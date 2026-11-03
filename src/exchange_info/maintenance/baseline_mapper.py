@@ -88,6 +88,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "ncut": ["oia.ncut.edu.tw", "www.ncut.edu.tw", "ncut.edu.tw"],
     "npust": ["oia2.npust.edu.tw", "oia.npust.edu.tw", "aa.npust.edu.tw", "www.npust.edu.tw", "npust.edu.tw", "docs.google.com"],
     "cjcu": ["dweb.cjcu.edu.tw", "www.cjcu.edu.tw", "cjcu.edu.tw", "forms.gle"],
+    "knu": ["knuoica.knu.edu.tw", "www.knu.edu.tw", "knu.edu.tw"],
 }
 
 
@@ -1668,6 +1669,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["cjcu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="cjcu", partner_rows=cjcu_rows, default_cycle_label="116"
+        )
+
+    # 39. KNU partners.jsonl (88 partner schools)
+    knu_partners_path = official_data_root / "knu" / "partners.jsonl"
+    if knu_partners_path.exists():
+        knu_rows = []
+        for line in knu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            knu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://knuoica.knu.edu.tw/p/406-1004-59525,r30.php?Lang=zh-tw",
+            })
+        school_reports["knu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="knu", partner_rows=knu_rows, default_cycle_label="116"
         )
 
     if store.current_release_id is None:

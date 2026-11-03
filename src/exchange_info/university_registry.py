@@ -1875,7 +1875,43 @@ CJCU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU)
+KNU = UniversityProfile(
+    id="knu",
+    school_name="開南大學",
+    short_name="開南",
+    english_name="Kainan University",
+    aliases=(
+        "knu",
+        "開南大學",
+        "開南",
+        "KNU",
+        "Kainan University",
+    ),
+    hero_image="/static/assets/knu-campus.svg",
+    official_url="https://knuoica.knu.edu.tw/p/406-1004-59525,r30.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合開南大學國際及兩岸事務處（OICA）《海外交換、日本交換、大陸交換與跨國雙聯學位簡章》、《全球姊妹校名冊（88校）》、《開南大學與境外大學校院辦理跨國雙學位制實施辦法》、《開南大學選派優秀學生赴國外研修獎助學金執行要點》及《海外研修與雙聯學位學生心得專區（43校121篇）》官方資料：（1）兩階段校內甄選、學業與語言門檻：每年分兩梯次（秋季班 9～10 月初、春季班 2～3 月中旬；大陸交換秋季班 3～4 月、春季班 10～11 月）辦理甄選，限大學部日間部及進修學士班 1～3 年級、碩士班 1 年級在學學生（轉學生須於本校就讀滿一學年；不含碩士在職專班及應屆畢業生），一般海外、日本及大陸交換歷年每學期學業平均達 75 分（GPA 2.75）以上，雙聯學位（富山、札幌國際、威斯康辛河瀑）與教育部學海系列獎學金須達 80 分（GPA 3.0）以上且操行成績達 82 分以上（佛羅倫斯美國大學 AUF 雙聯門檻為 GPA 2.5）；語言能力須達英語組 TOEIC 500 / IELTS 4.5 / TOEFL iBT 61 / ITP 500（日本全英授課須 TOEIC 600 / IELTS 5.0，AIU 須 TOEIC 785 / iBT 71）、日語組 JLPT N3～N1（島根、德島、愛媛、弘前、山口、名櫻、神戶國際、星城可 N3，多數國立與私立名校須 N2，御茶水女子大學及富山雙聯須 N1）或韓語組 TOPIK 3 級（大陸交換免附外語檢定）；採第一階段書面審查與第二階段面試。（2）全球 15 國／地區 88 所姊妹校與 5 校跨國雙聯學位：完整收錄 70 所常態開放交換與雙聯學校及 18 所學術合作姊妹校，日本高達 42 校（含御茶水女子大學、奈良女子大學、東京海洋大學、富山大學、弘前大學、山形大學、島根大學、山口大學、香川大學、愛媛大學、德島大學、琉球大學等 12 所日本國立大學及秋田國際教養大學 AIU、北九州市立大學、名櫻大學、尾道市立大學等 6 所公立名校），並提供日本國立富山大學（2+2 雙學士，免繳日方學費！）、日本札幌國際大學（2+2／1+1 雙學士）、美國威斯康辛大學河瀑分校 UW-River Falls（2+2 雙學士）、美國密蘇里科技大學 Missouri S&T（3+1.5 學碩雙聯）及義大利佛羅倫斯美國大學 AUF（2+2／3+1 雙學士，觀光餐旅直抵 69 學分且首學期減免學費）等 5 校雙聯學位。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／惜珠》、《開南大學選派優秀學生赴國外研修獎助學金》及 43 所合作大學共 121 篇歷屆學長姐出國交換與雙聯研修心得報告。",
+    support_level="full",
+    partner_count_hint=88,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "開南大學",
+        "KAINANUNIVERSITY",
+        "KAINAN UNIVERSITY",
+        "KNU",
+    ),
+    # https://www.knu.edu.tw/ — checked 2026-11-03.
+    colleges=(
+        "商學院",
+        "觀光運輸學院",
+        "資訊媒體學院",
+        "人文社會學院",
+        "健康照護管理學院",
+        "法律學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, KNU)
 DEFAULT_UNIVERSITY = CGU
 
 

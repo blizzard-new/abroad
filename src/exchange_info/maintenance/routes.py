@@ -807,6 +807,7 @@ def create_maintenance_router(
             <option value="ntue">國立臺北教育大學（共 143 所姊妹校）</option>
             <option value="npust">國立屏東科技大學（共 309 所姊妹校）</option>
             <option value="cjcu">長榮大學（共 193 所姊妹校）</option>
+            <option value="knu">開南大學（共 88 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -928,7 +929,8 @@ def create_maintenance_router(
     ntue: "國立臺北教育大學 (NTUE)",
     ncut: "國立勤益科技大學 (NCUT)",
     npust: "國立屏東科技大學 (NPUST)",
-    cjcu: "長榮大學 (CJCU)"
+    cjcu: "長榮大學 (CJCU)",
+    knu: "開南大學 (KNU)"
   };
 
   const FIELD_LABELS = {
