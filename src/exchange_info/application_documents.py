@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, CMU, CSMU, CYCU, FCU, FJU, ISU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -124,6 +124,9 @@ NQU_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
 
 
 ISU_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
+
+
+FGU_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3122,6 +3125,51 @@ def _isu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _fgu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理佛光大學國際暨兩岸事務處（雲起樓 104 室）辦理學生赴海外及大陸地區姊妹校交換與跨國雙學位（美西大學 UOTS、澳洲南天大學 NTI、日本龍谷大學、韓國東國大學）暨教育部學海飛颺／惜珠與校內海外學習獎學金應繳資料：1. 海外／大陸地區姊妹校交換學生申請表及家長同意書（須經導師、系所主任及院長核章；大陸及日韓姊妹校每年 3 月初／9 月初截止，美西大學及菲律賓光明大學等 4 月中／10 月中截止）、2. 歷年中英文成績單正本（含歷年學業總平均與班／所排名百分比，大學部二至三年級須歷年總平均達 75 分以上或班排前 25%，研究所以上須平均達 85 分以上或所排前 30%，且操行平均 80 分以上、無記過處分）、3. 有效外語能力檢定證明（英語組 IELTS 5.5–6.5、TOEFL iBT 70–85 或 TOEIC 750 以上；日語組 JLPT N2–N1；韓語組 TOPIK 2–3 級；赴大陸姊妹校免附語檢）、4. 自傳、讀書計畫書（含擬選修課程對照表）及教師推薦函 1–2 封。",
+        "study-plan": "撰寫佛光大學學生赴海外及大陸地區姊妹校交換、跨國雙學位及教育部學海飛颺／惜珠獎助學金甄選必繳之《出國／赴陸研修讀書計畫書與自傳》（建議約 1,000–2,000 字；申請歐美、澳洲及日韓姊妹校建議同時備妥中、外文版本）。請具體說明申請動機、個人學業與語言優勢、擬於志願姊妹校修讀之課程規劃（依佛光大學規定，交換期間每學期至少須選修相當於本校 2 學分以上之課程，美西大學等部分姊妹校規定學士班至少修習 12 學分／碩士班 9 學分），以及返國後學分抵免與生涯發展規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙學位之選課預審與教務核備（依《佛光大學學生赴境外大學研修辦法》及《與境外大學校院辦理雙學位制實施辦法》規定，交換期間須辦理佛光大學註冊並繳交全額學雜費，免繳接待姊妹校學費；每學期至少應修習相當於佛光大學 2 學分以上之課程）。",
+        "predeparture-notice": "經系所與院初審推薦、國際暨兩岸事務處複審及校長核定錄取並取得境外姊妹校入學許可（Admission Letter／JW202 表／COE／I-20）後，配合國際處完成確認同意書、護照與簽證（或台胞證）申辦、役男出境核准、海外醫療及意外保險投保，並出席行前說明會。",
+        "return-report": "境外交換或跨國雙學位研修期滿返國後 1 個月內，須依《佛光大學海外學習獎學金辦法》、《學生赴境外大學研修辦法》及教育部學海系列計畫規定，向國際暨兩岸事務處繳交 1,500–3,000 字以上之《境外交換研修心得報告》（附研修及校園生活照片至少 4–6 張），並配合出席國際處舉辦之海外學習經驗分享會與辦理獎助學金核銷。",
+        "credit-transfer": "境外交換或雙學位研修期滿返國後，持境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《佛光大學學生赴境外大學研修辦法》向所屬學系（所）、學院及教務處申請境外修習科目學分採認抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "佛光大學").replace("長庚", "佛光")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "佛光大學海外姊妹校交換規定：大學部二至三年級歷年學業總平均達 75 分以上或班排名前 25%（研究所以上平均達 85 分以上或所排名前 30%），且操行平均 80 分以上、無小過以上處分。請檢附歷年中英文成績單正本（含排名百分比）。"
+        if field["id"] == "language_test":
+            field["options"] = ["IELTS 雅思學術組（美西大學 5.5+／澳洲南天大學 6.0–6.5+／休士頓大學清湖分校 6.0+）", "TOEFL iBT 托福測驗（休士頓大學清湖分校 79+／美西大學 69–85+）", "TOEIC 多益測驗（韓國東國大學／金剛大學／京東大學英語授課及校內初審建議 550–750+）", "JLPT 日語能力試驗（龍谷大學／花園大學／佛教大學／淑德大學／筑波學院大學 N2–N1）", "TOPIK 韓語能力測驗（東國大學／金剛大學韓語授課 2–3 級以上）", "赴大陸地區姊妹校交換（中文授課免附外語檢定證明）"]
+            field["help_text"] = "依佛光大學國際暨兩岸事務處各姊妹校交換簡章：申請英語系、日本或韓國姊妹校須檢附符合志願學校門檻之有效外語檢定成績單；申請大陸地區姊妹校免附外語檢定。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oica.fgu.edu.tw/zh_tw/StudyAbroad/op1",
+        source_checked_at=FGU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="海外／大陸地區姊妹校交換學生申請表與家長同意書" if template.id == "exchange-application-data" else ("出國／赴陸研修讀書計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oica.fgu.edu.tw/zh_tw/Download",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長（或監護人）親筆簽名蓋章", "導師（或指導教授）簽章", "系（所）主任及院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所）辦公室及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "獲錄取推薦並取得姊妹校入學許可後辦理簽證／台胞證、役男出境、保險及出席行前說明會", "return-report": "返國後 1 個月內繳交境外交換研修心得報告（含照片）與正式成績單並配合經驗分享會辦理核銷", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱向系所及教務處辦理境外學分採認抵免"}.get(template.id, "備齊核章紙本申請表、家長同意書、歷年含排名成績單、語檢證明、推薦信及自傳／讀書計畫送交雲起樓 104 室國際暨兩岸事務處"),
+        version="116準備工具-2026-11-02.1",
+        destinations=["佛光大學國際暨兩岸事務處（262307 宜蘭縣礁溪鄉林尾路 160 號 雲起樓 104 室）"],
+        conditional_note="此為個人準備工具；佛光大學每學期分梯次辦理赴大陸地區、日韓及歐美澳菲姊妹校交換生甄選（秋季班約 2–4 月收件、春季班約 9–10 月收件），在學學生皆可搭配申請佛光大學海外學習獎學金、佛光山系統大學獎助或教育部學海飛颺／惜珠計畫。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3232,6 +3280,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nqu_template(template)) is not None]
     if university.id == ISU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _isu_template(template)) is not None]
+    if university.id == FGU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _fgu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
