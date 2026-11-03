@@ -1,5 +1,20 @@
 # Editorial intentions and next topics
 
+## 2026-11-03 每日批次：AI 閱讀精讀／托福郵件寫作兩篇（PR #222 待審）
+
+日期採 Asia/Taipei；隔離分支 `codex/seo-daily-20261103`，基於 main `7f124f1205dec0ed6cce046089b45a6a342208c9`。開始前沒有同日分支或任何狀態同日 PR。已核對 main 27 篇、相關未完成分支，以及全部 12 個待審 PR #209–#214、#216–#221 的標題、說明摘要及完整變更檔案清單；只有 #213 含 editorial JSON，兩題已選並排除。#78、#92 已合併，本批無未合併基礎相依。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 17：用 AI 練英文閱讀怎麼做？精讀 Prompt、原文證據與訂正示例 | `ai-english-reading-practice` | [PR #222](https://github.com/blizzard-new/abroad/pull/222) 待審，完整文章、來源、照片與驗收完成；後續不得重做 |
+| 19：托福 Write an Email 怎麼寫？題目拆解、回信範例與檢查表 | `toefl-write-an-email` | 同一個 PR #222 待審，完整文章、來源、照片與驗收完成；後續不得重做 |
+
+選題依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。AI 篇深入單段閱讀及回饋查核，加入三輪可填寫 Prompt、兩段獨立原創短文及簡化版、人工訂正與錯誤回饋辨識；`ai-english-learning` 保留每日聽說讀寫總覽。托福篇深入 Write an Email 的任務與事實對照，提供完整原創題目、初稿修改、郵件及換題練習；`toefl-ibt-preparation` 保留版本、四科與讀書安排。不是以年份、品牌或改標題重發總覽。
+
+11/2 [PR #213](https://github.com/blizzard-new/abroad/pull/213) 的 `toefl-listen-and-repeat`、`toeic-part-seven-multiple-passages` 仍待審，視為已選，未納入或重做。10/30 的 `exchange-study-plan` 更新仍在 `codex/seo-daily-20261030`、`97de3fda`，保持原批次；候選 15 未取得實測，沒有捏造比較。這些保留狀態優先於下方歷史盤點中的「尚待實作／待審」舊描述。
+
+兩篇皆有四個官方來源、原創五步 HTML 圖解、已重查授權的真實照片、FAQ 及必要工具／相關文章連結。本分支文章總數為 29，原有 27 篇 URL、刊載日與 lastmod 不變。135 項 SEO 測試、39 項 E2E、六個無 JavaScript 桌機／手機閱讀組合及 wheel 中 59 檔逐位元核對通過；詳見[本批驗收紀錄](seo-editorial-validation-2026-11-03.md)。本批唯一 PR #222 待審，未合併或部署。
+
 ## 2026-11-02 每日批次：托福／多益任務練習兩篇（PR #213 待審）
 
 日期採 Asia/Taipei；隔離分支 `codex/seo-daily-20261102`，基於 main `8a3efc91e92f61629322c7db229f42c5db1d4438`。開始前沒有同日分支／PR；核對 main 27 篇、未完成的 10/30 分支，以及全部待審 PR #209–#212 的說明與完整變更檔案清單，沒有另一個產文批次或文章改動。基礎 #78、流程 #92 均已合併；SEO renderer PR #168 也已合併，本批直接沿用 main。

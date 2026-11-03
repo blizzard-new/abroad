@@ -1,0 +1,2433 @@
+[
+  {
+    "url": "https://datastudio.google.com/embed/getReport?appVersion=20261025_0000",
+    "postData": {
+      "reportId": "bd58ff7a-ffc3-4cc7-b573-3caee0d08507",
+      "includePages": true,
+      "updateViewedDate": false,
+      "updateFirestore": false,
+      "draftRequestMode": 0,
+      "mobileFriendlyView": false
+    },
+    "data": {
+      "reportConfig": {
+        "shareable": {
+          "id": "bd58ff7a-ffc3-4cc7-b573-3caee0d08507",
+          "type": 0,
+          "aclMode": 2,
+          "name": "雙學位列表(資料來源：NEW 姐妹校名單 Sister School List)",
+          "createdDate": "1715321573435",
+          "modifiedDate": "1724293216353",
+          "copyable": true,
+          "downloadable": true,
+          "schedulable": false,
+          "alertEnabled": true,
+          "generateSlidesEnabled": true,
+          "canUseAdvancedFilterPanel": false,
+          "projectNumber": "1023684646485",
+          "locationType": 2,
+          "locationName": "",
+          "editable": false,
+          "isOwner": false,
+          "abuseType": 0,
+          "description": "",
+          "isDataAppReport": false,
+          "dataAppSourceNotebookId": ""
+        },
+        "page": [
+          {
+            "pageId": "56611633",
+            "page": {
+              "creatorGaiaId": "522813778868",
+              "lastModifierGaiaId": "522813778868",
+              "componentConfig": [
+                {
+                  "componentId": "cd-eg3pwy75gd",
+                  "type": "simple-description",
+                  "behavior": {
+                    "mapValue": {
+                      "entry": []
+                    }
+                  },
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 1,
+                      "height": 123,
+                      "width": 822,
+                      "top": 59,
+                      "left": 189,
+                      "flipHorizontal": false,
+                      "flipVertical": false
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "sort": [],
+                      "breakdownConfig": [],
+                      "filters": [],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "descriptionProperty": {
+                        "text": "<div style=\"text-align: center;\" align=\"center\"><b><span style=\"font-size: 44px;\">放眼世界 · 接軌國際 · </span><font style=\"font-size: 44px;\">​</font><span style=\"font-size: 44px;\">多元國際交流計劃</span></b></div>",
+                        "fontSize": 14,
+                        "paddingTop": 8,
+                        "paddingLeft": 8,
+                        "paddingRight": 8
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": []
+                },
+                {
+                  "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+                  "componentId": "cd-1rbvp075gd",
+                  "type": "dimension-filter",
+                  "behavior": {
+                    "mapValue": {
+                      "entry": []
+                    }
+                  },
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 0,
+                      "height": 50,
+                      "width": 234,
+                      "top": 182,
+                      "left": 29,
+                      "alias": "df3",
+                      "flipHorizontal": false,
+                      "flipVertical": false
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "dataset": {
+                        "datasetType": 1,
+                        "datasetId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546"
+                      },
+                      "dimensions": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_zrbvp075gd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "metrics": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": []
+                            }
+                          }
+                        ]
+                      },
+                      "row": 5001,
+                      "sort": [
+                        {
+                          "sortDir": 1,
+                          "sortColumn": "qt_zrbvp075gd"
+                        }
+                      ],
+                      "breakdownConfig": [],
+                      "dateRangeDimension": "qt_ea3up075gd",
+                      "filters": [
+                        "filterwzfrqe85gd"
+                      ],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "dimensionFilterProperty": {
+                        "showSearch": true,
+                        "sliderShowTextBoxes": true,
+                        "expandable": true,
+                        "labelFontSize": 14,
+                        "paddingTop": 8,
+                        "paddingLeft": 24,
+                        "paddingRight": 24,
+                        "centerVertical": true,
+                        "lineHeight": 16
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": [
+                    {
+                      "id": "t0.qt_ea3up075gd",
+                      "name": "qt_ea3up075gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_1596127825_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_zrbvp075gd",
+                      "name": "qt_zrbvp075gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_2032628390_"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+                  "componentId": "cd-pl440075gd",
+                  "type": "dimension-filter",
+                  "behavior": {
+                    "mapValue": {
+                      "entry": []
+                    }
+                  },
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 0,
+                      "height": 50,
+                      "width": 234,
+                      "top": 182,
+                      "left": 294,
+                      "alias": "df4",
+                      "flipHorizontal": false,
+                      "flipVertical": false
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "dataset": {
+                        "datasetType": 1,
+                        "datasetId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546"
+                      },
+                      "dimensions": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_bcv40075gd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "metrics": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": []
+                            }
+                          }
+                        ]
+                      },
+                      "row": 5001,
+                      "sort": [
+                        {
+                          "sortDir": 1,
+                          "sortColumn": "qt_bcv40075gd"
+                        }
+                      ],
+                      "breakdownConfig": [],
+                      "dateRangeDimension": "qt_acv40075gd",
+                      "filters": [],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "dimensionFilterProperty": {
+                        "showSearch": true,
+                        "sliderShowTextBoxes": true,
+                        "expandable": true,
+                        "labelFontSize": 14,
+                        "paddingTop": 8,
+                        "paddingLeft": 24,
+                        "paddingRight": 24,
+                        "centerVertical": true,
+                        "lineHeight": 16
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": [
+                    {
+                      "id": "t0.qt_acv40075gd",
+                      "name": "qt_acv40075gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_1596127825_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_bcv40075gd",
+                      "name": "qt_bcv40075gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n924117441_"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+                  "componentId": "cd-2ult2275gd",
+                  "type": "dimension-filter",
+                  "behavior": {
+                    "mapValue": {
+                      "entry": []
+                    }
+                  },
+                  "componentConfig": [],
+                  "preset": "control-textbox",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 0,
+                      "height": 50,
+                      "width": 264,
+                      "top": 182,
+                      "left": 559,
+                      "alias": "df5",
+                      "flipHorizontal": false,
+                      "flipVertical": false
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "dataset": {
+                        "datasetType": 1,
+                        "datasetId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546"
+                      },
+                      "dimensions": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_92kt2275gd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "row": 5001,
+                      "sort": [
+                        {
+                          "sortDir": 1,
+                          "sortColumn": "qt_92kt2275gd"
+                        }
+                      ],
+                      "breakdownConfig": [],
+                      "dateRangeDimension": "qt_gbkt2275gd",
+                      "filters": [],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "dimensionFilterProperty": {
+                        "showSearch": true,
+                        "defaultConditionType": 2,
+                        "sliderShowTextBoxes": true,
+                        "expandable": false,
+                        "labelFontSize": 14,
+                        "paddingTop": 8,
+                        "paddingLeft": 24,
+                        "paddingRight": 24,
+                        "centerVertical": true,
+                        "lineHeight": 16
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": [
+                    {
+                      "id": "t0.qt_gbkt2275gd",
+                      "name": "qt_gbkt2275gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_1596127825_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_92kt2275gd",
+                      "name": "qt_92kt2275gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n1472922184_"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+                  "componentId": "cd-3xywn475gd",
+                  "type": "simple-table",
+                  "behavior": {
+                    "mapValue": {
+                      "entry": [
+                        {
+                          "key": "onSelect",
+                          "value": {
+                            "arrayValue": {
+                              "value": [
+                                {
+                                  "mapValue": {
+                                    "entry": [
+                                      {
+                                        "key": "action",
+                                        "value": {
+                                          "strValue": "cross-filtering"
+                                        }
+                                      },
+                                      {
+                                        "key": "isControl",
+                                        "value": {
+                                          "boolValue": true
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 0,
+                      "height": 592,
+                      "width": 1114,
+                      "top": 268,
+                      "left": 29,
+                      "flipHorizontal": false,
+                      "flipVertical": false
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "dataset": {
+                        "datasetType": 1,
+                        "datasetId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546"
+                      },
+                      "dimensions": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_hk5wz575gd",
+                                "qt_95xwn475gd",
+                                "qt_089c4575gd",
+                                "qt_o9195675gd",
+                                "qt_oxcbk675gd",
+                                "qt_s2uxp675gd",
+                                "qt_odohh775gd",
+                                "qt_zklza875gd",
+                                "qt_wboer675gd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "metrics": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": []
+                            }
+                          }
+                        ]
+                      },
+                      "row": 100,
+                      "sort": [
+                        {
+                          "sortDir": 1,
+                          "sortColumn": "qt_hk5wz575gd"
+                        }
+                      ],
+                      "breakdownConfig": [],
+                      "dateRangeDimension": "qt_85xwn475gd",
+                      "filters": [
+                        "filterwzfrqe85gd",
+                        "filter2jo4sg85gd"
+                      ],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "tableProperty": {
+                        "missingDataStyle": 4,
+                        "compactPagination": false,
+                        "fontSize": 14,
+                        "headerFontSize": 16,
+                        "headerTextWrapping": true,
+                        "bodyTextWrapping": true,
+                        "footerBorderColor": {
+                          "color": "#eee",
+                          "opacity": 1
+                        },
+                        "footerBorderWeight": 0,
+                        "tableDimensionProperty": [
+                          {
+                            "dimAlignment": 1
+                          },
+                          {
+                            "dimAlignment": 1
+                          },
+                          {
+                            "dimAlignment": 1
+                          },
+                          {
+                            "dimAlignment": 2
+                          },
+                          {
+                            "dimAlignment": 2
+                          },
+                          {
+                            "dimAlignment": 2
+                          },
+                          {
+                            "dimAlignment": 1
+                          },
+                          {
+                            "dimAlignment": 1
+                          },
+                          {
+                            "dimAlignment": 1
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          },
+                          {
+                            "dimAlignment": 0
+                          }
+                        ],
+                        "tableMetricProperty": [],
+                        "columnsWidth": [
+                          33.933855526544825,
+                          96.49523063533508,
+                          100.61700609225412,
+                          115.19329852045257,
+                          81.8055526544822,
+                          104.21853785900782,
+                          129.3099216710183,
+                          166.38563968668404,
+                          188.20287206266312,
+                          97.83808529155795
+                        ],
+                        "rowsHeight": [
+                          31,
+                          31,
+                          31,
+                          31,
+                          31,
+                          31,
+                          31,
+                          31,
+                          31,
+                          31
+                        ]
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": [
+                    {
+                      "id": "t0.qt_85xwn475gd",
+                      "name": "qt_85xwn475gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_1596127825_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_95xwn475gd",
+                      "name": "qt_95xwn475gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_2032628390_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_hk5wz575gd",
+                      "name": "qt_hk5wz575gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n371419177_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_089c4575gd",
+                      "name": "qt_089c4575gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n924117441_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_oxcbk675gd",
+                      "name": "qt_oxcbk675gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n1472922184_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_s2uxp675gd",
+                      "name": "qt_s2uxp675gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n359586409_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_wboer675gd",
+                      "name": "qt_wboer675gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n1731831913_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_o9195675gd",
+                      "name": "qt_o9195675gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_1962790570_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_odohh775gd",
+                      "name": "qt_odohh775gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_1651292053_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_zklza875gd",
+                      "name": "qt_zklza875gd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n273825204_"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "groupConfig": [],
+              "attributeConfig": {
+                "pageAttribute": {
+                  "datasourceConfigVersion": 2,
+                  "displayConfigVersion": 0,
+                  "name": "Untitled Page"
+                }
+              },
+              "propertyConfig": {
+                "pageProperty": {
+                  "filters": [],
+                  "inheritFilters": true
+                }
+              },
+              "conceptDefs": []
+            },
+            "position": 0,
+            "version": "1724293247245",
+            "chartCondition": [
+              {
+                "chartId": "cd-3xywn475gd",
+                "conditionalFormat": {
+                  "rule": []
+                }
+              }
+            ]
+          }
+        ],
+        "report": {
+          "lastModifierGaiaId": "522813778868",
+          "componentConfig": [],
+          "resource": {
+            "filter": {
+              "entry": [
+                {
+                  "key": "filterwzfrqe85gd",
+                  "value": {
+                    "name": "國別\nCountry filter",
+                    "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+                    "filterDefinition": {
+                      "filterExpression": {
+                        "include": false,
+                        "conceptType": 0,
+                        "concept": {
+                          "ns": "t0",
+                          "name": "qt_3xocfe85gd"
+                        },
+                        "filterConditionType": "NU",
+                        "stringValues": [
+                          ""
+                        ],
+                        "numberValues": [],
+                        "queryTimeTransformation": {
+                          "dataTransformation": {
+                            "sourceFieldName": "_2032628390_"
+                          }
+                        }
+                      }
+                    },
+                    "version": 3
+                  }
+                },
+                {
+                  "key": "filter2jo4sg85gd",
+                  "value": {
+                    "name": "合約是否有效\nContract Validity filter",
+                    "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+                    "filterDefinition": {
+                      "filterExpression": {
+                        "include": true,
+                        "conceptType": 0,
+                        "concept": {
+                          "ns": "t0",
+                          "name": "qt_z3jjbg85gd"
+                        },
+                        "filterConditionType": "EQ",
+                        "stringValues": [
+                          "✔"
+                        ],
+                        "numberValues": [],
+                        "queryTimeTransformation": {
+                          "dataTransformation": {
+                            "sourceFieldName": "_1264722088_"
+                          }
+                        }
+                      }
+                    },
+                    "version": 3
+                  }
+                }
+              ]
+            },
+            "datasourceAlias": [
+              {
+                "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+                "alias": "ds5"
+              }
+            ],
+            "communityVizResource": [],
+            "parameterResource": [],
+            "unifiedParameterResource": [],
+            "fieldOverridesResource": []
+          },
+          "attributeConfig": {
+            "reportAttribute": {
+              "datasourceConfigVersion": 2,
+              "displayConfigVersion": 0,
+              "height": 900,
+              "width": 1200,
+              "viewModeHeader": 0,
+              "viewModeNav": 1,
+              "viewModeScale": 0,
+              "viewModeMargin": true,
+              "snapMode": 1,
+              "isEmbeddable": true,
+              "crossFilterByDefault": true,
+              "showNavigationInEditMode": true,
+              "showNavigationInEmbeddingMode": true
+            }
+          },
+          "propertyConfig": {
+            "reportProperty": {
+              "globalObjectPosition": 2,
+              "themeConfig": "t-default",
+              "coordinatedColoring": 3,
+              "filters": []
+            }
+          },
+          "conceptDefs": []
+        },
+        "encryptedReportId": "AMVsmzaPxl6LNOY3yCOmDfzyOlqYFF40_y8f4luULemISDGLvmgocOvlNOrZO824t9V8FIv4FL3_",
+        "version": "1736815934019",
+        "pinRequired": false,
+        "chartCondition": [],
+        "navigationInfo": {
+          "style": 2,
+          "navItems": [
+            {
+              "page": {
+                "pageId": "56611633",
+                "displayName": "雙學位"
+              }
+            }
+          ],
+          "respectTheme": true
+        },
+        "thirdPartyPolicies": {
+          "newThirdPartyVizDisabled": false,
+          "existingThirdPartyVizDisabled": false
+        },
+        "notebookDataAppConfig": {}
+      },
+      "shortLinkSet": {
+        "shortLink": [],
+        "activeId": ""
+      },
+      "iog": false,
+      "isSameOrgAsUser": false,
+      "parentWorkspaceId": ""
+    }
+  },
+  {
+    "url": "https://datastudio.google.com/embed/getSchema?appVersion=20261025_0000",
+    "postData": {
+      "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+      "includeDisabledColumns": false,
+      "revisionNumber": "0",
+      "requestContext": {
+        "reportContext": {
+          "reportId": "bd58ff7a-ffc3-4cc7-b573-3caee0d08507",
+          "mode": 1
+        },
+        "requestMode": 0
+      },
+      "version": "-1",
+      "googleAuthOAuthToken": ""
+    },
+    "data": {
+      "schema": {
+        "dimensions": [
+          {
+            "displayName": "洲別 \nContinent",
+            "dataType": 0,
+            "name": "_n371419177_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n371419177_",
+              "simpleName": "_n371419177_",
+              "label": "洲別 \nContinent"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "國別\nCountry",
+            "dataType": 0,
+            "name": "_2032628390_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 16
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_2032628390_",
+              "simpleName": "_2032628390_",
+              "label": "國別\nCountry"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "城市\nCity",
+            "dataType": 0,
+            "name": "_990368033_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 24
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_990368033_",
+              "simpleName": "_990368033_",
+              "label": "城市\nCity"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "學校編號",
+            "dataType": 0,
+            "name": "_724237024_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_724237024_",
+              "simpleName": "_724237024_",
+              "label": "學校編號"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "類別",
+            "dataType": 0,
+            "name": "_1230215_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1230215_",
+              "simpleName": "_1230215_",
+              "label": "類別"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "校名 Name",
+            "dataType": 0,
+            "name": "_n924117441_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n924117441_",
+              "simpleName": "_n924117441_",
+              "label": "校名 Name"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "雙學位合約簽約日 Dual-Degree Agreement Start Date",
+            "dataType": 6,
+            "name": "_1596127825_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 2,
+                  "dateTimeOptions": {
+                    "useNativeDateTime": true
+                  }
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1596127825_",
+              "simpleName": "_1596127825_",
+              "label": "雙學位合約簽約日 Dual-Degree Agreement Start Date"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "DATE"
+          },
+          {
+            "displayName": "截止日期\nExpiry Date",
+            "dataType": 6,
+            "name": "_n488366205_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 2,
+                  "dateTimeOptions": {
+                    "useNativeDateTime": true
+                  }
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n488366205_",
+              "simpleName": "_n488366205_",
+              "label": "截止日期\nExpiry Date"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "DATE"
+          },
+          {
+            "displayName": "自動續約\nAutomatic Renewal",
+            "dataType": 0,
+            "name": "_n1887906788_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n1887906788_",
+              "simpleName": "_n1887906788_",
+              "label": "自動續約\nAutomatic Renewal"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "合約是否有效\nContract Validity",
+            "dataType": 0,
+            "name": "_1264722088_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1264722088_",
+              "simpleName": "_1264722088_",
+              "label": "合約是否有效\nContract Validity"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "計畫類型 \nProgram",
+            "dataType": 0,
+            "name": "_1962790570_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1962790570_",
+              "simpleName": "_1962790570_",
+              "label": "計畫類型 \nProgram"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "適用系所\nDepartment",
+            "dataType": 0,
+            "name": "_n1472922184_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n1472922184_",
+              "simpleName": "_n1472922184_",
+              "label": "適用系所\nDepartment"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "門檻 \nRequirements",
+            "dataType": 0,
+            "name": "_1651292053_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1651292053_",
+              "simpleName": "_1651292053_",
+              "label": "門檻 \nRequirements"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "其他學費 Additional Tuition Fees\n(必須繳交義守學費 \nI-Shou Tuition is Mandatory)",
+            "dataType": 0,
+            "name": "_n273825204_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n273825204_",
+              "simpleName": "_n273825204_",
+              "label": "其他學費 Additional Tuition Fees\n(必須繳交義守學費 \nI-Shou Tuition is Mandatory)"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "雙學位學校網站 \nSchool Website",
+            "dataType": 0,
+            "name": "_n1731831913_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 41
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n1731831913_",
+              "simpleName": "_n1731831913_",
+              "label": "雙學位學校網站 \nSchool Website"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "窗口 Contact",
+            "dataType": 0,
+            "name": "_1476106252_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1476106252_",
+              "simpleName": "_1476106252_",
+              "label": "窗口 Contact"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "雙學位名額\nStudent Quota",
+            "dataType": 0,
+            "name": "_n359586409_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n359586409_",
+              "simpleName": "_n359586409_",
+              "label": "雙學位名額\nStudent Quota",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          }
+        ],
+        "metrics": [
+          {
+            "displayName": "Record Count",
+            "dataType": 5,
+            "name": "datastudio_record_count_system_field_id_98323387",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 33
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "datastudio_record_count_system_field_id_98323387",
+              "simpleName": "datastudio_record_count_system_field_id_98323387"
+            },
+            "isDefault": true,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 7,
+            "newDefaultAggregation": 7,
+            "conceptType": 1
+          }
+        ],
+        "dateRangeRequired": false,
+        "connectorType": 8,
+        "isUnlocked": true,
+        "isCacheable": true,
+        "allowThirdPartyViz": true,
+        "isDelegatedAccessEnabled": true,
+        "isLegolasForwardEnabled": false,
+        "isGaSegmentsEnabled": false,
+        "isScheduleExtractSupported": true,
+        "cacheShelfLife": {
+          "amount": 15,
+          "chronoUnit": 1
+        },
+        "isViewerEmailFilterEnabled": false,
+        "isBqProdWorkflow": false,
+        "allowThirdPartyVizExternalAccess": false,
+        "filterOnlyFields": [],
+        "deprecationMetadata": {},
+        "lastUpdatedTimestampMs": "1715321608837",
+        "isAutoRefreshEnabled": false
+      },
+      "version": "1724293191156",
+      "encryptedDatasourceId": "AMVsmzZl3rp7ixrmAVUviVvKOGlNIHr0Z_kBsld_lBkt_gn5p5Z782g1TvlQjedf4pLRvEX118JK",
+      "maxDimensions": "100",
+      "datasourceParameters": {
+        "connectorParameterConfiguration": {
+          "parameters": []
+        },
+        "datasourceVariableParameterConfiguration": {
+          "parameters": []
+        }
+      },
+      "maxMetrics": "100",
+      "isCredentialOwner": false
+    }
+  },
+  {
+    "url": "https://datastudio.google.com/embed/batchedDataV2?appVersion=20261025_0000",
+    "postData": {
+      "dataRequest": [
+        {
+          "requestContext": {
+            "reportContext": {
+              "reportId": "bd58ff7a-ffc3-4cc7-b573-3caee0d08507",
+              "pageId": "56611633",
+              "mode": 1,
+              "componentId": "cd-1rbvp075gd",
+              "displayType": "dimension-filter"
+            },
+            "requestMode": 7
+          },
+          "datasetSpec": {
+            "dataset": [
+              {
+                "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+                "revisionNumber": 0,
+                "parameterOverrides": []
+              }
+            ],
+            "queryFields": [
+              {
+                "name": "qt_zrbvp075gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_2032628390_"
+                }
+              }
+            ],
+            "sortData": [
+              {
+                "sortColumn": {
+                  "name": "qt_zrbvp075gd",
+                  "datasetNs": "d0",
+                  "tableNs": "t0",
+                  "dataTransformation": {
+                    "sourceFieldName": "_2032628390_"
+                  }
+                },
+                "sortDir": 1
+              }
+            ],
+            "includeRowsCount": true,
+            "relatedDimensionMask": {
+              "addDisplay": false,
+              "addUniqueId": false,
+              "addLatLong": false
+            },
+            "paginateInfo": {
+              "startRow": 1,
+              "rowsCount": 5001
+            },
+            "dsFilterOverrides": [],
+            "filters": [
+              {
+                "filterDefinition": {
+                  "filterExpression": {
+                    "include": false,
+                    "conceptType": 0,
+                    "concept": {
+                      "ns": "t0",
+                      "name": "qt_3xocfe85gd"
+                    },
+                    "filterConditionType": "NU",
+                    "stringValues": [
+                      ""
+                    ],
+                    "numberValues": [],
+                    "queryTimeTransformation": {
+                      "dataTransformation": {
+                        "sourceFieldName": "_2032628390_"
+                      }
+                    }
+                  }
+                },
+                "dataSubsetNs": {
+                  "datasetNs": "d0",
+                  "tableNs": "t0",
+                  "contextNs": "c0"
+                },
+                "version": 3
+              }
+            ],
+            "features": [],
+            "dateRanges": [],
+            "contextNsCount": 1,
+            "dateRangeDimensions": [
+              {
+                "name": "qt_ea3up075gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_1596127825_"
+                }
+              }
+            ],
+            "calculatedField": [],
+            "needGeocoding": false,
+            "geoFieldMask": [],
+            "multipleGeocodeFields": [],
+            "timezone": "Asia/Taipei"
+          },
+          "role": "main",
+          "retryHints": {
+            "useClientControlledRetry": true,
+            "isLastRetry": false,
+            "retryCount": 0,
+            "originalRequestId": "cd-1rbvp075gd_0_0"
+          }
+        },
+        {
+          "requestContext": {
+            "reportContext": {
+              "reportId": "bd58ff7a-ffc3-4cc7-b573-3caee0d08507",
+              "pageId": "56611633",
+              "mode": 1,
+              "componentId": "cd-pl440075gd",
+              "displayType": "dimension-filter"
+            },
+            "requestMode": 7
+          },
+          "datasetSpec": {
+            "dataset": [
+              {
+                "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+                "revisionNumber": 0,
+                "parameterOverrides": []
+              }
+            ],
+            "queryFields": [
+              {
+                "name": "qt_bcv40075gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_n924117441_"
+                }
+              }
+            ],
+            "sortData": [
+              {
+                "sortColumn": {
+                  "name": "qt_bcv40075gd",
+                  "datasetNs": "d0",
+                  "tableNs": "t0",
+                  "dataTransformation": {
+                    "sourceFieldName": "_n924117441_"
+                  }
+                },
+                "sortDir": 1
+              }
+            ],
+            "includeRowsCount": true,
+            "relatedDimensionMask": {
+              "addDisplay": false,
+              "addUniqueId": false,
+              "addLatLong": false
+            },
+            "paginateInfo": {
+              "startRow": 1,
+              "rowsCount": 5001
+            },
+            "dsFilterOverrides": [],
+            "filters": [],
+            "features": [],
+            "dateRanges": [],
+            "contextNsCount": 1,
+            "dateRangeDimensions": [
+              {
+                "name": "qt_acv40075gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_1596127825_"
+                }
+              }
+            ],
+            "calculatedField": [],
+            "needGeocoding": false,
+            "geoFieldMask": [],
+            "multipleGeocodeFields": [],
+            "timezone": "Asia/Taipei"
+          },
+          "role": "main",
+          "retryHints": {
+            "useClientControlledRetry": true,
+            "isLastRetry": false,
+            "retryCount": 0,
+            "originalRequestId": "cd-pl440075gd_0_0"
+          }
+        }
+      ]
+    },
+    "data": {
+      "dataResponse": [
+        {
+          "dataSubset": [
+            {
+              "dataset": {
+                "tableDataset": {
+                  "columnInfo": [
+                    {
+                      "ns": "t0",
+                      "name": "qt_zrbvp075gd"
+                    }
+                  ],
+                  "totalCount": 6,
+                  "column": [
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "香港\nHongKong",
+                          "韓國\nKorea",
+                          "英國 \nUnited Kingdom",
+                          "美國\nAmerica",
+                          "日本\nJapan",
+                          "中國\nChina"
+                        ]
+                      }
+                    }
+                  ],
+                  "size": 6,
+                  "metadata": {
+                    "columnMetadata": [
+                      {
+                        "imageContainsDynamicData": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "requestId": "98c4aa22-25133825-20261101",
+              "isCompare": false,
+              "jobRequestUrl": [
+                "http://go/lego-backend-inspect-requests?var.request_id=98c4aa22-25133825-20261101"
+              ],
+              "isTotals": false,
+              "viewTags": {
+                "compareIndex": 0,
+                "isTotals": false,
+                "role": "main",
+                "bypassCanvasFilters": false
+              }
+            }
+          ],
+          "dataTimestamp": "1793569365743",
+          "responseMetaSet": {
+            "responseMetas": [
+              {
+                "requestNamespace": {
+                  "context": 0
+                },
+                "origin": 2,
+                "mappingId": {
+                  "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546"
+                }
+              }
+            ]
+          },
+          "startRequestTimestampMilliseconds": "1793569683398",
+          "endRequestTimestampMilliseconds": "1793569683403"
+        },
+        {
+          "dataSubset": [
+            {
+              "dataset": {
+                "tableDataset": {
+                  "columnInfo": [
+                    {
+                      "ns": "t0",
+                      "name": "qt_bcv40075gd"
+                    }
+                  ],
+                  "totalCount": 10,
+                  "column": [
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "香港理工大學\nHong Kong Polytechnic University",
+                          "諾丁漢特倫特大學\nNottingham Trent University",
+                          "蘭州大學\nLanzhou University",
+                          "帝京大學\nTeikyo University",
+                          "奧克拉荷馬州立大學\nOklahoma State University",
+                          "四川大學\nSichuan University",
+                          "吉林大學\nJilin University",
+                          "又松大學Solbridge國際商學院\nSolbridge International School of Business, \nWoosong University",
+                          "南伊利諾大學卡本岱爾校區\nSouthern Illinois University Carbondale",
+                          "內華達大學拉斯維加斯分校 \nUniversity of Nevada, Las Vegas"
+                        ]
+                      }
+                    }
+                  ],
+                  "size": 10,
+                  "metadata": {
+                    "columnMetadata": [
+                      {
+                        "imageContainsDynamicData": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "requestId": "3edc592f-25133826-20261101",
+              "isCompare": false,
+              "jobRequestUrl": [
+                "http://go/lego-backend-inspect-requests?var.request_id=3edc592f-25133826-20261101"
+              ],
+              "isTotals": false,
+              "viewTags": {
+                "compareIndex": 0,
+                "isTotals": false,
+                "role": "main",
+                "bypassCanvasFilters": false
+              }
+            }
+          ],
+          "dataTimestamp": "1793569365742",
+          "responseMetaSet": {
+            "responseMetas": [
+              {
+                "requestNamespace": {
+                  "context": 0
+                },
+                "origin": 2,
+                "mappingId": {
+                  "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546"
+                }
+              }
+            ]
+          },
+          "startRequestTimestampMilliseconds": "1793569683398",
+          "endRequestTimestampMilliseconds": "1793569683403"
+        }
+      ]
+    }
+  },
+  {
+    "url": "https://datastudio.google.com/embed/batchedDataV2?appVersion=20261025_0000",
+    "postData": {
+      "dataRequest": [
+        {
+          "requestContext": {
+            "reportContext": {
+              "reportId": "bd58ff7a-ffc3-4cc7-b573-3caee0d08507",
+              "pageId": "56611633",
+              "mode": 1,
+              "componentId": "cd-3xywn475gd",
+              "displayType": "simple-table"
+            },
+            "requestMode": 0
+          },
+          "datasetSpec": {
+            "dataset": [
+              {
+                "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546",
+                "revisionNumber": 0,
+                "parameterOverrides": []
+              }
+            ],
+            "queryFields": [
+              {
+                "name": "qt_hk5wz575gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_n371419177_"
+                }
+              },
+              {
+                "name": "qt_95xwn475gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_2032628390_"
+                }
+              },
+              {
+                "name": "qt_089c4575gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_n924117441_"
+                }
+              },
+              {
+                "name": "qt_o9195675gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_1962790570_"
+                }
+              },
+              {
+                "name": "qt_oxcbk675gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_n1472922184_"
+                }
+              },
+              {
+                "name": "qt_s2uxp675gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_n359586409_"
+                }
+              },
+              {
+                "name": "qt_odohh775gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_1651292053_"
+                }
+              },
+              {
+                "name": "qt_zklza875gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_n273825204_"
+                }
+              },
+              {
+                "name": "qt_wboer675gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_n1731831913_"
+                }
+              }
+            ],
+            "sortData": [
+              {
+                "sortColumn": {
+                  "name": "qt_hk5wz575gd",
+                  "datasetNs": "d0",
+                  "tableNs": "t0",
+                  "dataTransformation": {
+                    "sourceFieldName": "_n371419177_"
+                  }
+                },
+                "sortDir": 1
+              }
+            ],
+            "includeRowsCount": true,
+            "relatedDimensionMask": {
+              "addDisplay": false,
+              "addUniqueId": false,
+              "addLatLong": false
+            },
+            "paginateInfo": {
+              "startRow": 1,
+              "rowsCount": 100
+            },
+            "dsFilterOverrides": [],
+            "filters": [
+              {
+                "filterDefinition": {
+                  "filterExpression": {
+                    "include": false,
+                    "conceptType": 0,
+                    "concept": {
+                      "ns": "t0",
+                      "name": "qt_3xocfe85gd"
+                    },
+                    "filterConditionType": "NU",
+                    "stringValues": [
+                      ""
+                    ],
+                    "numberValues": [],
+                    "queryTimeTransformation": {
+                      "dataTransformation": {
+                        "sourceFieldName": "_2032628390_"
+                      }
+                    }
+                  }
+                },
+                "dataSubsetNs": {
+                  "datasetNs": "d0",
+                  "tableNs": "t0",
+                  "contextNs": "c0"
+                },
+                "version": 3
+              },
+              {
+                "filterDefinition": {
+                  "filterExpression": {
+                    "include": true,
+                    "conceptType": 0,
+                    "concept": {
+                      "ns": "t0",
+                      "name": "qt_z3jjbg85gd"
+                    },
+                    "filterConditionType": "EQ",
+                    "stringValues": [
+                      "✔"
+                    ],
+                    "numberValues": [],
+                    "queryTimeTransformation": {
+                      "dataTransformation": {
+                        "sourceFieldName": "_1264722088_"
+                      }
+                    }
+                  }
+                },
+                "dataSubsetNs": {
+                  "datasetNs": "d0",
+                  "tableNs": "t0",
+                  "contextNs": "c0"
+                },
+                "version": 3
+              }
+            ],
+            "features": [],
+            "dateRanges": [],
+            "contextNsCount": 1,
+            "dateRangeDimensions": [
+              {
+                "name": "qt_85xwn475gd",
+                "datasetNs": "d0",
+                "tableNs": "t0",
+                "dataTransformation": {
+                  "sourceFieldName": "_1596127825_"
+                }
+              }
+            ],
+            "calculatedField": [],
+            "needGeocoding": false,
+            "geoFieldMask": [],
+            "multipleGeocodeFields": [],
+            "timezone": "Asia/Taipei"
+          },
+          "role": "main",
+          "retryHints": {
+            "useClientControlledRetry": true,
+            "isLastRetry": false,
+            "retryCount": 0,
+            "originalRequestId": "cd-3xywn475gd_0_0"
+          }
+        }
+      ]
+    },
+    "data": {
+      "dataResponse": [
+        {
+          "dataSubset": [
+            {
+              "dataset": {
+                "tableDataset": {
+                  "columnInfo": [
+                    {
+                      "ns": "t0",
+                      "name": "qt_hk5wz575gd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_95xwn475gd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_089c4575gd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_o9195675gd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_oxcbk675gd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_s2uxp675gd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_odohh775gd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_zklza875gd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_wboer675gd"
+                    }
+                  ],
+                  "totalCount": 5,
+                  "column": [
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "英國 \nUnited Kingdom",
+                          "英國 \nUnited Kingdom",
+                          "日本\nJapan",
+                          "香港\nHongKong",
+                          "香港\nHongKong"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "諾丁漢特倫特大學\nNottingham Trent University",
+                          "諾丁漢特倫特大學\nNottingham Trent University",
+                          "帝京大學\nTeikyo University",
+                          "香港理工大學\nHong Kong Polytechnic University",
+                          "香港理工大學\nHong Kong Polytechnic University"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "3+1+1+1",
+                          "3+1",
+                          "2+2",
+                          "1+1",
+                          "4+1"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "IBA, IF, EM, BA, IB",
+                          "IBA, IF, EM, BA, IB, IPAI",
+                          "1.經濟學院（地域經濟學系除外）\n2.法學院\n3.文學院（心理學學系除外）\n4.教育學院（初等教育學系除外） ",
+                          "BA",
+                          "IC, COM (T&H related department)"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [
+                        0,
+                        1
+                      ],
+                      "stringColumn": {
+                        "values": [
+                          "短期留學:人數為每學期10名",
+                          "2 students per year",
+                          "2 students per year"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "雅思 6.5, • 大三讀完的同學\nIELTS 6.5, completed 3 years of study",
+                          "雅思 6.5, • 大三讀完的同學\nIELTS 6.5, completed 3 years of study",
+                          "1.以3年級為主\n2.語文學院2年級以上，已修畢或預估可修畢62學分的在學生\n3.通過日語能力檢定N2以上或同等日語檢定",
+                          "1.學術表現優秀之學生\nStudents of good academic performance\n2. 符合所選學術學程要求之語言能力\nShall meet the required language proficiency of their chosen academic programme\n3. 應於進行交換前，於原就讀學校完成至少一年之連續學習\nMust have successfully completed at least one year of continuous study at their home institution before the proposed exchange",
+                          "1.學術表現優秀之學生\nStudents of good academic performance\n2. 符合所選學術學程要求之語言能力\nShall meet the required language proficiency of their chosen academic programme\n3. 應於進行交換前，於原就讀學校完成至少一年之連續學習\nMust have successfully completed at least one year of continuous study at their home institution before the proposed exchange"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          " Tuition: US$14,400/year",
+                          " Tuition: US$14,400/year",
+                          "短期留學為自費, 1學期, 只需繳學費及學生傷害保險費\n25,500元(機票自費)\n雙學位: 伙食、住宿、書籍、課外活動、交通等費用自費",
+                          "HKD120,000 /year",
+                          "HKD120,000 /year"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "www.ntu.ac.uk",
+                          "www.ntu.ac.uk",
+                          "www.teikyo-u.ac.jp/english/",
+                          "www.polyu.edu.hk/tc/",
+                          "www.polyu.edu.hk/tc/"
+                        ]
+                      }
+                    }
+                  ],
+                  "size": 5,
+                  "metadata": {
+                    "columnMetadata": [
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "requestId": "5f1ad541-44760561-20261101",
+              "isCompare": false,
+              "jobRequestUrl": [
+                "http://go/lego-backend-inspect-requests?var.request_id=5f1ad541-44760561-20261101"
+              ],
+              "isTotals": false,
+              "viewTags": {
+                "compareIndex": 0,
+                "isTotals": false,
+                "role": "main",
+                "bypassCanvasFilters": false
+              }
+            }
+          ],
+          "dataTimestamp": "1793569366086",
+          "responseMetaSet": {
+            "responseMetas": [
+              {
+                "requestNamespace": {
+                  "context": 0
+                },
+                "origin": 2,
+                "mappingId": {
+                  "datasourceId": "5933eb80-7e7a-47bb-84d4-e8ed273b0546"
+                }
+              }
+            ]
+          },
+          "startRequestTimestampMilliseconds": "1793569683677",
+          "endRequestTimestampMilliseconds": "1793569683684"
+        }
+      ]
+    }
+  }
+]

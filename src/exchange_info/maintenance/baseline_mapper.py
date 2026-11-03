@@ -88,6 +88,14 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "ncut": ["oia.ncut.edu.tw", "www.ncut.edu.tw", "ncut.edu.tw"],
     "npust": ["oia2.npust.edu.tw", "oia.npust.edu.tw", "aa.npust.edu.tw", "www.npust.edu.tw", "npust.edu.tw", "docs.google.com"],
     "cjcu": ["dweb.cjcu.edu.tw", "www.cjcu.edu.tw", "cjcu.edu.tw", "forms.gle"],
+    "nqu": ["oica.nqu.edu.tw", "teach.nqu.edu.tw", "www.nqu.edu.tw", "nqu.edu.tw"],
+    "isu": ["oica.isu.edu.tw", "www.isu.edu.tw", "www2.isu.edu.tw", "isu.edu.tw", "docs.google.com", "lookerstudio.google.com"],
+    "fgu": ["oica.fgu.edu.tw", "website.fgu.edu.tw", "www.fgu.edu.tw", "fgu.edu.tw"],
+    "nkuht": ["iao.nkuht.edu.tw", "www.nkuht.edu.tw", "nkuht.edu.tw"],
+    "nuu": ["oia.nuu.edu.tw", "rnd.nuu.edu.tw", "www.nuu.edu.tw", "nuu.edu.tw", "docs.google.com"],
+    "tnnua": ["oia.tnnua.edu.tw", "www.tnnua.edu.tw", "tnnua.edu.tw"],
+    "tpcu": ["ieec.tpcu.edu.tw", "iac.tpcu.edu.tw", "www.tpcu.edu.tw", "tpcu.edu.tw"],
+    "au": ["cia.au.edu.tw", "www.au.edu.tw", "au.edu.tw", "docs.google.com"],
 }
 
 
@@ -1668,6 +1676,190 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["cjcu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="cjcu", partner_rows=cjcu_rows, default_cycle_label="116"
+        )
+
+    # 51. NQU partners.jsonl (64 partner schools)
+    nqu_partners_path = official_data_root / "nqu" / "partners.jsonl"
+    if nqu_partners_path.exists():
+        nqu_rows = []
+        for line in nqu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            nqu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oica.nqu.edu.tw/p/404-1003-8171.php?Lang=zh-tw",
+            })
+        school_reports["nqu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="nqu", partner_rows=nqu_rows, default_cycle_label="115"
+        )
+
+    # 51. ISU partners.jsonl (181 partner schools)
+    isu_partners_path = official_data_root / "isu" / "partners.jsonl"
+    if isu_partners_path.exists():
+        isu_rows = []
+        for line in isu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            isu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oica.isu.edu.tw/page/%E5%87%BA%E5%9C%8B%E4%BA%A4%E6%8F%9B-NlHq3RuLdDcK",
+            })
+        school_reports["isu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="isu", partner_rows=isu_rows, default_cycle_label="115"
+        )
+
+    # 51. FGU partners.jsonl (52 partner schools)
+    fgu_partners_file = official_data_root / "fgu" / "partners.jsonl"
+    if fgu_partners_file.exists():
+        fgu_rows = []
+        for line in fgu_partners_file.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            fgu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oica.fgu.edu.tw/zh_tw/exchange/20",
+            })
+        school_reports["fgu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="fgu", partner_rows=fgu_rows, default_cycle_label="115"
+        )
+
+    # 38. NKUHT partners.jsonl (40 partner schools)
+    nkuht_partners_path = official_data_root / "nkuht" / "partners.jsonl"
+    if nkuht_partners_path.exists():
+        nkuht_rows = []
+        for line in nkuht_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            nkuht_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://iao.nkuht.edu.tw/p/412-1005-857.php?Lang=zh-tw",
+            })
+        school_reports["nkuht"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="nkuht", partner_rows=nkuht_rows, default_cycle_label="116"
+        )
+
+    # 51. NUU partners.jsonl (128 partner schools)
+    nuu_partners_path = official_data_root / "nuu" / "partners.jsonl"
+    if nuu_partners_path.exists():
+        nuu_rows = []
+        for line in nuu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            nuu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.nuu.edu.tw/p/412-1068-1242.php",
+            })
+        school_reports["nuu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="nuu", partner_rows=nuu_rows, default_cycle_label="115"
+        )
+
+    # 51. TNNUA partners.jsonl (63 partner schools)
+    tnnua_partners_path = official_data_root / "tnnua" / "partners.jsonl"
+    if tnnua_partners_path.exists():
+        tnnua_rows = []
+        for line in tnnua_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            tnnua_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.tnnua.edu.tw/p/412-1007-1052.php?Lang=zh-tw",
+            })
+        school_reports["tnnua"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="tnnua", partner_rows=tnnua_rows, default_cycle_label="115"
+        )
+
+    # 38. TPCU partners.jsonl (18 partner schools)
+    tpcu_partners_path = official_data_root / "tpcu" / "partners.jsonl"
+    if tpcu_partners_path.exists():
+        tpcu_rows = []
+        for line in tpcu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            tpcu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://ieec.tpcu.edu.tw/files/15-1007-65684,c3974-1.php?Lang=zh-tw",
+            })
+        school_reports["tpcu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="tpcu", partner_rows=tpcu_rows, default_cycle_label="115"
+        )
+
+    # 51. AU partners.jsonl (80 partner schools)
+    au_partners_path = official_data_root / "au" / "partners.jsonl"
+    if au_partners_path.exists():
+        au_rows = []
+        for line in au_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            au_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://cia.au.edu.tw/p/403-1022-109353.php?Lang=zh-tw",
+            })
+        school_reports["au"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="au", partner_rows=au_rows, default_cycle_label="115"
         )
 
     if store.current_release_id is None:

@@ -53,6 +53,14 @@ from .ntue_eligibility import is_ntue, ntue_academic_check, ntue_degree_check, n
 from .ncut_eligibility import is_ncut, ncut_academic_check, ncut_degree_check, ncut_language_check
 from .npust_eligibility import is_npust, npust_academic_check, npust_degree_check, npust_language_check
 from .cjcu_eligibility import cjcu_academic_check, cjcu_degree_check, cjcu_language_check, is_cjcu
+from .nqu_eligibility import is_nqu, nqu_academic_check, nqu_degree_check, nqu_language_check
+from .isu_eligibility import is_isu, isu_academic_check, isu_degree_check, isu_language_check
+from .fgu_eligibility import is_fgu, fgu_academic_check, fgu_degree_check, fgu_language_check
+from .nkuht_eligibility import is_nkuht, nkuht_academic_check, nkuht_degree_check, nkuht_language_check
+from .nuu_eligibility import is_nuu, nuu_academic_check, nuu_degree_check, nuu_language_check
+from .tnnua_eligibility import is_tnnua, tnnua_academic_check, tnnua_degree_check, tnnua_language_check
+from .tpcu_eligibility import is_tpcu, tpcu_academic_check, tpcu_degree_check, tpcu_language_check
+from .au_eligibility import is_au, au_academic_check, au_degree_check, au_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -781,6 +789,46 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_nqu(request.home_school):
+        deg_status, deg_detail = nqu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_isu(request.home_school):
+        deg_status, deg_detail = isu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_fgu(request.home_school):
+        deg_status, deg_detail = fgu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_nkuht(request.home_school):
+        deg_status, deg_detail = nkuht_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_nuu(request.home_school):
+        deg_status, deg_detail = nuu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_tnnua(request.home_school):
+        deg_status, deg_detail = tnnua_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_tpcu(request.home_school):
+        deg_status, deg_detail = tpcu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_au(request.home_school):
+        deg_status, deg_detail = au_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -1108,6 +1156,54 @@ def _eligibility_checks(
             "academic_score", status, "長榮大學前一學年度學業平均 70 分以上、書審（操行 10%＋學業 10%）與學海飛颺班排前 40% 門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_nqu(request.home_school):
+        status, detail = nqu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "金大國際交換（操行80分以上及姊妹校GPA 2.0–3.0門檻）與赴大陸交換（平均70分以上且班系排名前60%）雙軌標準", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
+    elif is_isu(request.home_school):
+        status, detail = isu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "義守大學交換研修學業成績門檻（歷年及格 60 分／GPA 2.0、學海飛颺／惜珠系前 40% 或班前 30%、學海助學金／學文助學金前 50%）", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
+    elif is_fgu(request.home_school):
+        status, detail = fgu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "佛光大學海外交換歷年學業總平均 75 分或班排前 25%（研究所以上平均 85 分或所排前 30%）及操行 80 分門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
+    elif is_nkuht(request.home_school):
+        status, detail = nkuht_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "高餐大海外留學交換與學海飛颺／遠航圓夢助學金成績門檻（歷年平均75分以上或班排前20%–30%、操行無小過以上處分）", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
+    elif is_nuu(request.home_school):
+        status, detail = nuu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "聯大選送學生出國研修辦法與甄選簡章（操行80分以上、甄選總分60分及格、學海飛颺／校內獎學金GPA 3.0或班排前40%）", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
+    elif is_tnnua(request.home_school):
+        status, detail = tnnua_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "南藝大選送學生出國研修與交流甄選辦法（兩階段初複審總成績80分以上、學海飛颺歷年平均80分／GPA 3.0以上）", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
+    elif is_tpcu(request.home_school):
+        status, detail = tpcu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "城市科大前一學年學業平均 60 分、操行 75 分與雙聯／學海飛颺（前 50%）門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
+    elif is_au(request.home_school):
+        status, detail = au_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "真理大學交換甄選學業門檻（前一學期全班前 50%、操行 80 分、學海飛颺／惜珠歷年平均 75 分或班排前 30%、雙聯 CGPA 2.5）", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1289,6 +1385,30 @@ def _eligibility_checks(
     if is_cjcu(request.home_school):
         home_status, home_detail = cjcu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "長榮大學四大語組（英韓組／英語組／日語組／中文組）語文證明（書審 10%）與姊妹校門檻", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_nqu(request.home_school):
+        home_status, home_detail = nqu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "金大國際交換語言檢定標準（須為2年內有效成績，占書審20%：TOEIC 550+／TOEFL iBT 61+／IELTS 5.0+／JLPT N2–N3／TOPIK 2–3級）與大陸交換中文授課規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_isu(request.home_school):
+        home_status, home_detail = isu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "義守大學外語能力基準（校訂英語畢業門檻 CEFR B1／TOEIC 550／TOEFL iBT 42／IELTS 4.0、日語 JLPT N2–N3、韓語 TOPIK 2–4級）與大陸澳門免語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_fgu(request.home_school):
+        home_status, home_detail = fgu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "佛光大學海外交換外語檢定門檻（英語組IELTS 5.5–6.5／TOEFL iBT 70–85／TOEIC 750、日語組JLPT N2–N1、韓語組TOPIK 2–3級）與大陸姊妹校免語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_nkuht(request.home_school):
+        home_status, home_detail = nkuht_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "高餐大海外留學交換外語能力檢定標準（TOEIC 500–850／TOEFL iBT 61–84／IELTS 5.0–6.5／GEPT 中級／JLPT N2–N3／TOPIK 2–3級）與 CEFR B2 對照規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_nuu(request.home_school):
+        home_status, home_detail = nuu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "聯大選送出國交換外語參考基準（TOEFL iBT 57／ITP 457／IELTS 4.0／TOEIC 550／JLPT N3或愛教大與甲南N2／TOPIK 3／DELF B1）與大陸免語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_tnnua(request.home_school):
+        home_status, home_detail = tnnua_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "南藝大外國語文能力對照表（英語TOEFL iBT 79／IELTS 6.0、日語JLPT N2、韓語TOPIK 3級、法語DELF B1、德語B1／TDN3、西語DELE B1）與大陸免附語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_tpcu(request.home_school):
+        home_status, home_detail = tpcu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "城市科大外語能力檢定基準（日本 JLPT N2–N4、韓國 TOPIK 2–6 級、英美紐 TOEFL iBT 61／IELTS 5.5／TOEFL ITP 500／TOEIC 550）", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_au(request.home_school):
+        home_status, home_detail = au_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "真理大學外語能力基準（日本交換 JLPT N2、日本多摩大學 TOEIC 600、澳洲麥覺理 IELTS 6.5、英國雙聯 IELTS 6.0–6.5、學海飛颺／惜珠 TOEIC 750／iBT 57／IELTS 5.0／JLPT N2／TOPIK 2級）與大陸澳門免語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

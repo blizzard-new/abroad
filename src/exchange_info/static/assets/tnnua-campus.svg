@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="tnnuaSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="55%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#ccfbf1"/>
+    </linearGradient>
+    <linearGradient id="tnnuaWater" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0d9488"/>
+      <stop offset="100%" stop-color="#115e59"/>
+    </linearGradient>
+    <linearGradient id="tnnuaBrick" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+  </defs>
+  <!-- Sky over Wushantou Reservoir & Guantian Hills -->
+  <rect width="800" height="450" fill="url(#tnnuaSky)"/>
+  <!-- Warm Tainan sun -->
+  <circle cx="650" cy="96" r="44" fill="#fde68a" opacity="0.88"/>
+  <!-- Wushantou hills silhouette -->
+  <path d="M0 285 Q190 210 390 265 T800 235 L800 335 L0 335 Z" fill="#134e4a" opacity="0.45"/>
+  <!-- Green banks along the TNNUA water canal -->
+  <rect x="0" y="305" width="800" height="55" fill="#15803d"/>
+  <!-- TNNUA Jiangnan water-town canal -->
+  <rect x="0" y="345" width="800" height="105" fill="url(#tnnuaWater)"/>
+  <!-- Left & right studio wings (College of Music & College of Visual Arts) -->
+  <rect x="95" y="185" width="175" height="125" rx="4" fill="#f8fafc"/>
+  <polygon points="85,185 182,135 280,185" fill="#334155"/>
+  <rect x="530" y="185" width="175" height="125" rx="4" fill="url(#tnnuaBrick)"/>
+  <polygon points="520,185 618,135 715,185" fill="#451a03"/>
+  <!-- Central Administration & Library Pavilion -->
+  <rect x="285" y="155" width="230" height="155" rx="4" fill="#fef3c7"/>
+  <polygon points="265,155 400,95 535,155" fill="#1e293b"/>
+  <!-- Iconic TNNUA Ancient Stone Arch Bridge (同安橋 / 敘斯橋) over the canal -->
+  <path d="M230 365 Q400 275 570 365 L590 385 Q400 315 210 385 Z" fill="#d6d3d1" stroke="#78716c" stroke-width="3"/>
+  <path d="M330 368 A70 48 0 0 1 470 368 Z" fill="#0f766e"/>
+  <!-- Water reflection -->
+  <ellipse cx="400" cy="395" rx="68" ry="14" fill="#99f6e4" opacity="0.35"/>
+  <!-- Studio windows -->
+  <g fill="#0f172a" opacity="0.82">
+    <rect x="122" y="210" width="28" height="36" rx="2"/>
+    <rect x="168" y="210" width="28" height="36" rx="2"/>
+    <rect x="214" y="210" width="28" height="36" rx="2"/>
+    <rect x="325" y="190" width="32" height="44" rx="2"/>
+    <rect x="384" y="190" width="32" height="44" rx="2"/>
+    <rect x="443" y="190" width="32" height="44" rx="2"/>
+    <rect x="558" y="210" width="28" height="36" rx="2" fill="#fef3c7"/>
+    <rect x="604" y="210" width="28" height="36" rx="2" fill="#fef3c7"/>
+    <rect x="650" y="210" width="28" height="36" rx="2" fill="#fef3c7"/>
+  </g>
+  <!-- Title Banner -->
+  <rect x="24" y="24" width="490" height="62" rx="10" fill="#0f172a" opacity="0.8"/>
+  <text x="42" y="52" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="bold">國立臺南藝術大學 TNNUA</text>
+  <text x="42" y="74" fill="#99f6e4" font-family="sans-serif" font-size="13">Tainan National University of the Arts · 官田烏山頭水鄉校園與古石橋</text>
+</svg>

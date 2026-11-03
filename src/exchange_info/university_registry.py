@@ -1833,6 +1833,42 @@ NPUST = UniversityProfile(
     ),
 )
 
+NKUHT = UniversityProfile(
+    id="nkuht",
+    school_name="國立高雄餐旅大學",
+    short_name="高餐大",
+    english_name="National Kaohsiung University of Hospitality and Tourism",
+    aliases=(
+        "nkuht",
+        "國立高雄餐旅大學",
+        "高雄餐旅大學",
+        "高餐大",
+        "高餐",
+        "NKUHT",
+        "National Kaohsiung University of Hospitality and Tourism",
+    ),
+    hero_image="/static/assets/nkuht-campus.svg",
+    official_url="https://iao.nkuht.edu.tw/p/412-1005-857.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立高雄餐旅大學國際事務處（OIA）《海外留學交換平台（2027-28 交換學生與雙聯學位簡章）》、《辦理學生海外實習及留學補充規定（113.06.05修正）》、《115年度教育部學海飛颺及學海惜珠計畫甄選簡章》及《遠航圓夢助學金實施辦法》官方資料：（1）校內甄選時程與資格：免學費交換生為三年級出國交換一學年、自費交換生及 1+1 雙聯碩士為三年級或研究所出國一學年，115-1 起跑（2026/09/17 留學說明會、2026/10–12 校內報名收件、2027/02–03 國際處公告錄取名單與姊妹校提名），歷年操行成績須無小過以上紀錄、學業成績總平均達 75 分以上（或班排名前 20%–30%），並具備多益、托福、雅思、全民英檢、日檢 JLPT N2–N3 或韓檢 TOPIK 等語檢證明。（2）合作姊妹校與雙聯學位：完整收錄 40 所海外餐旅觀光名校（橫跨 15 國，含 31 所 2027-28 開放申請之免學費交換、自費交換與瑞士 SHMS／César Ritz、英國 UCB、美國天普大學及南卡羅來納大學 1+1 雙聯碩士合作校，以及 9 所重點海外合作大學）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／學海惜珠》（歐洲最高補助 NT$120,000、美加最高 NT$150,000）、《高餐大遠航圓夢助學金》（最高 NT$200,000）及 17 所合作大學共 19 篇歷屆學長姐赴外交換與雙聯實習心得報告。",
+    support_level="full",
+    partner_count_hint=40,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立高雄餐旅大學",
+        "高雄餐旅大學",
+        "NATIONALKAOHSIUNGUNIVERSITYOFHOSPITALITYANDTOURISM",
+        "NKUHT",
+    ),
+    # https://www.nkuht.edu.tw/p/412-1000-322.php?Lang=zh-tw — checked 2026-11-02.
+    colleges=(
+        "餐旅學院",
+        "觀光學院",
+        "廚藝學院",
+        "國際學院",
+        "全人教育學院",
+    ),
+)
+
 
 CJCU = UniversityProfile(
     id="cjcu",
@@ -1875,7 +1911,286 @@ CJCU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU)
+NQU = UniversityProfile(
+    id="nqu",
+    school_name="國立金門大學",
+    short_name="金大",
+    english_name="National Quemoy University",
+    aliases=(
+        "nqu",
+        "國立金門大學",
+        "金門大學",
+        "金大",
+        "國立金門技術學院",
+        "金門技術學院",
+        "NQU",
+        "National Quemoy University",
+    ),
+    hero_image="/static/assets/nqu-campus.svg",
+    official_url="https://oica.nqu.edu.tw/",
+    coverage_note="完整支援：已整合國立金門大學國際暨兩岸事務處（OICA）與教務處註冊組《國際交換學校一覽表（39校）》、《大陸地區交換學校一覽表與姊妹校名冊（25校）》、《115學年度第一／二階段國際交換學生甄選簡章》、《2027春季班（115-2）赴國內及大陸地區交換學生甄選簡章》、《國立金門大學學生國際交流甄選要點》、《國立金門大學學生出國交換實施要點》、《國立金門大學科目學分抵免辦法》、《115年度教育部學海飛颺及學海惜珠計畫甄選簡章》及 31 校共 317 篇歷屆赴外與赴大陸交換學生心得報告。",
+    support_level="full",
+    partner_count_hint=64,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "國立金門大學",
+        "金門大學",
+        "金大",
+        "NATIONALQUEMOYUNIVERSITY",
+        "NATIONAL QUEMOY UNIVERSITY",
+        "NQU",
+    ),
+    # https://www.nqu.edu.tw/ — checked 2026-11-02.
+    colleges=(
+        "人文社會學院",
+        "管理學院",
+        "理工學院",
+        "健康護理學院",
+    ),
+)
+
+
+ISU = UniversityProfile(
+    id="isu",
+    school_name="義守大學",
+    short_name="義大",
+    english_name="I-Shou University",
+    aliases=(
+        "isu",
+        "義守大學",
+        "義大",
+        "義守",
+        "ISU",
+        "I-Shou University",
+        "IShou University",
+    ),
+    hero_image="/static/assets/isu-campus.svg",
+    official_url="https://oica.isu.edu.tw/page/%E5%87%BA%E5%9C%8B%E4%BA%A4%E6%8F%9B-NlHq3RuLdDcK",
+    coverage_note="完整支援：已整合義守大學國際及兩岸事務處（OICA）《出國交換暨雙聯學位專區》、《交換姐妹校名冊》、《雙聯學位學校列表（11 校）》、《全球與兩岸合作姐妹校名錄》、《海外交換費用參考表》、《義守大學學生赴境外交換研修甄選辦法》、《義守大學辦理教育部學海飛颺及學海惜珠計畫甄選辦法》、《義守大學學海助學金設置及甄選作業辦法》、《義守大學赴大陸校際交換獎學金辦法》與《義守大學學文助學金設置及甄選作業辦法》官方資料：（1）校內甄選時程與資格：每年 2 月開放第一梯次（秋季班出國交換一學期或一學年）及每年 8 月開放第二梯次（春季班出國交換一學期）校內甄選，限大二以上或碩一以上在學學生，出國期間維持本校學籍並繳交義守大學全額學雜費，每學期修習至少 9 學分（大陸研修團至少 16 學分），外語能力應符合交流學校規定或通過本校英語畢業資格檢定標準（CEFR B1 / TOEIC 550 / TOEFL iBT 42 / IELTS 4.0）。（2）合作姐妹校與雙聯學位：完整收錄 181 所全球及兩岸港澳有效締約姐妹校（橫跨 33 國與地區，含英、美、港、日、韓、陸 11 所跨國雙聯學位合作校）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／惜珠》（系前 40% 或班前 30%）、《義守大學學海助學金》、《赴大陸校際交換獎學金》、《義守大學學文助學金》（交流團、暑期學習團公費／部分公費與一學期大陸研修團）、《歐盟 Erasmus+ 獎學金》及 13 所合作大學共 18 篇歷屆學長姐交換心得報告与 12 份官方 Fact Sheet。",
+    support_level="full",
+    partner_count_hint=181,
+    academic_score_minimum=60,
+    student_card_signals=(
+        "義守大學",
+        "義大",
+        "ISHOUUNIVERSITY",
+        "I-SHOUUNIVERSITY",
+        "ISU",
+    ),
+    # https://www.isu.edu.tw/ — checked 2026-11-02.
+    colleges=(
+        "智慧科技學院",
+        "工學院",
+        "管理學院",
+        "傳播與設計學院",
+        "國際學院",
+        "觀光餐旅學院",
+        "醫學院",
+        "醫學科技學院",
+        "原住民族學院",
+        "通識教育中心",
+    ),
+)
+
+
+FGU = UniversityProfile(
+    id="fgu",
+    school_name="佛光大學",
+    short_name="佛大",
+    english_name="Fo Guang University",
+    aliases=(
+        "fgu",
+        "佛光大學",
+        "佛大",
+        "佛光",
+        "FGU",
+        "Fo Guang University",
+    ),
+    hero_image="/static/assets/fgu-campus.svg",
+    official_url="https://oica.fgu.edu.tw/zh_tw/exchange/20",
+    coverage_note="完整支援：已整合佛光大學國際暨兩岸事務處（OICA，雲起樓 112 室）《115學年度第一學期交換生／雙學位甄選說明會簡報》、《認識 2+2 Program（佛光山系統大學美國西來大學 University of the West 台美雙學位）》、《英國國立密德薩斯大學 Middlesex University 3+1／1+1 雙聯學位說明會簡報》、《佛光大學赴中國大陸以外國家及地區交換學生甄選辦法（A06-004）》、《佛光大學赴大陸交換學生甄選辦法（A06-005）》、《佛光大學學生參與西來大學 2+2 計畫實施辦法》、《佛光大學林陸素琦女士海外留學獎勵基金設置與管理辦法》、《佛光大學學海無涯國際交流獎助學金設置與管理辦法》、《佛光大學辦理國內外學校學生交流學習執行要點》與《歷屆海外交換及台美雙學位甄選錄取榜單與分享會簡報》官方資料：（1）兩梯次校內甄選時程、75分／全班前50%學業門檻與圖書館 EASY TEST iBT 測驗規定：每學期初（9–10月及2–3月）辦理次學期赴海外及大陸交換生暨雙聯學位校內甄選（如 115-1 甄選說明會於 2026/09/23 舉辦、申請文件繳交截止日為 2026/10/08），限具本校正式學籍之在學學生（大學部大二以上或碩博班碩一以上，大一下可報名大二交換，大一／大二可報名西來大學 2+2 雙學位），前一學期學業平均成績須達 75 分（約 GPA 3.0）以上且操行成績達 80 分以上（申請中國人民大學、南京大學、東南大學、四川大學、北京交通大學等大陸 985/211 重點名校須達全班排名前 20% 以內）；報名海外交換或雙學位者須於校內甄選前先完成圖書館線上英文模擬測驗「EASY TEST iBT 托福題型」並繳交成績單，外語能力依姊妹校規定須達英語 TOEFL iBT 61–80 / IELTS 5.5–6.5 / TOEIC 550–750、日檢 JLPT N3–N2 或韓檢 TOPIK 2–3 級（大陸姊妹校免附外語檢定）；交換期間於佛光大學完成註冊繳費並免繳姊妹校學費（日本花園大學與韓國金剛大學另提供免住宿費、美國西來大學交換生每學期最高獎助 US$3,500、2+2 雙學位生每學期最高獎助 US$7,500）。（2）全球 13 國／地區 52 所合作姊妹校與佛光山教團系統大學：完整收錄美國 3 校（西來大學、休士頓大學清湖分校、春山學院）、英國 1 校（國立密德薩斯大學）、德國 1 校（漢堡大學）、澳洲 1 校（南天大學）、紐西蘭 1 校（奧塔哥大學）、日本 2 校（龍谷大學、花園大學）、韓國 12 校（京畿大學、東國大學首爾校區、東國大學 WISE 校區、慶尚國立大學、金剛大學、東明大學、昌原國立大學、威德大學、新羅大學、中央僧伽大學、建國大學、京東大學）、泰國 2 校（正大管理學院、ม่โจ้大學 Maejo University）、馬來西亞 1 校（拉曼大學）、菲律賓 2 校（拉普拉普宿霧國際大學、光明大學）、印度 1 校（德里大學）、緬甸 1 校（龐道烏國際大學）、香港 1 校（香港教育大學）及中國大陸 23 校（中國人民大學、南京大學、北京交通大學、上海大學、四川大學、深圳大學、華中師範大學、鄭州大學、西北師範大學、陽光學院、東南大學、煙台大學、揚州大學、合肥工業大學、集美大學、廣東海洋大學、福建技術師範學院、海南大學、南京理工大學、濟南大學、陝西師範大學、雲南大學、青海民族大學）共 52 所合作大學（含 50 所當期開放申請之交換與雙聯合作校）。（3）四大獎助學金體系與學長姐經驗傳承：涵蓋教育部《學海飛颺／學海惜珠》、《林陸素琦女士海外留學獎勵基金》、《學海無涯國際交流獎助學金》與《西來大學 2+2 計畫獎學金》，以及 26 所合作大學共 30 篇歷屆交換生與雙學位生錄取榜單及分享會心得紀錄。",
+    support_level="full",
+    partner_count_hint=52,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "佛光大學",
+        "佛大",
+        "FOGUANGUNIVERSITY",
+        "FO GUANG UNIVERSITY",
+        "FGU",
+    ),
+    # https://website.fgu.edu.tw/zh_tw/academics — checked 2026-11-02.
+    colleges=(
+        "人文學院",
+        "社會科學院",
+        "管理學院",
+        "創意與科技學院",
+        "樂活產業學院",
+        "佛教學院",
+    ),
+)
+
+
+NUU = UniversityProfile(
+    id="nuu",
+    school_name="國立聯合大學",
+    short_name="聯大",
+    english_name="National United University",
+    aliases=(
+        "nuu",
+        "國立聯合大學",
+        "聯合大學",
+        "聯大",
+        "NUU",
+        "National United University",
+    ),
+    hero_image="/static/assets/nuu-campus.svg",
+    official_url="https://oia.nuu.edu.tw/p/412-1068-1242.php",
+    coverage_note="完整支援：已整合國立聯合大學研究發展處國際及兩岸事務組（OIA）《國際交換學生作業要點（109.03.03修正）》、《國際學術交流實施辦法（110.05.25修正）》、《雙聯學制實施辦法（106.02.18）》、《學生赴國外研修留學國語言能力參考標準》、《補助學生參與境外學術交流及研習服務經費管理要點》、《「學海系列計畫」甄選作業要點（114.01.16修正）》、《學生於締約學校修讀課程學分與成績轉換參考表》、《交換學校一覽表（128校）》及《全球締約姊妹校名錄》官方資料：（1）兩梯次校內甄選、「出國交換當時」年級系所認定、分組配分與NT$ 3,000保證金規定：每年1月（第一梯次，結合12/15–2/14教育部學海飛颺／惜珠期程，得申請一學期或一學年）及8月（第二梯次春季班，僅得申請一學期）辦理校內甄選，具本校大學部及研究所學籍之在學學生（不含在職生）皆可申請，惟各姊妹校之年級與系所限制以「出國交換當時」之學籍身分與年級為準；甄選採計總分未達60分不予推薦（赴大陸以外地區大學部採計在校成績50%＋外語20%＋自傳10%＋讀書計畫15%＋其他5%、研究所採計在校成績30%＋外語20%＋自傳20%＋讀書計畫25%＋其他5%；赴大陸地區免計外語，大學部採計在校成績60%＋自傳15%＋讀書計畫20%＋其他5%、研究所採計在校成績40%＋自傳25%＋讀書計畫30%＋其他5%）；錄取後20日內須繳交保證金NT$ 3,000，交換期間每學期大學部至少修讀3門課程及格、研究所至少修讀1門課程及格，返國後14日內繳交返國程序單與中英文心得並完成20小時國際組服務後全額退還。（2）全球21國／地區128所合作姊妹校、日本國立高專（NIT）聯盟與6校美法加雙聯學位：完整收錄128所合作姊妹校（含29所常態開放申請之交換、雙聯與日本高專暑期研習合作校，涵蓋日本宇部、高知、新居濱、阿南、木更津、明石、小山、釧路等國立高專及甲南大學、愛知教育大學，韓國仁荷大學、昌原國立大學、高麗網路大學，美國霜堡州立大學 FSU 2+2、佛羅里達理工學院 FIT 2+2、樹城州立大學 Boise State 2+2、南猶他大學 SUU、明尼蘇達州立大學曼卡托分校，加拿大安大略理工大學、卡加利大學，法國南特理工大學、薩瓦勃朗峰大學，德國馬德堡大學，馬來西亞拉曼大學 UTAR，泰國吞武里蒙庫國王科技大學 KMUTT，越南胡志明市經濟大學 UEH，印尼總統大學、迪波內戈羅大學及蒙古全球領袖大學）。（3）獎助學金體系：涵蓋教育部《學海飛颺／學海惜珠／學海築夢／新南向學海築夢》、聯大《補助學生參與境外學術交流經費》（亞太最高NT$ 15,000、歐美最高NT$ 25,000–35,000、團隊最高NT$ 100,000）、日本JASSO獎學金及美國雙聯學位獎學金（FSU每學期USD 3,000、FIT每學期USD 5,000–7,000、SUU USD 4,250）。",
+    support_level="full",
+    partner_count_hint=128,
+    academic_score_minimum=60,
+    student_card_signals=(
+        "國立聯合大學",
+        "聯合大學",
+        "NATIONALUNITEDUNIVERSITY",
+        "NATIONAL UNITED UNIVERSITY",
+        "NUU",
+    ),
+    # https://www.nuu.edu.tw/p/412-1000-745.php?Lang=zh-tw — checked 2026-11-02.
+    colleges=(
+        "理工學院",
+        "電機資訊學院",
+        "管理學院",
+        "客家研究學院",
+        "人文與社會學院",
+        "設計學院",
+    ),
+)
+
+
+TNNUA = UniversityProfile(
+    id="tnnua",
+    school_name="國立臺南藝術大學",
+    short_name="南藝大",
+    english_name="Tainan National University of the Arts",
+    aliases=(
+        "tnnua",
+        "國立臺南藝術大學",
+        "國立台南藝術大學",
+        "臺南藝術大學",
+        "台南藝術大學",
+        "南藝大",
+        "南藝",
+        "TNNUA",
+        "Tainan National University of the Arts",
+    ),
+    hero_image="/static/assets/tnnua-campus.svg",
+    official_url="https://oia.tnnua.edu.tw/p/412-1007-1052.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立臺南藝術大學國際事務處（OIA）《海外姊妹校締約一覽表（63校）》、《115學年度第一學期赴國外及大陸地區姊妹校交換生甄選公告》、《國立臺南藝術大學選送學生出國研修與交流甄選辦法（113.06.03修正）》、《學生修讀國外與港澳地區雙聯學位實施辦法（112.01.03修正）》、《辦理教育部學海飛颺、學海惜珠及學海築夢補助作業要點》、《選送學生赴國外研修獎助學金審查原則》與《海外研修暨學海築夢經驗分享（38篇）》官方資料：（1）兩階段校內甄選、系所書審與外語口試門檻：每年分兩學期（秋季班於前一年9–10月、春季班於當年度2–4月，如115-1秋季班於2025/09/17公告、10/14截止收件、10/29面試，115-2春季班於2026/02/13啟動春季提名）辦理甄選，限本校日間學制大學部二年級以上、七年一貫制學士班五年級以上及碩博士班就讀一學期以上之在學學生（不含碩士班在職專班、休學生及外籍學位生）；第一階段「系所書面初審」（占50%，含歷年成績與研修計畫30%、專業作品與成就20%）須經系所會議通過且初審成績達40分（滿分50分）以上始得進入複審，第二階段「校內口試複審」（占50%，含面試表現30%、語言能力含1–2分鐘擬赴國家語言自我介紹20%），兩階段總成績須達80分（含）以上始得錄取；外語能力依《外國語文能力對照表》建議達英語 TOEFL iBT 79 / IELTS 6.0、日檢 JLPT N2、韓檢 TOPIK 3級、法語 DELF/TCF B1、德語 B1 / TestDaF TDN3 或西語 DELE B1 以上（中國大陸姊妹校免附外語檢定）；交換期間須完成南藝大註冊繳費並免繳姊妹校學費，每學期至少修習1門專業課程。（2）全球21國／地區63所合作姊妹校與跨國雙聯學位：完整收錄中國大陸25校、美國6校、日本4校、印尼4校、韓國3校、法國3校、奧地利2校、捷克2校、新加坡2校、泰國2校及德、義、西、瑞士、波蘭、愛沙尼亞、保加利亞、澳洲、越南、哈薩克各1校共63所合作藝術與綜合大學（含29所開放學期交換與雙聯學位之姊妹校，以及美國舊金山藝術學院 SFAI 雙聯學位與《學生修讀國外與港澳地區雙聯學位實施辦法》）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》（學業總平均80分／GPA 3.0以上）、《學海惜珠》、《學海築夢／新南向學海築夢》及南藝大《選送學生赴國外研修獎助學金審查原則》，以及18所合作大學與海外博物館／古物修復機構共38篇歷屆學長姐出國交換與學海築夢實習心得報告。",
+    support_level="full",
+    partner_count_hint=63,
+    academic_score_minimum=80.0,
+    student_card_signals=(
+        "國立臺南藝術大學",
+        "國立台南藝術大學",
+        "南藝大",
+        "TAINAN NATIONAL UNIVERSITY OF THE ARTS",
+        "TAINANNATIONALUNIVERSITYOFTHEARTS",
+        "TNNUA",
+    ),
+    # https://www.tnnua.edu.tw/p/412-1000-91.php?Lang=zh-tw — checked 2026-11-03.
+    colleges=(
+        "音樂學院",
+        "視覺藝術學院",
+        "音像藝術學院",
+        "文博學院",
+        "跨域創生學院",
+    ),
+)
+
+
+TPCU = UniversityProfile(
+    id="tpcu",
+    school_name="臺北城市科技大學",
+    short_name="城市科大",
+    english_name="Taipei City University of Science and Technology",
+    aliases=(
+        "tpcu",
+        "臺北城市科技大學",
+        "台北城市科技大學",
+        "城市科大",
+        "北城科大",
+        "臺北城市科大",
+        "台北城市科大",
+        "城市大學",
+        "北台科大",
+        "北台科學技術學院",
+        "光武工專",
+        "TPCU",
+        "Taipei City University of Science and Technology",
+    ),
+    hero_image="/static/assets/tpcu-campus.svg",
+    official_url="https://ieec.tpcu.edu.tw/",
+    coverage_note="完整支援：已整合臺北城市科技大學國際事務處（國際交流中心）、商管學院、民生學院、工程學院與研究發展處《海外留學姊妹校總表》、《學生出國研修辦法（106.06.19修訂）》、《與境外大學辦理雙聯學制實施辦法（105.09.14教育部備查）》、《教育部獎助大專校院選送學生出國研修—學海飛颺、學海惜珠校內甄選辦法（108.01.21修訂）》、《教育部獎助大專校院國外專業實習計畫—學海築夢及新南向學海築夢校內甄選辦法（115.01.05修訂）》及《學生海外實習及研習輔導要點（106.10.30修訂）》官方資料：（1）校內甄選資格、錄取確認與修課抵免：申請出國交換研修者須為就讀本校滿一學年以上且非當學期畢業之在學學生（不含境外碩士專班；學海計畫須在學滿一學期以上且不含在職專班生），無小過以上處分紀錄，前一學年學業平均總成績達 60 分以上、操行平均總成績達 75 分以上；錄取生於公告隔天至國際事務處報到、1 週內繳交錄取確認書；海外研習一學期上課總學分不得少於 10 學分，返國後當學期開學 1 週內辦理學分抵免。（2）海外合作姊妹校與跨國雙聯學制：完整收錄 18 所日、韓、紐、英、美官方合作姊妹校（含日本城西國際大學、神戶國際大學、鹿兒島國際大學、國立琉球大學、日本經濟大學、北海道星槎道都大學、國立德島大學、十文字學園女子大學、國立宇都宮大學、昭和音樂大學；韓國信韓大學、富川大學；紐西蘭國際太平洋大學 IPU New Zealand；英國伯明翰大學學院 UCB；美國加州峽谷大學、曼徹普利敦州立大學、聖保羅學院、明州西南州立大學，其中 11 校提供 2+2／3+1／1 年雙聯學位）。（3）獎助學金與留學榜單：涵蓋教育部《學海飛颺／惜珠》（補助 NT$50,000–300,000）、《學海築夢／新南向學海築夢》海外實習獎助及 18 所合作大學共 38 篇歷屆交換雙聯榜單與研修紀錄。",
+    support_level="full",
+    partner_count_hint=18,
+    academic_score_minimum=60.0,
+    student_card_signals=(
+        "臺北城市科技大學",
+        "台北城市科技大學",
+        "城市科大",
+        "TAIPEICITYUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "TPCU",
+    ),
+    # https://www.tpcu.edu.tw/p/412-1000-485.php?Lang=zh-tw — checked 2026-11-03.
+    colleges=(
+        "工程學院",
+        "商管學院",
+        "民生學院",
+    ),
+)
+
+
+AU = UniversityProfile(
+    id="au",
+    school_name="真理大學",
+    short_name="真理",
+    english_name="Aletheia University",
+    aliases=(
+        "au",
+        "真理大學",
+        "真理",
+        "真大",
+        "AU",
+        "Aletheia University",
+        "Oxford College Tamsui",
+    ),
+    hero_image="/static/assets/au-campus.svg",
+    official_url="https://cia.au.edu.tw/p/403-1022-109353.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合真理大學國際事務中心（CIA）《交換計畫專區》、《雙聯學制專區》、《短期研修專區》、《姐妹校一覽》、《法規與獎學金辦法》與《學海計畫專區》官方資料：（1）校內甄選時程與資格：依《真理大學交換學生出國甄選辦法（教-P-806）》、《2027春季／2026秋季國外姐妹校交換學生實施計畫》與《2026~2027日本姐妹校交換生實施計畫》，限就讀滿一學年以上之大學部與研究所在學學生（大二、碩二以上），前一學期學業成績全班前 50% 為原則且操行 80 分以上，報名繳交 NT$3,000 行政處理費，交換期間繳交真理大學全額學雜費且每學期修習至少 9 學分；日本交換組要求三年內通過 JLPT N2 以上（日本多摩大學可憑 JLPT N2 或 TOEIC 600 申請）。（2）合作姐妹校與雙聯學位：完整收錄 80 所全球及兩岸港澳有效締約姐妹校（橫跨 14 國與地區，含 31 所當期開放申請之出國交換與雙聯學位合作校，涵蓋英國密德薩斯大學、英國西英格蘭大學 UWE Bristol 及西班牙赫羅納大學觀光學院 EUHT StPOL 雙聯學制）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／惜珠／築夢／新南向學海築夢》、《真理大學交換學生出國獎學金辦法（P-01-510）》、《外國語言遊學獎助學金（P-01-509）》、《國際志工服務獎助學金（P-01-513）》、《特殊貢獻獎助學金（P-01-526）》及 14 所合作大學共 88 篇歷屆學長姐返國交換心得報告。",
+    support_level="full",
+    partner_count_hint=80,
+    academic_score_minimum=60,
+    student_card_signals=(
+        "真理大學",
+        "真理",
+        "ALETHEIAUNIVERSITY",
+        "ALETHEIA",
+        "AU",
+    ),
+    # https://www.au.edu.tw/ — checked 2026-11-03.
+    colleges=(
+        "人文學院",
+        "觀光休閒與運動學院",
+        "管理與資訊學院",
+        "財經學院",
+        "通識教育中心",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU)
 DEFAULT_UNIVERSITY = CGU
 
 
