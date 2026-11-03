@@ -128,6 +128,30 @@ def phone_rows(settings: Settings, store: Store, http: httpx.Client | None = Non
     return [Row(True, "Telegram", f"@{name} → {who} 的手機（跟 Leo 聊天、收通知、按核准）")]
 
 
+def dm_rows(settings: Settings, store: Store, http: httpx.Client | None = None) -> list[Row]:
+    """Comment keyword -> private message needs Meta's messaging permission. Read-only: asks whether the account's inbox can be reached."""
+    from . import autodm
+    from .platforms.base import PlatformError
+    from .platforms.meta import InstagramClient
+
+    records = autodm.rules(store)
+    cred = accounts.credentials(settings, store)["instagram"]
+    name = "IG 自動私訊"
+    if not cred["token"] or not cred["user_id"]:
+        return [Row(None, name, "Instagram 還沒連上，等連好再設留言關鍵字私訊（見 README「IG 留言關鍵字自動私訊」）")]
+    client = InstagramClient(cred["user_id"], cred["token"], host=settings.instagram_graph_host, dry_run=False, http=http)
+    mode = "" if not settings.dry_run else "；目前是模擬模式，不會真的私訊"
+    off = "" if settings.auto_dm else "；.env 的 OFFICE_AUTO_DM 關著"
+    try:
+        client.can_message()
+    except (PlatformError, httpx.HTTPError) as error:
+        kind = autodm.classify(error) if isinstance(error, PlatformError) else "other"
+        why = autodm.explain(kind) or f"連不上私訊（{str(error)[:120]}）"
+        return [Row(None if not records else False, name, f"{why}{'' if not records else f'（已經設了 {len(records)} 條規則，現在傳不出去）'}")]
+    word = f"{len(records)} 條規則" if records else "還沒有規則：跟 Leo 說「留言雅思就私訊他 …」就會建立"
+    return [Row(True, name, f"Meta 的私訊權限通了（{word}）{mode}{off}")]
+
+
 def voice_rows(settings: Settings) -> list[Row]:
     """voice.md is the boss's own voice notes; without it the writers use the built-in guide, which is fine."""
     from .brand import VOICE_NOTES_LIMIT, read_voice
@@ -166,6 +190,7 @@ def run(settings: Settings, *, ping: bool = False, http: httpx.Client | None = N
         ("GitHub（核准的資料更新提案會開成 draft PR；只讀取，不會建立任何東西）", [accounts.github_row(settings, store, http)]),
         ("手機", phone_rows(settings, store, http)),
         ("手機 App（Android）", app_rows(settings)),
+        ("IG 留言自動私訊", dm_rows(settings, store, http)),
         ("語氣", voice_rows(settings)),
     ]
 

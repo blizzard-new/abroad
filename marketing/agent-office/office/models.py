@@ -59,9 +59,10 @@ class CarouselDraft(BaseModel):
 
 class Scene(BaseModel):
     kind: Literal["hook", "point", "stat", "cta"]
-    heading: str = Field(description="畫面大標，12 字內")
+    heading: str = Field(description="畫面大標，12 字內。字會放很大，可以用換行（\\n）分行，每行 4～6 個字、最多三行，讓重點詞獨佔一行")
     lines: list[str] = Field(description="依序出現的字幕，每行 12 字內")
     seconds: float
+    emphasis: list[str] = Field(default_factory=list, description="畫面大標裡最重要的 1 個詞（必須是 heading 裡原本的字），會放在珊瑚紅色塊上；沒有就留空")
 
 
 class VideoScript(BaseModel):
@@ -193,7 +194,7 @@ class Insights(BaseModel):
 
 
 ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain", "hire", "assign", "dismiss",
-                          "watch_schools", "set_schedule", "set_office_times", "add_routine", "remove_routine", "set_verifier", "redo_image"]
+                          "watch_schools", "set_schedule", "set_office_times", "add_routine", "remove_routine", "set_verifier", "redo_image", "add_dm_rule", "remove_dm_rule"]
 
 
 class ChiefAction(BaseModel):
@@ -212,6 +213,9 @@ class ChiefAction(BaseModel):
             "times 填新時間，填 [\"default\"] 代表改回原本設定；"
             "add_routine：新增每天固定時間做的事（times、task_kind、instructions 寫題目或工作，name 填新同事名字，原本的同事可留空）；"
             "remove_routine：刪掉編號 routine_id 的固定排程；"
+            "add_dm_rule：新增一條「IG 留言關鍵字自動私訊」規則：學生在 IG 貼文或 Reels 底下留言 keywords 裡的字，就自動私訊 message（老闆給的完整內容，含連結），"
+            "public_reply 是留言底下公開回的一句話（可留空），offer 是學生會拿到什麼（例如「領雅思閱讀教材」，給寫手在貼文裡邀請大家留言用），draft_id 填了就只對那則貼文有效、填 0 是所有 IG 貼文；"
+            "remove_dm_rule：刪掉編號 dm_id 的自動私訊規則；"
             "redo_image：請 Mori 重新做 draft_id 那則的圖（版面重新設計、封面插圖重畫），instructions 寫對圖的要求；文字不變，要改文字用 redo；"
             "set_verifier：指定 name 的新同事當驗證員，巡查同事發現新公告或不一致後，先交給她重新打開官網驗證，確認要更新平台的才送進審核匣；name 留空代表取消驗證員"
         )
@@ -234,6 +238,11 @@ class ChiefAction(BaseModel):
     times: list[str] = Field(default_factory=list, description="set_schedule／set_office_times／add_routine 用：每天幾點，例如 [\"10:00\", \"17:00\"]")
     which: Literal["start", "threads", "instagram", "youtube", ""] = Field(default="", description="set_office_times 用：要改哪一個時間")
     routine_id: int = Field(default=0, description="remove_routine 用：固定排程編號（R 後面的數字）")
+    keywords: list[str] = Field(default_factory=list, description="add_dm_rule 用：觸發的留言關鍵字，每個至少 2 個字、最多 5 個，要夠精準（不要「想」「好」「我要」這種太普通的字）")
+    message: str = Field(default="", description="add_dm_rule 用：私訊的完整內容，照老闆給的字，不要自己加料或改寫；一則最多約 330 個中文字")
+    public_reply: str = Field(default="", description="add_dm_rule 用：在留言底下公開回的一句話（不放連結），老闆沒說就留空")
+    offer: str = Field(default="", description="add_dm_rule 用：學生留言後會拿到什麼，一句話，例如「領雅思閱讀教材」；老闆沒說就留空")
+    dm_id: int = Field(default=0, description="remove_dm_rule 用：自動私訊規則編號（D 後面的數字）")
     brain: Literal["claude-code", "codex", "antigravity", "api", "offline", "default", ""] = ""
     model: str = Field(default="", description="set_brain 用：模型名稱，例如 sonnet、opus、claude-sonnet-5-5、gpt-5.5、Gemini 3.7 Pro")
     effort: Literal["low", "medium", "high", "xhigh", "max", "default", ""] = ""

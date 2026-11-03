@@ -11,7 +11,7 @@ from fake_cli import install
 from office import brains, visual
 from office.brand import MASCOT, VISUAL_BRIEF, BrandFacts, Briefing
 from office.config import Settings
-from office.models import CarouselDraft, PlanItem, Slide, ThreadsDraft, VisualPlan, VisualSlide, VisualSpec
+from office.models import CarouselDraft, PlanItem, Scene, Slide, ThreadsDraft, VideoScript, VisualPlan, VisualSlide, VisualSpec
 from office.office import Office, desk_of
 from office.render.renderer import Renderer
 from test_render import chromium_available
@@ -179,6 +179,35 @@ def test_the_headline_is_giant_and_its_key_word_keeps_the_coral_block(settings):
         page.evaluate("(a) => window.renderSlide(a)", {"slide": Slide(kind="point", title="生活費大約多少", body="歐洲城市每月 3 萬元起跳").model_dump(), "index": 3, "total": 6,
                                                        "site": "app.uniway-tw.com", "story": False, "art": None, "design": design})
         assert 100 <= page.locator("h2").evaluate(size) <= 125
+
+
+@needs_chromium
+def test_reels_and_long_videos_have_the_same_look_as_the_pictures(settings):
+    """Deep navy, giant white headlines, the key word on a coral block: for the vertical Reel and the wide long video alike."""
+    renderer = Renderer(settings)
+    script = VideoScript(
+        title="語言檢定", caption="c", hashtags=[], youtube_title="t #Shorts", youtube_description="d",
+        scenes=[Scene(kind="hook", heading="托福還是雅思\n怎麼選？", lines=["30 秒看懂"], seconds=3.0, emphasis=["怎麼選"]),
+                Scene(kind="point", heading="先看目標學校", lines=["每間要求不同"], seconds=6.0, emphasis=["目標學校"]),
+                Scene(kind="point", heading="預留重考時間", lines=["提早排考試"], seconds=6.0),
+                Scene(kind="cta", heading="從這裡出發", lines=["app.uniway-tw.com"], seconds=5.0)],
+    )
+    size = "(el) => parseFloat(getComputedStyle(el).fontSize)"
+    for orientation, (width, height), smallest in (("portrait", (1080, 1920), 120), ("landscape", (1920, 1080), 100)):
+        with renderer._page(width, height) as page:
+            page.goto("https://render.office/template/video.html", wait_until="load")
+            page.evaluate("([s, o]) => window.setup(s, o)", [script.model_dump(), orientation])
+            page.evaluate("(t) => window.render(t)", 2.0)  # inside the hook
+            assert page.locator("#stage").evaluate("(el) => getComputedStyle(el).color") == "rgb(255, 255, 255)"
+            hook = page.locator(".scene.hook h1")
+            assert hook.evaluate(size) >= smallest + 10 and hook.locator(".seg").all_inner_texts() == ["托福還是雅思", "怎麼選？"]  # her own line break is kept
+            assert hook.locator("mark.em").inner_text() == "怎麼選"
+            assert hook.locator("mark.em").evaluate("(el) => getComputedStyle(el).backgroundColor") == "rgb(255, 90, 74)"
+            page.evaluate("(t) => window.render(t)", 6.0)  # inside the first point
+            point = page.locator(".scene.point h1").first
+            assert point.evaluate(size) >= smallest and point.locator("mark.em").inner_text() == "目標學校"
+            page.evaluate("(t) => window.render(t)", 17.0)  # the closing scene still has its logo and a headline of the same size class
+            assert page.locator(".scene.cta h1").evaluate(size) >= smallest - 20 and page.locator(".scene.cta .word").inner_text() == "UniWay"
 
 
 @needs_chromium

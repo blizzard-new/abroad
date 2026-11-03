@@ -22,7 +22,7 @@ from .agents.reviewer import Reviewer
 from .agents.strategist import Strategist
 from .agents.threads_writer import ThreadsWriter
 from .agents.video_editor import VideoEditor
-from . import accounts, brains
+from . import accounts, autodm, brains
 from .brand import Briefing, load_facts, load_news, load_schools
 from .config import Settings
 from .events import EventBus
@@ -568,7 +568,7 @@ class Office:
     def briefing_for_replies(self, with_news: bool = False) -> Briefing:
         """A light briefing (platform numbers, optionally today's verified announcements) for work outside the
         morning run: replies, rewrites, extra posts, pre-publish checks."""
-        return Briefing(day=self.today(), facts=self.facts(), news=load_news(self.settings) if with_news else [])
+        return Briefing(day=self.today(), facts=self.facts(), news=load_news(self.settings) if with_news else [], dm_hooks=autodm.hooks(self.store))
 
     def snapshot(self) -> dict:
         run = self.store.latest_run()

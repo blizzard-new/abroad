@@ -14,7 +14,7 @@ import threading
 from secrets import token_hex
 from datetime import date, datetime, time, timedelta, timezone
 
-from .. import accounts, brains
+from .. import accounts, autodm, brains
 from ..llm import WriterError
 from ..models import CarouselDraft, ChiefAction, ChiefReply, PlanItem, ThreadsAlbumDraft, ThreadsDraft, VideoScript
 from ..rules import check_carousel, check_threads, check_threads_album, check_video, instagram_caption
@@ -138,10 +138,22 @@ class Chief(Agent):
             f"新同事每天固定的工作：\n{daily or '（還沒有新同事）'}\n\n"
             f"每天的時間表（台北，set_office_times 可改）：{timetable}\n"
             f"固定排程（add_routine 新增、remove_routine 刪除，編號是 R 後面的數字）：\n{routines or '（還沒有）'}\n"
+            f"{self.dm_text()}"
             f"最近 7 天的成效復盤（Nana 把每則貼文和同平台同格式的平常表現比；老闆問什麼題目、哪則貼文有效時照這個回答，不要自己猜）：\n"
             f"{office.staff['analyst'].review_text()}\n"
             f"平台目前支援 {office.facts().university_count} 所大學，清單在辦公室電腦上的專案裡，watch_schools 會直接讀，不用上 GitHub。"
         )
+
+    def dm_text(self) -> str:
+        """The keyword rules, in words the chief can repeat, and whether sending is paused."""
+        office = self.office
+        records = autodm.rules(office.store)
+        paused = autodm.blocked(office.store, datetime.now(timezone.utc))
+        today = autodm.sent_on(office.store, office.today())
+        rows = "\n".join(f"- {autodm.describe(r)}" for r in records) or "（還沒有）"
+        state = ("目前暫停中：" + paused) if paused else (f"今天已經私訊 {today} 位（上限 {office.settings.auto_dm_limit}）" if records else "")
+        return (f"IG 留言關鍵字自動私訊（add_dm_rule 新增、remove_dm_rule 刪除，編號是 D 後面的數字；學生留言關鍵字就自動私訊老闆給的內容，"
+                f"每人每條規則每天一次，模擬模式不會真的傳）：\n{rows}\n{state}\n")
 
     def verifier_text(self) -> str:
         agent = self.office.verifier()
@@ -256,6 +268,27 @@ class Chief(Agent):
     def _do_add_routine(self, action: ChiefAction) -> str:
         record = self.office.add_routine(action.name, action.task_kind, action.instructions, action.times)
         return f"排好了：{self.office.describe_routine(record)}（從下一個時間開始）"
+
+    def _do_add_dm_rule(self, action: ChiefAction) -> str:
+        office, settings = self.office, self.office.settings
+        record = autodm.add(office.store, keywords=action.keywords, message=action.message, public_reply=action.public_reply, offer=action.offer,
+                            draft_id=action.draft_id)
+        where = f"#{record['draft_id']} 這則" if record["draft_id"] else "所有 IG 貼文和 Reels"
+        notes = [f"之後有人在{where}留言{'、'.join(f'「{k}」' for k in record['keywords'])}，會自動收到你給的私訊"
+                 + (f"，留言底下也會公開回「{record['public_reply']}」" if record["public_reply"] else "")
+                 + "（只回規則建立之後的新留言，每人每天最多收一次）"]
+        if settings.dry_run:
+            notes.append("目前是模擬模式（OFFICE_DRY_RUN=1），不會真的私訊；改成正式發佈才會開始")
+        if not settings.auto_dm:
+            notes.append("但 .env 的 OFFICE_AUTO_DM 是關的，要打開才會私訊")
+        notes.append("Meta 要先開通 Instagram 私訊權限才傳得出去，老闆可以跑 uv run office check 看有沒有通")
+        if record["offer"]:
+            notes.append(f"明天起寫手會在貼文說明欄邀請大家「留言「{record['keywords'][0]}」{record['offer']}」")
+        return f"設好了：{autodm.describe(record)}。{'；'.join(notes)}。"
+
+    def _do_remove_dm_rule(self, action: ChiefAction) -> str:
+        record = autodm.remove(self.office.store, action.dm_id)
+        return f"刪掉了：{autodm.describe(record)}"
 
     def _do_remove_routine(self, action: ChiefAction) -> str:
         record = self.office.remove_routine(action.routine_id)

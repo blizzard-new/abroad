@@ -57,6 +57,7 @@ class Briefing:
     winners: list[dict] = field(default_factory=list)
     research: list = field(default_factory=list)  # models.Finding from the research desk
     insights: list[str] = field(default_factory=list)  # the analyst's notes from the last metrics run
+    dm_hooks: list[str] = field(default_factory=list)  # what people may be invited to comment ("留言「雅思」領雅思閱讀教材"), from the boss's DM rules
 
 
 def load_facts(settings: Settings) -> BrandFacts:
