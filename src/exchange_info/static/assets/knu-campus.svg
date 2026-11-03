@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="開南大學 Kainan University Campus">
+  <defs>
+    <linearGradient id="knuSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#143264"/>
+      <stop offset="48%" stop-color="#28589c"/>
+      <stop offset="100%" stop-color="#e9eff8"/>
+    </linearGradient>
+    <linearGradient id="knuGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e5bb47"/>
+      <stop offset="100%" stop-color="#ad8619"/>
+    </linearGradient>
+    <linearGradient id="knuLawn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4e8c57"/>
+      <stop offset="100%" stop-color="#2b5a34"/>
+    </linearGradient>
+    <linearGradient id="knuWater" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3c7bb8" stop-opacity="0.88"/>
+      <stop offset="50%" stop-color="#6ca6dc" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="#2f669e" stop-opacity="0.88"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1200" height="630" fill="url(#knuSky)"/>
+
+  <!-- Soft sun & aviation trail (Taoyuan Aerotropolis / Aviation Management) -->
+  <circle cx="960" cy="130" r="56" fill="#fbe39c" opacity="0.85"/>
+  <path d="M 160 140 Q 520 70 920 125" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="8 6" opacity="0.55"/>
+  <polygon points="935,123 910,115 916,124 908,131" fill="#ffffff" opacity="0.85"/>
+
+  <!-- Distant Taoyuan hills -->
+  <path d="M0 390 Q 240 330 510 375 T 1020 355 L 1200 380 L 1200 450 L 0 450 Z" fill="#5b7aa6" opacity="0.45"/>
+
+  <!-- Excellence Building (卓越大樓) & Sincerity Building (至誠樓) -->
+  <g transform="translate(210, 195)">
+    <!-- Left wing -->
+    <rect x="0" y="65" width="210" height="175" rx="4" fill="#d9c3a5" stroke="#8c6d46" stroke-width="2"/>
+    <rect x="12" y="52" width="186" height="16" fill="#8b3a2b"/>
+    <!-- Windows left wing -->
+    <g fill="#254878" opacity="0.85">
+      <rect x="24" y="85" width="32" height="24" rx="2"/>
+      <rect x="70" y="85" width="32" height="24" rx="2"/>
+      <rect x="116" y="85" width="32" height="24" rx="2"/>
+      <rect x="162" y="85" width="26" height="24" rx="2"/>
+      <rect x="24" y="122" width="32" height="24" rx="2"/>
+      <rect x="70" y="122" width="32" height="24" rx="2"/>
+      <rect x="116" y="122" width="32" height="24" rx="2"/>
+      <rect x="162" y="122" width="26" height="24" rx="2"/>
+      <rect x="24" y="159" width="32" height="24" rx="2"/>
+      <rect x="70" y="159" width="32" height="24" rx="2"/>
+      <rect x="116" y="159" width="32" height="24" rx="2"/>
+      <rect x="162" y="159" width="26" height="24" rx="2"/>
+    </g>
+
+    <!-- Central Tower & Arcade (Kainan Red Brick & Classical Archway) -->
+    <rect x="200" y="15" width="380" height="225" rx="6" fill="#e6d4bc" stroke="#8c6d46" stroke-width="2.5"/>
+    <polygon points="188,18 390,-28 592,18" fill="#7d2f22" stroke="#e5bb47" stroke-width="2"/>
+    <circle cx="390" cy="-2" r="14" fill="url(#knuGold)"/>
+
+    <!-- Classical columns & arches -->
+    <g fill="#234370">
+      <rect x="230" y="42" width="44" height="34" rx="3"/>
+      <rect x="292" y="42" width="44" height="34" rx="3"/>
+      <rect x="368" y="42" width="44" height="34" rx="3"/>
+      <rect x="444" y="42" width="44" height="34" rx="3"/>
+      <rect x="506" y="42" width="44" height="34" rx="3"/>
+
+      <rect x="230" y="92" width="44" height="34" rx="3"/>
+      <rect x="292" y="92" width="44" height="34" rx="3"/>
+      <rect x="368" y="92" width="44" height="34" rx="3"/>
+      <rect x="444" y="92" width="44" height="34" rx="3"/>
+      <rect x="506" y="92" width="44" height="34" rx="3"/>
+    </g>
+
+    <!-- Grand Arched Colonnade at Ground Floor (B112 OICA) -->
+    <path d="M235 240 L235 172 A26 26 0 0 1 287 172 L287 240 Z" fill="#1b3154"/>
+    <path d="M312 240 L312 168 A32 32 0 0 1 376 168 L376 240 Z" fill="#1b3154"/>
+    <path d="M404 240 L404 168 A32 32 0 0 1 468 168 L468 240 Z" fill="#1b3154"/>
+    <path d="M493 240 L493 172 A26 26 0 0 1 545 172 L545 240 Z" fill="#1b3154"/>
+
+    <!-- Right wing -->
+    <rect x="570" y="65" width="210" height="175" rx="4" fill="#d9c3a5" stroke="#8c6d46" stroke-width="2"/>
+    <rect x="582" y="52" width="186" height="16" fill="#8b3a2b"/>
+    <g fill="#254878" opacity="0.85">
+      <rect x="592" y="85" width="26" height="24" rx="2"/>
+      <rect x="632" y="85" width="32" height="24" rx="2"/>
+      <rect x="678" y="85" width="32" height="24" rx="2"/>
+      <rect x="724" y="85" width="32" height="24" rx="2"/>
+      <rect x="592" y="122" width="26" height="24" rx="2"/>
+      <rect x="632" y="122" width="32" height="24" rx="2"/>
+      <rect x="678" y="122" width="32" height="24" rx="2"/>
+      <rect x="724" y="122" width="32" height="24" rx="2"/>
+      <rect x="592" y="159" width="26" height="24" rx="2"/>
+      <rect x="632" y="159" width="32" height="24" rx="2"/>
+      <rect x="678" y="159" width="32" height="24" rx="2"/>
+      <rect x="724" y="159" width="32" height="24" rx="2"/>
+    </g>
+  </g>
+
+  <!-- Campus Lawn & Kainan Lake -->
+  <rect x="0" y="430" width="1200" height="200" fill="url(#knuLawn)"/>
+  <ellipse cx="600" cy="495" rx="390" ry="42" fill="url(#knuWater)" stroke="#d9e8f5" stroke-width="2"/>
+  <!-- Arch Bridge over Kainan Lake -->
+  <path d="M 470 495 Q 600 455 730 495" fill="none" stroke="#f3ead8" stroke-width="8"/>
+  <path d="M 470 489 Q 600 449 730 489" fill="none" stroke="#ad8619" stroke-width="2.5"/>
+
+  <!-- Title Banner -->
+  <rect x="56" y="42" width="530" height="96" rx="14" fill="#0f2547" fill-opacity="0.84" stroke="url(#knuGold)" stroke-width="2"/>
+  <text x="84" y="84" font-family="'Noto Sans TC', 'Microsoft JhengHei', sans-serif" font-size="30" font-weight="700" fill="#ffffff">開南大學 Kainan University</text>
+  <text x="84" y="116" font-family="'Noto Sans TC', 'Microsoft JhengHei', sans-serif" font-size="17" font-weight="500" fill="#f3d47c">國際及兩岸事務處 OICA · 桃園蘆竹 · 全球姊妹校交換與雙聯學制</text>
+</svg>
