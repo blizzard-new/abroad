@@ -269,11 +269,18 @@ def test_when_meta_has_not_given_the_permission_the_office_stops_says_so_once_an
     assert len(warnings) == 1 and "instagram_business_manage_messages" in warnings[0] and "應用程式審核" in warnings[0]
     assert not autodm.handled(office.store, "c1") and autodm.blocked(office.store, NOW + timedelta(minutes=5))
     assert momo.auto_dm(NOW + timedelta(minutes=5)) == 0 and fake.reads == 1  # paused: not even reading comments
-    assert "暫停中" in office.staff["chief"].state_text() or "instagram_business_manage_messages" in office.staff["chief"].state_text()
 
     fake.refuse = None  # the boss fixed the permission
     assert momo.auto_dm(NOW + timedelta(minutes=31)) == 2  # the same two comments, still inside the seven days
     assert [m[0] for m in fake.messages] == ["c1", "c2"]
+
+
+def test_leos_state_says_when_sending_is_paused(make_office):
+    """Leo's state reads the real clock, so this pause is set against the real clock too."""
+    office = make_office()
+    autodm.add(office.store, keywords=["雅思"], message=MESSAGE)
+    autodm.block(office.store, "Meta 說沒有私訊權限", datetime.now(timezone.utc), timedelta(minutes=30))
+    assert "目前暫停中：Meta 說沒有私訊權限" in office.staff["chief"].state_text()
 
 
 def test_a_comment_that_cannot_be_answered_is_skipped_but_the_rest_still_are(live):

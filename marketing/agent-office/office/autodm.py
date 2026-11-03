@@ -242,7 +242,8 @@ def classify(error: PlatformError) -> str:
 def explain(kind: str) -> str:
     return {
         "permission": ("Meta 說這個帳號或這把權杖沒有私訊的權限（instagram_business_manage_messages）。要在 Meta 開發者後台把這個權限加進應用程式、"
-                       "重新產生權杖後再跑 uv run office auth instagram；而且要私訊「沒有加入測試人員」的一般學生，這個權限要先通過 Meta 的應用程式審核（進階存取）。"),
+                       "重新產生權杖後再跑 uv run office auth instagram --token <新權杖>；如果只有測試人員收得到、一般人收不到，"
+                       "就要向 Meta 申請這個權限的進階存取（應用程式審核，通常還要企業驗證）。"),
         "token": "Instagram 權杖失效或過期：重新跑 uv run office auth instagram",
         "limit": "Meta 說呼叫太頻繁，稍後會自動再試",
     }.get(kind, "")
