@@ -93,6 +93,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "fgu": ["oica.fgu.edu.tw", "website.fgu.edu.tw", "www.fgu.edu.tw", "fgu.edu.tw"],
     "nkuht": ["iao.nkuht.edu.tw", "www.nkuht.edu.tw", "nkuht.edu.tw"],
     "nuu": ["oia.nuu.edu.tw", "rnd.nuu.edu.tw", "www.nuu.edu.tw", "nuu.edu.tw", "docs.google.com"],
+    "tnnua": ["oia.tnnua.edu.tw", "www.tnnua.edu.tw", "tnnua.edu.tw"],
 }
 
 
@@ -1788,6 +1789,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["nuu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="nuu", partner_rows=nuu_rows, default_cycle_label="115"
+        )
+
+    # 51. TNNUA partners.jsonl (63 partner schools)
+    tnnua_partners_path = official_data_root / "tnnua" / "partners.jsonl"
+    if tnnua_partners_path.exists():
+        tnnua_rows = []
+        for line in tnnua_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            tnnua_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.tnnua.edu.tw/p/412-1007-1052.php?Lang=zh-tw",
+            })
+        school_reports["tnnua"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="tnnua", partner_rows=tnnua_rows, default_cycle_label="115"
         )
 
     if store.current_release_id is None:
