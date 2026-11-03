@@ -1834,7 +1834,48 @@ NPUST = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST)
+CJCU = UniversityProfile(
+    id="cjcu",
+    school_name="長榮大學",
+    short_name="長大",
+    english_name="Chang Jung Christian University",
+    aliases=(
+        "cjcu",
+        "長榮大學",
+        "長榮",
+        "長大",
+        "CJCU",
+        "Chang Jung Christian University",
+    ),
+    hero_image="/static/assets/cjcu-campus.svg",
+    official_url="https://dweb.cjcu.edu.tw/oia/article/3030",
+    coverage_note="完整支援：已整合長榮大學國際處國際合作組（OIA）《115學年度校級國際交換生甄選簡章》、《校級國際交換生學校一覽表（79校）》、《海外雙聯學位學校列表（8校12學程）》、《全球與兩岸締約姊妹校名錄（193校）》、《長榮大學赴外研修生作業要點》、《長榮大學學生出國期間學業及學籍處理要點》、《長榮大學海外雙聯學制實施辦法》、《長榮大學推展學生國際學術交流獎補助辦法》与《長榮大學短期交流補助作業要點》官方資料：（1）校內甄選時程、資格與四組配分：115學年度校級國際交換生甄選自 2026/10/01 至 2026/11/27 17:00 受理（10/02 12:10 舉辦說明會、12/04 公告面試時間表、12/11 辦理分組面試、12/16 公告第一階段錄取名單、12/21 第一階段錄取確認截止、12/31 公告最終錄取名單），申請人出國就讀時須於本校修業滿一學年（含）以上且前一學年度學業平均成績達 70 分（含）以上；評比採「面試 40%」（英韓組、英語組、中文組、日語組）＋「書面資料 60%」（前一學年度操行成績 10%＋前一學年度學業成績 10%＋自傳及讀書計畫 15%＋語文證明 10%＋其他相關資料 15%），錄取生（除日語組與中國地區外）須參加並通過語文教育中心「交換生英語加強課程」（第 1–9 週），交換期間每學期至少修習相當本校 9 學分或 3 門課程（不含體育課）且至少 6 學分或 2 門課程及格。（2）全球 26 國與地區 193 所合作姊妹校與 8 校跨國雙聯學位：完整收錄 88 所常態開放申請之校級交換與雙聯學位學校（含日本鎮西學院大學、創價大學與韓國韓信大學「免學費＋免住宿費」，印尼蘇吉甲普拉納塔天主教大學印尼政府獎學金，以及英國女王大學 QUB、諾丁漢特倫特大學 NTU、法國雷恩商學院、澳洲西雪梨大學、美國北德州大學 UNT、馬來西亞砂拉越科技大學 UTS、泰國清邁皇家大學 CMRU 等雙聯學位）及 105 所正式締約姊妹校。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／惜珠》（前學年平均達 75 分或班排前 25%）、《長榮大學推展學生國際學術交流獎補助金》（前學年平均及格或班排前 50%）、《短期交流補助》（每人最高 NT$40,000），以及 42 所合作大學共 145 篇歷屆學長姐返國交換心得報告與 35 份官方 Fact Sheet。",
+    support_level="full",
+    partner_count_hint=193,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "長榮大學",
+        "CHANGJUNGCHRISTIANUNIVERSITY",
+        "CHANG JUNG CHRISTIAN UNIVERSITY",
+        "CJCU",
+    ),
+    # https://www.cjcu.edu.tw/tw/acad.php — checked 2026-11-02.
+    colleges=(
+        "管理學院",
+        "健康科學學院",
+        "人文社會學院",
+        "資訊暨設計學院",
+        "安全衛生科學學院",
+        "永續教育學院",
+        "環境教育國際實驗學院",
+        "神學院",
+        "PLUS學院",
+        "博雅教育學部",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU)
 DEFAULT_UNIVERSITY = CGU
 
 

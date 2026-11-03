@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -119,6 +119,7 @@ NCUT_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 NPUST_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
+CJCU_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2968,6 +2969,58 @@ def _npust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _cjcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理長榮大學（國際處國際合作組，行政大樓 3 樓，信箱 exch@mail.cjcu.edu.tw）《115學年度校級國際交換生甄選簡章》及《赴外研修生作業要點》應繳申請表件（依序以迴紋針固定紙本，並掃描為單一彩色 PDF 檔寄至 exch@mail.cjcu.edu.tw，同時填寫 Google 表單 https://forms.gle/2kaidJJ8b4xwsPbu6）：1. 申請資料檢核表、2. 校級國際交換生甄選報名表（填明報考組別［英韓組／英語組／中文組／日語組］、第一至第三志願學校與交換學期 116-1／116-2，經申請人、導師及系主任簽名）、3. 家長或監護人同意書、4. 歷年成績單正本（中文及英文，需註明歷年總平均、名次及總人數，前一學年度學業平均須達 70 分以上）、5. 自傳（中文及外文，報名表附件一）、6. 讀書計畫（中文及外文，報名表附件二）、7. 師長推薦函（中文及外文，報名表附件三）、8. 相關語言能力證明影本（英韓組／英語組／日語組依姊妹校要求檢附）、9. 其他相關資料（優秀表現證明、獎狀及證照等影本）。",
+        "study-plan": "撰寫長榮大學校級國際交換生甄選（報名表附件一《自傳》、附件二《讀書計畫》，中文及外文各一份，佔書面審查 15%）、雙聯學位及教育部學海飛颺／惜珠獎補助必繳之《中、外文自傳及讀書計畫》（建議合計約 1,000–2,500 字）。請具體說明赴外交換動機、擬於志願姊妹校修習之課程規劃（依《長榮大學赴外研修生作業要點》第九條第八款及《行政契約書》第八條規定，赴外期間每學期至少須選修相當於長榮大學 9 學分或 3 門科目［不含體育］，並至少及格 6 學分或 2 門科目）、錄取後參加語文教育中心第 1 至第 9 週交換生英語加強課程（或應日系每週口說練習）之準備，以及返國後學分抵免與職涯發展規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位（如英國諾丁漢特倫特大學 NTU 3+1、馬來西亞砂拉越科技大學 UTS 2+2、澳洲凱斯林大學 ACU 3+1 等）之選課預審與教務核備（依《長榮大學赴外研修生作業要點》、《學生赴境外大學修讀雙聯學位實施辦法》及《學生抵免學分辦法》，赴外期間須維持長榮大學在學學籍並繳交全額學雜費，每學期至少修習相當於長榮大學 9 學分或 3 門科目［不含體育］且至少及格 6 學分或 2 門科目）。",
+        "predeparture-notice": "經國際處書面審查（60%）與面試（40%，2026/12/11 舉行）錄取公告後，須於規定期限內（第一階段 2026/12/21 前）繳交《錄取資格確認書》（或放棄聲明書），除日語組與中國地區外全體錄取生須修習並通過語文教育中心《交換生英語加強課程》（第 1 週至第 9 週，日語組參加應日系每週口說練習），並簽署《長榮大學赴外交換學生行政契約書》，配合國際處完成姊妹校提名、入學申請、簽證、役男出境及海外醫療與意外保險。",
+        "return-report": "境外交換或雙聯研修期滿返國後一個月內，須依《長榮大學赴外研修生作業要點》第九條第九款及《行政契約書》第九條規定，向國際處國際合作組提交中文（2,000 字以上）及外文（400 字以上）之《研修心得報告》與交換期間學習／生活照片 6 張（供刊登於國際處「海外研修生心得分享」專區與教育部學海計畫資訊網），並協助填寫國際處問卷與經驗傳承，始得完成結案與教育部學海計畫／校內出國交換助學金核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《長榮大學學生抵免學分辦法》及《長榮大學辦理赴外交換學生學分抵免相關規定》向所屬學系（所）、通識教育中心及教務處註冊課務組申請境外修習科目學分採認抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "長榮大學").replace("長庚", "長榮")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "長榮大學規定：修業滿一學年（含）以上，且前一學年度學業平均成績達 70 分（含）以上（書審含前一學年度操行成績 10%＋學業成績 10%；申請教育部學海飛颺須班排名前 40%）。請檢附中英文歷年成績單正本（需註明歷年總平均、名次及總人數）。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語組／英韓組：TOEIC 多益測驗（捷克赫拉德茨克拉洛韋大學、韓國韓信／韓南大學等要求 550–785+）",
+                "英語組／英韓組：IELTS 雅思（德國科堡應用科技大學 5.0、法國雷恩商學院 6.0、雙聯英國 NTU 6.5 / 馬來西亞 UTS 5.0–6.0）",
+                "英語組／英韓組：TOEFL iBT / ITP（韓國、捷克奧斯特拉瓦、德國巴登符騰堡、日本國際教養大學等要求 iBT 45–80+ 或 ITP 480–550+）",
+                "日語組：JLPT 日語能力試驗（國際基督教大學 N1、島根／名櫻／琉球／天理／創價／桃山／青森等 N2、鎮西／明治／東北學院／大東文化等 N3–N4、東亞／北洋／聖泉／韓信／金城／清泉等 N5）",
+                "英韓組（韓語授課）：TOPIK 韓國語文能力測驗（東亞／德成／韓南／白石／蔚山等要求 TOPIK 2–4 級）",
+                "中文組：中國大陸、馬來西亞拉曼大學／新紀元大學學院或免語檢英語授課姊妹校（以書審 60%＋面試 40% 甄選）",
+            ]
+            field["help_text"] = "依長榮大學《115學年度校級國際交換生甄選簡章》四大語組（英韓組／英語組／中文組／日語組）及各姊妹校申請標準填報有效語言能力證明（佔書審 10%）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://dweb.cjcu.edu.tw/oia/article/3030",
+        source_checked_at=CJCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="校級國際交換生甄選報名表（含申請資料檢核表、家長同意書、自傳、讀書計畫及師長推薦函）" if template.id == "exchange-application-data" else ("自傳及讀書計畫（中文及外文）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://dweb.cjcu.edu.tw/ShepherdFiles/B0602/File/20250915165529463.pdf",
+        default_copies=1,
+        signatures=["申請人親筆簽名", "家長或監護人親筆簽名蓋章", "導師簽名", "系主任簽名"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "第一階段錄取生於 2026/12/21 前繳交錄取資格確認書、簽署行政契約書，並修習通過第 1–9 週交換生英語加強課程（或應日系口說練習）", "return-report": "返國後一個月內繳交中文 2,000 字以上及外文 400 字以上之研修心得報告（含照片 6 張）辦理結案與獎助核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分抵免"}.get(template.id, "2026/10/01 至 2026/11/27 17:00 前將紙本（迴紋針固定）送交國際處，並掃描為單一彩色 PDF 寄至 exch@mail.cjcu.edu.tw 及填寫線上表單"),
+        version="115準備工具-2026-11-02.1",
+        destinations=["長榮大學國際處國際合作組（711010 臺南市歸仁區長大路 1 號 行政大樓 3 樓，exch@mail.cjcu.edu.tw）"],
+        conditional_note="此為個人準備工具；長榮大學 115 學年度校級國際交換生甄選（選送 116-1 及 116-2 出國交換）收件期間為 2026/10/01 至 2026/11/27 17:00，面試日期為 2026/12/11（書審 60%＋面試 40%）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3072,6 +3125,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncut_template(template)) is not None]
     if university.id == NPUST.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _npust_template(template)) is not None]
+    if university.id == CJCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _cjcu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

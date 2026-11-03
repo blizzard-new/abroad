@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/images/icon/favicon01.ico">
+
+        <meta name="description" content="&#x9577;&#x69AE;&#x5927;&#x5B78;-&#x570B;&#x969B;&#x4E8B;&#x52D9;&#x5BA4; | &#x9577;&#x69AE;&#x5927;&#x5B78;&#x69AE;&#x7372;&#x300C;&#x570B;&#x5BB6;&#x54C1;&#x8CEA;&#x734E;-&#x6C38;&#x7E8C;&#x767C;&#x5C55;&#x5178;&#x7BC4;&#x734E;&#x300D;&#xFF0C;2026&#x5E74;&#x4E9E;&#x6D32;&#x6392;&#x540D;&#x7B2C;375&#xFF0C;2026&#x5E74;&#x4E16;&#x754C;&#x6392;&#x540D;1201&#x2013;1400&#xFF0C;THE 2026&#x4E16;&#x754C;&#x5927;&#x5B78;&#x5F71;&#x97FF;&#x529B; 601-800&#xFF0C;&#x6301;&#x7E8C;&#x6DF1;&#x8015;&#x5728;&#x5730;&#x9023;&#x7D50;&#x570B;&#x969B;&#xFF0C;&#x6210;&#x70BA;&#x6C38;&#x7E8C;&#x767C;&#x5C55;&#x5178;&#x7BC4;&#x5927;&#x5B78;" />
+    <meta name="keywords" content="國際事務室,長榮大學,永續發展典範,綠色大學,永續發展,基督教大學,社會責任,CJCU,台南,Tainan">
+    <meta name="author" content="長榮大學 國際事務室" />
+    <meta name="robots" content="all" />
+    <meta property="og:url" content="https://dweb.cjcu.edu.tw/intl/article/4379" />
+    <meta property="og:site_name" content="長榮大學 國際事務室">
+        <meta property="og:title" content="【短期交流】長榮大學短期交流獎助計畫-國際事務室" />
+        <title>【短期交流】長榮大學短期交流獎助計畫-長榮大學 國際事務室</title>
+        <meta property="og:description" content="&#x9577;&#x69AE;&#x5927;&#x5B78;-&#x570B;&#x969B;&#x4E8B;&#x52D9;&#x5BA4; | &#x9577;&#x69AE;&#x5927;&#x5B78;&#x69AE;&#x7372;&#x300C;&#x570B;&#x5BB6;&#x54C1;&#x8CEA;&#x734E;-&#x6C38;&#x7E8C;&#x767C;&#x5C55;&#x5178;&#x7BC4;&#x734E;&#x300D;&#xFF0C;2026&#x5E74;&#x4E9E;&#x6D32;&#x6392;&#x540D;&#x7B2C;375&#xFF0C;2026&#x5E74;&#x4E16;&#x754C;&#x6392;&#x540D;1201&#x2013;1400&#xFF0C;THE 2026&#x4E16;&#x754C;&#x5927;&#x5B78;&#x5F71;&#x97FF;&#x529B; 601-800&#xFF0C;&#x6301;&#x7E8C;&#x6DF1;&#x8015;&#x5728;&#x5730;&#x9023;&#x7D50;&#x570B;&#x969B;&#xFF0C;&#x6210;&#x70BA;&#x6C38;&#x7E8C;&#x767C;&#x5C55;&#x5178;&#x7BC4;&#x5927;&#x5B78;" />
+    <meta property="og:image" content="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/Logo/20260115163948748.jpg" />
+    <meta property="og:type" content="website" />
+
+    <link href="/css/styles/style.css?ver=20230704" rel="stylesheet" />
+    <link href="/css/styles/color01.css?ver=20230704" rel="stylesheet" />
+    <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="/lib/main/css/aos.css" rel="stylesheet">
+    <link href="/lib/main/css/main.css?ver=20230704" rel="stylesheet">
+    <link href="/css/pagestyles/freshman.css?version=2023061201" rel="stylesheet" />
+    <script src="/js/Scripts/jquery-3.7.1.min.js"></script>
+    <script src="/js/Scripts/weya.js"></script>
+    <script src="/lib/main/js/aos.js"></script>
+    <script src="/lib/main/js/swiper-bundle.min.js"></script>
+    <script src="/lib/main/js/main.js"></script>
+
+    <script type="text/javascript">
+
+        window.addEventListener("load", (event) => {
+            mobile();
+        });
+
+        addEventListener("keydown", (event) => {
+            // ALT + "C"
+            if (event.altKey && event.keyCode === 67) {
+                $('#AC').show();
+                $('html, body').animate({
+                    // 滾動條位置設置為錨點 "C" 的位置
+                    scrollTop: $('#AC').offset().top - 200
+                },); // 0 表示滾動不需要花費時間
+                event.preventDefault(); // 阻止預設的滾動行為
+            }
+        });
+
+        $(function () {
+            var parent_id = $('.active').attr("data-parent_id");
+            $("#" + parent_id).addClass("nav_selected");
+        });
+
+        function mobile() {
+
+            if ($(window).width() < 1024 && $('#mobile-btn').length == 0) {
+                //mobile menu
+                0 === $('#mobile-btn').length && $('body').append('<div id="mobile-btn"><div><span></span></div></div><div class="accordion mobile-menu" id="mobile"><p> </p></div><div class="mobile-bg"></div>');
+                $(".accordion dd").hide();
+                $('#mobile').append("<dl><dt class='no-child'><a href='/intl/sitemap' title='網站導覽'>網站導覽</a></dt></dl><dl><dt class='no-child'><a href='?lang=en' title='English'>English</a></dt></dl><dl><dt class='no-child'><a href='/intl/main' title='訊息中心'>訊息中心</a></dt></dl><dl><dt class='no-child'><a href='/intl/article/1617' title='單位介紹'>單位介紹</a></dt></dl><dl><dt class='no-child'><a href='/intl/files/350' title='服務資源'>服務資源</a></dt></dl><dl><dt class='no-child'><a href='/intl/article/2577' title='校際交流合作'>校際交流合作</a></dt></dl><dl><dt class='no-child'><a href='/intl/article/1552' title='赴外交換生'>赴外交換生</a></dt></dl><dl><dt class='no-child'><a href='/intl/article/2588' title='來校交換生'>來校交換生</a></dt></dl><dl><dt class='no-child'><a href='/intl/article/4379' title='短期交流'>短期交流</a></dt></dl><dl><dt class='no-child'><a href='https://dweb.cjcu.edu.tw/overseas_student?lang=zh-TW' title='境外生招生'>境外生招生</a></dt></dl><dl><dt class='no-child'><a href='/intl/article/2563' title='國際學伴組織'>國際學伴組織</a></dt></dl>");
+                $('#mobile-btn').on("click", function () {
+                    $('.mobile-bg').hide();
+                    var switchBtn = $('.mobile-menu');
+                    if (switchBtn.hasClass('btn-open')) {
+                        //close
+                        $('.mobile-menu').animate({ right: -250 }, 300).removeClass('btn-open');
+                        $('#mobile-btn').removeClass('active'); //menu active
+                    } else {
+                        //open
+                        $('.mobile-menu').animate({ right: 0 }, 300).addClass('btn-open');
+                        $('#mobile-btn').addClass('active'); //menu active
+                        $('.mobile-bg').fadeIn()
+                    }
+                });
+                $('.mobile-bg').on("click", function () {
+                    $('.mobile-bg').hide();
+                    $('.mobile-menu').animate({ right: -250 }, 300).removeClass('btn-open');
+                    $('#mobile-btn').removeClass('active'); //menu word
+                });
+            }
+        }
+    </script>
+    <!-- Global site tag (gtag.js) - Google Ads: 761907490 廣告-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-761907490"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'AW-761907490');
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics DWEB-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130210965-4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-130210965-4');
+    </script>
+</head>
+<body>
+
+        <header>
+            <div class="header-wrap">
+                <div class="width" style="">
+                    <a href="#main_content" id="gotocenter" title="移到主要內容" class="sr-only sr-only-focusable">跳到主要內容</a>
+                    <a href="/intl" class="logo hrefTitle" style="">
+                            <img src="/ShepherdFiles/B2600/Logo/20180125094009346.png" style="float:left" alt="長榮大學 國際事務室" />
+                        <div class="spanTitle">
+                                <span class="hero-title" style="float:left;">國際事務室</span>
+                        </div>
+                    </a>
+                    <div class="right">
+                        <ul class="common">
+                            <li><a href="#U" id="AU" name="U" title="上方功能區塊" accesskey="U">:::</a></li>
+                            <li>
+                                <a href="http://cjcu.tw" target="_blank">長榮大學</a>
+                            </li>
+                            <li>
+                                <a href="/intl/sitemap" title="&#x7DB2;&#x7AD9;&#x5C0E;&#x89BD;">&#x7DB2;&#x7AD9;&#x5C0E;&#x89BD;</a>
+                            </li>
+
+                                    <li>
+                                        <a href="?lang=en">English</a>
+                                    </li>
+                        </ul>
+                    </div>
+                    <div class="cleaner"></div>
+                </div>
+
+                    <div class="gray-bg">
+                        <div class="width">
+                            <ul id="oe_menu" class="oe_menu">
+                                    <li>
+                                        <a id='nav_01' href="/intl/main" >訊息中心</a>
+                                    </li>
+                                    <li>
+                                        <a id='nav_2741' href="/intl/article/1617"  >單位介紹</a>
+                                    </li>
+                                    <li>
+                                        <a id='nav_2788' href="/intl/files/350"  >服務資源</a>
+                                    </li>
+                                    <li>
+                                        <a id='nav_2949' href="/intl/article/2577"  >校際交流合作</a>
+                                    </li>
+                                    <li>
+                                        <a id='nav_2859' href="/intl/article/1552"  >赴外交換生</a>
+                                    </li>
+                                    <li>
+                                        <a id='nav_2887' href="/intl/article/2588"  >來校交換生</a>
+                                    </li>
+                                    <li>
+                                        <a id='nav_3002' href="/intl/article/4379" class='nav_selected' >短期交流</a>
+                                    </li>
+                                    <li>
+                                        <a id='nav_10096' href="https://dweb.cjcu.edu.tw/overseas_student?lang=zh-TW"   target=&#x27;_blank&#x27;>境外生招生</a>
+                                    </li>
+                                    <li>
+                                        <a id='nav_4642' href="/intl/article/2563"  >國際學伴組織</a>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+        </header>
+    <div class="width cc" id="featured">
+        <div class="row container-fluid" id="main_content">
+                    <div class="col-md-9 col-md-push-3">
+                        
+        <div class="row padded-t35">
+            <div class="title-line">&#x3010;&#x77ED;&#x671F;&#x4EA4;&#x6D41;&#x3011;&#x9577;&#x69AE;&#x5927;&#x5B78;&#x77ED;&#x671F;&#x4EA4;&#x6D41;&#x734E;&#x52A9;&#x8A08;&#x756B;</div>
+            <div class="col-xs-12">
+            <a href="#C" title="中央內容區塊" id="AC" accesskey="C" name="C" style="display:none">:::</a>
+                <span style="float: right">2026/10/28 下午 02:11:00</span>
+            </div>
+        </div>
+        <div id="article" class="row padded-t20">
+        <h1 style="display:none">&#x3010;&#x77ED;&#x671F;&#x4EA4;&#x6D41;&#x3011;&#x9577;&#x69AE;&#x5927;&#x5B78;&#x77ED;&#x671F;&#x4EA4;&#x6D41;&#x734E;&#x52A9;&#x8A08;&#x756B;</h1>
+                <p><strong><span style="color:#d35400;"><span style="font-size:22px">長榮大學短期交流獎助計畫-116年度第一梯次，即日起開跑囉！</span></span></strong></p>
+
+<p><span style="font-size:22px"><span style="color:null;">📅申請截止至115年10月28日(五)中午12:00前</span><br>
+<span style="color:null">📅【受理116(2027)年01月01日至06月30日之短期交流活動案】</span></span></p>
+
+<p><span style="font-size:16px;">📌說明：<br>
+1.依據「長榮大學短期交流補助作業要點」辦理徵案，由校內行政或教學單位以團體方式，於規定時間內提出申請，參與(受補助)對象必須是本校在學學生(於交流期間須全程保留本校學籍)及本校隨(帶)隊老師，期盼師生積極進行海外移動，增進國際視野!</span></p>
+
+<p><span style="font-size:16px;">2.每位學生補助以三萬元為限，補助項目得包括補助活動類型 所需之 課程費、報名費、住宿費、保險費、經濟艙來回機票費，不限區域。</span></p>
+
+<p><span style="font-size:16px;">詳情請見附件之徵案說明，敬邀老師及同仁前來參與徵案說明會瞭解更多哦~</span></p>
+
+<p><span style="font-size:16px;">🔗補助作業要點：&nbsp;<a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/20240321154041506.pdf" target="_blank">服務資源&gt;法規專區&gt;長榮大學短期交流補助作業要點</a></span></p>
+
+<p><span style="font-size:16px;">🔗申請資料下載處(Word):&nbsp;</span></p>
+
+<p><a href="https://drive.google.com/drive/folders/12il1KyN2xDRp8rGvbSRf7fzNeTvn4Foe?usp=drive_link">https://drive.google.com/drive/folders/12il1KyN2xDRp8rGvbSRf7fzNeTvn4Foe?usp=drive_link</a></p>
+
+<h3><span style="font-size:16px;">🔗徵案說明會報名：</span><a href="https://eweb.cjcu.edu.tw/act/act.aspx?id=20207">活動歷程 - 長榮大學</a></h3>
+
+<p><span style="font-size:16px;">▲承辦單位：國際事務室 #1702 王欣恩</span></p>
+
+<p style="text-align:justify"><span style="font-size:20px"><strong><span style="background-color:#dddddd">成果分享&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></strong></span></p>
+
+<p><span style="font-size:14px"><strong>◆111AY第二梯次(受理112.07-112.12</strong><strong>)</strong>&nbsp;<span style="color:#e74c3c"><strong>112.03月徵案</strong></span></span></p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:100%">
+	<tbody>
+		<tr>
+			<td><span style="font-size:14px">活動日期</span></td>
+			<td><span style="font-size:14px">活動名稱</span></td>
+			<td>
+			<p><span style="font-size:14px">活動地點&nbsp;</span></p>
+			</td>
+			<td><span style="font-size:14px">執行成效表單</span></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px;">112.07.08-08.09</span></td>
+			<td><span style="font-size:14px;">資訊暨設計學院:2023資設院赴捷克UHK大學暑期短期交流</span></td>
+			<td><span style="font-size: 14px;">捷克</span></td>
+			<td>執行完畢</td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px;">112.08.04-08.20</span></td>
+			<td><span style="font-size:14px;">運動競技學系:橄欖球隊移地訓練</span></td>
+			<td>韓國</td>
+			<td>執行完畢</td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px;">112.09.05-09.10</span></td>
+			<td><span style="font-size:14px;">永續發展國際學程:根與芽國際性環境教育交流暨倡議行動計畫</span></td>
+			<td>馬來西亞</td>
+			<td>執行完畢</td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px;">112.11(暫定)</span></td>
+			<td><span style="font-size:14px;">東南亞文化與產業學士學位學程:東南亞學程2023印尼行動學習</span></td>
+			<td>印尼</td>
+			<td>執行完畢</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><span style="font-size:14px"><strong>◆111AY第一梯次(受理112.01-112.06)</strong>&nbsp;<span style="color:#e74c3c"><strong>111.10月徵案</strong></span></span></p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:100%">
+	<tbody>
+		<tr>
+			<td><span style="font-size:14px">活動日期</span></td>
+			<td><span style="font-size:14px">活動名稱</span></td>
+			<td>
+			<p><span style="font-size:14px">活動地點&nbsp;</span></p>
+			</td>
+			<td><span style="font-size:14px">執行成效表單</span></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">112.01.26-02.12</span></td>
+			<td><span style="font-size:14px">東南亞文化與產業學士學位學程：行動學習在泰國：走訪台資產業與考察後疫情下的泰國社會</span></td>
+			<td><span style="font-size:14px">泰國</span></td>
+			<td>執行完畢</td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">112.02.02-02.08</span></td>
+			<td><span style="font-size:14px">運動競技學系：馬來西亞籃球運動文化交流</span></td>
+			<td><span style="font-size:14px">馬來西亞</span></td>
+			<td><a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/20230829100241310.pdf">點此查看</a></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">112.02.05-02.11</span></td>
+			<td><span style="font-size:14px">應用日語學系：台日地方創生體驗學習考察</span></td>
+			<td><span style="font-size:14px">日本</span></td>
+			<td><a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/20230829100402321.pdf">點此查看</a></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px;">112.03.31-04.06</span></td>
+			<td><span style="font-size:14px;">翻譯學系: 2023翻譯系學生赴泰國基督教大學短期交流計畫</span></td>
+			<td>泰國</td>
+			<td>執行完畢</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify"><span style="font-size:14px"><strong>◆108AY第一梯次(受理109.01-109.06)&nbsp;</strong><span style="color:#e74c3c"><strong>108.10月徵案</strong></span></span></p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:100%">
+	<tbody>
+		<tr>
+			<td><span style="font-size:14px">活動日期</span></td>
+			<td><span style="font-size:14px">活動名稱</span></td>
+			<td>
+			<p><span style="font-size:14px">活動地點&nbsp;</span></p>
+			</td>
+			<td><span style="font-size:14px">執行成效表單</span></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">109.02.03-02.14</span></td>
+			<td><span style="font-size:14px">護理系：跨文化健康照護深度學習</span></td>
+			<td><span style="font-size:14px">菲律賓</span></td>
+			<td><span style="font-size:14px">心得&nbsp; <a href="https://www.cjcu.edu.tw/news-detail.php?id=IN,2341">新聞</a></span></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">109.06.23-06.30</span></td>
+			<td><span style="font-size:14px">安科院：日本安全衛生課程體驗及企業參訪計畫</span></td>
+			<td><span style="font-size:14px">日本</span></td>
+			<td><span style="font-size:14px">心得&nbsp;&nbsp;</span></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">109.07.14-08.17</span></td>
+			<td><span style="font-size:14px">資設院：2020資設院赴捷克UHK大學暑期短期交流</span></td>
+			<td><span style="font-size:14px">捷克</span></td>
+			<td><span style="font-size:14px">心得&nbsp;&nbsp;</span></td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:justify"><strong>◆107AY第二梯次第二次(受理108.10-11)</strong>&nbsp;<span style="font-size:14px"><span style="color:#e74c3c"><strong>108.07月徵案</strong></span></span></p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:100%">
+	<tbody>
+		<tr>
+			<td><span style="font-size:14px">活動日期</span></td>
+			<td><span style="font-size:14px">活動名稱</span></td>
+			<td>
+			<p><span style="font-size:14px">活動地點&nbsp;</span></p>
+			</td>
+			<td><span style="font-size:14px">執行成效表單</span></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">108.11.03-11.10</span></td>
+			<td><span style="font-size:14px">永續發展國際學程：根與芽國際性環境教育倡議行動</span></td>
+			<td><span style="font-size:14px">馬來西亞</span></td>
+			<td><a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/20191230163359118.pdf"><span style="font-size:14px">心得&nbsp;&nbsp;</span></a></td>
+		</tr>
+	</tbody>
+</table>
+
+<p><span style="font-size:14px"><strong>◆107AY第二梯次(受理108.08-109.01)&nbsp;</strong><span style="color:#e74c3c"><strong>108.05月徵案</strong></span></span></p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:100%">
+	<tbody>
+		<tr>
+			<td>活動日期</td>
+			<td>活動名稱</td>
+			<td>
+			<p><span style="font-size:14px">活動地點&nbsp;</span></p>
+			</td>
+			<td><span style="font-size:14px">執行成效表單</span></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">108.08.16-08.28</span></td>
+			<td><span style="font-size:14px">東南亞學程：2019行動學習II</span></td>
+			<td><span style="font-size:14px">泰國、越南</span></td>
+			<td><a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/201912301620142.pdf"><span style="font-size:14px">心得&nbsp;&nbsp;</span></a></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">108.08.20-08.29 </span></td>
+			<td><span style="font-size:14px">華語中心：2019<span style="color:black">跨界交流專案計畫</span></span></td>
+			<td><span style="font-size:14px">日本</span></td>
+			<td><a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/20191230162732817.pdf"><span style="font-size:14px">心得&nbsp;&nbsp;</span></a></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">108.11.16-11.24</span></td>
+			<td><span style="font-size:14px">翻譯系：中英文導覽技巧移地密集課程@CUT</span></td>
+			<td><span style="font-size:14px">泰國</span></td>
+			<td><a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/20191230162517700.pdf"><span style="font-size:14px">心得&nbsp;&nbsp;</span></a></td>
+		</tr>
+	</tbody>
+</table>
+
+<p><strong>◆107AY第二學期隨到隨審</strong>&nbsp;<span style="font-size:14px"><span style="color:#e74c3c"><strong>108.02收案</strong></span></span></p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:100%">
+	<tbody>
+		<tr>
+			<td><span style="font-size:14px">活動日期</span></td>
+			<td><span style="font-size:14px">活動名稱</span></td>
+			<td>
+			<p><span style="font-size:14px">活動地點&nbsp;</span></p>
+			</td>
+			<td><span style="font-size:14px">執行成效表單</span></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px"><span style="color:black">108.03.31-04.04</span></span></td>
+			<td><span style="font-size:14px">醫管系：<span style="color:black">日本醫療相關產業與學術機構研習</span></span></td>
+			<td><span style="font-size:14px">日本</span></td>
+			<td><a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/20191230161352734.pdf"><span style="font-size:14px">心得&nbsp;&nbsp;</span></a></td>
+		</tr>
+	</tbody>
+</table>
+
+<p><span style="font-size:14px"><strong>◆107AY第一梯次(受理108.02-07) </strong><span style="color:#e74c3c"><strong>107.10月徵案</strong></span></span></p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width:100%">
+	<tbody>
+		<tr>
+			<td><span style="font-size:14px">活動日</span></td>
+			<td><span style="font-size:14px">活動名稱</span></td>
+			<td>
+			<p><span style="font-size:14px">活動地點&nbsp;</span></p>
+			</td>
+			<td><span style="font-size:14px">執行成效表單</span></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">108.04.20-04.28</span></td>
+			<td><span style="font-size:14px">翻譯系：翻譯系中英文導覽技巧移地密集課程@CUT</span></td>
+			<td><span style="font-size:14px">泰國</span></td>
+			<td><a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/20191230155230347.pdf"><span style="font-size:14px">心得&nbsp;&nbsp;</span></a></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">108.06.25-07.02</span></td>
+			<td><span style="font-size:14px">安科院：日本安全衛生課程體驗及企業參訪計畫</span></td>
+			<td><span style="font-size:14px">日本</span></td>
+			<td><a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/20191230154951820.pdf"><span style="font-size:14px">心得&nbsp;&nbsp;</span></a></td>
+		</tr>
+		<tr>
+			<td><span style="font-size:14px">108.07.05-08.07</span></td>
+			<td><span style="font-size:14px">資設院：2019資設院赴捷克UHK大學暑期短期交流</span></td>
+			<td><span style="font-size:14px">捷克</span></td>
+			<td><span style="font-size:14px"><a href="https://dweb.cjcu.edu.tw/ShepherdFiles/B2600/File/20191230155129892.pdf">心得&nbsp;</a>&nbsp;</span></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+                </div>
+            <div class="cleaner"></div>
+
+        <div class="row padded-t30">
+            <span class="title">
+                <i class="fa fa-download" aria-hidden="true"></i>
+                <b>檔案下載</b>
+            </span>
+            <div class="padded-l10"  >
+                <ul>
+                    <li>
+                        <a target="_blank" rel="noopener noreferrer" href="/ShepherdFiles/B2600/Article/2026102814111425.pdf" aria-label="另開新視窗：下載 116&#x5E74;&#x5EA6;&#x7B2C;&#x4E00;&#x68AF;&#x6B21;&#x77ED;&#x671F;&#x4EA4;&#x6D41;&#x734E;&#x52A9;&#x8A08;&#x756B;&#x5FB5;&#x6848;&#x7C21;&#x7AE0;">
+                            <i class="fa fa-file-o padded-r10" aria-hidden="true" role="presentation"></i>116年度第一梯次短期交流獎助計畫徵案簡章
+                        </a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+
+            <div class="row padded-b10"></div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+                    if ($(window).width() < 1024 && $('#mobile-btn').length == 0) {
+                        $("#article img").removeAttr('height').removeAttr('width').removeAttr('style');
+                        $("#article table").removeAttr('height').removeAttr('width').removeAttr('style');
+                        $("#aboutus iframe").removeAttr('height').removeAttr('width').removeAttr('style');
+                        $("#article table").addClass("table");
+                        $("#article iframe").addClass("iframeWrapper");
+                    }
+                    $("#article img").addClass("img-responsive").addClass("img-rounded").css({ 'display': 'block', 'max-width': '98%', 'height': 'auto' });
+                    $("#article a").addClass("link");
+                    $("#article ul li").css({ 'margin-left': '20px', 'padding-left': '0px', 'list-style-type': 'circle' });
+                    $("#article ol li").css({ 'margin-left': '20px', 'padding-left': '0px', 'list-style-type': 'decimal' });
+                });
+            </script>
+
+                    </div>
+    <div class="col-md-3 col-md-pull-9">
+        <div class="news-link padded-t46">
+                    <a data-parent_id="nav_3002" href="/intl/article/4379" class='active' >&#x77ED;&#x671F;&#x4EA4;&#x6D41;&#x734E;&#x52A9;&#x8A08;&#x756B;</a>
+                    <a data-parent_id="nav_3002" href="/intl/article/7957"  >&#x5728;&#x5730;&#x570B;&#x969B;&#x5316;&#x5FB5;&#x6848;</a>
+                    <a data-parent_id="nav_3002" href="/intl/article/2131"  >&#x8DE8;&#x570B;&#x6559;&#x80B2;&#x9AD4;&#x9A57;GlobEEs</a>
+                    <a data-parent_id="nav_3002" href="/intl/article/2135"  >Outbound&#x8AB2;&#x7A0B;&#x3001;&#x71DF;&#x968A;</a>
+                    <a data-parent_id="nav_3002" href="/intl/article/2132"  >Outbound&#x5BD2;&#x6691;&#x5047;&#x904A;&#x5B78;&#x5718;</a>
+                    <a data-parent_id="nav_3002" href="/intl/article/4488"  >Inbound&#x8AB2;&#x7A0B;&#x3001;&#x71DF;&#x968A;</a>
+                    <a data-parent_id="nav_3002" href="/intl/news/37293"  >&#x8D74;&#x9678;&#x4EA4;&#x6D41;&#x6D3B;&#x52D5;&#x767B;&#x9304;</a>
+        </div>
+    </div>
+        </div>
+        <div class="push"></div>
+    </div>
+        <footer>
+            <div class="width">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="foot-left">
+                                <ul>
+                                    <li class="hidden-xs"><a href="#Z" id="AZ" title="下方功能區塊" accesskey="Z" name="Z">:::</a> Copyright © 長榮大學 國際事務室</li>
+                                    <li>711301 台南市歸仁區長大路1號 (行政大樓3樓)
+                                    </li>
+                                    
+
+                                            <li>
+                                                行政大樓 3F
+                                            </li>
+                                    
+                                    <li>
+                                            <span class="hidden-xs">電話</span>
+                                                <span>(06)2785123 #1701-#1741</span>
+                                        <span class="hidden-xs">
+                                                <span class="padded-l20">&#x50B3;&#x771F;&nbsp;(06)2785979</span>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>intl@mail.cjcu.edu.tw</span>
+                                    </li>
+                                </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="foot-right">
+                            <ul>
+                                <li class="hidden-xs">
+                                    &nbsp;
+                                </li>
+                                <li>
+                                    <a target="_blank" href="http://www.cjcu.edu.tw/isms">資安政策</a>
+                                    <span>‧</span>
+                                    <a target="_blank" href="http://www.cjcu.edu.tw/pims">隱私權</a>
+                                    <span>‧</span>
+                                        <a href="/Home/Counter?site_no=B2600" target="_blank">瀏覽人次 2122001</a>
+                                </li>
+                                <li class="hidden-xs"><span title="短網址">http://cjcu.tw/d/intl</span></li>
+                                <li class="hidden-xs">
+                                    <a href="/siteManage/index">後台管理</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cleaner"></div>
+        </footer>
+    <a id="top" title="向上滑動"></a>
+
+</body>
+</html>

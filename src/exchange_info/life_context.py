@@ -134,7 +134,7 @@ def reference_record(partner: PartnerUniversity) -> dict:
 @lru_cache(maxsize=1)
 def _bundled_ntnu_student_experiences() -> dict[tuple[str, str], tuple[StudentExperienceSource, ...]]:
     by_key: dict[tuple[str, str], list[StudentExperienceSource]] = {}
-    for school_code in ("ntnu", "cycu", "ntust", "yzu", "fcu", "nsysu", "nchu", "ntut", "nccu", "ncku", "nycu", "nthu", "pccu", "wzu", "nkust", "yuntech", "ntou", "ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub", "ncnu", "ndhu", "thu", "shu", "pu", "usc", "nuk", "ncyu", "nutc", "nfu", "utaipei", "ntcu", "tnua", "ntua", "ntue", "ncut", "npust"):
+    for school_code in ("ntnu", "cycu", "ntust", "yzu", "fcu", "nsysu", "nchu", "ntut", "nccu", "ncku", "nycu", "nthu", "pccu", "wzu", "nkust", "yuntech", "ntou", "ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub", "ncnu", "ndhu", "thu", "shu", "pu", "usc", "nuk", "ncyu", "nutc", "nfu", "utaipei", "ntcu", "tnua", "ntua", "ntue", "ncut", "npust", "cjcu"):
         exp_path = Path(__file__).parent / "official_data" / school_code / "student_experiences.jsonl"
         if exp_path.exists():
             with exp_path.open(encoding="utf-8") as handle:
@@ -270,6 +270,7 @@ def _bundled_extra_research() -> Mapping[tuple[str, str], LifeResearchSnapshot]:
         Path(__file__).parent / "official_data" / "ntue" / "student_life.jsonl",
         Path(__file__).parent / "official_data" / "ncut" / "student_life.jsonl",
         Path(__file__).parent / "official_data" / "npust" / "student_life.jsonl",
+        Path(__file__).parent / "official_data" / "cjcu" / "student_life.jsonl",
     )
     for life_path in bundled_files:
         if life_path.exists():
