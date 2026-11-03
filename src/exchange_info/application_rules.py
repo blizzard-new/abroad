@@ -54,6 +54,7 @@ from .ncut_eligibility import is_ncut, ncut_academic_check, ncut_degree_check, n
 from .npust_eligibility import is_npust, npust_academic_check, npust_degree_check, npust_language_check
 from .cjcu_eligibility import cjcu_academic_check, cjcu_degree_check, cjcu_language_check, is_cjcu
 from .nqu_eligibility import is_nqu, nqu_academic_check, nqu_degree_check, nqu_language_check
+from .isu_eligibility import is_isu, isu_academic_check, isu_degree_check, isu_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -787,6 +788,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_isu(request.home_school):
+        deg_status, deg_detail = isu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -1120,6 +1126,12 @@ def _eligibility_checks(
             "academic_score", status, "金大國際交換（操行80分以上及姊妹校GPA 2.0–3.0門檻）與赴大陸交換（平均70分以上且班系排名前60%）雙軌標準", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_isu(request.home_school):
+        status, detail = isu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "義守大學交換研修學業成績門檻（歷年及格 60 分／GPA 2.0、學海飛颺／惜珠系前 40% 或班前 30%、學海助學金／學文助學金前 50%）", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1304,6 +1316,9 @@ def _eligibility_checks(
     if is_nqu(request.home_school):
         home_status, home_detail = nqu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "金大國際交換語言檢定標準（須為2年內有效成績，占書審20%：TOEIC 550+／TOEFL iBT 61+／IELTS 5.0+／JLPT N2–N3／TOPIK 2–3級）與大陸交換中文授課規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_isu(request.home_school):
+        home_status, home_detail = isu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "義守大學外語能力基準（校訂英語畢業門檻 CEFR B1／TOEIC 550／TOEFL iBT 42／IELTS 4.0、日語 JLPT N2–N3、韓語 TOPIK 2–4級）與大陸澳門免語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

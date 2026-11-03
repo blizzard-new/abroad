@@ -1,0 +1,3752 @@
+[
+  {
+    "url": "https://datastudio.google.com/embed/getReport?appVersion=20261025_0000",
+    "data": {
+      "reportConfig": {
+        "shareable": {
+          "id": "7a264451-b2db-429d-a092-87557cce54f6",
+          "type": 0,
+          "aclMode": 2,
+          "name": "(交換學校列表)學生交換研修 Student Exchange & Visiting ",
+          "createdDate": "1744094432012",
+          "modifiedDate": "1776149561831",
+          "copyable": true,
+          "downloadable": true,
+          "schedulable": false,
+          "alertEnabled": true,
+          "generateSlidesEnabled": true,
+          "canUseAdvancedFilterPanel": false,
+          "projectNumber": "1023684646485",
+          "locationType": 2,
+          "locationName": "",
+          "editable": false,
+          "isOwner": false,
+          "abuseType": 0,
+          "description": "",
+          "isDataAppReport": false,
+          "dataAppSourceNotebookId": ""
+        },
+        "page": [
+          {
+            "pageId": "75320265",
+            "page": {
+              "componentConfig": [
+                {
+                  "componentId": "cd-s_DzCcyafRU",
+                  "type": "simple-description",
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 1,
+                      "height": 30,
+                      "width": 875,
+                      "top": 0,
+                      "left": 16
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "sort": [],
+                      "breakdownConfig": [],
+                      "filters": [],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "descriptionProperty": {
+                        "text": "<span>交換學校列表 Exchange Programs</span>",
+                        "fontSize": 24
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": []
+                },
+                {
+                  "componentId": "cd-hwHwAAO1dBE",
+                  "type": "simple-daterangepicker",
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 1,
+                      "height": 40,
+                      "width": 281,
+                      "top": 0,
+                      "left": 907
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "sort": [],
+                      "breakdownConfig": [],
+                      "filters": [],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "dateRangePickerProperty": {},
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": []
+                },
+                {
+                  "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0",
+                  "componentId": "cd-ylfwqlfdrd",
+                  "type": "simple-table",
+                  "behavior": {
+                    "mapValue": {
+                      "entry": []
+                    }
+                  },
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 0,
+                      "height": 614,
+                      "width": 1172,
+                      "top": 0,
+                      "left": 16,
+                      "flipHorizontal": false,
+                      "flipVertical": false
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "dataset": {
+                        "datasetType": 1,
+                        "datasetId": "64be5815-d714-4524-be9f-3009f34aaea0"
+                      },
+                      "dimensions": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_wlfwqlfdrd",
+                                "qt_pkyydmfdrd",
+                                "qt_dttxgmfdrd",
+                                "qt_lxkvjmfdrd",
+                                "qt_xafgtmfdrd",
+                                "qt_u1s4xmfdrd",
+                                "qt_etaucnfdrd",
+                                "qt_2bu79mfdrd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "metrics": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": []
+                            }
+                          }
+                        ]
+                      },
+                      "row": 100,
+                      "sort": [
+                        {
+                          "sortDir": 1,
+                          "sortColumn": "qt_wlfwqlfdrd"
+                        }
+                      ],
+                      "breakdownConfig": [],
+                      "filters": [],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "tableProperty": {
+                        "missingDataStyle": 2,
+                        "compactPagination": false,
+                        "bodyTextWrapping": true,
+                        "showRowNum": false,
+                        "footerBorderColor": {
+                          "color": "#eee",
+                          "opacity": 1
+                        },
+                        "footerBorderWeight": 0,
+                        "tableDimensionProperty": [],
+                        "tableMetricProperty": [],
+                        "columnsWidth": [
+                          88.84400294931174,
+                          80.5732715807041,
+                          81.98084594486255,
+                          122.55345372671536,
+                          135.8569941811141,
+                          171.60883475509144,
+                          273.8135424347166,
+                          216.7690544274841
+                        ],
+                        "rowsHeight": [
+                          31,
+                          31,
+                          31,
+                          31,
+                          31,
+                          31,
+                          31,
+                          31
+                        ],
+                        "chartTitleProperty": {
+                          "chartTitleText": "學生交換研修 Student Exchange & Visiting  Table",
+                          "chartTitleShowTitle": false,
+                          "chartTitleAutoGenerateText": true
+                        }
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": [
+                    {
+                      "id": "t0.qt_wlfwqlfdrd",
+                      "name": "qt_wlfwqlfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n371419177_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_pkyydmfdrd",
+                      "name": "qt_pkyydmfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_2032628390_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_dttxgmfdrd",
+                      "name": "qt_dttxgmfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_990368033_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_lxkvjmfdrd",
+                      "name": "qt_lxkvjmfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n924117441_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_xafgtmfdrd",
+                      "name": "qt_xafgtmfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_533045275_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_u1s4xmfdrd",
+                      "name": "qt_u1s4xmfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_1651292053_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_2bu79mfdrd",
+                      "name": "qt_2bu79mfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n378037408_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_etaucnfdrd",
+                      "name": "qt_etaucnfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n273825204_"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0",
+                  "componentId": "cd-6c208sfdrd",
+                  "type": "dimension-filter",
+                  "behavior": {
+                    "mapValue": {
+                      "entry": []
+                    }
+                  },
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 0,
+                      "height": 40,
+                      "width": 281,
+                      "top": 0,
+                      "left": 16,
+                      "alias": "df4",
+                      "flipHorizontal": false,
+                      "flipVertical": false
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "dataset": {
+                        "datasetType": 1,
+                        "datasetId": "64be5815-d714-4524-be9f-3009f34aaea0"
+                      },
+                      "dimensions": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_cl108sfdrd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "metrics": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_dl108sfdrd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "row": 5001,
+                      "sort": [
+                        {
+                          "sortDir": 1,
+                          "sortColumn": "qt_dl108sfdrd"
+                        }
+                      ],
+                      "breakdownConfig": [],
+                      "filters": [
+                        "filter07275ufdrd"
+                      ],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "dimensionFilterProperty": {
+                        "showSearch": true,
+                        "sliderShowTextBoxes": true,
+                        "expandable": true,
+                        "labelFontSize": 14,
+                        "paddingTop": 8,
+                        "paddingLeft": 24,
+                        "paddingRight": 24,
+                        "centerVertical": true,
+                        "lineHeight": 16
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": [
+                    {
+                      "id": "t0.qt_cl108sfdrd",
+                      "name": "qt_cl108sfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n371419177_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_dl108sfdrd",
+                      "name": "qt_dl108sfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "datastudio_record_count_system_field_id_98323387"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0",
+                  "componentId": "cd-7r1914gdrd",
+                  "type": "dimension-filter",
+                  "behavior": {
+                    "mapValue": {
+                      "entry": []
+                    }
+                  },
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 0,
+                      "height": 40,
+                      "width": 281,
+                      "top": 0,
+                      "left": 313,
+                      "alias": "df6",
+                      "flipHorizontal": false,
+                      "flipVertical": false
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "dataset": {
+                        "datasetType": 1,
+                        "datasetId": "64be5815-d714-4524-be9f-3009f34aaea0"
+                      },
+                      "dimensions": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_csrdbtfdrd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "metrics": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_8pjcldsxyd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "row": 5001,
+                      "sort": [
+                        {
+                          "sortDir": 1,
+                          "sortColumn": "qt_8pjcldsxyd"
+                        }
+                      ],
+                      "breakdownConfig": [],
+                      "filters": [
+                        "filter07275ufdrd"
+                      ],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "dimensionFilterProperty": {
+                        "showSearch": true,
+                        "sliderShowTextBoxes": true,
+                        "expandable": true,
+                        "labelFontSize": 14,
+                        "paddingTop": 8,
+                        "paddingLeft": 24,
+                        "paddingRight": 24,
+                        "centerVertical": true,
+                        "lineHeight": 16
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": [
+                    {
+                      "id": "t0.qt_csrdbtfdrd",
+                      "name": "qt_csrdbtfdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_2032628390_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_8pjcldsxyd",
+                      "name": "qt_8pjcldsxyd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n924117441_",
+                          "aggregation": 3
+                        },
+                        "displayTransformation": {
+                          "displayName": "校數"
+                        }
+                      },
+                      "resultTransformation": {
+                        "analyticalFunction": 0,
+                        "isRelativeToBase": false,
+                        "bypassCanvasFilters": false
+                      }
+                    }
+                  ]
+                },
+                {
+                  "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0",
+                  "componentId": "cd-aaw4a5gdrd",
+                  "type": "dimension-filter",
+                  "behavior": {
+                    "mapValue": {
+                      "entry": []
+                    }
+                  },
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 0,
+                      "height": 40,
+                      "width": 281,
+                      "top": 0,
+                      "left": 610,
+                      "alias": "df9",
+                      "flipHorizontal": false,
+                      "flipVertical": false
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "dataset": {
+                        "datasetType": 1,
+                        "datasetId": "64be5815-d714-4524-be9f-3009f34aaea0"
+                      },
+                      "dimensions": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_nwaz54gdrd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "metrics": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_eaxv8dsxyd"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "row": 5001,
+                      "sort": [
+                        {
+                          "sortDir": 1,
+                          "sortColumn": "qt_eaxv8dsxyd"
+                        }
+                      ],
+                      "breakdownConfig": [],
+                      "filters": [
+                        "filter07275ufdrd"
+                      ],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "dimensionFilterProperty": {
+                        "showSearch": true,
+                        "sliderShowTextBoxes": true,
+                        "expandable": true,
+                        "labelFontSize": 14,
+                        "paddingTop": 8,
+                        "paddingLeft": 24,
+                        "paddingRight": 24,
+                        "centerVertical": true,
+                        "lineHeight": 16
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": [
+                    {
+                      "id": "t0.qt_nwaz54gdrd",
+                      "name": "qt_nwaz54gdrd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_990368033_"
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_eaxv8dsxyd",
+                      "name": "qt_eaxv8dsxyd",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_990368033_",
+                          "aggregation": 3
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0",
+                  "componentId": "cd-0ua7d5gdrd",
+                  "type": "dimension-filter",
+                  "behavior": {
+                    "mapValue": {
+                      "entry": []
+                    }
+                  },
+                  "componentConfig": [],
+                  "preset": "default",
+                  "attributeConfig": {
+                    "componentAttribute": {
+                      "datasourceConfigVersion": 2,
+                      "displayConfigVersion": 0,
+                      "height": 40,
+                      "width": 281,
+                      "top": 0,
+                      "left": 907,
+                      "alias": "df10",
+                      "flipHorizontal": false,
+                      "flipVertical": false
+                    }
+                  },
+                  "propertyConfig": {
+                    "componentProperty": {
+                      "dataset": {
+                        "datasetType": 1,
+                        "datasetId": "64be5815-d714-4524-be9f-3009f34aaea0"
+                      },
+                      "dimensions": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_t2ktixpfud"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "metrics": {
+                        "labeledConcepts": [
+                          {
+                            "key": "primary",
+                            "value": {
+                              "conceptNames": [
+                                "qt_p2ktixpfud"
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      "row": 5001,
+                      "sort": [
+                        {
+                          "sortDir": 1,
+                          "sortColumn": "qt_p2ktixpfud"
+                        }
+                      ],
+                      "breakdownConfig": [],
+                      "filters": [
+                        "filter07275ufdrd"
+                      ],
+                      "inheritFilters": true,
+                      "dsRequiredFilters": [],
+                      "dimensionFilterProperty": {
+                        "showSearch": true,
+                        "showMetricsValue": false,
+                        "sliderShowTextBoxes": true,
+                        "expandable": true,
+                        "labelFontSize": 14,
+                        "paddingTop": 8,
+                        "paddingLeft": 24,
+                        "paddingRight": 24,
+                        "centerVertical": true,
+                        "lineHeight": 16
+                      },
+                      "componentPropertyMigrationStatus": 2
+                    }
+                  },
+                  "conceptDefs": [
+                    {
+                      "id": "t0.qt_p2ktixpfud",
+                      "name": "qt_p2ktixpfud",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_485720097_",
+                          "aggregation": 6
+                        }
+                      }
+                    },
+                    {
+                      "id": "t0.qt_t2ktixpfud",
+                      "name": "qt_t2ktixpfud",
+                      "namespace": "t0",
+                      "queryTimeTransformation": {
+                        "dataTransformation": {
+                          "sourceFieldName": "_n924117441_"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "groupConfig": [
+                {
+                  "groupId": "g-vvcHeI-8VoQ",
+                  "componentId": [
+                    "cd-s_DzCcyafRU",
+                    "cd-hwHwAAO1dBE"
+                  ],
+                  "propertyConfig": {
+                    "groupProperty": {
+                      "filters": [],
+                      "inheritFilters": true,
+                      "controlStatePassThrough": true,
+                      "backgroundAndBorderProperty": {
+                        "background": {
+                          "color": "#E9EEF6",
+                          "opacity": 1
+                        }
+                      },
+                      "sectionType": 1
+                    }
+                  },
+                  "conceptDefs": [],
+                  "childGroupId": []
+                },
+                {
+                  "groupId": "g-44208sfdrd",
+                  "componentId": [
+                    "cd-6c208sfdrd",
+                    "cd-7r1914gdrd",
+                    "cd-aaw4a5gdrd",
+                    "cd-0ua7d5gdrd"
+                  ],
+                  "propertyConfig": {
+                    "groupProperty": {
+                      "filters": [],
+                      "inheritFilters": true,
+                      "controlStatePassThrough": true,
+                      "sectionType": 0
+                    }
+                  },
+                  "conceptDefs": [],
+                  "childGroupId": []
+                },
+                {
+                  "groupId": "g-o5gwqlfdrd",
+                  "componentId": [
+                    "cd-ylfwqlfdrd"
+                  ],
+                  "propertyConfig": {
+                    "groupProperty": {
+                      "filters": [
+                        "filter07275ufdrd",
+                        "filter9e7qgi9drd"
+                      ],
+                      "inheritFilters": true,
+                      "controlStatePassThrough": true,
+                      "sectionType": 0
+                    }
+                  },
+                  "conceptDefs": [],
+                  "childGroupId": []
+                }
+              ],
+              "attributeConfig": {
+                "pageAttribute": {
+                  "datasourceConfigVersion": 2,
+                  "displayConfigVersion": 0,
+                  "name": "Untitled Page"
+                }
+              },
+              "propertyConfig": {
+                "pageProperty": {
+                  "filters": [],
+                  "inheritFilters": true
+                }
+              },
+              "conceptDefs": []
+            },
+            "position": 0,
+            "version": "1776149561526",
+            "chartCondition": []
+          }
+        ],
+        "report": {
+          "componentConfig": [],
+          "resource": {
+            "filter": {
+              "entry": [
+                {
+                  "key": "filter07275ufdrd",
+                  "value": {
+                    "name": "合約是否有效\nContract Validity filter",
+                    "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0",
+                    "filterDefinition": {
+                      "filterExpression": {
+                        "include": true,
+                        "conceptType": 0,
+                        "concept": {
+                          "ns": "t0",
+                          "name": "qt_d4a9xufdrd"
+                        },
+                        "filterConditionType": "EQ",
+                        "stringValues": [
+                          "✔"
+                        ],
+                        "numberValues": [],
+                        "queryTimeTransformation": {
+                          "dataTransformation": {
+                            "sourceFieldName": "_1264722088_"
+                          }
+                        }
+                      }
+                    },
+                    "version": 3
+                  }
+                },
+                {
+                  "key": "filter9e7qgi9drd",
+                  "value": {
+                    "name": "國別\nCountry filter",
+                    "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0",
+                    "filterDefinition": {
+                      "and": {
+                        "filterDefinitions": [
+                          {
+                            "filterExpression": {
+                              "include": false,
+                              "conceptType": 0,
+                              "concept": {
+                                "ns": "t0",
+                                "name": "qt_dpbgzg9drd"
+                              },
+                              "filterConditionType": "EQ",
+                              "stringValues": [
+                                "中國大陸 \nMainland China"
+                              ],
+                              "numberValues": [],
+                              "queryTimeTransformation": {
+                                "dataTransformation": {
+                                  "sourceFieldName": "_2032628390_"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "filterExpression": {
+                              "include": false,
+                              "conceptType": 0,
+                              "concept": {
+                                "ns": "t0",
+                                "name": "qt_1owkeh9drd"
+                              },
+                              "filterConditionType": "EQ",
+                              "stringValues": [
+                                "中國大陸\nMainland China"
+                              ],
+                              "numberValues": [],
+                              "queryTimeTransformation": {
+                                "dataTransformation": {
+                                  "sourceFieldName": "_2032628390_"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "filterExpression": {
+                              "include": false,
+                              "conceptType": 0,
+                              "concept": {
+                                "ns": "t0",
+                                "name": "qt_qcskkh9drd"
+                              },
+                              "filterConditionType": "EQ",
+                              "stringValues": [
+                                "印尼\nIndonesia"
+                              ],
+                              "numberValues": [],
+                              "queryTimeTransformation": {
+                                "dataTransformation": {
+                                  "sourceFieldName": "_2032628390_"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "filterExpression": {
+                              "include": false,
+                              "conceptType": 0,
+                              "concept": {
+                                "ns": "t0",
+                                "name": "qt_rhhvsh9drd"
+                              },
+                              "filterConditionType": "EQ",
+                              "stringValues": [
+                                "印度\nIndia"
+                              ],
+                              "numberValues": [],
+                              "queryTimeTransformation": {
+                                "dataTransformation": {
+                                  "sourceFieldName": "_2032628390_"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "filterExpression": {
+                              "include": false,
+                              "conceptType": 0,
+                              "concept": {
+                                "ns": "t0",
+                                "name": "qt_k07vyh9drd"
+                              },
+                              "filterConditionType": "EQ",
+                              "stringValues": [
+                                "泰國\nThailand"
+                              ],
+                              "numberValues": [],
+                              "queryTimeTransformation": {
+                                "dataTransformation": {
+                                  "sourceFieldName": "_2032628390_"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "version": 3
+                  }
+                }
+              ]
+            },
+            "datasourceAlias": [
+              {
+                "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0",
+                "alias": "ds0"
+              }
+            ],
+            "communityVizResource": [],
+            "parameterResource": [],
+            "unifiedParameterResource": [],
+            "fieldOverridesResource": []
+          },
+          "attributeConfig": {
+            "reportAttribute": {
+              "height": 900,
+              "width": 1220,
+              "viewModeHeader": 0,
+              "viewModeScale": 1,
+              "viewModeMargin": false,
+              "snapMode": 0,
+              "gridSize": 99,
+              "gridPadding": 8,
+              "gridXOffset": 8,
+              "gridYOffset": 8,
+              "isEmbeddable": true,
+              "showNavigationInEmbeddingMode": true,
+              "layoutType": 2
+            }
+          },
+          "propertyConfig": {
+            "reportProperty": {
+              "globalObjectPosition": 2,
+              "themeConfig": "t-default-modern",
+              "coordinatedColoring": 3,
+              "filters": []
+            }
+          },
+          "conceptDefs": []
+        },
+        "encryptedReportId": "AMVsmzbzQN305LTW3ElWm3bG-CuycPwA_CmncFow1cXKvnGNKFZrFZ0cSA3SqUnirpTfpN5LNX3i",
+        "version": "1752743900428",
+        "pinRequired": false,
+        "chartCondition": [],
+        "navigationInfo": {
+          "style": 1,
+          "navItems": [
+            {
+              "page": {
+                "pageId": "75320265",
+                "displayName": "Untitled Page"
+              }
+            }
+          ],
+          "respectTheme": true
+        },
+        "thirdPartyPolicies": {
+          "newThirdPartyVizDisabled": false,
+          "existingThirdPartyVizDisabled": false
+        },
+        "notebookDataAppConfig": {}
+      },
+      "shortLinkSet": {
+        "shortLink": [],
+        "activeId": ""
+      },
+      "iog": false,
+      "isSameOrgAsUser": false,
+      "parentWorkspaceId": ""
+    }
+  },
+  {
+    "url": "https://datastudio.google.com/embed/getSchema?appVersion=20261025_0000",
+    "data": {
+      "schema": {
+        "dimensions": [
+          {
+            "displayName": "洲別 \nContinent",
+            "dataType": 0,
+            "name": "_n371419177_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n371419177_",
+              "simpleName": "_n371419177_",
+              "label": "洲別 \nContinent"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "國別\nCountry",
+            "dataType": 0,
+            "name": "_2032628390_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_2032628390_",
+              "simpleName": "_2032628390_",
+              "label": "國別\nCountry"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "城市\nCity",
+            "dataType": 0,
+            "name": "_990368033_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_990368033_",
+              "simpleName": "_990368033_",
+              "label": "城市\nCity"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "學校編號",
+            "dataType": 0,
+            "name": "_724237024_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_724237024_",
+              "simpleName": "_724237024_",
+              "label": "學校編號"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "類別",
+            "dataType": 0,
+            "name": "_1230215_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1230215_",
+              "simpleName": "_1230215_",
+              "label": "類別"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "校名 Name",
+            "dataType": 0,
+            "name": "_n924117441_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n924117441_",
+              "simpleName": "_n924117441_",
+              "label": "校名 Name"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "交換合約簽約日 Exchange Agreement Start Date",
+            "dataType": 6,
+            "name": "_n101266230_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 2,
+                  "dateTimeOptions": {
+                    "useNativeDateTime": true
+                  }
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n101266230_",
+              "simpleName": "_n101266230_",
+              "label": "交換合約簽約日 Exchange Agreement Start Date"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "截止日期\nExpiry Date",
+            "dataType": 0,
+            "name": "_n488366205_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n488366205_",
+              "simpleName": "_n488366205_",
+              "label": "截止日期\nExpiry Date"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "自動續約\nAutomatic Renewal",
+            "dataType": 0,
+            "name": "_n1887906788_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n1887906788_",
+              "simpleName": "_n1887906788_",
+              "label": "自動續約\nAutomatic Renewal"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "合約是否有效\nContract Validity",
+            "dataType": 0,
+            "name": "_1264722088_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1264722088_",
+              "simpleName": "_1264722088_",
+              "label": "合約是否有效\nContract Validity"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "交換生名額 Student Quota",
+            "dataType": 0,
+            "name": "_533045275_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_533045275_",
+              "simpleName": "_533045275_",
+              "label": "交換生名額 Student Quota"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "門檻 \nRequirements",
+            "dataType": 0,
+            "name": "_1651292053_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1651292053_",
+              "simpleName": "_1651292053_",
+              "label": "門檻 \nRequirements"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "其他學費 Additional Tuition Fees\n(必須繳交義守學費 \nI-Shou Tuition is Mandatory)",
+            "dataType": 0,
+            "name": "_n273825204_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n273825204_",
+              "simpleName": "_n273825204_",
+              "label": "其他學費 Additional Tuition Fees\n(必須繳交義守學費 \nI-Shou Tuition is Mandatory)"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "交換學校網站 \nSchool Website",
+            "dataType": 0,
+            "name": "_n378037408_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n378037408_",
+              "simpleName": "_n378037408_",
+              "label": "交換學校網站 \nSchool Website"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "窗口 Contact",
+            "dataType": 0,
+            "name": "_1476106252_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1476106252_",
+              "simpleName": "_1476106252_",
+              "label": "窗口 Contact"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "備註\nRemarks",
+            "dataType": 0,
+            "name": "_n1242795957_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n1242795957_",
+              "simpleName": "_n1242795957_",
+              "label": "備註\nRemarks"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "右列為學期人次計算",
+            "dataType": 0,
+            "name": "_1948077011_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1948077011_",
+              "simpleName": "_1948077011_",
+              "label": "右列為學期人次計算"
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "113\nInbound",
+            "dataType": 2,
+            "name": "_n1321734366_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 33
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n1321734366_",
+              "simpleName": "_n1321734366_",
+              "label": "113\nInbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 6,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "DOUBLE"
+          },
+          {
+            "displayName": "113\nOutbound",
+            "dataType": 2,
+            "name": "_1968573543_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 33
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_1968573543_",
+              "simpleName": "_1968573543_",
+              "label": "113\nOutbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 6,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "DOUBLE"
+          },
+          {
+            "displayName": "112\nInbound",
+            "dataType": 2,
+            "name": "_485720097_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 33
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_485720097_",
+              "simpleName": "_485720097_",
+              "label": "112\nInbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 6,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "DOUBLE"
+          },
+          {
+            "displayName": "112\nOutbound",
+            "dataType": 0,
+            "name": "_n2129880248_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n2129880248_",
+              "simpleName": "_n2129880248_",
+              "label": "112\nOutbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "111\nInbound",
+            "dataType": 2,
+            "name": "_n2001792736_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 33
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n2001792736_",
+              "simpleName": "_n2001792736_",
+              "label": "111\nInbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 6,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "DOUBLE"
+          },
+          {
+            "displayName": "111\nOutbound",
+            "dataType": 0,
+            "name": "_n1933366743_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n1933366743_",
+              "simpleName": "_n1933366743_",
+              "label": "111\nOutbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "110\nInbound",
+            "dataType": 2,
+            "name": "_n194338273_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 33
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n194338273_",
+              "simpleName": "_n194338273_",
+              "label": "110\nInbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 6,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "DOUBLE"
+          },
+          {
+            "displayName": "110\nOutbound",
+            "dataType": 0,
+            "name": "_n1736853238_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_n1736853238_",
+              "simpleName": "_n1736853238_",
+              "label": "110\nOutbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          },
+          {
+            "displayName": "109\nInbound",
+            "dataType": 2,
+            "name": "_914954249_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 33
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_914954249_",
+              "simpleName": "_914954249_",
+              "label": "109\nInbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 6,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "DOUBLE"
+          },
+          {
+            "displayName": "114 Outbound",
+            "dataType": 2,
+            "name": "_662767516_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 33
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_662767516_",
+              "simpleName": "_662767516_",
+              "label": "114 Outbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 6,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "DOUBLE"
+          },
+          {
+            "displayName": "114 Inbound",
+            "dataType": 0,
+            "name": "_852900173_",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 32
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "_852900173_",
+              "simpleName": "_852900173_",
+              "label": "114 Inbound",
+              "alternativeName": ""
+            },
+            "isDefault": false,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 0,
+            "newDefaultAggregation": 0,
+            "conceptType": 0,
+            "underlyingConnectorDataType": "STRING"
+          }
+        ],
+        "metrics": [
+          {
+            "displayName": "Record Count",
+            "dataType": 5,
+            "name": "datastudio_record_count_system_field_id_98323387",
+            "semanticInfo": {
+              "semanticConfig": [
+                {
+                  "semanticType": 33
+                }
+              ]
+            },
+            "params": [],
+            "fieldName": {
+              "ns": "t0",
+              "name": "datastudio_record_count_system_field_id_98323387",
+              "simpleName": "datastudio_record_count_system_field_id_98323387"
+            },
+            "isDefault": true,
+            "isAutoField": true,
+            "lookerProperties": {
+              "description": ""
+            },
+            "defaultAggregation": 7,
+            "newDefaultAggregation": 7,
+            "conceptType": 1
+          }
+        ],
+        "dateRangeRequired": false,
+        "connectorType": 8,
+        "isUnlocked": true,
+        "isCacheable": true,
+        "allowThirdPartyViz": true,
+        "isDelegatedAccessEnabled": true,
+        "isLegolasForwardEnabled": false,
+        "isGaSegmentsEnabled": false,
+        "isScheduleExtractSupported": true,
+        "cacheShelfLife": {
+          "amount": 15,
+          "chronoUnit": 1
+        },
+        "isViewerEmailFilterEnabled": false,
+        "isBqProdWorkflow": false,
+        "allowThirdPartyVizExternalAccess": false,
+        "filterOnlyFields": [],
+        "deprecationMetadata": {},
+        "lastUpdatedTimestampMs": "1744098190788",
+        "isAutoRefreshEnabled": false
+      },
+      "version": "1752743393686",
+      "encryptedDatasourceId": "AMVsmza4GdJO2mAAB8Tpnptii9uhGZim9eoUvlGi7Dm9tj3gL95e-Je6BqXCrrZsc4Xy5LFzvqkN",
+      "maxDimensions": "100",
+      "datasourceParameters": {
+        "connectorParameterConfiguration": {
+          "parameters": []
+        },
+        "datasourceVariableParameterConfiguration": {
+          "parameters": []
+        }
+      },
+      "maxMetrics": "100",
+      "isCredentialOwner": false
+    }
+  },
+  {
+    "url": "https://datastudio.google.com/embed/batchedDataV2?appVersion=20261025_0000",
+    "data": {
+      "dataResponse": [
+        {
+          "dataSubset": [
+            {
+              "dataset": {
+                "tableDataset": {
+                  "columnInfo": [
+                    {
+                      "ns": "t0",
+                      "name": "qt_t2ktixpfud"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_p2ktixpfud"
+                    }
+                  ],
+                  "totalCount": 180,
+                  "column": [
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "AUDENCIA 南特高等商學院",
+                          "奧地利茵斯布魯克管理專業高等學院\nManagement Center Innsbruck (MCI)",
+                          "印尼買提斯瓦達亞山大学\nUniversitas Swadaya Gunung Jati ",
+                          "東洋大學\nToyo University",
+                          "諾歐商學院\nNEOMA Business School",
+                          "蒙貝利耶商學院\nMontpellier Business School",
+                          "特利剎蒂管理學院\nTrisakti School of Management",
+                          "哈戈赫利亞應用科技大學\nHaaga-Helia University of Applied Sciences",
+                          "中國海洋大學\nOcean University of China",
+                          "北京科技大學\nUniversity of Science and Technology Beijing",
+                          "北京郵電大學\nBeijing University of Posts and telecommunications",
+                          "北京理工大學\nBeijing Institute of Technology",
+                          "北京工業大學\nBeijing University of Technology",
+                          "中南財經政法大學\nZhongnan University of Economics and Law",
+                          "澳門科技大學\nMacau University of Science and Technology, Macau",
+                          "北京交通大學\nBeijing Jiaotong University",
+                          "延邊大學\nYanbian University",
+                          "暨南大學\nJinan University",
+                          "東北林業大學\nNortheast Forestry University",
+                          "武漢理工大學\nWuhan University of Technology",
+                          "江南大學\nJiangnan University",
+                          "河北工業大學\nHebei University of Technology",
+                          "浙江大學--傳媒與國際文化學院\nZhejiang University-College of Media and International culture",
+                          "湖南大學\nHunan University",
+                          "華中師範大學\nCentral China Normal University",
+                          "華南理工大學\nSouth China University of Technology",
+                          "山東大學\nShandong University",
+                          "天津醫科大學\nTianjin Medical University",
+                          "內蒙古大學\nInner Mongolia University",
+                          "上海財經大學\nShanghai University of Finance and Economics",
+                          "大連理工大學\nDalian University of Technology",
+                          "西安電子科技大學\nXidian University",
+                          "貴州大學\nGuizhou University",
+                          "鄭州大學\nZhengzhou University",
+                          "重慶大學\nChongqing University",
+                          "陝西師範大學\nShaanxi Normal University",
+                          "雲南大學\nYunnan University",
+                          "亞太大學交流會\nUniversity Mobility in Asia and the Pacific (UMAP)",
+                          "日本國松本市村瀨組株式會社\nMatsumoto City Murase Group Co., Ltd.",
+                          "比娜大學\nBinus University, INDONESIA",
+                          "大板產業大學\nOsaka Sangyo University",
+                          "櫻美林大學\nJ.F. Oberlin University",
+                          "大阪市立大學\nOsaka City University",
+                          "大阪觀光大學\nOsaka University of Tourism",
+                          "新瀉大學\nNiigata University",
+                          "帝京大學\nTeikyo University",
+                          "帝京大學 （雙學位2+2）\nTeikyo University",
+                          "帝京大學醫療技術學院診療放射線學系\nDepartment of Radiological Technology,Teikyo University",
+                          "西九州大學\nNishikyushu University",
+                          "駒澤大學\nKomazawa University",
+                          "崇城大學\nSojo University",
+                          "德島文理大學\nTokushima Bunri University",
+                          "德島文理大學至義守大學 (短期交換留學）\nTokushima Bunri University",
+                          "愛媛大學\nEhime University",
+                          "梅花女子大學\nBaika Women's University",
+                          "日本東京福祉大學\nTokyo University of Social Welfare",
+                          "芝浦工業大學\nShibaura Institute of Technology",
+                          "西南財經大學\nSouthwetern University of Finance and Economics",
+                          "西南大學\nSouthwest University",
+                          "合肥工業大學\nHefei University of Technology",
+                          "中央財經大學\nCentral University of Finance and Economics",
+                          "西南交通大學\nSouthwest Jiaotong University",
+                          "東洋學園大學\nToyo Gakuen University Hongo Campus",
+                          "帝塚山學院大學\nTezukayama Gakuin University",
+                          "帝塚山學院大學 人間科學部食物營養學科\nTezukayama Gakuin University \nFaculty of Human Sciences Department of Food and Nutrition",
+                          "京都府立大学\nKyoto Prefectural University",
+                          "帝京平成大學\nTeikyo Heisei University",
+                          "長崎大學\nNagasaki University",
+                          "青海大學\nQinghai University",
+                          "SMA Nasional Plus BPK PENABUR Bogor",
+                          "SMA NEGERI 1 BATAM",
+                          "SMA KRISTEN IMMANUEL BATAM",
+                          "SMA BAYT AL-HIKMAH",
+                          "SMK Tunatsu Bandung Barat",
+                          "SMA NU 1 GRESIK",
+                          "Joint Degree Program 1+1\n(Master's program in Management (PETRA) and International Master of Business Administration (ISU)\n\n",
+                          "印尼泗水大學\nUniversity of Surabaya (Ubaya)",
+                          "紹里尼大學\nShoolini University",
+                          "Sekolah Tinggi Ilmu Ekonomi Pembangunan",
+                          "印尼巴淡國際大學\nUniversitas Internasional Batam",
+                          "STKIP PGRI 西蘇門答臘\nPGRI STKIP Sumatera Barat",
+                          "塔杜拉科大學\nTadulako University",
+                          "印尼總統大學\nPresident University",
+                          "阿天瑪加雅印度尼西亞天主教大學\nAtma Jaya Catholic University of Indonesia",
+                          "叡啓大學\nEikei University of Hiroshima",
+                          "杜塔瓦卡納基督教大學\nUniversitas Kristen Duta Wacana",
+                          "雅加達州立大學\nUniversitas NEGERI JAKARTA, INDONESIA",
+                          "印尼總理大學\nUniversitas Prima INDONESIA, INDONESIA",
+                          "印尼大學\nUniversity of Indonesia",
+                          "塔魯瑪迦大學\nTarumanagara Foundation",
+                          "聖約翰天主教學校\nSaint John's Catholic School",
+                          "加札馬達大學\nGadjah Mada University (UGM)",
+                          "泗水克里斯汀佩特拉大學\nUNIVERSITAS KRISTEN PETRA SURABAYA",
+                          "攝南大學\nSetsunan University",
+                          "蘭州大學\nLanzhou University",
+                          "南開大學\nNankai University",
+                          "詹德爾蘇迪爾曼大學\nUNIVERSITAS JENDERAL SOEDIRMAN",
+                          "布拉維加亞\nBrawijaya University",
+                          "柬埔寨大學\nScience University, Cambodia",
+                          "瓦拉亞隆宮皇家大學\nValaya AlongKorn Rajabahat University (VRU)",
+                          "坦亞布里皇家理工大學\nRajamangala Univeristy of Technology Thanyaburi",
+                          "正大管理學院\nPanyapiwat Institute of Management",
+                          "國立發展管理學院國際學院\nInternational College of the National Institute of Development Administration (ICO NIDA)",
+                          "瑪希敦大學國際學院\nMahidol University International College (MUIC)",
+                          "碧武里皇家大學\nPhetchaburi Rajabhat University",
+                          "蘭實大學\nRangsit University",
+                          "梅州大學\nMaejo University",
+                          "泰國農業大學\nKasetsart University",
+                          "亞洲理工學院\nAsian Institute of Technology",
+                          "先皇理工大學\nKing Mongkut's Institute of Technology Ladkrabang (KMITL)",
+                          "皇太后大學\nMae Fah Luang University",
+                          "宋卡王子大學\nPrince of Songkla University",
+                          "朱拉隆功大學\nChulalongkorn University",
+                          "翰林大學\nHallym University",
+                          "漢陽大學\nHanyang University",
+                          "釜山大學\nPusan National University",
+                          "乙支大學校\nEulji University",
+                          "釜山外語大學\nBusan University of Foreign Studies",
+                          "大邱保健大學校\nDaegu Health College",
+                          "嘉泉大學\nGachon University",
+                          "仁荷大學\nInha University",
+                          "拉曼大學\nUniversiti Tunku Abdul Rahman (UTAR)",
+                          "松本大學松商短期大學\nMatsusho Gakuen Junior College",
+                          "明海大學外國語學部日本語學科\nMeikai University",
+                          "華東理工大學\nEast China University of Science and Technology",
+                          "維陶瑪納大學\nVytautas Magnus University, Erasmus\n",
+                          "塔林理工大學\nTallinn University of Technology",
+                          "捷克都會大學\nMetropolitan University Prague",
+                          "克里斯蒂安斯塔德大學\nKristianstad University",
+                          "英國考文垂大學\nCoventry University",
+                          "群馬大學\nSchool of Science and Technology/ Graduate School of Science and Technology, Gunma University",
+                          "巴黎EDH(EFAP,ICART,EFJ) 聯盟\nGroup EDH (EFAP, ICART, EFJ)",
+                          "北方高等商業學院\nEDHEC Business School",
+                          "EMLV Business school Paris （De Vinci Higher Education)",
+                          "敦克爾克國際貿易高等學院\nL'Institut Superieur de Commerce International de Dunkerque - Cote d'Opale (ISCID-CO)",
+                          "奧地利約翰內姆專業高等學院\nFH JOANNEUM University of Applied Science",
+                          "赫羅納大學附設StPol酒店觀光學院\nEUHT StPOL",
+                          "埃杜孔斯大學\nEducons University, Erasmus",
+                          "D. A. Tsenov經濟學院\nD.A. Tsenov Academy of Economics - Svishtov",
+                          "歐洲大學\nEU Business School Geneva",
+                          "美國西來大學\nUniversity of the West",
+                          "南伊利諾大學卡本岱爾校區\nSouthern Illinois University Carbondale",
+                          "德州聖道大學\nUniversity of The Incarnate Word",
+                          "美國南佛羅里達大學\nThe University of South Florida",
+                          "密蘇里大學坎薩斯分校\nThe University of Missouri- Kansas City",
+                          "約翰·霍普金斯醫院臨床醫工部\nClinical Engineering Services, John Hopkins Hospital",
+                          "聖地牙哥州立大學\nSan Diego State University",
+                          "德州健康科學大學\nTexas Health and Science University",
+                          "關島大學\nUniversity of Guam",
+                          "阿拉斯秘魯大學\nUniversidad Alas Peruanas",
+                          "UNIP 保利斯塔大學\nUNIP Paulista University(UNIP Universidade Paulista)",
+                          "加拿大紐布朗維克大學\nThe University of New Brunswick",
+                          "斯里蘭卡龍喜佛教國際大學\nNãgãnanda International Buddhist University",
+                          "阿拉圖國際大學\nAla Too International University",
+                          "莫斯科市立大學薩瑪拉分校\nMoscow City University-Samara Branch",
+                          "昌迪加大學\nChandigarh University",
+                          "卡林加工業技術學院\nKalinga Institute of Industrial Technology",
+                          "印度斯坦大學\nHindustan Institute of Technology & Science",
+                          "SRM大學\nSRM Institute of Science and Technology",
+                          "馬達納帕爾萊理工學院\nMadanapalle Institute of Technology & Science",
+                          "MGR教育及研究大學\nDr. M.G.R Educational and Research Institute",
+                          "英國金斯頓大學\nKingston University",
+                          "拉夫里科技大學\nLovely Professional University",
+                          "米佐拉姆大學\nMizoram University",
+                          "阿希爾亞女神大學\nDevi Ahilya Niversity",
+                          "昌迪加爾學院\nCHANDIGARH GROUP OF COLLEGES, JHANJERI",
+                          "雒鴻大學\nLac Hong University",
+                          "文朗大學\nVan Lang University",
+                          "雄王大學\nHung Vuong University",
+                          "芹苴大學\nCan Tho University",
+                          "Hai Phong Polytechnics College",
+                          "河內水利大學\nThuyloi University",
+                          "馬來亞大學\nUniversity of Malaya",
+                          "多摩大學\nTAMA University",
+                          "華東師範大學\nEast China Normal University",
+                          "南京大學\nNanjing University",
+                          "中國石油大學(華東)\nChina University of Petroleum",
+                          "澳門聖若瑟大學\nUniversity of Saint Joseph",
+                          "澳門理工大學(原澳門理工學院)\nMacau Polytechnic Institute",
+                          "香港理工大學\nHong Kong Polytechnic University"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72,
+                        73,
+                        74,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        82,
+                        83,
+                        84,
+                        85,
+                        86,
+                        87,
+                        88,
+                        89,
+                        90,
+                        91,
+                        92,
+                        93,
+                        94,
+                        95,
+                        96,
+                        97,
+                        98,
+                        99,
+                        100,
+                        101,
+                        102,
+                        103,
+                        104,
+                        105,
+                        106,
+                        107,
+                        108,
+                        109,
+                        110,
+                        111,
+                        112,
+                        113,
+                        114,
+                        115,
+                        116,
+                        117,
+                        118,
+                        119,
+                        120,
+                        121,
+                        122,
+                        123,
+                        124,
+                        125,
+                        126,
+                        127,
+                        128,
+                        129,
+                        130,
+                        131,
+                        132,
+                        133,
+                        134,
+                        135,
+                        136,
+                        137,
+                        138,
+                        139,
+                        140,
+                        141,
+                        142,
+                        143,
+                        144,
+                        145,
+                        146,
+                        147,
+                        148,
+                        149,
+                        150,
+                        151,
+                        152,
+                        153,
+                        154,
+                        155,
+                        156,
+                        157,
+                        158,
+                        159,
+                        160,
+                        161,
+                        162,
+                        163,
+                        164,
+                        165,
+                        166,
+                        167,
+                        168,
+                        169,
+                        170,
+                        171,
+                        172,
+                        173,
+                        174,
+                        175,
+                        176,
+                        177,
+                        178,
+                        179
+                      ],
+                      "doubleColumn": {
+                        "values": [
+                          5,
+                          4,
+                          4,
+                          2,
+                          2,
+                          2,
+                          2,
+                          1
+                        ]
+                      }
+                    }
+                  ],
+                  "size": 180,
+                  "metadata": {
+                    "columnMetadata": [
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "requestId": "90737dba-25125007-20261101",
+              "isCompare": false,
+              "jobRequestUrl": [
+                "http://go/lego-backend-inspect-requests?var.request_id=90737dba-25125007-20261101"
+              ],
+              "isTotals": false,
+              "viewTags": {
+                "compareIndex": 0,
+                "isTotals": false,
+                "role": "main",
+                "bypassCanvasFilters": false
+              }
+            }
+          ],
+          "dataTimestamp": "1793569347963",
+          "responseMetaSet": {
+            "responseMetas": [
+              {
+                "requestNamespace": {
+                  "context": 0
+                },
+                "origin": 2,
+                "mappingId": {
+                  "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0"
+                }
+              }
+            ]
+          },
+          "startRequestTimestampMilliseconds": "1793569539318",
+          "endRequestTimestampMilliseconds": "1793569539326"
+        }
+      ]
+    }
+  },
+  {
+    "url": "https://datastudio.google.com/embed/batchedDataV2?appVersion=20261025_0000",
+    "data": {
+      "dataResponse": [
+        {
+          "dataSubset": [
+            {
+              "dataset": {
+                "tableDataset": {
+                  "columnInfo": [
+                    {
+                      "ns": "t0",
+                      "name": "qt_cl108sfdrd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_dl108sfdrd"
+                    }
+                  ],
+                  "totalCount": 3,
+                  "column": [
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "亞洲 Asia",
+                          "歐洲 Europe",
+                          "美洲 America"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "longColumn": {
+                        "values": [
+                          "150",
+                          "20",
+                          "12"
+                        ]
+                      }
+                    }
+                  ],
+                  "size": 3,
+                  "metadata": {
+                    "columnMetadata": [
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "requestId": "91f17a9e-44749183-20261101",
+              "isCompare": false,
+              "jobRequestUrl": [
+                "http://go/lego-backend-inspect-requests?var.request_id=91f17a9e-44749183-20261101"
+              ],
+              "isTotals": false,
+              "viewTags": {
+                "compareIndex": 0,
+                "isTotals": false,
+                "role": "main",
+                "bypassCanvasFilters": false
+              }
+            }
+          ],
+          "dataTimestamp": "1793569347781",
+          "responseMetaSet": {
+            "responseMetas": [
+              {
+                "requestNamespace": {
+                  "context": 0
+                },
+                "origin": 2,
+                "mappingId": {
+                  "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0"
+                }
+              }
+            ]
+          },
+          "startRequestTimestampMilliseconds": "1793569539320",
+          "endRequestTimestampMilliseconds": "1793569539335"
+        },
+        {
+          "dataSubset": [
+            {
+              "dataset": {
+                "tableDataset": {
+                  "columnInfo": [
+                    {
+                      "ns": "t0",
+                      "name": "qt_csrdbtfdrd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_8pjcldsxyd"
+                    }
+                  ],
+                  "totalCount": 30,
+                  "column": [
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "中國大陸\nMainland China",
+                          "日本\nJapan",
+                          "印尼\nIndonesia",
+                          "泰國\nThailand",
+                          "印度\nIndia",
+                          "美國\nUSA",
+                          "南韓\r\nSouth Korea",
+                          "法國\nFrance",
+                          "越南\nVietnam",
+                          "澳門\nMacau",
+                          "英國\nUnited Kingdom",
+                          "馬來西亞\nMalaysia",
+                          "奧地利\nAustria",
+                          "捷克\nCzech Republic",
+                          "俄羅斯\nRussia",
+                          "愛沙尼亞\nEstonia",
+                          "芬蘭\nFinland",
+                          "巴西\nBrazil",
+                          "立陶宛\nLithuania",
+                          "柬埔寨\nCambodia",
+                          "加拿大\nCanada",
+                          "斯里蘭卡\nSri Lanka",
+                          "吉爾吉斯斯坦\nKyrgyzstan",
+                          "祕魯\nPeru",
+                          "瑞士\nSwitzerland",
+                          "保加利亞\nBulgaria",
+                          "Serbia\n塞爾維亞",
+                          "西班牙\nSpain",
+                          "瑞典\nSweden",
+                          "香港\nHong Kong"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "longColumn": {
+                        "values": [
+                          "40",
+                          "32",
+                          "27",
+                          "14",
+                          "11",
+                          "9",
+                          "8",
+                          "7",
+                          "6",
+                          "3",
+                          "2",
+                          "2",
+                          "2",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1"
+                        ]
+                      }
+                    }
+                  ],
+                  "size": 30,
+                  "metadata": {
+                    "columnMetadata": [
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "requestId": "c7b367ad-44749180-20261101",
+              "isCompare": false,
+              "jobRequestUrl": [
+                "http://go/lego-backend-inspect-requests?var.request_id=c7b367ad-44749180-20261101"
+              ],
+              "isTotals": false,
+              "viewTags": {
+                "compareIndex": 0,
+                "isTotals": false,
+                "role": "main",
+                "bypassCanvasFilters": false
+              }
+            }
+          ],
+          "dataTimestamp": "1793569347784",
+          "responseMetaSet": {
+            "responseMetas": [
+              {
+                "requestNamespace": {
+                  "context": 0
+                },
+                "origin": 2,
+                "mappingId": {
+                  "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0"
+                }
+              }
+            ]
+          },
+          "startRequestTimestampMilliseconds": "1793569539320",
+          "endRequestTimestampMilliseconds": "1793569539335"
+        },
+        {
+          "dataSubset": [
+            {
+              "dataset": {
+                "tableDataset": {
+                  "columnInfo": [
+                    {
+                      "ns": "t0",
+                      "name": "qt_nwaz54gdrd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_eaxv8dsxyd"
+                    }
+                  ],
+                  "totalCount": 124,
+                  "column": [
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "上海\nShanghai",
+                          "青島\nQingdao",
+                          "北京\nBeijing",
+                          "呼和浩特\nHohhot",
+                          "天津\nTianjin",
+                          "合肥\nHefei",
+                          "大連市\nDalian",
+                          "天津\nTianjin ",
+                          "濟南\nJinan",
+                          "吉林\nJilin ",
+                          "廣州\nGuangzhou",
+                          "武漢\nWuhan",
+                          "無錫\nWuxi",
+                          "杭州\nHANGZHOU",
+                          "長沙\nChangsha",
+                          "廣東\nGuangdong ",
+                          "蘭州\nLanzhou",
+                          "成都\nChengdu ",
+                          "重慶\nChongqing",
+                          "陝西\nShaanxi ",
+                          "貴陽\nGuiyang",
+                          "鄭州\nZhengzhou ",
+                          "昆明\nKunming",
+                          "東京都\nTokyo",
+                          "長野縣\nNagano",
+                          "大阪市\r\nOsaka",
+                          "新潟市\r\nNiigata",
+                          "東京都\r\nTokyo",
+                          "佐賀縣\nSaga",
+                          "熊本市\nKumamoto",
+                          "德島市\r\nTokushima",
+                          "愛媛縣\r\nEhime",
+                          "群馬縣\nGunma",
+                          "千葉縣\nChiba",
+                          "廣島縣\nHiroshima",
+                          "京都市\nKyoto",
+                          "東京 Tokyo",
+                          "長崎縣\nNagasaki-ken",
+                          "西寧\nXining",
+                          "West Java\n西爪哇省",
+                          "Riau Islands\n廖內群島省",
+                          "Batam\n巴旦島",
+                          "Jawa Timur\n東爪哇省",
+                          "Surabaya\n泗水",
+                          "Jakarta\n雅加達",
+                          "Kepulauan Riau\n廖內群島省",
+                          "West Sumatra\n西蘇門答臘省",
+                          "Palu, Central Sulawesi\n中蘇拉威西省",
+                          "Daerah Istimewa Yogyakarta\n日惹特區",
+                          "Sumatera Utara\n北蘇門答臘省",
+                          "Banten\n萬丹省",
+                          "Purwokerto, Banyumas Regency, Central Java\n中爪哇省巴紐馬斯攝政普禾加多",
+                          "印尼東爪哇, 瑪琅市",
+                          "Phnom Penh\n金邊",
+                          "巴吞他尼府\nPathum Thani",
+                          "暖武里府\nNonthaburi",
+                          "曼谷\nBangkok",
+                          "碧武里府\nPhetchaburi",
+                          "清邁\nChuang Mai",
+                          "清萊\nChiang Rai",
+                          "Chuncheon\n江原道春川市",
+                          "Seoul\n首爾特別市",
+                          "Busan\n釜山廣域市",
+                          "Uijeongbu\n議政府市",
+                          "Daegu\n大邱廣域市",
+                          "seongnam\n京畿道城南市",
+                          "Incheon\n仁川彌鄒忽區龍峴洞",
+                          "金寶縣, 霹靂州\nKampar, Perak",
+                          "吉隆坡\nKuala Lumpur",
+                          "金斯頓\nKingston ",
+                          "考文垂\nCoventry ",
+                          "克里斯蒂安斯塔德\nKristianstad",
+                          "考納斯\nKaunas",
+                          "帕西拉\nPasila",
+                          "塔林\nTallinn",
+                          "布拉格\nPrague",
+                          "茵斯布魯克\nInnsbruck",
+                          "蒙貝利耶\nMontpellier",
+                          "南特\nNantes",
+                          "巴黎\nParis",
+                          "魯貝\nRoubaix",
+                          "庫爾伯瓦\nCourbevoie",
+                          "蒙聖艾尼昂\nMont-Saint-Aignan",
+                          "敦克爾克\nDunkerque",
+                          "格拉茲\nGraz",
+                          "巴塞隆納\nBarcelona",
+                          "斯雷姆斯卡卡梅尼察\nSremska Kamenica",
+                          "斯維什托夫\nSvishtov",
+                          "日內瓦\nGenève",
+                          "羅斯密德\nRosemead",
+                          "卡本戴爾\nCarbondale",
+                          "聖安東尼\nSan Antonio",
+                          "佛羅里達坦帕\nTampa, FL",
+                          "坎薩斯\nKansas City",
+                          "美國馬里蘭州巴爾的摩\nBaltimore, MD",
+                          "聖地牙哥                    San Diego",
+                          "奧斯汀\nAustin",
+                          "關島\nGuam",
+                          "阿拉斯\r\nPlan Regulador de",
+                          "聖保羅\nSão Paulo",
+                          "弗雷德里克顿\r\nFrederiction",
+                          "凱拉尼亞\nKelaniya",
+                          "Bishkek\n比斯凱克",
+                          "莫斯科\nMoscow",
+                          "Ajitgarh\n阿吉特加爾",
+                          "Bhubaneswar\n布巴內什瓦爾",
+                          "Chennai\n清奈",
+                          "Tamil Nadu\n泰米爾那都邦",
+                          "Madanapalle \n馬達納帕爾萊",
+                          "Himachal Pradesh\n喜馬偕爾邦",
+                          "Jalandhar\n賈朗達爾",
+                          "Mizoram\n米佐拉姆邦",
+                          "Indore\n印多爾",
+                          "胡志明\nHo Chi Minh City",
+                          "河內\nHanoi",
+                          "肯特省\nKhentii",
+                          "海防市\nHaiphong",
+                          "佛統\nNakhon Pathom",
+                          "大阪市\nOsaka",
+                          "哈爾濱\nHarbin",
+                          "南京\nNanjing",
+                          "武漢\nWuhan ",
+                          "澳門\nMacau",
+                          "香港\nHong Kong"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "longColumn": {
+                        "values": [
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1",
+                          "1"
+                        ]
+                      }
+                    }
+                  ],
+                  "size": 124,
+                  "metadata": {
+                    "columnMetadata": [
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "requestId": "ef1c376c-44749182-20261101",
+              "isCompare": false,
+              "jobRequestUrl": [
+                "http://go/lego-backend-inspect-requests?var.request_id=ef1c376c-44749182-20261101"
+              ],
+              "isTotals": false,
+              "viewTags": {
+                "compareIndex": 0,
+                "isTotals": false,
+                "role": "main",
+                "bypassCanvasFilters": false
+              }
+            }
+          ],
+          "dataTimestamp": "1793569347784",
+          "responseMetaSet": {
+            "responseMetas": [
+              {
+                "requestNamespace": {
+                  "context": 0
+                },
+                "origin": 2,
+                "mappingId": {
+                  "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0"
+                }
+              }
+            ]
+          },
+          "startRequestTimestampMilliseconds": "1793569539320",
+          "endRequestTimestampMilliseconds": "1793569539335"
+        }
+      ]
+    }
+  },
+  {
+    "url": "https://datastudio.google.com/embed/batchedDataV2?appVersion=20261025_0000",
+    "data": {
+      "dataResponse": [
+        {
+          "dataSubset": [
+            {
+              "dataset": {
+                "tableDataset": {
+                  "columnInfo": [
+                    {
+                      "ns": "t0",
+                      "name": "qt_wlfwqlfdrd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_pkyydmfdrd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_dttxgmfdrd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_lxkvjmfdrd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_xafgtmfdrd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_u1s4xmfdrd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_etaucnfdrd"
+                    },
+                    {
+                      "ns": "t0",
+                      "name": "qt_2bu79mfdrd"
+                    }
+                  ],
+                  "totalCount": 88,
+                  "column": [
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "美洲 America",
+                          "美洲 America",
+                          "美洲 America",
+                          "美洲 America",
+                          "美洲 America",
+                          "美洲 America",
+                          "美洲 America",
+                          "美洲 America",
+                          "美洲 America",
+                          "美洲 America",
+                          "美洲 America",
+                          "美洲 America",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "歐洲 Europe",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia",
+                          "亞洲 Asia"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "美國\nUSA",
+                          "美國\nUSA",
+                          "美國\nUSA",
+                          "美國\nUSA",
+                          "美國\nUSA",
+                          "美國\nUSA",
+                          "美國\nUSA",
+                          "巴西\nBrazil",
+                          "美國\nUSA",
+                          "美國\nUSA",
+                          "祕魯\nPeru",
+                          "加拿大\nCanada",
+                          "瑞典\nSweden",
+                          "法國\nFrance",
+                          "法國\nFrance",
+                          "芬蘭\nFinland",
+                          "英國\nUnited Kingdom",
+                          "捷克\nCzech Republic",
+                          "奧地利\nAustria",
+                          "法國\nFrance",
+                          "愛沙尼亞\nEstonia",
+                          "法國\nFrance",
+                          "立陶宛\nLithuania",
+                          "法國\nFrance",
+                          "法國\nFrance",
+                          "法國\nFrance",
+                          "奧地利\nAustria",
+                          "瑞士\nSwitzerland",
+                          "英國\nUnited Kingdom",
+                          "保加利亞\nBulgaria",
+                          "Serbia\n塞爾維亞",
+                          "西班牙\nSpain",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "澳門\nMacau",
+                          "馬來西亞\nMalaysia",
+                          "馬來西亞\nMalaysia",
+                          "日本\nJapan",
+                          "南韓\r\nSouth Korea",
+                          "南韓\r\nSouth Korea",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "南韓\r\nSouth Korea",
+                          "南韓\r\nSouth Korea",
+                          "日本\nJapan",
+                          "南韓\r\nSouth Korea",
+                          "南韓\r\nSouth Korea",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "南韓\r\nSouth Korea",
+                          "南韓\r\nSouth Korea",
+                          "日本\nJapan",
+                          "柬埔寨\nCambodia",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "斯里蘭卡\nSri Lanka",
+                          "吉爾吉斯斯坦\nKyrgyzstan",
+                          "俄羅斯\nRussia",
+                          "越南\nVietnam",
+                          "越南\nVietnam",
+                          "越南\nVietnam",
+                          "越南\nVietnam",
+                          "越南\nVietnam",
+                          "越南\nVietnam",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "日本\nJapan",
+                          "澳門\nMacau",
+                          "澳門\nMacau",
+                          "香港\nHong Kong"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "佛羅里達坦帕\nTampa, FL",
+                          "美國馬里蘭州巴爾的摩\nBaltimore, MD",
+                          "卡本戴爾\nCarbondale",
+                          "聖地牙哥                    San Diego",
+                          "坎薩斯\nKansas City",
+                          "關島\nGuam",
+                          "聖安東尼\nSan Antonio",
+                          "聖保羅\nSão Paulo",
+                          "羅斯密德\nRosemead",
+                          "奧斯汀\nAustin",
+                          "阿拉斯\r\nPlan Regulador de",
+                          "弗雷德里克顿\r\nFrederiction",
+                          "克里斯蒂安斯塔德\nKristianstad",
+                          "蒙貝利耶\nMontpellier",
+                          "魯貝\nRoubaix",
+                          "帕西拉\nPasila",
+                          "金斯頓\nKingston ",
+                          "布拉格\nPrague",
+                          "茵斯布魯克\nInnsbruck",
+                          "南特\nNantes",
+                          "塔林\nTallinn",
+                          "庫爾伯瓦\nCourbevoie",
+                          "考納斯\nKaunas",
+                          "蒙聖艾尼昂\nMont-Saint-Aignan",
+                          "巴黎\nParis",
+                          "敦克爾克\nDunkerque",
+                          "格拉茲\nGraz",
+                          "日內瓦\nGenève",
+                          "考文垂\nCoventry ",
+                          "斯維什托夫\nSvishtov",
+                          "斯雷姆斯卡卡梅尼察\nSremska Kamenica",
+                          "巴塞隆納\nBarcelona",
+                          "廣島縣\nHiroshima",
+                          "廣島縣\nHiroshima",
+                          "東京都\r\nTokyo",
+                          "大阪市\r\nOsaka",
+                          "長野縣\nNagano",
+                          "東京都\r\nTokyo",
+                          "東京都\nTokyo",
+                          "千葉縣\nChiba",
+                          "群馬縣\nGunma",
+                          "東京都\r\nTokyo",
+                          "東京都\nTokyo",
+                          "東京都\nTokyo",
+                          "新潟市\r\nNiigata",
+                          "長野縣\nNagano",
+                          "澳門\nMacau",
+                          "吉隆坡\nKuala Lumpur",
+                          "金寶縣, 霹靂州\nKampar, Perak",
+                          "東京都\r\nTokyo",
+                          "Incheon\n仁川彌鄒忽區龍峴洞",
+                          "seongnam\n京畿道城南市",
+                          "大阪市\nOsaka",
+                          "大阪市\nOsaka",
+                          "Daegu\n大邱廣域市",
+                          "Busan\n釜山廣域市",
+                          "愛媛縣\r\nEhime",
+                          "Uijeongbu\n議政府市",
+                          "Busan\n釜山廣域市",
+                          "德島市\r\nTokushima",
+                          "大阪市\nOsaka",
+                          "東京都\nTokyo",
+                          "Seoul\n首爾特別市",
+                          "Chuncheon\n江原道春川市",
+                          "德島市\r\nTokushima",
+                          "Phnom Penh\n金邊",
+                          "長崎縣\nNagasaki-ken",
+                          "熊本市\nKumamoto",
+                          "東京都\nTokyo",
+                          "東京 Tokyo",
+                          "京都市\nKyoto",
+                          "東京都\nTokyo",
+                          "大阪市\r\nOsaka",
+                          "凱拉尼亞\nKelaniya",
+                          "Bishkek\n比斯凱克",
+                          "莫斯科\nMoscow",
+                          "胡志明\nHo Chi Minh City",
+                          "河內\nHanoi",
+                          "胡志明\nHo Chi Minh City",
+                          "肯特省\nKhentii",
+                          "海防市\nHaiphong",
+                          "河內\nHanoi",
+                          "大阪市\r\nOsaka",
+                          "佐賀縣\nSaga",
+                          "大阪市\r\nOsaka",
+                          "澳門\nMacau",
+                          "澳門\nMacau",
+                          "香港\nHong Kong"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [],
+                      "stringColumn": {
+                        "values": [
+                          "美國南佛羅里達大學\nThe University of South Florida",
+                          "約翰·霍普金斯醫院臨床醫工部\nClinical Engineering Services, John Hopkins Hospital",
+                          "南伊利諾大學卡本岱爾校區\nSouthern Illinois University Carbondale",
+                          "聖地牙哥州立大學\nSan Diego State University",
+                          "密蘇里大學坎薩斯分校\nThe University of Missouri- Kansas City",
+                          "關島大學\nUniversity of Guam",
+                          "德州聖道大學\nUniversity of The Incarnate Word",
+                          "UNIP 保利斯塔大學\nUNIP Paulista University(UNIP Universidade Paulista)",
+                          "美國西來大學\nUniversity of the West",
+                          "德州健康科學大學\nTexas Health and Science University",
+                          "阿拉斯秘魯大學\nUniversidad Alas Peruanas",
+                          "加拿大紐布朗維克大學\nThe University of New Brunswick",
+                          "克里斯蒂安斯塔德大學\nKristianstad University",
+                          "蒙貝利耶商學院\nMontpellier Business School",
+                          "北方高等商業學院\nEDHEC Business School",
+                          "哈戈赫利亞應用科技大學\nHaaga-Helia University of Applied Sciences",
+                          "英國金斯頓大學\nKingston University",
+                          "捷克都會大學\nMetropolitan University Prague",
+                          "奧地利茵斯布魯克管理專業高等學院\nManagement Center Innsbruck (MCI)",
+                          "AUDENCIA 南特高等商學院",
+                          "塔林理工大學\nTallinn University of Technology",
+                          "EMLV Business school Paris （De Vinci Higher Education)",
+                          "維陶瑪納大學\nVytautas Magnus University, Erasmus\n",
+                          "諾歐商學院\nNEOMA Business School",
+                          "巴黎EDH(EFAP,ICART,EFJ) 聯盟\nGroup EDH (EFAP, ICART, EFJ)",
+                          "敦克爾克國際貿易高等學院\nL'Institut Superieur de Commerce International de Dunkerque - Cote d'Opale (ISCID-CO)",
+                          "奧地利約翰內姆專業高等學院\nFH JOANNEUM University of Applied Science",
+                          "歐洲大學\nEU Business School Geneva",
+                          "英國考文垂大學\nCoventry University",
+                          "D. A. Tsenov經濟學院\nD.A. Tsenov Academy of Economics - Svishtov",
+                          "埃杜孔斯大學\nEducons University, Erasmus",
+                          "赫羅納大學附設StPol酒店觀光學院\nEUHT StPOL",
+                          "東洋學園大學\nToyo Gakuen University Hongo Campus",
+                          "叡啓大學\nEikei University of Hiroshima",
+                          "帝京大學醫療技術學院診療放射線學系\nDepartment of Radiological Technology,Teikyo University",
+                          "攝南大學\nSetsunan University",
+                          "松本大學松商短期大學\nMatsusho Gakuen Junior College",
+                          "帝京大學 （雙學位2+2）\nTeikyo University",
+                          "東洋大學\nToyo University",
+                          "明海大學外國語學部日本語學科\nMeikai University",
+                          "群馬大學\nSchool of Science and Technology/ Graduate School of Science and Technology, Gunma University",
+                          "帝京大學\nTeikyo University",
+                          "多摩大學\nTAMA University",
+                          "芝浦工業大學\nShibaura Institute of Technology",
+                          "新瀉大學\nNiigata University",
+                          "日本國松本市村瀨組株式會社\nMatsumoto City Murase Group Co., Ltd.",
+                          "澳門科技大學\nMacau University of Science and Technology, Macau",
+                          "馬來亞大學\nUniversity of Malaya",
+                          "拉曼大學\nUniversiti Tunku Abdul Rahman (UTAR)",
+                          "日本東京福祉大學\nTokyo University of Social Welfare",
+                          "仁荷大學\nInha University",
+                          "嘉泉大學\nGachon University",
+                          "梅花女子大學\nBaika Women's University",
+                          "大阪觀光大學\nOsaka University of Tourism",
+                          "大邱保健大學校\nDaegu Health College",
+                          "釜山外語大學\nBusan University of Foreign Studies",
+                          "愛媛大學\nEhime University",
+                          "乙支大學校\nEulji University",
+                          "釜山大學\nPusan National University",
+                          "德島文理大學至義守大學 (短期交換留學）\nTokushima Bunri University",
+                          "大阪市立大學\nOsaka City University",
+                          "亞太大學交流會\nUniversity Mobility in Asia and the Pacific (UMAP)",
+                          "漢陽大學\nHanyang University",
+                          "翰林大學\nHallym University",
+                          "德島文理大學\nTokushima Bunri University",
+                          "柬埔寨大學\nScience University, Cambodia",
+                          "長崎大學\nNagasaki University",
+                          "崇城大學\nSojo University",
+                          "櫻美林大學\nJ.F. Oberlin University",
+                          "帝京平成大學\nTeikyo Heisei University",
+                          "京都府立大学\nKyoto Prefectural University",
+                          "駒澤大學\nKomazawa University",
+                          "帝塚山學院大學 人間科學部食物營養學科\nTezukayama Gakuin University \nFaculty of Human Sciences Department of Food and Nutrition",
+                          "斯里蘭卡龍喜佛教國際大學\nNãgãnanda International Buddhist University",
+                          "阿拉圖國際大學\nAla Too International University",
+                          "莫斯科市立大學薩瑪拉分校\nMoscow City University-Samara Branch",
+                          "雒鴻大學\nLac Hong University",
+                          "文朗大學\nVan Lang University",
+                          "雄王大學\nHung Vuong University",
+                          "芹苴大學\nCan Tho University",
+                          "Hai Phong Polytechnics College",
+                          "河內水利大學\nThuyloi University",
+                          "帝塚山學院大學\nTezukayama Gakuin University",
+                          "西九州大學\nNishikyushu University",
+                          "大板產業大學\nOsaka Sangyo University",
+                          "澳門聖若瑟大學\nUniversity of Saint Joseph",
+                          "澳門理工大學(原澳門理工學院)\nMacau Polytechnic Institute",
+                          "香港理工大學\nHong Kong Polytechnic University"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [
+                        1,
+                        4,
+                        6,
+                        9,
+                        10,
+                        11,
+                        16,
+                        20,
+                        26,
+                        27,
+                        29,
+                        31,
+                        45,
+                        46,
+                        47,
+                        54,
+                        57,
+                        58,
+                        62,
+                        73,
+                        75,
+                        76,
+                        77,
+                        78,
+                        80,
+                        81,
+                        85,
+                        86
+                      ],
+                      "stringColumn": {
+                        "values": [
+                          "2 participants from ISU per academic year (July 1 - July 30) for a month (four weeks) clinical rotation\n",
+                          "up to 2 students for one academic year or 4 for one semester ",
+                          "One semester as paid visiting student+One semester payment-based intership at Orlando Disney World",
+                          "up to 2 students per semester ",
+                          "Both parties will review the Exchange Program on a regular basis for any imbalances in the number of students exchanged",
+                          "Up to 15 Students per year",
+                          "up to two undergraduate students",
+                          "3 slots of one academic year each ( undergraduate and graduate level)",
+                          "up to two students per year",
+                          "up to 2 students per semester ",
+                          "allow up to 2 students per year",
+                          "up to 4 exchange students each academic year ",
+                          "5 students annually ",
+                          "up to 2 students per semester",
+                          "up to 2 students per academic year annually; two students studying for one semester will count as one student for academic year",
+                          "maximum of 3 students per academic year or 6 one semester students per institution per year",
+                          "up to four students each academic year for one semester",
+                          "5 students for a duration of a half-year or of a full academic year",
+                          "2 Students ",
+                          "2 (5) [total number of months of the study periods or average duration]",
+                          "沒有相關的資訊",
+                          "1. 兩所學校互相協商, 同一時期應接受相同數量之交換學生, 維持二校間交換學生至平衡數量.",
+                          "沒有相關的資訊",
+                          "1. 每年4名(含研究生), 每學期2名",
+                          "1年3名為上限",
+                          "沒有相關的資訊",
+                          "up to 3 undergraduate or graduate students each year",
+                          "沒有相關的資訊",
+                          "每年上限5名",
+                          "1. 每年上限3名交換生\n2. 大學生或研究生",
+                          "最多每年4名學士生或研究生(每學期2名) ",
+                          "沒有相關的資訊",
+                          "1. 每學期最多5名\n2. 交換1年將視爲2名交換各一學期",
+                          "3 students per semester",
+                          "1年最多3名",
+                          "not exceeding 3 for each university",
+                          "up to 2 students for one academic year or 4 students for one semester ",
+                          "沒有相關的資訊",
+                          "沒有相關的資訊",
+                          "up to 5 students per year",
+                          "每年2名， (包含研究生)",
+                          "最多接受8名短期交換生，1位長期折抵4位短期\n(期間為3個星期 - 1個月， 留學開始時期為2月下旬）",
+                          "大學生及博士生",
+                          "每年不超過2名，除非雙方學校同意可增至5名",
+                          "沒有相關的資訊",
+                          "1. 1年最多2名，長期與短期交換學生數比例為1比4",
+                          "2 students per semester",
+                          "-",
+                          "大學生或研究生",
+                          "1學年1名或每學期2名，每年交換人數不一定要相同，但須在3 年內達到平衡",
+                          "沒有相關的資訊",
+                          "1. 大學生或研究生\n2. 1年1名(讀2學期) 或 1年2名(各讀1學期)",
+                          "1. 每年2名(含研究生)\n2. 同1年人數不足2人，翌年不得增派",
+                          "兩名研究生或大學部學生",
+                          "2 exchange students per semester",
+                          "Up to two students for one academic semester or two students for one academic year",
+                          "每年2 名正式註冊的大學生或研究生，如該年度派遣學生不足，餘額不得歸至下個年度使用",
+                          "1年不超過2名",
+                          "大學生，共同研究",
+                          "Total of 2 student per year for an academic exchange period of one or more summer session(s) or semester(s) up to one academic year"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [
+                        1,
+                        5,
+                        7,
+                        9,
+                        10,
+                        11,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        19,
+                        20,
+                        21,
+                        26,
+                        27,
+                        29,
+                        31,
+                        46,
+                        47,
+                        48,
+                        50,
+                        54,
+                        55,
+                        57,
+                        58,
+                        59,
+                        62,
+                        73,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        85,
+                        86
+                      ],
+                      "stringColumn": {
+                        "values": [
+                          "- Students must be in their final year of their medical program;\n- Students must demostrate their ability to speak and understand English",
+                          "i. have completed at least one year of full-time study at the home institution before the start of the exchange;\nii. good academic record;\niii. meet all admission or specific requirements of the institution and host institution, including language proficiency test",
+                          "i.Completion of the Sophomore year of study at ISU-IC\nii. iBT: 80+\n    IELTS: 6.5+\n    GEPT: intermediate\niii. Pass a screening interview conducted by a host company staff member",
+                          "1. No TOEFL or IELTS requires for ALI only admission                                                              \n2. Minimum TOEFL 45 or IELTS 5.5 for one semester or summer semester in ALI followed by one semester of AU courses.                                                               \n3. TOEFL 61/ IELTS 6.0 for combination of 2 ALI + 2 AU taken in the same semester.                                                    \n4. TOEFL 79/ IELTS 6.5 taking only AU.                                    \n5. TOEFL 70 for one semester or summer semester in ALI followed by one semester of AU ( Law program).                                                                              \n6. TOEFL 80 for students taking only Law classes",
+                          " TOEFL: 550、PBT:213、CBT:79ibt\n TOEIC: 650 and above\n IELTS: 6.5                                                                                                                                                                      \n2 undergraduate students for 1 semester or 1 undergraduate student for 2 semesters ( 1 academic year)",
+                          "托福TOEFL iBT 69 / pBT 525 / 雅思IELTS 5.5\nNo TOEFL/IELTS score report, students may take the remote English Placement Test (EPT)",
+                          "Students who have completed at least two years of undergraduate study",
+                          "Students must have completed at least three semester of study ( two semesters in case of graduate students)\n",
+                          "1. have completed at least one year of study at their home instituiton;\n2. have an enrolment proposal, approved by their home faculty and host institution;\n3. have satisfied any language proficiency requirements  ",
+                          "- should demostrate his/her academic proficiency by a certified transcript \n- depending on the program, students will need to meet the the English and/or French language proficiency entry requirements\n- the level at NEOMA BS is for French CEFR B2 and for English IELTS 6.5",
+                          "Accept the certificate from ISU for the student's English proficiency.",
+                          "The participating students will undergo the ordinary, written and/or oral examinations, according to the same modalities as the national students",
+                          "IELTS 6.0 with no element lower than IELTS 5.5 ( or accepted equivalent)",
+                          "Subject area by name: International Business Administration (IBA)\nMinimum recommended level: B1\nLanguage of instruction 1: English\nLanguage of instruction 2: Serbian",
+                          "具備雙方學校協定之語言能力",
+                          "1. 交換學生應為大學部學生, 且經原就讀學校推薦, \n2. 應具備交換學校要求之英語能力證明\n",
+                          "義守學院影像放射科學系的學生",
+                          "具備雙方學校協定之語言能力",
+                          "具備雙方學校協定之語言能力",
+                          "- 接受學院：經濟學院（地域經濟學系除外），文學院（心理學學係除外），法學院，教育學院 初等教育學系除外）\n- 入學年紀：3年級/2年級以上\n- 修業年限： 2年\n- 已修畢或預估可修畢62學分之在學學生\n- 已過日語能力考試N2以上",
+                          "1. Student must have a minimum 2.5 GPA on a 4.0 scale\n2. Student must have English proficiency of B2 or higher on the CEFR and/or Japanese proficiency of N3 on the JLPT. ",
+                          "沒有相關的資訊",
+                          "交換生限醫學院學生 ",
+                          "1. 學生必有雙方溝通能力,不足時可參加語言機構上課(帝京大學理工學院以及經濟學院除外)\n2. 短期人數(1學期)\\為每學期上限10名, 日語能力N5 ",
+                          "候選生必把學業成績及相關證明交給交換學校",
+                          "沒有相關的資訊",
+                          "1.須具備完成學術課程所需的語言及學術能力\n2.由所屬學校選擇要交換的學生，但交換校傭有最終選擇權\n3.須滿足交換校入學的語言條件",
+                          "- 日本語能力試驗N2以上\n- 畢業後立志事松本市建設業及松本市社區總體營造相關工作者\n\n",
+                          "交換生需充分了解交換學校之課程, 並提供交換學校認可之資料, 和證明自身語言能力",
+                          "Students must complete at least two semesters;\nhave good academic record and an appropriate degree of fluency in the language of instruction of the Host University;\nStudent must enroll for the minimum number of credits requires in each semester",
+                          "沒有相關的資訊",
+                          "沒有相關的資訊",
+                          "具備雙方學校協定之語言能力",
+                          "沒有相關的資訊",
+                          "經原就讀學校給通知書",
+                          "沒有相關的資訊",
+                          "沒有相關的資訊",
+                          "Only students of good academic performance will be selected by the home institution",
+                          "-",
+                          "沒有相關的資訊",
+                          "(學士生,博士生)\n1.良好的學術成績\n2.語言流利程度符合指標\n3.健康的身體狀況\n4.當前大學學位學生\n5.對相關課程有興趣\n6.其他符合兩校皆認同的標準",
+                          "沒有相關的資訊",
+                          "1.大學生或研究生必須在本校完成至少1學期\n2.在交換前的最後1學期結束時保持良好的學術成績\n3.須滿足交換校的語言需求:\n- KPU學生讀在ISU: 英/漢語能力檢定: CEFR B1 以上\n- ISU學生讀在KPU:日語能力檢定: JLPT N2 以上\n\n\n",
+                          "1. 在校已修習科目平均分數達70分以上\n2. 能經由交換計畫修習對方學校所開之適當課程\n3. 日語應有足夠熟練的程度",
+                          "1.通過選拔標準之本校交換生仍需經兩校討論後確定(但最後決定權由乙方決定)\n2.英語能力檢定:TOEIC 600 以上 / TOEFL PBT 540 以上 / TOEFL iBT 57 以上 / IELTS 5.5 以上 ",
+                          "Admitted as non-degree students for a period of one or two semesters ( fall or spring ), or for both semesters",
+                          "1.已修畢之各科成績平均達70分以上\n2.透過此計畫於交換學校可選修所開授的相應課程\n3.對交換學校所使用語言有充分的熟悉度",
+                          "學生必有語言能力要求, 不足時可參加語言機構上課",
+                          "沒有相關資訊",
+                          "1. Home Institution shall students of good academic performance and the student shall meet the required language proficiency of their choosen academic programme \n2. Students must have completed at least one year of continuous study at their home institution"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [
+                        1,
+                        5,
+                        9,
+                        10,
+                        11,
+                        16,
+                        18,
+                        20,
+                        26,
+                        27,
+                        30,
+                        31,
+                        46,
+                        47,
+                        54,
+                        57,
+                        58,
+                        62,
+                        66,
+                        73,
+                        75,
+                        76,
+                        77,
+                        78,
+                        79,
+                        80,
+                        81,
+                        85,
+                        86
+                      ],
+                      "stringColumn": {
+                        "values": [
+                          "Students are responsible for their own expenses",
+                          "Other expenses are at your own expense",
+                          "i. ISU-IC shall pay to ALI-SeaWorld Program fee of $11980 per student in full and complete consideration of the ALI's performance.\nii. SDSU College of Extended Studies will stipulate the Program Fee for each term.\n  (a) Full amount payable prior to arrival;\n  (b) Included: application fee, tuition, welcome orientation, closing ceremony, health insurance and program administration \n       fee;\n  (c) Not included: visa fees, airfare and personal expenses；\n  (d) Non-refundable application fee of $175 per student is due at the time of application ",
+                          "Students are responsible",
+                          "No tuition fee. Students are responsible for their own expenses",
+                          "Students pay tuition, institutional, application and/or enrolment fees at their Home University\nStudents are also responsible for their personal expenses.",
+                          "交換生支付西來大學50%之學費 50% of the tuition of University of the West",
+                          "Responsible for the cost of living, travelling, accommodation and insurance",
+                          "Responsible for the costs of living, travelling, accommodation and insurance",
+                          "Responsible for their own costs of living, traveling, accommodation, insurance and other incidental expenses.",
+                          "Responsible for their own cost of livings, travelling, accommodation and insurance",
+                          "Responsible for ther own cost of living, insurance",
+                          "Responsible for their own costs of living, traveling, accommodation, insurance and other incidental expenses.",
+                          "Responsible for their own costs of living, traveling, accommodation, insurance and other incidental expenses.",
+                          "Responsible for their own cost of livings, travelling, accommodation and insurance",
+                          "Responsible for their own costs of living, traveling, accommodation, insurance and other incidental expenses.",
+                          "Responsible for their own costs of living, traveling, accommodation, insurance and other incidental expenses.",
+                          "The host instiution will assist students with accommodationm either in halls of residence ot in private housing\n\nResponsible for their own costs of living, traveling, accommodation, insurance and other incidental expenses.",
+                          "Tuition fees to Coventry University\nResponsible for paying all travel, accommodation and any other costs associated with undertaking Stage II",
+                          "special tuition fee:\n1. 600 EUR per semester (Bachelor Students)\n2. 1050 EUR per semester (Master Students)\n3. 1450 EUR per semester (PhD Students)",
+                          "沒有相關的資訊",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\r\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\r\n3. 其他: \n\n在交換前就須事先購買當地健康/醫療保險，並交給交換學校。交換學校亦可以依照國家規定，要求學生購買該國健康保險計畫",
+                          "沒有相關的資訊",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\r\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\r\n3. 其他: ",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\r\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\r\n3. 其他: ",
+                          "1. 減免： 免繳納入金， 減免學費30%， 但如品行及成績優異者減免40%\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\n3. 其他: ",
+                          "沒有相關的資訊",
+                          "1. 減免: 交換生學費(入學金、授課費、設備使用費)\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\n3. 其他: ",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\n2. 自費:  住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\n3. 短期留學: 為自費,  只需繳學費及學生傷害保險費 \n",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\r\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\r\n3. 其他: ",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\r\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\r\n3. 其他: ",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\n3. 其他: ",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\r\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\r\n3. 其他: ",
+                          "Admin fee - RM 300.00\nEMGS Processing Fee -  RM 270.00\nEMGS Medical & Health Insurance -  RM 330.75 (6 months)\nEMGS Medical Screening fee - RM 250.00\nEMGS i-Kad - RM 50.00\nEMGS E-Val - RM 162.00\nStudent Pass - RM 60.00\nMultiple Entry Visa Charges - RM 20.00 (Taiwanese)\nCaution Money- RM 500.00\nBond Deposit - RM 1500.00\n\nTotal : RM3,442.75",
+                          "兩校核定的5名交換生中，經過遴選及協調，2名交換生適用以下條例：\n\n(1) 免學費。但其他費用( 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等)需自行負擔。\n(2) 該2名交換生必須符合上述第1點的所有項目。",
+                          "Exchange students are responsible for purchasing the required heath/accident insurance;\nExchange students are responsible to pay personal expenses.\nThe Host University will provide on-campus housing for pre-agreed number of students.",
+                          "Exchange students are responsible for purchasing the required heath/accident insurance;\nExchange students are responsible to pay personal expenses.",
+                          "沒有相關的資訊",
+                          "沒有相關的資訊",
+                          "Pay personal expenses",
+                          "1. 雙方互相免除交換生的入學考試費、入學手續費及學費\n2.需加入留學期間相應的保險",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\n2. 自費: 生活費、機票費、辦理簽證費、參考書費等",
+                          "沒有相關的資訊",
+                          "保險費、住宿費，其他機票、書籍及生活等費用由學生自理",
+                          "提供住宿，但費用自理",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\n2. 自費: 生活費、機票費、辦理簽證費、參考書費等",
+                          "Responsible for fees, such as tuition, as regular students at the hosr institution",
+                          "沒有相關的資訊",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\n3. 其他: -",
+                          "沒有相關的資訊",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\n3. 其他: ",
+                          "1.學費: 減免交換生學費(入學金、授課費、報名費、設備使用費)\n2.自費: 住宿費、交通費及個人花銷費用",
+                          "1.不須繳交交換校學費, 乙方在可能的情況下提供住宿給甲方交換生\n2.自費: 保險費(日本國家健康保險、JEES 學生教育研究災害傷害保險)、住宿費, 交通費及其他個人費用\n3. 甲方在可能得情況下提供住宿給乙方交換生，關於住宿設拖，甲方雙方提前討論",
+                          "Travel and living expenses for exchange students are brone by students themselves",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\r\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\r\n3. 其他: ",
+                          "1. 減免: 交換生學費(入學金、授課費、報名費、設備使用費)\n2. 自費: 住宿費、 生活費、交通費、機票費、健康或醫療保險(必)、辦理簽證費、參考書費等\n3. 其他: ",
+                          "沒有相關資訊",
+                          "1. The host institution are responsible to provide accommodation for the exchange student.\n2. Students are responsible for the expenses"
+                        ]
+                      }
+                    },
+                    {
+                      "nullIndex": [
+                        59
+                      ],
+                      "stringColumn": {
+                        "values": [
+                          "www.usf.edu",
+                          "https://www.hopkinsmedicine.org/som",
+                          "https://siu.edu/",
+                          "https://www.sdsu.edu/",
+                          "http://www.umkc.edu",
+                          "https://www.uog.edu/",
+                          "https://www.uiw.edu",
+                          "www.unip.br",
+                          "https://www.uwest.edu/",
+                          "https://thsu.edu/",
+                          "www.uap.edu.pe",
+                          "https://www.unb.ca/",
+                          "https://www.hkr.se/en/",
+                          "www.montpellier-bs.com",
+                          "www.edhec.edu/en",
+                          "www.haaga-helia.fi/en",
+                          "https://www.kingston.ac.uk/",
+                          "http://www.mup.cz/",
+                          "www.mci.edu/en",
+                          "www.audencia.com",
+                          "taltech.ee/university",
+                          "www.devinci.fr",
+                          "www.vdu.lt/en",
+                          "neoma-bs.com",
+                          "www.groupe-edh.com",
+                          "www.iscid-co.fr/en",
+                          "www.fh-joanneum.at/en",
+                          "geneva.euruni.edu",
+                          "https://www.coventry.ac.uk/",
+                          "www.uni-svishtov.bg/en",
+                          "www.studyinserbia.rs/in/educons-university-novi-sad",
+                          "www.santpol.edu.es/en",
+                          "https://www.tyg.jp/",
+                          "https://www.eikei.ac.jp/english/",
+                          "https://www.teikyo-u.ac.jp/",
+                          "http://www.setsunan.ac.jp/",
+                          "https://www.matsumoto-u.ac.jp/en/",
+                          "https://www.teikyo-u.ac.jp/english/",
+                          "https://www.toyo.ac.jp/en/",
+                          "http://www.st.gunma-u.ac.jp/english/index.html",
+                          "https://www.st.gunma-u.ac.jp/home-e",
+                          "https://www.teikyo-u.ac.jp/english/",
+                          "https://www.tama.ac.jp/",
+                          "https://www.shibaura-it.ac.jp/",
+                          "https://www.niigata-u.ac.jp/en/",
+                          "https://www.murase-group.co.jp/",
+                          "https://www.must.edu.mo/index.html?locale=zh_MO",
+                          "https://www.um.edu.my/",
+                          "https://www.utar.edu.my/\nEducation Malaysia Global Services (EMGS) website: https://educationmalaysia.gov.my/",
+                          "http://www.tokyo-fukushi.ac.jp/index_index.html",
+                          "https://eng.inha.ac.kr/eng/index.do",
+                          "https://www.gachon.ac.kr/english/",
+                          "https://www.baika.ac.jp/english/",
+                          "https://www.tourism.ac.jp/en/",
+                          "https://www.dhc.ac.kr/dhc/",
+                          "https://eng.bufs.ac.kr/eng/",
+                          "https://www.ehime-u.ac.jp/",
+                          "https://www.eulji.ac.kr/eng/index.html?menuno=3822",
+                          "http://www.pusan.ac.kr/eng/Main.do",
+                          "https://www.osaka-cu.ac.jp/en",
+                          "http://umap.org/",
+                          "https://www.hanyang.ac.kr/web/eng/home",
+                          "https://cn.hallym.ac.kr/exchange_cn/",
+                          "http://www.bunri-u.ac.jp/",
+                          "http://scienceuniversity.edu.kh/DefaultEN.aspx",
+                          "https://www.nagasaki-u.ac.jp/",
+                          "https://www.sojo-u.ac.jp/en/",
+                          "https://www.obirin.ac.jp/en/",
+                          "https://www.thu.ac.jp/",
+                          "https://www.kpu.ac.jp/university/",
+                          "https://www.komazawa-u.ac.jp/english/",
+                          "https://www.tezuka-gu.ac.jp/en/",
+                          "https://niibs.edu.lk/",
+                          "https://alatoo.edu.kg/en/",
+                          "https://eng.sfmgpu.ru/?categoryid=229",
+                          "http://lhu.edu.vn/",
+                          "https://www.vlu.edu.vn/",
+                          "https://dhv.edu.vn/en",
+                          "https://www.ctu.edu.vn/",
+                          "https://bachnghe.edu.vn/home2/",
+                          "https://www.tlu.edu.vn/",
+                          "https://www.tezuka-gu.ac.jp/en/",
+                          "https://www.nisikyu-u.ac.jp/en/",
+                          "https://www.osaka-cu.ac.jp/en",
+                          "https://www.usj.edu.mo/zh/",
+                          "https://www.mpu.edu.mo/zh/index.php",
+                          "https://www.polyu.edu.hk/tc/"
+                        ]
+                      }
+                    }
+                  ],
+                  "size": 88,
+                  "metadata": {
+                    "columnMetadata": [
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      },
+                      {
+                        "imageContainsDynamicData": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "requestId": "1de326d3-29300325-20261101",
+              "isCompare": false,
+              "jobRequestUrl": [
+                "http://go/lego-backend-inspect-requests?var.request_id=1de326d3-29300325-20261101"
+              ],
+              "isTotals": false,
+              "viewTags": {
+                "compareIndex": 0,
+                "isTotals": false,
+                "role": "main",
+                "bypassCanvasFilters": false
+              }
+            }
+          ],
+          "dataTimestamp": "1793569347895",
+          "responseMetaSet": {
+            "responseMetas": [
+              {
+                "requestNamespace": {
+                  "context": 0
+                },
+                "origin": 2,
+                "mappingId": {
+                  "datasourceId": "64be5815-d714-4524-be9f-3009f34aaea0"
+                }
+              }
+            ]
+          },
+          "startRequestTimestampMilliseconds": "1793569539485",
+          "endRequestTimestampMilliseconds": "1793569539493"
+        }
+      ]
+    }
+  }
+]

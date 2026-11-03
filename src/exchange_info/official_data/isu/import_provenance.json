@@ -1,0 +1,664 @@
+{
+  "school_id": "isu",
+  "school_name": "義守大學",
+  "generated_at": "2026-11-02T00:00:00Z",
+  "active_cycle_note": "義守大學國際及兩岸事務處（OICA）《交換姐妹校名冊》、《雙聯學位學校列表（11 校）》、《全球與兩岸合作姐妹校名錄》、《海外交換費用參考表》、《義守大學學生赴境外交換研修甄選辦法》，以及教育部學海飛颺、學海惜珠、義守大學學海助學金、赴大陸校際交換獎學金與學文助學金辦法同步整合；共完整收錄 181 所全球與兩岸有效締約交換及雙聯姐妹校（橫跨全球 33 個國家與地區，並收錄 13 所合作大學共 18 篇歷屆學長姐交換心得報告與 12 份官方 Fact Sheet）。",
+  "sources": [
+    {
+      "file": "sources/isu/isu_catalog_source.json",
+      "source_url": "https://oica.isu.edu.tw/page/%E4%BA%A4%E6%8F%9B%E5%A7%90%E5%A6%B9%E6%A0%A1-X2088kX30A7R",
+      "title": "義守大學 181 所全球與兩岸合作姐妹校整合資料集 JSON",
+      "sha256": "c804ec863278cc7552470e66e357601b7713f457c8c4192689434d7bf00d9fa9",
+      "bytes": 521119,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/isu_resolved_locations.json",
+      "source_url": "https://oica.isu.edu.tw/page/%E4%BA%A4%E6%8F%9B%E5%A7%90%E5%A6%B9%E6%A0%A1-X2088kX30A7R",
+      "title": "義守大學 181 所合作姐妹校 ROR / Wikidata 地理座標核對表 JSON",
+      "sha256": "bf0a3b2e28b0db167b9d9850b43ca324fd75bceae500d7b6ac5cc8b39ce4586c",
+      "bytes": 64797,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/oica_exchange_sister_schools.html",
+      "source_url": "https://oica.isu.edu.tw/page/%E4%BA%A4%E6%8F%9B%E5%A7%90%E5%A6%B9%E6%A0%A1-X2088kX30A7R",
+      "title": "義守大學國際及兩岸事務處《交換姐妹校專區》HTML",
+      "sha256": "4c59b57bb0d18c93e059b4c55950fa7e89230cc88f9d4368b46784c3a67f6e4a",
+      "bytes": 405526,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/oica_dual_degree_schools.html",
+      "source_url": "https://oica.isu.edu.tw/page/%E9%9B%99%E8%81%AF%E5%AD%B8%E4%BD%8D%E5%AD%B8%E6%A0%A1-O76v3d9W18qB",
+      "title": "義守大學國際及兩岸事務處《雙聯學位學校列表》HTML",
+      "sha256": "11d835a1fb0882880f88decf41b8aad8bc3af991e27b7e712ba3f4eead15c7a9",
+      "bytes": 364463,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/oica_partner_schools.html",
+      "source_url": "https://oica.isu.edu.tw/page/%E5%90%88%E4%BD%9C%E5%A7%90%E5%A6%B9%E6%A0%A1-2136fX4h11fT",
+      "title": "義守大學國際及兩岸事務處《全球與兩岸合作姐妹校總覽》HTML",
+      "sha256": "b2ed351b04e2c06829a8d7d9a82d9a8d4ff1db18a85b322e1d466bfa36690045",
+      "bytes": 367374,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/looker_exchange_88_schools.json",
+      "source_url": "https://lookerstudio.google.com/embed/reporting/7a264451-b2db-429d-a092-87557cce54f6/page/9OCGF",
+      "title": "義守大學國際及兩岸事務處《學生交換及研修表 Looker Studio 資料庫》JSON",
+      "sha256": "4e383ef478bc473276a6dbb58cc014a225fe13cf84b125f27edf826068356807",
+      "bytes": 36325,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/looker_dual_degree_5_rows.json",
+      "source_url": "https://lookerstudio.google.com/embed/reporting/bd58ff7a-ffc3-4cc7-b573-3caee0d08507/page/1QhzD",
+      "title": "義守大學國際及兩岸事務處《雙聯學位一覽表 Looker Studio 資料庫》JSON",
+      "sha256": "fda1831e04c26af0823d83a6a51482a8ea5d73082923693f1e75062cc52285ec",
+      "bytes": 3227,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/exchange_cost_reference.xlsx",
+      "source_url": "https://docs.google.com/spreadsheets/d/14w5Amw4wQzBUh1LI2Xj2m7eEGoZbmdQaI_HVhPEzWRI/htmlview",
+      "title": "義守大學國際及兩岸事務處《海外交換暨雙聯學位費用參考表》XLSX",
+      "sha256": "ed4b99f7f5531b16c850b30e5a21c8660a81634e55cbff7b4ab1aa23fb2e91d2",
+      "bytes": 15343,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/9VWyfOdUEctjC7vuWd5v46Ogl2VmPZIxZddZdECx.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/9VWyfOdUEctjC7vuWd5v46Ogl2VmPZIxZddZdECx.pdf",
+      "title": "義守大學官方原始檔案：113錄取名單.pdf",
+      "sha256": "b87e2f916f5f0160c3e2fc7c8c82c30a6ab767a3ae42b9dd26ccbdbc9168c02c",
+      "bytes": 193265,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/VLA3AXEWWC3R6X6vAweNNE3iQNKO3MlaPtucTjWX.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/VLA3AXEWWC3R6X6vAweNNE3iQNKO3MlaPtucTjWX.pdf",
+      "title": "義守大學官方原始檔案：111 Fall Semester Exchange Announcement.pdf",
+      "sha256": "11c7acf098d6d9590d9be52ca7dc5962a4a574e62359705b7a49b93f149b724e",
+      "bytes": 1661837,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/Zp64BIcW281CdBWNHqBcExQ3dDMt5T66foFttHqG.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/Zp64BIcW281CdBWNHqBcExQ3dDMt5T66foFttHqG.pdf",
+      "title": "義守大學官方原始檔案：110 result.pdf",
+      "sha256": "6cac108044de7b8f922f6976bffeba502c66573a8fc1bdaf1bbf1c640d45c532",
+      "bytes": 157461,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/c40QoWlbTo0NvRFm56X2QlVS77Yo2R5E0OP5DCYR.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/c40QoWlbTo0NvRFm56X2QlVS77Yo2R5E0OP5DCYR.pdf",
+      "title": "義守大學官方原始檔案：112 結果.pdf",
+      "sha256": "7258ab2d1d6524a8af1828d2b929cebf0689a9ad3b86afc1d12feb4dd144af10",
+      "bytes": 140107,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/vziHvsueq8I852rSAUIFKcT66eBnKnnywIdgIycD.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/vziHvsueq8I852rSAUIFKcT66eBnKnnywIdgIycD.pdf",
+      "title": "義守大學官方原始檔案：114錄取名單.pdf",
+      "sha256": "4b88693b38c87edb40a67e783dc7500b50064aca4766efc1d977053006a27721",
+      "bytes": 201184,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/5KGWFUmApkKrcC7r2uKfmaUqcMPROayp01WRTBiD.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/5KGWFUmApkKrcC7r2uKfmaUqcMPROayp01WRTBiD.pdf",
+      "title": "義守大學官方原始檔案：義守大學生赴境外交換研修甄選辦法1110617.pdf",
+      "sha256": "ec83601442f05f49455376e1434f4931cc9a2eeed171f2fdfc397c06e2fdb815",
+      "bytes": 126884,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/0hUyXldM3VM1XPRfNORKw5LlBOQkfnbWTvXXKquS.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/0hUyXldM3VM1XPRfNORKw5LlBOQkfnbWTvXXKquS.pdf",
+      "title": "義守大學官方原始檔案：返校手續單(電子檔+紙本) Procedures of Returning to the University",
+      "sha256": "05d5383067df0b154928a3d81d50ce88b2091123312193c57b1d6d50f97dd52f",
+      "bytes": 135955,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/30B1BNIzifs9283A4vLDpvo9QfHp8bKEWqL4h9Gg.odt",
+      "source_url": "https://oica.isu.edu.tw/storage/files/30B1BNIzifs9283A4vLDpvo9QfHp8bKEWqL4h9Gg.odt",
+      "title": "義守大學官方原始檔案：學海築夢計畫書",
+      "sha256": "493fbcccfe292296daee4701c7dba33820c06f14fd46099b6d1c5e975b6b217d",
+      "bytes": 16502,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/362wIzJhtYCm4ygDzoQb8teee5kxn2MlqHhUYaUC.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/362wIzJhtYCm4ygDzoQb8teee5kxn2MlqHhUYaUC.pdf",
+      "title": "義守大學官方原始檔案：受獎生出國前後應辦理事項 Note for ISU &amp; MOE Scholarship",
+      "sha256": "0ff15c8c0be59662c5ab99c10735e84f6306f822a92206416618e8195f36ee3b",
+      "bytes": 178280,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/9jzVgXXV9Mp6Udc5zgytiPMjy27koE90mHXLtoJX.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/9jzVgXXV9Mp6Udc5zgytiPMjy27koE90mHXLtoJX.pdf",
+      "title": "義守大學官方原始檔案：Erasmus+學習合約書",
+      "sha256": "59d1b43f5b124669a356a59c1e2f1e4f072df22ab5e8b45c8798c2fc69d4bf26",
+      "bytes": 128584,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/AQzPShWV5lUvBE8eLAL7eq1zaUbkYCySqxDWo0FQ.docx",
+      "source_url": "https://oica.isu.edu.tw/storage/files/AQzPShWV5lUvBE8eLAL7eq1zaUbkYCySqxDWo0FQ.docx",
+      "title": "義守大學官方原始檔案：Declaration of Indemnity (Eng ver.).docx",
+      "sha256": "a2f6cdd1062b417e5977eac72f2c7f551a57f1683a9a6c06b1a32fbd4307ccd0",
+      "bytes": 17167,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/CNzBSIBA2kt4cN501HTSKfs7897KhIU9tIALalr3.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/CNzBSIBA2kt4cN501HTSKfs7897KhIU9tIALalr3.pdf",
+      "title": "義守大學官方原始檔案：家長擔保同意書(無需繳交) COVID-19 Agreement(DO NOT TURN IN)",
+      "sha256": "7ceef42fdb528dd24c5889193b5f8650b1c70723bf8165271edf48432b333efa",
+      "bytes": 158289,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/CyDv16tauPxLhbW491g2hv9c5x42CCWiam2nN0JA.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/CyDv16tauPxLhbW491g2hv9c5x42CCWiam2nN0JA.doc",
+      "title": "義守大學官方原始檔案：學分承認表Credit Transfer Form.doc",
+      "sha256": "446bda07da51458078ccae302a03759053e001b35aa0a11569c1023b834a3881",
+      "bytes": 51200,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/FWxfcpSUYxZm0R2SmuTpSAcedQCO8mIxewMA4Z6s.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/FWxfcpSUYxZm0R2SmuTpSAcedQCO8mIxewMA4Z6s.doc",
+      "title": "義守大學官方原始檔案：Erasmus+國際切結書 AFFIDAVIT of Nationality",
+      "sha256": "e9feb75b61630b6e7b2bbfda26448efc3c70c7408f0a038435d5d3929b329f87",
+      "bytes": 28160,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/MTyEtuTA0qNrkmnyDVI2M7Lum5pEPjrQCcUa6qyS.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/MTyEtuTA0qNrkmnyDVI2M7Lum5pEPjrQCcUa6qyS.doc",
+      "title": "義守大學官方原始檔案：114年度「學海飛颺+惜珠」行政契約書 2025.12.22.doc",
+      "sha256": "134495635244126130216e190e15067eb328f6a3dff349eae4e327ea67a7ca59",
+      "bytes": 107008,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/O3OdrMNPdYyo5BX8YHSbYTgfGh3Kt6eN72rR2paF.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/O3OdrMNPdYyo5BX8YHSbYTgfGh3Kt6eN72rR2paF.doc",
+      "title": "義守大學官方原始檔案：教育部學海飛颺、學海惜珠獎學金具結書.doc",
+      "sha256": "e3cd488ca204057e8be115d5d8ae7c4a1a74e70defd15aff8e80af8ecd3bc9e3",
+      "bytes": 32256,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/OgyDvYkFSu4GiEpJxN1BMZ6EttdyLMp7cvnNddsG.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/OgyDvYkFSu4GiEpJxN1BMZ6EttdyLMp7cvnNddsG.pdf",
+      "title": "義守大學官方原始檔案：學期心得報告(電子檔+紙本) Semester Report",
+      "sha256": "130c317d034549b363436f1921cfaf1767d66b71c20d67050426e9284a815a72",
+      "bytes": 101850,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/R5Are5uCI8wWgJeUPAcU9zAT5ETGn5EZS6kOaGbK.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/R5Are5uCI8wWgJeUPAcU9zAT5ETGn5EZS6kOaGbK.doc",
+      "title": "義守大學官方原始檔案：出國申請表 Application Form (4).doc",
+      "sha256": "f15c0a9aa2a66f954741b6b942d41aa8d4ad7f5b649505125ee7a7497f773728",
+      "bytes": 78848,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/a8WwfX3Kg0r9Hf1BP0BJugsPTaUsbYBpV5jsOj5i.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/a8WwfX3Kg0r9Hf1BP0BJugsPTaUsbYBpV5jsOj5i.pdf",
+      "title": "義守大學官方原始檔案：國外實習計畫同意書",
+      "sha256": "ee49946eb2b1cb71aa4d5f7fb2189ac7785e949cdd124db0e633e0cbb34d87c6",
+      "bytes": 45326,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/bmyt8bPKZ6CFEYIHJHocdbGGERewpasg9wyfcMMZ.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/bmyt8bPKZ6CFEYIHJHocdbGGERewpasg9wyfcMMZ.doc",
+      "title": "義守大學官方原始檔案：國外抵達報告表 Arrival Report",
+      "sha256": "825f35382a10660427dca43fdc4c6d00b457f52efb493576d3b6ded7682a093c",
+      "bytes": 112640,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/dPvPUedj6sSko9UP0TnGArBFvbxXFNjSLrlSKhIO.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/dPvPUedj6sSko9UP0TnGArBFvbxXFNjSLrlSKhIO.pdf",
+      "title": "義守大學官方原始檔案：築夢薦送學校聲明書",
+      "sha256": "9a2af29087ff60fc3ae62da023018071aaba77dffb80c4a683523041bb6bf6db",
+      "bytes": 66014,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/dnLg5CuBYnPAJf9c63fGpCjfjfwWdBevIx3BzUx7.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/dnLg5CuBYnPAJf9c63fGpCjfjfwWdBevIx3BzUx7.doc",
+      "title": "義守大學官方原始檔案：學分抵免表(電子檔+紙本)",
+      "sha256": "d2c3496538beac15ed6b725568df49e625e8ca25661fa860efd23bfd22061db6",
+      "bytes": 88064,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/ndBzEedTtF00jOHKJvvqCtYCWbVvx2KDjZRVyCG2.docx",
+      "source_url": "https://oica.isu.edu.tw/storage/files/ndBzEedTtF00jOHKJvvqCtYCWbVvx2KDjZRVyCG2.docx",
+      "title": "義守大學官方原始檔案：交換生具結書(中文版).docx",
+      "sha256": "4ca042050784d2f28c6afb559f725c09fd39a4905be3c6e4259fb1229ce97d06",
+      "bytes": 17059,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/o9xA2zr0CVqYjOFGpT1cYwRtL7JPiJzs2jTtBz8u.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/o9xA2zr0CVqYjOFGpT1cYwRtL7JPiJzs2jTtBz8u.pdf",
+      "title": "義守大學官方原始檔案：校內成果報告(ppt模板，電子檔) Exchange Report ppt",
+      "sha256": "b91bb83d74e2cfa7b07218efe4cb985e4497d05ad6d0748f85183fa1cdcabc88",
+      "bytes": 634509,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/qFzWr7Etc9CIfRlXNjV2b4azJzFUFUD9Z2LJ3ZQS.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/qFzWr7Etc9CIfRlXNjV2b4azJzFUFUD9Z2LJ3ZQS.pdf",
+      "title": "義守大學官方原始檔案：Erasmus+計畫申請表 ERASMUS+ Programme",
+      "sha256": "5ccf1e38aa7036d120b87eebd8af40b653eb191272580a6b101e179d5e4133ff",
+      "bytes": 640400,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/qUPxx7Ep4gdZAkkvnk2kpzXhRjn4WUG8GaiTsSce.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/qUPxx7Ep4gdZAkkvnk2kpzXhRjn4WUG8GaiTsSce.pdf",
+      "title": "義守大學官方原始檔案：教育部學海飛颺、學海惜珠獎學金申請資料單.pdf",
+      "sha256": "dac8363f3541b8ce82d499f5698a9e4cb14695106ba955109d9eac9b9f0de5b7",
+      "bytes": 125377,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/qY29MnmFU5TR1jMZ5VYGJnBP2TgL7y079rQIPaKa.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/qY29MnmFU5TR1jMZ5VYGJnBP2TgL7y079rQIPaKa.pdf",
+      "title": "義守大學官方原始檔案：Erasmus+計畫交換申請表 Erasmus+ Application Form",
+      "sha256": "5ccf1e38aa7036d120b87eebd8af40b653eb191272580a6b101e179d5e4133ff",
+      "bytes": 640400,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/ru5wxZFAObsmBSpwmIcwJcnzPeE0HDu9gKSNQaGf.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/ru5wxZFAObsmBSpwmIcwJcnzPeE0HDu9gKSNQaGf.pdf",
+      "title": "義守大學官方原始檔案：新南向學海築夢計畫書",
+      "sha256": "738577bed4639f03d6ed97e59e246ef4f415676b81e83ebd2e7cfe9d714b7bd5",
+      "bytes": 73709,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/t8l4W8Kj4jJJ8k3x7dA2uRnnMSYUGaWoXgQwplzQ.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/t8l4W8Kj4jJJ8k3x7dA2uRnnMSYUGaWoXgQwplzQ.doc",
+      "title": "義守大學官方原始檔案：放棄聲明書",
+      "sha256": "c44d4cc2c7b580682c0a550fed313dd97f6def48a1de4d41c7f2f330098ecda2",
+      "bytes": 29184,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/vdjPK5ZiX4SN1YuA28rlKk9U2iK4XZF0TjQCwetW.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/vdjPK5ZiX4SN1YuA28rlKk9U2iK4XZF0TjQCwetW.doc",
+      "title": "義守大學官方原始檔案：成果心得報告(電子檔+紙本) Exchange Program Report",
+      "sha256": "d393b33601deebcfcce0d022919cf5cb80d990bc9844944f781e1035091ad3e1",
+      "bytes": 43008,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/27a7QXddqplkv968yckNKChjkz0nFg3KTZGvOJxD.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/27a7QXddqplkv968yckNKChjkz0nFg3KTZGvOJxD.pdf",
+      "title": "義守大學官方原始檔案：更多NEOMA資訊.....pdf",
+      "sha256": "52a4b23d1bdc8cabf1be4401b2dfd92813472c704bd2c07aec08bdda5ff72ca5",
+      "bytes": 813220,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/ONn6q3WhHxB0Vu3fzPH2CGOkgW62V52ahaTnm6Y7.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/ONn6q3WhHxB0Vu3fzPH2CGOkgW62V52ahaTnm6Y7.pdf",
+      "title": "義守大學官方原始檔案：更多ESCE資訊....pdf",
+      "sha256": "8e2765c7bc0fcf75cb5525f7e04dfdf94920eb2c351349d4503dc5760d119802",
+      "bytes": 1768936,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/YrXHTogh8uvAhJsXmThGsTco9HfajjS0xTLqz7OW.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/YrXHTogh8uvAhJsXmThGsTco9HfajjS0xTLqz7OW.pdf",
+      "title": "義守大學官方原始檔案：更多Audencia資訊.....pdf",
+      "sha256": "dfa603a3a2876135307ffbb51bf2729ef5cac725a5379a0ad54b777b27c50c81",
+      "bytes": 3642753,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/dZ3FRNjzYoAutn2mKkznsGLslkAiHhBLZlNwyRRx.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/dZ3FRNjzYoAutn2mKkznsGLslkAiHhBLZlNwyRRx.pdf",
+      "title": "義守大學官方原始檔案：更多Haaga-Helia資訊....pdf",
+      "sha256": "edd7d0df754646db992413fc6bfc798d80664d7b0928e0d0c04b0c06dec9b289",
+      "bytes": 356986,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/mVnXz6Y1bl7MehTPOboeqaSWMsiYZJuapqjwq9vT.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/mVnXz6Y1bl7MehTPOboeqaSWMsiYZJuapqjwq9vT.pdf",
+      "title": "義守大學官方原始檔案：更多Nottingham資訊....pdf",
+      "sha256": "1bc8190ee65d9fb227ffa197246c3cf5c7f273e9a6c2dfb21490d4d1d61b6a16",
+      "bytes": 636856,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/63615a2f3abb1c308baf822b82d79357.pdf",
+      "source_url": "https://www.komazawa-u.ac.jp/english/academics/files/63615a2f3abb1c308baf822b82d79357.pdf",
+      "title": "義守大學官方原始檔案：日本 駒澤大學",
+      "sha256": "2c2b3f3be3991e596648a478787af2529b655b798c034322755a57c4d2c976de",
+      "bytes": 1050124,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/PolyUExchangeLeaflet.pdf",
+      "source_url": "https://www.polyu.edu.hk/geo/docdrive/PolyUExchangeLeaflet.pdf",
+      "title": "義守大學官方原始檔案：香港理工大學",
+      "sha256": "ef7e0b53a799c6122958ff774eea0179727c8c3ad8d9720496747c23e26cf1d4",
+      "bytes": 2929831,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/0oFQzn10G2adHnBJx3dP0vhzw90jBpNK3M1Qb0uf.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/0oFQzn10G2adHnBJx3dP0vhzw90jBpNK3M1Qb0uf.pdf",
+      "title": "義守大學官方原始檔案：相關成果心得.pdf",
+      "sha256": "5558caeaa4b799f19dee2421426dd70c07578859ce5f19ed0649f695b0519eb4",
+      "bytes": 3369729,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/30nmyXyxz0ka03Q70OreC6593AHjlleX9HymndGr.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/30nmyXyxz0ka03Q70OreC6593AHjlleX9HymndGr.pdf",
+      "title": "義守大學官方原始檔案：相關成果心得黃一峰.pdf",
+      "sha256": "efd4f889f962c0b11883ced75a784a05db8f5ecee372d04686420e96b922df21",
+      "bytes": 2410932,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/AqElcdpxqAFBzsvJLCgciK1SbxPMKoPl0tMw2sKH.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/AqElcdpxqAFBzsvJLCgciK1SbxPMKoPl0tMw2sKH.pdf",
+      "title": "義守大學官方原始檔案：相關成果楊曜誠.pdf",
+      "sha256": "79b2db62bc197a26494c0f190b7391e8b50f14d39b7da3ede921e1cc5d016eac",
+      "bytes": 1256035,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/CLLGnnEtl00YXIJhARzE2XDB6kxoNiO7KmZuDzWQ.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/CLLGnnEtl00YXIJhARzE2XDB6kxoNiO7KmZuDzWQ.pdf",
+      "title": "義守大學官方原始檔案：成果心得報告周君旻.pdf",
+      "sha256": "a9284a6697f6f2f523b03b63e1f5070e250e2d7202a44cec50f91059a73ed19f",
+      "bytes": 642766,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/K7rhneVRBo21jwueZxn5VjfmhDOUFi2oG2LE6wC9.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/K7rhneVRBo21jwueZxn5VjfmhDOUFi2oG2LE6wC9.pdf",
+      "title": "義守大學官方原始檔案：相關成果.pdf",
+      "sha256": "209414f1c98558270cf0772f1bddc07c1b80228fbd99d0ed5f3b9f0a498044ec",
+      "bytes": 1884728,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/KzAVu52l77emOasDu7CkFsKD8ViDDv7nntS00Q9h.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/KzAVu52l77emOasDu7CkFsKD8ViDDv7nntS00Q9h.pdf",
+      "title": "義守大學官方原始檔案：相關成果心得.pdf",
+      "sha256": "bc6e47ec523d0005c0b122c335f47532e4658c1d556b5aef3aa41952b04f79cd",
+      "bytes": 972154,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/VQuSAhlkQMAEMvtHU0gGfElGPDMCDUWr6KVt4tJs.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/VQuSAhlkQMAEMvtHU0gGfElGPDMCDUWr6KVt4tJs.pdf",
+      "title": "義守大學官方原始檔案：成果心得報告鄭暐翰.pdf",
+      "sha256": "3c93eadd3296f310f55d41308fd9b02547660fe134d76e6eb1f8d7ef9c997c33",
+      "bytes": 2949644,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/cxxYeK0yi5hExQi6HCeG9SzrTWZeRr8U57UTmEav.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/cxxYeK0yi5hExQi6HCeG9SzrTWZeRr8U57UTmEav.pdf",
+      "title": "義守大學官方原始檔案：相關成果劉庭妍.pdf",
+      "sha256": "7c889651af429e01a13068ed4a68ff53fbbc2e788f3af99eb0b9d59133f09acc",
+      "bytes": 1016591,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/kpaW6WvG4QRMdFpox4DvvOpP2vemJe9e0xAlmv2B.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/kpaW6WvG4QRMdFpox4DvvOpP2vemJe9e0xAlmv2B.pdf",
+      "title": "義守大學官方原始檔案：相關成果心得.pdf",
+      "sha256": "734126cbc34a84a5eb703397f36924cca68478638b11befa043e3f159e8fcabb",
+      "bytes": 1256381,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/rLhzHLrqSIn7DpSSrVe04EzoMxN8zTfolKzdjSdm.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/rLhzHLrqSIn7DpSSrVe04EzoMxN8zTfolKzdjSdm.pdf",
+      "title": "義守大學官方原始檔案：成果心得報告.pdf",
+      "sha256": "20d41caedef65564527253a27316dbd6045083ed23b1ab19280faeda9d289c02",
+      "bytes": 2063987,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/rpWVqf3DJ8MN01Aiuff86QrKobFUVWdzBcNA4hKx.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/rpWVqf3DJ8MN01Aiuff86QrKobFUVWdzBcNA4hKx.pdf",
+      "title": "義守大學官方原始檔案：相關成果心得張廷玉.pdf",
+      "sha256": "b6be58cf1fbce9622664435507d0228568389e7472d4161674ef33fd6cd30f7a",
+      "bytes": 1083390,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/sgooWRQGBzBbxdLlyew6LIOQNyYtERhZp33BVwFW.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/sgooWRQGBzBbxdLlyew6LIOQNyYtERhZp33BVwFW.pdf",
+      "title": "義守大學官方原始檔案：相關成果.pdf",
+      "sha256": "a075acbd86627d5fce8afefc0c96ad061f169d83d6a58e57011496d04e63383f",
+      "bytes": 3171957,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/wLBbJaYGCQj1vbOb1DBagN08USHfPEhGfyPpxk7K.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/wLBbJaYGCQj1vbOb1DBagN08USHfPEhGfyPpxk7K.pdf",
+      "title": "義守大學官方原始檔案：相關成果心得林久玳.pdf",
+      "sha256": "c9fb39d9332e18d77beb6f44da9643bc4929146bc642d568b3cfaa343e9f99c2",
+      "bytes": 565003,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/affidavit_for_MOE_Scholarship.pdf",
+      "source_url": "http://www2.isu.edu.tw/upload/654/3/affidavit%20for%20MOE%20Scholarship.pdf",
+      "title": "義守大學官方原始檔案：affidavit_for_MOE_Scholarship.pdf",
+      "sha256": "c45fa7434394a3ff8fe42e11ce4de94f85ebb17b77ef4b15410e0cbc433a9b1d",
+      "bytes": 487284,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/2lyfoeFdS84SZy0YKVXtHnisILPtSBKX3pCwJ9MO.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/2lyfoeFdS84SZy0YKVXtHnisILPtSBKX3pCwJ9MO.pdf",
+      "title": "義守大學官方原始檔案：義守大學學海助學金甄選辦法.pdf",
+      "sha256": "cb33f1b841cbec335f859b4ad0bca8b6fc6671924987eb7f42ce6d647feae1d8",
+      "bytes": 82089,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/3zYbSpd0AjWaytTsmCYSSWsH5lwOanCEPp5FpQGb.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/3zYbSpd0AjWaytTsmCYSSWsH5lwOanCEPp5FpQGb.pdf",
+      "title": "義守大學官方原始檔案：教育部補助要點",
+      "sha256": "27d72fb6f6bc0b36026b02c29b79b9fd4c84691ca81fd7b92dd49cf129b63e2f",
+      "bytes": 236837,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/6GsCYhYkkOBVo44YMPkJcwDcb39tUYw6GGoRSt4r.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/6GsCYhYkkOBVo44YMPkJcwDcb39tUYw6GGoRSt4r.pdf",
+      "title": "義守大學官方原始檔案：義守大學學文助學金設置及甄選作業辦法.pdf",
+      "sha256": "f2628142e87048b498f56b657e23f0c58de21a45e6454108917289b32b942109",
+      "bytes": 125353,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/8x7tZMcAbY128JykhVtmkLzop1CIR9Skyc5aT3HI.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/8x7tZMcAbY128JykhVtmkLzop1CIR9Skyc5aT3HI.doc",
+      "title": "義守大學官方原始檔案：獎學金具結書.doc",
+      "sha256": "e3cd488ca204057e8be115d5d8ae7c4a1a74e70defd15aff8e80af8ecd3bc9e3",
+      "bytes": 32256,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/ZnN6V2P4YRXCzdrUPIzihuDijyeeJ1xu70EOI8TW.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/ZnN6V2P4YRXCzdrUPIzihuDijyeeJ1xu70EOI8TW.pdf",
+      "title": "義守大學官方原始檔案：義守大學學生赴大陸校際交換獎學金發放要點.pdf",
+      "sha256": "e5d621453d9515e6d31e42b1b6ae3e4510e3bbb81adbe6e27820cfd6bfcbff91",
+      "bytes": 168741,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/aNNJgX52yneMCErISMhIGdDK6vbhkL8wHO6gBSjL.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/aNNJgX52yneMCErISMhIGdDK6vbhkL8wHO6gBSjL.doc",
+      "title": "義守大學官方原始檔案：行政契約書 (2).doc",
+      "sha256": "134495635244126130216e190e15067eb328f6a3dff349eae4e327ea67a7ca59",
+      "bytes": 107008,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/t0xM2DmaN4oKxP1WPLIF0qyFaJWxaxYlRnIFIobY.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/t0xM2DmaN4oKxP1WPLIF0qyFaJWxaxYlRnIFIobY.doc",
+      "title": "義守大學官方原始檔案：成果報告書.doc",
+      "sha256": "d393b33601deebcfcce0d022919cf5cb80d990bc9844944f781e1035091ad3e1",
+      "bytes": 43008,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/uCeTr1BtjbSFpZo5r1Z2VZaYiIcot3uW520kpPJU.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/uCeTr1BtjbSFpZo5r1Z2VZaYiIcot3uW520kpPJU.pdf",
+      "title": "義守大學官方原始檔案：義守甄選辦法",
+      "sha256": "6a73f4eb35ce9b82cbcfa06013e63fd46f114d412a6306da79512b845eb66b1a",
+      "bytes": 153552,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/0kWb3F41DZk4m9l5JtVBHBicUO5Bkrw1MYKdM4qg.docx",
+      "source_url": "https://oica.isu.edu.tw/storage/files/0kWb3F41DZk4m9l5JtVBHBicUO5Bkrw1MYKdM4qg.docx",
+      "title": "義守大學官方原始檔案：114 年度「新南向學海築夢」行政契約書.docx",
+      "sha256": "8d4b49768018b2acd5001ccfd39d6c4486a87c457eae281ff600b9b47e8aaaa6",
+      "bytes": 25879,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/eIkwRIJNaxRKZdGLEs7ytn1O5bc2ph6ZVgoqak0b.docx",
+      "source_url": "https://oica.isu.edu.tw/storage/files/eIkwRIJNaxRKZdGLEs7ytn1O5bc2ph6ZVgoqak0b.docx",
+      "title": "義守大學官方原始檔案：114 年度「學海築夢」行政契約書.docx",
+      "sha256": "1f976b3172d7b27c32ebd8208f8a1802b950b18654407e79a12b295f7a0280f6",
+      "bytes": 25625,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/20201231065523.pdf",
+      "source_url": "https://www.studyabroad.moe.gov.tw/ckfinder_upload/files/20201231065523.pdf",
+      "title": "義守大學官方原始檔案：教育部鼓勵國內大專校院選送學生出國研修或國外專業實習補助要點修正規定&nbsp;",
+      "sha256": "9e69daaf2647d5480084b64833c58ac5692fba96e677a54f6ac321a11fd1ed13",
+      "bytes": 293301,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/ISU_internship_plan.pdf",
+      "source_url": "https://www2.isu.edu.tw/upload/654/3/ISU%20internship%20plan.pdf",
+      "title": "義守大學官方原始檔案：義守大學選送學生參加教育部學海築夢系列計畫甄選辦法&nbsp;",
+      "sha256": "7ca2d0a27023bbc169fa3c884bc398b5e39403fc35724871f6ac699f853ab0b4",
+      "bytes": 487286,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/Gov_scholarship.docx",
+      "source_url": "http://www2.isu.edu.tw/upload/654/3/Gov%20scholarship.docx",
+      "title": "義守大學官方原始檔案：獎學金申請資料單",
+      "sha256": "72405331917be141b9fdcb3d56b3d0a18caf05ec3cf003ef5095360f26df5ec1",
+      "bytes": 487286,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/1bE2CHLxjmTKaJMUZK4wwWCotamDCgXvqcecDgyy.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/1bE2CHLxjmTKaJMUZK4wwWCotamDCgXvqcecDgyy.pdf",
+      "title": "義守大學官方原始檔案：校內獎助金應繳交文件列表",
+      "sha256": "0ff15c8c0be59662c5ab99c10735e84f6306f822a92206416618e8195f36ee3b",
+      "bytes": 178280,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/JWcDchnBY7mcsNUV15fdrbsiqNXmzZMqdb6opq3D.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/JWcDchnBY7mcsNUV15fdrbsiqNXmzZMqdb6opq3D.pdf",
+      "title": "義守大學官方原始檔案：獎學金要點",
+      "sha256": "7e26a8df9cdc76943530903574c0759c13325e1eb7e35c637ceb45d436d53c61",
+      "bytes": 159695,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/PR2IKvzmp5dItBJgoE8VpBxT4Fbo1rcYGgIdtT5Z.doc",
+      "source_url": "https://oica.isu.edu.tw/storage/files/PR2IKvzmp5dItBJgoE8VpBxT4Fbo1rcYGgIdtT5Z.doc",
+      "title": "義守大學官方原始檔案：成果報告書",
+      "sha256": "d393b33601deebcfcce0d022919cf5cb80d990bc9844944f781e1035091ad3e1",
+      "bytes": 43008,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/ZHyFBvvIGlsLM4hiKViEBOzkzzrLIKXBFqjzoYiu.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/ZHyFBvvIGlsLM4hiKViEBOzkzzrLIKXBFqjzoYiu.pdf",
+      "title": "義守大學官方原始檔案：獎學金具結書",
+      "sha256": "d044a88ebbce2380755aa501e536b10474768d86786ad652f4baddf3169aa3d5",
+      "bytes": 128848,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/lTwSRE8t05cc8FO9bK5XjWhePcoaadAho9uLpnDu.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/lTwSRE8t05cc8FO9bK5XjWhePcoaadAho9uLpnDu.pdf",
+      "title": "義守大學官方原始檔案：行政契約書",
+      "sha256": "82aca92fef9b7f8d542ed8fbde1fe8af161b803a4aac35b34149ca31f09cffe3",
+      "bytes": 432370,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/loZLXWMAzzGVVF7MQj38fhdZo69iSefE65QO3qaT.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/loZLXWMAzzGVVF7MQj38fhdZo69iSefE65QO3qaT.pdf",
+      "title": "義守大學官方原始檔案：甄選辦法",
+      "sha256": "cb33f1b841cbec335f859b4ad0bca8b6fc6671924987eb7f42ce6d647feae1d8",
+      "bytes": 82089,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/pGQxUs8guhNxldlrwQe4eKtT1kgTQ0xn8CuWTxbo.pdf",
+      "source_url": "https://oica.isu.edu.tw/storage/files/pGQxUs8guhNxldlrwQe4eKtT1kgTQ0xn8CuWTxbo.pdf",
+      "title": "義守大學官方原始檔案：教育部獎學金應繳交文件列表",
+      "sha256": "0ff15c8c0be59662c5ab99c10735e84f6306f822a92206416618e8195f36ee3b",
+      "bytes": 178280,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/20220829-MOE-Scholarship-Regulations.pdf",
+      "source_url": "https://www.isu.edu.tw/upload/654/3/20220829-MOE-Scholarship-Regulations.pdf",
+      "title": "義守大學官方原始檔案：義守大學甄選辦法",
+      "sha256": "78b0d34b3d1d98200b0614476478356109c515835fe9ba425fc465cf033b23a6",
+      "bytes": 487284,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/115教育部鼓勵國內大專校院選送學生出國研修或國外專業實習補助要點.pdf",
+      "source_url": "https://www.studyabroad.moe.gov.tw/ckfinder_upload/files/115%E6%95%99%E8%82%B2%E9%83%A8%E9%BC%93%E5%8B%B5%E5%9C%8B%E5%85%A7%E5%A4%A7%E5%B0%88%E6%A0%A1%E9%99%A2%E9%81%B8%E9%80%81%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B%E7%A0%94%E4%BF%AE%E6%88%96%E5%9C%8B%E5%A4%96%E5%B0%88%E6%A5%AD%E5%AF%A6%E7%BF%92%E8%A3%9C%E5%8A%A9%E8%A6%81%E9%BB%9E.pdf",
+      "title": "義守大學官方原始檔案：教育部規定",
+      "sha256": "ec6d5d1bee83075172903ae2968854b17a4eca9951e04065ba55f72b890626ae",
+      "bytes": 229866,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    },
+    {
+      "file": "sources/isu/regulations/A_05.pdf",
+      "source_url": "https://www2.isu.edu.tw/upload/605/5/scholarship/A_05.pdf",
+      "title": "義守大學官方原始檔案：甄選辦法",
+      "sha256": "fca93c98092ec776041b2e72ecf01721422507bab1b621ac712a9aa49500cdb2",
+      "bytes": 487283,
+      "fetched_at": "2026-11-02T00:00:00Z"
+    }
+  ]
+}
