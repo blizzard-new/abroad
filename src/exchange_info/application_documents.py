@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -130,6 +130,9 @@ FGU_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
 
 
 NKUHT_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
+
+
+NUU_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3218,6 +3221,61 @@ def _nkuht_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nuu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立聯合大學（國際暨兩岸事務處國際交流組 OIA，第二［八甲］校區圖資大樓 4 樓 G3-402）赴姊妹校交換學生、跨國雙聯學位暨教育部學海飛颺／惜珠與校內《選送學生出國研修獎學金》甄選應繳資料：1. 國立聯合大學學生出國交換研修申請表（電腦繕打、貼妥照片，至多選填 5 所志願姊妹校，須經導師或指導教授、系所主管及學院院長簽章推薦）、2. 家長同意書正本（由申請人及家長或監護人親筆簽名蓋章）、3. 歷年中英文成績單正本（含歷年學業總平均、GPA 與班級排名百分比；操行成績須達 80 分以上且無小過以上處分，學海飛颺及校內獎學金申請者須達 GPA 3.0 以上或班排名前 40%）、4. 有效外語能力檢定證明影本（TOEFL iBT 57 / TOEFL ITP 457 / IELTS 4.0 / TOEIC 550 / 全民英檢中高級初試或中級複試 / JLPT N3［愛知教育大學及甲南大學須 N2］ / TOPIK 3 級 / DELF B1；赴中國大陸姊妹校免附外語檢定）、5. 中、外文讀書計畫（含預期成果）及中、外文自傳（各以不超過 A4 兩頁為原則）、6. 師長推薦信 1–2 封及其他有利審查資料（競賽獲獎、證照、社團服務；申請學海惜珠另附新式戶口名簿影本及低收／中低收入戶證明）。",
+        "study-plan": "撰寫國立聯合大學赴姊妹校交換學生、跨國雙聯學位（美國 FSU 2+2、FIT 2+2、Boise State 2+2、SUU、加拿大安大略理工大學、法國南特大學綜合理工學院 Polytech Nantes）及教育部學海飛颺／惜珠計畫必繳之《中、外文讀書計畫（含預期成果）》與《中、外文自傳》（各以不超過 A4 兩頁為原則，建議合計約 1,000–2,000 字）。請具體說明申請赴外動機、擬於志願姊妹校選修之專業課程與學分規劃（交換期間須維持聯大在學註冊且至少修讀 1 門課，每學期至多採計 25 學分）、個人語言準備，以及返國後學分抵免與職涯發展展望。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《國立聯合大學選送學生出國研修辦法》及《與國外大學校院辦理跨國雙聯學制實施辦法》規定，交換期間須維持聯大在學學籍並繳交聯大全額學雜費，免繳姊妹校學費；每學期於姊妹校至少須修讀 1 門課程且每學期至多採計 25 學分，學士班修讀跨國雙聯累計修業至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月）。",
+        "predeparture-notice": "經國際交流審查小組書面審查及面試錄取（總成績須達 60 分以上）後，須於公告錄取後 20 日內繳交《錄取資格確認書》、《出國研修切結書》及新臺幣 3,000 元保證金（無正當理由放棄者沒收），配合國際交流組辦理姊妹校官方提名（Nomination）與外校入學申請；出國前須完成《出國手續單》、役男出境核准、購買涵蓋境外全期之海外醫療及意外保險，並簽署《教育部學海計畫行政契約書》或《校內出國研修獎學金契約書》。",
+        "return-report": "境外交換或雙聯研修期滿返國後兩週（14 日）內，須依《選送學生出國研修辦法》、《出國研修切結書》及《退還保證金申請表》向國際暨兩岸事務處繳交 3,000 字以上之《出國交換研修心得報告》（含生活照與上課照 4 張以上，並授權公開於 OIA 經驗分享專區）、返國手續單、國外姊妹校正式成績單、護照出入境紀錄及登機證正本，並回校協助國際處至少 20 小時服務學習，始得申請無息退還新臺幣 3,000 元保證金及辦理獎學金尾款核銷。",
+        "credit-transfer": "境外交換或跨國雙聯研修期滿返國後持國外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《國立聯合大學選送學生出國研修辦法》及《學生抵免學分辦法》向所屬系（所）、學院及教務處註冊組申請境外修習科目學分採認抵免（每學期至多採計 25 學分）。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立聯合大學").replace("長庚", "聯大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "聯大《選送學生出國研修辦法》及甄選簡章規定：在學期間操行成績達 80 分以上且無小過以上處分，各姊妹校院系與年級限制以「出國交換當時」之身分與年級為準；申請教育部學海飛颺或校內出國研修獎學金者，歷年學業 GPA 建議達 3.0（百分制 75 分）以上或班排名前 40%。請檢附歷年中英文成績單正本（含班級排名）。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "TOEIC 多益測驗（校內英語組參考基準 550+／韓國多數姊妹校採認 550–700+）",
+                "TOEFL iBT 托福網路測驗（校內參考基準 57+／美國 FSU、FIT、Boise State、SUU 等雙聯及交換要求 61–80+）",
+                "TOEFL ITP 托福紙筆測驗（校內參考基準 457+／多所亞洲及美洲姊妹校採認 500–550+）",
+                "IELTS 雅思學術組（校內參考基準 4.0+／歐美及雙聯姊妹校要求 5.5–6.5+）",
+                "GEPT 全民英檢（中高級初試或中級複試合格以上）",
+                "JLPT 日語能力試驗（日本姊妹校一般要求 N3+，愛知教育大學及甲南大學要求 N2+；日本高專 NIT 交換可搭配英語）",
+                "TOPIK 韓語能力測驗（韓國姊妹校韓語授課組要求 TOPIK 2–3 級以上）",
+                "DELF 法語檢定／Goethe 德語檢定（法國昂熱高等農學院、南特大學等法語授課要求 B1–B2）",
+                "中國大陸地區姊妹校交換（免附外語能力檢定證明，以歷年學業成績、讀書計畫與面試評分）",
+            ]
+            field["help_text"] = "依國立聯合大學《115學年度赴姊妹校交換學生甄選簡章》及外語能力參考基準填報有效期限內之外語檢定成績（赴大陸姊妹校免附）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.nuu.edu.tw/p/412-1068-1242.php",
+        source_checked_at=NUU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換研修申請表、家長同意書與切結書" if template.id == "exchange-application-data" else ("中外文讀書計畫與自傳（A4兩頁為原則）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.nuu.edu.tw/var/file/68/1068/img/1538/348573573.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取公告後 20 日內繳交確認書、切結書與 $3,000 保證金，並完成姊妹校提名、入學申請及出國手續單", "return-report": "返國後 14 日內繳交 3,000 字以上心得報告（含照片 4 張以上）、正式成績單並完成 20 小時服務學習以退還保證金", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱向系所及教務處辦理境外學分採認抵免（每學期至多採計 25 學分）"}.get(template.id, "備齊核章紙本申請表（至多 5 志願）、家長同意書、中英文成績單（含排名）、外語檢定證明及中外文讀書計畫與自傳送交八甲校區圖資大樓 4 樓 G3-402 國際暨兩岸事務處"),
+        version="115準備工具-2026-11-02.1",
+        destinations=["國立聯合大學國際暨兩岸事務處國際交流組（360302 苗栗縣苗栗市南勢里聯大 2 號 八甲校區圖資大樓 4 樓 G3-402）"],
+        conditional_note="此為個人準備工具；國立聯合大學每學期辦理赴姊妹校交換學生甄選（秋季班約 2–3 月收件、春季班約 9–10 月收件），甄選總成績未達 60 分不予錄取，錄取後 20 日內須繳交新臺幣 3,000 元保證金，返國後 14 日內須繳交 3,000 字以上心得報告並完成 20 小時服務學習始得無息退還保證金。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3332,6 +3390,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _fgu_template(template)) is not None]
     if university.id == NKUHT.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nkuht_template(template)) is not None]
+    if university.id == NUU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nuu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

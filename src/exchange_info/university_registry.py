@@ -2031,7 +2031,45 @@ FGU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT)
+NUU = UniversityProfile(
+    id="nuu",
+    school_name="國立聯合大學",
+    short_name="聯大",
+    english_name="National United University",
+    aliases=(
+        "nuu",
+        "國立聯合大學",
+        "聯合大學",
+        "聯大",
+        "NUU",
+        "National United University",
+    ),
+    hero_image="/static/assets/nuu-campus.svg",
+    official_url="https://oia.nuu.edu.tw/p/412-1068-1242.php",
+    coverage_note="完整支援：已整合國立聯合大學研究發展處國際及兩岸事務組（OIA）《國際交換學生作業要點（109.03.03修正）》、《國際學術交流實施辦法（110.05.25修正）》、《雙聯學制實施辦法（106.02.18）》、《學生赴國外研修留學國語言能力參考標準》、《補助學生參與境外學術交流及研習服務經費管理要點》、《「學海系列計畫」甄選作業要點（114.01.16修正）》、《學生於締約學校修讀課程學分與成績轉換參考表》、《交換學校一覽表（128校）》及《全球締約姊妹校名錄》官方資料：（1）兩梯次校內甄選、「出國交換當時」年級系所認定、分組配分與NT$ 3,000保證金規定：每年1月（第一梯次，結合12/15–2/14教育部學海飛颺／惜珠期程，得申請一學期或一學年）及8月（第二梯次春季班，僅得申請一學期）辦理校內甄選，具本校大學部及研究所學籍之在學學生（不含在職生）皆可申請，惟各姊妹校之年級與系所限制以「出國交換當時」之學籍身分與年級為準；甄選採計總分未達60分不予推薦（赴大陸以外地區大學部採計在校成績50%＋外語20%＋自傳10%＋讀書計畫15%＋其他5%、研究所採計在校成績30%＋外語20%＋自傳20%＋讀書計畫25%＋其他5%；赴大陸地區免計外語，大學部採計在校成績60%＋自傳15%＋讀書計畫20%＋其他5%、研究所採計在校成績40%＋自傳25%＋讀書計畫30%＋其他5%）；錄取後20日內須繳交保證金NT$ 3,000，交換期間每學期大學部至少修讀3門課程及格、研究所至少修讀1門課程及格，返國後14日內繳交返國程序單與中英文心得並完成20小時國際組服務後全額退還。（2）全球21國／地區128所合作姊妹校、日本國立高專（NIT）聯盟與6校美法加雙聯學位：完整收錄128所合作姊妹校（含29所常態開放申請之交換、雙聯與日本高專暑期研習合作校，涵蓋日本宇部、高知、新居濱、阿南、木更津、明石、小山、釧路等國立高專及甲南大學、愛知教育大學，韓國仁荷大學、昌原國立大學、高麗網路大學，美國霜堡州立大學 FSU 2+2、佛羅里達理工學院 FIT 2+2、樹城州立大學 Boise State 2+2、南猶他大學 SUU、明尼蘇達州立大學曼卡托分校，加拿大安大略理工大學、卡加利大學，法國南特理工大學、薩瓦勃朗峰大學，德國馬德堡大學，馬來西亞拉曼大學 UTAR，泰國吞武里蒙庫國王科技大學 KMUTT，越南胡志明市經濟大學 UEH，印尼總統大學、迪波內戈羅大學及蒙古全球領袖大學）。（3）獎助學金體系：涵蓋教育部《學海飛颺／學海惜珠／學海築夢／新南向學海築夢》、聯大《補助學生參與境外學術交流經費》（亞太最高NT$ 15,000、歐美最高NT$ 25,000–35,000、團隊最高NT$ 100,000）、日本JASSO獎學金及美國雙聯學位獎學金（FSU每學期USD 3,000、FIT每學期USD 5,000–7,000、SUU USD 4,250）。",
+    support_level="full",
+    partner_count_hint=128,
+    academic_score_minimum=60,
+    student_card_signals=(
+        "國立聯合大學",
+        "聯合大學",
+        "NATIONALUNITEDUNIVERSITY",
+        "NATIONAL UNITED UNIVERSITY",
+        "NUU",
+    ),
+    # https://www.nuu.edu.tw/p/412-1000-745.php?Lang=zh-tw — checked 2026-11-02.
+    colleges=(
+        "理工學院",
+        "電機資訊學院",
+        "管理學院",
+        "客家研究學院",
+        "人文與社會學院",
+        "設計學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU)
 DEFAULT_UNIVERSITY = CGU
 
 
