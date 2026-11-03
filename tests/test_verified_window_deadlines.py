@@ -35,7 +35,7 @@ def test_verified_window_catalog_covers_all_supported_universities_and_10_week_w
     audited_cards = [card for card in active_window_cards if card.school_id not in added_school_ids]
     assert len(audited_cards) == 18
     assert {card.school_id for card in catalog.items if card.school_id in added_school_ids} == added_school_ids
-    assert catalog.ten_week_school_count == 44
+    assert catalog.ten_week_school_count == 52
 
 
 def test_every_verified_rule_and_subtask_has_https_source_and_last_checked_date() -> None:
