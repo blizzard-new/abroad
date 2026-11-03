@@ -344,7 +344,7 @@ App 沒有用 Google 的推播，所以是在背景每 30 秒問辦公室一次�
 ### Instagram
 
 1. IG 帳號要是**專業帳號**（商業或創作者），在 IG App 的「設定 → 帳號類型和工具」切換。
-2. 同一個 Meta App 再加入 Instagram 的使用案例（後台名稱類似「管理 Instagram 上的訊息和內容」），選 **API setup with Instagram login**，勾選 `instagram_business_basic`、`instagram_business_content_publish`、`instagram_business_manage_comments`、`instagram_business_manage_insights`。
+2. 同一個 Meta App 再加入 Instagram 的使用案例（後台名稱類似「管理 Instagram 上的訊息和內容」），選 **API setup with Instagram login**，勾選 `instagram_business_basic`、`instagram_business_content_publish`、`instagram_business_manage_comments`、`instagram_business_manage_insights`；要用「留言關鍵字自動私訊」再加 `instagram_business_manage_messages`（見下面）。
 3. 在同一頁新增你的 IG 帳號並按 **Generate token**（產生權杖）；把 **Instagram App secret** 填進 `INSTAGRAM_APP_SECRET`，然後：
    ```bash
    uv run office auth instagram --token <產生的權杖>
@@ -362,7 +362,13 @@ App 沒有用 Google 的推播，所以是在背景每 30 秒問辦公室一次�
 
 **怎麼設**：在聊天跟 Leo 說，例如「學生在 IG 留言『雅思』或『閱讀』，就私訊他：雅思閱讀教材在這裡 👉 https://…；留言底下回『已私訊你，記得查看訊息 👀』；他會拿到的是『雅思閱讀教材』」。Leo 會建立一條 D1 規則；「刪掉 D1」就是刪除；只想對某一則貼文有效就說「只對 #12 這則」。私訊內容是**你給的原文**，不是 AI 臨時寫的；有給「他會拿到什麼」，之後寫手會在 IG 說明欄結尾邀請大家「留言「雅思」領雅思閱讀教材」，不會自己編別的。
 
-**Meta 要先開通（沒有它私訊傳不出去）**：Meta 開發者後台你的應用程式 → Instagram → 用 Instagram 登入的 API 設定 → 權限加上 `instagram_business_manage_messages`，重新產生權杖後再跑一次 `uv run office auth instagram`。注意：**這個權限在開發模式只能私訊「在應用程式裡有角色（管理員、開發人員、測試人員）」的人；要私訊一般學生，要先通過 Meta 的應用程式審核（進階存取，通常還要企業驗證）**。通過以前可以先用自己的測試帳號驗證整條流程。`uv run office check` 的「IG 留言自動私訊」那一欄會告訴你 Meta 的私訊權限通了沒有；沒通的話，辦公室會在聊天裡說一次原因，之後每 30 分鐘自己再試，修好就自動恢復。
+**Meta 端要做的（沒有它私訊傳不出去）**：
+1. Meta 開發者後台你的應用程式 → Instagram 的使用案例（和連 Instagram 發文是同一個）→ **API setup with Instagram login** → 權限多加 `instagram_business_manage_messages`（原本的 basic、content_publish、manage_comments 也要留著）。
+2. 在同一頁按 **Generate token** 重新產生權杖（登入 IG、同意所有權限，包含訊息），然後在這台電腦：`uv run office auth instagram --token <新權杖>`。權杖貼在這台電腦的終端機就好，不要貼到聊天或 GitHub。
+3. 想先用測試帳號驗證：後台 App roles → Roles → 加入 **Instagram 測試人員**（輸入對方 IG 使用者名稱，對方到 IG App 的「設定 → 網站權限／應用程式和網站」接受邀請）。
+4. `uv run office check`：「IG 留言自動私訊」那一欄變成 ○ 就是 Meta 的私訊權限通了。辦公室是自己定時去讀留言，不需要架 webhook 伺服器（Meta 文件的流程是用 webhook 通知留言，但私訊只需要留言編號）。
+
+**一般人收不收得到？要實測，Meta 文件沒寫死**：Meta 的「存取層級」文件寫標準存取（Standard Access）的權限和功能「只對在應用程式裡有角色的人有效」，要對任何人有效要進階存取（Advanced Access），也就是通過應用程式審核（還需要企業驗證）；但文件沒有寫清楚「回覆留言的私訊」算不算這個範圍。所以：先用測試人員帳號驗證流程，再用一個**完全沒有角色**的帳號（朋友的帳號）留言實測。一般帳號收得到，就不需要審核；收不到（聊天裡會出現「自動私訊先暫停」的說明），才需要向 Meta 申請 `instagram_business_manage_messages` 的進階存取（要準備隱私權政策網址、應用程式圖示、展示整個流程的螢幕錄影、企業驗證）。私訊會出現在對方的「訊息邀請（要求）」資料夾（如果對方沒有追蹤你的帳號），請測試時一併看那裡。`uv run office check` 的「IG 留言自動私訊」那一欄會告訴你 Meta 的私訊權限通了沒；沒通的話，辦公室會在聊天裡說一次原因，之後每 30 分鐘自己再試，修好就自動恢復。
 
 **辦公室替你守的規矩**（Meta 的限制加上防誤傷）：只回覆「規則建立之後」的新留言；一則留言只私訊一次（Meta 規定），而且要在留言後 7 天內（超過 6.5 天的不傳）；每人每條規則每天最多一則，不管他留言幾次；一則私訊最多 1000 bytes（約 330 個中文字）；關鍵字至少 2 個字，「想」「好」「我要」這種太普通的字不收（會誤傳給一堆沒要資料的人）；內容不能有「保證錄取」這類說法，私訊連結要 https，公開回覆不放連結；每天最多 150 位（`OFFICE_AUTO_DM_LIMIT`）；`OFFICE_AUTO_DM=0` 可以整個關掉。只有「正式發佈」（`OFFICE_DRY_RUN=0`）才會真的讀留言、傳私訊，模擬模式什麼都不會傳。新貼文每 2 分鐘看一次留言，超過一天每 10 分鐘，超過三天每 30 分鐘。
 
