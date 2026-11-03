@@ -21,7 +21,8 @@
       $("#discussion-moderation-body").replaceChildren();
       pending.clear();
     }
-    if (!owner || allowed || checking) return;
+    // The profile already says whether this account may moderate; asking the server as a student only produces a 403.
+    if (!owner || allowed || checking || !api.isContentAdmin()) return;
     checking = true;
     const stamp = version;
     try {

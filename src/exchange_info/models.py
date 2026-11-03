@@ -4041,6 +4041,7 @@ class UserAccount(BaseModel):
 
 class AccountProfile(BaseModel):
     is_platform_admin: bool = False
+    is_content_admin: bool = False
     catalog_home_university: str | None = None
     # Why catalog_home_university is that school: proved by student verification, inferred
     # from a provider-verified school mail domain, or simply chosen by the account holder.

@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -142,6 +142,7 @@ TPCU_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 AU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
+KNU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3427,6 +3428,58 @@ def _au_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTe
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _knu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理開南大學（國際及兩岸事務處，桃園市蘆竹區開南路 1 號 至誠樓 A106 室，電話 03-341-2500 分機 1023～1026）《出國交換留學／跨國雙聯學位／大陸交換甄選簡章》應繳申請表件：1. 出國交換留學／雙聯學位申請表、2. 歷年中文成績單正本（須註明歷年每學期平均、排名及操行成績；一般交換須平均 75 分以上、雙聯及學海獎學金須平均 80 分且操行 82 分以上）、3. 2 年內有效外語能力檢定證明影本（英語組 TOEIC 500–600 / IELTS 4.5–5.5 / TOEFL iBT 61、日語組 JLPT N3–N1、韓語組 TOPIK 3；大陸交換免附）、4. 中／外文讀書計畫（含修課規劃及出國動機）、5. 中／外文自傳、6. 教師推薦信、7. 家長（監護人）同意書、8. 專題研究計畫（研究生適用）。",
+        "study-plan": "撰寫開南大學出國交換留學、跨國雙聯學位（日本國立富山大學 2+2 免繳日方學費、札幌國際大學 2+2、美國威斯康辛大學河瀑分校 2+2、密蘇里科技大學 3+1.5 學碩、義大利佛羅倫斯美國大學 AUF 2+2／3+1）及教育部學海飛颺／惜珠獎學金必繳之《中、外文讀書計畫及自傳》。請具體說明申請動機、個人學經歷背景、於志願姊妹校擬修習之專業或語言課程規劃，以及返國後之學分抵免與職涯發展目標。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《開南大學與境外大學校院辦理跨國雙學位制實施辦法》及出國交換規定，出國期間須於開南大學完成註冊並繳交全額學雜費以保留學籍；2+2 雙聯學位須先於開南修滿 4 學期及 64 學分，義大利 AUF 觀光餐旅雙聯可直抵 69 學分）。",
+        "predeparture-notice": "經國際及兩岸事務處第一階段書面審查與第二階段面試錄取公告後，須於規定期限內繳交錄取確認書與家長同意書，配合國際處向姊妹校完成提名與入學申請（如日本在留資格認定證明書 COE 等），並於出國前辦妥開南大學註冊、選課、護照簽證、役男出境及海外醫療與意外保險。",
+        "return-report": "境外交換或雙聯研修期滿返國後 1 個月內，須依《開南大學選派優秀學生赴國外研修獎助學金執行要點》及教育部學海計畫規定，向國際及兩岸事務處提交《出國研修心得報告》（約 2,000 字，含國外研修生活與學習照片 4～6 張）、國外成績單及護照出入境紀錄影本，始得完成結案與獎助學金核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），向所屬學系（所）及教務處申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "開南大學").replace("長庚", "開南")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "開南大學規定：一般海外、日本及大陸交換歷年每學期學業平均達 75 分（GPA 2.75）以上；富山大學／札幌國際／威斯康辛河瀑雙聯學位及教育部學海系列獎學金須達 80 分（GPA 3.0）以上且操行成績達 82 分以上（佛羅倫斯美國大學 AUF 雙聯門檻為 GPA 2.5）。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語組：TOEIC 多益測驗（歐美亞太及 AUF 雙聯 500+、日本全英授課 600+、秋田國際教養大學 AIU 785+）",
+                "英語組：IELTS 雅思（歐美亞太 4.5+、日本全英授課 5.0+、UW-River Falls 雙聯 5.5+、AIU 6.0+、Missouri S&T 碩士雙聯 6.5+）",
+                "英語組：TOEFL iBT / ITP（iBT 61+、ITP 500+、AIU iBT 71+、Missouri S&T 碩士雙聯 iBT 80+）",
+                "日語組：JLPT 日語能力試驗（御茶水女大及富山大學交換／2+2 免學費雙聯 N1；奈良女大／東京海洋／山形／香川／琉球／青山學院／法政／明治學院／札幌國際雙聯 N2；島根／德島／愛媛／弘前／山口／名櫻／神戶國際／星城 N3）",
+                "韓語組：TOPIK 韓國語文能力測驗（中央／漢陽 ERICA／仁荷／明知／德成女大／韓南／釜山外大／蔚山等要求 TOPIK 3 級）",
+                "大陸交換組：南京大學、北京交通大學、大連理工大學、廣州美術學院等 12 所大陸重點高校（中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依開南大學國際及兩岸事務處出國交換留學與跨國雙聯學位簡章填報 2 年內有效之語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://knuoica.knu.edu.tw/p/406-1004-59525,r30.php?Lang=zh-tw",
+        source_checked_at=KNU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="開南大學出國交換留學／跨國雙聯學位申請表（含家長同意書、讀書計畫、自傳及推薦信）" if template.id == "exchange-application-data" else ("中、外文讀書計畫及自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://knuoica.knu.edu.tw/var/file/4/1004/img/307/582461487.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師及系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經兩階段甄選錄取後繳交確認書與家長同意書，配合國際處向姊妹校完成提名與簽證申請，並完成開南註冊", "return-report": "返國後 1 個月內繳交約 2,000 字出國研修心得報告（含照片）與成績單辦理結案與獎助核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分抵免"}.get(template.id, "於校內收件截止前備齊申請表、歷年成績單、語檢證明、讀書計畫、自傳、推薦信及家長同意書送交國際及兩岸事務處（至誠樓 A106）"),
+        version="116準備工具-2026-11-03.1",
+        destinations=["開南大學國際及兩岸事務處（33857 桃園市蘆竹區開南路 1 號 至誠樓 A106 室）"],
+        conditional_note="此為個人準備工具；開南大學出國交換與雙聯學位每年分兩梯次（秋季班 9～10 月初、春季班 2～3 月中旬）收件，採第一階段書面審查與第二階段面試。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3549,6 +3602,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _tpcu_template(template)) is not None]
     if university.id == AU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _au_template(template)) is not None]
+    if university.id == KNU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _knu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

@@ -4,7 +4,7 @@ window.UniWayPlanIndex = (() => {
   let owner='', data=null, status='idle', error='', request=0;
   const key=()=>JSON.stringify([state.account?.id, state.authSessionEpoch, activeHomeSchool()]);
   const current=()=>owner===key()?data:null;
-  const link=p=>'#my-application?'+new URLSearchParams({plan:p.id,view:'progress'});
+  const link=p=>'#my-application?'+new URLSearchParams({plan:p.id,view:'today'});
   function render(){
     const host=document.querySelector('#application-plan-index');if(!host)return;
     if(!state.account){host.replaceChildren();host.hidden=true;return;}
