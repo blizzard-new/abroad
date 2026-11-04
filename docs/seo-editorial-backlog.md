@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-04 每日批次：AI 單字回想／多益圖表聽力兩篇（PR 待建立）
+## 2026-11-04 每日批次：AI 單字回想／多益圖表聽力兩篇（PR #233 待審）
 
 日期採 Asia/Taipei；分支 `codex/seo-daily-20261104`，基於 main `f081c6b489c6d020850b5a66b584b6e920005104`。已盤點 main 31 篇、重讀相關總覽與任務文章，全部 open PR 為零，同日所有狀態 PR 為零。#78、#92 已合併；#213、#222 的四篇也已合併並排除。下方各批的「待審」為當時歷史紀錄，本段為本日核對狀態。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 17：用 AI 背英文單字怎麼練？回想測驗、情境造句與複習 Prompt | `ai-english-vocabulary-practice` | 完整文章及驗收準備完成；PR 待建立，後續不得重做 |
-| 20：多益 Part 3 圖表題怎麼練？預讀圖表、聽力定位與原創題組 | `toeic-part-three-graphics` | 同一批兩篇；PR 待建立，後續不得重做 |
+| 17：用 AI 背英文單字怎麼練？回想測驗、情境造句與複習 Prompt | `ai-english-vocabulary-practice` | [PR #233](https://github.com/blizzard-new/abroad/pull/233) 待審，完整文章與驗收完成；後續不得重做 |
+| 20：多益 Part 3 圖表題怎麼練？預讀圖表、聽力定位與原創題組 | `toeic-part-three-graphics` | 同一個 PR #233 待審，完整文章與驗收完成；後續不得重做 |
 
 依編輯判斷選題，沒有使用者 Search Console、搜尋量或排名資料。單字篇新增三輪可填寫 Prompt、用法卡、角色方向訂正、回想與延後複習；多益篇新增原創圖表／雙人對話／三題解析，辨別原訂時間、要求與保留期限。AI 聽說讀寫總覽、單段精讀、多益全卷準備與 Part 7 跨篇閱讀各維持原有任務，沒有改標題重發或以品牌／年份拆頁。
 
