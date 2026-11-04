@@ -323,7 +323,7 @@ powershell -ExecutionPolicy Bypass -File .\07-setup-backup.ps1
 它建立兩個排程工作（**以目前登入的使用者執行**，因為 Docker Desktop 在使用者的工作階段裡）：
 
 - `UniWay-Backup`：每天 04:00 備份資料庫、文件檔案、`.env` 到 `C:\uniway\backups`，保留 14 天＋8 週＋6 個月。
-- `UniWay-Health`：每 5 分鐘執行 `healthcheck.ps1`，檢查網站；本機沒回應就自動 `docker compose up -d`，並記錄在 `C:\uniway\logs\health.log`（對外網址不通、磁碟低於 50 GB 也會寫進去）。
+- `UniWay-Health`：每 5 分鐘執行 `healthcheck.ps1`，檢查網站；本機沒回應時若 Docker 未啟動會自動拉起，若 Docker Desktop 行程仍在但底層 WSL2 引擎無回應（假死）則會自動終止卡死行程並執行 `wsl --shutdown` 重置後重啟 Docker 與 `docker compose up -d`，並記錄在 `C:\uniway\logs\health.log`（對外網址不通、磁碟低於 50 GB 也會寫進去）。
 
 最後會立刻跑一次備份。
 

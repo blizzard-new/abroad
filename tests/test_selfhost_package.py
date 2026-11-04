@@ -161,3 +161,11 @@ def test_the_guide_explains_the_update_checks_and_the_two_switches() -> None:
     assert "-CheckOnly" in guide and "-SetAside" in guide
     assert "update-set-aside" in guide and "不會刪除任何東西" in guide
 
+
+def test_healthcheck_resets_hung_docker_wsl_engine_before_restarting_docker_desktop() -> None:
+    script = (SELFHOST / "scripts" / "healthcheck.ps1").read_text(encoding="utf-8")
+    assert "Get-Process -Name 'com.docker.backend','Docker Desktop'" in script
+    assert "Stop-Process -Name 'Docker Desktop','com.docker.backend','com.docker.build','docker-agent'" in script
+    assert "wsl --shutdown" in script
+    assert "Start-Service com.docker.service" in script
+    assert script.index("wsl --shutdown") < script.index("Start-Process -FilePath $dockerExe")
