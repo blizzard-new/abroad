@@ -19,7 +19,17 @@ if (-not (Test-Url 'http://127.0.0.1:8000/health')) {
     if ($LASTEXITCODE -ne 0) {
         $dockerExe = 'C:\Program Files\Docker\Docker\Docker Desktop.exe'
         if (Test-Path $dockerExe) {
-            Log 'Docker engine not running - starting Docker Desktop automatically (boot/power-loss recovery)'
+            $hung = @(Get-Process -Name 'com.docker.backend','Docker Desktop' -ErrorAction SilentlyContinue)
+            if ($hung.Count -gt 0) {
+                Log 'Docker Desktop processes are running but engine is unresponsive - resetting hung Docker/WSL2 engine'
+                Stop-Process -Name 'Docker Desktop','com.docker.backend','com.docker.build','docker-agent' -Force -ErrorAction SilentlyContinue
+                Start-Sleep -Seconds 3
+                Invoke-Quiet { & wsl --shutdown }
+                Start-Sleep -Seconds 3
+            } else {
+                Log 'Docker engine not running - starting Docker Desktop automatically (boot/power-loss recovery)'
+            }
+            Start-Service com.docker.service -ErrorAction SilentlyContinue
             Start-Process -FilePath $dockerExe
             for ($w = 0; $w -lt 45; $w++) {
                 Start-Sleep -Seconds 2
