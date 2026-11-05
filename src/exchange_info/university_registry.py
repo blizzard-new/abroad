@@ -2226,7 +2226,49 @@ KNU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU)
+NIU = UniversityProfile(
+    id="niu",
+    school_name="國立宜蘭大學",
+    short_name="宜大",
+    english_name="National Ilan University",
+    aliases=(
+        "niu",
+        "國立宜蘭大學",
+        "宜蘭大學",
+        "宜大",
+        "國立宜蘭技術學院",
+        "國立宜蘭農工專科學校",
+        "宜蘭農專",
+        "宜蘭農校",
+        "NIU",
+        "National Ilan University",
+    ),
+    hero_image="/static/assets/niu-campus.svg",
+    official_url="https://oia.niu.edu.tw/p/404-1014-9618.php",
+    coverage_note="完整支援：已整合國立宜蘭大學國際事務處（OIA，行政大樓 5 樓）《學生赴境外研習暨交換申請資訊簡章》、《美國密西根大學迪爾伯恩分校 UM-Dearborn 3+2／1+1 雙聯學位專頁》、《學生境外學習手冊（Students Go Global Guidebook）》、《四大洲及大陸地區締約姊妹校名錄（97校）》、《國立宜蘭大學學生赴境外研修甄選作業要點》、《國立宜蘭大學與境外大學辦理雙聯學制實施辦法》、《國立宜蘭大學學生赴境外研修獎補助要點》、《國立宜蘭大學學海系列方案甄選及補助要點》與《國立宜蘭大學學生參與國際性活動獎補助要點》官方資料：（1）兩梯次校內甄選、大學部全班前 60%／研究生 75 分門檻與每學期 4 學分或 2 門課規定：每年分兩梯次（秋季班 2 月初至 3 月底、春季班 9 月初至 10 月底）受理次學期赴境外（含大陸）交換甄選，限具本校學籍之日間學制學生（非中華民國籍學生不得交換至原屬國家），大學部前一學期學業成績須為全班前 60%、研究生學業成績平均達 75 分以上，且前一學期操行成績達 75 分以上無重大違紀事件；外語能力依各姊妹校規定（英語組 TOEIC 500–785 / IELTS 5.0–6.0 / TOEFL iBT 70–80、日語組 JLPT N5–N1、韓語組 TOPIK 3 級、大陸地區免外語檢定）；交換期間繳交宜大學雜費、免繳姊妹校學雜費，每學期至少修讀 4 學分或 2 門課程，抵達姊妹校 14 天內回報國外聯絡方式，返國後 1 個月內繳交至少 3 頁中文心得報告電子檔並配合經驗分享會及接待來校交換生。（2）全球 19 國／地區 97 所合作姊妹校與 9 校跨國雙聯學位：完整收錄 84 所常態開放申請之交換、雙聯與自費研修合作校及 13 所正式締約姊妹校，涵蓋美國密西根大學迪爾伯恩分校（UM-Dearborn 3+2 學碩／1+1 雙碩士，GPA 3.0、iBT 80–84 / IELTS 6.5，享本州生 1.2 倍學費減免）、美國伊利諾大學香檳分校（UIUC 環工／化材雙聯）、加拿大英屬哥倫比亞大學（UBC 森資系 2+2 雙學士）、瑞士 SHMS 瑞士酒店管理大學與 César Ritz 凱撒里茲酒店管理大學（休健系 3+1／2+1+1／3+2 雙聯含 4–6 個月有薪實習）、印尼日惹大學（UGM 雙聯）與阿瑪加雅大學（UAJY 建研所 1+1 雙碩士）、越南胡志明市理工大學（HCMUT 化工雙聯）及大陸福州大學（經管學院 1+1 雙碩士）等 9 校雙聯學位。（3）四大獎助學金體系與返國心得：涵蓋教育部《學海飛颺／學海惜珠》（大學部前 40%、研究生 80 分以上，補助 NT$50,000–450,000）、《學海築夢／新南向學海築夢》、《校內學生赴境外研修獎補助》（歐美非最高 NT$30,000、紐澳 NT$25,000、亞洲 NT$15,000、大陸港澳 NT$10,000，另加重點學校獎助 NT$3,000–5,000 與語文成績獎助最高 NT$4,000）及《參與國際性活動獎補助》，並收錄 22 所合作大學共 38 篇歷屆學長姐出國交換與雙聯學位心得分享紀錄。",
+    support_level="full",
+    partner_count_hint=97,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "國立宜蘭大學",
+        "宜蘭大學",
+        "宜大",
+        "NATIONALILANUNIVERSITY",
+        "NATIONAL ILAN UNIVERSITY",
+        "NIU",
+    ),
+    # https://www.niu.edu.tw/p/412-1000-84.php?Lang=zh-tw — checked 2026-11-05.
+    colleges=(
+        "人文及管理學院",
+        "工學院",
+        "生物資源學院",
+        "電機資訊學院",
+        "博雅學部",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NIU)
 DEFAULT_UNIVERSITY = CGU
 
 

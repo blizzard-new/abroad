@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NIU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -143,6 +143,7 @@ TPCU_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 AU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
 KNU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
+NIU_SOURCE_CHECKED_AT = datetime(2026, 11, 5, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3480,6 +3481,58 @@ def _knu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _niu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立宜蘭大學（國際事務處國際學生事務組，宜蘭縣宜蘭市神農路一段 1 號 行政大樓 3 樓，電話 03-935-7400 分機 7180）《赴境外姊妹校交換學生／雙聯學位／大陸交換甄選簡章》應繳申請表件：1. 赴境外姊妹校交換學生申請表（雙聯學位繳交雙聯學位申請表）、2. 歷年成績單正本（含前一學期名次百分比與操行成績；學士班須全班前 60%、碩博班須平均 75 分以上，學海飛颺與赴境外研修獎補助須學士班前 40% 或碩博 80 分以上，操行皆須 75 分以上）、3. 讀書計畫與自傳（1,000～1,500 字）、4. 師長推薦信 2 封、5. 有效語言能力檢定證明影本、6. 家長或監護人同意書、7. 其他有利審查資料。",
+        "study-plan": "撰寫國立宜蘭大學赴境外姊妹校交換學生、跨國雙聯學位（美國密西根大學迪爾伯恩分校 UM-Dearborn 3+2／1+1／4+1、波蘭奧爾什丁瓦爾米亞瑪祖里大學 UWM 碩士雙聯、瑞士 César Ritz 3+1／HIM 2+2、泰國農業大學 Kasetsart 等）及教育部學海飛颺／惜珠與校內赴境外研修獎補助必繳之《讀書計畫與自傳（1,000～1,500 字）》（UM-Dearborn 雙聯另須準備英文 Statement of Purpose 與英文 CV）。請具體說明申請動機、個人學經歷背景、於志願姊妹校擬修習之專業或語言課程規劃（每學期至少修讀相當於宜大 6 學分以上），以及返國後之學分抵免與職涯發展目標。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《國立宜蘭大學學生出國期間有關學業及學籍處理要點》與《國立宜蘭大學與境外大學校院辦理跨國雙學位制實施辦法》，出國期間須於宜大完成註冊並繳交全額學雜費以保留學籍，且每學期於境外姊妹校至少須修讀相當於宜大 6 學分以上之課程）。",
+        "predeparture-notice": "經國際事務處初審與「學生赴境外研修暨交流獎補助審查小組」複審錄取公告後，須於規定期限內繳交《錄取確認書》與《家長同意書》，配合國際事務處向姊妹校完成提名（Nomination）與入學申請（如日本在留資格認定證明書 COE、美國 DS-2019／I-20 等），並於出國前辦妥宜大註冊、選課、護照簽證、役男出境及海外醫療與意外保險。",
+        "return-report": "境外交換或雙聯研修期滿返國後 2 週（或依獎補助規定 1 個月）內，須依《國立宜蘭大學學生赴境外研修獎補助辦法》及教育部學海計畫規定，向國際事務處提交《出國研修心得報告》（約 1,500～2,000 字以上，含境外學習與生活照片，供刊登於國際事務處「學生赴外研修心得」專區）、姊妹校正式成績單、護照出入境紀錄及登機證正本，並配合成果發表會始得完成結案與獎助學金核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），向所屬學系（所）及教務處申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立宜蘭大學").replace("長庚", "宜大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立宜蘭大學規定：一般海外與大陸交換學士班前一學期學業成績須全班前 60%、碩博士班歷年平均須 75 分以上（操行皆須 75 分以上）；申請教育部《學海飛颺／惜珠》或《國立宜蘭大學學生赴境外研修獎補助》須學士班全班前 40% 或碩博士班平均 80 分以上；申請美國密西根大學迪爾伯恩分校（UM-Dearborn）雙聯須 GPA 3.0 以上。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語組：TOEIC 多益測驗（CEFR B1 550+、波蘭／捷克／泰國等 B2 785+）",
+                "英語組：TOEFL iBT / ITP（iBT 72+、UM-Dearborn 雙聯 80–84+、加拿大 UNBC 90+、ITP 500–543+）",
+                "英語組：IELTS 雅思（瑞士 César Ritz／HIM 5.5+、澳洲 UNE／波蘭 UWM 6.0+、UM-Dearborn／UNBC 6.5+）",
+                "日語組：JLPT 日語能力試驗（信州／香川／三重大學特定學院 N1；金城學院／愛媛／岡山／東京農業 N2；廣島／山口／島根／名城／北見工業 N3）",
+                "韓語組：TOPIK 韓國語文能力測驗（建國／嶺南／誠信女大／忠北／江原大學等要求 TOPIK 3 級或英語 B2）",
+                "大陸交換組：吉林大學、華中農業大學、西北農林科技大學、蘭州大學等 15 所大陸重點高校（中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依國立宜蘭大學國際事務處赴境外姊妹校交換學生與跨國雙聯學位簡章填報有效之語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.niu.edu.tw/p/404-1014-69635.php",
+        source_checked_at=NIU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立宜蘭大學赴境外姊妹校交換學生／跨國雙聯學位申請表（含讀書計畫與自傳、師長推薦信 2 封及家長同意書）" if template.id == "exchange-application-data" else ("讀書計畫與自傳（1,000～1,500 字）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.niu.edu.tw/p/412-1014-3545.php",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師及系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經審查小組錄取後繳交錄取確認書與家長同意書，配合國際事務處向姊妹校完成提名與簽證申請，並完成宜大註冊", "return-report": "返國後 2 週（或 1 個月）內繳交出國研修心得報告（含照片）與正式成績單辦理結案與獎助核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分抵免"}.get(template.id, "於校內收件截止前備齊申請表、歷年成績單（含名次）、語檢證明、讀書計畫與自傳（1,000～1,500 字）、推薦信 2 封及家長同意書送交國際事務處（行政大樓 3 樓）"),
+        version="115準備工具-2026-11-05.1",
+        destinations=["國立宜蘭大學國際事務處國際學生事務組（260007 宜蘭縣宜蘭市神農路一段 1 號 行政大樓 3 樓）"],
+        conditional_note="此為個人準備工具；國立宜蘭大學赴境外姊妹校交換與雙聯學位每年分兩學期（秋季班前一年 9～11 月、春季班 2～3 月）收件，由國際事務處初審並提送學生赴境外研修暨交流獎補助審查小組複審。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3604,6 +3657,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _au_template(template)) is not None]
     if university.id == KNU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _knu_template(template)) is not None]
+    if university.id == NIU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _niu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
