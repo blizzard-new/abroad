@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-Hant-TW"><!-- InstanceBegin template="/Templates/nutn_2024.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="x-ua-compatible" content="IE=edge">
+
+	<!-- Font Imports -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+
+	<!-- Core Style -->
+	<link rel="stylesheet" href="style.css">
+
+	<!-- Font Icons -->
+	<link rel="stylesheet" href="css/font-icons.css">
+
+	<!-- Plugins/Components CSS -->
+	<link rel="stylesheet" href="css/swiper.css">
+
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="css/custom.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Favicon -->
+	<link rel="icon" href="images/favicon.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+	
+	<!-- Document Title============================================= -->
+	<!-- InstanceBeginEditable name="doctitle" -->
+	<title>國立臺南大學 National University of Tainan</title>
+    <meta name="description" content="國立臺南大學" />
+    <meta property="og:url" content="https://www.nutn.edu.tw/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="國立臺南大學" />
+    <meta property="og:description" content="國立臺南大學" />
+    <meta property="og:image" content="https://www.nutn.edu.tw/images/logo.png" />
+	<!-- InstanceEndEditable -->
+     <meta HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE" />
+     <meta HTTP-EQUIV="EXPIRES" CONTENT="0" />
+     <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" />
+<!-- InstanceBeginEditable name="head" -->
+ <script src="js/jquery.js"></script>
+ 
+ <script>
+        $(function () {
+
+            $.ajax({
+                url: 'https://www.nutn.edu.tw/GetNews/GetNews.asmx/getnews',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: '{ "classid": "id_first" }',
+                success: function (result) {
+                    //$("#id_second").html('抓到資料囉!');
+                    var data = eval("(" + result.d + ")");
+                    $.each(data, function (rec) {
+                       
+						 $("#test_first").append('<article class="entry col-12 mb-3"><div class="grid-inner row"><div class="col-md-12"><div class="entry-title title-xs"><h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i>&nbsp' + this.posttime +'&nbsp'+ this.source + '</span><a href="information_details.html?boardno='+this.no+'&classid='+ this.num +'" class="stretched-link color-underline">' + this.subject + '</a></h3></div></div></div></article>');
+			  
+                        // alert(element);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    OnFailure(error);
+                }
+            });
+
+            function OnFailure(error) {
+                alert(error);
+            }
+
+        });
+
+
+     
+        $(function () {
+
+            $.ajax({
+                url: 'https://www.nutn.edu.tw/GetNews/GetNews.asmx/getnews',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: '{ "classid": "id_third" }',
+                success: function (result) {
+                    //$("#id_second").html('抓到資料囉!');
+                    var data = eval("(" + result.d + ")");
+                    $.each(data, function (rec) {
+                       
+						 $("#test_third").append('<article class="entry col-12 mb-3"><div class="grid-inner row"><div class="col-md-12"><div class="entry-title title-xs"><h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i>&nbsp' + this.posttime +'&nbsp'+ this.source + '</span><a href="information_details.html?boardno='+this.no+'&classid='+ this.num +'" class="stretched-link color-underline">' + this.subject + '</a></h3></div></div></div></article>');
+			  
+                        // alert(element);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    OnFailure(error);
+                }
+            });
+
+            function OnFailure(error) {
+                alert(error);
+            }
+
+        });
+		
+		 $(function () {
+
+            $.ajax({
+                url: 'https://www.nutn.edu.tw/GetNews/GetNews.asmx/getnews',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: '{ "classid": "id_eighth" }',
+                success: function (result) {
+                    //$("#id_second").html('抓到資料囉!');
+                    var data = eval("(" + result.d + ")");
+                    $.each(data, function (rec) {
+                       
+						  $("#test_eighth").append('<article class="entry col-12 mb-3"><div class="grid-inner row"><div class="col-md-12"><div class="entry-title title-xs"><h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i>&nbsp' + this.posttime +'&nbsp'+ this.source + '</span><a href="information_details.html?boardno='+this.no+'&classid='+ this.num +'" class="stretched-link color-underline">' + this.subject + '</a></h3></div></div></div></article>');
+			  
+                        // alert(element);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    OnFailure(error);
+                }
+            });
+
+            function OnFailure(error) {
+                alert(error);
+            }
+
+        });
+		
+		 $(function () {
+
+            $.ajax({
+                url: 'https://www.nutn.edu.tw/GetNews/GetNews.asmx/getnews',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: '{ "classid": "id_ninth" }',
+                success: function (result) {
+                    //$("#id_second").html('抓到資料囉!');
+                    var data = eval("(" + result.d + ")");
+                    $.each(data, function (rec) {
+                       
+						  $("#test_ninth").append('<article class="entry col-12 mb-3"><div class="grid-inner row"><div class="col-md-12"><div class="entry-title title-xs"><h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i>&nbsp' + this.posttime +'&nbsp'+ this.source + '</span><a href="information_details.html?boardno='+this.no+'&classid='+ this.num +'" class="stretched-link color-underline">' + this.subject + '</a></h3></div></div></div></article>');
+			  
+                        // alert(element);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    OnFailure(error);
+                }
+            });
+
+            function OnFailure(error) {
+                alert(error);
+            }
+
+        });
+
+        $(function () {
+
+            $.ajax({
+                url: 'https://www.nutn.edu.tw/GetNews/GetNews.asmx/getnews',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: '{ "classid": "id_fourth" }',
+                success: function (result) {
+                    //$("#id_second").html('抓到資料囉!');
+                    var data = eval("(" + result.d + ")");
+                    $.each(data, function (rec) {
+                        
+						 $("#test_fourth").append('<article class="entry col-12 mb-3"><div class="grid-inner row"><div class="col-md-12"><div class="entry-title title-xs"><h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i>&nbsp' + this.posttime +'&nbsp'+ this.source + '</span><a href="information_details.html?boardno='+this.no+'&classid='+ this.num +'" class="stretched-link color-underline">' + this.subject + '</a></h3></div></div></div></article>');
+			  
+                        // alert(element);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    OnFailure(error);
+                }
+            });
+
+            function OnFailure(error) {
+                alert(error);
+            }
+
+        });
+
+        $(function () {
+
+            $.ajax({
+                url: 'https://www.nutn.edu.tw/GetNews/GetNews.asmx/getnews',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: '{ "classid": "id_fifth" }',
+                success: function (result) {
+                    //$("#id_second").html('抓到資料囉!');
+                    var data = eval("(" + result.d + ")");
+                    $.each(data, function (rec) {
+                      
+						 $("#test_fifth").append('<article class="entry col-12 mb-3"><div class="grid-inner row"><div class="col-md-12"><div class="entry-title title-xs"><h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i>&nbsp' + this.posttime +'&nbsp'+ this.source + '</span><a href="information_details.html?boardno='+this.no+'&classid='+ this.num +'" class="stretched-link color-underline">' + this.subject + '</a></h3></div></div></div></article>');
+			  
+                        // alert(element);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    OnFailure(error);
+                }
+            });
+
+            function OnFailure(error) {
+                alert(error);
+            }
+
+        });
+
+        $(function () {
+
+            $.ajax({
+                url: 'https://www.nutn.edu.tw/GetNews/GetNews.asmx/getnews',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: '{ "classid": "id_sixth" }',
+                success: function (result) {
+                    //$("#id_second").html('抓到資料囉!');
+                    var data = eval("(" + result.d + ")");
+                    $.each(data, function (rec) {
+                       
+						  $("#test_sixth").append('<article class="entry col-12 mb-3"><div class="grid-inner row"><div class="col-md-12"><div class="entry-title title-xs"><h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i>&nbsp' + this.posttime +'&nbsp'+ this.source + '</span><a href="information_details.html?boardno='+this.no+'&classid='+ this.num +'" class="stretched-link color-underline">' + this.subject + '</a></h3></div></div></div></article>');
+			  
+                        // alert(element);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    OnFailure(error);
+                }
+            });
+
+            function OnFailure(error) {
+                alert(error);
+            }
+
+        });
+		
+		$(function () {
+
+            $.ajax({
+                url: 'https://www.nutn.edu.tw/GetNews/GetNews.asmx/getnews',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: '{ "classid": "id_seventh" }',
+                success: function (result) {
+                    //$("#id_second").html('抓到資料囉!');
+                    var data = eval("(" + result.d + ")");
+                    $.each(data, function (rec) {
+                      
+						  $("#test_seventh").append('<article class="entry col-12 mb-3"><div class="grid-inner row"><div class="col-md-12"><div class="entry-title title-xs"><h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i>&nbsp' + this.posttime +'&nbsp'+ this.source + '</span><a href="information_details.html?boardno='+this.no+'&classid='+ this.num +'" class="stretched-link color-underline">' + this.subject + '</a></h3></div></div></div></article>');
+			  
+                        // alert(element);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    OnFailure(error);
+                }
+            });
+
+            function OnFailure(error) {
+                alert(error);
+            }
+
+        });
+		
+		$(function () {
+
+            $.ajax({
+                url: 'https://www.nutn.edu.tw/GetNews/GetNews.asmx/getnews',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: '{ "classid": "id_tenth" }',
+                success: function (result) {
+                    //$("#id_second").html('抓到資料囉!');
+                    var data = eval("(" + result.d + ")");
+					if(typeof data === 'object' && Object.keys(data).length === 0)
+					{
+					 $("#test_tenth").append("目前無任何公告");
+				  
+					}
+					else
+					{
+						$.each(data, function (rec) {
+						  
+							  $("#test_tenth").append('<article class="entry col-12 mb-3"><div class="grid-inner row"><div class="col-md-12"><div class="entry-title title-xs"><h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i>&nbsp' + this.posttime +'&nbsp'+ this.source + '</span><a href="information_details.html?boardno='+this.no+'&classid='+ this.num +'" class="stretched-link color-underline">' + this.subject + '</a></h3></div></div></div></article>');
+				  
+							// alert(element);
+						});
+					}
+                },
+                error: function (xhr, status, error) {
+                    OnFailure(error);
+                }
+            });
+
+            function OnFailure(error) {
+                alert(error);
+            }
+
+        });
+		
+		$(function () {
+
+            $.ajax({
+                url: 'https://www.nutn.edu.tw/movierandom/movierandom.asmx/randommovie',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+               // data: '{ "classid": "id_seventh" }',
+                success: function (result) {
+                    //$("#id_second").html('抓到資料囉!');
+                    var data = eval("(" + result.d + ")");
+                    $.each(data, function (rec) {
+                        //$('#movietest').title(this.subject);
+                        $('#movietest').attr("title", this.subject);
+                       // $('#movietest').attr("src", 'https://www.youtube.com/embed/c0umbMpK0is?autoplay=1&mute=1&rel=0');
+                        $('#movietest').attr("src", 'https://www.youtube.com/embed/'+this.link +'?autoplay=1&mute=1&rel=0');
+                        $('#moviep').text(this.subject);
+                        // alert(element);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    OnFailure(error);
+                }
+            });
+
+            function OnFailure(error) {
+                alert(error);
+            }
+
+        });
+
+    </script>
+<!-- InstanceEndEditable -->
+
+</head>
+
+<body class="stretched sticky-responsive-pagemenu">
+	<a href="#main-content" class="skip-link">跳過主導覽區，直接進入內容</a>
+
+	<!-- Document Wrapper
+	============================================= -->
+	<div id="wrapper">
+
+		<!-- Top Bar
+		============================================= -->
+		<div id="top-bar" class="transparent-topbar dark gradient-bg">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-12 col-md-auto">
+					</div>
+					<div class="col-12 col-md-auto">
+						<!-- 右上方功能區塊
+						============================================= -->
+						<div class="top-links">
+							<ul class="top-links-container">
+								<li class="top-links-item"><a href="sitemap.html">網站導覽</a></li>
+								<li class="top-links-item"><a href="index.html">回首頁</a></li>
+								<li class="top-links-item"><a href="https://campus.nutn.edu.tw/SSO/entrance/Logon2.aspx" target="_blank">南大入口</a></li>
+								<li class="top-links-item"><a href="https://eng.nutn.edu.tw" target="_blank">English</a></li>
+								
+							</ul>
+						</div><!-- #右上方功能區塊 end -->
+					</div>
+				</div>
+			</div>
+		</div><!-- #top bar end -->
+		
+		<!-- Header============================================= -->
+		<header id="header" class="header-size-sm border-bottom-0">
+			<div id="header-wrap">
+				<div class="container">
+					<div class="header-row">
+
+						<!-- Logo============================================= -->
+						<div id="logo">
+							<a href="/">
+								<img class="logo-default" srcset="images/logo.png, images/logo@2x.png 2x" src="images/logo%402x.png" alt="國立臺南大學 Logo">
+							</a>
+						</div><!-- #logo end -->
+
+						<div class="primary-menu-trigger">
+							<button class="cnvs-hamburger" type="button" aria-label="開啟行動版選單" title="Open Mobile Menu">
+								<span class="cnvs-hamburger-box"><span class="cnvs-hamburger-inner"></span></span>
+							</button>
+						</div>
+
+						<!-- #主選單(桌上電腦)
+						============================================= -->
+						<nav id="desmenu" class="primary-menu">
+
+							<ul class="menu-container">
+								<li class="menu-item">
+									<a class="menu-link" href="about.html"><div>認識南大</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="teaching.html"><div>教學單位</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="administrative.html"><div>行政單位</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="info.html"><div>校務暨財務資訊</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="https://admissions.nutn.edu.tw/Admissions/" target="_blank"><div>招生與入學</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="https://campus.nutn.edu.tw/Calendars/" target="_blank"><div>校園行事曆</div></a>
+								</li>
+								<li class="menu-item">
+									<a class="menu-link" href="https://campus.nutn.edu.tw/netForum/" target="_blank"><div>意見交流</div></a>
+								</li>
+							</ul>
+
+						</nav><!-- #主選單(電腦) end -->
+						
+						<!-- #主選單(行動裝置)
+						============================================= -->
+						<nav id="mobmenu" class="primary-menu">
+
+							<div class="menu-container mega-menu">
+								<div class="mega-menu-column row">
+								<div class="menu-item col-6 border-end">
+									<a class="menu-link" href="about.html"><div>認識南大</div></a>
+								</div>
+								<div class="menu-item col-6 border-end">
+									<a class="menu-link" href="teaching.html"><div>教學單位</div></a>
+								</div>
+								<div class="menu-item col-6 border-end">
+									<a class="menu-link" href="administrative.html"><div>行政單位</div></a>
+								</div>
+								<div class="menu-item col-6 border-end">
+									<a class="menu-link" href="info.html"><div>校務暨財務資訊</div></a>
+								</div>
+								<div class="menu-item col-6 border-end">
+									<a class="menu-link" href="https://admissions.nutn.edu.tw/Admissions/" target="_blank"><div>招生與入學</div></a>
+								</div>
+								<div class="menu-item col-6 border-end">
+									<a class="menu-link" href="https://campus.nutn.edu.tw/Calendars/" target="_blank"><div>校園行事曆</div></a>
+								</div>
+								<div class="menu-item col-6 border-end">
+									<a class="menu-link" href="https://campus.nutn.edu.tw/netForum/" target="_blank"><div>意見交流</div></a>
+								</div>
+								
+								
+								<div class="menu-item col-6 border-end">
+									
+								</div>
+								
+								<div class="menu-item col-6 border-end audience-menu-item">
+									<a class="menu-link dark" href="sys_teacher.html"><div><i class="fa-solid fa-chalkboard-user pe-2"></i>教師</div></a>
+								</div>
+								<div class="menu-item col-6 border-end audience-menu-item">
+									<a class="menu-link dark" href="sys_staff.html"><div><i class="fa-solid fa-user-tie pe-2"></i>職員</div></a>
+								</div>
+								<div class="menu-item col-6 border-end audience-menu-item">
+									<a class="menu-link dark" href="student.html"><div><i class="fa-solid fa-user-graduate pe-2"></i>學生</div></a>
+								</div>
+								<div class="menu-item col-6 border-end audience-menu-item">
+									<a class="menu-link dark" href="alumni.html"><div><i class="fa-solid fa-users pe-2"></i>校友</div></a>
+								</div>
+								<div class="menu-item col-6 border-end audience-menu-item">
+									<a class="menu-link dark" href="student2.html"><div><i class="fa-solid fa-user-pen pe-2"></i>高中生</div></a>
+								</div>
+								
+								<div class="menu-item col-6 border-end audience-menu-item">
+									<a class="menu-link dark" href="visitor.html"><div><i class="fa-solid fa-user-alt pe-2"></i>訪客</div></a>
+								</div>
+								<div class="menu-item col-12 border-end audience-menu-item">
+									<a class="menu-link dark" href="https://en-oia.nutn.edu.tw/" target="_blank"><div><i class="fa-solid fa-user-graduate pe-2"></i>International Students</div></a>
+								</div>
+								<div class="menu-item col-12 text-end bg-contrast-400 py-2">
+									<a href="https://www.facebook.com/nutn.tw" class="px-2" target="_blank"><i class="fa-brands fa-facebook-f pe-2"></i>Facebook</a>
+									<a href="https://www.youtube.com/@nutncc1" class="px-2" target="_blank"><i class="fa-brands fa-youtube pe-2"></i>Youtube</a>
+								</div>
+								</div>
+							</div>						
+
+						</nav><!-- #主選單(行動裝置) end -->
+						
+						<div class="header-misc">
+							<!-- #Top Search============================================= -->
+							<div id="top-search" class="header-misc-icon py-2">
+								<a href="#" id="top-search-trigger" aria-label="開啟搜尋框"><i class="uil uil-search"></i><i class="bi-x-lg"></i></a>
+							</div><!-- #top-search end -->
+						</div>
+						<form class="top-search-form" action="https://www.google.com/search" target="_blank" method="get">
+							<input type="hidden" name="ie" value="Utf-8">
+							<input type="hidden" name="domains" value="nutn.edu.tw">
+							<input type=hidden name="sitesearch" value="nutn.edu.tw">
+							<input type="text" aria-label="全文檢索" name="q" class="form-control" value="" placeholder=" 全文檢索" autocomplete="off">
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="header-wrap-clone"></div>
+		</header><!-- #header end -->
+		<!-- InstanceBeginEditable name="Slider" -->
+		<!-- #輪播  ============================================= -->	
+		<section id="slider" class="slider-element h-auto" role="region" aria-roledescription="輪播" aria-label="首頁焦點圖片輪播">
+			<div class="slider-inner">
+				<button type="button" class="slider-rotation-control" aria-label="暫停首頁焦點圖片自動輪播">暫停輪播</button>
+				<div class="owl-carousel carousel-widget" data-margin="0" data-items="1" data-pagi="false" data-loop="false" data-rewind="true" data-autoplay="6000" data-nav="true" data-nav-prev="<span class='visually-hidden'>上一張焦點圖片</span><i class='uil uil-angle-left-b' aria-hidden='true'></i>" data-nav-next="<span class='visually-hidden'>下一張焦點圖片</span><i class='uil uil-angle-right-b' aria-hidden='true'></i>" data-speed="450">
+		<!-- 輪播圖片建議尺寸：1980x550px -->		              
+		           			
+					
+					
+				    <a href="#"><img src="images/slider/web283.jpg" alt="國立臺南大學128週年校慶，百年慶典，南得相聚"></a>	
+					<a href="#"><img src="images/slider/web282.jpg" alt="128週年校慶聖火環臺，10.28點聖火出發，11.02聖火回南大"></a>	
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/5942"><img src="images/slider/web241.jpg" alt="辦學成果持續獲肯定 南大《遠見》最佳大學四項分類榜單表現亮眼"></a>
+					<a href="#"><img src="images/slider/web258.jpg" alt="賀!南大榮獲教育部115年度高教深耕計畫補助6761.5萬元"></a>			
+					<a href="#"><img src="images/slider/web276.jpg" alt="賀！南大生科系張德生教授榮獲全球終身科學影響力榜單-BIOTECHNOLOGY領域全球排名前400"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/6129"><img src="images/slider/web275.jpg" alt="賀！南大師長榮登2026年全球前2%頂尖科學家榜單"></a>
+					<a href="#"><img src="images/slider/web267.jpg" alt="賀！南大榮獲教育部115年推動大學社會責任實踐計畫「轉型正義教育」先導型計畫"></a>
+					<a href="#"><img src="images/slider/web272.jpg" alt="賀！國科會115年度補助大專校院研究獎勵案"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/5938"><img src="images/slider/web240.jpg" alt="賀！卓越教學 實踐領航 115年度教育部教學實踐研究計畫通過名單"></a>
+					<a href="#"><img src="images/slider/web237.jpg" alt="賀！卓越科研-從南大開始 115學年度通過24件國科會大專生研究計畫"></a>	
+					<a href="#"><img src="images/slider/web278.jpg" alt="賀！數位系林豪鏘教授榮獲2026年Globee國際人工智慧大獎科技教育成就銀獎暨類別最佳獎"></a>
+					<a href="#"><img src="images/slider/web257.jpg" alt="賀！南大榮獲臺灣教育大學系統第12屆優良博碩士學位論文獎"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/6083"><img src="images/slider/web271.jpg" alt="賀！南大體育系賴柏翔、陳玟溥代表中華台北勇奪2026名古屋亞運男子4X100公尺接力銀牌"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/6095"><img src="images/slider/web266.jpg" alt="賀！南大數位系楊子賢同學榮獲OPEN AI辦理Build Week 2026(OPEN AI開發週)國際比賽 Developer Tools(開發者工具)組第一名"></a>
+					<a href="#"><img src="images/slider/web279.jpg" alt="賀！南大視設系陳映筑、陳怡安同學榮獲2026中華民國第42屆版印年畫徵選比賽優選獎"></a>	
+					<a href="#"><img src="images/slider/web281.jpg" alt="賀！南大綠能系黃明祺同學榮獲2026第6屆全國大專生工程藝文獎文學組第一名"></a>	
+					<a href="#"><img src="images/slider/web277.jpg" alt="賀！南大校安人員榮獲教育部表揚"></a>	
+					<a href="#"><img src="images/slider/web254.png" alt="賀！本校校友榮獲115年杏壇芬芳獎及教育部師鐸獎"></a>	
+					<a href="#"><img src="images/slider/web273.png" alt="賀！本校校友115學年度初任校長"></a>
+					<a href="#"><img src="images/slider/web274.png" alt="賀！115年第15屆教育大愛「菁師獎」"></a>
+					<a href="#"><img src="images/slider/web262.jpg" alt="賀！115年度教育部教育實習績優獎"></a>	
+					<a href="#"><img src="images/slider/web255.png" alt="賀！蕭瓊瑞校友榮獲第十五屆臺南文化獎"></a>
+					<a href="#"><img src="images/slider/web264.png" alt="賀！本校校友榮獲第3屆大武山職場新人賞"></a>							
+					<a href="#"><img src="images/slider/web260.jpg" alt="賀！南大團隊榮獲運動部2026「王牌愛/礙運動」適應運動設計比賽"></a>
+					<a href="https://sdgs.nutn.edu.tw/upload/2025-NUTN-Sustainability-Report.pdf"><img src="images/slider/web252.jpg" alt="2025永續報告書"></a>
+					<a href="https://isafeevent.moe.edu.tw"><img src="images/slider/web265.jpg" alt="教育部115年度全民數位素養自我評量活動，活動期間為09.14~11.15"></a>
+					
+					
+					
+					
+					
+										
+																
+				   									
+				
+					
+
+					<!--
+					<a href="https://sdgs.nutn.edu.tw/upload/2025-NUTN-Sustainability-Report.pdf"><img src="images/slider/web250.png" alt="2025永續報告書（PDF 檔）"></a>
+					
+					<a href="#"><img src="images/slider/web186.jpg" alt="賀！本校體育系沈郡蓉同學及音樂系陳怡臻同學榮獲115年全國特奧籃球競賽暨2027夏季世界特殊奧運匹克運動會中華台北代表隊選手選拔賽第二名"></a>
+					 <a href="#"><img src="images/slider/web182.jpg" alt="賀!本校環境與生態學院傅耀賢院長榮獲2026遠見第七屆USR大學社會責任獎產業共創組首獎"></a>	
+					<a href="https://reurl.cc/M37rZm"><img src="images/slider/web087.png" alt="首選南大新生線上招生說明會"></a>
+					<a href="#"><img src="images/slider/web039.jpg" alt="賀！生物科技學系張德生教授及電機工程學系許正良教授入榜「2023年度科學影響力」排名前2%頂尖科學家名單"></a>					   
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/4859"><img src="images/slider/web037.jpg" alt="賀！生物科技學系張德生教授榮登2024年Biotechnology全球排名前五百"></a>
+				   <a href="#"><img src="images/slider/web054.png" alt="賀!本校圖資處連續三年榮獲國家圖書館-全國圖書書目資訊網聯合目錄合作建置金心獎"></a>
+				   <a href="#"><img src="images/slider/web040.jpg" alt="賀！本校校友113學年度初任校長榮譽榜"></a>
+					<a href="#"><img src="images/slider/web041.jpg" alt="賀！本校校友113學年度初任校長榮譽榜"></a>	
+					<a href="#"><img src="images/slider/web036.png" alt="師培首選大學，113年度高級中等以下學校及幼兒園教師資格考，本校應屆通過率超過85.31%"></a>
+					<a href="#"><img src="images/slider/web035.png" alt="本校113年師培學系教師資格考試通過率"></a>				
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/4685"><img src="images/slider/web026.png" alt="賀！本校113學年度教育部教學實踐研究計畫成長率超過200%"></a>	
+					<a href="#"><img src="images/slider/web013.jpg" alt="賀！本校榮獲114學年度師資培育公費生獎優學校(幼兒園師資類科、國民小學師資類科)"></a>				
+                    <a href="https://epaper.nutn.edu.tw/newsreport-detail/4533"><img src="images/slider/web005.png" alt="賀！國立臺南大學榮獲2024天下USR大學公民獎 「公立一般中型大學組第四名」"></a>
+					<a href="#"><img src="images/slider/web025.png" alt="賀！本校113-114學年度大學招生專業化計畫榮獲教育部6125000元補助"></a>
+					<a href="#"><img src="images/slider/web014.jpg" alt="賀！特殊教育學系林千玉教授榮獲第12屆星雲教育獎-大專校院組典範教師"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/4649"><img src="images/slider/web021.png" alt="賀！本校榮登2024年遠見雜誌全國綜合大學前30強"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/4649"><img src="images/slider/web020.png" alt="賀！本校榮登2024年遠見雜誌全國公立大學前30強"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/4649"><img src="images/slider/web019.png" alt="賀！本校榮登2024年遠見雜誌全國中小型大學前10強"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/4649"><img src="images/slider/web018.png" alt="賀！本校榮登2024年遠見雜誌南部大學前10強"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/4649"><img src="images/slider/web023.png" alt="賀！本校榮登2024年遠見雜誌公立大學最佳進步獎"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/4649"><img src="images/slider/web024.png" alt="賀！本校榮登2024年遠見雜誌師均智慧財產衍生運用總金額全國第一"></a>		
+					<a href="#"><img src="images/slider/web032.png" alt="賀！本校校友榮獲臺灣教育大學系統第十屆優良博碩士學位論文獎"></a>
+				    <a href="#"><img src="images/slider/web030.jpg" alt="賀！本校校友榮獲113年杏壇芬芳獎、113年第19屆教育奉獻獎、教育部113年師鐸獎"></a>
+				    <a href="#"><img src="images/slider/web033.jpg" alt="賀！本校校友113學年度初任校長榮譽榜"></a>
+					<a href="https://student.nutn.edu.tw/freshInfo/"><img src="images/slider/web017.jpg" alt="113學年度新生入學專區"></a>
+			        <a href="https://epaper.nutn.edu.tw/newsreport-detail/4478"><img src="images/slider/web008.png" alt="賀！南大傅耀賢特聘教授創新太陽能板回收技術，榮獲法國POwR Earth Summit再生能源回收獎第一名殊榮"></a>
+					<a href="#"><img src="images/slider/web156.jpg" alt="受鳳凰颱風影響，本校11月12日(星期三)停止上班上課"></a>
+					<a href="https://graduation.nutn.edu.tw/"><img src="images/slider/web002.png" alt="國立臺南大學113級畢業典禮"></a>
+					<a href="#"><img src="images/slider/web009.png" alt="賀！112學年度全國學生音樂比賽本校大成國樂社榮獲特優 本校管弦樂社榮獲優等"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/4483"><img src="images/slider/web007.png" alt="賀！國立臺南大學民俗隊2024高雄內門宋江陣頭大賽二連霸"></a>
+					<a href="https://epaper.nutn.edu.tw/newsreport-detail/4496"><img src="images/slider/web006.png" alt="賀！南大小太陽服務社、桌遊社榮獲113年全國大專校院社團評選佳績"></a>
+				    <a href="https://epaper.nutn.edu.tw/newsreport-detail/4562"><img src="images/slider/web004.png" alt="賀！本校運動代表隊參加113年全國大專校院運動會成績大放異彩，榮獲2金2銀1銅"></a>
+					-->
+				</div>
+			</div>
+		</section>
+		<!-- #輪播 end -->
+		<!-- InstanceEndEditable -->		
+
+		
+		<!-- #主內區塊============================================= -->
+		<section id="content">
+			<div class="content-wrap py-0" style="overflow: visible">
+
+				<!-- #南大入口選單
+				============================================= -->
+				<!-- #中間選單 -上滑頂部隱藏（手機版隱藏）  -->
+				<div class="container">
+					<div id="mynutn" class="slider-feature w-100">
+						<div class="row justify-content-center">
+							<div class="col px-1">
+								<a href="sys_teacher.html" class="card text-center border-start-0 border-end-0 border-top-0 border-bottom shadow py-0 rounded-2 fw-semibold ls-1 gradient-color">
+									<div class="card-body dark">
+										<i class="fa-solid fa-chalkboard-teacher pe-2"></i>教師
+									</div>
+								</a>
+							</div>
+							<div class="col px-1">
+								<a href="sys_staff.html" class="card text-center border-start-0 border-end-0 border-top-0 border-bottom shadow py-0 rounded-2 fw-semibold ls-1 gradient-color">
+									<div class="card-body dark">
+										<i class="fa-solid fa-user-tie pe-2"></i>職員
+									</div>
+								</a>
+							</div>
+							<div class="col px-1">
+								<a href="student.html" class="card text-center border-start-0 border-end-0 border-top-0 border-bottom shadow py-0 rounded-2 fw-semibold ls-1 gradient-color">
+									<div class="card-body dark">
+										<i class="fa-solid fa-user-graduate pe-2"></i>學生
+									</div>
+								</a>
+							</div>
+							<div class="col px-1">
+								<a href="alumni.html" class="card text-center border-start-0 border-end-0 border-top-0 border-bottom shadow py-0 rounded-2 fw-semibold ls-1 gradient-color">
+									<div class="card-body dark">
+										<i class="fa-solid fa-users pe-2"></i>校友
+									</div>
+								</a>
+							</div>
+							<div class="col px-1">
+								<a href="student2.html" class="card text-center border-start-0 border-end-0 border-top-0 border-bottom shadow py-0 rounded-2 fw-semibold ls-1 gradient-color">
+									<div class="card-body dark">
+										<i class="fa-solid fa-user-pen pe-2"></i>高中生
+									</div>
+								</a>
+							</div>
+							
+							<div class="col px-1">
+								<a href="visitor.html" class="card text-center border-start-0 border-end-0 border-top-0 border-bottom shadow py-0 rounded-2 fw-semibold ls-1 gradient-color">
+									<div class="card-body dark">
+										<i class="fa-solid fa-user-alt pe-2"></i>訪客
+									</div>
+								</a>
+							</div>
+							<div class="col-md-auto px-1">
+								<a href="https://en-oia.nutn.edu.tw/" target="_blank" class="card text-center border-start-0 border-end-0 border-top-0 border-bottom shadow py-0 rounded-2 ls-1 gradient-color">
+									<div class="card-body dark">
+										<i class="fa-solid fa-user-graduate pe-2"></i>International Students
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+				<!-- #吸頂固定選單 -上滑顯示 (手機版隱藏) -->
+				<div id="page-menu">
+					<div id="page-menu-wrap">
+						<div class="container">
+							<div class="page-menu-row">
+
+								<div class="page-menu-title"><div id="pt-hidden">南大入口<span> MYNUTN</span></div></div>
+
+								<nav class="page-menu-nav one-page-menu" data-offset="100">
+									<ul class="page-menu-container">
+										<li class="page-menu-item"><a href="sys_teacher.html"><div><i class="fa-solid fa-chalkboard-teacher pe-2"></i>教師</div></a></li>
+										<li class="page-menu-item"><a href="sys_staff.html"><div><i class="fa-solid fa-user-tie pe-2"></i>職員</div></a></li>
+										<li class="page-menu-item"><a href="student.html"><div><i class="fa-solid fa-user-graduate pe-2"></i>學生</div></a></li>
+										<li class="page-menu-item"><a href="alumni.html"><div><i class="fa-solid fa-users pe-2"></i>校友</div></a></li>
+										<li class="page-menu-item"><a href="student2.html"><div><i class="fa-solid fa-user-pen pe-2"></i>高中生</div></a></li>
+										<li class="page-menu-item"><a href="visitor.html"><div><i class="fa-solid fa-user-alt pe-2"></i>訪客</div></a></li>
+										<li class="page-menu-item"><a href="https://en-oia.nutn.edu.tw/" target="_blank"><div><i class="fa-solid fa-user-graduate pe-2"></i>International Students</div></a></li>
+									</ul>
+								</nav>
+
+								<button type="button" id="page-menu-trigger" aria-label="切換南大入口快速導覽選單" aria-controls="page-menu-wrap"><i class="bi-list" aria-hidden="true"></i></button>
+
+							</div>
+						</div>
+					</div>
+				</div><!-- #南大入口選單 end -->
+				
+				<!-- InstanceBeginEditable name="Contents" -->
+				
+				<!-- 中央內容區塊
+				============================================= -->
+				<div class="section  bg-white m-0  py-3" id="main-content" role="main" tabindex="-1">
+				<div class="container">	
+
+					<!-- 新聞報導 列1 ============================================= -->
+					<div class="row col-mb-30">
+						
+						<!-- 南大焦點 報導x3-->
+							<div class="fancy-title title-bottom-border">
+							<h1 class="fs-4">南大焦點</h1>
+							</div>
+							 <div id="epapar" class="row col-mb-30">
+                     
+                              </div>
+							<!-- 報導 1 
+							<div class="col-md-4">
+								<div class="card shadow-sm h-shadow all-ts h-translate-y-sm">		
+									<a href="#" target="_blank">
+										<img class="card-img-top" src="images/1031-1.jpg" alt="臺南大學師生聯展：「不拘藝格」與「創。灣裡」精彩登場">
+										<div class="card-body">
+											<div class="entry-meta no-separator mb-1 mt-0">
+												<ul>
+													<li><i class="uil uil-schedule"></i>2023-10-12</li>
+												</ul>
+											</div>
+											<h4 class="card-title text-size-sm" style="min-height: 50px; overflow: auto;">臺南大學師生聯展：「不拘藝格」與「創。灣裡」精彩登場</h4>
+										</div>
+									</a>
+								</div>
+							</div>
+							-->
+							<!-- 報導 2 -->
+							
+							<!-- 報導 3 
+							
+							<div class="text-end mt-2">
+								<a href="https://epaper.nutn.edu.tw/newsreport/catalog/3" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多南大焦點</a>
+							</div>-->
+							
+
+						<!-- 南大焦點 end-->
+
+
+					</div><!-- 新聞報導 列1 end -->
+					
+					<!-- 新聞報導 列2 ============================================= -->
+					<div class="row col-mb-30 mt-2">
+						
+						<!-- 師生榮耀 報導x1-->
+						<div class="col-md-4" >
+							<div class="fancy-title title-bottom-border">
+							<h2 class="fs-4">師生榮耀</h2>
+							</div>
+							 <div id="honor">
+					         </div>
+
+							<!-- 報導 1 
+								<div class="card shadow-sm h-shadow all-ts h-translate-y-sm">
+									<a href="#" target="_blank">
+										<img class="card-img-top" src="images/1106-1.jpg" alt="南大第16屆學生會接棒，與學生社團幹部一起邁向永續">
+										<div class="card-body">
+											<div class="entry-meta no-separator mb-1 mt-0">
+												<ul>
+													<li><i class="uil uil-schedule"></i>2023-10-12</li>
+												</ul>
+											</div>
+											<h4 class="card-title text-size-sm" style="min-height: 50px; overflow: auto;">南大第16屆學生會接棒，與學生社團幹部一起邁向永續</h4>
+										</div>
+									</a>
+								</div>	
+							<div class="text-end mt-2">
+								<a href="https://campus.nutn.edu.tw/newsPost3/honorpost.aspx" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多師生榮耀</a>
+							</div>
+                          -->
+						</div><!-- 師生榮耀 end-->
+						
+						<!-- 產學亮點 報導x1-->
+						<div class="col-md-4">
+							<div class="fancy-title title-bottom-border">
+							<h2 class="fs-4">產學亮點</h2>
+							</div>
+							 <div id="highlight" >
+					         </div>
+							<!-- 報導 1 
+
+								<div class="card shadow-sm h-shadow all-ts h-translate-y-sm">
+									<a href="#" target="_blank">
+										<img class="card-img-top" src="images/1106-2-1.jpg" alt="南大師生參與「2023學甲新知味」重現在地好滋味">
+										<div class="card-body">
+											<div class="entry-meta no-separator mb-1 mt-0">
+												<ul>
+													<li><i class="uil uil-schedule"></i>2023-10-12</li>
+												</ul>
+											</div>
+											<h4 class="card-title text-size-sm" style="min-height: 50px; overflow: auto;">南大師生參與「2023學甲新知味」重現在地好滋味</h4>
+										</div>
+									</a>
+								</div>
+							<div class="text-end mt-2">
+								<a href="https://epaper.nutn.edu.tw/newsreport/catalog/1" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多產學亮點</a>
+							</div>-->
+						</div><!-- 產學亮點 end-->
+					
+						<!-- 校園活動/校友訊息-->
+						<div class="col-md-4">
+							<div class="fancy-title title-bottom-border">
+							<h2 class="fs-4">校園活動/校友訊息</h2>
+							</div>
+							<div id="school" >
+					         </div>
+							<!-- 報導 1 
+
+								<div class="card shadow-sm h-shadow all-ts h-translate-y-sm">
+									<a href="#" target="_blank">
+										<img class="card-img-top" src="images/1106-3-2.jpg" alt="臺南大學師生聯展：「不拘藝格」與「創。灣裡」精彩登場">
+										<div class="card-body">
+											<div class="entry-meta no-separator mb-1 mt-0">
+												<ul>
+													<li><i class="uil uil-schedule"></i>2023-10-12</li>
+												</ul>
+											</div>
+											<h4 class="card-title text-size-sm" style="min-height: 50px; overflow: auto;">臺南大學師生聯展：「不拘藝格」與「創。灣裡」精彩登場</h4>
+										</div>
+									</a>
+								</div>
+							<div class="text-end mt-2">
+								<a href="https://epaper.nutn.edu.tw/newsreport/catalog/5" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多校園活動/校友訊息</a>
+							</div>-->
+						</div><!-- 校園活動/校友訊息 end-->
+						
+					</div><!-- 新聞報導 列2 end -->	
+					
+				</div>
+				</div><!-- #中央內容區塊 end -->
+				
+				<!-- 新聞列表 Tab
+				============================================= -->
+				<div class="section border-top-1 m-0 p-0 bg-white">
+					<div class="container">
+						
+							<div class="row g-5 justify-content-center mt-0">
+								<div class="col-lg-12">
+
+									<ul class="nav canvas-alt-tabs tabs-alt tabs-bb tabs nav-tabs rounded-2 shadow" role="tablist" aria-label="首頁資訊分類" style="background-color: #fce4d6;">
+										<li class="nav-item" role="presentation">
+											<button class="nav-link active" id="news-tab-01" data-bs-toggle="pill" data-bs-target="#tab-01" type="button" role="tab" aria-controls="tab-01" aria-selected="true">榮譽榜</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="news-tab-02" data-bs-toggle="pill" data-bs-target="#tab-02" type="button" role="tab" aria-controls="tab-02" aria-selected="false">南大新聞</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="news-tab-03" data-bs-toggle="pill" data-bs-target="#tab-03" type="button" role="tab" aria-controls="tab-03" aria-selected="false">學術研討</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="news-tab-04" data-bs-toggle="pill" data-bs-target="#tab-04" type="button" role="tab" aria-controls="tab-04" aria-selected="false">最新消息</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="news-tab-05" data-bs-toggle="pill" data-bs-target="#tab-05" type="button" role="tab" aria-controls="tab-05" aria-selected="false">招生資訊</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="news-tab-06" data-bs-toggle="pill" data-bs-target="#tab-06" type="button" role="tab" aria-controls="tab-06" aria-selected="false">終身學習</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="news-tab-07" data-bs-toggle="pill" data-bs-target="#tab-07" type="button" role="tab" aria-controls="tab-07" aria-selected="false">活動預告</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="news-tab-08" data-bs-toggle="pill" data-bs-target="#tab-08" type="button" role="tab" aria-controls="tab-08" aria-selected="false">活動剪影</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="news-tab-09" data-bs-toggle="pill" data-bs-target="#tab-09" type="button" role="tab" aria-controls="tab-09" aria-selected="false">影音媒體</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="news-tab-10" data-bs-toggle="pill" data-bs-target="#tab-10" type="button" role="tab" aria-controls="tab-10" aria-selected="false">演講公告</button>
+										</li>
+									</ul>
+									
+								  <div class="tab-content bg-white min-vh-25 rounded-2 mt-2 shadow">
+							<!-- 榮譽榜 -->
+										<div class="tab-pane fade show active" id="tab-01" role="tabpanel" aria-labelledby="news-tab-01" tabindex="0">
+											<div class="row pt-3">
+                                                  <div id="test_first" >
+					                              </div>											
+												
+											<div class="text-end mt-2">
+											  <a href="https://campus.nutn.edu.tw/newsPost3/honorpost.aspx" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多榮譽榜</a>
+											</div>
+												
+											</div>
+										</div><!-- 榮譽榜 end -->
+										
+							<!-- 南大新聞 -->
+										<div class="tab-pane fade" id="tab-02" role="tabpanel" aria-labelledby="news-tab-02" tabindex="0">
+											<div class="row pt-3">
+                                                 <div id="test_second" >
+					                              </div>
+													<!--
+													<article class="entry col-12 mb-3">
+														<div class="grid-inner row">
+															<div class="col-md-12">
+																<div class="entry-title title-xs">
+																	<h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i> 2023-9-15 學務處 </span><a href="#" class="stretched-link color-underline">B創生教母陳美伶南大談行動招式 ，為青年注入創生實踐力</a></h3>
+																</div>
+
+															</div>
+														</div>
+													</article>
+                                                    -->
+												
+
+												
+												
+											<div class="text-end mt-2">
+												<a href="https://epaper.nutn.edu.tw/mediareport" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多南大新聞</a>
+											</div>
+												
+											</div>
+										</div><!-- 南大新聞 end -->
+										
+							<!-- 學術研討 -->
+										<div class="tab-pane fade" id="tab-03" role="tabpanel" aria-labelledby="news-tab-03" tabindex="0">
+											<div class="row pt-3">
+												 <div id="test_fifth" >
+					                              </div>
+												
+
+												
+												
+											<div class="text-end mt-2">
+											  <a href="https://campus.nutn.edu.tw/newsPost3/deptPost.aspx?board=2" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多學術研討</a>
+											</div>
+												
+											</div>
+										</div><!-- 學術研討 end -->
+										
+							<!-- 最新消息 -->
+										<div class="tab-pane fade" id="tab-04" role="tabpanel" aria-labelledby="news-tab-04" tabindex="0">
+											<div class="row pt-3">
+                                                <div id="test_third" >
+					                              </div>
+												
+												
+											<div class="text-end mt-2">
+											  <a href="https://campus.nutn.edu.tw/newsPost3/deptPost.aspx" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多最新消息</a>
+											</div>
+												
+											</div>
+										</div><!-- 最新消息 end -->
+										
+							<!-- 招生資訊 -->
+										<div class="tab-pane fade" id="tab-05" role="tabpanel" aria-labelledby="news-tab-05" tabindex="0">
+											<div class="row pt-3">
+												<div id="test_eighth" >
+					                              </div>
+																						
+											<div class="text-end mt-2">
+											  <a href="https://campus.nutn.edu.tw/newsPost3/deptPost.aspx?board=6" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多招生資訊</a>
+											</div>
+												
+											</div>
+										</div><!-- 招生資訊 end -->
+										
+							<!-- 終身學習 -->
+										<div class="tab-pane fade" id="tab-06" role="tabpanel" aria-labelledby="news-tab-06" tabindex="0">
+											<div class="row pt-3">
+                                                <div id="test_ninth" >
+					                              </div>
+												
+
+												
+												
+											<div class="text-end mt-2">
+											  <a href="https://academics.nutn.edu.tw/sce/portal/classList2.aspx" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多終身學習</a>
+											</div>
+												
+											</div>
+										</div><!-- 終身學習 end -->
+										
+							<!-- 活動預告 -->
+										<div class="tab-pane fade" id="tab-07" role="tabpanel" aria-labelledby="news-tab-07" tabindex="0">
+											<div class="row pt-3">
+                                             <div id="test_fourth" >
+					                              </div>
+												
+
+												
+												
+											<div class="text-end mt-2">
+											  <a href="https://campus.nutn.edu.tw/newsPost3/deptPost.aspx?board=4" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多活動預告</a>
+											</div>
+												
+											</div>
+										</div><!-- 活動預告 end -->
+									  
+							<!-- 活動剪影 -->
+										<div class="tab-pane fade" id="tab-08" role="tabpanel" aria-labelledby="news-tab-08" tabindex="0">
+											<div class="row pt-3">
+                                              <div id="test_seventh">
+					                              </div>
+												
+
+												
+												
+											<div class="text-end mt-2">
+											  <a href="https://campus.nutn.edu.tw/photo/" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多活動剪影</a>
+											</div>
+												
+											</div>
+										</div><!-- 活動剪影 end -->
+									  
+							<!-- 影音媒體 -->
+										<div class="tab-pane fade" id="tab-09" role="tabpanel" aria-labelledby="news-tab-09" tabindex="0">
+											<div class="row pt-3">
+                                               <div id="test_sixth" >
+					                              </div>
+												
+
+												
+												
+											<div class="text-end mt-2">
+											  <a href="https://campus.nutn.edu.tw/newsPost3/deptpost.aspx?board=42" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多影音媒體</a>
+											</div>
+												
+											</div>
+										</div><!-- 影音媒體 end -->
+										
+									  <!-- 演講公告 -->
+										<div class="tab-pane fade" id="tab-10" role="tabpanel" aria-labelledby="news-tab-10" tabindex="0">
+											<div class="row pt-3">
+                                             <div id="test_tenth" >
+					                              </div>
+												
+
+												
+												
+											<div class="text-end mt-2">
+											  <a href="https://campus.nutn.edu.tw/newsPost3/default.aspx?board=31" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多演講公告</a>
+											</div>
+												
+											</div>
+										</div><!-- 演講公告 end -->
+								  </div>
+								</div>
+
+								<div class="w-100"></div>
+
+							</div>
+
+					</div>
+				</div><!-- #新聞列表 Tab End -->
+			
+				<!-- 額外資訊
+				============================================= -->
+				<div class="section border-top-1 m-0 p-0 bg-white py-4">
+					<div class="container">
+
+					  <div class="row align-items-stretch g-4">
+							<!-- 南大相關連結
+							============================================= -->
+							<div class="col-xl-5">
+								<div class="d-flex p-3 position-relative flex-column h-100 overflow-hidden shadow" style="border-radius: 10px; background-color: #ffeeed;">
+									<div class="row">
+										<div class="col-xl-12" style="z-index: 1">
+											<div class="title-block">
+												<h3>南大相關連結</h3>
+											</div>
+											<div class="row">
+											<!--
+												<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+													<div class="grid-inner row g-0">
+														<div class="col-lg-3 col-md-3 col-sm-4 col-4 p-2">
+															<div class="entry-image m-0">
+																<a href="https://oga.nutn.edu.tw/donate.asp" target="_blank"><img class="" src="images/related/donate-qr-code.jpg" alt="校務基金捐贈 QR-Code"></a>
+															</div>
+														</div>
+														<div class="col ">
+															<div class="entry-title">
+																<h4 class="fs-5 mt-2" ><a href="https://oga.nutn.edu.tw/donate.asp" target="_blank">校務基金捐贈 QR-Code</a></h4>
+																<p>臺南大學以最誠摯的心籲請您「秉一方福田，植萬朵心蓮」的胸懷，慷慨解囊，支持學校校務發展、學生獎助學金及各項急難救助。</p>
+															</div>
+														</div>
+													</div>
+												</div>
+												End -->
+												
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://epaper.nutn.edu.tw/nutnfacebook" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-11.jpg" alt="">
+															</div>
+														</div>
+														<div class="col ">
+															<div class="entry-title">
+																<h4 class="text-center">各單位社群</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="http://anniversary.nutn.edu.tw/" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-35.jpg" alt="">
+															</div>
+														</div>
+														<div class="col ">
+															<div class="entry-title">
+																<h4 class="text-center">128週年校慶</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://redbuilding100.nutn.edu.tw" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-13.jpg" alt="">
+															</div>
+														</div>
+														<div class="col">
+															<div class="entry-title">
+																<h4 class="text-center">紅樓百歲慶</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://ecourse.nutn.edu.tw" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-14.jpg" alt="">
+															</div>
+														</div>
+														<div class="col">
+															<div class="entry-title">
+																<h4 class="text-center">國立臺南大學課程網站</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://collego.edu.tw/Highschool/School?city=臺南市&amp;school=033" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-15.jpg" alt="">
+															</div>
+														</div>
+														<div class="col">
+															<div class="entry-title">
+																<h4 class="text-center">大學選才與高中育才</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://festival.nutn.edu.tw/" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-32.png" alt="">
+															</div>
+														</div>
+														<div class="col">
+															<div class="entry-title">
+																<h4 class="text-center">南大阿勃勒節</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://info.nutn.edu.tw/Page/Index/Donation" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-17.jpg" alt="">
+															</div>
+														</div>
+														<div class="col">
+															<div class="entry-title">
+																<h4 class="text-center">捐款芳名錄</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://ep2.nutn.edu.tw/" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-18.jpg" alt="">
+															</div>
+														</div>
+														<div class="col ps-2">
+															<div class="entry-title">
+																<h4 class="text-center">學生學習歷程平台</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://www.ewant.org/local/school/singlelist.php?id=90" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-19.jpg" alt="">
+															</div>
+														</div>
+														<div class="col ps-2">
+															<div class="entry-title">
+																<h4 class="text-center">磨課師課程</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://perma.nutn.edu.tw/" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-21.png" alt="">
+															</div>
+														</div>
+														<div class="col ps-2">
+															<div class="entry-title">
+																<h4 class="text-center">高等教育深耕計畫</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://oga.nutn.edu.tw/donate.asp" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-25.png" alt="">
+															</div>
+														</div>
+														<div class="col ps-2">
+															<div class="entry-title">
+																<h4 class="text-center">獎助學金捐贈</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-4 col-4">
+													<a href="https://sdgs.nutn.edu.tw/" target="_blank" rel="noopener" class="d-block text-reset text-decoration-none">
+													<div class="grid-inner row g-0">
+														<div class="col-12 p-2">
+															<div class="entry-image m-0">
+																<img class="rounded-circle" src="images/related/ban-31.png" alt="">
+															</div>
+														</div>
+														<div class="col ps-2">
+															<div class="entry-title">
+																<h4 class="text-center">南大永續網</h4>
+															</div>
+														</div>
+													</div>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div><!-- 南大相關連結 End -->
+							
+						<!-- 重要訊息宣導
+							============================================= -->
+							<div class="col-xl-3">
+
+								<div class="d-flex p-3 position-relative flex-column h-100 overflow-hidden shadow" style="border-radius: 10px; background-color: #ffeeed;">
+									<div class="title-block">
+										<h3>重要訊息宣導</h3>
+									</div>
+									<div class="row" style="z-index: 1">
+										<div class="col-lg-12 p-2">
+										<ul class="ms-5">
+											<li><a href="https://www.tipo.gov.tw/" target="_blank">校園著作權</a></li>
+											<li><a href="https://www.bot.com.tw/GESSI/Pages/default.aspx" target="_blank">公教人員保險服務</a></li>
+											<li><a href="https://tiponet.tipo.gov.tw/030_OUT_V1/home.do" target="_blank">智慧財產權e 網通</a></li>
+											<li><a href="https://www.edu.tw/helpdreams/Default.aspx" target="_blank">教育部圓夢助學網</a></li>
+											<li><a href="https://165.npa.gov.tw/" target="_blank">165 反詐騙諮詢專線</a></li>
+											<li><a href="https://greenlifestyle.moenv.gov.tw/about#news" target="_blank">綠色生活資訊網</a></li>
+											<li><a href="https://www.energylabel.org.tw/" target="_blank">節能標章資訊網</a></li>
+											<li><a href="https://web.pcc.gov.tw/pishtml/pisindex.html" target="_blank">政府電子採購網</a></li>
+											<li><a href="https://terms.naer.edu.tw/publish/1/" target="_blank">國教院學術名詞資訊</a></li>
+											<li><a href="https://nit.immigration.gov.tw/" target="_blank">新住民數位資訊e網</a></li>
+											<li><a href="https://www.e-quit.org/CustomPage/HtmlEditorPage.aspx?MId=916&ML=3" target="_blank">吸菸的真實代價</a></li>
+											<li><a href="https://health.tainan.gov.tw/dengue/" target="_blank">臺南市登革熱防治中心</a></li>
+											<li><a href="https://www.ey.gov.tw/Index" target="_blank">行政院時政講義主題專區</a></li>
+											<li><a href="https://eliteracy.edu.tw/Shorts/xiaohongshu.html" target="_blank">不迷小紅書，青春不迷途</a></li>
+										</ul>
+										</div>
+									</div>
+								</div>
+							</div><!-- 重要訊息宣導 End -->
+
+						<!-- 南大影音媒體
+							============================================= -->
+							<div class="col-xl-4">
+
+								<div class="d-flex p-3 position-relative flex-column h-100 overflow-hidden shadow" style="border-radius: 10px; background-color: #ffeeed;">
+									<div class="title-block">
+										<h3>南大影音媒體</h3>
+									</div>
+									<div class="row" style="z-index: 1">
+										<div class="col-lg-12 p-2">
+										<!--<iframe width="560" height="315" src="https://www.youtube.com/embed/eU9Tu0L2qYk?si=u9pXqt8dQELbyFg3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>-->
+										<iframe id="movietest" title="預告片影片播放器" width="560" height="315"  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+										</div>
+									</div>
+									<img  class="d-none d-md-block" viewBox="0 0 300 300" width="500" height="210" style="position: absolute; right: 0px; bottom: -40px;  z-index: auto;" src="images/logo_bird.png" alt="南大影音媒體">
+								</div>
+							</div><!-- 南大影音媒體 End -->
+						  
+						  
+						</div>
+
+					</div>
+				</div><!-- #額外資訊 End -->
+
+				<!-- InstanceEndEditable -->
+		  </div>
+		</section><!-- #主要區塊 end -->
+
+		<!-- Footer
+		============================================= -->
+		<footer id="footer" class="dark gradient-bg">
+			<div class="container">
+
+				<!-- Footer Widgets
+				============================================= -->
+				<div class="footer-widgets-wrap">
+
+					
+					<div class="row">
+						<div class="col-lg-9">
+							<div class="widget">
+								<div>
+									<img src="images/logo-dark.png" alt="國立臺南大學" height="50px" class="alignleft" style="margin-top: 8px; padding-right: 18px; border-right: 1px solid #ffffff;">
+
+									<p class="pt-1">
+										地址：700301 台南市中西區樹林街二段33號 <a href="https://maps.app.goo.gl/7XyvpD4ftn5zHqi58" target="_blank" rel="noopener" class="color-btc ms-2"> <i class="fa-solid fa-map-location-dot"></i> 前往Google 地圖</a>
+										<br>府城校區電話：06-2133111傳真：06-2144409 | 榮譽校區電話：06-2606123
+									</p>
+								</div>
+								
+								<div class="mb-3">
+									Address：33, Sec. 2, Shu-Lin St., West Central Dist., Tainan City 700301, Taiwan (R.O.C.) <br>
+									Main Campus Phone：+886-6-213-3111 Fax：+886-6-214-4409<br>
+									Rongyu Campus Phone：+886-6-2606123<br>
+									TANet VoIP：9831-7000  
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-3 mt-5 mt-lg-0">
+
+							<div class="widget">
+
+								<div class="row">
+									<div>
+									<p ><i class="fa-solid fa-person-shelter"></i> 24小時校園安全通報專線<br><span class="fs-4 fw-bold" style="color:bisque;">06-2133112</span></p>
+									</div>
+									<div class="col-12 d-flex align-items-center"> 
+										<a href="https://epaper.nutn.edu.tw/nutnfacebook" target="_blank" class="social-icon text-white border-transparent bg-facebook me-2 mb-0 float-none" aria-label="前往南大臉書粉絲頁（另開新視窗）" title="南大臉書粉絲頁列表">
+											<i class="fa-brands fa-facebook-f"></i>
+											<i class="fa-brands fa-facebook-f"></i>
+										</a>
+										<a href="https://www.youtube.com/@nutncc1" target="_blank" class="social-icon text-white border-transparent bg-youtube me-2 mb-0 float-none" aria-label="南大YOUTUBE頻道" title="南大YOUTUBE頻道">
+											<i class="fa-brands fa-youtube"></i>
+											<i class="fa-brands fa-youtube"></i>
+										</a>
+									</div>
+
+								</div>
+
+							</div>
+							<!--
+							<div class="widget my-3">
+
+								<div class="row col-mb-50">
+									<div class="col-12">
+										<img src="images/aa.jpg" alt="無障礙標章2.1 A Accessiblity">
+									</div>
+								</div>
+
+							</div>
+							end -->
+						</div>
+					</div>
+					
+				</div><!-- .footer-widgets-wrap end -->
+
+			</div>
+
+			<!-- #Copyrights
+			============================================= -->
+			<div id="copyrights" class="dark">
+				<div class="container">
+
+					<div class="row m-0 p-0">
+
+						<div class="col-auto accordion-border text-center text-md-start mb-0">
+							Copyrights &copy; 2024 國立臺南大學.
+					    | 網站聯絡人：<a href="mailto:yuan@mail.nutn.edu.tw"  class="dark">Email:yuan@mail.nutn.edu.tw</a>/<a href="tel:+886-6-2133111#601" class="dark">Tel:+886-6-2133111#601</a> | <a href="https://pip.nutn.edu.tw/Page/Index/policy" class="dark" target="_blank">資訊網隱私權政策</a> | <!-- InstanceBeginEditable name="Page last updated" -->最後更新：2026/7/14<!-- InstanceEndEditable --> </div>
+                          <!--
+						<div class=" col-auto text-center text-md-end">
+							<a href="https://www.puffy.com.tw">　</a>
+						</div>
+                            -->
+					</div>
+
+				</div>
+			</div><!-- #copyrights end -->
+		</footer><!-- #footer end -->
+
+	</div><!-- #wrapper end -->
+
+	<!-- Go To Top
+	============================================= -->
+	<div id="gotoTop" class="uil uil-angle-up"></div>
+
+	<!-- JavaScripts
+	============================================= -->
+	<script>
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			document.querySelector('#slider .owl-carousel').removeAttribute('data-autoplay');
+		}
+	</script>
+	<script src="js/plugins.min.js"></script>
+	<script src="js/functions.bundle.js"></script>
+	<script>
+		jQuery(document).on('initialized.owl.carousel translated.owl.carousel', '#slider .owl-carousel', function () {
+			var carousel = jQuery(this);
+			var items = carousel.find('.owl-item');
+			var rotationControl = jQuery('#slider .slider-rotation-control');
+
+			function setRotation(isPlaying) {
+				if (isPlaying) {
+					carousel.trigger('play.owl.autoplay', [6000]);
+				} else {
+					carousel.trigger('stop.owl.autoplay');
+				}
+				rotationControl
+					.attr('aria-label', isPlaying ? '暫停首頁焦點圖片自動輪播' : '繼續首頁焦點圖片自動輪播')
+					.text(isPlaying ? '暫停輪播' : '繼續輪播')
+					.data('is-playing', isPlaying);
+				carousel.find('.owl-stage-outer').attr('aria-live', isPlaying ? 'off' : 'polite');
+			}
+
+			items.each(function (index) {
+				var item = jQuery(this);
+				var isActive = item.hasClass('active');
+
+				item.attr({
+					'aria-hidden': isActive ? 'false' : 'true',
+					'aria-label': (index + 1) + ' / ' + items.length,
+					'aria-roledescription': '投影片',
+					'role': 'group'
+				});
+				item.find('a').attr('tabindex', isActive ? '0' : '-1');
+			});
+
+			carousel.find('.owl-nav .owl-prev').removeAttr('role').attr('aria-label', '上一張焦點圖片');
+			carousel.find('.owl-nav .owl-next').removeAttr('role').attr('aria-label', '下一張焦點圖片');
+
+			if (arguments[0].type === 'initialized') {
+				var shouldPlay = carousel.attr('data-autoplay') !== undefined
+					&& !document.querySelector('#slider').contains(document.activeElement);
+				setRotation(shouldPlay);
+			}
+
+			rotationControl.off('click.rotation').on('click.rotation', function () {
+				setRotation(!jQuery(this).data('is-playing'));
+			});
+		});
+
+		document.querySelector('#slider').addEventListener('focus', function () {
+			var carousel = jQuery(this).find('.owl-carousel');
+			var rotationControl = this.querySelector('.slider-rotation-control');
+			if (jQuery(rotationControl).data('is-playing')) {
+				carousel.trigger('stop.owl.autoplay');
+				jQuery(rotationControl)
+					.attr('aria-label', '繼續首頁焦點圖片自動輪播')
+					.text('繼續輪播')
+					.data('is-playing', false);
+				carousel.find('.owl-stage-outer').attr('aria-live', 'polite');
+			}
+		}, true);
+	</script>
+	<!-- InstanceBeginEditable name="footer JS" -->
+	
+	<!-- InstanceEndEditable -->
+</body>
+<!-- InstanceEnd --></html>
+ <script>
+    var uri = 'https://www.nutn.edu.tw/epaperapinew/api/Epapernew';
+ $(document).ready(function () {
+      // Send an AJAX request
+      $.getJSON(uri)
+          .done(function (data) {
+            // On success, 'data' contains a list of products.
+            $.each(data, function (key, item) {
+              // Add a list item for the product.
+			  if(key == 2)
+			  {
+			    $("#epapar").append('<div class="col-md-4"><div class="card shadow-sm h-shadow all-ts h-translate-y-sm"><a href="https://epaper.nutn.edu.tw/newsreport-detail/' + item.news_id + '" target="_blank" title="' + item.name + '"><img class="card-img-top max-img-h" src="https://epaper.nutn.edu.tw/img/cache/' + item.image + '" alt="圖片' + item.name + '"title="' + item.name + '"><div class="card-body"><div class="entry-meta no-separator mb-1 mt-0"><ul><li><i class="uil uil-schedule"></i>'+ item.date_added +'</li></ul></div><h4 class="card-title text-size-sm" style="min-height: 50px; overflow: auto;">' + item.name + '</h4></div></a></div><div class="text-end mt-2"><a href="https://epaper.nutn.edu.tw/newsreport/catalog/3" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多南大焦點</a></div></div>'); 
+			  }
+			  else
+			  {
+                $("#epapar").append('<div class="col-md-4"><div class="card shadow-sm h-shadow all-ts h-translate-y-sm"><a href="https://epaper.nutn.edu.tw/newsreport-detail/' + item.news_id + '" target="_blank" title="' + item.name + '"><img class="card-img-top max-img-h" src="https://epaper.nutn.edu.tw/img/cache/' + item.image + '" alt="圖片' + item.name + '"title="' + item.name + '"><div class="card-body"><div class="entry-meta no-separator mb-1 mt-0"><ul><li><i class="uil uil-schedule"></i>'+ item.date_added +'</li></ul></div><h4 class="card-title text-size-sm" style="min-height: 50px; overflow: auto;">' + item.name + '</h4></div></a></div></div>');   
+			  }
+			  
+            });
+          });
+    });
+
+       
+  </script>
+  
+   <script>
+    var uri2 = 'https://www.nutn.edu.tw/honornew/api/Honornew';
+ $(document).ready(function () {
+      // Send an AJAX request
+      $.getJSON(uri2)
+          .done(function (data2) {
+            // On success, 'data' contains a list of products.
+            $.each(data2, function (key, item) {
+              // Add a list item for the product.            
+			  $("#honor").append('<div class="card shadow-sm h-shadow all-ts h-translate-y-sm h-100"><a href="https://epaper.nutn.edu.tw/newsreport-detail/' + item.news_id + '" target="_blank" title="' + item.name + '"><img class="card-img-top max-img-h" src="https://epaper.nutn.edu.tw/img/cache/' + item.image + '" alt="圖片' + item.name + '"title="' + item.name + '"><div class="card-body h-100"><div class="entry-meta no-separator mb-1 mt-0"><ul><li><i class="uil uil-schedule"></i>'+ item.date_added +'</li></ul></div><h4 class="card-title text-size-sm" style="min-height: 50px; overflow: auto;">' + item.name + '</h4></div></a></div><div class="text-end mt-2"><a href="https://epaper.nutn.edu.tw/newsreport/catalog/4" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多師生榮耀</a></div>'); 
+            });
+          });
+    });
+
+       
+  </script>
+  
+   <script>
+    var uri3 = 'https://www.nutn.edu.tw/newhighlight/api/Highlight';
+ $(document).ready(function () {
+      // Send an AJAX request
+      $.getJSON(uri3)
+          .done(function (data3) {
+            // On success, 'data' contains a list of products.
+            $.each(data3, function (key, item) {
+              // Add a list item for the product.            
+			  $("#highlight").append('<div class="card shadow-sm h-shadow all-ts h-translate-y-sm"><a href="https://epaper.nutn.edu.tw/newsreport-detail/' + item.news_id + '" target="_blank" title="' + item.name + '"><img class="card-img-top max-img-h" src="https://epaper.nutn.edu.tw/img/cache/' + item.image + '" alt="圖片' + item.name + '"title="' + item.name + '"><div class="card-body"><div class="entry-meta no-separator mb-1 mt-0"><ul><li><i class="uil uil-schedule"></i>'+ item.date_added +'</li></ul></div><h4 class="card-title text-size-sm" style="min-height: 50px; overflow: auto;">' + item.name + '</h4></div></a></div><div class="text-end mt-2"><a href="https://epaper.nutn.edu.tw/newsreport/catalog/1" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多產學亮點</a></div>'); 
+            });
+          });
+    });
+
+       
+  </script>
+  
+  <script>
+    var uri4 = 'https://www.nutn.edu.tw/newschool/api/School';
+ $(document).ready(function () {
+      // Send an AJAX request
+      $.getJSON(uri4)
+          .done(function (data4) {
+            // On success, 'data' contains a list of products.
+            $.each(data4, function (key, item) {
+              // Add a list item for the product.            
+			  $("#school").append('<div class="card shadow-sm h-shadow all-ts h-translate-y-sm"><a href="https://epaper.nutn.edu.tw/newsreport-detail/' + item.news_id + '" target="_blank" title="' + item.name + '"><img class="card-img-top max-img-h" src="https://epaper.nutn.edu.tw/img/cache/' + item.image + '" alt="圖片' + item.name + '"title="' + item.name + '"><div class="card-body"><div class="entry-meta no-separator mb-1 mt-0"><ul><li><i class="uil uil-schedule"></i>'+ item.date_added +'</li></ul></div><h4 class="card-title text-size-sm" style="min-height: 50px; overflow: auto;">' + item.name + '</h4></div></a></div><div class="text-end mt-2"><a href="https://epaper.nutn.edu.tw/newsreport/catalog/5" class="button button-small gradient-color rounded-5 border-0" target="_blank">更多校園活動/校友訊息</a></div>'); 
+            });
+          });
+    });
+
+       
+  </script>
+  
+  <script>
+      var uri5 = 'https://www.nutn.edu.tw/newmedia/api/Media';
+           $(document).ready(function () {
+             // Send an AJAX request
+               $.getJSON(uri5)
+              .done(function (data5) {
+             // On success, 'data' contains a list of products.
+                 $.each(data5, function (key, item1) {
+               // Add a list item for the product.
+               $("#test_second").append('<article class="entry col-12 mb-3"><div class="grid-inner row"><div class="col-md-12"><div class="entry-title title-xs"><h3><span class="text-dange mx-2"><i class="uil uil-schedule"></i>&nbsp' + item1.onair +'&nbsp'+item1.source + '</span><a href="https://epaper.nutn.edu.tw/mediareport-detail/' + item1.media_id +'" class="stretched-link color-underline">' + item1.name + '</a></h3></div></div></div></article>');
+			  
+			  
+               });
+            });
+          });
+
+    
+  </script>
