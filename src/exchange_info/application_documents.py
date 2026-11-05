@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPTU, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -143,6 +143,7 @@ TPCU_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 AU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
 KNU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
+NPTU_SOURCE_CHECKED_AT = datetime(2026, 11, 5, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3480,6 +3481,58 @@ def _knu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nptu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立屏東大學（國際事務處國際合作組，屏東市民生路 4-18 號 屏商校區行政大樓 3 樓，電話 08-766-3800 分機 17102、17103）《選送學生赴境外大學研修甄選簡章》應繳申請表件（正本 1 份，並上傳合併 PDF 電子檔至 Google 表單）：1. 表單一：赴境外大學研修申請表、2. 表單二：保證書（學生及保證人親筆簽名蓋章）、3. 表單三：中文自傳及讀書計畫（各 1,000 字以內，含預計修讀課程）、4. 表單四：推薦信 2 封（1 封須為指導教授或班導師）、5. 歷年成績單正本（含歷年總平均及系所排名百分比；大陸及韓國學校須加附英文版）、6. 2 年內有效外語能力檢定證明影本（日本學校可以《日語能力評估表》替代）、7. 優秀表現證明（非必繳）。",
+        "study-plan": "撰寫國立屏東大學選送學生赴境外大學交換、跨國雙學位制（英國密德薩斯大學 3+1／1+1、美國北阿拉巴馬大學 3+1／2+2／1+1、美國西來大學 2+2／1+1、捷克赫拉德茨克拉洛韋大學／茲林托馬斯巴塔大學 1+1、泰國宋卡王子大學 2+2、泰國國王科技大學 1+1）及教育部學海飛颺／惜珠獎助學金必繳之《表單三：中文自傳及讀書計畫》（各 1,000 字以內）。請具體說明申請動機、個人學經歷背景、於志願姊妹校預計修讀之課程規劃（每學期至少修習相當於屏大 2 門課或 4 學分，學海獎助生至少 6 學分），以及返國後之學分採認與職涯發展目標。",
+        "course-preapproval": "辦理赴境外合作大學修讀交換課程或跨國雙學位制之選課預審與教務核備（依《國立屏東大學學生出國期間有關學業及學籍處理要點》及《與境外大學辦理雙聯學位制實施辦法》，出國期間須於屏東大學完成註冊並繳交全額學雜費以保留學籍；每學期至少修習相當於屏大 2 門科目或 4 學分，學海飛颺／惜珠受獎生至少 6 學分）。",
+        "predeparture-notice": "經系所初審與國際事務處甄審委員會複審錄取公告後，須於 1 週內繳交《錄取資格確認書》及交換保證金新臺幣 3,000 元，配合國際合作組完成姊妹校線上提名、入學申請（如日本 COE、歐美 I-20／CAS 等），並於出國前辦妥屏東大學註冊、護照簽證、役男出境及海外醫療與意外保險。",
+        "return-report": "境外交換或雙學位研修期滿返國後 2 週至 1 個月內，須依《國立屏東大學選送優秀學生出國研修實施要點》及《海外研習助學金補助要點》規定，向國際事務處提交《出國研修心得報告》電子檔（約 1,500–2,000 字，含國外研修與生活照片至少 4 張）、國外姊妹校正式成績單、護照出入境紀錄及登機證正本，並配合出席出國交換學生說明會分享經驗，始得辦理保證金 3,000 元退還與獎助學金核銷。",
+        "credit-transfer": "境外交換或雙學位研修期滿返國後，持境外合作大學核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《國立屏東大學學生出國期間有關學業及學籍處理要點》向所屬學系（所）及教務處申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立屏東大學").replace("長庚", "屏大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立屏東大學規定：一般境外交換與校內海外研習助學金須歷年學業總平均達 70 分（GPA 2.5）以上或班排名前 50%、操行平均 80 分以上；教育部學海飛颺須班排名前 30%（或 GPA 3.0）；跨國雙學位依姊妹校要求（GPA 2.5–3.0）。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語組：TOEIC 多益測驗（校內 CEFR B1 門檻 550+、波蘭格但斯克大學／日本東北大學／捷克托馬斯巴塔大學 B2 門檻 785+）",
+                "英語組：IELTS 雅思（校內 CEFR B1 門檻 4.0+、美國北阿拉巴馬雙聯 5.5+、英國密德薩斯雙聯／澳洲西雪梨大學 6.0–6.5+）",
+                "英語組：TOEFL iBT / ITP（校內 iBT 42+ / ITP 460+、美國北阿拉巴馬／西來雙聯 iBT 61–69+、密德薩斯雙聯 iBT 72–79+）",
+                "日語組：JLPT 日語能力試驗（東北大學 N1；姬路獨協／兵庫教育／聖泉／神戶學院／敬愛／梅光學院 N2；愛知教育／弘前／長崎／近畿／別府 N3；札幌國際／高崎經濟 N4；名櫻 N5；或教師簽章日語能力評估表）",
+                "韓語組：TOPIK 韓國語文能力測驗（東國／京畿／大邱／首爾市立／世宗／釜山外大等 TOPIK 2–3 級，英語授課可採 TOEIC 550+）",
+                "大陸及華語組：北京師範、華東師範、武漢大學、廈門大學、山東大學等 48 所大陸及香港姊妹校（中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依國立屏東大學國際事務處選送學生赴境外大學研修簡章填報 2 年內有效之語言能力檢定證明（日本姊妹校若無 JLPT 可檢附教師評核之日語能力評估表）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://ccd.nptu.edu.tw/p/406-1091-190211,r2961.php?Lang=zh-tw",
+        source_checked_at=NPTU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立屏東大學選送學生赴境外大學研修申請表件（表單一至表單四：申請表、保證書、中文自傳及讀書計畫、推薦信）" if template.id == "exchange-application-data" else ("表單三：中文自傳及讀書計畫（各 1,000 字以內）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://ccd.nptu.edu.tw/var/file/91/1091/img/1500/576898976.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "保證人（家長或監護人）親筆簽名蓋章", "指導教授或導師及系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經錄取公告後 1 週內繳交錄取資格確認書與保證金 3,000 元，配合國際合作組完成姊妹校提名與簽證申請，並完成屏大註冊", "return-report": "返國後 2 週至 1 個月內繳交出國研修心得報告（含照片）與正式成績單，並配合說明會經驗分享以辦理保證金退還與獎助核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分採認與抵免"}.get(template.id, "於校內收件截止前備齊表單一至表單四、歷年成績單（含排名）及語檢證明送交系所初審，核章後送國際事務處國際合作組（屏商校區行政大樓 3 樓）並上傳 PDF 電子檔"),
+        version="115準備工具-2026-11-05.1",
+        destinations=["國立屏東大學國際事務處國際合作組（900391 屏東市民生路 4-18 號 屏商校區行政大樓 3 樓）"],
+        conditional_note="此為個人準備工具；國立屏東大學出國交換甄選每年分兩梯次（春季班約 9–10 月初、秋季班約 2–3 月中旬）收件，紙本須經系所及學院核章並同步填寫 Google 表單上傳合併 PDF 檔。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3604,6 +3657,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _au_template(template)) is not None]
     if university.id == KNU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _knu_template(template)) is not None]
+    if university.id == NPTU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nptu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

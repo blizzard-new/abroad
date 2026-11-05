@@ -2226,7 +2226,54 @@ KNU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU)
+NPTU = UniversityProfile(
+    id="nptu",
+    school_name="國立屏東大學",
+    short_name="屏大",
+    english_name="National Pingtung University",
+    aliases=(
+        "nptu",
+        "國立屏東大學",
+        "屏東大學",
+        "屏大",
+        "國立屏東教育大學",
+        "屏東教育大學",
+        "屏教大",
+        "國立屏東商業技術學院",
+        "屏東商業技術學院",
+        "屏商技",
+        "屏商",
+        "屏師",
+        "NPTU",
+        "National Pingtung University",
+    ),
+    hero_image="/static/assets/nptu-campus.svg",
+    official_url="https://ccd.nptu.edu.tw/p/412-1091-12234.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立屏東大學國際事務處（OIA，下設國際合作組與大陸事務組）《115年出國交換甄選簡章》、《116學年度出國交換／實習三校區說明會公告（2026/12/08–12/10，報名至 11/30 17:00）》、《115年第1次教育部學海築夢及新南向學海築夢甄選簡章》、《跨國雙聯學位專區（英、美、捷、日、泰 7 校）》、《學生出國有關學業及學籍處理要點（114.03.27修正）》、《與境外大學校院辦理雙聯學制實施辦法（114.05.22修正）》、《學生抵免學分要點（115.10.22修正）》、《與外國學制學分轉換準則》、《學海計畫學生生活費核銷支給數額標準表》及《出國交換學生心得分享專區（20校61篇）》官方資料：（1）四大推薦計畫、語檢門檻與雙軌送件：每年 12 月舉辦三校區說明會、1–2 月收件、2 月下旬 17:00 截止、3 月初面試，分為【教育部學海飛颺】（本國籍就讀滿一學期一般生、歷年成績班排前 50% 內、操行平均 80 分以上且無申誡以上處分）、【教育部學海惜珠】（同飛颺條件並具低收／中低收／特殊境遇／身障等資格）、【本校「菁英育才」補助（校友捐款）】（無班排前 50% 限制，惟「每學期」操行皆須達 80 分以上，補助生活費每月 NT$10,000 最高 5 個月＋機票費最高 NT$30,000，合計最高 NT$80,000）及【自費交換】（含在職生與進修生）；非日語組須達 CEFR B1（TOEIC 550 / TOEFL iBT 42 / ITP 460 / IELTS 4.0 / GEPT 中級初試），日語組須達 JLPT N2（校內甄選時得先以非日語 B1＋師長簽署《日本語力評價表》替代）；至多填寫 5 所志願學校，紙本送交屏商行政大樓 3F 國際合作組並將合併 PDF 寄至 vida2022@mail.nptu.edu.tw；交換期間於屏大完成註冊且大學部每學期至少修 1 門課（姬路獨協大學須修 7 門課以上），返國次學期期末考前一次辦理學分抵免（1 NPTU＝2 ECTS＝4 CATS＝4 澳洲學分）。（2）全球 24 國／地區 172 所合作姊妹校與 7 校跨國雙聯學位：完整收錄 41 所常態開放申請之交換與雙聯合作校（含日本宮崎大學、弘前大學、大阪教育大學、兵庫教育大學、室蘭工業大學、和歌山大學、鹿兒島大學、香川大學、山形大學、信州大學等 10 所日本國立大學與麗澤、姬路獨協、廣島修道、山陽學園、日本經濟大學，捷克 UHK 10 名、TBU、TUL、CTU，德國 ASH Berlin，義大利帕維亞大學，韓國外國語大學 HUFS，馬來亞大學 UM，以及泰國程逸皇家大學等 4 校「免學費＋免住宿費」優惠）及英國密德薩斯大學（3+1／1+1）、美國北阿拉巴馬大學（3+1／2+2／1+1）、美國西來大學（2+2／1+1）、捷克 UHK（1+1）、捷克 TBU（1+1）、泰國宋卡王子大學（2+2）、泰國蒙庫國王科技大學 KMUTT（1+1）等 7 校雙聯學位。（3）返國心得：完整收錄 20 所合作大學共 61 篇歷屆學長姐出國交換與海外研修心得報告。",
+    support_level="full",
+    partner_count_hint=172,
+    academic_score_minimum=60.0,
+    student_card_signals=(
+        "國立屏東大學",
+        "屏東大學",
+        "NATIONALPINGTUNGUNIVERSITY",
+        "NATIONAL PINGTUNG UNIVERSITY",
+        "NPTU",
+    ),
+    # https://www.nptu.edu.tw/p/412-1000-2972.php?Lang=zh-tw — checked 2026-11-05.
+    colleges=(
+        "管理學院",
+        "資訊學院",
+        "教育學院",
+        "人文社會學院",
+        "理學院",
+        "國際學院",
+        "大武山學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NPTU)
 DEFAULT_UNIVERSITY = CGU
 
 
