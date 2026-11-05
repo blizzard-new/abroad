@@ -1,0 +1,268 @@
+{
+  "slug": "ai-english-vocabulary-practice",
+  "title": "用 AI 背英文單字怎麼練？回想測驗、情境造句與複習 Prompt",
+  "description": "把看過的單字變成能自己用出的句子：附三輪可填寫 Prompt、borrow／lend／return 原創練習、訂正前後示例與延後複習紀錄表。",
+  "category": "申請準備",
+  "published": "2026-11-04",
+  "modified": "2026-11-04",
+  "checked": "2026-11-04",
+  "image": "english-guide-photo",
+  "image_alt": "戴藍色耳機與眼鏡的學習者在桌前使用筆電，其他人也在周圍學習。",
+  "image_caption": "筆電學習情境的真實攝影素材，可搭配自己的單字紀錄練習；照片未呈現本文 Prompt 操作或任何人的實際學習成果。",
+  "image_credit": {
+    "photographer": "Roxanne Minnish",
+    "source_url": "https://www.pexels.com/photo/woman-wearing-blue-headphones-studying-on-her-laptop-7976775/"
+  },
+  "summary": [
+    "先核對字義、搭配與情境，再遮住答案自行回想；看得懂解釋與能獨立造句分開記錄。",
+    "請 AI 一次問一題、等你回答才訂正，並用誰借給誰檢查 borrow、lend、return 的方向。",
+    "之後用新人物與新物品再測一次；複習間隔依實際表現調整，不把固定天數或聊天評語當成學會的保證。"
+  ],
+  "intro": [
+    "用 AI 背英文單字，可以把工具安排成出題與回饋的助手：從自己遇過的少量詞開始，查字典確認本次意思與搭配，遮住答案後依情境說出英文，再請它針對錯誤出新題。每輪保留第一次答案、訂正原因與下次要重測的情境，才知道自己是認得單字，還是已能在需要時用出來。",
+    "本文專練單字回想、用法辨別與造句，三輪 Prompt 可貼到自己可用的文字對話介面。下列人物、句子、預期答案與錯誤回饋均為 UniWay 編寫的教學示例，未作模型實測或品牌比較；不需要語音、上傳、付費方案或自動提醒功能。每天聽說讀寫的整體安排另見相關文章。"
+  ],
+  "sections": [
+    {
+      "id": "choose-and-verify",
+      "title": "先做少量用法卡：把「這次要學什麼」寫清楚",
+      "paragraphs": [
+        "先從自己的閱讀或生活需要挑詞，例如向室友借充電器、把雨傘借給同學、歸還圖書。一次處理能逐項核對的小組；這裡用三個詞示範，三個只是便於展示，沒有宣稱是最佳每日單字量。記下原句與出處，避免只留下孤立的中文意思，也避免把未授權教材整頁貼進工具。",
+        "本例限定物品借用。Merriam-Webster 的 borrow 詞條說明接收物品並有歸還的意思，例句有 borrow ... from；lend 是讓別人暫時使用，詞形列出 lent；return 的動詞義包含把物品交回原持有人。這些詞還有其他意思，所以單字卡需寫明此輪採用的義項，不能把字典中的不同意思混成一張萬用翻譯卡。",
+        "先用自己的話寫「誰擁有、誰暫時使用、物品回到誰手上」。若中文都說不清楚，先整理角色，再請工具改英文。字典中有地區或方言用法時保留標記；本文示範一般學習情境的 borrow from 與 lend to，沒有把所有變體都說成錯誤。"
+      ],
+      "refs": [
+        "mw-borrow",
+        "mw-lend",
+        "mw-return"
+      ],
+      "table": {
+        "caption": "原創用法卡：這一輪只處理物品借用",
+        "headers": [
+          "詞／詞形",
+          "此輪意思與方向",
+          "自己編寫的例句"
+        ],
+        "rows": [
+          [
+            "borrow／borrowed",
+            "我從別人那裡暫時借來；borrow something from someone",
+            "I borrowed a charger from Mina."
+          ],
+          [
+            "lend／lent",
+            "我把東西暫時借給別人；lend something to someone",
+            "I lent my umbrella to Eli."
+          ],
+          [
+            "return／returned",
+            "把物品歸還；return something to someone",
+            "I returned the charger to Mina."
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-card",
+      "title": "第一輪 Prompt：把已核對素材整理成卡片",
+      "paragraphs": [
+        "OpenAI 的提示建議包含明確任務、背景與逐輪檢視。用在單字卡時，把已查證的義項放進輸入，限制工具只整理這一組，會比一句「幫我背英文」更容易檢查是否偏題。若工具自行新增搭配或字典連結，仍須另外開啟來源核對。",
+        "可複製 Prompt：「我想練 [情境，例如向室友借物品]，目前能做 [能理解的句子／常見困難]。目標詞是 [詞表]，我已核對的字義、詞形與來源是 [逐詞填寫字典網址、義項、搭配及查核日期]。請只依這些素材製成『詞／此輪意思／角色方向／搭配／一個新例句』卡片。新例句標成自編，保留來源未涵蓋的疑問，不捏造字典原句或連結。先不要出測驗或追加一長串同義詞，讓我逐項核對。」",
+        "核對卡片時，用角色對照例句：borrow 的主詞是暫時借入的人，lend 的主詞是暫時借出的人。也要檢查過去式：本例用 lent，不能因其他兩個詞加 -ed 就類推成 lended。當來源、例句或自己的意思對不上，先修卡片，不把錯卡帶進後續反覆練習。"
+      ],
+      "refs": [
+        "openai-prompt",
+        "mw-lend"
+      ]
+    },
+    {
+      "id": "recall-before-feedback",
+      "title": "第二輪 Prompt：藏起答案，依情境自己回想",
+      "paragraphs": [
+        "確認卡片後，把它收起來。只看「物品原本是誰的、誰要使用、是否已用完」等線索，先自己說或寫一句。若畫面已顯示詞表、首字母或完整句型，把這次記為有提示作答；這仍可練習，但不能與完全沒有提示的回想混算。",
+        "可複製 Prompt：「以下是我核對完成的用法卡：[貼入卡片]。請用不同人物與物品，一次給我一個中文生活情境，讓我用英文回答。先不顯示目標詞、首字母、選項、答案或示範句，等我回答才檢查角色方向、搭配和詞形。回饋格式為『我的原句／一個主要問題／最小修改／新的同類情境』。若我的句子已符合情境，直接說明理由，不為了改寫而新增錯誤；不產生正式程度或成績。」",
+        "可先用下表的情境自測，暫時遮住最後一欄，或請同伴只念中間一欄。這些參考句是可能的自然回答，並非唯一字串；例如 May I borrow your charger? 也可表達請求。判斷時看是否完成情境，不能把與參考句不同的禮貌說法一律判錯。"
+      ],
+      "table": {
+        "caption": "先遮住參考句再作答：三個獨立情境",
+        "headers": [
+          "題號",
+          "只看這個情境",
+          "訂正時才看的參考句"
+        ],
+        "rows": [
+          [
+            "1",
+            "充電器屬於 Mina；你想暫時使用，稍後歸還。請向她開口。",
+            "Could I borrow your charger?"
+          ],
+          [
+            "2",
+            "雨傘是你的；昨天你把它暫時交給 Eli 使用。說明昨天的事。",
+            "I lent my umbrella to Eli yesterday."
+          ],
+          [
+            "3",
+            "你已用完 Mina 的充電器，今天早上把它交還。說明發生的事。",
+            "I returned the charger to Mina this morning."
+          ]
+        ]
+      }
+    },
+    {
+      "id": "revision-example",
+      "title": "訂正示例：先修角色方向，再增加新情境",
+      "paragraphs": [
+        "假設學習者想說「我向 Mina 借了充電器」，卻寫成 I lent a charger from Mina.。先問充電器原本是誰的：Mina 擁有，你借入，所以最小修改是 I borrowed a charger from Mina.。若只把 from 改成 to，句子會變成你借給 Mina，與原本想表達的事不同。",
+        "再把角色反過來：「充電器原本是你的，你借給 Mina。」這時可寫 I lent a charger to Mina.，也可用 I lent Mina a charger.。兩句都把 Mina 放在借用者的位置。練完再加上歸還：Mina returned the charger to me.。用物品流向核對三句，不只記住 lend 等於「借」這個模糊對應。",
+        "以下是刻意編寫的錯誤回饋示例：「borrowed 和 lent 都是借，所以原句不用改。」它忽略了角色方向。可追問：「請分別列出原句與情境中的擁有者、借用者、物品流向，再依我提供的字典義項核對。」OpenAI 的準確性說明提醒回答可能有錯，語氣肯定也不代表可信；第二次回答仍要對照字典。此示例不是任何模型的真實輸出。"
+      ],
+      "refs": [
+        "mw-borrow",
+        "mw-lend",
+        "mw-return",
+        "openai-accuracy"
+      ],
+      "diagram": {
+        "title": "把一組詞變成可重測的用法",
+        "steps": [
+          [
+            "選情境",
+            "記下自己需要表達的真實用途"
+          ],
+          [
+            "核用法",
+            "查義項、詞形與角色方向"
+          ],
+          [
+            "藏答案",
+            "先留下無提示的第一次回答"
+          ],
+          [
+            "修一句",
+            "依意思做最小修改並換情境"
+          ],
+          [
+            "稍後重測",
+            "保存錯因，用新題再回想"
+          ]
+        ],
+        "caption": "UniWay 原創單字練習流程；每次核對是否能獨立表達意思，AI 回饋仍需查核。"
+      }
+    },
+    {
+      "id": "spaced-review",
+      "title": "第三輪 Prompt：保存錯因，之後用新題重測",
+      "paragraphs": [
+        "美國 IES／What Works Clearinghouse 的 2007 年學習指南建議分散學習，並用測驗讓學習者再次提取重要內容。這是一般學習的歷史指南，支持把「隔一段時間再回想」納入安排；它沒有測試本文的 AI 單字 Prompt，也沒有提供人人適用的最佳複習日數。",
+        "本輪結束先記錄錯因，另約自己能執行的下一次練習時間。下一次先不看訂正句，用新物品與新角色測同一用法；如果仍反覆弄錯，回到字典與卡片，縮小任務。如果新情境可以獨立完成，再把下一次拉開一些，或加入口頭使用。間隔依忘記情況與要使用的日期調整，不承諾一、三、七天就永久記住。",
+        "可複製 Prompt：「今天日期是 [日期]，我上次在 [日期] 練了 [詞／義項]。已核對卡片：[內容]；第一次錯句：[原句]；確認錯因：[角色方向／搭配／詞形／其他]。請用新人物、新物品重測這個錯因，一次一題，不沿用舊句、不先給目標詞與答案。等我作答再依卡片訂正，將有提示與無提示分開記錄。最後列出仍要人工查證的問題，讓我自行安排下次複習。」",
+        "這份紀錄由你自行帶回對話，無須假設工具會跨對話記得、準時提醒或自動保存。不要把同一天看完答案後的重答記成隔日回想成功；紀錄中保留「何時測、是否看過答案、用什麼新情境」，比累積漂亮的連續打卡天數更能定位困難。"
+      ],
+      "refs": [
+        "ies-guide"
+      ],
+      "table": {
+        "caption": "可照抄的複習紀錄格式；本列為虛構示例",
+        "headers": [
+          "詞與錯因",
+          "首次作答／訂正",
+          "下次新題",
+          "重測紀錄"
+        ],
+        "rows": [
+          [
+            "borrow／lend：借入與借出顛倒",
+            "lent ... from → borrowed ... from；保留原句",
+            "把充電器改為腳踏車，角色反向",
+            "日期 [填寫]；無提示／有提示 [填寫]；仍卡住 [填寫]"
+          ],
+          [
+            "lend：過去式",
+            "若誤寫 lended，回查 lent",
+            "換成昨天借雨衣給室友",
+            "第一次詞形 [填寫]；核對來源 [填寫]"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "levels-and-checklist",
+      "title": "依卡點分級：從一句請求到新場合對話",
+      "paragraphs": [
+        "起步時保留一個熟悉情境，只練「借入」或「歸還」，句子先短且意思清楚。能獨立完成後，再把擁有者與借用者交換，加入昨天、已經歸還等時間資訊。最後換成未練過的物品，連續寫三句小對話：提出請求、答應借出、確認歸還。這是編輯安排的任務層次，沒有對應官方 CEFR 等級。",
+        "可用這個新情境驗收：Noah 有一本旅遊指南，你上週向他借來，今天已歸還。先不用提示寫兩句，之後再比對參考：I borrowed a travel guide from Noah last week. I returned it to him today.。若改從 Noah 的角度說第一件事，可寫 Noah lent me a travel guide last week.。要改寫的是視角，不能把物品原本的擁有者也一起換掉。",
+        "單字記得住，仍要在實際閱讀、寫信或對話中使用。把這輪最常錯的用法帶回自己的英文任務，之後再以新情境重測。若是為了交換資格準備，聊天紀錄和自編小測驗只用來學習；正式語言證明與採認方式，請從下方母校、目的地與選校工具連結核對當期要求。"
+      ],
+      "bullets": [
+        "[ ] 卡片標出此次義項、詞形、搭配與可開啟的來源。",
+        "[ ] 第一次回答在看答案前留下，有提示與無提示分開記。",
+        "[ ] 訂正後仍表達原本想說的事，沒有偷偷顛倒角色。",
+        "[ ] AI 新增的意思、例句與連結已人工核對。",
+        "[ ] 下一輪換了情境，並記日期與仍需協助的地方。"
+      ]
+    }
+  ],
+  "faq": [
+    [
+      "用 AI 背英文單字，直接請它列一百個詞好嗎？",
+      "先選能逐項核對、與自己用途相關的小組。長詞表可以當素材池，但仍須查意思、遮住答案回想並造句；本文沒有推薦人人適用的每日數量。"
+    ],
+    [
+      "AI 改寫得更漂亮，就表示原句有錯嗎？",
+      "不一定。先看原句是否符合情境、角色方向及用法；若已能正確表達，可保留原句。請工具分開說明必要訂正與可選風格修改。"
+    ],
+    [
+      "要隔幾天複習才有效？",
+      "依自己的錯誤、保留時間與使用需求調整。IES 2007 年指南提供分散學習與提取練習的一般原則，沒有替本篇 Prompt 證明固定日數或保證記憶成效。"
+    ],
+    [
+      "只背中文翻譯，為什麼造句仍會用錯？",
+      "同一個「借」可能需要 borrow 或 lend，取決於誰借入、誰借出。卡片加上角色方向、搭配和情境，再用新題自行作答，才能看見這類差異。"
+    ]
+  ],
+  "sources": [
+    {
+      "id": "mw-borrow",
+      "title": "Merriam-Webster：borrow",
+      "url": "https://www.merriam-webster.com/dictionary/borrow",
+      "note": "2026-11-04 實讀動詞義項 1a、詞形、from 例句與 dialect 標記；動態詞典未見固定版次。只引用物品借用義，不複製頁面自動彙整新聞例句。"
+    },
+    {
+      "id": "mw-lend",
+      "title": "Merriam-Webster：lend",
+      "url": "https://www.merriam-webster.com/dictionary/lend",
+      "note": "2026-11-04 實讀暫借義、lent 詞形、lend me your pen 與 lent ... to 句式；無固定修訂日。本文人物與句子均為自編。"
+    },
+    {
+      "id": "mw-return",
+      "title": "Merriam-Webster：return",
+      "url": "https://www.merriam-webster.com/dictionary/return",
+      "note": "2026-11-04 實讀動詞詞形及及物義 5b give back to the owner，核對歸還情境；未將其他義項一概排除，未見固定版次。"
+    },
+    {
+      "id": "ies-guide",
+      "title": "IES／WWC：Organizing Instruction and Study to Improve Student Learning",
+      "url": "https://ies.ed.gov/ncee/wwc/PracticeGuide/1",
+      "note": "2026-11-04 實讀官方摘要與同站 20072004.pdf 的建議 1、5／5b 相關段落；指南發表於 2007 年 9 月，屬一般學習方法，非 2026 AI 英文工具成效、最佳複習天數或提分研究。"
+    },
+    {
+      "id": "openai-prompt",
+      "title": "OpenAI：Prompt engineering best practices for ChatGPT",
+      "url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "note": "2026-11-04 實讀，顯示 Updated: 15 days ago；只引用明確背景、具體任務與逐輪修改原則，不反推確切更新日，未作模型／方案／地區功能比較。"
+    },
+    {
+      "id": "openai-accuracy",
+      "title": "OpenAI：Does ChatGPT tell the truth?",
+      "url": "https://help.openai.com/en/articles/8313428-does-chatgpt-tell-the-truth",
+      "note": "2026-11-04 實讀，顯示 Updated: 12 days ago；引用可能答錯、捏造引文及需查核的限制，不把頁面工具可用性描述當成本篇功能測試。"
+    }
+  ],
+  "related": [
+    "ai-english-learning",
+    "ai-english-reading-practice",
+    "natural-writing-prompts",
+    "exchange-eligibility"
+  ]
+}
