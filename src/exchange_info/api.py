@@ -652,6 +652,41 @@ from .knu_student_view import (
     knu_processed_pages,
 )
 
+from .nutn_student_view import (
+    build_nutn_student_dashboard,
+    fetch_nutn_partner_universities,
+    nutn_exchange_info,
+    nutn_processed_pages,
+)
+
+from .niu_student_view import (
+    build_niu_student_dashboard,
+    fetch_niu_partner_universities,
+    niu_exchange_info,
+    niu_processed_pages,
+)
+
+from .nptu_student_view import (
+    build_nptu_student_dashboard,
+    fetch_nptu_partner_universities,
+    nptu_exchange_info,
+    nptu_processed_pages,
+)
+
+from .npu_student_view import (
+    build_npu_student_dashboard,
+    fetch_npu_partner_universities,
+    npu_exchange_info,
+    npu_processed_pages,
+)
+
+from .ntunhs_student_view import (
+    build_ntunhs_student_dashboard,
+    fetch_ntunhs_partner_universities,
+    ntunhs_exchange_info,
+    ntunhs_processed_pages,
+)
+
 from .nttu_student_view import (
     build_nttu_student_dashboard,
     fetch_nttu_partner_universities,
@@ -850,6 +885,11 @@ from .university_registry import (
     TPCU,
     AU,
     KNU,
+    NUTN,
+    NIU,
+    NPTU,
+    NPU,
+    NTUNHS,
     NTTU,
     YZU,
     SUPPORTED_UNIVERSITIES,
@@ -1843,6 +1883,16 @@ def create_app(
                         if university.id == AU.id
                         else fetch_knu_partner_universities()
                         if university.id == KNU.id
+                        else fetch_nutn_partner_universities()
+                        if university.id == NUTN.id
+                        else fetch_niu_partner_universities()
+                        if university.id == NIU.id
+                        else fetch_nptu_partner_universities()
+                        if university.id == NPTU.id
+                        else fetch_npu_partner_universities()
+                        if university.id == NPU.id
+                        else fetch_ntunhs_partner_universities()
+                        if university.id == NTUNHS.id
                         else fetch_nttu_partner_universities()
                         if university.id == NTTU.id
                         else []
@@ -2000,6 +2050,16 @@ def create_app(
             return au_processed_pages()
         if university.id == KNU.id:
             return knu_processed_pages()
+        if university.id == NUTN.id:
+            return nutn_processed_pages()
+        if university.id == NIU.id:
+            return niu_processed_pages()
+        if university.id == NPTU.id:
+            return nptu_processed_pages()
+        if university.id == NPU.id:
+            return npu_processed_pages()
+        if university.id == NTUNHS.id:
+            return ntunhs_processed_pages()
         if university.id == NTTU.id:
             return nttu_processed_pages()
         return (
@@ -2132,6 +2192,16 @@ def create_app(
             return au_exchange_info(partners_for_university(university))
         if university.id == KNU.id:
             return knu_exchange_info(partners_for_university(university))
+        if university.id == NUTN.id:
+            return nutn_exchange_info(partners_for_university(university))
+        if university.id == NIU.id:
+            return niu_exchange_info(partners_for_university(university))
+        if university.id == NPTU.id:
+            return nptu_exchange_info(partners_for_university(university))
+        if university.id == NPU.id:
+            return npu_exchange_info(partners_for_university(university))
+        if university.id == NTUNHS.id:
+            return ntunhs_exchange_info(partners_for_university(university))
         if university.id == NTTU.id:
             return nttu_exchange_info(partners_for_university(university))
         return load_exchange_info(resolved_data_dir) or ExchangeInfo(school_name=CGU.school_name)
@@ -2304,6 +2374,16 @@ def create_app(
             return build_au_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == KNU.id:
             return build_knu_student_dashboard(partner_universities=partners_for_university(university))
+        if university.id == NUTN.id:
+            return build_nutn_student_dashboard(partner_universities=partners_for_university(university))
+        if university.id == NIU.id:
+            return build_niu_student_dashboard(partner_universities=partners_for_university(university))
+        if university.id == NPTU.id:
+            return build_nptu_student_dashboard(partner_universities=partners_for_university(university))
+        if university.id == NPU.id:
+            return build_npu_student_dashboard(partner_universities=partners_for_university(university))
+        if university.id == NTUNHS.id:
+            return build_ntunhs_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == NTTU.id:
             return build_nttu_student_dashboard(partner_universities=partners_for_university(university))
         # The base dashboard parses official PDFs; partner rows are overlaid from the
@@ -2518,6 +2598,21 @@ def create_app(
             elif university.id == KNU.id:
                 from .knu_student_view import knu_school_location
                 location = knu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NUTN.id:
+                from .nutn_student_view import nutn_school_location
+                location = nutn_school_location(partner, location, resolved_data_dir)
+            elif university.id == NIU.id:
+                from .niu_student_view import niu_school_location
+                location = niu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NPTU.id:
+                from .nptu_student_view import nptu_school_location
+                location = nptu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NPU.id:
+                from .npu_student_view import npu_school_location
+                location = npu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NTUNHS.id:
+                from .ntunhs_student_view import ntunhs_school_location
+                location = ntunhs_school_location(partner, location, resolved_data_dir)
             elif university.id == NTTU.id:
                 from .nttu_student_view import nttu_school_location
                 location = nttu_school_location(partner, location, resolved_data_dir)
@@ -4254,7 +4349,7 @@ def create_app(
         if university.id == "tku":
             from .tku_assets import campus_photos
             from .tku_census import school_identifier
-        if university.id in {NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id, UTAIPEI.id, NTCU.id, TNUA.id, NTUA.id, NTUE.id, NCUT.id, NPUST.id, CJCU.id, NQU.id, ISU.id, FGU.id, NKUHT.id, NUU.id, TNNUA.id, TPCU.id, AU.id, KNU.id, NTTU.id}:
+        if university.id in {NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id, UTAIPEI.id, NTCU.id, TNUA.id, NTUA.id, NTUE.id, NCUT.id, NPUST.id, CJCU.id, NQU.id, ISU.id, FGU.id, NKUHT.id, NUU.id, TNNUA.id, TPCU.id, AU.id, KNU.id, NUTN.id, NIU.id, NPTU.id, NPU.id, NTUNHS.id, NTTU.id}:
             from .life_context import _bundled_ntnu_student_experiences
             ntnu_bundled_exps = _bundled_ntnu_student_experiences()
         for partner in partners:
@@ -4272,7 +4367,7 @@ def create_app(
                 photo=campus_photos().get(identifier) if identifier else None
                 visual={"status":"verified","checked_at":photo['checked_at']} if photo else None
             partner_experiences = list(experience_map.get(normalized, []))
-            if university.id in {NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id, UTAIPEI.id, NTCU.id, TNUA.id, NTUA.id, NTUE.id, NCUT.id, NPUST.id, CJCU.id, NQU.id, ISU.id, FGU.id, NKUHT.id, NUU.id, TNNUA.id, TPCU.id, AU.id, KNU.id, NTTU.id}:
+            if university.id in {NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id, UTAIPEI.id, NTCU.id, TNUA.id, NTUA.id, NTUE.id, NCUT.id, NPUST.id, CJCU.id, NQU.id, ISU.id, FGU.id, NKUHT.id, NUU.id, TNNUA.id, TPCU.id, AU.id, KNU.id, NUTN.id, NIU.id, NPTU.id, NPU.id, NTUNHS.id, NTTU.id}:
                 for b_exp in ntnu_bundled_exps.get((school_identity_key(partner.school_name), partner.country or ""), ()):
                     if all(x.source_url != b_exp.source_url for x in partner_experiences):
                         partner_experiences.append(b_exp)
@@ -4286,13 +4381,13 @@ def create_app(
                 if experience_audit
                 else (
                     "completed"
-                    if university.id in {CGU.id, NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id, UTAIPEI.id, NTCU.id, TNUA.id, NTUA.id, NTUE.id, NCUT.id, NPUST.id, CJCU.id, NQU.id, ISU.id, FGU.id, NKUHT.id, NUU.id, TNNUA.id, TPCU.id, AU.id, KNU.id, NTTU.id} and partner_experiences
+                    if university.id in {CGU.id, NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id, UTAIPEI.id, NTCU.id, TNUA.id, NTUA.id, NTUE.id, NCUT.id, NPUST.id, CJCU.id, NQU.id, ISU.id, FGU.id, NKUHT.id, NUU.id, TNNUA.id, TPCU.id, AU.id, KNU.id, NUTN.id, NIU.id, NPTU.id, NPU.id, NTUNHS.id, NTTU.id} and partner_experiences
                     else "not_collected"
                 )
             )
             visible_experiences = (
                 partner_experiences
-                if experience_audit or university.id in {CGU.id, NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id, UTAIPEI.id, NTCU.id, TNUA.id, NTUA.id, NTUE.id, NCUT.id, NPUST.id, CJCU.id, NQU.id, ISU.id, FGU.id, NKUHT.id, NUU.id, TNNUA.id, TPCU.id, AU.id, KNU.id, NTTU.id}
+                if experience_audit or university.id in {CGU.id, NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id, UTAIPEI.id, NTCU.id, TNUA.id, NTUA.id, NTUE.id, NCUT.id, NPUST.id, CJCU.id, NQU.id, ISU.id, FGU.id, NKUHT.id, NUU.id, TNNUA.id, TPCU.id, AU.id, KNU.id, NUTN.id, NIU.id, NPTU.id, NPU.id, NTUNHS.id, NTTU.id}
                 else []
             )
             destination_status = (
@@ -5568,6 +5663,21 @@ def create_app(
         if university.id == KNU.id:
             from .knu_student_view import knu_school_location
             location = knu_school_location(partner, location, resolved_data_dir)
+        if university.id == NUTN.id:
+            from .nutn_student_view import nutn_school_location
+            location = nutn_school_location(partner, location, resolved_data_dir)
+        if university.id == NIU.id:
+            from .niu_student_view import niu_school_location
+            location = niu_school_location(partner, location, resolved_data_dir)
+        if university.id == NPTU.id:
+            from .nptu_student_view import nptu_school_location
+            location = nptu_school_location(partner, location, resolved_data_dir)
+        if university.id == NPU.id:
+            from .npu_student_view import npu_school_location
+            location = npu_school_location(partner, location, resolved_data_dir)
+        if university.id == NTUNHS.id:
+            from .ntunhs_student_view import ntunhs_school_location
+            location = ntunhs_school_location(partner, location, resolved_data_dir)
         if university.id == NTTU.id:
             from .nttu_student_view import nttu_school_location
             location = nttu_school_location(partner, location, resolved_data_dir)
@@ -5756,6 +5866,21 @@ def create_app(
         if university.id == KNU.id:
             from .knu_student_view import knu_school_location
             location = knu_school_location(partner, location, resolved_data_dir)
+        if university.id == NUTN.id:
+            from .nutn_student_view import nutn_school_location
+            location = nutn_school_location(partner, location, resolved_data_dir)
+        if university.id == NIU.id:
+            from .niu_student_view import niu_school_location
+            location = niu_school_location(partner, location, resolved_data_dir)
+        if university.id == NPTU.id:
+            from .nptu_student_view import nptu_school_location
+            location = nptu_school_location(partner, location, resolved_data_dir)
+        if university.id == NPU.id:
+            from .npu_student_view import npu_school_location
+            location = npu_school_location(partner, location, resolved_data_dir)
+        if university.id == NTUNHS.id:
+            from .ntunhs_student_view import ntunhs_school_location
+            location = ntunhs_school_location(partner, location, resolved_data_dir)
         if university.id == NTTU.id:
             from .nttu_student_view import nttu_school_location
             location = nttu_school_location(partner, location, resolved_data_dir)

@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTTU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -143,6 +143,11 @@ TPCU_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 AU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
 KNU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
+NUTN_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
+NIU_SOURCE_CHECKED_AT = datetime(2026, 11, 5, tzinfo=timezone.utc)
+NPTU_SOURCE_CHECKED_AT = datetime(2026, 11, 5, tzinfo=timezone.utc)
+NPU_SOURCE_CHECKED_AT = datetime(2026, 11, 4, tzinfo=timezone.utc)
+NTUNHS_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 NTTU_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 
 
@@ -3481,6 +3486,265 @@ def _knu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nutn_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺南大學（國際事務處國際事務組，700301 臺南市中西區樹林街二段 33 號 府城校區誠正大樓 3 樓 B302 室，電話 06-213-3111 分機 856）《116學年度出國交換學生甄選簡章》及《美國天普大學 3+2 學碩雙聯學位申請公告》應繳申請表件：1. 海外教育計畫網站（ESA）線上申請表列印紙本（須經學生本人、家長或監護人、導師及系所主任簽名或蓋章，最多填 3 個志願）、2. 歷年中文成績單正本（須註明全班人數、名次及排名百分比；碩博士班加附大學部歷年成績單正本；全班前 50% 同步審查校內與教育部學海獎學金）、3. 有效外語能力檢定證明影本（CEFR B1 基準或達各姊妹校門檻；大陸交換且不申請校內獎學金者免附；美國 UCA 音樂系可附個人演奏曲目代替）、4. 中文自傳（1,000–1,500 字）、5. 中文讀書計畫（1,000–1,500 字）、6. 課外活動及優良表現證明（選繳，最多 5 項）。",
+        "study-plan": "撰寫國立臺南大學出國交換甄選必繳並上傳至海外教育計畫網站（ESA）之《中文自傳及中文讀書計畫》（各 1,000–1,500 字，或美國天普大學 3+2 雙聯英文 Statement of Goals）。請具體說明申請動機、個人學經歷背景、於志願姊妹校擬修習之領域課程與時間規劃（每學期至少修習相當於本校 2 門課／6 學分以上），以及返國後之學分採認與學職涯目標。",
+        "course-preapproval": "辦理赴國外或大陸姊妹校修讀交換課程與美國天普大學 3+2 學碩雙聯學位（DBMD）之選課規劃與抵免預審（依《國立臺南大學選送學生出國研修辦法》第 10 條，出國期間須辦理本校註冊並繳交全額學雜費以保留學籍；抵達姊妹校 2 週內須將《交換學生抵達外國註冊單》及選課單寄回國際事務組）。",
+        "predeparture-notice": "經選送學生出國研修甄選委員會書面審查錄取公告後，須依限繳交《交換意願確認書》與《國立臺南大學交換學生保證人同意書》，配合國際事務組完成姊妹校提名與簽證申請，並於出國前完成《交換學生出國程序單》各單位核章、本校註冊繳費、役男出國前 1 個月緩徵核准及海外全期保險。",
+        "return-report": "境外交換研修期滿返國後 2 個月內，須依《國立臺南大學選送優秀學生出國研修獎學金審查作業要點》及《交換學生心得報告格式》，完成《交換學生返國程序單》並繳交 2,000 字以上（附至少 4 張含圖說照片）之《交換學生心得報告》電子檔（寄至 oia-1@pubmail.nutn.edu.tw）與《國外大學修課報告表》，始得領取獎學金尾款（20%）並完成離校結案。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），連同《國外大學修課報告表》向所屬學系（所）及教務處註冊組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺南大學").replace("長庚", "南大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立臺南大學規定：在校學業成績平均達全班前 50%（約平均 75 分／GPA 2.75 以上）且具 CEFR B1 外語證明者，報名交換生時由甄選委員會同步審查校內交換生獎學金（亞洲每學期最高 2.5 萬／非亞洲最高 4 萬）及教育部學海飛颺／惜珠獎學金；申請美國天普大學 3+2 學碩雙聯學位（DBMD）須達 GPA 3.0/4.0 以上。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "CEFR B1 基準與歐韓組：TOEIC 550+ / TOEFL iBT 42+ / ITP 457+ / IELTS 4.0+ / GEPT 中級 / Linguaskill 140+（適用校內獎學金及韓國東國／崇實／關東／德成女大、捷克 UHK、波蘭歐波蘭大學）",
+                "歐美高階與雙聯組：TOEFL iBT 79+ / IELTS 6.0–6.5+ / Duolingo 105–120（適用美國 UCA［音樂系可附演奏曲免英檢］、Otterbein、UMKC、天普大學 3+2 雙聯、法國 ISEP、荷蘭 Aeres）",
+                "日本組：JLPT N2（大阪公立大學、北海道大學、岡山大學、埼玉大學、順天堂大學、金澤星稜學分學程）或 JLPT N5（日本獨協大學、金澤星稜日語密集課程）",
+                "韓國組：TOPIK 3 級以上（崇實大學、東國大學、天主教關東大學、德成女子大學、首爾市立大學、全南大學、中央大學）",
+                "法西語組：法檢 DELF B2（法國波爾多蒙田大學；B2 以下僅修法語課）、西檢 DELE B2 或英語 B2（西班牙哈恩大學、武康大學 UCAM）",
+                "大陸交換組：華東師範大學、安徽大學等大陸合作大學（中文授課免附外語檢定；惟申請校內交換生獎學金者仍須附 CEFR B1 以上語檢）",
+            ]
+            field["help_text"] = "依國立臺南大學《116學年度出國交換學生甄選簡章》及《選送優秀學生出國研修獎學金審查作業要點》填報有效語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.nutn.edu.tw/?page_id=971",
+        source_checked_at=NUTN_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立臺南大學海外教育計畫網站（ESA）線上申請表與保證人同意書" if template.id == "exchange-application-data" else ("中文自傳與中文讀書計畫（各 1,000–1,500 字）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.nutn.edu.tw/?page_id=830",
+        default_copies=1,
+        signatures=["申請學生親筆簽章", "家長或監護人親筆簽章", "導師簽章", "系所主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經甄選委員會書審錄取後繳交確認書與保證人同意書、完成《交換學生出國程序單》核章與南大註冊繳費，並於抵達姊妹校 2 週內寄回《抵達外國註冊單》", "return-report": "返國後 2 個月內完成《交換學生返國程序單》、繳交 2,000 字以上（附至少 4 張圖說照片）心得報告電子檔（寄至 oia-1@pubmail.nutn.edu.tw）及修課報告表辦理獎學金尾款核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分採認抵免"}.get(template.id, "先於海外教育計畫網站（ESA）完成線上填報與 PDF 上傳，再將四方簽章紙本申請表、含班排百分比之歷年成績單正本、語檢證明及 1,000–1,500 字中文自傳與讀書計畫送交誠正大樓 3 樓 B302 室國際事務組"),
+        version="116準備工具-2026-11-06.1",
+        destinations=["國立臺南大學國際事務處國際事務組（700301 臺南市中西區樹林街二段 33 號 府城校區誠正大樓 3 樓 B302 室）"],
+        conditional_note="此為個人準備工具；國立臺南大學出國交換甄選每年分兩梯次（第1梯次 11/15–11/30、第2梯次 4/1–4/20）受理申請，採 100% 書面審查，全班前 50% 且具 CEFR B1 語檢者免另備文件同步審查校內與教育部學海獎學金。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _niu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立宜蘭大學（國際事務處國際學生事務組，宜蘭縣宜蘭市神農路一段 1 號 行政大樓 3 樓，電話 03-935-7400 分機 7180）《赴境外姊妹校交換學生／雙聯學位／大陸交換甄選簡章》應繳申請表件：1. 赴境外姊妹校交換學生申請表（雙聯學位繳交雙聯學位申請表）、2. 歷年成績單正本（含前一學期名次百分比與操行成績；學士班須全班前 60%、碩博班須平均 75 分以上，學海飛颺與赴境外研修獎補助須學士班前 40% 或碩博 80 分以上，操行皆須 75 分以上）、3. 讀書計畫與自傳（1,000～1,500 字）、4. 師長推薦信 2 封、5. 有效語言能力檢定證明影本、6. 家長或監護人同意書、7. 其他有利審查資料。",
+        "study-plan": "撰寫國立宜蘭大學赴境外姊妹校交換學生、跨國雙聯學位（美國密西根大學迪爾伯恩分校 UM-Dearborn 3+2／1+1／4+1、波蘭奧爾什丁瓦爾米亞瑪祖里大學 UWM 碩士雙聯、瑞士 César Ritz 3+1／HIM 2+2、泰國農業大學 Kasetsart 等）及教育部學海飛颺／惜珠與校內赴境外研修獎補助必繳之《讀書計畫與自傳（1,000～1,500 字）》（UM-Dearborn 雙聯另須準備英文 Statement of Purpose 與英文 CV）。請具體說明申請動機、個人學經歷背景、於志願姊妹校擬修習之專業或語言課程規劃（每學期至少修讀相當於宜大 6 學分以上），以及返國後之學分抵免與職涯發展目標。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《國立宜蘭大學學生出國期間有關學業及學籍處理要點》與《國立宜蘭大學與境外大學校院辦理跨國雙學位制實施辦法》，出國期間須於宜大完成註冊並繳交全額學雜費以保留學籍，且每學期於境外姊妹校至少須修讀相當於宜大 6 學分以上之課程）。",
+        "predeparture-notice": "經國際事務處初審與「學生赴境外研修暨交流獎補助審查小組」複審錄取公告後，須於規定期限內繳交《錄取確認書》與《家長同意書》，配合國際事務處向姊妹校完成提名（Nomination）與入學申請（如日本在留資格認定證明書 COE、美國 DS-2019／I-20 等），並於出國前辦妥宜大註冊、選課、護照簽證、役男出境及海外醫療與意外保險。",
+        "return-report": "境外交換或雙聯研修期滿返國後 2 週（或依獎補助規定 1 個月）內，須依《國立宜蘭大學學生赴境外研修獎補助辦法》及教育部學海計畫規定，向國際事務處提交《出國研修心得報告》（約 1,500～2,000 字以上，含境外學習與生活照片，供刊登於國際事務處「學生赴外研修心得」專區）、姊妹校正式成績單、護照出入境紀錄及登機證正本，並配合成果發表會始得完成結案與獎助學金核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），向所屬學系（所）及教務處申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立宜蘭大學").replace("長庚", "宜大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立宜蘭大學規定：一般海外與大陸交換學士班前一學期學業成績須全班前 60%、碩博士班歷年平均須 75 分以上（操行皆須 75 分以上）；申請教育部《學海飛颺／惜珠》或《國立宜蘭大學學生赴境外研修獎補助》須學士班全班前 40% 或碩博士班平均 80 分以上；申請美國密西根大學迪爾伯恩分校（UM-Dearborn）雙聯須 GPA 3.0 以上。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語組：TOEIC 多益測驗（CEFR B1 550+、波蘭／捷克／泰國等 B2 785+）",
+                "英語組：TOEFL iBT / ITP（iBT 72+、UM-Dearborn 雙聯 80–84+、加拿大 UNBC 90+、ITP 500–543+）",
+                "英語組：IELTS 雅思（瑞士 César Ritz／HIM 5.5+、澳洲 UNE／波蘭 UWM 6.0+、UM-Dearborn／UNBC 6.5+）",
+                "日語組：JLPT 日語能力試驗（信州／香川／三重大學特定學院 N1；金城學院／愛媛／岡山／東京農業 N2；廣島／山口／島根／名城／北見工業 N3）",
+                "韓語組：TOPIK 韓國語文能力測驗（建國／嶺南／誠信女大／忠北／江原大學等要求 TOPIK 3 級或英語 B2）",
+                "大陸交換組：吉林大學、華中農業大學、西北農林科技大學、蘭州大學等 15 所大陸重點高校（中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依國立宜蘭大學國際事務處赴境外姊妹校交換學生與跨國雙聯學位簡章填報有效之語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.niu.edu.tw/p/404-1014-69635.php",
+        source_checked_at=NIU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立宜蘭大學赴境外姊妹校交換學生／跨國雙聯學位申請表（含讀書計畫與自傳、師長推薦信 2 封及家長同意書）" if template.id == "exchange-application-data" else ("讀書計畫與自傳（1,000～1,500 字）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.niu.edu.tw/p/412-1014-3545.php",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師及系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經審查小組錄取後繳交錄取確認書與家長同意書，配合國際事務處向姊妹校完成提名與簽證申請，並完成宜大註冊", "return-report": "返國後 2 週（或 1 個月）內繳交出國研修心得報告（含照片）與正式成績單辦理結案與獎助核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分抵免"}.get(template.id, "於校內收件截止前備齊申請表、歷年成績單（含名次）、語檢證明、讀書計畫與自傳（1,000～1,500 字）、推薦信 2 封及家長同意書送交國際事務處（行政大樓 3 樓）"),
+        version="115準備工具-2026-11-05.1",
+        destinations=["國立宜蘭大學國際事務處國際學生事務組（260007 宜蘭縣宜蘭市神農路一段 1 號 行政大樓 3 樓）"],
+        conditional_note="此為個人準備工具；國立宜蘭大學赴境外姊妹校交換與雙聯學位每年分兩學期（秋季班前一年 9～11 月、春季班 2～3 月）收件，由國際事務處初審並提送學生赴境外研修暨交流獎補助審查小組複審。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _nptu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立屏東大學（國際事務處國際合作組，屏東市民生路 4-18 號 屏商校區行政大樓 3 樓，電話 08-766-3800 分機 17102、17103）《選送學生赴境外大學研修甄選簡章》應繳申請表件（正本 1 份，並上傳合併 PDF 電子檔至 Google 表單）：1. 表單一：赴境外大學研修申請表、2. 表單二：保證書（學生及保證人親筆簽名蓋章）、3. 表單三：中文自傳及讀書計畫（各 1,000 字以內，含預計修讀課程）、4. 表單四：推薦信 2 封（1 封須為指導教授或班導師）、5. 歷年成績單正本（含歷年總平均及系所排名百分比；大陸及韓國學校須加附英文版）、6. 2 年內有效外語能力檢定證明影本（日本學校可以《日語能力評估表》替代）、7. 優秀表現證明（非必繳）。",
+        "study-plan": "撰寫國立屏東大學選送學生赴境外大學交換、跨國雙學位制（英國密德薩斯大學 3+1／1+1、美國北阿拉巴馬大學 3+1／2+2／1+1、美國西來大學 2+2／1+1、捷克赫拉德茨克拉洛韋大學／茲林托馬斯巴塔大學 1+1、泰國宋卡王子大學 2+2、泰國國王科技大學 1+1）及教育部學海飛颺／惜珠獎助學金必繳之《表單三：中文自傳及讀書計畫》（各 1,000 字以內）。請具體說明申請動機、個人學經歷背景、於志願姊妹校預計修讀之課程規劃（每學期至少修習相當於屏大 2 門課或 4 學分，學海獎助生至少 6 學分），以及返國後之學分採認與職涯發展目標。",
+        "course-preapproval": "辦理赴境外合作大學修讀交換課程或跨國雙學位制之選課預審與教務核備（依《國立屏東大學學生出國期間有關學業及學籍處理要點》及《與境外大學辦理雙聯學位制實施辦法》，出國期間須於屏東大學完成註冊並繳交全額學雜費以保留學籍；每學期至少修習相當於屏大 2 門科目或 4 學分，學海飛颺／惜珠受獎生至少 6 學分）。",
+        "predeparture-notice": "經系所初審與國際事務處甄審委員會複審錄取公告後，須於 1 週內繳交《錄取資格確認書》及交換保證金新臺幣 3,000 元，配合國際合作組完成姊妹校線上提名、入學申請（如日本 COE、歐美 I-20／CAS 等），並於出國前辦妥屏東大學註冊、護照簽證、役男出境及海外醫療與意外保險。",
+        "return-report": "境外交換或雙學位研修期滿返國後 2 週至 1 個月內，須依《國立屏東大學選送優秀學生出國研修實施要點》及《海外研習助學金補助要點》規定，向國際事務處提交《出國研修心得報告》電子檔（約 1,500–2,000 字，含國外研修與生活照片至少 4 張）、國外姊妹校正式成績單、護照出入境紀錄及登機證正本，並配合出席出國交換學生說明會分享經驗，始得辦理保證金 3,000 元退還與獎助學金核銷。",
+        "credit-transfer": "境外交換或雙學位研修期滿返國後，持境外合作大學核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《國立屏東大學學生出國期間有關學業及學籍處理要點》向所屬學系（所）及教務處申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立屏東大學").replace("長庚", "屏大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立屏東大學規定：一般境外交換與校內海外研習助學金須歷年學業總平均達 70 分（GPA 2.5）以上或班排名前 50%、操行平均 80 分以上；教育部學海飛颺須班排名前 30%（或 GPA 3.0）；跨國雙學位依姊妹校要求（GPA 2.5–3.0）。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語組：TOEIC 多益測驗（校內 CEFR B1 門檻 550+、波蘭格但斯克大學／日本東北大學／捷克托馬斯巴塔大學 B2 門檻 785+）",
+                "英語組：IELTS 雅思（校內 CEFR B1 門檻 4.0+、美國北阿拉巴馬雙聯 5.5+、英國密德薩斯雙聯／澳洲西雪梨大學 6.0–6.5+）",
+                "英語組：TOEFL iBT / ITP（校內 iBT 42+ / ITP 460+、美國北阿拉巴馬／西來雙聯 iBT 61–69+、密德薩斯雙聯 iBT 72–79+）",
+                "日語組：JLPT 日語能力試驗（東北大學 N1；姬路獨協／兵庫教育／聖泉／神戶學院／敬愛／梅光學院 N2；愛知教育／弘前／長崎／近畿／別府 N3；札幌國際／高崎經濟 N4；名櫻 N5；或教師簽章日語能力評估表）",
+                "韓語組：TOPIK 韓國語文能力測驗（東國／京畿／大邱／首爾市立／世宗／釜山外大等 TOPIK 2–3 級，英語授課可採 TOEIC 550+）",
+                "大陸及華語組：北京師範、華東師範、武漢大學、廈門大學、山東大學等 48 所大陸及香港姊妹校（中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依國立屏東大學國際事務處選送學生赴境外大學研修簡章填報 2 年內有效之語言能力檢定證明（日本姊妹校若無 JLPT 可檢附教師評核之日語能力評估表）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://ccd.nptu.edu.tw/p/406-1091-190211,r2961.php?Lang=zh-tw",
+        source_checked_at=NPTU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立屏東大學選送學生赴境外大學研修申請表件（表單一至表單四：申請表、保證書、中文自傳及讀書計畫、推薦信）" if template.id == "exchange-application-data" else ("表單三：中文自傳及讀書計畫（各 1,000 字以內）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://ccd.nptu.edu.tw/var/file/91/1091/img/1500/576898976.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "保證人（家長或監護人）親筆簽名蓋章", "指導教授或導師及系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經錄取公告後 1 週內繳交錄取資格確認書與保證金 3,000 元，配合國際合作組完成姊妹校提名與簽證申請，並完成屏大註冊", "return-report": "返國後 2 週至 1 個月內繳交出國研修心得報告（含照片）與正式成績單，並配合說明會經驗分享以辦理保證金退還與獎助核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分採認與抵免"}.get(template.id, "於校內收件截止前備齊表單一至表單四、歷年成績單（含排名）及語檢證明送交系所初審，核章後送國際事務處國際合作組（屏商校區行政大樓 3 樓）並上傳 PDF 電子檔"),
+        version="115準備工具-2026-11-05.1",
+        destinations=["國立屏東大學國際事務處國際合作組（900391 屏東市民生路 4-18 號 屏商校區行政大樓 3 樓）"],
+        conditional_note="此為個人準備工具；國立屏東大學出國交換甄選每年分兩梯次（春季班約 9–10 月初、秋季班約 2–3 月中旬）收件，紙本須經系所及學院核章並同步填寫 Google 表單上傳合併 PDF 檔。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _npu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立澎湖科技大學（研究發展處國際事務中心，澎湖縣馬公市六合路 300 號 行政大樓，電話 06-9264115 分機 1632）《辦理選送學生赴境外大學交流甄選要點》、《辦理選送學生出國研修獎助學金要點（教育部學海飛颺／學海惜珠／學海築夢）》及《與國外大學校院辦理跨國雙學位制實施辦法》應繳申請表件：1. 選送學生赴境外大學研修申請表、2. 歷年中英文成績單正本（含歷年學業總平均、班級排名百分比及操行成績；須修業滿一學期以上且無小過以上處分，學海飛颺及校內獎助須班排名前 50% 或 GPA 2.75／75 分以上）、3. 有效外語能力檢定證明影本（英語組 TOEIC 500–650 / TOEFL iBT 61–68 / IELTS 5.0–6.0；日語組 JLPT N3–N2；大陸姊妹校免附語檢）、4. 出國研修讀書計畫與自傳（1,000–5,000 字，含擬選修課程與預期成效）、5. 家長（監護人）同意書、6. 教師推薦函及學海惜珠低收／中低收入戶證明。",
+        "study-plan": "撰寫國立澎湖科技大學選送學生赴境外大學交換、跨國雙聯學位（美國匹茲堡州立大學 PSU 2+2 雙學士、越南孫德勝大學 TDTU 觀光休閒系與航運管理系雙聯學士、泰國湄州大學 MJU 雙聯學位）及教育部學海飛颺／惜珠獎助必繳之《出國研修讀書計畫與自傳》（依學海簡章規定 1,000 至 5,000 字）。請具體說明申請動機、個人學經歷背景、於志願姊妹校擬修習之專業或語言課程規劃（交換生每學期至少應選修 2 門或 6 學分以上課程），以及返國後之學分採認與職涯發展目標。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《國立澎湖科技大學學生出境期間有關學業及學籍處理要點》及《與國外大學校院辦理跨國雙學位制實施辦法》規定，出境期間須於澎科大辦理註冊並繳交全額學雜費以保留學籍；交換生於境外大學每學期至少應選修 2 門或 6 學分以上課程，雙聯學士班在兩校修業時間合計至少須滿 32 個月、碩士班至少 12 個月，且於兩校修習學分數各須達畢業應修總學分數三分之一以上）。",
+        "predeparture-notice": "經所屬系（所、院）初審推薦及研究發展處國際事務中心／國際學術交流審議委員會複審錄取公告後，須於規定期限內繳交《錄取資格確認書》、《家長同意書》及《切結書／行政契約書》，配合國際事務中心向境外姊妹校完成提名與入學申請，並於出國前辦妥澎科大註冊、選課、護照簽證、役男出境及海外醫療與意外保險。",
+        "return-report": "境外交換、雙聯研修或學海築夢海外實習期滿返國後，須依《辦理選送學生赴境外大學交流甄選要點》及《辦理選送學生出國研修獎助學金要點》規定，於返國後兩週（14 日）至一個月內向研究發展處國際事務中心提交《出國研修／實習心得報告》（2,000 字以上並附研修與生活照片 4 張以上，並上傳至教育部學海計畫資訊網）、境外姊妹校正式成績單、護照出入境紀錄及登機證正本，始得辦理結案與獎助學金尾款核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《國立澎湖科技大學學生出境期間有關學業及學籍處理要點》及《學生抵免學分辦法》向所屬學系（所）及教務處申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立澎湖科技大學").replace("長庚", "澎科大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立澎湖科技大學規定：申請赴境外大學交換須於本校就讀滿一學期以上且無小過以上處分；申請教育部《學海飛颺／惜珠》或校內出國研修獎助學金者，歷年學業總平均須達班排名前 50%（或 GPA 2.75／百分制 75 分以上）且操行成績達 80 分以上。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語組：TOEIC 多益測驗（馬來西亞拉曼大學／沙巴大學、越南孫德勝大學／峴港大學、泰國湄州大學、菲律賓甲米地州大等 500–550+；瑞士 BHMS 及學海計畫建議 550–650+）",
+                "英語組：TOEFL iBT / ITP（美國匹茲堡州立大學 PSU 2+2 雙學士 iBT 59–68+ / ITP 520+；歐美交換 iBT 61+）",
+                "英語組：IELTS 雅思（瑞士 BHMS 5.0–5.5+、美國匹茲堡州立大學 PSU 雙聯 5.5–6.0+、歐美及東南亞全英授課 5.0–6.0+）",
+                "日語組：JLPT 日語能力試驗（日本國立琉球大學、公立鳥取環境大學、日本文理大學、岡山商科大學、鈴鹿醫療科學大學、沖繩大學等要求 N2 或 N3 以上）",
+                "大陸交換組：上海海洋大學、大連海洋大學、中國海洋大學、廈門理工學院、泉州師範學院等 15 所大陸合作高校（中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依國立澎湖科技大學研究發展處國際事務中心《選送學生赴境外大學交流甄選要點》及教育部學海系列計畫簡章填報有效之語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://www.npu.edu.tw/content/index.aspx?Parser=1,6,174,163",
+        source_checked_at=NPU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立澎湖科技大學選送學生赴境外大學交流申請表（含家長同意書、讀書計畫、自傳及推薦函）" if template.id == "exchange-application-data" else ("出國研修讀書計畫與自傳（1,000–5,000字）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://www.npu.edu.tw/content/index.aspx?Parser=1,6,184,163",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師及系（所）主任簽章", "學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經系院初審與國際事務中心複審錄取後繳交確認書、家長同意書與行政契約書，配合辦理姊妹校提名與簽證，並完成澎科大註冊", "return-report": "返國後 14 日至 1 個月內繳交 2,000 字以上出國研修心得報告（含照片）與正式成績單辦理結案與獎助核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分抵免"}.get(template.id, "於校內收件截止前備齊申請表、歷年成績單、語檢證明、讀書計畫與自傳、推薦函及家長同意書送交研究發展處國際事務中心（行政大樓）"),
+        version="115準備工具-2026-11-04.1",
+        destinations=["國立澎湖科技大學研究發展處國際事務中心（880011 澎湖縣馬公市六合路 300 號 行政大樓）"],
+        conditional_note="此為個人準備工具；國立澎湖科技大學赴境外大學交換、跨國雙聯學位及教育部學海系列計畫由所屬系（所、院）初審推薦後送研究發展處國際事務中心複審，出境期間須辦理本校註冊保留學籍且每學期至少選修 2 門或 6 學分以上課程。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _ntunhs_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺北護理健康大學（國際及兩岸教育中心 ICSED，臺北市北投區明德路 365 號 親仁樓 B118 室，電話 02-2822-7101 分機 2731～2736）《學生出國研修、跨國雙學位制與教育部學海飛颺／惜珠／築夢校內甄選簡章》應繳申請表件：1. 學生出國研修／跨國雙學位申請表（含導師與系所主管初審推薦簽章）、2. 歷年中英文成績單正本（含歷年學業總平均、GPA 與班級排名百分比；學海飛颺／惜珠須前一學期或歷年平均 75 分以上或班排前 40%，操行 80 分以上）、3. 有效外語能力檢定證明影本（澳洲 UQ／QUT／Deakin、英國 UWE Bristol、美國 Auburn 雙聯 IELTS 6.0–7.0 或 TOEFL iBT 79–100；學海飛颺／惜珠 CEFR B1：TOEIC 550 / IELTS 4.5 / TOEFL iBT 42；日本交換建議 JLPT N2–N3）、4. 中、英文出國研修／實習計畫書、5. 中、英文自傳及履歷表（CV）、6. 教師推薦信、7. 家長（監護人）同意書。",
+        "study-plan": "撰寫國立臺北護理健康大學出國交換研修、跨國雙聯學位（澳洲昆士蘭大學 UQ、昆士蘭科技大學 QUT、迪肯大學 Deakin、威廉安格力斯學院 William Angliss Institute、英國西英格蘭大學 UWE Bristol、美國奧本大學 Auburn University 共 6 校 9 項學碩博雙聯學制）及教育部學海飛颺／惜珠／築夢計畫必繳之《中、英文研修／實習計畫書及自傳》。請具體說明申請動機、個人護理健康或管理專業背景、擬於海外姊妹校修習之專業課程或醫療機構臨床見實習規劃，以及返國後之學分抵免與職涯發展目標。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程、海外醫療照護專業實習或跨國雙聯學位之選課預審與《學生出境修習學分採認對照規劃》：依《國立臺北護理健康大學選送學生出國研修及實習辦法》、《與國外大學校院辦理跨國雙學位制實施辦法》及《學生抵免學分辦法》，整理擬修習之海外課程名稱、學分數與課程大綱（Syllabus），會請所屬系（所、學位學程）及教務處確認返國學分抵免對應。",
+        "predeparture-notice": "經系所初審與校級國際學術合作交流委員會書面暨面試錄取公告後，須依限繳交錄取確認書、家長同意書與行政契約書，配合國際及兩岸教育中心向海外姊妹校完成提名與入學／簽證申請（如澳洲 CoE、英國 CAS、美國 I-20、日本 COE），並於出國前完成國北護當學期註冊繳費、選課、護照簽證、役男出境及海外醫療與意外保險，且出席行前說明會。",
+        "return-report": "境外交換、雙聯學位或海外醫療照護實習期滿返國後 2 週至 1 個月內，須依《國立臺北護理健康大學選送學生出國研修及實習辦法》、《強化學生國際移動力補助要點》及教育部學海系列計畫規定，向國際及兩岸教育中心提交《出國研修／實習成果報告書》（約 1,500–3,000 字，含研修或臨床見實習照片）、國外姊妹校正式成績單或修業證明、護照出入境紀錄及電子機票／登機證正本，並出席國際化成果發表暨經驗分享會始得辦理結案與獎助學金核銷。",
+        "credit-transfer": "境外交換、雙聯學位或海外實習期滿返國後，持國外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《國立臺北護理健康大學學生抵免學分辦法》與《與國外大學校院辦理跨國雙學位制實施辦法》向所屬系（所、學位學程）及教務處註冊組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺北護理健康大學").replace("長庚", "國北護")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立臺北護理健康大學規定：申請人須為本校在學滿一學期以上之正式學籍學生（不含在職專班），操行成績達 80 分以上；申請教育部《學海飛颺／惜珠》須前一學期或歷年學業平均達 75 分（GPA 3.0）以上或班排前 40%；申請澳洲 UQ／QUT／Deakin、英國 UWE Bristol、美國 Auburn 雙聯學位須符合各雙聯協議之 GPA 與專業科目門檻。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "IELTS 雅思學術組（澳洲昆士蘭大學 UQ／昆士蘭科技大學 QUT／迪肯大學 Deakin 護理雙聯 7.0［單科 7.0］；英國西英格蘭大學 UWE Bristol 雙聯 6.0–6.5；威廉安格力斯學院 5.5–6.0；學海飛颺／惜珠 4.5+）",
+                "TOEFL iBT 托福網路測驗（美國奧本大學 Auburn 雙聯 79+；澳洲／英國護理雙聯 94–100；一般交換 61–79；學海飛颺／惜珠 42+）",
+                "TOEIC 多益測驗（教育部學海飛颺／惜珠及強化學生國際移動力補助 CEFR B1 基準 550 分以上；亞洲姊妹校交換與海外實習 550–785 分）",
+                "JLPT 日語能力試驗（日本大阪大學、東北大學、鹿兒島大學、新潟大學、聖路加國際大學、東京有明醫療大學、札幌保健醫療大學等交換與實習建議 N2–N3）",
+                "TOPIK 韓國語文能力測驗（韓國首爾女子看護大學、誠信女子大學、慶熙大學、延世大學、高麗大學等交換與研修建議 TOPIK 2–3 級或英語檢定）",
+                "中國大陸、港澳及華語區姊妹校交換與醫療專業見實習（北京中醫藥大學、上海中醫藥大學、南京醫科大學、香港大學、澳門理工大學等中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依國立臺北護理健康大學國際及兩岸教育中心《選送學生出國研修及實習辦法》、跨國雙聯學位協議及教育部學海系列計畫簡章填報有效語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://icsed-rnd.ntunhs.edu.tw/p/412-1035-2523.php?Lang=zh-tw",
+        source_checked_at=NTUNHS_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立臺北護理健康大學學生出國研修／跨國雙學位申請表（含家長同意書、研修計畫書、自傳及推薦信）" if template.id == "exchange-application-data" else ("中、英文出國研修／實習計畫書及自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://icsed-rnd.ntunhs.edu.tw/var/file/35/1035/img/639/469092837.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師及系（所、學位學程）主管簽章", "學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所、學位學程）辦公室及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經甄選錄取後繳交確認書、家長同意書與行政契約書，配合國際及兩岸教育中心向姊妹校完成提名與簽證申請，並完成國北護註冊與行前說明會", "return-report": "返國後 14 日至 1 個月內繳交約 1,500–3,000 字出國研修／實習成果報告書（含照片）、成績單與出入境／登機證單據並出席經驗分享會辦理核銷", "credit-transfer": "返國後持姊妹校正式成績單正本、修業證明與課程大綱向系所及教務處註冊組申請境外學分抵免"}.get(template.id, "於校內甄選收件截止前備齊申請表、歷年成績單（含排名）、外語檢定證明、中英文研修計畫書、自傳及家長同意書送交國際及兩岸教育中心（親仁樓 B118）"),
+        version="115準備工具-2026-11-06.1",
+        destinations=["國立臺北護理健康大學研究發展處國際及兩岸教育中心（112303 臺北市北投區明德路 365 號 親仁樓 B118 室）"],
+        conditional_note="此為個人準備工具；國北護出國交換、跨國雙聯學位、海外專業實習及教育部學海系列計畫由各系所初審後送交國際及兩岸教育中心辦理複審與面試。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _nttu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
         "exchange-application-data": "整理國立臺東大學（研究發展處國際事務中心 COIA，臺東市大學路二段 369 號 行政服務大樓二樓，電話 089-517492～517497）《辦理學生申請出國進修或交換作業要點》及當期交換生甄選簡章應繳資料（均一式 3 份）：1. 國立臺東大學學生申請出國進修交換申請表（須經系所主任、院長簽核）、2. 家長或監護人同意書、3. 出國進修交換計畫書（含個人自傳、讀書修課計畫、預期成果）、4. 中文歷年學業成績單正本、5. 歷年學業成績名次證明（班排名證明；同時申請《學生出國進修獎助學金》或《學海飛颺／惜珠》者，學士班各學期平均須達全班前 50% 或學海總平均 80 分以上，碩博須系所推薦）、6. 語言能力相關證明或檢定成績單（英語區 CEFR B1／B2、日本 JLPT N1–N4、韓國 TOPIK 2–3 級；大陸姊妹校免附但可列加分佐證）、7. 其他有利審查文件（社團幹部、志工、競賽或作品集）。",
@@ -3656,6 +3920,16 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _au_template(template)) is not None]
     if university.id == KNU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _knu_template(template)) is not None]
+    if university.id == NUTN.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nutn_template(template)) is not None]
+    if university.id == NIU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _niu_template(template)) is not None]
+    if university.id == NPTU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nptu_template(template)) is not None]
+    if university.id == NPU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _npu_template(template)) is not None]
+    if university.id == NTUNHS.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntunhs_template(template)) is not None]
     if university.id == NTTU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nttu_template(template)) is not None]
     if university.id == "tku":

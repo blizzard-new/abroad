@@ -817,6 +817,11 @@ def create_maintenance_router(
             <option value="tpcu">臺北城市科技大學（共 18 所姊妹校）</option>
             <option value="au">真理大學（共 80 所姊妹校）</option>
             <option value="knu">開南大學（共 88 所姊妹校）</option>
+            <option value="nutn">國立臺南大學（共 114 所姊妹校）</option>
+            <option value="niu">國立宜蘭大學（共 97 所姊妹校）</option>
+            <option value="nptu">國立屏東大學（共 172 所姊妹校）</option>
+            <option value="npu">國立澎湖科技大學（共 37 所姊妹校）</option>
+            <option value="ntunhs">國立臺北護理健康大學（共 84 所姊妹校）</option>
             <option value="nttu">國立臺東大學（共 59 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
@@ -949,6 +954,11 @@ def create_maintenance_router(
     tpcu: "臺北城市科技大學 (TPCU)",
     au: "真理大學 (AU)",
     knu: "開南大學 (KNU)",
+    nutn: "國立臺南大學 (NUTN)",
+    niu: "國立宜蘭大學 (NIU)",
+    nptu: "國立屏東大學 (NPTU)",
+    npu: "國立澎湖科技大學 (NPU)",
+    ntunhs: "國立臺北護理健康大學 (NTUNHS)",
     nttu: "國立臺東大學 (NTTU)"
   };
 

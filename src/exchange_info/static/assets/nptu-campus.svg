@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="國立屏東大學 National Pingtung University Campus">
+  <defs>
+    <linearGradient id="nptuSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#114b5f"/>
+      <stop offset="52%" stop-color="#1a829b"/>
+      <stop offset="100%" stop-color="#f3e9d2"/>
+    </linearGradient>
+    <linearGradient id="nptuSun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#f48c06"/>
+    </linearGradient>
+    <linearGradient id="dawushanFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2c6975"/>
+      <stop offset="100%" stop-color="#1b4353"/>
+    </linearGradient>
+    <linearGradient id="dawushanNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b7a57"/>
+      <stop offset="100%" stop-color="#1e4d3b"/>
+    </linearGradient>
+    <linearGradient id="nptuLawn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#52b788"/>
+      <stop offset="100%" stop-color="#2d6a4f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Southern Taiwan Tropical Sky -->
+  <rect width="1200" height="630" fill="url(#nptuSky)"/>
+
+  <!-- Warm Pingtung Sun -->
+  <circle cx="950" cy="135" r="64" fill="url(#nptuSun)" opacity="0.88"/>
+
+  <!-- Mount Dawu (大武山 Kavulungan) Ridge Backdrop -->
+  <path d="M 0 370 L 180 250 L 350 305 L 590 155 L 790 275 L 980 210 L 1200 325 L 1200 450 L 0 450 Z" fill="url(#dawushanFar)" opacity="0.72"/>
+  <path d="M 0 410 Q 260 330 540 375 T 1200 360 L 1200 460 L 0 460 Z" fill="url(#dawushanNear)" opacity="0.68"/>
+
+  <!-- NPTU Main Administration & International Building (五育樓 / 屏商行政大樓) -->
+  <g transform="translate(200, 200)">
+    <!-- Left Wing -->
+    <rect x="0" y="65" width="210" height="175" rx="4" fill="#f4efe6" stroke="#8d6e63" stroke-width="2"/>
+    <rect x="-6" y="52" width="222" height="15" rx="2" fill="#9e2a2b"/>
+    <g fill="#1d4e68" opacity="0.88">
+      <rect x="24" y="86" width="34" height="24" rx="2"/>
+      <rect x="72" y="86" width="34" height="24" rx="2"/>
+      <rect x="120" y="86" width="34" height="24" rx="2"/>
+      <rect x="166" y="86" width="24" height="24" rx="2"/>
+      <rect x="24" y="124" width="34" height="24" rx="2"/>
+      <rect x="72" y="124" width="34" height="24" rx="2"/>
+      <rect x="120" y="124" width="34" height="24" rx="2"/>
+      <rect x="166" y="124" width="24" height="24" rx="2"/>
+      <rect x="24" y="162" width="34" height="24" rx="2"/>
+      <rect x="72" y="162" width="34" height="24" rx="2"/>
+      <rect x="120" y="162" width="34" height="24" rx="2"/>
+      <rect x="166" y="162" width="24" height="24" rx="2"/>
+    </g>
+
+    <!-- Central Tower -->
+    <rect x="200" y="18" width="400" height="222" rx="6" fill="#fbf8f3" stroke="#8d6e63" stroke-width="2.5"/>
+    <polygon points="186,20 400,-26 614,20" fill="#9e2a2b" stroke="#ffd166" stroke-width="2"/>
+    <circle cx="400" cy="-1" r="15" fill="url(#nptuSun)"/>
+
+    <!-- Upper Floor Windows -->
+    <g fill="#1d4e68">
+      <rect x="232" y="46" width="46" height="34" rx="3"/>
+      <rect x="298" y="46" width="46" height="34" rx="3"/>
+      <rect x="377" y="46" width="46" height="34" rx="3"/>
+      <rect x="456" y="46" width="46" height="34" rx="3"/>
+      <rect x="522" y="46" width="46" height="34" rx="3"/>
+
+      <rect x="232" y="96" width="46" height="34" rx="3"/>
+      <rect x="298" y="96" width="46" height="34" rx="3"/>
+      <rect x="377" y="96" width="46" height="34" rx="3"/>
+      <rect x="456" y="96" width="46" height="34" rx="3"/>
+      <rect x="522" y="96" width="46" height="34" rx="3"/>
+    </g>
+
+    <!-- Grand Entrance Arches -->
+    <path d="M240 240 L240 172 A26 26 0 0 1 292 172 L292 240 Z" fill="#143647"/>
+    <path d="M318 240 L318 166 A32 32 0 0 1 382 166 L382 240 Z" fill="#143647"/>
+    <path d="M418 240 L418 166 A32 32 0 0 1 482 166 L482 240 Z" fill="#143647"/>
+    <path d="M508 240 L508 172 A26 26 0 0 1 560 172 L560 240 Z" fill="#143647"/>
+
+    <!-- Right Wing -->
+    <rect x="590" y="65" width="210" height="175" rx="4" fill="#f4efe6" stroke="#8d6e63" stroke-width="2"/>
+    <rect x="584" y="52" width="222" height="15" rx="2" fill="#9e2a2b"/>
+    <g fill="#1d4e68" opacity="0.88">
+      <rect x="610" y="86" width="24" height="24" rx="2"/>
+      <rect x="646" y="86" width="34" height="24" rx="2"/>
+      <rect x="694" y="86" width="34" height="24" rx="2"/>
+      <rect x="742" y="86" width="34" height="24" rx="2"/>
+      <rect x="610" y="124" width="24" height="24" rx="2"/>
+      <rect x="646" y="124" width="34" height="24" rx="2"/>
+      <rect x="694" y="124" width="34" height="24" rx="2"/>
+      <rect x="742" y="124" width="34" height="24" rx="2"/>
+      <rect x="610" y="162" width="24" height="24" rx="2"/>
+      <rect x="646" y="162" width="34" height="24" rx="2"/>
+      <rect x="694" y="162" width="34" height="24" rx="2"/>
+      <rect x="742" y="162" width="34" height="24" rx="2"/>
+    </g>
+  </g>
+
+  <!-- Tropical Royal Palms Boulevard & Campus Lawn -->
+  <rect x="0" y="440" width="1200" height="190" fill="url(#nptuLawn)"/>
+  <path d="M 480 440 L 600 630 L 720 630 L 640 440 Z" fill="#e9d8a6" opacity="0.78"/>
+  <text x="600" y="592" text-anchor="middle" font-family="'Noto Sans TC', 'Microsoft JhengHei', sans-serif" font-size="26" font-weight="700" fill="#ffffff" letter-spacing="3">國立屏東大學 National Pingtung University</text>
+</svg>
