@@ -1,0 +1,33 @@
+2026-11-06 Asia/Taipei — actual final checks
+Base: origin/main 18622eec20364822f10674b8b1d84ff1a0b5fc7e
+Runtime: /workspace/abroad/.venv/bin/python
+
+EDITORIAL GATE
+PYTHONPATH=src python scripts/check_editorial.py --base-ref origin/main
+Exit 0; ok=true; 37 articles; errors=[]
+Output: seo-editorial-checks-2026-11-06.json
+
+SEO UNIT / INTEGRATION / RELEASE GATE
+EXCHANGE_INFO_DATA_DIR=<task-cache>/unit-import-data PYTHONPATH=src python -m pytest -q tests/test_seo_articles.py tests/test_seo.py tests/test_seo_content.py tests/test_seo_quality.py tests/test_seo_reporting.py tests/test_editorial_release_gate.py
+CONFTEST LOADED!
+........................................................................ [ 47%]
+........................................................................ [ 94%]
+.........                                                                [100%]
+153 passed in 115.48s (0:01:55)
+
+BROWSER E2E
+EXCHANGE_INFO_DATA_DIR=<task-cache>/e2e-import-data PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium PYTHONPATH=src python -m pytest -q tests/e2e/test_seo_articles.py tests/e2e/test_seo_pages.py tests/e2e/test_seo_analytics.py
+CONFTEST LOADED!
+...............................................                          [100%]
+47 passed in 222.12s (0:03:42)
+
+READING PREVIEW
+Task-local qa.py preview; real create_app; isolated data; Chromium, JavaScript disabled.
+Two articles x 320/390/1440 px: six passed; all main exercise/answer/transfer/diagram/photo screenshots visually inspected.
+Output: seo-editorial-browser-2026-11-06.json
+
+PACKAGE
+uv build --wheel --out-dir <task-cache>/wheel
+Build successful. qa.py package checks 37 JSON, 27 unique WebP, CSS/renderer/init, 67 byte matches.
+Checkout-external import loaded 37 articles including both new slugs.
+Output: seo-editorial-package-2026-11-06.json
