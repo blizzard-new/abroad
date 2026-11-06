@@ -11,11 +11,27 @@ Instagram API with Instagram Login: https://developers.facebook.com/docs/instagr
 from __future__ import annotations
 
 import time
+from datetime import datetime, timedelta, timezone
 
 from .base import Client, PlatformError
 
 THREADS_API = "https://graph.threads.net/v1.0"
 THREADS_ROOT = "https://graph.threads.net"
+
+
+def _squash(text: str | None) -> str:
+    """Whitespace-insensitive form of a post's text, for matching what was sent against what Threads lists."""
+    return " ".join((text or "").split())
+
+
+def _parse_time(value: str | None) -> datetime | None:
+    """Threads timestamps look like 2026-11-06T04:30:12+0000."""
+    if not value:
+        return None
+    try:
+        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S%z")
+    except ValueError:
+        return None
 
 
 class ThreadsClient(Client):
@@ -26,15 +42,15 @@ class ThreadsClient(Client):
         self.user_id = user_id or "{THREADS_USER_ID}"
         self.token = token
 
-    def _call(self, method: str, path: str, fake=None, **params):
-        response = self.request(method, f"{THREADS_API}/{path}", params={**params, "access_token": self.token}, fake=fake)
+    def _call(self, method: str, path: str, fake=None, retry: bool = False, **params):
+        response = self.request(method, f"{THREADS_API}/{path}", params={**params, "access_token": self.token}, fake=fake, retry=retry)
         return fake if self.dry_run else response.json()
 
     def _wait(self, container_id: str, attempts: int = 20) -> None:
         if self.dry_run:
             return
         for _ in range(attempts):
-            status = self._call("GET", container_id, fields="status,error_message")
+            status = self._call("GET", container_id, retry=True, fields="status,error_message")
             if status.get("status") in (None, "FINISHED"):
                 return
             if status.get("status") in {"ERROR", "EXPIRED"}:
@@ -48,15 +64,17 @@ class ThreadsClient(Client):
             params["topic_tag"] = topic_tag
         if reply_to_id:
             params["reply_to_id"] = reply_to_id
-        container = self._call("POST", f"{self.user_id}/threads", fake={"id": self.fake_id("container")}, **params)
-        return self._publish(container["id"])
+        # Making a container publishes nothing, so a temporary failure here can simply be tried again.
+        container = self._call("POST", f"{self.user_id}/threads", fake={"id": self.fake_id("container")}, retry=True, **params)
+        return self._publish(container["id"], text=text, reply_to_id=reply_to_id)
 
     def post_carousel(self, image_urls: list[str], text: str, *, topic_tag: str = "") -> dict:
         """One post with several pictures that swipe: a container per picture, then one carousel container that holds them."""
         if not 2 <= len(image_urls) <= 20:
             raise PlatformError("Threads 輪播需要 2～20 張圖")
         children = [
-            self._call("POST", f"{self.user_id}/threads", fake={"id": self.fake_id("child")}, media_type="IMAGE", image_url=url, is_carousel_item="true")["id"]
+            self._call("POST", f"{self.user_id}/threads", fake={"id": self.fake_id("child")}, retry=True,
+                       media_type="IMAGE", image_url=url, is_carousel_item="true")["id"]
             for url in image_urls
         ]
         for child in children:
@@ -64,15 +82,58 @@ class ThreadsClient(Client):
         params = {"media_type": "CAROUSEL", "children": ",".join(children), "text": text}
         if topic_tag:
             params["topic_tag"] = topic_tag
-        container = self._call("POST", f"{self.user_id}/threads", fake={"id": self.fake_id("container")}, **params)
-        return self._publish(container["id"])
+        container = self._call("POST", f"{self.user_id}/threads", fake={"id": self.fake_id("container")}, retry=True, **params)
+        return self._publish(container["id"], text=text)
 
-    def _publish(self, container_id: str) -> dict:
+    def _publish(self, container_id: str, *, text: str = "", reply_to_id: str = "") -> dict:
+        """Publish a ready container.
+
+        A temporary failure here can be a lost answer: Meta may answer 500 (or time out) after the post is already live.
+        Reporting that as a failure would hide a real post, and repeating the publish blindly could post it twice. So after
+        a temporary failure the account is looked at first; only a post that is not there is published again.
+        """
         self._wait(container_id)
-        published = self._call("POST", f"{self.user_id}/threads_publish", fake={"id": self.fake_id("thread")}, creation_id=container_id)
+        started = datetime.now(timezone.utc)
+        waits = self.retry_waits or (0.0,)
+        published, last_error = None, None
+        for attempt in range(len(waits) + 1):
+            try:
+                published = self._call("POST", f"{self.user_id}/threads_publish", fake={"id": self.fake_id("thread")}, creation_id=container_id)
+                break
+            except PlatformError as error:
+                if not error.transient:
+                    raise
+                last_error = error
+                self._pause(waits[min(attempt, len(waits) - 1)])
+                found = self._already_posted(text, reply_to_id, started)
+                if found:
+                    self.log(f"Threads 回了暫時性錯誤，但貼文其實已經發出去了（{found['id']}）")
+                    return found
+        if published is None:
+            raise last_error
         media_id = published["id"]
-        link = self._call("GET", media_id, fake={"permalink": ""}, fields="permalink")
+        link = self._call("GET", media_id, fake={"permalink": ""}, retry=True, fields="permalink")
         return {"id": media_id, "url": link.get("permalink", "")}
+
+    def _already_posted(self, text: str, reply_to_id: str, since: datetime) -> dict | None:
+        """The account's own recent post (or reply) with exactly this text, made since `since`; None when there is none or
+        the account cannot be read right now."""
+        wanted = _squash(text)
+        if not wanted or self.dry_run:
+            return None
+        path = f"{self.user_id}/replies" if reply_to_id else f"{self.user_id}/threads"
+        try:
+            data = self._call("GET", path, fields="id,text,permalink,timestamp", limit=25)
+        except PlatformError:
+            return None
+        for item in data.get("data", []):
+            if _squash(item.get("text")) != wanted:
+                continue
+            made = _parse_time(item.get("timestamp"))
+            if made is not None and made < since - timedelta(minutes=5):
+                continue  # the same words posted earlier are not this post
+            return {"id": str(item.get("id", "")), "url": item.get("permalink", "")}
+        return None
 
     def username(self) -> str:
         return self._call("GET", self.user_id, fake={"username": ""}, fields="username").get("username", "")
