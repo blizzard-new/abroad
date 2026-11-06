@@ -2272,7 +2272,216 @@ NUTN = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN)
+NIU = UniversityProfile(
+    id="niu",
+    school_name="國立宜蘭大學",
+    short_name="宜大",
+    english_name="National Ilan University",
+    aliases=(
+        "niu",
+        "國立宜蘭大學",
+        "宜蘭大學",
+        "宜大",
+        "國立宜蘭技術學院",
+        "國立宜蘭農工專科學校",
+        "宜蘭農專",
+        "宜蘭農校",
+        "NIU",
+        "National Ilan University",
+    ),
+    hero_image="/static/assets/niu-campus.svg",
+    official_url="https://oia.niu.edu.tw/p/404-1014-9618.php",
+    coverage_note="完整支援：已整合國立宜蘭大學國際事務處（OIA，行政大樓 5 樓）《學生赴境外研習暨交換申請資訊簡章》、《美國密西根大學迪爾伯恩分校 UM-Dearborn 3+2／1+1 雙聯學位專頁》、《學生境外學習手冊（Students Go Global Guidebook）》、《四大洲及大陸地區締約姊妹校名錄（97校）》、《國立宜蘭大學學生赴境外研修甄選作業要點》、《國立宜蘭大學與境外大學辦理雙聯學制實施辦法》、《國立宜蘭大學學生赴境外研修獎補助要點》、《國立宜蘭大學學海系列方案甄選及補助要點》與《國立宜蘭大學學生參與國際性活動獎補助要點》官方資料：（1）兩梯次校內甄選、大學部全班前 60%／研究生 75 分門檻與每學期 4 學分或 2 門課規定：每年分兩梯次（秋季班 2 月初至 3 月底、春季班 9 月初至 10 月底）受理次學期赴境外（含大陸）交換甄選，限具本校學籍之日間學制學生（非中華民國籍學生不得交換至原屬國家），大學部前一學期學業成績須為全班前 60%、研究生學業成績平均達 75 分以上，且前一學期操行成績達 75 分以上無重大違紀事件；外語能力依各姊妹校規定（英語組 TOEIC 500–785 / IELTS 5.0–6.0 / TOEFL iBT 70–80、日語組 JLPT N5–N1、韓語組 TOPIK 3 級、大陸地區免外語檢定）；交換期間繳交宜大學雜費、免繳姊妹校學雜費，每學期至少修讀 4 學分或 2 門課程，抵達姊妹校 14 天內回報國外聯絡方式，返國後 1 個月內繳交至少 3 頁中文心得報告電子檔並配合經驗分享會及接待來校交換生。（2）全球 19 國／地區 97 所合作姊妹校與 9 校跨國雙聯學位：完整收錄 84 所常態開放申請之交換、雙聯與自費研修合作校及 13 所正式締約姊妹校，涵蓋美國密西根大學迪爾伯恩分校（UM-Dearborn 3+2 學碩／1+1 雙碩士，GPA 3.0、iBT 80–84 / IELTS 6.5，享本州生 1.2 倍學費減免）、美國伊利諾大學香檳分校（UIUC 環工／化材雙聯）、加拿大英屬哥倫比亞大學（UBC 森資系 2+2 雙學士）、瑞士 SHMS 瑞士酒店管理大學與 César Ritz 凱撒里茲酒店管理大學（休健系 3+1／2+1+1／3+2 雙聯含 4–6 個月有薪實習）、印尼日惹大學（UGM 雙聯）與阿瑪加雅大學（UAJY 建研所 1+1 雙碩士）、越南胡志明市理工大學（HCMUT 化工雙聯）及大陸福州大學（經管學院 1+1 雙碩士）等 9 校雙聯學位。（3）四大獎助學金體系與返國心得：涵蓋教育部《學海飛颺／學海惜珠》（大學部前 40%、研究生 80 分以上，補助 NT$50,000–450,000）、《學海築夢／新南向學海築夢》、《校內學生赴境外研修獎補助》（歐美非最高 NT$30,000、紐澳 NT$25,000、亞洲 NT$15,000、大陸港澳 NT$10,000，另加重點學校獎助 NT$3,000–5,000 與語文成績獎助最高 NT$4,000）及《參與國際性活動獎補助》，並收錄 22 所合作大學共 38 篇歷屆學長姐出國交換與雙聯學位心得分享紀錄。",
+    support_level="full",
+    partner_count_hint=97,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "國立宜蘭大學",
+        "宜蘭大學",
+        "宜大",
+        "NATIONALILANUNIVERSITY",
+        "NATIONAL ILAN UNIVERSITY",
+        "NIU",
+    ),
+    # https://www.niu.edu.tw/p/412-1000-84.php?Lang=zh-tw — checked 2026-11-05.
+    colleges=(
+        "人文及管理學院",
+        "工學院",
+        "生物資源學院",
+        "電機資訊學院",
+        "博雅學部",
+    ),
+)
+
+
+NPTU = UniversityProfile(
+    id="nptu",
+    school_name="國立屏東大學",
+    short_name="屏大",
+    english_name="National Pingtung University",
+    aliases=(
+        "nptu",
+        "國立屏東大學",
+        "屏東大學",
+        "屏大",
+        "國立屏東教育大學",
+        "屏東教育大學",
+        "屏教大",
+        "國立屏東商業技術學院",
+        "屏東商業技術學院",
+        "屏商技",
+        "屏商",
+        "屏師",
+        "NPTU",
+        "National Pingtung University",
+    ),
+    hero_image="/static/assets/nptu-campus.svg",
+    official_url="https://ccd.nptu.edu.tw/p/412-1091-12234.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立屏東大學國際事務處（OIA，下設國際合作組與大陸事務組）《115年出國交換甄選簡章》、《116學年度出國交換／實習三校區說明會公告（2026/12/08–12/10，報名至 11/30 17:00）》、《115年第1次教育部學海築夢及新南向學海築夢甄選簡章》、《跨國雙聯學位專區（英、美、捷、日、泰 7 校）》、《學生出國有關學業及學籍處理要點（114.03.27修正）》、《與境外大學校院辦理雙聯學制實施辦法（114.05.22修正）》、《學生抵免學分要點（115.10.22修正）》、《與外國學制學分轉換準則》、《學海計畫學生生活費核銷支給數額標準表》及《出國交換學生心得分享專區（20校61篇）》官方資料：（1）四大推薦計畫、語檢門檻與雙軌送件：每年 12 月舉辦三校區說明會、1–2 月收件、2 月下旬 17:00 截止、3 月初面試，分為【教育部學海飛颺】（本國籍就讀滿一學期一般生、歷年成績班排前 50% 內、操行平均 80 分以上且無申誡以上處分）、【教育部學海惜珠】（同飛颺條件並具低收／中低收／特殊境遇／身障等資格）、【本校「菁英育才」補助（校友捐款）】（無班排前 50% 限制，惟「每學期」操行皆須達 80 分以上，補助生活費每月 NT$10,000 最高 5 個月＋機票費最高 NT$30,000，合計最高 NT$80,000）及【自費交換】（含在職生與進修生）；非日語組須達 CEFR B1（TOEIC 550 / TOEFL iBT 42 / ITP 460 / IELTS 4.0 / GEPT 中級初試），日語組須達 JLPT N2（校內甄選時得先以非日語 B1＋師長簽署《日本語力評價表》替代）；至多填寫 5 所志願學校，紙本送交屏商行政大樓 3F 國際合作組並將合併 PDF 寄至 vida2022@mail.nptu.edu.tw；交換期間於屏大完成註冊且大學部每學期至少修 1 門課（姬路獨協大學須修 7 門課以上），返國次學期期末考前一次辦理學分抵免（1 NPTU＝2 ECTS＝4 CATS＝4 澳洲學分）。（2）全球 24 國／地區 172 所合作姊妹校與 7 校跨國雙聯學位：完整收錄 41 所常態開放申請之交換與雙聯合作校（含日本宮崎大學、弘前大學、大阪教育大學、兵庫教育大學、室蘭工業大學、和歌山大學、鹿兒島大學、香川大學、山形大學、信州大學等 10 所日本國立大學與麗澤、姬路獨協、廣島修道、山陽學園、日本經濟大學，捷克 UHK 10 名、TBU、TUL、CTU，德國 ASH Berlin，義大利帕維亞大學，韓國外國語大學 HUFS，馬來亞大學 UM，以及泰國程逸皇家大學等 4 校「免學費＋免住宿費」優惠）及英國密德薩斯大學（3+1／1+1）、美國北阿拉巴馬大學（3+1／2+2／1+1）、美國西來大學（2+2／1+1）、捷克 UHK（1+1）、捷克 TBU（1+1）、泰國宋卡王子大學（2+2）、泰國蒙庫國王科技大學 KMUTT（1+1）等 7 校雙聯學位。（3）返國心得：完整收錄 20 所合作大學共 61 篇歷屆學長姐出國交換與海外研修心得報告。",
+    support_level="full",
+    partner_count_hint=172,
+    academic_score_minimum=60.0,
+    student_card_signals=(
+        "國立屏東大學",
+        "屏東大學",
+        "NATIONALPINGTUNGUNIVERSITY",
+        "NATIONAL PINGTUNG UNIVERSITY",
+        "NPTU",
+    ),
+    # https://www.nptu.edu.tw/p/412-1000-2972.php?Lang=zh-tw — checked 2026-11-05.
+    colleges=(
+        "管理學院",
+        "資訊學院",
+        "教育學院",
+        "人文社會學院",
+        "理學院",
+        "國際學院",
+        "大武山學院",
+    ),
+)
+
+
+NPU = UniversityProfile(
+    id="npu",
+    school_name="國立澎湖科技大學",
+    short_name="澎科大",
+    english_name="National Penghu University of Science and Technology",
+    aliases=(
+        "npu",
+        "國立澎湖科技大學",
+        "澎湖科技大學",
+        "澎科大",
+        "澎湖科大",
+        "NPU",
+        "National Penghu University of Science and Technology",
+    ),
+    hero_image="/static/assets/npu-campus.svg",
+    official_url="https://www.npu.edu.tw/content.aspx?id=273",
+    coverage_note="完整支援：已整合國立澎湖科技大學研究發展處國際事務組（ORD International Affairs Section）《交換學生赴國外（含大陸地區）姊妹校就讀選薦辦法（108.09.19修正通過）》、《辦理教育部鼓勵大專校院選送學生出國研修（學海飛颺、學海惜珠）審查要點（115.03.25通過）》、《辦理教育部鼓勵大專校院選送學生國外專業實習（學海築夢、新南向學海築夢）審查要點（115.03.25通過）》、《獎助學生境外研修及參訪辦法（108.12.19修正通過）》、《辦理雙聯學制實施辦法（104.11.30教育部備查）》、《國際合作姊妹校一覽表》、《與本校簽訂學生交流協議書清冊》及各姊妹校交換入學簡章官方資料：（1）兩梯次校內選薦、40%/40%/20% 量化評分與系務會議課程認可規定：每年分秋季班（3月1日至3月31日校內收件，5月15日／5月30日前向姊妹校完成提名）與春季班（9月1日至9月30日校內收件，11月15日／11月30日前向姊妹校完成提名）辦理出國交換甄選，並於每年 2–3 月辦理教育部學海系列計畫校內甄選；限已就讀本校一學期以上且非當學期畢業之在學學生（含四技、二技、五專部專四及專五、碩士班，不含國內及境外在職專班生），擬進修課程須先檢附所屬系所課程委員會或系務會議同意之會議紀錄；由研發長召集教務長及各學院委員組成「學術合作審查小組」，依「在校成績 40%、語文能力 40%、讀書計畫 20%」評分，總分達 70 分（含）以上始得由校長名義寄發推薦函；外語能力須符合交換學校或本校自訂標準（英文 TOEIC 550 / IELTS 4.0 / TOEFL ITP 457 / iBT 42，日文 JLPT N4 / J.TEST E 級；學海築夢實習為 TOEIC 400 / GEPT 中級 / JLPT N4 且操行平均 80 分以上；大陸地區交換免附外語能力證明）。（2）全球與大陸 12 國／地區 37 所高等教育合作姊妹校與 3 校跨國雙聯學位：完整收錄 18 所簽署學生交流協議與雙聯學位之常態開放申請學校（日本國立琉球大學、馬來西亞拉曼大學 UTAR、越南峴港大學、越南孫德勝大學、泰國湄州大學、泰國朱拉隆功大學、菲律賓甲米地州立大學、美國匹茲堡州立大學，以及大陸中國海洋大學、上海海洋大學、浙江海洋大學、集美大學、汕頭大學、龍岩學院、浙江越秀外國語學院、黎明職業大學、廣州航海學院、深圳職業技術大學）與 19 所學術合作備忘錄（MOU）姊妹校（含日本長崎大學、菲律賓大學系統、印尼亞齊大學、瑞士教育集團 SEG、馬紹爾群島學院、貝里斯大學等），並提供美國匹茲堡州立大學（2+2 雙學士）、越南孫德勝大學（觀休、海運雙聯學士）及泰國湄州大學（雙聯學位）跨國雙聯通道（學士累計修業滿 32 個月、碩士滿 12 個月）。（3）獎助學金與研修指南：涵蓋教育部《學海飛颺／學海惜珠》（每人平均獎助 NT$ 50,000–300,000，含本校 20% 配合款）、《學海築夢／新南向學海築夢》、校內《獎助學生境外研修及參訪辦法》（每人補助 NT$ 5,000–15,000）及 13 所合作大學共 13 篇海外研修指南與交流紀錄。",
+    support_level="full",
+    partner_count_hint=37,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "國立澎湖科技大學",
+        "澎湖科技大學",
+        "澎科大",
+        "NATIONALPENGHUUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "NATIONAL PENGHU UNIVERSITY OF SCIENCE AND TECHNOLOGY",
+        "NPU",
+    ),
+    # https://www.npu.edu.tw/submenu.aspx?id=149 — checked 2026-11-06.
+    colleges=(
+        "海洋資源暨工程學院",
+        "觀光休閒學院",
+        "人文暨管理學院",
+        "博雅教育學院",
+    ),
+)
+
+
+NTUNHS = UniversityProfile(
+    id="ntunhs",
+    school_name="國立臺北護理健康大學",
+    short_name="國北護",
+    english_name="National Taipei University of Nursing and Health Sciences",
+    aliases=(
+        "ntunhs",
+        "國立臺北護理健康大學",
+        "國立台北護理健康大學",
+        "臺北護理健康大學",
+        "台北護理健康大學",
+        "國北護",
+        "北護",
+        "北護大",
+        "國立臺北護理學院",
+        "NTUNHS",
+        "National Taipei University of Nursing and Health Sciences",
+    ),
+    hero_image="/static/assets/ntunhs-campus.svg",
+    official_url="https://icsed-rnd.ntunhs.edu.tw/",
+    coverage_note="完整支援：已整合國立臺北護理健康大學研究發展處國際暨兩岸教育中心《雙聯學制專區（英美澳6校9學程）》、《海外長短期交換專區》、《教育部學海飛颺／惜珠／築夢專區》、《五大洲締約姊妹校名錄（84校）》、《學生出國期間有關學業及學籍處理要點（112.11.01修正）》、《學生抵免學分處理辦法（115.06.24修正）》及《歷屆雙聯、交換與海外實習心得報告（24校33篇）》官方資料：（1）校內甄選資格、臨床實習同意與在學註冊規定：限日間部四技（2～4年級）、二技、學士後護理系、碩士班及博士班在學學生（不含在職專班），在校歷年平均達 GPA 2.0（百分制 70 分）以上，申請教育部學海飛颺／惜珠獎學金以班排前 50% 及操行 80 分以上無懲戒紀錄優先；因考量各系專業必修與醫院臨床實習排程，交換生及雙聯生皆須經所屬系所同意始得出國，出國進修以二年為限且交換期間須維持北護在學註冊學籍（不得休學）；校內甄選採書面審查（40%–60%，曾任國際學伴 International Buddy 者加分）與中英文面試（40%–60%）。（2）全球 21 國／地區 84 所合作姊妹校與英美澳 6 校 9 學程雙聯學位：完整收錄 37 所常態開放雙聯、長短期交換與海外實習合作校及 47 所五大洲締約姊妹校，涵蓋澳洲昆士蘭大學 UQ（護理雙學士／護理碩士／聽力學碩士／社工碩士雙聯，IELTS 7.0）、美國奧本大學 Auburn（護理 MSN 碩士暨 PhD 博士雙聯，IELTS 6.5）、英國西英格蘭大學 UWE（護理雙學士 IELTS 6.5、資管 3+1 雙學士 IELTS 6.0）、澳洲昆士蘭科技大學 QUT（資管 2+2 雙學士 IELTS 6.5）、澳洲迪肯大學 Deakin（健管 3.5+1.5 MBA 醫療管理雙聯 IELTS 6.5）及澳洲墨爾本威廉安格利斯學院 WAI（休健航空空服／旅遊管理雙聯 IELTS 6.0），以及捷克奧斯特拉瓦大學醫學院、立陶宛 KVK、日本名古屋市立大學、縣立廣島大學、東京都立大學 HIIP（免費荒川校區宿舍）、紐西蘭梅西大學、韓國大邱保健大學（免費雙人房宿舍）等。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／惜珠／築夢／新南向學海築夢》及 24 所合作大學共 33 篇歷屆學長姐心得報告。",
+    support_level="full",
+    partner_count_hint=84,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "國立臺北護理健康大學",
+        "國立台北護理健康大學",
+        "國北護",
+        "NATIONALTAIPEIUNIVERSITYOFNURSINGANDHEALTHSCIENCES",
+        "NATIONAL TAIPEI UNIVERSITY OF NURSING AND HEALTH SCIENCES",
+        "NTUNHS",
+    ),
+    # https://www.ntunhs.edu.tw/ — checked 2026-11-06.
+    colleges=(
+        "護理學院",
+        "健康科技學院",
+        "人類發展與健康學院",
+        "智慧健康照護跨領域學院",
+    ),
+)
+
+
+NTTU = UniversityProfile(
+    id="nttu",
+    school_name="國立臺東大學",
+    short_name="東大",
+    english_name="National Taitung University",
+    aliases=(
+        "nttu",
+        "國立臺東大學",
+        "國立台東大學",
+        "臺東大學",
+        "台東大學",
+        "東大",
+        "NTTU",
+        "National Taitung University",
+    ),
+    hero_image="/static/assets/nttu-campus.svg",
+    official_url="https://rd.nttu.edu.tw/p/412-1007-9902.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立臺東大學研究發展處國際事務中心（COIA）《2025–2027 赴境外姊妹校交換生暨雙聯學位甄選簡章與名額一覽表》、《國際暨大陸地區締約姊妹校名錄（59校）》、《辦理學生申請出國進修或交換作業要點》、《學生出國進修獎助學金要點（含附件一 CEFR B1/B2 語言基準表）》、《與境外大學校院辦理雙聯學制實施辦法》、《學生出國期間有關學業及學籍處理辦法》、《學生抵免學分要點》及《出國交換生暨學海築夢心得分享專區（12校58篇）》官方資料：（1）校內甄選時程、在學資格與評分權重：每學期分兩梯次（春季班於前一年 9 月中旬截止，如 2027 春季班於 2026/09/15 中午 12:00 截止、10/15 放榜；秋季班於當年 3 月中旬截止，如 2026 秋季班於 2026/03/20 中午 12:00 截止）受理報名，限本校二年級（含）以上之在學學位生（含學士班大二至大四、碩士班、博士班；不含大一新生、當學期畢業生、延畢生及在職專班學生；大四申請交換以一學期為限），採「書面資料審查 50%＋面試（含外語口試）50%」擇優錄取。（2）全球 15 國／地區 59 所合作姊妹校與日本 2 校跨國雙聯學士學位：完整收錄 15 所當期開放申請之國際與大陸重點交換及雙聯姊妹校（含美國加州西來大學［每期 15 名，至多 12 學分學費半價減免］、日本仙台大學［交換 4–6 名＋2.5+2 雙聯學士 2 名］、日本琵琶湖成蹊體育運動大學［春季班 1.5+2+1 雙聯學士 1 名］、日本天理大學［1 名，免學費、免宿舍費且免水電瓦斯費！］、韓國國立順天大學［2–4 名，免韓檢］、韓國高神大學［1–2 名，免韓檢］、韓國釜山教育大學［3 名，TOPIK 2 級］、捷克茲林托馬斯巴塔大學［5 名，CEFR B2，保證提供低廉宿舍］，以及大陸華東師範大學、蘭州大學、華中師範大學、西南大學、東北師範大學、中央民族大學、鄭州大學等 7 所 985/211 重點名校）及 44 所正式締約姊妹校。（3）最高 30 萬元出國進修獎助學金與教育部學海計畫：涵蓋校內《學生出國進修獎助學金》（攻讀雙聯學位或交換生每人每年最高補助 NT$300,000、短期修讀學分最高 NT$80,000、短期語言進修最高 NT$20,000；學士班須各學期班排前 50% 且具 CEFR B1 外語證明，碩博士班須系所推薦且具 CEFR B2 外語證明）、教育部《學海飛颺》、《學海惜珠》、《學海築夢／新南向學海築夢》及 12 所合作大學共 58 篇歷屆學長姐交換、雙聯與海外實習心得報告。",
+    support_level="full",
+    partner_count_hint=59,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "國立臺東大學",
+        "國立台東大學",
+        "臺東大學",
+        "台東大學",
+        "NATIONALTAITUNGUNIVERSITY",
+        "NATIONAL TAITUNG UNIVERSITY",
+        "NTTU",
+    ),
+    # https://www.nttu.edu.tw/p/412-1000-1495.php?Lang=zh-tw — checked 2026-11-06.
+    colleges=(
+        "人文學院",
+        "師範學院",
+        "理工學院",
+        "跨領域學位學程",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU)
 DEFAULT_UNIVERSITY = CGU
 
 
