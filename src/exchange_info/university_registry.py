@@ -2226,7 +2226,45 @@ KNU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU)
+NPU = UniversityProfile(
+    id="npu",
+    school_name="國立澎湖科技大學",
+    short_name="澎科大",
+    english_name="National Penghu University of Science and Technology",
+    aliases=(
+        "npu",
+        "國立澎湖科技大學",
+        "澎湖科技大學",
+        "澎科大",
+        "澎湖科大",
+        "NPU",
+        "National Penghu University of Science and Technology",
+    ),
+    hero_image="/static/assets/npu-campus.svg",
+    official_url="https://www.npu.edu.tw/content.aspx?id=273",
+    coverage_note="完整支援：已整合國立澎湖科技大學研究發展處國際事務組（ORD International Affairs Section）《交換學生赴國外（含大陸地區）姊妹校就讀選薦辦法（108.09.19修正通過）》、《辦理教育部鼓勵大專校院選送學生出國研修（學海飛颺、學海惜珠）審查要點（115.03.25通過）》、《辦理教育部鼓勵大專校院選送學生國外專業實習（學海築夢、新南向學海築夢）審查要點（115.03.25通過）》、《獎助學生境外研修及參訪辦法（108.12.19修正通過）》、《辦理雙聯學制實施辦法（104.11.30教育部備查）》、《國際合作姊妹校一覽表》、《與本校簽訂學生交流協議書清冊》及各姊妹校交換入學簡章官方資料：（1）兩梯次校內選薦、40%/40%/20% 量化評分與系務會議課程認可規定：每年分秋季班（3月1日至3月31日校內收件，5月15日／5月30日前向姊妹校完成提名）與春季班（9月1日至9月30日校內收件，11月15日／11月30日前向姊妹校完成提名）辦理出國交換甄選，並於每年 2–3 月辦理教育部學海系列計畫校內甄選；限已就讀本校一學期以上且非當學期畢業之在學學生（含四技、二技、五專部專四及專五、碩士班，不含國內及境外在職專班生），擬進修課程須先檢附所屬系所課程委員會或系務會議同意之會議紀錄；由研發長召集教務長及各學院委員組成「學術合作審查小組」，依「在校成績 40%、語文能力 40%、讀書計畫 20%」評分，總分達 70 分（含）以上始得由校長名義寄發推薦函；外語能力須符合交換學校或本校自訂標準（英文 TOEIC 550 / IELTS 4.0 / TOEFL ITP 457 / iBT 42，日文 JLPT N4 / J.TEST E 級；學海築夢實習為 TOEIC 400 / GEPT 中級 / JLPT N4 且操行平均 80 分以上；大陸地區交換免附外語能力證明）。（2）全球與大陸 12 國／地區 37 所高等教育合作姊妹校與 3 校跨國雙聯學位：完整收錄 18 所簽署學生交流協議與雙聯學位之常態開放申請學校（日本國立琉球大學、馬來西亞拉曼大學 UTAR、越南峴港大學、越南孫德勝大學、泰國湄州大學、泰國朱拉隆功大學、菲律賓甲米地州立大學、美國匹茲堡州立大學，以及大陸中國海洋大學、上海海洋大學、浙江海洋大學、集美大學、汕頭大學、龍岩學院、浙江越秀外國語學院、黎明職業大學、廣州航海學院、深圳職業技術大學）與 19 所學術合作備忘錄（MOU）姊妹校（含日本長崎大學、菲律賓大學系統、印尼亞齊大學、瑞士教育集團 SEG、馬紹爾群島學院、貝里斯大學等），並提供美國匹茲堡州立大學（2+2 雙學士）、越南孫德勝大學（觀休、海運雙聯學士）及泰國湄州大學（雙聯學位）跨國雙聯通道（學士累計修業滿 32 個月、碩士滿 12 個月）。（3）獎助學金與研修指南：涵蓋教育部《學海飛颺／學海惜珠》（每人平均獎助 NT$ 50,000–300,000，含本校 20% 配合款）、《學海築夢／新南向學海築夢》、校內《獎助學生境外研修及參訪辦法》（每人補助 NT$ 5,000–15,000）及 13 所合作大學共 13 篇海外研修指南與交流紀錄。",
+    support_level="full",
+    partner_count_hint=37,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "國立澎湖科技大學",
+        "澎湖科技大學",
+        "澎科大",
+        "NATIONALPENGHUUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "NATIONAL PENGHU UNIVERSITY OF SCIENCE AND TECHNOLOGY",
+        "NPU",
+    ),
+    # https://www.npu.edu.tw/submenu.aspx?id=149 — checked 2026-11-06.
+    colleges=(
+        "海洋資源暨工程學院",
+        "觀光休閒學院",
+        "人文暨管理學院",
+        "博雅教育學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NPU)
 DEFAULT_UNIVERSITY = CGU
 
 

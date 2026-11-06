@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPU, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -143,6 +143,7 @@ TPCU_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 AU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
 KNU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
+NPU_SOURCE_CHECKED_AT = datetime(2026, 11, 4, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3480,6 +3481,57 @@ def _knu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _npu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立澎湖科技大學（研究發展處國際事務中心，澎湖縣馬公市六合路 300 號 行政大樓，電話 06-9264115 分機 1632）《辦理選送學生赴境外大學交流甄選要點》、《辦理選送學生出國研修獎助學金要點（教育部學海飛颺／學海惜珠／學海築夢）》及《與國外大學校院辦理跨國雙學位制實施辦法》應繳申請表件：1. 選送學生赴境外大學研修申請表、2. 歷年中英文成績單正本（含歷年學業總平均、班級排名百分比及操行成績；須修業滿一學期以上且無小過以上處分，學海飛颺及校內獎助須班排名前 50% 或 GPA 2.75／75 分以上）、3. 有效外語能力檢定證明影本（英語組 TOEIC 500–650 / TOEFL iBT 61–68 / IELTS 5.0–6.0；日語組 JLPT N3–N2；大陸姊妹校免附語檢）、4. 出國研修讀書計畫與自傳（1,000–5,000 字，含擬選修課程與預期成效）、5. 家長（監護人）同意書、6. 教師推薦函及學海惜珠低收／中低收入戶證明。",
+        "study-plan": "撰寫國立澎湖科技大學選送學生赴境外大學交換、跨國雙聯學位（美國匹茲堡州立大學 PSU 2+2 雙學士、越南孫德勝大學 TDTU 觀光休閒系與航運管理系雙聯學士、泰國湄州大學 MJU 雙聯學位）及教育部學海飛颺／惜珠獎助必繳之《出國研修讀書計畫與自傳》（依學海簡章規定 1,000 至 5,000 字）。請具體說明申請動機、個人學經歷背景、於志願姊妹校擬修習之專業或語言課程規劃（交換生每學期至少應選修 2 門或 6 學分以上課程），以及返國後之學分採認與職涯發展目標。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《國立澎湖科技大學學生出境期間有關學業及學籍處理要點》及《與國外大學校院辦理跨國雙學位制實施辦法》規定，出境期間須於澎科大辦理註冊並繳交全額學雜費以保留學籍；交換生於境外大學每學期至少應選修 2 門或 6 學分以上課程，雙聯學士班在兩校修業時間合計至少須滿 32 個月、碩士班至少 12 個月，且於兩校修習學分數各須達畢業應修總學分數三分之一以上）。",
+        "predeparture-notice": "經所屬系（所、院）初審推薦及研究發展處國際事務中心／國際學術交流審議委員會複審錄取公告後，須於規定期限內繳交《錄取資格確認書》、《家長同意書》及《切結書／行政契約書》，配合國際事務中心向境外姊妹校完成提名與入學申請，並於出國前辦妥澎科大註冊、選課、護照簽證、役男出境及海外醫療與意外保險。",
+        "return-report": "境外交換、雙聯研修或學海築夢海外實習期滿返國後，須依《辦理選送學生赴境外大學交流甄選要點》及《辦理選送學生出國研修獎助學金要點》規定，於返國後兩週（14 日）至一個月內向研究發展處國際事務中心提交《出國研修／實習心得報告》（2,000 字以上並附研修與生活照片 4 張以上，並上傳至教育部學海計畫資訊網）、境外姊妹校正式成績單、護照出入境紀錄及登機證正本，始得辦理結案與獎助學金尾款核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《國立澎湖科技大學學生出境期間有關學業及學籍處理要點》及《學生抵免學分辦法》向所屬學系（所）及教務處申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立澎湖科技大學").replace("長庚", "澎科大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立澎湖科技大學規定：申請赴境外大學交換須於本校就讀滿一學期以上且無小過以上處分；申請教育部《學海飛颺／惜珠》或校內出國研修獎助學金者，歷年學業總平均須達班排名前 50%（或 GPA 2.75／百分制 75 分以上）且操行成績達 80 分以上。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語組：TOEIC 多益測驗（馬來西亞拉曼大學／沙巴大學、越南孫德勝大學／峴港大學、泰國湄州大學、菲律賓甲米地州大等 500–550+；瑞士 BHMS 及學海計畫建議 550–650+）",
+                "英語組：TOEFL iBT / ITP（美國匹茲堡州立大學 PSU 2+2 雙學士 iBT 59–68+ / ITP 520+；歐美交換 iBT 61+）",
+                "英語組：IELTS 雅思（瑞士 BHMS 5.0–5.5+、美國匹茲堡州立大學 PSU 雙聯 5.5–6.0+、歐美及東南亞全英授課 5.0–6.0+）",
+                "日語組：JLPT 日語能力試驗（日本國立琉球大學、公立鳥取環境大學、日本文理大學、岡山商科大學、鈴鹿醫療科學大學、沖繩大學等要求 N2 或 N3 以上）",
+                "大陸交換組：上海海洋大學、大連海洋大學、中國海洋大學、廈門理工學院、泉州師範學院等 15 所大陸合作高校（中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依國立澎湖科技大學研究發展處國際事務中心《選送學生赴境外大學交流甄選要點》及教育部學海系列計畫簡章填報有效之語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://www.npu.edu.tw/content/index.aspx?Parser=1,6,174,163",
+        source_checked_at=NPU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立澎湖科技大學選送學生赴境外大學交流申請表（含家長同意書、讀書計畫、自傳及推薦函）" if template.id == "exchange-application-data" else ("出國研修讀書計畫與自傳（1,000–5,000字）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://www.npu.edu.tw/content/index.aspx?Parser=1,6,184,163",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師及系（所）主任簽章", "學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經系院初審與國際事務中心複審錄取後繳交確認書、家長同意書與行政契約書，配合辦理姊妹校提名與簽證，並完成澎科大註冊", "return-report": "返國後 14 日至 1 個月內繳交 2,000 字以上出國研修心得報告（含照片）與正式成績單辦理結案與獎助核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分抵免"}.get(template.id, "於校內收件截止前備齊申請表、歷年成績單、語檢證明、讀書計畫與自傳、推薦函及家長同意書送交研究發展處國際事務中心（行政大樓）"),
+        version="115準備工具-2026-11-04.1",
+        destinations=["國立澎湖科技大學研究發展處國際事務中心（880011 澎湖縣馬公市六合路 300 號 行政大樓）"],
+        conditional_note="此為個人準備工具；國立澎湖科技大學赴境外大學交換、跨國雙聯學位及教育部學海系列計畫由所屬系（所、院）初審推薦後送研究發展處國際事務中心複審，出境期間須辦理本校註冊保留學籍且每學期至少選修 2 門或 6 學分以上課程。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3604,6 +3656,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _au_template(template)) is not None]
     if university.id == KNU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _knu_template(template)) is not None]
+    if university.id == NPU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _npu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
