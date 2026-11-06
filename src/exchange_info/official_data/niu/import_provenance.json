@@ -1,0 +1,528 @@
+{
+  "school_id": "niu",
+  "school_name": "國立宜蘭大學",
+  "generated_at": "2026-11-05T00:00:00Z",
+  "active_cycle_note": "國立宜蘭大學國際事務處（OIA）《學生赴境外研習暨交換申請資訊》、《美國密西根大學迪爾伯恩分校 UM-Dearborn 3+2／1+1 雙聯學位專頁》、《學生境外學習手冊（Students Go Global Guidebook）》、《國立宜蘭大學學生赴境外研修甄選作業要點》、《與境外大學辦理雙聯學制實施辦法》、《學生赴境外研修獎補助要點》及《學海系列方案甄選及補助要點》同步整合；共完整收錄 97 所全球與兩岸合作姊妹校（含 82 所常態開放申請交換、雙聯與自費研修學校及 15 所正式締約姊妹校，橫跨 18 個國家與地區，並收錄 23 所合作大學共 43 篇歷屆學長姐交換與雙聯心得報告）。",
+  "sources": [
+    {
+      "file": "sources/niu/niu_catalog_source.json",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9163.php",
+      "title": "國立宜蘭大學 97 所全球與兩岸合作姊妹校整合資料集 JSON",
+      "sha256": "5055e7a462ef070e54e551b74cb96caa1d302d1083e0a59d6e99df64d2c94d20",
+      "bytes": 290623,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/niu_resolved_locations.json",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9163.php",
+      "title": "國立宜蘭大學 97 所合作姊妹校 ROR / Wikidata 地理座標核對表 JSON",
+      "sha256": "ccb7670cf4f84231505e304c53cf7e17f27b3421173e38642c1d9c447b06acd4",
+      "bytes": 34970,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/niu_experience_index.json",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-68131.php",
+      "title": "國立宜蘭大學 43 篇歷屆交換與雙聯心得報告索引 JSON",
+      "sha256": "fcf15bf436429a67c885553e9202bf4b1d1171a8148119a80cc872bfb45f865f",
+      "bytes": 15963,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/niu_home.html",
+      "source_url": "https://www.niu.edu.tw/",
+      "title": "國立宜蘭大學官方原始檔案：niu_home.html",
+      "sha256": "c907aa07c1f401d167abb9dae5c8575e170c0599b385ca583c0bddb1cd449c17",
+      "bytes": 42566,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/niu_academic_units.html",
+      "source_url": "https://www.niu.edu.tw/p/412-1000-84.php?Lang=zh-tw",
+      "title": "國立宜蘭大學官方原始檔案：niu_academic_units.html",
+      "sha256": "d850003d5c11b509cd84284e0aa7b5ddd46e8d484064b59ee0278362457aebd9",
+      "bytes": 28971,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_home.html",
+      "source_url": "https://oia.niu.edu.tw/",
+      "title": "國立宜蘭大學官方原始檔案：oia_home.html",
+      "sha256": "f9941a122e611ae934736df0273612f051baddd25d83039cf7827cc16214fa7d",
+      "bytes": 36014,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sitemap.html",
+      "source_url": "https://oia.niu.edu.tw/p/17-1014.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sitemap.html",
+      "sha256": "4c3593a14d6d22e61ab464f73e84c55c9c0008663f18e2269f84c869c7715b1a",
+      "bytes": 22947,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_about.html",
+      "source_url": "https://oia.niu.edu.tw/p/412-1014-6193.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_about.html",
+      "sha256": "a23d00c3d3b2e1289956fe9001e40fca70d84d346df81416f4ef731169ddc22d",
+      "bytes": 90214,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_staff.html",
+      "source_url": "https://oia.niu.edu.tw/p/412-1014-1830.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_staff.html",
+      "sha256": "e7975d2666da37d47ee9ef353a01a178f164017adea79e0c85d8cecc9678d26b",
+      "bytes": 47519,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_location.html",
+      "source_url": "https://oia.niu.edu.tw/p/412-1014-1789.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_location.html",
+      "sha256": "4b30b211ca71498da2e38bb044f84b79f2af2f9f6c10591f97ac41e2b900aeb1",
+      "bytes": 22034,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_regulations.html",
+      "source_url": "https://oia.niu.edu.tw/p/412-1014-1790.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_regulations.html",
+      "sha256": "73fc3b2a101d6fc254b5f70179dae3db72f89f52f1d329be859bb70e819f8cad",
+      "bytes": 44141,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_downloads.html",
+      "source_url": "https://oia.niu.edu.tw/p/412-1014-1791.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_downloads.html",
+      "sha256": "6251f70dcf30e632ba9f4be5605c170b2cfa45f0460d05df566f596db2fb4b3f",
+      "bytes": 18843,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_outbound_menu_1817.html",
+      "source_url": "https://oia.niu.edu.tw/p/412-1014-1817.php?Lang=zh-tw",
+      "title": "國立宜蘭大學官方原始檔案：oia_outbound_menu_1817.html",
+      "sha256": "be711d0bc9fb030547ff884a7b68569b1d947bfb235c3b656a07dc023b7bbb8a",
+      "bytes": 21141,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_scholarships_menu_5405.html",
+      "source_url": "https://oia.niu.edu.tw/p/412-1014-5405.php?Lang=zh-tw",
+      "title": "國立宜蘭大學官方原始檔案：oia_scholarships_menu_5405.html",
+      "sha256": "3fd73628dd58df031ba9290c9da7ea29c88369e55035450925ff18e6890a13d3",
+      "bytes": 17945,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_outbound_exchange_9618.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9618.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_outbound_exchange_9618.html",
+      "sha256": "b6b642ab4be0e5174f37ca6cfbfbfaa3bb1e186a0fac5362eeb6f6459908f73b",
+      "bytes": 102454,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_umd_dual_degree_9619.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9619.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_umd_dual_degree_9619.html",
+      "sha256": "761ab6795dd4dfc69d1a584cb23d0b56223d85bc9b7b7deab4271392f762fc0d",
+      "bytes": 59589,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_scholarships_9622.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9622.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_scholarships_9622.html",
+      "sha256": "9dd607144ef2856ea6b4215acfb575a18961c0e9e38cad3e53ad6bd9af175830",
+      "bytes": 28439,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_activity_subsidy_5409.html",
+      "source_url": "https://oia.niu.edu.tw/p/412-1014-5409.php?Lang=zh-tw",
+      "title": "國立宜蘭大學官方原始檔案：oia_activity_subsidy_5409.html",
+      "sha256": "b30a0334ca74c7b5ed17028843aeebd3981d3cc524a7c8f146c5fe6c4322c7c3",
+      "bytes": 409937,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sisters_9580.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9580.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sisters_9580.html",
+      "sha256": "a7c507f4056b6196bffe83f466f92fecd5eef1543cd60e735bdf0ba1bef59829",
+      "bytes": 20583,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sisters_overview_9163.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9163.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sisters_overview_9163.html",
+      "sha256": "f4ef18793900b33a05208fa4dae5421ff9dfeeb6de4a4f9887f605bc0c0a7375",
+      "bytes": 20869,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sisters_asia_9222.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9222.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sisters_asia_9222.html",
+      "sha256": "693b0ffbe2932c56eec4d8ea17d4a07bae5106340f6a57274c57528ccb5ec6f8",
+      "bytes": 184732,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sisters_mainland_9223.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9223.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sisters_mainland_9223.html",
+      "sha256": "112e7232d22b6aa1920c7d7fc5e8b557269eaf81b79b391f385b57bf1111cb75",
+      "bytes": 23880,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sisters_europe_9224.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9224.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sisters_europe_9224.html",
+      "sha256": "188b5a43d29f29e6dec4f3a39023a5933cbadac056fcd93bada046e6591e9583",
+      "bytes": 26283,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sisters_americas_9226.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9226.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sisters_americas_9226.html",
+      "sha256": "77e4a1c8973f042f296b45e745cd835fb94e8b0841eca902b425f591ee06ebd9",
+      "bytes": 24139,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_experiences_menu_68131.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-68131.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_experiences_menu_68131.html",
+      "sha256": "deb65a2869ba1e1df5376cb00371ebfa2a0f4f45f05163da8987e8af84785d94",
+      "bytes": 22998,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_experiences_us_68124.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-68124.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_experiences_us_68124.html",
+      "sha256": "dfb1d175d5cfb90c5867c42a2e525a647022bfd42ed012e4e8dbeb1b48e14e0f",
+      "bytes": 21480,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_xuehai_115_69596.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-69596.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_xuehai_115_69596.html",
+      "sha256": "6fccf7ceb8052c98b26f0dbd49f95d8082fa3f5fcde92f59c84d927238d3a433",
+      "bytes": 40366,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_xuehai_zhumeng_115_69628.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-69628.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_xuehai_zhumeng_115_69628.html",
+      "sha256": "83cd8fcaa6ffc4fabf8f78993f69ea2f8a1dd03ed97eac8fcdd74228d7540de2",
+      "bytes": 53527,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_briefing_67401.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-67401.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_briefing_67401.html",
+      "sha256": "860a3a983b9e99f7b79cec08b827ebacb1f797c6b8edfa6af4f3c2cce599979f",
+      "bytes": 29045,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_predeparture_67889.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-67889.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_predeparture_67889.html",
+      "sha256": "6c7d397bc5a2727eb01830d8cba1a2a3ae9f72f094a4f45cd8ecb6dc5b2b18cc",
+      "bytes": 46155,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_67441.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-67441.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_67441.html",
+      "sha256": "b3f47f00f6ff39fe84f647747f082b47f8b5478aa6646d0c42c6685c038a2ee3",
+      "bytes": 38533,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_50929.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-50929.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_50929.html",
+      "sha256": "028096393892a278fc79fe79855d6cc159b5458d2a0d1ceb300369eaeedff0af",
+      "bytes": 26241,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_50906.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-50906.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_50906.html",
+      "sha256": "ce714367656c660709f990fd502e46addee1ff40a542e05bd900fd78b5a14845",
+      "bytes": 33997,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_38406.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-38406.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_38406.html",
+      "sha256": "b2ec513272ad192193e915904d1bcc126860cb309ece2ba93bdf79a7a204e084",
+      "bytes": 32779,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_33665.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-33665.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_33665.html",
+      "sha256": "b7bf1e755f9daa149a22a95d5d939f9a6e8761d5c1f176ef9f1843f5c37b47f6",
+      "bytes": 32732,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_31919.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-31919.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_31919.html",
+      "sha256": "c2b7c129b673b73ec048624d73b1b9683cf7d189f8e6abb7a610345f42cf8eb7",
+      "bytes": 36311,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_28843.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-28843.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_28843.html",
+      "sha256": "3ba235ac2c0834c06709bd3647ecbb4970dc0ca0e685623b147a32e8edaf957c",
+      "bytes": 24171,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_22680.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-22680.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_22680.html",
+      "sha256": "31e1ea74bdccf06824520b69521bdc8584793c9bdc883295b67d776063dc486a",
+      "bytes": 28200,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_20735.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-20735.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_20735.html",
+      "sha256": "5ce7d23d574f01336eb7f3c1f30d2ece361092236c33809985bd661e41540266",
+      "bytes": 31918,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_18448.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-18448.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_18448.html",
+      "sha256": "72c26ff65e543c59d51f9dfada6009146b49902d578bc1244133f26de8d52f12",
+      "bytes": 28404,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_15739.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-15739.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_15739.html",
+      "sha256": "d774216d2e66f9e22dcdc534a085d9a2c12e2eb6c90685282f92fcbc7b66ec6d",
+      "bytes": 25857,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_sharing_12336.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-12336.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_sharing_12336.html",
+      "sha256": "d5226eb30f1547ef7bf89726999115a4ee9f106b86e96d402815b4acd6136635",
+      "bytes": 23857,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_ubc_dual_degree_12082.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-12082.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_ubc_dual_degree_12082.html",
+      "sha256": "cb4c195926cf5f59c514206f233785dc9b9cfa0530ead016ede49cf158142cbe",
+      "bytes": 47730,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_exchange_roster_13358.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-13358.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_exchange_roster_13358.html",
+      "sha256": "4f1649ffd6230427fb3cb622dc9c255492e6ba4edcbd61108824b4cf805e51e9",
+      "bytes": 35767,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_exchange_roster_10769.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-10769.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_exchange_roster_10769.html",
+      "sha256": "3f6730d2f31a29147e5db341ff9fa4a232a4c1178f81bec3d020290bd29aed82",
+      "bytes": 25805,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/html/oia_exchange_roster_9162.html",
+      "source_url": "https://oia.niu.edu.tw/p/404-1014-9162.php",
+      "title": "國立宜蘭大學官方原始檔案：oia_exchange_roster_9162.html",
+      "sha256": "a2f4fd4d2fca0c520ae69890d0b13ee325cc38329cead93ad1a02ba538202801",
+      "bytes": 22127,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/students_go_global_guidebook.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/538245820.pdf",
+      "title": "國立宜蘭大學官方原始檔案：students_go_global_guidebook.pdf",
+      "sha256": "097637bd6c812c525efb61b4ba2cc29896cbaf31f62bd05f7490a9737fd84f1c",
+      "bytes": 1714216,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/degree_and_xuehai_briefing.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/619608383.pdf",
+      "title": "國立宜蘭大學官方原始檔案：degree_and_xuehai_briefing.pdf",
+      "sha256": "6bc88bc4147d18f26557bfe6bd6305792b872a114dbb63bd0b9d4d704ab2a5a0",
+      "bytes": 4796749,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/predeparture_briefing.pptx",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/657023686.pptx",
+      "title": "國立宜蘭大學官方原始檔案：predeparture_briefing.pptx",
+      "sha256": "95eaef6a1fde516ef44d8707bbc6822f4c363274a7cd8afc33be372a3bd26445",
+      "bytes": 1795535,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/reg_exchange_selection_guidelines.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/462/88737351.pdf",
+      "title": "國立宜蘭大學官方原始檔案：reg_exchange_selection_guidelines.pdf",
+      "sha256": "e163d9d58d40b876f669410bf9bbe9ec4cd0c8f5dab95583ca3e6104943379df",
+      "bytes": 83282,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/reg_study_abroad_subsidy_guidelines.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/462/196586951.pdf",
+      "title": "國立宜蘭大學官方原始檔案：reg_study_abroad_subsidy_guidelines.pdf",
+      "sha256": "dc178bde9c19be306af471f927519dc993ff1c215b41cefde5a1689461c1beda",
+      "bytes": 155694,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/reg_xuehai_selection_and_subsidy_guidelines.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/414/896982223.pdf",
+      "title": "國立宜蘭大學官方原始檔案：reg_xuehai_selection_and_subsidy_guidelines.pdf",
+      "sha256": "071e14ecf7adfd141194325a4cbd22a0c0ace8d3a169c05a740fe74a9c2ac646",
+      "bytes": 343470,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/reg_dual_degree_implementation.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/414/692375089.pdf",
+      "title": "國立宜蘭大學官方原始檔案：reg_dual_degree_implementation.pdf",
+      "sha256": "1c5993fa33a8536a2140535108bbe5fe9d9bb2049ba5a76736765af29245f2f3",
+      "bytes": 142381,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/reg_international_activity_subsidy.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/414/499146048.pdf",
+      "title": "國立宜蘭大學官方原始檔案：reg_international_activity_subsidy.pdf",
+      "sha256": "6cc1dd451b49a3d27c59388eccb62cb74f986d403804a9aaf658facf64b2b60a",
+      "bytes": 249619,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/dual_degree_fuzhou_info.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/445400109.pdf",
+      "title": "國立宜蘭大學官方原始檔案：dual_degree_fuzhou_info.pdf",
+      "sha256": "1233b1de42a7b2fbbf62673c0a7be78813cd70a3538991e85cb9381b5fc7c55d",
+      "bytes": 162030,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/dual_degree_shms_info.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/122646074.pdf",
+      "title": "國立宜蘭大學官方原始檔案：dual_degree_shms_info.pdf",
+      "sha256": "c99d97b32f66ea1c58b317f61c78f25999ea1d4b054287288b96acc36218cb74",
+      "bytes": 170294,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/mainland_study_notes.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/310486689.pdf",
+      "title": "國立宜蘭大學官方原始檔案：mainland_study_notes.pdf",
+      "sha256": "12cf275c4a5aeb7c18c6a4140d5847736f3c4da4adc1b39f9e822d8e8e562db2",
+      "bytes": 207974,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/overseas_study_reference.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/612200532.pdf",
+      "title": "國立宜蘭大學官方原始檔案：overseas_study_reference.pdf",
+      "sha256": "f6435e97ec68fc0c9f3e7ac367f8f02368a7c5483579da626fb18b66a7a67554",
+      "bytes": 296590,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/form_exchange_application.doc",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/456/917162547.doc",
+      "title": "國立宜蘭大學官方原始檔案：form_exchange_application.doc",
+      "sha256": "de9d56586f722d447424a15bffb17813c3c0826fd4fd32d59455cc9e88a99d7b",
+      "bytes": 62976,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/form_self_funded_application.doc",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/456/688757054.doc",
+      "title": "國立宜蘭大學官方原始檔案：form_self_funded_application.doc",
+      "sha256": "06d77527bd11cf6c4a03dd81a18505b4a6c923c21716432011adbca1f3e13b39",
+      "bytes": 57856,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/form_umd_application.doc",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/456/570123585.doc",
+      "title": "國立宜蘭大學官方原始檔案：form_umd_application.doc",
+      "sha256": "513e3ade0e7b22bab691cf8e611febfb828cf39057cc06dd2124294463ad6acc",
+      "bytes": 59904,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/form_degree_program_application.doc",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/352524317.doc",
+      "title": "國立宜蘭大學官方原始檔案：form_degree_program_application.doc",
+      "sha256": "931e50a5f6a47b48489e8be268056756bb037b2ff804d5d203e056e3628db229",
+      "bytes": 47616,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/form_study_abroad_subsidy_application.docx",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/img/456/854203121.docx",
+      "title": "國立宜蘭大學官方原始檔案：form_study_abroad_subsidy_application.docx",
+      "sha256": "c029330e190289027b0be1961e34c626e8fef2022ba9336fcb433c643d62948e",
+      "bytes": 18038,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/form_xuehai_115_application.pdf",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/attach/88/pta_31731_2678566_70827.pdf",
+      "title": "國立宜蘭大學官方原始檔案：form_xuehai_115_application.pdf",
+      "sha256": "98f581dffaaf6f4ca8e88c6d1750c055ade89d1c298414efa8abf97971850d86",
+      "bytes": 223686,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "file": "sources/niu/docs/form_xuehai_115_study_plan.docx",
+      "source_url": "https://oia.niu.edu.tw/var/file/14/1014/attach/88/pta_31732_2034169_70827.docx",
+      "title": "國立宜蘭大學官方原始檔案：form_xuehai_115_study_plan.docx",
+      "sha256": "9590b3fae8ad465f7d5bed3a23d8619349fc90b9670862ad626212cd89529446",
+      "bytes": 29940,
+      "fetched_at": "2026-11-05T00:00:00Z"
+    }
+  ]
+}
