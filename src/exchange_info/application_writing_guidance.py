@@ -1480,6 +1480,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="開南大學規定返國後 1 個月內須繳交約 2,000 字之出國研修心得報告（含照片 4～6 張），始得完成結案與獎助學金核銷；這裡只合計下方各欄。",
     ),
+    ("ntunhs", "study-plan"): _rules(
+        (
+            "國立臺北護理健康大學（國際及兩岸教育中心 ICSED）《學生出國研修、跨國雙學位制與教育部學海飛颺／惜珠／築夢校內甄選簡章》規定應繳文件包含《中、英文研修／實習計畫書》與《中、英文自傳及履歷表》，供所屬系所初審與校級國際學術合作交流委員會書面審查與面試評分。",
+            "內容應具體說明申請動機、個人專業背景（護理學院、健康科技學院、人類發展與健康學院或智慧健康照護跨領域學院）、外語能力準備（學海飛颺／惜珠須達 CEFR B1 如 TOEIC 550／IELTS 4.5／TOEFL iBT 42；澳洲昆士蘭大學 UQ、昆士蘭科技大學 QUT、迪肯大學 Deakin、英國西英格蘭大學 UWE Bristol、美國奧本大學 Auburn 雙聯學位須達 IELTS 6.0–7.0 或 TOEFL iBT 79–100）、擬於海外姊妹校修習之課程或醫療照護見實習規劃，以及返國後學分抵免與護理健康專業發展目標。",
+        ),
+        evidence="國立臺北護理健康大學選送學生出國研修及實習辦法、與國外大學校院辦理跨國雙學位制實施辦法及教育部學海系列計畫校內甄選簡章",
+        minimum=1000,
+        maximum=3000,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="國北護出國研修、雙聯學位與學海系列甄選規定須繳交中、英文研修／實習計畫書與自傳（建議合計約 1,000–3,000 字）；這裡只合計下方各欄。",
+    ),
+    ("ntunhs", "return-report"): _rules(
+        (
+            "依《國立臺北護理健康大學選送學生出國研修及實習辦法》、《強化學生國際移動力補助要點》及教育部《學海飛颺／學海惜珠／學海築夢／新南向學海築夢》簡章規定，出國交換、跨國雙聯學位、海外專業實習及短期研修學生於期滿返國後 2 週至 1 個月內，須向國際及兩岸教育中心繳交《出國研修／實習成果報告書》（約 1,500–3,000 字並附研修或醫療機構實習照片），並有義務出席國際化成果發表暨經驗分享會。",
+            "獲教育部學海系列計畫、國北護強化學生國際移動力補助或國際交流獎助學金之受獎生，須於返國後 14 日內登入教育部學海計畫資訊網上傳心得報告與問卷，並檢附國外姊妹校正式成績單或修業證明、護照出入境紀錄及電子機票／登機證正本辦理經費核銷。",
+        ),
+        evidence="國立臺北護理健康大學選送學生出國研修及實習辦法、強化學生國際移動力補助要點及教育部學海系列計畫校內甄選簡章",
+        minimum=1500,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="國北護規定返國後須於期限內繳交出國研修／實習成果報告書（含照片）並出席成果分享會，始得完成結案與獎助學金核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1543,6 +1565,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "tpcu": ("https://ieec.tpcu.edu.tw/files/15-1007-23082,c3974-1.php?Lang=zh-tw", "2026-11-01"),
     "au": ("https://cia.au.edu.tw/p/403-1022-109353.php?Lang=zh-tw", "2026-11-03"),
     "knu": ("https://knuoica.knu.edu.tw/p/406-1004-59525,r30.php?Lang=zh-tw", "2026-11-03"),
+    "ntunhs": ("https://icsed-rnd.ntunhs.edu.tw/p/412-1035-2523.php?Lang=zh-tw", "2026-11-06"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

@@ -2226,7 +2226,49 @@ KNU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU)
+NTUNHS = UniversityProfile(
+    id="ntunhs",
+    school_name="國立臺北護理健康大學",
+    short_name="國北護",
+    english_name="National Taipei University of Nursing and Health Sciences",
+    aliases=(
+        "ntunhs",
+        "國立臺北護理健康大學",
+        "國立台北護理健康大學",
+        "臺北護理健康大學",
+        "台北護理健康大學",
+        "國北護",
+        "北護",
+        "北護大",
+        "國立臺北護理學院",
+        "NTUNHS",
+        "National Taipei University of Nursing and Health Sciences",
+    ),
+    hero_image="/static/assets/ntunhs-campus.svg",
+    official_url="https://icsed-rnd.ntunhs.edu.tw/",
+    coverage_note="完整支援：已整合國立臺北護理健康大學研究發展處國際暨兩岸教育中心《雙聯學制專區（英美澳6校9學程）》、《海外長短期交換專區》、《教育部學海飛颺／惜珠／築夢專區》、《五大洲締約姊妹校名錄（84校）》、《學生出國期間有關學業及學籍處理要點（112.11.01修正）》、《學生抵免學分處理辦法（115.06.24修正）》及《歷屆雙聯、交換與海外實習心得報告（24校33篇）》官方資料：（1）校內甄選資格、臨床實習同意與在學註冊規定：限日間部四技（2～4年級）、二技、學士後護理系、碩士班及博士班在學學生（不含在職專班），在校歷年平均達 GPA 2.0（百分制 70 分）以上，申請教育部學海飛颺／惜珠獎學金以班排前 50% 及操行 80 分以上無懲戒紀錄優先；因考量各系專業必修與醫院臨床實習排程，交換生及雙聯生皆須經所屬系所同意始得出國，出國進修以二年為限且交換期間須維持北護在學註冊學籍（不得休學）；校內甄選採書面審查（40%–60%，曾任國際學伴 International Buddy 者加分）與中英文面試（40%–60%）。（2）全球 21 國／地區 84 所合作姊妹校與英美澳 6 校 9 學程雙聯學位：完整收錄 37 所常態開放雙聯、長短期交換與海外實習合作校及 47 所五大洲締約姊妹校，涵蓋澳洲昆士蘭大學 UQ（護理雙學士／護理碩士／聽力學碩士／社工碩士雙聯，IELTS 7.0）、美國奧本大學 Auburn（護理 MSN 碩士暨 PhD 博士雙聯，IELTS 6.5）、英國西英格蘭大學 UWE（護理雙學士 IELTS 6.5、資管 3+1 雙學士 IELTS 6.0）、澳洲昆士蘭科技大學 QUT（資管 2+2 雙學士 IELTS 6.5）、澳洲迪肯大學 Deakin（健管 3.5+1.5 MBA 醫療管理雙聯 IELTS 6.5）及澳洲墨爾本威廉安格利斯學院 WAI（休健航空空服／旅遊管理雙聯 IELTS 6.0），以及捷克奧斯特拉瓦大學醫學院、立陶宛 KVK、日本名古屋市立大學、縣立廣島大學、東京都立大學 HIIP（免費荒川校區宿舍）、紐西蘭梅西大學、韓國大邱保健大學（免費雙人房宿舍）等。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／惜珠／築夢／新南向學海築夢》及 24 所合作大學共 33 篇歷屆學長姐心得報告。",
+    support_level="full",
+    partner_count_hint=84,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "國立臺北護理健康大學",
+        "國立台北護理健康大學",
+        "國北護",
+        "NATIONALTAIPEIUNIVERSITYOFNURSINGANDHEALTHSCIENCES",
+        "NATIONAL TAIPEI UNIVERSITY OF NURSING AND HEALTH SCIENCES",
+        "NTUNHS",
+    ),
+    # https://www.ntunhs.edu.tw/ — checked 2026-11-06.
+    colleges=(
+        "護理學院",
+        "健康科技學院",
+        "人類發展與健康學院",
+        "智慧健康照護跨領域學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NTUNHS)
 DEFAULT_UNIVERSITY = CGU
 
 

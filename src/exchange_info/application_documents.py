@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NTUNHS, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -143,6 +143,7 @@ TPCU_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 AU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
 KNU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
+NTUNHS_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3480,6 +3481,58 @@ def _knu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ntunhs_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺北護理健康大學（國際及兩岸教育中心 ICSED，臺北市北投區明德路 365 號 親仁樓 B118 室，電話 02-2822-7101 分機 2731～2736）《學生出國研修、跨國雙學位制與教育部學海飛颺／惜珠／築夢校內甄選簡章》應繳申請表件：1. 學生出國研修／跨國雙學位申請表（含導師與系所主管初審推薦簽章）、2. 歷年中英文成績單正本（含歷年學業總平均、GPA 與班級排名百分比；學海飛颺／惜珠須前一學期或歷年平均 75 分以上或班排前 40%，操行 80 分以上）、3. 有效外語能力檢定證明影本（澳洲 UQ／QUT／Deakin、英國 UWE Bristol、美國 Auburn 雙聯 IELTS 6.0–7.0 或 TOEFL iBT 79–100；學海飛颺／惜珠 CEFR B1：TOEIC 550 / IELTS 4.5 / TOEFL iBT 42；日本交換建議 JLPT N2–N3）、4. 中、英文出國研修／實習計畫書、5. 中、英文自傳及履歷表（CV）、6. 教師推薦信、7. 家長（監護人）同意書。",
+        "study-plan": "撰寫國立臺北護理健康大學出國交換研修、跨國雙聯學位（澳洲昆士蘭大學 UQ、昆士蘭科技大學 QUT、迪肯大學 Deakin、威廉安格力斯學院 William Angliss Institute、英國西英格蘭大學 UWE Bristol、美國奧本大學 Auburn University 共 6 校 9 項學碩博雙聯學制）及教育部學海飛颺／惜珠／築夢計畫必繳之《中、英文研修／實習計畫書及自傳》。請具體說明申請動機、個人護理健康或管理專業背景、擬於海外姊妹校修習之專業課程或醫療機構臨床見實習規劃，以及返國後之學分抵免與職涯發展目標。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程、海外醫療照護專業實習或跨國雙聯學位之選課預審與《學生出境修習學分採認對照規劃》：依《國立臺北護理健康大學選送學生出國研修及實習辦法》、《與國外大學校院辦理跨國雙學位制實施辦法》及《學生抵免學分辦法》，整理擬修習之海外課程名稱、學分數與課程大綱（Syllabus），會請所屬系（所、學位學程）及教務處確認返國學分抵免對應。",
+        "predeparture-notice": "經系所初審與校級國際學術合作交流委員會書面暨面試錄取公告後，須依限繳交錄取確認書、家長同意書與行政契約書，配合國際及兩岸教育中心向海外姊妹校完成提名與入學／簽證申請（如澳洲 CoE、英國 CAS、美國 I-20、日本 COE），並於出國前完成國北護當學期註冊繳費、選課、護照簽證、役男出境及海外醫療與意外保險，且出席行前說明會。",
+        "return-report": "境外交換、雙聯學位或海外醫療照護實習期滿返國後 2 週至 1 個月內，須依《國立臺北護理健康大學選送學生出國研修及實習辦法》、《強化學生國際移動力補助要點》及教育部學海系列計畫規定，向國際及兩岸教育中心提交《出國研修／實習成果報告書》（約 1,500–3,000 字，含研修或臨床見實習照片）、國外姊妹校正式成績單或修業證明、護照出入境紀錄及電子機票／登機證正本，並出席國際化成果發表暨經驗分享會始得辦理結案與獎助學金核銷。",
+        "credit-transfer": "境外交換、雙聯學位或海外實習期滿返國後，持國外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《國立臺北護理健康大學學生抵免學分辦法》與《與國外大學校院辦理跨國雙學位制實施辦法》向所屬系（所、學位學程）及教務處註冊組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺北護理健康大學").replace("長庚", "國北護")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立臺北護理健康大學規定：申請人須為本校在學滿一學期以上之正式學籍學生（不含在職專班），操行成績達 80 分以上；申請教育部《學海飛颺／惜珠》須前一學期或歷年學業平均達 75 分（GPA 3.0）以上或班排前 40%；申請澳洲 UQ／QUT／Deakin、英國 UWE Bristol、美國 Auburn 雙聯學位須符合各雙聯協議之 GPA 與專業科目門檻。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "IELTS 雅思學術組（澳洲昆士蘭大學 UQ／昆士蘭科技大學 QUT／迪肯大學 Deakin 護理雙聯 7.0［單科 7.0］；英國西英格蘭大學 UWE Bristol 雙聯 6.0–6.5；威廉安格力斯學院 5.5–6.0；學海飛颺／惜珠 4.5+）",
+                "TOEFL iBT 托福網路測驗（美國奧本大學 Auburn 雙聯 79+；澳洲／英國護理雙聯 94–100；一般交換 61–79；學海飛颺／惜珠 42+）",
+                "TOEIC 多益測驗（教育部學海飛颺／惜珠及強化學生國際移動力補助 CEFR B1 基準 550 分以上；亞洲姊妹校交換與海外實習 550–785 分）",
+                "JLPT 日語能力試驗（日本大阪大學、東北大學、鹿兒島大學、新潟大學、聖路加國際大學、東京有明醫療大學、札幌保健醫療大學等交換與實習建議 N2–N3）",
+                "TOPIK 韓國語文能力測驗（韓國首爾女子看護大學、誠信女子大學、慶熙大學、延世大學、高麗大學等交換與研修建議 TOPIK 2–3 級或英語檢定）",
+                "中國大陸、港澳及華語區姊妹校交換與醫療專業見實習（北京中醫藥大學、上海中醫藥大學、南京醫科大學、香港大學、澳門理工大學等中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依國立臺北護理健康大學國際及兩岸教育中心《選送學生出國研修及實習辦法》、跨國雙聯學位協議及教育部學海系列計畫簡章填報有效語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://icsed-rnd.ntunhs.edu.tw/p/412-1035-2523.php?Lang=zh-tw",
+        source_checked_at=NTUNHS_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立臺北護理健康大學學生出國研修／跨國雙學位申請表（含家長同意書、研修計畫書、自傳及推薦信）" if template.id == "exchange-application-data" else ("中、英文出國研修／實習計畫書及自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://icsed-rnd.ntunhs.edu.tw/var/file/35/1035/img/639/469092837.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師及系（所、學位學程）主管簽章", "學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所、學位學程）辦公室及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經甄選錄取後繳交確認書、家長同意書與行政契約書，配合國際及兩岸教育中心向姊妹校完成提名與簽證申請，並完成國北護註冊與行前說明會", "return-report": "返國後 14 日至 1 個月內繳交約 1,500–3,000 字出國研修／實習成果報告書（含照片）、成績單與出入境／登機證單據並出席經驗分享會辦理核銷", "credit-transfer": "返國後持姊妹校正式成績單正本、修業證明與課程大綱向系所及教務處註冊組申請境外學分抵免"}.get(template.id, "於校內甄選收件截止前備齊申請表、歷年成績單（含排名）、外語檢定證明、中英文研修計畫書、自傳及家長同意書送交國際及兩岸教育中心（親仁樓 B118）"),
+        version="115準備工具-2026-11-06.1",
+        destinations=["國立臺北護理健康大學研究發展處國際及兩岸教育中心（112303 臺北市北投區明德路 365 號 親仁樓 B118 室）"],
+        conditional_note="此為個人準備工具；國北護出國交換、跨國雙聯學位、海外專業實習及教育部學海系列計畫由各系所初審後送交國際及兩岸教育中心辦理複審與面試。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3604,6 +3657,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _au_template(template)) is not None]
     if university.id == KNU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _knu_template(template)) is not None]
+    if university.id == NTUNHS.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntunhs_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
