@@ -2226,7 +2226,53 @@ KNU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU)
+NUTN = UniversityProfile(
+    id="nutn",
+    school_name="國立臺南大學",
+    short_name="南大",
+    english_name="National University of Tainan",
+    aliases=(
+        "nutn",
+        "國立臺南大學",
+        "國立台南大學",
+        "臺南大學",
+        "台南大學",
+        "南大",
+        "國立臺南師範學院",
+        "臺南師範學院",
+        "南師",
+        "NUTN",
+        "National University of Tainan",
+    ),
+    hero_image="/static/assets/nutn-campus.svg",
+    official_url="https://oia.nutn.edu.tw/?page_id=971",
+    coverage_note="完整支援：已整合國立臺南大學國際事務處國際事務組（OIA，府城校區誠正大樓 3 樓 B302 室）《116學年度出國交換學生甄選簡章》、《115學年度第1、2學期出國交換學生甄選簡章》、《2026-2027美國天普大學（Temple University）3+2學碩雙聯學位申請公告與Fact Sheet》、《四大洲締約姊妹校名錄（114校）》、《國立臺南大學選送學生出國研修辦法》、《國立臺南大學選送優秀學生出國研修獎學金審查作業要點》、《高教深耕計畫補助學生赴國外進行國際交流實施要點》、《學生進行國外教育見習教育實習及國際史懷哲計畫要點》與《海外教育計畫網站（ESA）暨南大新聞電子報海外交流報導（33校49篇）》官方資料：（1）兩梯次校內甄選、100%書面審查與全班前50%獎學金同步核定機制：每年分兩梯次（第1梯次11月15日至11月30日受理次學年度秋季班／全學年交換、第2梯次4月1日至4月20日受理當學年度春季班交換）於海外教育計畫網站（ESA）線上填報並送交紙本至B302室，限大學部一年級（含）以上、碩博士班一年級（含）以上之在學學生（含進修部；出國就讀時須在本校就讀至少一學期，修業年限內限交換一次，下學年將順利畢業者不得申請）；採100%書面審查（在校成績及名次百分比、外語檢定證明、1,000–1,500字中文自傳與讀書計畫、最多5項優良表現，至多填3志願），凡在校學業成績平均達全班前50%且具CEFR B1以上外語證明者，無須另備文件即由甄選委員會一併審查校內交換生獎學金及教育部學海飛颺／惜珠獎學金。（2）全球19國／地區114所合作姊妹校與美國天普大學3+2雙聯學位：完整收錄25所最新簡章開放申請之交換與雙聯合作校及89所正式締約姊妹校，日本涵蓋大阪公立大學、北海道大學、岡山大學、埼玉大學、長崎大學、順天堂大學（N2或iBT 72）及獨協大學、金澤星稜大學（日語密集課程JLPT N5即可申請！），韓國東國、崇實、天主教關東、德成女子大學與捷克赫拉德茨克拉洛韋大學、波蘭歐波蘭大學採計英語CEFR B1（TOEIC 550 / iBT 42 / IELTS 4.0）或TOPIK 3級，美國中央阿肯色大學UCA（iBT 79，音樂系可附個人演奏曲目免英檢！）、奧特本大學、密蘇里大學堪薩斯分校UMKC及美國天普大學（Temple University）3+2學碩雙聯學位（DBMD，大三以上GPA 3.0、免GRE、享最高USD 10,000獎學金）。（3）四大獎助學金體系與海外實踐報導：涵蓋《校內交換學生獎學金》（亞洲每學期最高NT$25,000、非亞洲每學期最高NT$40,000）、教育部《學海飛颺／學海惜珠／學海築夢／新南向學海築夢》、《高教深耕國際交流與公開展演競試補助》（最高NT$30,000）及《國外教育見習與國際史懷哲計畫》，並收錄33所合作大學共49篇歷屆海外交流報導與研修指南。",
+    support_level="full",
+    partner_count_hint=114,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "國立臺南大學",
+        "國立台南大學",
+        "臺南大學",
+        "台南大學",
+        "南大",
+        "NATIONALUNIVERSITYOFTAINAN",
+        "NATIONAL UNIVERSITY OF TAINAN",
+        "NUTN",
+    ),
+    # https://www.nutn.edu.tw/teaching.html — checked 2026-11-06.
+    colleges=(
+        "教育學院",
+        "人文學院",
+        "理工學院",
+        "環境與生態學院",
+        "藝術學院",
+        "管理學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN)
 DEFAULT_UNIVERSITY = CGU
 
 

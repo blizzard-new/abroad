@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NUTN, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -143,6 +143,7 @@ TPCU_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 AU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
 KNU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
+NUTN_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3480,6 +3481,58 @@ def _knu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nutn_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺南大學（國際事務處國際事務組，700301 臺南市中西區樹林街二段 33 號 府城校區誠正大樓 3 樓 B302 室，電話 06-213-3111 分機 856）《116學年度出國交換學生甄選簡章》及《美國天普大學 3+2 學碩雙聯學位申請公告》應繳申請表件：1. 海外教育計畫網站（ESA）線上申請表列印紙本（須經學生本人、家長或監護人、導師及系所主任簽名或蓋章，最多填 3 個志願）、2. 歷年中文成績單正本（須註明全班人數、名次及排名百分比；碩博士班加附大學部歷年成績單正本；全班前 50% 同步審查校內與教育部學海獎學金）、3. 有效外語能力檢定證明影本（CEFR B1 基準或達各姊妹校門檻；大陸交換且不申請校內獎學金者免附；美國 UCA 音樂系可附個人演奏曲目代替）、4. 中文自傳（1,000–1,500 字）、5. 中文讀書計畫（1,000–1,500 字）、6. 課外活動及優良表現證明（選繳，最多 5 項）。",
+        "study-plan": "撰寫國立臺南大學出國交換甄選必繳並上傳至海外教育計畫網站（ESA）之《中文自傳及中文讀書計畫》（各 1,000–1,500 字，或美國天普大學 3+2 雙聯英文 Statement of Goals）。請具體說明申請動機、個人學經歷背景、於志願姊妹校擬修習之領域課程與時間規劃（每學期至少修習相當於本校 2 門課／6 學分以上），以及返國後之學分採認與學職涯目標。",
+        "course-preapproval": "辦理赴國外或大陸姊妹校修讀交換課程與美國天普大學 3+2 學碩雙聯學位（DBMD）之選課規劃與抵免預審（依《國立臺南大學選送學生出國研修辦法》第 10 條，出國期間須辦理本校註冊並繳交全額學雜費以保留學籍；抵達姊妹校 2 週內須將《交換學生抵達外國註冊單》及選課單寄回國際事務組）。",
+        "predeparture-notice": "經選送學生出國研修甄選委員會書面審查錄取公告後，須依限繳交《交換意願確認書》與《國立臺南大學交換學生保證人同意書》，配合國際事務組完成姊妹校提名與簽證申請，並於出國前完成《交換學生出國程序單》各單位核章、本校註冊繳費、役男出國前 1 個月緩徵核准及海外全期保險。",
+        "return-report": "境外交換研修期滿返國後 2 個月內，須依《國立臺南大學選送優秀學生出國研修獎學金審查作業要點》及《交換學生心得報告格式》，完成《交換學生返國程序單》並繳交 2,000 字以上（附至少 4 張含圖說照片）之《交換學生心得報告》電子檔（寄至 oia-1@pubmail.nutn.edu.tw）與《國外大學修課報告表》，始得領取獎學金尾款（20%）並完成離校結案。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），連同《國外大學修課報告表》向所屬學系（所）及教務處註冊組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺南大學").replace("長庚", "南大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立臺南大學規定：在校學業成績平均達全班前 50%（約平均 75 分／GPA 2.75 以上）且具 CEFR B1 外語證明者，報名交換生時由甄選委員會同步審查校內交換生獎學金（亞洲每學期最高 2.5 萬／非亞洲最高 4 萬）及教育部學海飛颺／惜珠獎學金；申請美國天普大學 3+2 學碩雙聯學位（DBMD）須達 GPA 3.0/4.0 以上。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "CEFR B1 基準與歐韓組：TOEIC 550+ / TOEFL iBT 42+ / ITP 457+ / IELTS 4.0+ / GEPT 中級 / Linguaskill 140+（適用校內獎學金及韓國東國／崇實／關東／德成女大、捷克 UHK、波蘭歐波蘭大學）",
+                "歐美高階與雙聯組：TOEFL iBT 79+ / IELTS 6.0–6.5+ / Duolingo 105–120（適用美國 UCA［音樂系可附演奏曲免英檢］、Otterbein、UMKC、天普大學 3+2 雙聯、法國 ISEP、荷蘭 Aeres）",
+                "日本組：JLPT N2（大阪公立大學、北海道大學、岡山大學、埼玉大學、順天堂大學、金澤星稜學分學程）或 JLPT N5（日本獨協大學、金澤星稜日語密集課程）",
+                "韓國組：TOPIK 3 級以上（崇實大學、東國大學、天主教關東大學、德成女子大學、首爾市立大學、全南大學、中央大學）",
+                "法西語組：法檢 DELF B2（法國波爾多蒙田大學；B2 以下僅修法語課）、西檢 DELE B2 或英語 B2（西班牙哈恩大學、武康大學 UCAM）",
+                "大陸交換組：華東師範大學、安徽大學等大陸合作大學（中文授課免附外語檢定；惟申請校內交換生獎學金者仍須附 CEFR B1 以上語檢）",
+            ]
+            field["help_text"] = "依國立臺南大學《116學年度出國交換學生甄選簡章》及《選送優秀學生出國研修獎學金審查作業要點》填報有效語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.nutn.edu.tw/?page_id=971",
+        source_checked_at=NUTN_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立臺南大學海外教育計畫網站（ESA）線上申請表與保證人同意書" if template.id == "exchange-application-data" else ("中文自傳與中文讀書計畫（各 1,000–1,500 字）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.nutn.edu.tw/?page_id=830",
+        default_copies=1,
+        signatures=["申請學生親筆簽章", "家長或監護人親筆簽章", "導師簽章", "系所主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經甄選委員會書審錄取後繳交確認書與保證人同意書、完成《交換學生出國程序單》核章與南大註冊繳費，並於抵達姊妹校 2 週內寄回《抵達外國註冊單》", "return-report": "返國後 2 個月內完成《交換學生返國程序單》、繳交 2,000 字以上（附至少 4 張圖說照片）心得報告電子檔（寄至 oia-1@pubmail.nutn.edu.tw）及修課報告表辦理獎學金尾款核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分採認抵免"}.get(template.id, "先於海外教育計畫網站（ESA）完成線上填報與 PDF 上傳，再將四方簽章紙本申請表、含班排百分比之歷年成績單正本、語檢證明及 1,000–1,500 字中文自傳與讀書計畫送交誠正大樓 3 樓 B302 室國際事務組"),
+        version="116準備工具-2026-11-06.1",
+        destinations=["國立臺南大學國際事務處國際事務組（700301 臺南市中西區樹林街二段 33 號 府城校區誠正大樓 3 樓 B302 室）"],
+        conditional_note="此為個人準備工具；國立臺南大學出國交換甄選每年分兩梯次（第1梯次 11/15–11/30、第2梯次 4/1–4/20）受理申請，採 100% 書面審查，全班前 50% 且具 CEFR B1 語檢者免另備文件同步審查校內與教育部學海獎學金。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3604,6 +3657,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _au_template(template)) is not None]
     if university.id == KNU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _knu_template(template)) is not None]
+    if university.id == NUTN.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nutn_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
