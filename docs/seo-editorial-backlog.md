@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-06 每日批次：托福討論／多益詞性兩篇（PR 待建立）
+## 2026-11-06 每日批次：托福討論／多益詞性兩篇（PR #247 待審）
 
 日期採 Asia/Taipei，已核對即時時鐘為 11/6；分支 `codex/seo-daily-20261106`，基於 main `18622eec20364822f10674b8b1d84ff1a0b5fc7e`。盤點 main 35 篇、重讀相關正文與當期流程／backlog，核對所有 11 個待審 PR #234、#236、#237、#239–#246 的標題、說明及完整分頁檔案清單，沒有 editorial 文章改動。開始前沒有同日分支／任何狀態 PR。#78、#92 已合併；#233、#238 也已合併，其四篇已在 main 並排除。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 19：托福 Academic Discussion 怎麼寫？立場、回應同學與原創範例 | `toefl-academic-discussion` | 完整文章與驗收完成；PR 待建立，後續排除 |
-| 20：多益 Part 5 詞性題怎麼判斷？空格位置、字族與原創題解析 | `toeic-part-five-word-forms` | 同一批兩篇；PR 待建立，後續排除 |
+| 19：托福 Academic Discussion 怎麼寫？立場、回應同學與原創範例 | `toefl-academic-discussion` | [PR #247](https://github.com/blizzard-new/abroad/pull/247) 待審，完整文章與驗收完成；後續排除 |
+| 20：多益 Part 5 詞性題怎麼判斷？空格位置、字族與原創題解析 | `toeic-part-five-word-forms` | 同一個 PR #247 待審，完整文章與驗收完成；後續排除 |
 
 選題依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。討論篇新增原創教授題、同學留言、弱稿修改、完整回覆與換題；詞性篇新增七題填空、結構／詞形／語意解析及口訣限制。四科／全卷總覽、郵件、給定片段組句、Part 2／3／7 各保留既有任務，沒有改標題或以年份／品牌重發。
 
