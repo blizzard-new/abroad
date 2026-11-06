@@ -1,5 +1,18 @@
 # Editorial intentions and next topics
 
+## 2026-11-06 每日批次：托福討論／多益詞性兩篇（PR 待建立）
+
+日期採 Asia/Taipei，已核對即時時鐘為 11/6；分支 `codex/seo-daily-20261106`，基於 main `18622eec20364822f10674b8b1d84ff1a0b5fc7e`。盤點 main 35 篇、重讀相關正文與當期流程／backlog，核對所有 11 個待審 PR #234、#236、#237、#239–#246 的標題、說明及完整分頁檔案清單，沒有 editorial 文章改動。開始前沒有同日分支／任何狀態 PR。#78、#92 已合併；#233、#238 也已合併，其四篇已在 main 並排除。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 19：托福 Academic Discussion 怎麼寫？立場、回應同學與原創範例 | `toefl-academic-discussion` | 完整文章與驗收完成；PR 待建立，後續排除 |
+| 20：多益 Part 5 詞性題怎麼判斷？空格位置、字族與原創題解析 | `toeic-part-five-word-forms` | 同一批兩篇；PR 待建立，後續排除 |
+
+選題依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。討論篇新增原創教授題、同學留言、弱稿修改、完整回覆與換題；詞性篇新增七題填空、結構／詞形／語意解析及口訣限制。四科／全卷總覽、郵件、給定片段組句、Part 2／3／7 各保留既有任務，沒有改標題或以年份／品牌重發。
+
+原有 35 篇內容、網址、published 與 lastmod 不變；本分支共 37 篇。10/30 `exchange-study-plan` 擴充保留 `97de3fda`，候選 15 沒有實測，不製造比較。完整來源、真實攝影授權、原創 HTML 圖解、FAQ、驗收與截圖見[本批紀錄](seo-editorial-validation-2026-11-06.md)。153 項 SEO 測試、47 項 E2E、六組無 JavaScript 閱讀檢查與 wheel 67 檔核對均通過。兩篇同屬本日唯一待審 PR；未合併或部署。下方歷史待審狀態，以本段當日核對為優先。
+
 ## 2026-11-05 每日批次：托福組句／多益應答兩篇（PR #238 待審）
 
 日期採 Asia/Taipei；隔離分支 `codex/seo-daily-20261105`，基於 main `aa29dacc31eadbb02460c757d743786ca5b7d817`。已盤點 31 篇並重讀相關正文，核對所有待審 PR #233、#234、#236、#237 的說明及完整變更檔案。#233 的 `ai-english-vocabulary-practice`／`toeic-part-three-graphics` 兩篇已選並排除，其餘三個只含稽核 proposal。本批不依賴 #233，開始前沒有同日分支／任何狀態 PR。#78、#92、#213、#222 已合併。
