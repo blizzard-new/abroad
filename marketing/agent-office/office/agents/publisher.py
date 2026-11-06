@@ -107,10 +107,17 @@ class Publisher(Agent):
         simulated = self.simulated(draft["channel"])
         if simulated:
             self._write_outbox(draft, clients)
+        reply_error = result.get("reply_error")
         store.update_draft(
             draft["id"], status="published", published_at=now_utc(), remote_id=result.get("id"), remote_url=result.get("url") or None,
-            note="模擬發佈（沒有真的送出）" if simulated else None, error=None,
+            note="模擬發佈（沒有真的送出）" if simulated else None,
+            error=f"貼文已發出，但第一則留言（連結）沒發出去，請手動補上：{reply_error}" if reply_error else None,
         )
+        if reply_error:
+            self.office.chat(
+                "chief",
+                f"⚠️ 「{draft['title'][:20]}」已經發出去了，但第一則留言（放連結的那則）沒發成功。請到貼文底下手動補上連結：{result.get('url') or ''}\n原因：{reply_error[:160]}",
+            )
         done = "draft PR 開好了 📮" if draft["channel"] == "github" else f"{label} 發佈完成 🚀"
         self.status("done", done, screen={"type": "terminal", "lines": list(self.lines)})
         self.office.draft_changed(draft["id"])
@@ -167,7 +174,12 @@ class Publisher(Agent):
                 image = clients["media"].public_url(files(media["image"])) if attach else ""
                 post = threads.post_text(payload["text"], topic_tag=payload.get("topic_tag", ""), image_url=image)
             if payload.get("first_reply"):
-                threads.post_text(payload["first_reply"], reply_to_id=post["id"])
+                try:
+                    threads.post_text(payload["first_reply"], reply_to_id=post["id"])
+                except PlatformError as error:
+                    # The post itself is live. Failing the whole draft here would hide it (no id, no numbers) and invite a
+                    # second post, so it counts as published and the missing link comment is reported.
+                    post = {**post, "reply_error": str(error)[:300]}
             return post
         if channel == "instagram":
             instagram: InstagramClient = clients["instagram"]
