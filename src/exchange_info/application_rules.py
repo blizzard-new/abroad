@@ -62,6 +62,7 @@ from .tnnua_eligibility import is_tnnua, tnnua_academic_check, tnnua_degree_chec
 from .tpcu_eligibility import is_tpcu, tpcu_academic_check, tpcu_degree_check, tpcu_language_check
 from .au_eligibility import is_au, au_academic_check, au_degree_check, au_language_check
 from .knu_eligibility import is_knu, knu_academic_check, knu_degree_check, knu_language_check
+from .nttu_eligibility import is_nttu, nttu_academic_check, nttu_degree_check, nttu_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -835,6 +836,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_nttu(request.home_school):
+        deg_status, deg_detail = nttu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -1216,6 +1222,12 @@ def _eligibility_checks(
             "academic_score", status, "開南大學一般交換歷年平均 75 分（GPA 2.75）以上、雙聯與學海系列 80 分（GPA 3.0）及操行 82 分門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_nttu(request.home_school):
+        status, detail = nttu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "臺東大學出國交換甄選書審（50%）＋面試（50%）與出國進修獎助學金／學海飛颺（學士班各學期班排前 50% 或總平均 80 分以上、碩博系所推薦）門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1424,6 +1436,9 @@ def _eligibility_checks(
     if is_knu(request.home_school):
         home_status, home_detail = knu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "開南大學出國交換與雙聯學位（英語組 TOEIC 500–600／日語組 JLPT N3–N1／韓語組 TOPIK 3／大陸免語檢）門檻", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_nttu(request.home_school):
+        home_status, home_detail = nttu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "臺東大學外語能力基準（出國進修獎助學金學士班 CEFR B1［TOEIC 550／iBT 42／IELTS 4.0／JLPT N2–N4］、碩博 CEFR B2、日本姊妹校 JLPT N1–N3、韓國 TOPIK 2–3級）與大陸姊妹校免語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

@@ -817,6 +817,7 @@ def create_maintenance_router(
             <option value="tpcu">臺北城市科技大學（共 18 所姊妹校）</option>
             <option value="au">真理大學（共 80 所姊妹校）</option>
             <option value="knu">開南大學（共 88 所姊妹校）</option>
+            <option value="nttu">國立臺東大學（共 59 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -947,7 +948,8 @@ def create_maintenance_router(
     tnnua: "國立臺南藝術大學 (TNNUA)",
     tpcu: "臺北城市科技大學 (TPCU)",
     au: "真理大學 (AU)",
-    knu: "開南大學 (KNU)"
+    knu: "開南大學 (KNU)",
+    nttu: "國立臺東大學 (NTTU)"
   };
 
   const FIELD_LABELS = {

@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTTU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -143,6 +143,7 @@ TPCU_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 AU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
 KNU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
+NTTU_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3480,6 +3481,57 @@ def _knu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nttu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺東大學（研究發展處國際事務中心 COIA，臺東市大學路二段 369 號 行政服務大樓二樓，電話 089-517492～517497）《辦理學生申請出國進修或交換作業要點》及當期交換生甄選簡章應繳資料（均一式 3 份）：1. 國立臺東大學學生申請出國進修交換申請表（須經系所主任、院長簽核）、2. 家長或監護人同意書、3. 出國進修交換計畫書（含個人自傳、讀書修課計畫、預期成果）、4. 中文歷年學業成績單正本、5. 歷年學業成績名次證明（班排名證明；同時申請《學生出國進修獎助學金》或《學海飛颺／惜珠》者，學士班各學期平均須達全班前 50% 或學海總平均 80 分以上，碩博須系所推薦）、6. 語言能力相關證明或檢定成績單（英語區 CEFR B1／B2、日本 JLPT N1–N4、韓國 TOPIK 2–3 級；大陸姊妹校免附但可列加分佐證）、7. 其他有利審查文件（社團幹部、志工、競賽或作品集）。",
+        "study-plan": "撰寫國立臺東大學出國進修交換、跨國雙聯學位（日本仙台大學 2.5+2 雙學士、日本琵琶湖成蹊體育運動大學 1.5+2+1 雙學士、美國北德州大學 UNT 3+2 學碩雙聯）及《學生出國進修獎助學金》／教育部《學海飛颺／惜珠》必繳之《出國進修交換計畫書》（含一、個人自傳、二、讀書修課計畫、三、預期成果，一式 3 份）。請具體說明申請動機、擬於志願姊妹校修習之專業與語言課程規劃（依規定每學期至少修習 1 門 2 學分以上專業課程且及格），以及返國後學分抵免與生涯規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位（日本仙台大學 2.5+2、日本琵琶湖成蹊體育運動大學 1.5+2+1、美國北德州大學 UNT 3+2）之選課預審與教務核備（依《國立臺東大學與境外大學校院辦理雙聯學制實施辦法》與《學生出國期間有關學業及學籍處理要點》規定，出國交換期間仍須於臺東大學辦理註冊並繳交全額學雜費以保留學籍；申請獎助學金者每學期至少須修習 1 門 2 學分以上專業課程且成績及格）。",
+        "predeparture-notice": "經研究發展處國際事務中心第一階段書面審查（50%）與第二階段面試（50%）錄取公告後，須依限完成錄取報到確認、配合國際事務中心辦理姊妹校提名與入學申請（如日本 COE、韓國標準入學許可書、捷克／奧地利／西班牙簽證文件、大陸入學通知書與台胞證）、辦妥臺東大學註冊選課、役男出境核准及海外醫療與意外保險。",
+        "return-report": "境外交換、雙聯研修或學海築夢海外實習期滿返國後，須依《國立臺東大學學生出國進修獎助學金要點》第 8 點及教育部《學海計畫》規定，於返國後 1 個月內（學海計畫為結束後 2 週內）向研究發展處國際事務中心繳交 2,000 字以上之《出國進修／交換／實習心得報告》（含活動照片至少 4 張）、國外成績單、護照出入境紀錄及機票登機證正本，並參與國際事務中心舉辦之出國交換經驗分享會，始得完成結案與獎助學金尾款（30%）核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《國立臺東大學辦理學生抵免學分實施要點》及《國外大學成績轉換要點》向所屬學系（所）及教務處註冊組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺東大學").replace("長庚", "東大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立臺東大學規定：報名出國交換或雙聯須檢附中文歷年學業成績單正本及歷年學業成績名次證明（班排名證明）各 3 份；甄選採書面審查 50%＋面試 50%。若同時申請校內《學生出國進修獎助學金》（最高 30 萬元）或教育部《學海飛颺／學海惜珠》，學士班各學期平均成績須達全班前 50%（含）以上（或學海總平均 80 分以上），碩博士班須由系所推薦。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語檢定 CEFR B1（出國進修獎助學金學士班基準：TOEIC 550 / TOEFL iBT 42 / TOEFL ITP 460 / IELTS 4.0 / GEPT 中級複試）",
+                "英語檢定 CEFR B2（出國進修獎助學金碩博班及歐美英語授課姊妹校基準：TOEIC 785 / TOEFL iBT 72 / IELTS 5.5 / GEPT 中高級）",
+                "日語檢定 JLPT（日本新潟大學人文／雙葉／志學館 N1；信州／弘前／名城／鳴門教育／新潟教育／上越教育／目白／仙台雙聯／琵琶湖雙聯 N2；金城／北洋 N3；久留米 N4）",
+                "韓語檢定 TOPIK（韓國晉州教育大學、誠信女子大學、中央大學、世宗大學、江南大學、建陽大學建議 TOPIK 2–3 級或選修英語授課課程）",
+                "大陸地區姊妹校交換（北京師範、東北師範、西南大學、中央民族、華中師範、華東師範、山東師範等 21 校中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依《國立臺東大學辦理學生申請出國進修或交換作業要點》、《學生出國進修獎助學金要點》及當期交換生甄選簡章填報有效語言能力證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://rd.nttu.edu.tw/p/412-1007-9902.php?Lang=zh-tw",
+        source_checked_at=NTTU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立臺東大學學生申請出國進修交換申請表（含家長同意書、出國進修交換計畫書及獎助學金申請表）" if template.id == "exchange-application-data" else ("國立臺東大學學生出國進修交換計畫書（含自傳、讀書修課計畫、預期成果）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://rd.nttu.edu.tw/var/file/7/1007/img/1704/339798359.docx" if template.id != "study-plan" else "https://rd.nttu.edu.tw/var/file/7/1007/img/1704/488363506.docx",
+        default_copies=3 if template.id in {"exchange-application-data", "study-plan"} else 1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師／指導教授、系（所）主任及院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經書審（50%）與面試（50%）錄取後完成確認、配合國際事務中心辦理姊妹校提名與簽證，並完成臺東大學註冊", "return-report": "返國後 1 個月內繳交 2,000 字以上出國交換／實習心得報告（含照片至少 4 張）並出席經驗分享會辦理獎助學金尾款核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分抵免"}.get(template.id, "於校內收件截止前備齊申請表、家長同意書、出國進修交換計畫書、中文歷年成績單、班排名證明及語檢證明各一式 3 份送交研究發展處國際事務中心"),
+        version="115-2準備工具-2026-11-06.1",
+        destinations=["國立臺東大學研究發展處國際事務中心（95092 臺東縣臺東市大學路二段 369 號 行政服務大樓二樓）"],
+        conditional_note="此為個人準備工具；國立臺東大學出國交換與雙聯學位每年分兩梯次（春季班於前一年 9–10 月、秋季班於當年度 2–3 月）收件，採書面審查（50%）與面試（50%），報名表件須繳交一式 3 份。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3604,6 +3656,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _au_template(template)) is not None]
     if university.id == KNU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _knu_template(template)) is not None]
+    if university.id == NTTU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nttu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

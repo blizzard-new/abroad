@@ -2226,7 +2226,47 @@ KNU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU)
+NTTU = UniversityProfile(
+    id="nttu",
+    school_name="國立臺東大學",
+    short_name="東大",
+    english_name="National Taitung University",
+    aliases=(
+        "nttu",
+        "國立臺東大學",
+        "國立台東大學",
+        "臺東大學",
+        "台東大學",
+        "東大",
+        "NTTU",
+        "National Taitung University",
+    ),
+    hero_image="/static/assets/nttu-campus.svg",
+    official_url="https://rd.nttu.edu.tw/p/412-1007-9902.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立臺東大學研究發展處國際事務中心（COIA）《2025–2027 赴境外姊妹校交換生暨雙聯學位甄選簡章與名額一覽表》、《國際暨大陸地區締約姊妹校名錄（59校）》、《辦理學生申請出國進修或交換作業要點》、《學生出國進修獎助學金要點（含附件一 CEFR B1/B2 語言基準表）》、《與境外大學校院辦理雙聯學制實施辦法》、《學生出國期間有關學業及學籍處理辦法》、《學生抵免學分要點》及《出國交換生暨學海築夢心得分享專區（12校58篇）》官方資料：（1）校內甄選時程、在學資格與評分權重：每學期分兩梯次（春季班於前一年 9 月中旬截止，如 2027 春季班於 2026/09/15 中午 12:00 截止、10/15 放榜；秋季班於當年 3 月中旬截止，如 2026 秋季班於 2026/03/20 中午 12:00 截止）受理報名，限本校二年級（含）以上之在學學位生（含學士班大二至大四、碩士班、博士班；不含大一新生、當學期畢業生、延畢生及在職專班學生；大四申請交換以一學期為限），採「書面資料審查 50%＋面試（含外語口試）50%」擇優錄取。（2）全球 15 國／地區 59 所合作姊妹校與日本 2 校跨國雙聯學士學位：完整收錄 15 所當期開放申請之國際與大陸重點交換及雙聯姊妹校（含美國加州西來大學［每期 15 名，至多 12 學分學費半價減免］、日本仙台大學［交換 4–6 名＋2.5+2 雙聯學士 2 名］、日本琵琶湖成蹊體育運動大學［春季班 1.5+2+1 雙聯學士 1 名］、日本天理大學［1 名，免學費、免宿舍費且免水電瓦斯費！］、韓國國立順天大學［2–4 名，免韓檢］、韓國高神大學［1–2 名，免韓檢］、韓國釜山教育大學［3 名，TOPIK 2 級］、捷克茲林托馬斯巴塔大學［5 名，CEFR B2，保證提供低廉宿舍］，以及大陸華東師範大學、蘭州大學、華中師範大學、西南大學、東北師範大學、中央民族大學、鄭州大學等 7 所 985/211 重點名校）及 44 所正式締約姊妹校。（3）最高 30 萬元出國進修獎助學金與教育部學海計畫：涵蓋校內《學生出國進修獎助學金》（攻讀雙聯學位或交換生每人每年最高補助 NT$300,000、短期修讀學分最高 NT$80,000、短期語言進修最高 NT$20,000；學士班須各學期班排前 50% 且具 CEFR B1 外語證明，碩博士班須系所推薦且具 CEFR B2 外語證明）、教育部《學海飛颺》、《學海惜珠》、《學海築夢／新南向學海築夢》及 12 所合作大學共 58 篇歷屆學長姐交換、雙聯與海外實習心得報告。",
+    support_level="full",
+    partner_count_hint=59,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "國立臺東大學",
+        "國立台東大學",
+        "臺東大學",
+        "台東大學",
+        "NATIONALTAITUNGUNIVERSITY",
+        "NATIONAL TAITUNG UNIVERSITY",
+        "NTTU",
+    ),
+    # https://www.nttu.edu.tw/p/412-1000-1495.php?Lang=zh-tw — checked 2026-11-06.
+    colleges=(
+        "人文學院",
+        "師範學院",
+        "理工學院",
+        "跨領域學位學程",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NTTU)
 DEFAULT_UNIVERSITY = CGU
 
 

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="nttuTitle nttuDesc">
+  <title id="nttuTitle">國立臺東大學 National Taitung University</title>
+  <desc id="nttuDesc">Campus illustration of National Taitung University (NTTU) Zhiben Main Campus featuring the iconic pyramid-shaped green-roofed Library and Information Center, Jingxin Lake, Central Mountain Range, and Pacific Ocean sunrise.</desc>
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b3b5b"/>
+      <stop offset="55%" stop-color="#1d6fa5"/>
+      <stop offset="100%" stop-color="#f7d08a"/>
+    </linearGradient>
+    <linearGradient id="mountainGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1b4d3e"/>
+      <stop offset="100%" stop-color="#0f2e25"/>
+    </linearGradient>
+    <linearGradient id="greenRoofGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4caf50"/>
+      <stop offset="60%" stop-color="#2e7d32"/>
+      <stop offset="100%" stop-color="#1b5e20"/>
+    </linearGradient>
+    <linearGradient id="concreteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5f5f3"/>
+      <stop offset="100%" stop-color="#cfd4d0"/>
+    </linearGradient>
+    <linearGradient id="lakeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#19647e"/>
+      <stop offset="100%" stop-color="#0d3b4c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Taitung Sky & Pacific Sunrise -->
+  <rect width="1200" height="630" fill="url(#skyGrad)"/>
+  <circle cx="980" cy="155" r="72" fill="#ffe599" opacity="0.9"/>
+  <circle cx="980" cy="155" r="105" fill="#ffe599" opacity="0.25"/>
+
+  <!-- Distant Central Mountain Range & Dulan Mountain Silhouette -->
+  <polygon points="0,440 180,270 390,360 620,235 880,350 1080,285 1200,365 1200,480 0,480" fill="url(#mountainGrad)" opacity="0.72"/>
+  <polygon points="0,460 280,335 540,395 810,310 1200,410 1200,490 0,490" fill="#143a2f" opacity="0.82"/>
+
+  <!-- NTTU Iconic Pyramid Library & Information Center (圖書資訊館) -->
+  <g transform="translate(130, 175)">
+    <!-- Concrete Pyramid Facade & Geometric Windows -->
+    <polygon points="90,305 495,35 895,305" fill="url(#concreteGrad)" stroke="#b0b8b4" stroke-width="3"/>
+    <!-- Sloping Green Grass Roof Walkways -->
+    <polygon points="60,305 495,15 535,35 135,305" fill="url(#greenRoofGrad)"/>
+    <polygon points="495,15 930,305 865,305 470,35" fill="url(#greenRoofGrad)" opacity="0.9"/>
+    <!-- Architectural Window Band -->
+    <polygon points="260,260 495,105 725,260" fill="#1e3f52" opacity="0.92"/>
+    <line x1="380" y1="180" x2="380" y2="260" stroke="#e0e5e2" stroke-width="4"/>
+    <line x1="455" y1="132" x2="455" y2="260" stroke="#e0e5e2" stroke-width="4"/>
+    <line x1="535" y1="132" x2="535" y2="260" stroke="#e0e5e2" stroke-width="4"/>
+    <line x1="610" y1="180" x2="610" y2="260" stroke="#e0e5e2" stroke-width="4"/>
+    <line x1="310" y1="220" x2="680" y2="220" stroke="#e0e5e2" stroke-width="4"/>
+    <!-- Main Entrance Portal -->
+    <rect x="440" y="245" width="110" height="60" rx="4" fill="#0d2636"/>
+  </g>
+
+  <!-- Jingxin Lake (鏡心湖) & Green Lawn -->
+  <rect x="0" y="480" width="1200" height="150" fill="#255f38"/>
+  <path d="M160 500 Q 600 470 1080 510 L 1200 630 L 0 630 Z" fill="url(#lakeGrad)"/>
+  <path d="M480 525 L760 525 M520 555 L720 555 M560 585 L680 585" stroke="#ffe599" stroke-width="2.5" opacity="0.45" stroke-linecap="round"/>
+
+  <!-- Badge & Title Overlay -->
+  <rect x="55" y="45" width="490" height="92" rx="14" fill="#0b3b5b" opacity="0.86" stroke="#81c784" stroke-width="2"/>
+  <text x="82" y="86" font-family="'Noto Sans TC', 'Microsoft JhengHei', sans-serif" font-size="28" font-weight="700" fill="#ffffff" letter-spacing="2">國立臺東大學 NTTU</text>
+  <text x="82" y="116" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="500" fill="#a5d6a7" letter-spacing="1">National Taitung University</text>
+</svg>
