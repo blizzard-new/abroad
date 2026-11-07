@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-07 每日批次：AI 英文改稿／托福缺字兩篇（待建立 PR）
+## 2026-11-07 每日批次：AI 英文改稿／托福缺字兩篇（PR #255 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261107`，基於 main `b5caecf856c184e349ffaecc2ffc384c6615d9a3`。盤點 main 37 篇並重讀相關正文，開始前與提交前所有 open PR、同日任何狀態 PR 均為零。#78、#92 已合併；#247 已於 11/6 UTC 合併，其兩篇已在 main，排除重做。下方歷史待審狀態以本段當日查核優先。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 17：用 AI 改英文作文怎麼做？文法 Prompt、最小修改與原意檢查 | `ai-english-writing-feedback` | 完整文章與驗收完成，待建立本日唯一 PR；後續排除 |
-| 19：托福 Complete the Words 怎麼練？缺字補全、上下文與原創題解析 | `toefl-complete-the-words` | 同批完整文章與驗收完成，待同一個 PR；後續排除 |
+| 17：用 AI 改英文作文怎麼做？文法 Prompt、最小修改與原意檢查 | `ai-english-writing-feedback` | [PR #255](https://github.com/blizzard-new/abroad/pull/255) 待審，完整文章與驗收完成；後續排除 |
+| 19：托福 Complete the Words 怎麼練？缺字補全、上下文與原創題解析 | `toefl-complete-the-words` | 同一個 PR #255 待審，完整文章與驗收完成；後續排除 |
 
 依編輯判斷選題，沒有使用者 Search Console、搜尋量或排名資料。AI 篇深入文法／風格／意思分流，提供三輪 Prompt、最小修改、錯誤回饋辨識與新情境重寫；與自然寫作、四技能總覽、閱讀／單字練習分工。托福篇新增兩段原創短文、八個缺字及上下文／拼字驗算，與四選一詞性、給定片段組句及四科總覽分工，不以品牌、年份或改標題重發。
 
