@@ -1,0 +1,277 @@
+{
+  "slug": "ai-english-writing-feedback",
+  "title": "用 AI 改英文作文怎麼做？文法 Prompt、最小修改與原意檢查",
+  "description": "先自己寫短文，再分開檢查文法、風格與意思。附三輪可填寫 Prompt、英文初稿與訂正對照、錯誤回饋辨識及換句重寫練習。",
+  "category": "申請準備",
+  "published": "2026-11-07",
+  "modified": "2026-11-07",
+  "checked": "2026-11-07",
+  "image": "writing-photo",
+  "image_alt": "手持自動鉛筆的人在膝上的線圈筆記本寫字，右側可見筆電鍵盤。",
+  "image_caption": "寫作與訂正的真實攝影素材，可搭配自己的英文初稿紀錄；畫面不是本文 AI 操作、虛構組員或真實學習成效。",
+  "image_credit": {
+    "photographer": "PNW Production",
+    "source_url": "https://www.pexels.com/photo/a-person-writing-on-a-notebook-8091212/"
+  },
+  "summary": [
+    "先提供用途、時間線與不能改的意思，再請工具找問題；必要訂正和可選風格改寫分開。",
+    "用最小修改解決文法問題，逐句核對人物、時間、不確定性與完成狀態，不能只看改稿是否流暢。",
+    "保存初稿、修改理由與自己的重寫；用新情境驗證，不把 AI 評語當作正式程度或考試成績。"
+  ],
+  "intro": [
+    "用 AI 改英文作文，可以先自己寫一小段，交代想說的事、讀者與時間線，再請工具分類問題、提出最小修改並解釋原因。收到回饋後，把每句對回原意：是修了文法，還是改掉了事實或語氣？最後收起改稿，用不同情境重寫一次，檢查自己是否能用出同一個結構。",
+    "本文專練英文文法訂正與意思核對，與一般自然文風、文章提綱及每日聽說讀寫安排分工。三輪 Prompt 可在自己可用的文字對話介面嘗試；以下短文、訂正與故意設計的錯誤回饋均為 UniWay 原創教學，並非特定模型實際輸出、品牌比較或正式評分。"
+  ],
+  "sections": [
+    {
+      "id": "prepare-the-meaning",
+      "title": "先寫意思備忘：這段話要回報過去，還是交代現在？",
+      "paragraphs": [
+        "不要一開始只貼文章並要求改得更高級。先說明用途、讀者、事件時間，以及哪些內容仍不確定。相同句子在不同情境可能需要不同時態，工具若不知道你要表達的時間線，就可能改出流暢但與事實不符的版本。",
+        "本例是假設組員的進度更新：上週二已開會，當時決定下週測兩個版面；這裡的「下週」指本次寫作日之後的一週。老師只說期限可能改，目前仍未訂教室。以上是自編語言練習，沒有真實課程、老師承諾或場地安排。",
+        "先寫下這四項意思，再讀初稿。若你自己的情境中 next week 是相對於過去會議，而非寫作當下，先補清楚日期或參照點；不要把本文的時間設定自動套到所有文章。準備申請或課堂作業時，也先確認使用規定，練習材料使用自己有權提供的文字。"
+      ],
+      "table": {
+        "caption": "自編範例的意思備忘，後續改稿逐項核對",
+        "headers": [
+          "要保留的內容",
+          "時間／狀態",
+          "不能偷換成什麼"
+        ],
+        "rows": [
+          [
+            "組員開會討論海報",
+            "上週二已發生",
+            "尚未開會或多了一場會議"
+          ],
+          [
+            "決定測兩個版面",
+            "已做決定，測試在本次寫作後的下週",
+            "已完成測試或改成其他數量"
+          ],
+          [
+            "期限可能改",
+            "老師僅提可能性",
+            "已確定改期"
+          ],
+          [
+            "尚未訂教室",
+            "直到現在仍未完成",
+            "已訂好或已取消預約"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-one",
+      "title": "第一輪 Prompt：先分類，不急著重寫整篇",
+      "paragraphs": [
+        "OpenAI 的官方提示建議包括清楚任務、背景及逐輪檢視。用在英文訂正，就是先提供意思備忘，再把文法、風格與資訊缺口分開；這是編輯設計的使用方式，不保證任何工具都會完全照做，也沒有查核或比較付費方案、上傳或語音功能。",
+        "可複製 Prompt：「我想練英文寫作。用途：[用途]；讀者：[對象]；想表達的時間與事實：[意思備忘]；初稿：[自己寫的短文]。請先用『原句／可能的文法問題／可選風格建議／需要我確認的意思』分類，最多挑兩個優先文法問題。先不要整篇重寫，不新增事件、數字、身分或結果。若不確定時間線，先問我；語法可以成立的句子，不要為了修改而說它錯。不要產生正式程度或分數。」",
+        "收到分類後，先回覆真正需要澄清的問題。如果工具把所有時態都判成同一種錯誤，或直接給一篇新的漂亮文章，請它回到逐句分類。寫作學習需要知道哪一種錯會再發生，而不只是取得一份自己無法解釋的成稿。"
+      ],
+      "refs": [
+        "openai-prompt"
+      ]
+    },
+    {
+      "id": "original-draft",
+      "title": "原創初稿：兩處過去式，不代表每句都要改過去",
+      "paragraphs": [
+        "以下是刻意保留問題的自編初稿，請搭配第一節的意思備忘閱讀：「Last Tuesday, my team meet to discuss our poster. We decide to test two layouts next week. Our teacher said the deadline might change. We have not booked a room yet.」先自己圈出需要修改的地方，並說明理由。",
+        "在本例已確認的回報用途下，開會與做決定都是過去事件，因此 meet 改成 met，decide 改成 decided。British Council 的過去簡單式說明涵蓋已發生事件，也列出 meet／met 等不規則形式。這裡的判斷來自原句時間與意思，不能擴張成所有文章出現 decide 都必須改成過去式。",
+        "後兩句先保留。might 在此表達期限改動仍不確定；have not booked ... yet 交代截至現在尚未訂好教室。British Council 的情態動詞與現在完成式資料可核對這兩種用途。不要為了整段看起來「時態一致」，把可能性變成已確定，或把目前狀態強行改成另一個過去時間點。"
+      ],
+      "refs": [
+        "bc-past",
+        "bc-perfect",
+        "bc-might"
+      ],
+      "table": {
+        "caption": "原創初稿的教學訂正，不是模型實測",
+        "headers": [
+          "原句片段",
+          "本例的處理",
+          "為什麼"
+        ],
+        "rows": [
+          [
+            "Last Tuesday, my team meet ...",
+            "meet → met",
+            "已明示過去時間，回報已發生會議"
+          ],
+          [
+            "We decide to test ...",
+            "decide → decided",
+            "意思備忘確認決定已在會議時做出"
+          ],
+          [
+            "the deadline might change",
+            "保留",
+            "仍是不確定的可能性"
+          ],
+          [
+            "We have not booked a room yet.",
+            "保留",
+            "描述到現在仍未完成的事情"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-two-and-revision",
+      "title": "第二輪 Prompt：最小修改，逐句對回原意",
+      "paragraphs": [
+        "可複製 Prompt：「已確認的意思是 [補充後備忘]；我的初稿是 [文字]。請只修正影響正確性或理解的文法問題，以『原句／最小改句／修改理由／意思是否改變』呈現。可選風格建議另列，不直接套用。保留人物、時間參照、數量、可能性與尚未完成的狀態；不把 might 改成確定承諾，不把尚未完成改成完成。最後列出仍需人工核對的地方。」",
+        "本例的教學訂正如下：「Last Tuesday, my team met to discuss our poster. We decided to test two layouts next week. Our teacher said the deadline might change. We have not booked a room yet.」只處理兩處已確認的過去式，其餘意思保留。這不是任何工具的真實輸出，也不是唯一可行的英文寫法。",
+        "核對時先從意思備忘出發，再看每個改動。把 my team 換成 our group 可能只是風格選擇；若兩者都符合你想說的意思，不必把原本的寫法記為文法錯誤。若改稿用了自己不懂的詞，先請工具解釋，再決定是否採用，不因看起來高級就照單全收。"
+      ],
+      "diagram": {
+        "title": "把改稿變成自己學得會的訂正",
+        "steps": [
+          [
+            "寫原意",
+            "交代用途、時間、事實與疑問"
+          ],
+          [
+            "分問題",
+            "文法、風格與資訊缺口分開"
+          ],
+          [
+            "改最少",
+            "針對已確認的問題修改"
+          ],
+          [
+            "核意思",
+            "對照可能性與完成狀態"
+          ],
+          [
+            "換句重寫",
+            "不看成稿，測試結構能否轉用"
+          ]
+        ],
+        "caption": "UniWay 原創英文訂正流程；工具回饋需要逐項核對，沒有正式評分效力。"
+      }
+    },
+    {
+      "id": "check-bad-feedback",
+      "title": "錯誤回饋示例：英文流暢，也可能改掉事實",
+      "paragraphs": [
+        "刻意設計的錯誤改稿：「Our teacher confirmed that the deadline will change, and we booked a room.」它看似通順，卻把老師說可能改期變成已確認，還把尚未訂教室變成已訂好。這些不是修正文法，而是改寫了訊息；此句是自編反例，不是某個模型真的這樣回答。",
+        "OpenAI 的準確性說明提醒，回答可能不正確，也可能在語氣肯定時給出錯誤資訊。英文訂正因此要有兩張檢查表：一句是否合乎文法，以及它是否仍說你原本要說的事。第二張不能由「讀起來很自然」取代。",
+        "可追問：「請把這個改稿逐項對照意思備忘，指出 confirmed、will change、booked 各自增加或改動了什麼。若原文沒有支持，撤回新增內容，只留下必要的文法修正。」回來的第二版也要人工比對，不把一次道歉或重新生成當作查核完成。"
+      ],
+      "refs": [
+        "openai-accuracy"
+      ]
+    },
+    {
+      "id": "prompt-three-and-transfer",
+      "title": "第三輪 Prompt：換情境測試，再記重複錯因",
+      "paragraphs": [
+        "可複製 Prompt：「本輪我確認要練的是 [過去事件／現在仍未完成／其他結構]，錯因是 [自己的說明]。請用不同的虛構生活情境給我兩個短任務，讓我自己寫英文；先只給中文意思，不提供答案、句型或首字提示。等我作答後，依已核對的文法原則指出一個優先問題，再讓我重寫。新題標成自編，不估 CEFR、官方成績或進步幅度。」",
+        "也可先用另一個自編初稿練習：「Yesterday, we finish the survey, but we have not check all the responses yet.」意思是昨天完成問卷工作，但到現在尚未核對完所有回覆。先自己改，再看下一段；這段同樣不是實際研究或學生紀錄。",
+        "參考訂正：「Yesterday, we finished the survey, but we have not checked all the responses yet.」finished 對應已發生事件，checked 是 have not 後的過去分詞。兩個都以 -ed 結尾，不代表結構相同；重點是能解釋句子的時間與狀態，再用新動詞重寫。",
+        "起步先練單一時間點，較穩定後再把過去事件與目前進度放在同一段，最後練如何保留可能性或條件。這是編輯分層，不是正式程度判級。紀錄至少保留初答、確認的錯因、接受的修改與新題第一次表現；不要只保存最後一份乾淨稿。"
+      ],
+      "refs": [
+        "bc-past",
+        "bc-perfect"
+      ],
+      "table": {
+        "caption": "可照填的英文訂正紀錄",
+        "headers": [
+          "初答／用意",
+          "修改分類",
+          "核對結果",
+          "新題重做"
+        ],
+        "rows": [
+          [
+            "[原句與想表達的時間]",
+            "[必要文法／可選風格／待問意思]",
+            "[依據與是否保留原意]",
+            "[新情境、第一次答案、仍不懂之處]"
+          ],
+          [
+            "例：昨天完成，現在仍未查完",
+            "finished 與 have not checked",
+            "兩種時間用途不同，事實未變",
+            "換成寄出資料、仍未收到回覆的情境"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "human-checklist",
+      "title": "接受改稿前，用自己的話說得出修改理由",
+      "paragraphs": [
+        "最後把工具視窗放旁邊，重讀自己的短文，逐句確認人物、事件、時間與立場。再用一句話說明每個必要修改，不能解釋的先留在問題清單，回到可靠文法資料或請教師協助。改稿能看懂，和下一次能獨立寫出來，是不同的學習紀錄。",
+        "若材料是課堂作業、申請或考試答案，先依相關規定確認 AI 可用範圍與揭露要求，不把練習模板直接當成可提交成稿。本文只處理自己可提供的短文訂正；個人資料、他人文件與未授權教材不因方便就貼入。整體英文安排可看相關文章，交換採認仍從母校與目的地工具核對正式要求。"
+      ],
+      "bullets": [
+        "[ ] 用途與時間線已說清楚，未知資訊沒有被補成事實。",
+        "[ ] 必要文法修改與可選風格改寫分開。",
+        "[ ] 人物、數量、可能性和完成狀態保留。",
+        "[ ] 我能解釋修改原因，來源確實可讀。",
+        "[ ] 已用新情境自己重寫，沒有拿聊天評語當成績。"
+      ]
+    }
+  ],
+  "faq": [
+    [
+      "AI 把句子改得更長，就是比較正確嗎？",
+      "不一定。先區分必要訂正與風格選擇，再核對原意；能用自己理解的句子清楚表達，比無法解釋的複雜改稿更適合學習。"
+    ],
+    [
+      "一段回報過去事件，所有句子都要改過去式嗎？",
+      "不一定。本例同時回報過去會議與截至現在尚未訂房的狀態，需要看每句的用途；不要為了表面一致而改掉時間線。"
+    ],
+    [
+      "AI 的英文文法解釋可以直接背嗎？",
+      "先查可核對的文法本文，再用自己的新句驗證。工具可能解釋錯、過度套用規則或改變意思；語氣肯定不等於可靠。"
+    ],
+    [
+      "這些 Prompt 在哪個模型效果最好？",
+      "本篇沒有品牌、模型版本或方案實測，不能給比較結論。它們是可在自己可用文字介面嘗試的教學模板，回覆仍須逐項核對。"
+    ]
+  ],
+  "sources": [
+    {
+      "id": "openai-prompt",
+      "title": "OpenAI：Prompt engineering best practices for ChatGPT",
+      "url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "note": "2026-11-07 實讀，顯示 Updated: 18 days ago；引用明確任務、背景與逐輪修訂原則，不反推確切修訂日，不作功能、方案或品牌效果比較。"
+    },
+    {
+      "id": "openai-accuracy",
+      "title": "OpenAI：Does ChatGPT tell the truth?",
+      "url": "https://help.openai.com/en/articles/8313428-does-chatgpt-tell-the-truth",
+      "note": "2026-11-07 實讀，顯示 Updated: 15 days ago；引用回答可能錯誤、肯定語氣不保證準確及需核對的限制，未以工具／方案描述充作本篇實測。"
+    },
+    {
+      "id": "bc-past",
+      "title": "British Council：Past simple",
+      "url": "https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/past-simple",
+      "note": "2026-11-07 實讀過去事件、規則變化及 meet／met 相關本文；原路徑轉向現行頁，未依賴留言，未見固定修訂日。"
+    },
+    {
+      "id": "bc-perfect",
+      "title": "British Council：Present perfect",
+      "url": "https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/present-perfect",
+      "note": "2026-11-07 實讀 have＋過去分詞、與現在相關用途及 yet 段落；原路徑轉向現行頁，未見固定修訂日。"
+    },
+    {
+      "id": "bc-might",
+      "title": "British Council：may and might",
+      "url": "https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/may-and-might",
+      "note": "2026-11-07 實讀 may／might 表達現在或未來不確定性的本文，原路徑轉向現行頁；只用於本篇已給情境，不把所有情態動詞用途一概化，未見固定修訂日。"
+    }
+  ],
+  "related": [
+    "ai-english-learning",
+    "natural-writing-prompts",
+    "ai-english-reading-practice",
+    "exchange-eligibility"
+  ]
+}
