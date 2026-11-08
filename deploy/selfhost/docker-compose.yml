@@ -125,6 +125,9 @@ services:
       dockerfile: Dockerfile
     image: uniway-app:local
     restart: unless-stopped
+    # Bound the website independently of Docker/WSL's shared memory budget.
+    mem_limit: ${APP_MEMORY_LIMIT:-16g}
+    memswap_limit: ${APP_MEMORY_LIMIT:-16g}
     security_opt:
       - no-new-privileges:true
     depends_on:
@@ -152,8 +155,13 @@ services:
       EXCHANGE_WARM_CACHE_DELAY_SECONDS: "0"
       # Reads stay fresh across app workers; the database is on this host.
       EXCHANGE_ACCOUNT_READ_CACHE_SECONDS: "0"
-      EXCHANGE_WORKER_THREADS: "${APP_THREADS:-16}"
-      EXCHANGE_CATALOGUE_CONCURRENCY: "${APP_CATALOGUE_CONCURRENCY:-2}"
+      EXCHANGE_WORKER_THREADS: "${APP_THREADS:-4}"
+      EXCHANGE_CATALOGUE_CONCURRENCY: "${APP_CATALOGUE_CONCURRENCY:-1}"
+      # Repeated catalogue serialization otherwise leaves large temporary
+      # allocations resident in glibc arenas long after requests finish.
+      MALLOC_ARENA_MAX: "2"
+      MALLOC_TRIM_THRESHOLD_: "131072"
+      MALLOC_MMAP_THRESHOLD_: "131072"
       EXCHANGE_HOSTING_PROFILE: selfhost
       EXCHANGE_SUPABASE_URL: https://gateway
       INTERNAL_CA_FILE: /ca-public/root.crt
