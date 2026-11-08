@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, ASIA, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -149,6 +149,7 @@ NPTU_SOURCE_CHECKED_AT = datetime(2026, 11, 5, tzinfo=timezone.utc)
 NPU_SOURCE_CHECKED_AT = datetime(2026, 11, 4, tzinfo=timezone.utc)
 NTUNHS_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 NTTU_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
+ASIA_SOURCE_CHECKED_AT = datetime(2026, 11, 8, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3796,6 +3797,57 @@ def _nttu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _asia_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理亞洲大學國際事務處（OIA，臺中市霧峰區柳豐路 500 號 行政大樓 L105，電話 04-2332-3456 分機 6271～6279）《亞洲大學學生出國交換生實施辦法》及當期《出國交換學生申請簡章》應繳資料：1. 亞洲大學出國交換學生申請表（須經導師、系所主任及院長簽核）、2. 家長或監護人同意書、3. 中／英文出國讀書計畫書（含申請動機、海外修課規劃、返國學分抵免與生涯規劃）、4. 中／英文自傳（含個人學經歷與國際交流準備）、5. 歷年中英文學業成績單正本（含 GPA 與全系名次百分比證明；學業總平均須達 75 分以上或名列全系前 50%，操行 80 分以上）、6. 有效外語能力檢定證明影本（TOEFL iBT / IELTS / TOEIC / Duolingo / JLPT / TOPIK）、7. 教師推薦信與其他有利審查資料（可同時申請《亞大 318 國際交流亮點計畫》、《雙聯學位獎助學金》或教育部《學海飛颺／惜珠》）。",
+        "study-plan": "撰寫亞洲大學出國交換、跨國雙聯學位（加拿大維多利亞大學 UVic 3+1+1、美國北伊利諾大學 NIU 雙聯、瑞士 BHMS 雙聯、法國蒙彼利埃商學院 MBS 雙聯、英國西蘇格蘭大學 UWS 雙聯、印尼 Airlangga 雙聯、馬來西亞拉曼大學 UTAR 等）及《亞大 318 國際交流亮點計畫》／教育部《學海飛颺／惜珠》必繳之《出國讀書計畫書與自傳》。請具體說明申請動機、擬於志願姊妹校修習之專業領域課程、語言能力準備，以及返國後學分抵免與職涯規劃。",
+        "course-preapproval": "辦理赴國外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《亞洲大學學生出國期間有關學業及學籍處理要點》與《與國外大學辦理雙聯學制實施辦法》規定，出國交換及雙聯期間仍須於亞洲大學辦理註冊並保留學籍；學士班交換生每學期至少修讀 2 門或 6 學分專業課程，雙聯學位生於兩校修業時間須達學士班累計 32 個月、碩士班 12 個月、博士班 24 個月以上）。",
+        "predeparture-notice": "經國際事務處書面審查與口試甄選錄取公告後，須依限繳交錄取確認書與家長同意書、配合國際事務處完成國外姊妹校線上提名與入學申請（Fact Sheet 指定文件、財力證明、健康檢查、護照影本）、辦妥亞洲大學出國選課與在學註冊、簽證、機票及海外醫療與意外保險。",
+        "return-report": "國外交換、雙聯研修或學海築夢海外實習期滿返國後，須依《亞洲大學學生出國交換生實施辦法》、《亞洲大學 318 國際交流亮點計畫補助要點》及教育部《學海計畫》規定，於返國後 2 週至 1 個月內向國際事務處繳交 1,500–2,000 字以上之《出國交換／研修心得報告書》（含研修與生活照片至少 4 張）、國外姊妹校正式成績單、護照出入境章影本及電子機票登機證正本，並配合參加國際事務處舉辦之成果發表或經驗分享會，始得完成結案與獎助學金核銷。",
+        "credit-transfer": "國外交換或雙聯研修期滿返國後，持國外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《亞洲大學學生抵免學分要點》及《學生出國期間有關學業及學籍處理要點》向所屬學系（所）及教務處註冊與課務組申請國外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "亞洲大學").replace("長庚", "亞大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "亞洲大學規定：申請出國交換生須在校學業成績總平均達 75 分（含）以上，或名列全系（所）前 50%，且操行成績達 80 分以上；若同時申請教育部《學海惜珠》，歷年成績須達全班前 40%。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語檢定 CEFR B2（多數歐美亞英語授課盟校與學海飛颺主流基準：TOEFL iBT 72–80 / IELTS 5.5–6.0 / TOEIC 785 / Duolingo 105）",
+                "英語檢定高階（加拿大維多利亞大學 UVic 3+1+1、法國 MBS 商學院、韓國成均館大學 SKKU 等：TOEFL iBT 80–90 / IELTS 6.0–6.5）",
+                "英語檢定 CEFR B1（東南亞姊妹校及亞大 318 計畫基本門檻：TOEIC 550 / TOEFL iBT 42–60 / IELTS 4.5–5.0）",
+                "日語檢定 JLPT（日本近畿大學、關西國際大學、京都先端科學大學 N2；亞細亞大學、長崎外國語大學、東亞大學、穴吹學園 N3；帝京大學 N4）",
+                "韓語檢定 TOPIK（韓國慶熙大學 TOPIK 3 級；成均館大學、韓國外國語大學、釜山外國語大學、大邱大學 TOPIK 2–3 級或英語檢定）",
+            ]
+            field["help_text"] = "依《亞洲大學學生出國交換生實施辦法》、當期《出國交換學校一覽表（Fact Sheet）》及《學海計畫助學金審查要點》填報有效外語檢定成績。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.asia.edu.tw/p/412-1008-258.php?Lang=zh-tw",
+        source_checked_at=ASIA_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="亞洲大學出國交換學生申請表件（含申請表、家長同意書、讀書計畫與 318／學海獎助申請表）" if template.id == "exchange-application-data" else ("亞洲大學出國交換／318 亮點計畫讀書計畫書" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.asia.edu.tw/var/file/8/1008/img/680/351475617.zip" if template.id != "study-plan" else "https://oia.asia.edu.tw/var/file/8/1008/img/693/585720604.docx",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師／指導教授、系（所）主任及院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經國際事務處甄選錄取後完成確認、配合辦理國外姊妹校提名與簽證，並完成亞洲大學在學註冊", "return-report": "返國後 2 週至 1 個月內繳交 1,500–2,000 字以上出國交換／研修心得報告（含照片至少 4 張）並配合經驗分享辦理獎助學金核銷", "credit-transfer": "返國後持國外姊妹校正式成績單正本與課程大綱向系所及教務處註冊與課務組申請學分抵免"}.get(template.id, "於校內收件截止前備齊交換生申請表、家長同意書、讀書計畫、自傳、歷年中英文成績單（含系排名）及外語檢定證明送交國際事務處（行政大樓 L105）"),
+        version="115-2準備工具-2026-11-08.1",
+        destinations=["亞洲大學國際事務處（41354 臺中市霧峰區柳豐路 500 號 行政大樓 L105）"],
+        conditional_note="此為個人準備工具；亞洲大學出國交換每學期定期開放申請（春季班於前一年 9–10 月、秋季班於當年度 2 月截止），申請人須修滿一學期且學業總平均達 75 分以上或全系前 50%。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3932,6 +3984,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntunhs_template(template)) is not None]
     if university.id == NTTU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nttu_template(template)) is not None]
+    if university.id == ASIA.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _asia_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

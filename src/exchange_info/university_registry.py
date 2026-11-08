@@ -2481,7 +2481,49 @@ NTTU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU)
+ASIA = UniversityProfile(
+    id="asia",
+    school_name="亞洲大學",
+    short_name="亞大",
+    english_name="Asia University",
+    aliases=(
+        "asia",
+        "亞洲大學",
+        "亞大",
+        "臺中健康暨管理學院",
+        "台中健康暨管理學院",
+        "ASIA",
+        "Asia University",
+        "Asia University Taiwan",
+        "Asia University, Taiwan",
+    ),
+    hero_image="/static/assets/asia-campus.svg",
+    official_url="https://oia.asia.edu.tw/p/412-1008-258.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合亞洲大學國際事務處（OIA）《2026–2027 出國交換學生甄選簡章與學校一覽表（Fact Sheet）》、《全球合作姊妹校名錄（29 國 106 校）》、《亞洲大學學生出國交換生實施辦法》、《亞洲大學與國外大學辦理雙聯學制實施辦法》、《亞洲大學雙聯學位獎助學金辦法》、《亞洲大學 318 國際交流亮點計畫補助要點》、《亞洲大學學海計畫-選送優秀學生出國研修助學金審查要點》、《學生出國期間有關學業及學籍處理要點》、《學生抵免學分要點》及《出國交換暨學海計畫學生心得報告（12 校 14 篇）》官方資料：（1）校內甄選時程與資格門檻：每學期定期公告學期交換甄選（如 2027 春季班於 2026/10/19 截止收件、2026 秋季班於 2026/02/26 截止收件），限本校具中華民國國籍且修業滿一學期以上之全職在學學生（不含在職專班、延修生及休學生），在校學業總平均須達 75 分以上或名列全系（所）前 50%、操行成績 80 分以上，並具備目標姊妹校要求之外語檢定證明（英語組 TOEFL iBT 60–90 / IELTS 5.5–6.5 / TOEIC 550–800、日語組 JLPT N2–N4、韓語組 TOPIK 2–3 級）。（2）全球 29 國 106 所合作姊妹校與 9 校歐美亞跨國雙聯學位：完整收錄 40 所當期開放申請之學期交換與雙聯學位重點盟校（含加拿大維多利亞大學 UVic 3+1+1、美國北伊利諾大學 NIU 雙聯、美國蒙clair州立大學、瑞士 BHMS 飯店與商業管理學院雙聯、法國蒙彼利埃商學院 MBS 雙聯、英國西蘇格蘭大學 UWS 雙聯、捷克馬薩里克大學與奧斯特拉瓦大學、波蘭華沙經濟大學 SGH、義大利天主教聖心大學、日本近畿大學、日本亞細亞大學、日本關西國際大學、韓國成均館大學 SKKU、韓國慶熙大學、韓國外國語大學 HUFS、新加坡南洋理工大學 NTU、馬來西亞拉曼大學 UTAR 等）及 66 所正式締約姊妹校。（3）多元出國獎助學金與經驗傳承：涵蓋《亞大 318 國際交流亮點計畫》（依地區與天數定額補助機票與生活費）、《雙聯學位獎助學金》（每名最高補助 NT$200,000）、教育部《學海飛颺》、《學海惜珠》、《學海築夢／新南向學海築夢》及 12 所歐美日韓新馬姊妹校共 14 篇歷屆學長姐研修心得。",
+    support_level="full",
+    partner_count_hint=106,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "亞洲大學",
+        "亞大",
+        "ASIAUNIVERSITY",
+        "ASIA UNIVERSITY",
+        "ASIA",
+    ),
+    # https://www.asia.edu.tw/zh_tw/academics — checked 2026-11-08.
+    colleges=(
+        "醫學暨健康學院",
+        "資訊電機學院",
+        "管理學院",
+        "人文社會學院",
+        "創意設計學院",
+        "護理學院",
+        "國際學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, ASIA)
 DEFAULT_UNIVERSITY = CGU
 
 

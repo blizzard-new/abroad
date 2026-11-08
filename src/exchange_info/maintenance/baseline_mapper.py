@@ -111,6 +111,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
         "docs.google.com",
     ],
     "nttu": ["rd.nttu.edu.tw", "aa.nttu.edu.tw", "lc.nttu.edu.tw", "www.nttu.edu.tw", "nttu.edu.tw"],
+    "asia": ["oia.asia.edu.tw", "ac.asia.edu.tw", "www.asia.edu.tw", "asia.edu.tw"],
 }
 
 
@@ -2036,6 +2037,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["nttu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="nttu", partner_rows=nttu_rows, default_cycle_label="115"
+        )
+
+    # 62. ASIA partners.jsonl (106 partner schools)
+    asia_partners_path = official_data_root / "asia" / "partners.jsonl"
+    if asia_partners_path.exists():
+        asia_rows = []
+        for line in asia_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            asia_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.asia.edu.tw/p/412-1008-258.php?Lang=zh-tw",
+            })
+        school_reports["asia"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="asia", partner_rows=asia_rows, default_cycle_label="115"
         )
 
     if store.current_release_id is None:

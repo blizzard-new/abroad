@@ -823,6 +823,7 @@ def create_maintenance_router(
             <option value="npu">國立澎湖科技大學（共 37 所姊妹校）</option>
             <option value="ntunhs">國立臺北護理健康大學（共 84 所姊妹校）</option>
             <option value="nttu">國立臺東大學（共 59 所姊妹校）</option>
+            <option value="asia">亞洲大學（共 106 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -959,7 +960,8 @@ def create_maintenance_router(
     nptu: "國立屏東大學 (NPTU)",
     npu: "國立澎湖科技大學 (NPU)",
     ntunhs: "國立臺北護理健康大學 (NTUNHS)",
-    nttu: "國立臺東大學 (NTTU)"
+    nttu: "國立臺東大學 (NTTU)",
+    asia: "亞洲大學 (ASIA)"
   };
 
   const FIELD_LABELS = {
