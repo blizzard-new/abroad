@@ -368,6 +368,7 @@ window.UniWayHome = (() => {
     renderPlan(host);
     renderTiles(host);
     renderMaps(host);
+    window.UniWayMetro?.render(host);
     const schoolCard = host.querySelector("#home-board-school-description");
     if (schoolCard) schoolCard.textContent = `${activeUniversityProfile().short_name || "校內"}學生的交換申請資訊與討論。`;
     initIcons();
@@ -442,5 +443,5 @@ window.UniWayHome = (() => {
   loadLand();
   // Schools, destination notes and a signed-in student's saved data arrive at different times; the render key makes this cheap.
   window.setInterval(() => { const host = root(); if (host && !host.hidden && !document.hidden) schedule(); }, 1500);
-  return { render: schedule };
+  return { render: schedule, goPartners };
 })();

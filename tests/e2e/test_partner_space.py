@@ -41,10 +41,12 @@ def test_space_globe_drag_zoom_filters_and_route_cleanup(page, live_server, size
     output.mkdir(exist_ok=True)
     page.evaluate('scrollTo(0, 0)')
     page.screenshot(path=str(output / f'globe-{size[0]}.png'), full_page=True)
-    # The whole route has a space background and no enclosing map surface.
+    # The whole route sits in the same world as every page (the theme's ground and the five-line band across the top)
+    # and has no enclosing map surface.
     assert page.locator('#partner-map-panel').evaluate('el => getComputedStyle(el).borderTopWidth') == '0px'
     assert page.locator('#partner-map-panel').evaluate('el => getComputedStyle(el).backgroundColor') == 'rgba(0, 0, 0, 0)'
-    assert page.locator('body').evaluate('el => getComputedStyle(el, "::before").backgroundColor') == 'rgb(6, 12, 27)'
+    assert page.evaluate('getComputedStyle(document.documentElement).backgroundColor') == 'rgb(255, 255, 255)'
+    assert 'data:image/svg+xml' in page.locator('body').evaluate('el => getComputedStyle(el, "::before").backgroundImage')
     page.locator('.pr-facets > summary').click()
     # Native selects are enhanced; use the visible country combobox.
     country = page.get_by_role('combobox', name='國家', exact=True)
@@ -68,8 +70,9 @@ def test_space_globe_drag_zoom_filters_and_route_cleanup(page, live_server, size
     page.locator('[data-partner-view="map"]').click()
     ready(page)
     page.evaluate("document.documentElement.dataset.theme = 'dark'")
-    assert page.locator('body').evaluate('el => getComputedStyle(el, "::before").backgroundColor') == 'rgb(6, 12, 27)'
+    # Night follows the theme: the same dark ground as every other page, not a separate space canvas.
+    page.wait_for_function("() => getComputedStyle(document.documentElement).backgroundColor === 'rgb(17, 21, 28)'")
     page.evaluate("location.hash = '#home'")
     expect(page.locator('#partners')).to_be_hidden()
-    assert page.locator('body').evaluate('el => getComputedStyle(el, "::before").backgroundColor') != 'rgb(6, 12, 27)'
+    assert 'data:image/svg+xml' in page.locator('body').evaluate('el => getComputedStyle(el, "::before").backgroundImage')
     assert not errors

@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-08T00:00:00Z",
+  "title": "Design System: UniWay",
+  "extensions": {
+    "colorMeta": {
+      "ground": {"role": "neutral", "displayName": "Ground", "canonical": "#ffffff", "night": "#11151c", "tonalRamp": ["#11151c","#1a2029","#2f3846","#5d6879","#8d95a3","#d6dae1","#f3f4f6","#ffffff"]},
+      "concourse": {"role": "neutral", "displayName": "Concourse", "canonical": "#f3f4f6", "night": "#1a2029", "tonalRamp": ["#11151c","#1a2029","#2f3846","#5d6879","#8d95a3","#d6dae1","#e9ecf1","#f3f4f6"]},
+      "ink": {"role": "primary", "displayName": "Platform Ink", "canonical": "#1a1d23", "night": "#eef0f4", "tonalRamp": ["#000000","#1a1d23","#2c313a","#454c5a","#6a7282","#8d95a3","#c7cdd8","#eef0f4"]},
+      "ink-2": {"role": "neutral", "displayName": "Ink 2", "canonical": "#454c5a", "night": "#b9c0cc", "tonalRamp": ["#1a1d23","#2c313a","#454c5a","#5a6272","#6a7282","#8d95a3","#b9c0cc","#d6dae1"]},
+      "ink-3": {"role": "neutral", "displayName": "Ink 3", "canonical": "#6a7282", "night": "#8f98a8", "tonalRamp": ["#1a1d23","#454c5a","#5a6272","#6a7282","#8d95a3","#a8afbb","#c7cdd8","#e9ecf1"]},
+      "rule": {"role": "neutral", "displayName": "Rule", "canonical": "#d6dae1", "night": "#2f3846", "tonalRamp": ["#2f3846","#5d6879","#8d95a3","#b3b9c4","#d6dae1","#e3e6eb","#eef0f3","#f3f4f6"]},
+      "rule-strong": {"role": "neutral", "displayName": "Rule Strong", "canonical": "#8d95a3", "night": "#5d6879", "tonalRamp": ["#2f3846","#454c5a","#5d6879","#6a7282","#8d95a3","#a8afbb","#c7cdd8","#d6dae1"]},
+      "board": {"role": "neutral", "displayName": "Station Board", "canonical": "#1a1d23", "night": "#000000", "tonalRamp": ["#000000","#1a1d23","#2c313a","#454c5a","#6a7282","#8d95a3","#c7cdd8","#ffffff"]},
+      "on-board": {"role": "neutral", "displayName": "On Board", "canonical": "#ffffff", "tonalRamp": ["#6a7282","#8d95a3","#aab2c0","#c7cdd8","#d6dae1","#e3e6eb","#f3f4f6","#ffffff"]},
+      "on-board-2": {"role": "neutral", "displayName": "On Board 2", "canonical": "#c7cdd8", "tonalRamp": ["#6a7282","#8d95a3","#aab2c0","#b3b9c4","#c7cdd8","#d6dae1","#e3e6eb","#f3f4f6"]},
+      "line-red": {"role": "secondary", "displayName": "East Asia Red", "canonical": "#d9262c", "night": "#ff5a60", "tonalRamp": ["#5c1013","#8a171b","#b81c22","#d9262c","#ea5a5f","#ff5a60","#ff8a8e","#fdecec"]},
+      "line-orange": {"role": "secondary", "displayName": "Southeast and South Asia Orange", "canonical": "#f2a81d", "night": "#ffbf47", "tonalRamp": ["#4a3000","#7a4e00","#a96f00","#f2a81d","#ffbf47","#ffc24d","#fdd88a","#fdf1d6"]},
+      "line-blue": {"role": "secondary", "displayName": "Europe Blue", "canonical": "#1f6fd1", "night": "#5aa2ff", "tonalRamp": ["#0b1220","#10305e","#165cb4","#1f6fd1","#5aa2ff","#8ebcff","#c3dbfb","#e8f1fc"]},
+      "line-green": {"role": "secondary", "displayName": "Americas Green", "canonical": "#0c7d56", "night": "#38d69b", "tonalRamp": ["#0b1220","#07402d","#0e6a49","#0c7d56","#38d69b","#6fe3b8","#a8efd4","#e1f8ef"]},
+      "line-brown": {"role": "secondary", "displayName": "Oceania, Africa and West Asia Brown", "canonical": "#8c5a2e", "night": "#d2a074", "tonalRamp": ["#2e1c0d","#5a3a1d","#8c5a2e","#a8744a","#d2a074","#e0bc9a","#eed8c3","#f8efe6"]},
+      "red-text": {"role": "secondary", "displayName": "Red Text", "canonical": "#b81c22", "night": "#ff8a8e", "tonalRamp": ["#5c1013","#8a171b","#b81c22","#d9262c","#ea5a5f","#ff8a8e","#ffb7ba","#fdecec"]},
+      "blue-text": {"role": "secondary", "displayName": "Blue Text", "canonical": "#165cb4", "night": "#8ebcff", "tonalRamp": ["#0b1220","#10305e","#165cb4","#1f6fd1","#5aa2ff","#8ebcff","#c3dbfb","#e8f1fc"]},
+      "focus": {"role": "secondary", "displayName": "Focus Blue", "canonical": "#1f6fd1", "night": "#8ebcff", "tonalRamp": ["#0b1220","#10305e","#165cb4","#1f6fd1","#5aa2ff","#8ebcff","#c3dbfb","#e8f1fc"]}
+    },
+    "typographyMeta": {
+      "display": {"displayName": "Display", "purpose": "Home H1 only; 900 weight with a red underline on one span."},
+      "headline": {"displayName": "Headline", "purpose": "Section h2s."},
+      "title": {"displayName": "Title", "purpose": "Board values, station and line names, card headings."},
+      "body": {"displayName": "Body", "purpose": "Section intro text in ink-2."},
+      "label": {"displayName": "Label", "purpose": "Board captions and map sub-labels; 11px floor."}
+    },
+    "shadows": [
+      {"name": "none-at-rest", "value": "none", "purpose": "Containers are flat; depth is the 2px ink outline."},
+      {"name": "menu", "value": "0 6px 18px #1a1d2326", "purpose": "Select menu floating over content."},
+      {"name": "map-popup", "value": "0 8px 22px #1a1d2326", "purpose": "Map preview popup."},
+      {"name": "legacy-soft", "value": "0 1px 2px #1a1d2314", "purpose": "Legacy --uw-shadow-soft / --glass-shadow, still read by older sheets."}
+    ],
+    "motion": [
+      {"name": "line-focus", "value": ".25s ease on opacity", "purpose": "Unfocused lines fade to .18-.25 when a line tag is pressed; disabled under prefers-reduced-motion."},
+      {"name": "station-hover", "value": ".15s ease, scale 1.22", "purpose": "Station dot grows on hover and focus; disabled under prefers-reduced-motion."}
+    ],
+    "breakpoints": [
+      {"name": "board-two-column", "value": "container max-width 1060px"},
+      {"name": "route-sheet", "value": "container (mtstage) max-width 719px"},
+      {"name": "plan-two-column", "value": "container max-width 640px"},
+      {"name": "phone", "value": "viewport max-width 700px"},
+      {"name": "explore-search", "value": "viewport max-width 900px"}
+    ]
+  },
+  "components": [
+    {
+      "name": "Station Board Search",
+      "kind": "input",
+      "refersTo": "board",
+      "description": "Dark search bar of line-topped cells with one orange go button.",
+      "html": "<div class=\"ds-board\"><label class=\"ds-cell\" style=\"--c:#d9262c\"><small>FROM</small><strong>國立中央大學</strong></label><label class=\"ds-cell\" style=\"--c:#f2a81d\"><small>DESTINATION</small><strong>日本</strong></label><label class=\"ds-cell\" style=\"--c:#1f6fd1\"><small>TERM</small><strong>2027 春</strong></label><button class=\"ds-go\">找學校</button></div>",
+      "css": ".ds-board{display:grid;grid-template-columns:1.1fr 1.1fr .8fr auto;background:var(--mt-board,#1a1d23);color:#fff;font-family:var(--mt-font,'UniWay Sign','Noto Sans TC',sans-serif)}.ds-cell{display:grid;gap:2px;min-height:72px;padding:12px 18px 10px;border-top:6px solid var(--c);border-right:1px solid #ffffff33;cursor:pointer}.ds-cell:hover{background:#ffffff14}.ds-cell small{color:#c7cdd8;font-size:11.5px;font-weight:700;letter-spacing:.1em}.ds-cell strong{font:800 17px/1.3 inherit}.ds-go{min-width:150px;padding:0 28px;border:0;background:#f2a81d;color:#1a1d23;font:900 19px/1 inherit;cursor:pointer}.ds-go:hover{background:#ffc24d}.ds-go:focus-visible,.ds-cell:focus-within{outline:3px solid #fff;outline-offset:-3px}"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ink-filled button for every action except search.",
+      "html": "<button class=\"ds-btn\">儲存</button>",
+      "css": ".ds-btn{padding:10px 18px;border:2px solid #1a1d23;border-radius:10px;background:#1a1d23;color:#fff;font:800 15px/1.2 'UniWay Sign','Noto Sans TC',sans-serif;cursor:pointer}.ds-btn:hover{background:#454c5a;border-color:#454c5a}.ds-btn:focus-visible{outline:3px solid #1f6fd1;outline-offset:2px}"
+    },
+    {
+      "name": "Line Tag",
+      "kind": "chip",
+      "refersTo": "line-tag",
+      "description": "Coloured region tag at the end of a line; pressed state is an ink outline.",
+      "html": "<button class=\"ds-line\" aria-pressed=\"false\"><span class=\"ds-line-name\">歐洲線</span><small>Europe · 6 國 · 18 間</small></button>",
+      "css": ".ds-line{display:grid;gap:1px;padding:6px 12px 7px 11px;border:0;border-radius:8px;background:#1f6fd1;color:#fff;text-align:left;cursor:pointer;font-family:'UniWay Sign','Noto Sans TC',sans-serif}.ds-line-name{font-size:15px;font-weight:900}.ds-line small{font-size:12px;font-weight:600}.ds-line[aria-pressed=true]{outline:3px solid #1a1d23;outline-offset:2px}.ds-line:focus-visible{outline:3px solid #1f6fd1;outline-offset:2px}"
+    },
+    {
+      "name": "Station",
+      "kind": "custom",
+      "refersTo": "station",
+      "description": "Station dot: solid when all open, inner dot when some open, hollow when none.",
+      "html": "<div style=\"display:flex;gap:40px;font-family:'UniWay Sign','Noto Sans TC',sans-serif\"><span class=\"ds-st all\"><i></i></span><span class=\"ds-st some\"><i></i></span><span class=\"ds-st none\"><i></i></span></div>",
+      "css": ".ds-st{display:inline-block;position:relative;width:20px;height:20px}.ds-st i{position:absolute;inset:0;box-sizing:border-box;border:4px solid #1a1d23;border-radius:50%;background:#fff;transition:transform .15s ease}.ds-st.all i{background:#1f6fd1}.ds-st.some i::after{content:'';position:absolute;inset:2px;border-radius:50%;background:#1f6fd1}.ds-st:hover i{transform:scale(1.22)}"
+    },
+    {
+      "name": "Ruled Card",
+      "kind": "card",
+      "refersTo": "card-ruled",
+      "description": "Flat card with a 2px ink outline.",
+      "html": "<article class=\"ds-card\"><h3>交換申請指南</h3><p>從資格到文件，一步一步。</p></article>",
+      "css": ".ds-card{padding:20px;border:2px solid #1a1d23;border-radius:12px;background:#fff;color:#1a1d23;font-family:'UniWay Sign','Noto Sans TC',sans-serif}.ds-card h3{margin:0 0 6px;font-weight:900}.ds-card p{margin:0;color:#454c5a;line-height:1.75}.ds-card:hover h3{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}"
+    },
+    {
+      "name": "Nav Rail Item",
+      "kind": "nav",
+      "refersTo": "nav-item-active",
+      "description": "Rail link; the active one is ink-filled.",
+      "html": "<nav class=\"ds-rail\"><a class=\"ds-nav\" aria-current=\"page\">首頁</a><a class=\"ds-nav\">找學校</a></nav>",
+      "css": ".ds-rail{display:grid;gap:4px;width:88px;padding:8px;border:2px solid #1a1d23;border-radius:14px;background:#fff}.ds-nav{padding:10px 6px;border-radius:10px;color:#454c5a;font:800 11px/1.2 'UniWay Sign','Noto Sans TC',sans-serif;text-align:center;cursor:pointer}.ds-nav:hover{background:#f3f4f6;color:#1a1d23}.ds-nav[aria-current=page]{background:#1a1d23;color:#fff}"
+    },
+    {
+      "name": "Next Stop",
+      "kind": "custom",
+      "refersTo": "board",
+      "description": "Board strip announcing the nearest real deadline.",
+      "html": "<a class=\"ds-next\"><span class=\"ds-next-label\">NEXT</span><b>11/30</b><span>中央大學交換申請截止</span></a>",
+      "css": ".ds-next{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding:12px 18px;background:#1a1d23;color:#fff;text-decoration:none;font-family:'UniWay Sign','Noto Sans TC',sans-serif}.ds-next b{font-size:26px;font-weight:900;font-variant-numeric:tabular-nums}.ds-next-label{align-self:center;padding:2px 10px;border-radius:4px;background:#f2a81d;color:#1a1d23;font-size:13px;font-weight:900;letter-spacing:.08em}.ds-next:hover{background:#000}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Route Map From Your Own Campus",
+    "overview": "The home is drawn like a Taipei metro diagram. The student's school is the origin station, each region of the world is a coloured line, each partner country is a station, and the state of a station is drawn rather than implied. One white ground, one near-black ink, five saturated line colours; no gradients, glass or blur. Depth is 2px ink outlines, flat fills and rules.\n\nThe --mt-* properties in metro.css are the source of truth; legacy --uw-* and --glass-* names are remapped onto them so older stylesheets inherit the world. A light day service and a night variant are selected by html[data-theme].\n\nOnly the home was designed as a surface; other routes inherit through tokens plus override blocks.",
+    "keyCharacteristics": [
+      "White ground, ink #1a1d23, five region line colours, no gradients, glass or blur.",
+      "Station-board controls: black bars with a 6px line-coloured top rule per cell and one orange action.",
+      "Heavy gothic (weight 800-900) for every name and heading, in Noto Sans TC self-hosted as UniWay Sign.",
+      "Ruled 2px ink outlines for containers; flat, no resting shadow.",
+      "A five-colour band, 6px tall, fixed at the top of every page."
+    ],
+    "rules": [
+      {"name": "The Colour-Means-Region Rule", "body": "A line colour on a map, chip or tile identifies a region or a tool category. Do not use a line colour as decoration.", "section": "colors"},
+      {"name": "The One Action Rule", "body": "Orange with ink text is the primary search action and the \"next stop\" announcement. Every other button is ink.", "section": "colors"},
+      {"name": "The Ink-On-Orange Rule", "body": "Orange never carries white text; --mt-on-orange is ink in both themes.", "section": "colors"},
+      {"name": "The Heavy Name Rule", "body": "Names, headings and values are 800 or 900. Do not set a heading in a light or regular weight.", "section": "typography"},
+      {"name": "The Signage Floor Rule", "body": "Text is 11px or larger. Small captions stay in ink-2 or on-board-2, never lighter.", "section": "typography"},
+      {"name": "The Flat-On-The-Ground Rule", "body": "Containers sit on the ground with an outline, not a shadow. A shadow appears only on something that floats over content (menu, map popup).", "section": "elevation"}
+    ],
+    "dos": [
+      "Do keep one ground and one ink; draw containers with 2px ink outlines and no resting shadow.",
+      "Do use a line colour only for its region, or for the tool category it already marks, and pair it with its --mt-on-* text colour.",
+      "Do make the primary search action orange with ink text; make every other primary button ink.",
+      "Do set names and headings at weight 800-900 in UniWay Sign, 11px minimum anywhere.",
+      "Do draw state: solid for open, dot for some, hollow for none, and state the same fact in text.",
+      "Do reference --mt-* tokens in new rules and test both data-theme values.",
+      "Do keep the 3px focus outline on every interactive element."
+    ],
+    "donts": [
+      "Don't use gradients, glass, blur or backdrop-filter; they were removed deliberately and background-image: none is enforced on buttons.",
+      "Don't put a line colour behind white text if it fails contrast: orange takes ink text; use red-text and blue-text for small red or blue text.",
+      "Don't add new line colours or recolour a region; an extra hue breaks the map's meaning.",
+      "Don't write new rules against --uw-* or --glass-*; they exist only for old stylesheets.",
+      "Don't put a label above a heading. Kicker and eyebrow elements are hidden by the build; do not reintroduce them.",
+      "Don't add pastel fills, shadowed floating cards or arcs and halos to maps."
+    ]
+  }
+}

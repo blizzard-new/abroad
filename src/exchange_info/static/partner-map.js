@@ -94,9 +94,14 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     type: "Feature", properties: { name: f.properties.name.normalize("NFD").replace(/[^\x20-\x7E]/g, "") },
     geometry: { type: "Point", coordinates: [f.properties.label_lon, f.properties.label_lat] },
   })) };
-  // Space remains the canvas in either site theme. Globe projection keeps real
-  // school coordinates, clustering and keyboard/touch navigation on one engine.
-  const colors = { sea: "#0b3356", land: "#427c83", border: "#91c4be", label: "#ffffff", halo: "#14354c", water: "#0b3356", coast: "#57bbcf", grid: "#95c8eb" };
+  // The globe follows the site theme: daylight is white land on pale sea with an ink coastline, night keeps the dark sea.
+  // Globe projection keeps real school coordinates, clustering and keyboard/touch navigation on one engine.
+  const PALETTES = {
+    light: { sea: "#e3eefb", land: "#ffffff", border: "#8d95a3", label: "#1a1d23", halo: "#ffffff", water: "#e3eefb", coast: "#1a1d23", grid: "#1a1d23", coastWidth: 1.6, coastBlur: 0, coastOpacity: .9, gridOpacity: .12 },
+    dark: { sea: "#0b1220", land: "#2a3340", border: "#5d6879", label: "#eef0f4", halo: "#0b1220", water: "#0b1220", coast: "#5aa2ff", grid: "#8f98a8", coastWidth: 5, coastBlur: 2, coastOpacity: .48, gridOpacity: .2 },
+  };
+  const themeName = () => (document.documentElement.dataset.theme === "dark" ? "dark" : "light");
+  let colors = PALETTES[themeName()];
   const globalCamera = () => {
     const width = canvasHost.clientWidth || 960, height = canvasHost.clientHeight || 600;
     return { center: [120, 22], zoom: Math.max(.25, Math.min(2.5, Math.log2(Math.min(width * .88, height * .88) * Math.PI / 512))), bearing: 0, pitch: 0 };
@@ -121,8 +126,8 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
         sources: { countries: { type: "geojson", data: countries }, labels: { type: "geojson", data: labels }, lakes: { type: "geojson", data: lakes }, rivers: { type: "geojson", data: rivers }, graticule: { type: "geojson", data: graticule() } },
         layers: [
           { id: "ocean", type: "background", paint: { "background-color": colors.sea } },
-          { id: "graticule", type: "line", source: "graticule", maxzoom: 5, paint: { "line-color": colors.grid, "line-width": .65, "line-opacity": .2 } },
-          { id: "coast-shelf", type: "line", source: "countries", paint: { "line-color": colors.coast, "line-width": 5, "line-blur": 2, "line-opacity": .48 } },
+          { id: "graticule", type: "line", source: "graticule", maxzoom: 5, paint: { "line-color": colors.grid, "line-width": .65, "line-opacity": colors.gridOpacity } },
+          { id: "coast-shelf", type: "line", source: "countries", paint: { "line-color": colors.coast, "line-width": colors.coastWidth, "line-blur": colors.coastBlur, "line-opacity": colors.coastOpacity } },
           { id: "land", type: "fill", source: "countries", paint: { "fill-color": colors.land } },
           { id: "country-hover", type: "fill", source: "countries", filter: ["==", ["get", "name"], ""], paint: { "fill-color": "#ffffff", "fill-opacity": .18, "fill-opacity-transition": { duration: 180 } } },
           { id: "lakes", type: "fill", source: "lakes", paint: { "fill-color": colors.water } },
@@ -133,6 +138,20 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
       },
     });
   } catch (error) { canvasHost.replaceChildren(); throw error; }
+  // Switching the site theme repaints the globe in place; nothing is reloaded.
+  function applyPalette() {
+    colors = PALETTES[themeName()];
+    const set = (layer, property, value) => { if (map.getLayer(layer)) map.setPaintProperty(layer, property, value); };
+    set("ocean", "background-color", colors.sea);
+    set("graticule", "line-color", colors.grid); set("graticule", "line-opacity", colors.gridOpacity);
+    set("coast-shelf", "line-color", colors.coast); set("coast-shelf", "line-width", colors.coastWidth);
+    set("coast-shelf", "line-blur", colors.coastBlur); set("coast-shelf", "line-opacity", colors.coastOpacity);
+    set("land", "fill-color", colors.land); set("lakes", "fill-color", colors.water); set("rivers", "line-color", colors.water);
+    set("borders", "line-color", colors.border);
+    set("country-labels", "text-color", colors.label); set("country-labels", "text-halo-color", colors.halo);
+  }
+  const themeWatch = new MutationObserver(() => { if (map.isStyleLoaded()) applyPalette(); else map.once("load", applyPalette); });
+  themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   let loaded = false, disposed = false, visible = true, failed = false;
   let current = { partners: [], home: null, filterKey: "", country: "" };
   let dataKey = "", cameraKey = null, selectedName = "", lastFocus = null, homeMarker = null, homeKey = "", hoveredName = "";
@@ -251,10 +270,11 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     $("#map-home").disabled = !usable;
     $("#map-home").title = usable ? home.school_name : "所屬大學座標待確認";
     const homeStatus = $("#partner-map-home-status");
-    homeStatus.textContent = usable ? `★ ${home.school_name}：${home.location.city || "母校"}代表位置已核對。` : `★ ${home?.school_name || "所屬大學"}座標待確認；合作校與申請資訊仍可瀏覽。`;
+    homeStatus.textContent = usable ? `${home.school_name}：${home.location.city || "母校"}代表位置已核對。` : `${home?.school_name || "所屬大學"}座標待確認；合作校與申請資訊仍可瀏覽。`;
     if (!usable) return;
     const button = document.createElement("button"); button.type = "button"; button.className = "map-home-marker";
-    const star = document.createElement("span"); star.textContent = "★"; star.setAttribute("aria-hidden", "true");
+    const star = document.createElement("span"); star.setAttribute("aria-hidden", "true");
+    star.innerHTML = '<svg class="mt-star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg>';
     const text = document.createElement("span"); text.textContent = home.short_name || home.school_name;
     button.append(star, text); button.setAttribute("aria-label", `${current.homeSelected ? "我的大學" : "瀏覽中的出發學校"}：${home.school_name}`);
     button.onclick = homeView;
@@ -454,7 +474,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     },
     setVisible(next) { visible = next; if (next) { map.resize(); } else { map.stop(); popup.remove(); } syncMotion(); },
     destroy() {
-      stopMotion(); disposed = true; clearTimeout(timer); resize.disconnect(); intersection.disconnect(); homeMarker?.remove(); popup.remove();
+      stopMotion(); disposed = true; clearTimeout(timer); resize.disconnect(); intersection.disconnect(); themeWatch.disconnect(); homeMarker?.remove(); popup.remove();
       motionButton.removeEventListener("click", toggleMotion); reducedMotion.removeEventListener("change", syncMotion); document.removeEventListener("visibilitychange", syncMotion);
       canvasHost.removeEventListener("mouseleave", leave); $("#partner-map-panel").removeEventListener("keydown", escape);
       select.removeEventListener("change", onSelect); $("#map-global").removeEventListener("click", globalView); $("#map-home").removeEventListener("click", homeView); $("#map-gaps-open").removeEventListener("click", openGaps); list.removeEventListener("click", onListClick);
