@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-08 每日批次：托福訪談／多益句子填入兩篇（待建立 PR）
+## 2026-11-08 每日批次：托福訪談／多益句子填入兩篇（PR #266 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261108`，基於 main `b5caecf856c184e349ffaecc2ffc384c6615d9a3`。盤點 main 37 篇及待審兩篇，重讀相關正文與 workflow；核對全部 11 個 open PR #255–#265 的說明與完整變更清單。#256–#265 只有資料稽核提案，#255 的 `ai-english-writing-feedback`、`toefl-complete-the-words` 仍待審，已選並排除，不納入本批。開始前無同日分支／任何狀態同日 PR。#78、#92 已合併，無未合併基礎相依。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 19：托福 Take an Interview 怎麼答？口說展開、原創模擬題與錄音訂正 | `toefl-take-an-interview` | 完整文章與驗收完成；待建立本日唯一 PR，後續排除 |
-| 20：多益 Part 6 句子填入怎麼判斷？段落銜接、指涉與原創題組 | `toeic-part-six-sentence-insertion` | 同批完整文章與驗收完成，待同一個 PR，後續排除 |
+| 19：托福 Take an Interview 怎麼答？口說展開、原創模擬題與錄音訂正 | `toefl-take-an-interview` | [PR #266](https://github.com/blizzard-new/abroad/pull/266) 待審，完整文章與驗收完成；後續排除 |
+| 20：多益 Part 6 句子填入怎麼判斷？段落銜接、指涉與原創題組 | `toeic-part-six-sentence-insertion` | 同一個 PR #266 待審，完整文章與驗收完成；後續排除 |
 
 依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。訪談篇以四個原創問題、弱稿修改、換任務回答與錄音訂正，練即時原創回答，與重述、交換甄選面試及四科總覽分工。Part 6 篇以兩份原創文件、八個選項解析及開放換題處理整句銜接，與 Part 5 詞形及 Part 7 跨文件證據分工，不以品牌／年份改標題重發。
 
