@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, TTU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -149,6 +149,7 @@ NPTU_SOURCE_CHECKED_AT = datetime(2026, 11, 5, tzinfo=timezone.utc)
 NPU_SOURCE_CHECKED_AT = datetime(2026, 11, 4, tzinfo=timezone.utc)
 NTUNHS_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 NTTU_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
+TTU_SOURCE_CHECKED_AT = datetime(2026, 11, 8, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3796,6 +3797,57 @@ def _nttu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ttu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理大同大學（研究發展處國際暨兩岸事務組 OIA，104 臺北市中山區中山北路三段 40 號，電話 02-2182-2928 轉 7546／7548）《大同大學學生申請出國進修辦法》及當期《交換生申請及審查表》應繳資料（每梯次最多選填 2 所志願學校，先送系所初審後轉交國際暨兩岸事務組複審）：1. 大同大學交換生申請及審查表（含讀書計畫，須經導師／指導教授及系所主任簽核）、2. 大同大學交換生家長同意書、3. 中、英文歷年學業成績單正本（含歷年 GPA 及排名，歷年學業總平均須達 GPA 3.0／約 75 分以上，英國布魯內爾雙聯須 70 分以上）、4. 有效外語能力檢定證明影本（英語組 TOEIC 500–800／TOEFL iBT 68–80／IELTS 5.5–6.5、日語組 JLPT N1–N4、韓語組 TOPIK 2–3 級、德語組 B1–B2；大陸姊妹校免附外語檢定）、5. 其他有利審查文件（雙聯學位另檢附雙聯申請文件與作品集）。",
+        "study-plan": "撰寫大同大學出國進修交換、跨國雙聯學位（美國密西根大學迪爾伯恩分校 UM-Dearborn 3+2／4+1、德國康斯坦茨應用科技大學 HTWG Konstanz 雙聯碩士、英國布魯內爾大學 Brunel 4+1／1+1 雙聯碩士、日本宇都宮大學 1+1、日本千葉大學、京都工藝纖維大學、信州大學、山形大學、韓國仁川大學 2+2）及《林挺生校長世界公民獎學金》／教育部《學海飛颺／惜珠》必繳之《中、外文讀書計畫（含修課規劃及出國動機）》（占校內量化審查總分 20%，在校成績 40%＋語文能力 40%＋讀書計畫 20%，總分達 70 分以上始得推薦）。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《大同大學學生申請出國進修辦法》與《與境外大學辦理雙聯學位制實施辦法》規定，出國進修交換期間仍須於大同大學辦理註冊並繳交全額學雜費以保留學籍；雙聯學位生須符合兩校學分規定始得分別獲頒學位）。",
+        "predeparture-notice": "經系所初審及國際暨兩岸事務組量化審查（總分 70 分以上）錄取公告後，須依限完成錄取確認、配合國際暨兩岸事務組辦理姊妹校線上提名與入學申請（如日本在留資格認定證明書 COE、韓國入學許可、歐美 I-20／CAS／簽證文件、大陸入學通知書與台胞證）、辦妥大同大學註冊選課、役男出境核准及海外醫療與意外保險。",
+        "return-report": "境外交換、雙聯研修或學海築夢海外實習期滿返國後，須依《大同大學學生申請出國進修辦法》及《選送優秀學生出國研修獎助學金辦法》規定，於返國後 1 個月內（教育部學海計畫為返國後 2 週內）向研究發展處國際暨兩岸事務組繳交《出國交換／雙聯研修心得報告》電子檔（含境外學習與生活照片，供刊登於《人在他鄉大同人》部落格 https://tatunguni.pixnet.net/blog）、境外姊妹校正式成績單、護照出入境紀錄及登機證正本，並配合出席經驗分享會，始得辦理結案與獎助學金核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《大同大學學生申請出國進修辦法》及教務處學分抵免規定，向所屬學系（所）及教務處註冊組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "大同大學").replace("長庚", "大同")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "大同大學規定：報名出國交換或雙聯須於本校就讀滿一學年以上（大二以上或碩博在學），歷年學業總平均須達 GPA 3.0（約 75 分）以上（英國布魯內爾大學雙聯須達 70 分以上）；校內甄選採量化書面審查：在校成績 40%＋語文能力 40%＋讀書計畫 20%，總分達 70 分以上始得推薦。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語檢定（歐美英語授課交換與雙聯：TOEIC 500–800 / TOEFL iBT 68–80 / TOEFL ITP 520 / IELTS 5.5–6.5）",
+                "日語檢定 JLPT（日本千葉、信州、早稻田、岡山、同志社等 N1–N2；近畿、武藏野、京都精華等 N3；東京電機、芝浦工大、宇都宮等 N4 或英語授課）",
+                "韓語檢定 TOPIK（韓國高麗、建國、慶熙、弘益、世宗、梨花女子、仁川雙聯等 TOPIK 2–3 級或英語授課）",
+                "德語／歐語檢定（德國康斯坦茨 HTWG Konstanz、歐芬堡 Offenburg、科堡 Coburg 等德語 B1–B2 或英語 B2）",
+                "大陸地區姊妹校交換（北科大、西安交大、蘭州大學、廈門大學、南京理工等 12 校中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依《大同大學學生申請出國進修辦法》及當期《交換生申請及審查表》填報有效語言能力證明（語文能力占審查總分 40%）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ttu.edu.tw/p/406-1071-44122,r568.php?Lang=zh-tw",
+        source_checked_at=TTU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="大同大學交換生申請及審查表（含讀書計畫及家長同意書）" if template.id == "exchange-application-data" else ("大同大學交換生申請及審查表—讀書計畫欄" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ttu.edu.tw/var/file/71/1071/img/1271/862997280.zip",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師／指導教授及系（所）主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經量化審查（總分 70 分以上）錄取後完成確認、配合國際暨兩岸事務組辦理姊妹校提名與簽證，並完成大同大學註冊", "return-report": "返國後 1 個月內繳交出國交換／雙聯研修心得報告（供刊登於《人在他鄉大同人》部落格）並配合經驗分享辦理獎助學金核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分抵免"}.get(template.id, "於校內收件截止（第一波或第二波下午 4:00）前備齊交換生申請及審查表、家長同意書、歷年成績單及語檢證明先送系所審查，再轉交研究發展處國際暨兩岸事務組"),
+        version="115-2準備工具-2026-11-08.1",
+        destinations=["大同大學研究發展處國際暨兩岸事務組（104 臺北市中山區中山北路三段 40 號）"],
+        conditional_note="此為個人準備工具；大同大學出國交換每學期分第一波與第二波收件，每梯次最多選填 2 所志願，採量化審查（在校成績 40%＋語文能力 40%＋讀書計畫 20%，70 分及格）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3932,6 +3984,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntunhs_template(template)) is not None]
     if university.id == NTTU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nttu_template(template)) is not None]
+    if university.id == TTU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ttu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

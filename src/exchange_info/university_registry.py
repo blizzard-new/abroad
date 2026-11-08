@@ -2481,7 +2481,45 @@ NTTU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU)
+TTU = UniversityProfile(
+    id="ttu",
+    school_name="大同大學",
+    short_name="大同",
+    english_name="Tatung University",
+    aliases=(
+        "ttu",
+        "大同大學",
+        "大同",
+        "私立大同大學",
+        "大同工學院",
+        "TTU",
+        "Tatung University",
+        "Tatung",
+    ),
+    hero_image="/static/assets/ttu-campus.svg",
+    official_url="https://oia.ttu.edu.tw/",
+    coverage_note="完整支援：已整合大同大學國際暨兩岸事務處《2027 春季／2026 秋季／2026 春季／2025 秋季赴外交換及雙聯學位甄選公告》、《115 年度教育部學海飛颺與學海惜珠簡章及候補申請公告》、《全球與兩岸締約姊妹校名錄（104校）》、《交換學生計畫實施辦法（rid=1049）》、《與境外大學校院辦理雙聯學制實施辦法（rid=232）》、《學生出國期間有關學業及學籍處理要點（rid=225）》、《學生抵免學分辦法（rid=224）》、《校友捐助國際交流專案獎助學金辦法（rid=1124）》、《鼓勵學生出國交換研修助學金辦法（rid=1045）》、《學生暑期赴境外語言學習助學金辦法（rid=1129）》及《人在他鄉大同人（痞客邦官方交換網誌 28 校 146 篇）》官方資料：（1）兩階段校內甄選、量化評分與至多 2 志願規定：每學期分第一階段与第二階段收件（秋季班約 2 月下旬／3 月上旬 16:00 截止；春季班約 9 月上旬／10 月中旬 16:00 截止），每人每階段至多選填 2 個志願；申請人須為本校正式學籍在學學生（不含在職專班），實際出國時須在大同大學就讀滿一學年以上（即大二以上、碩士班或博士班），歷年學業總平均達 GPA 3.0（百分制約 75 分）以上（英國倫敦布魯內爾大學 Brunel 1+1／4+1 雙聯達 70 分以上即可）；校內甄選採量化審查「在校成績 40% + 語文能力 40% + 讀書計畫 20%」，總分達 70 分以上始得推薦，第一階段獲推薦者不得放棄並改申請第二階段，簽署家長同意書及本人聲明書後無故放棄者兩年內不得再申請；交換期間須維持大同在學註冊並繳交全額學雜費（免繳接待校學費）。（2）全球 20 國／地區 104 所合作姊妹校與英美德法澳日 9 校跨國雙聯學位：完整收錄 53 所常態開放申請之交換與雙聯合作校（含日本京都工藝纖維大學、千葉大學、東京都市大學、芝浦工業大學、東京電機大學、長岡造形大學、札幌市立大學、東北工業大學、岡山大學、熊本大學、琉球大學、縣立廣島大學、同志社大學、專修大學等 22 所日本名校，德國斯圖加特應用科技大學 HFT Stuttgart、奧斯納布魯克應用科技大學、德根多夫應用科技大學 DIT、巴登符騰堡雙元制大學 DHBW、卡爾斯魯厄應用科技大學 HKA，芬蘭東南芬蘭應用科技大學 Xamk，法國貢比涅科技大學 UTC，韓國仁川大學，泰國法政大學 SIIT，美國匹茲堡州立大學 PSU 及大陸 12 所重點高校），以及美國愛荷華州立大學 ISU（1+1／3.5+1.5）、韋恩州立大學 WSU（1+1 碩士，每名大同生享 USD 3,000/學期獎學金）、拉瑪大學 Lamar（1+1 免 GRE）、英國密德薩斯大學 Middlesex（3+1／1+1／3+1.5）、倫敦布魯內爾大學 Brunel（1+1／4+1 數位設計與 AI，每年 10 名享 15% 學費減免）、德國 HFT Stuttgart（1+1 雙碩士）、法國 ESIEE-Amiens / UniLaSalle（1+1 雙碩士）、澳洲紐卡索大學（1+1 雙碩士）與日本千葉大學雙聯學位。（3）豐厚校友捐助獎助與返國心得：涵蓋教育部《學海飛颺／惜珠》（申請學海自動聯審《大同大學校友捐助國際交流獎助學金》）、電機系 66 級校友捐助《鼓勵學生出國交換研修助學金》（最高 NT$100,000）、《暑期赴境外語言學習助學金》（最高 NT$50,000），並收錄《人在他鄉大同人》官方網誌 28 所合作大學共 146 篇歷屆學長姐交換與雙聯心得報告。",
+    support_level="full",
+    partner_count_hint=104,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "大同大學",
+        "TATUNGUNIVERSITY",
+        "TATUNG UNIVERSITY",
+        "TTU",
+    ),
+    # https://www.ttu.edu.tw/p/412-1000-99.php?Lang=zh-tw — checked 2026-11-08.
+    colleges=(
+        "工程學院",
+        "電機資訊學院",
+        "經營學院",
+        "設計學院",
+        "國際學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, TTU)
 DEFAULT_UNIVERSITY = CGU
 
 

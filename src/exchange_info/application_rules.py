@@ -68,6 +68,7 @@ from .nptu_eligibility import is_nptu, nptu_academic_check, nptu_degree_check, n
 from .npu_eligibility import is_npu, npu_academic_check, npu_degree_check, npu_language_check
 from .ntunhs_eligibility import is_ntunhs, ntunhs_academic_check, ntunhs_degree_check, ntunhs_language_check
 from .nttu_eligibility import is_nttu, nttu_academic_check, nttu_degree_check, nttu_language_check
+from .ttu_eligibility import is_ttu, ttu_academic_check, ttu_degree_check, ttu_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -871,6 +872,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_ttu(request.home_school):
+        deg_status, deg_detail = ttu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -1288,6 +1294,12 @@ def _eligibility_checks(
             "academic_score", status, "臺東大學出國交換甄選書審（50%）＋面試（50%）與出國進修獎助學金／學海飛颺（學士班各學期班排前 50% 或總平均 80 分以上、碩博系所推薦）門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_ttu(request.home_school):
+        status, detail = ttu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "大同大學學生申請出國進修辦法（歷年學業總平均 GPA 3.0／約 75 分以上、布魯內爾雙聯 70 分以上）與量化審查（在校成績 40%＋語文能力 40%＋讀書計畫 20%，總分 70 分及格）門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1514,6 +1526,9 @@ def _eligibility_checks(
     if is_nttu(request.home_school):
         home_status, home_detail = nttu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "臺東大學外語能力基準（出國進修獎助學金學士班 CEFR B1［TOEIC 550／iBT 42／IELTS 4.0／JLPT N2–N4］、碩博 CEFR B2、日本姊妹校 JLPT N1–N3、韓國 TOPIK 2–3級）與大陸姊妹校免語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_ttu(request.home_school):
+        home_status, home_detail = ttu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "大同大學語文能力標準（語文能力占審查 40%：英語組 TOEIC 500–800／TOEFL iBT 68–80／IELTS 5.5–6.5、日語組 JLPT N1–N4、韓語組 TOPIK 2–3級、德語組 B1–B2）與大陸姊妹校免語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",
