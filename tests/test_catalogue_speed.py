@@ -147,8 +147,15 @@ def test_the_warm_up_builds_the_dashboards_before_the_first_visitor_asks(counted
     for name in ("_reference_translations", "_bundled_machine_translations", "_display_patterns", "_identifier_pattern"):
         monkeypatch.setattr(public_translation, name, lambda: None)
     monkeypatch.setattr(api, "CACHE_WARM_UP_DELAY_SECONDS", 0)
+    unrequested_loads = []
+    def not_requested(*args, **kwargs):
+        unrequested_loads.append(True)
+        return []
+    monkeypatch.setattr(api, "load_bundled_application_workflows", not_requested)
+    monkeypatch.setattr(api, "fetch_ntpu_partner_universities", not_requested)
     with TestClient(api.create_app(data_dir)) as client:
         _wait_for_warm_up(client)
+        assert not unrequested_loads, "Unrequested catalogues must not load at startup"
         assert calls["dashboard"] == 1, "the warm-up built the CGU dashboard"
         assert client.get("/student-dashboard", params={"school": CGU}).status_code == 200
         assert calls["dashboard"] == 1, "so the first visitor did not have to"

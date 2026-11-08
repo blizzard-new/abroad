@@ -4,6 +4,7 @@ from .destination_tips import DestinationGuide, DestinationGuideSummary, guide_f
 from .discovery import localize_experience_digest
 from .experience_digests import attach_digests, load_digests, with_bundled_sources
 from .public_translation import PublicTranslationBatch, translate_public_batch
+from .dashboard_cache import DashboardResponseCache
 from .school_content import complete_destination_profile
 from .ncu_document_conditions import preparation_state_key
 
@@ -2210,7 +2211,7 @@ def create_app(
     dashboard_cache_lock = threading.Lock()
     dashboard_build_lock = threading.Lock()  # one build at a time: a second visitor waits for it instead of repeating it
     dashboard_refreshing: set[str] = set()
-    dashboard_response_cache: dict[tuple, tuple[bytes, bytes, str]] = {}
+    dashboard_response_cache = DashboardResponseCache()
     dashboard_response_builds: dict[tuple, Future[tuple[bytes, bytes, str]]] = {}
     dashboard_response_lock = threading.Lock()
     dashboard_response_ready: set[str] = set()
@@ -2659,9 +2660,7 @@ def create_app(
                 f'W/"{hashlib.sha256(raw).hexdigest()}"',
             )
             with dashboard_response_lock:
-                while len(dashboard_response_cache) >= 96:
-                    dashboard_response_cache.pop(next(iter(dashboard_response_cache)))
-                dashboard_response_cache[key] = result
+                dashboard_response_cache.put(key, result)
                 dashboard_response_ready.add(university.id)
             pending.set_result(result)
             return result
@@ -2673,10 +2672,10 @@ def create_app(
                 dashboard_response_builds.pop(key, None)
 
     async def warm_catalogue_caches() -> None:
-        """Do the slow first-time work now, so the first visitor after a restart does not wait for it.
+        """Warm the landing flow; load other schools and workflows on demand.
 
-        On the free host that work took close to a minute of CPU (checking thousands of bundled translations, merging the
-        workflow catalogue, building each school's dashboard). It only has to happen once per process.
+        Eagerly loading all 66 catalogues in every worker multiplies the entire
+        source graph by the worker count before any visitor requests it.
         """
         from . import public_translation
 
@@ -2686,7 +2685,6 @@ def create_app(
             public_translation._bundled_machine_translations,
             public_translation._display_patterns,
             public_translation._identifier_pattern,
-            load_bundled_application_workflows,
         ]
         warm_base_url = (
             os.environ.get("EXCHANGE_PUBLIC_BASE_URL", "").strip().rstrip("/")
@@ -2694,20 +2692,11 @@ def create_app(
             or "http://localhost"
         )
         # The promoted landing flow opens CGU first. Make its serialized public
-        # response ready before slower translation and all-school background work.
+        # response ready before slower translation work.
         steps.insert(
             0,
             partial(cached_dashboard_response, CGU, base_url=warm_base_url),
         )
-        for university in SUPPORTED_UNIVERSITIES:
-            steps.extend([
-                partial(partners_for_university, university),
-                partial(workflows_for_university, university),
-            ])
-            if university.id != CGU.id:
-                steps.append(
-                    partial(cached_dashboard_response, university, base_url=warm_base_url)
-                )
         started = time.monotonic()
         for step in steps:
             try:
