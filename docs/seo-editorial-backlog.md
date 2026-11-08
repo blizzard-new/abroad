@@ -1,5 +1,18 @@
 # Editorial intentions and next topics
 
+## 2026-11-08 每日批次：托福訪談／多益句子填入兩篇（PR #266 待審）
+
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261108`，基於 main `b5caecf856c184e349ffaecc2ffc384c6615d9a3`。盤點 main 37 篇及待審兩篇，重讀相關正文與 workflow；核對全部 11 個 open PR #255–#265 的說明與完整變更清單。#256–#265 只有資料稽核提案，#255 的 `ai-english-writing-feedback`、`toefl-complete-the-words` 仍待審，已選並排除，不納入本批。開始前無同日分支／任何狀態同日 PR。#78、#92 已合併，無未合併基礎相依。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 19：托福 Take an Interview 怎麼答？口說展開、原創模擬題與錄音訂正 | `toefl-take-an-interview` | [PR #266](https://github.com/blizzard-new/abroad/pull/266) 待審，完整文章與驗收完成；後續排除 |
+| 20：多益 Part 6 句子填入怎麼判斷？段落銜接、指涉與原創題組 | `toeic-part-six-sentence-insertion` | 同一個 PR #266 待審，完整文章與驗收完成；後續排除 |
+
+依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。訪談篇以四個原創問題、弱稿修改、換任務回答與錄音訂正，練即時原創回答，與重述、交換甄選面試及四科總覽分工。Part 6 篇以兩份原創文件、八個選項解析及開放換題處理整句銜接，與 Part 5 詞形及 Part 7 跨文件證據分工，不以品牌／年份改標題重發。
+
+原有 37 篇內容、URL、published 與 lastmod 不變，本分支共 39 篇；待審 #255 兩篇保持原批次。10/30 `exchange-study-plan` 擴充仍保留 `97de3fda`，候選 15 無實測，不捏造工具比較。來源、已重查授權的真實照片、HTML 圖解、FAQ 與驗收證據見[本批紀錄](seo-editorial-validation-2026-11-08.md)。下方歷史待審描述，以本段當日核對及 #255 保留狀態優先。161 項 SEO 測試、49 項 E2E、六組無 JavaScript 閱讀及 wheel 69 檔核對通過，無重跑。本批兩篇同屬本日唯一待審 PR，未合併或部署。
+
 ## 2026-11-07 每日批次：AI 英文改稿／托福缺字兩篇（PR #255 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261107`，基於 main `b5caecf856c184e349ffaecc2ffc384c6615d9a3`。盤點 main 37 篇並重讀相關正文，開始前與提交前所有 open PR、同日任何狀態 PR 均為零。#78、#92 已合併；#247 已於 11/6 UTC 合併，其兩篇已在 main，排除重做。下方歷史待審狀態以本段當日查核優先。
