@@ -1446,19 +1446,24 @@ const SCHOOL_BADGES = {
 };
 const SCHOOL_EMBLEM_FILES = {};
 
-function schoolBadge(item) {
+// Schools without a preset tint take the next hue of a wheel that never puts two neighbours in the same colour, so every
+// school's mark is told apart at a glance (they used to share one blue).
+const SCHOOL_TINTS = [4, 28, 48, 78, 140, 168, 188, 210, 232, 258, 286, 314, 340];
+function schoolBadge(item, index = -1) {
   const preset = SCHOOL_BADGES[item.school_name];
+  const hash = [...String(item.school_name || "")].reduce((sum, ch) => (sum * 31 + ch.charCodeAt(0)) >>> 0, 7);
+  const tint = preset?.tint ?? SCHOOL_TINTS[(index >= 0 ? index : hash) % SCHOOL_TINTS.length];
   const text = preset?.text || String(item.short_name || item.school_name || "").replace(/^國立/, "").slice(0, 2);
   const emblem = SCHOOL_EMBLEM_FILES[item.school_name];
   const inner = emblem ? `<img src="${escapeHtml(emblem)}" alt="" decoding="async" />` : escapeHtml(text);
-  return { tint: preset?.tint ?? 200, text, html: `<span class="school-emblem" aria-hidden="true">${inner}</span>` };
+  return { tint, text, html: `<span class="school-emblem" aria-hidden="true">${inner}</span>` };
 }
 
 function renderSchoolOptions(query = "") {
   if (window.UniWaySchoolPicker) {
     window.UniWaySchoolPicker.update({
-      schools: state.supportedUniversities.map(item => {
-        const badge = schoolBadge(item);
+      schools: state.supportedUniversities.map((item, index) => {
+        const badge = schoolBadge(item, index);
         return { ...item, badgeText: badge.text, badgeTint: badge.tint };
       }),
       selectedSchool: state.selectedHomeSchool,
@@ -5744,7 +5749,8 @@ function addCalendarEvent(form) {
   persistCalendarEvents();
   form.reset();
   form.elements.date.value = date;
-  form.elements.preparation_days.value = "7";
+  // The quick-add form on 我的申請 has no preparation-days field; the calendar form does.
+  if (form.elements.preparation_days) form.elements.preparation_days.value = "7";
   renderCalendarPlanOptions();
   status.textContent = "已加入你的申請日曆。";
   renderApplicationCalendar();
@@ -8718,7 +8724,7 @@ function syncPartnerView() {
   if (partnerMapLoadPromise || partnerMapLoadFailed) return;
   showPartnerMapStatus("正在準備你的世界地圖", "首次載入需要一點時間。", { loading: true });
   const generation = partnerMapGeneration;
-  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261109-earth-1&attempt=${generation}`)
+  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261109-ui-2&attempt=${generation}`)
     .then((module) => module.createPartnerMap({ renderPreview: renderMapPreview, onSchoolSelect: loadDiscoveryPreview, onList: () => setPartnerView("list"), onRetry: retryPartnerMap, onIcons: initIcons, freshEngine: generation > 0 }))
     .then((controller) => {
       if (generation !== partnerMapGeneration) { controller.destroy(); return; }

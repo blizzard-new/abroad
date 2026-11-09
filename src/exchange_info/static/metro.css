@@ -29,7 +29,7 @@
   --glass-coral: var(--mt-red); --glass-coral-strong: var(--mt-red-text);
   --amber: #8a4b00; --green: #0e6a49; --journal-coral: var(--mt-red-text);
 }
-html[data-theme="dark"] {
+html[data-theme="dark"], html:has(#home-landing:not([hidden])) {
   --mt-ground: #11151c; --mt-concourse: #1a2029; --mt-ink: #eef0f4; --mt-ink-2: #b9c0cc; --mt-ink-3: #8f98a8;
   --mt-rule: #2f3846; --mt-rule-strong: #5d6879; --mt-board: #000; --mt-on-board: #fff; --mt-on-board-2: #c7cdd8;
   --mt-red: #ff5a60; --mt-orange: #ffbf47; --mt-blue: #5aa2ff; --mt-green: #38d69b; --mt-brown: #d2a074;
@@ -704,3 +704,73 @@ body.unified-shell #home-landing .mt-hero { grid-template-columns: minmax(0, 1fr
 #home-landing .mt-sky .pr-social-pill { color: #fff; font-size: 13px; }
 #home-landing .mt-sky .pr-social-pill b { color: inherit; }
 @media (max-width: 700px) { #home-landing .mt-sky .pr-hero-socials { justify-self: center; justify-content: center; } }
+
+/* 15. The language-test (and every other) dropdown on the search bar: the highlighted row is a tint with an outline, never
+   a solid bar the same colour as its text, in both themes. */
+body.unified-shell #partners.pr-explore .glide-select__pill { background: var(--mt-concourse); background: color-mix(in srgb, var(--mt-ink) 12%, transparent); box-shadow: inset 0 0 0 2px var(--mt-ink); color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .glide-select__option { position: relative; z-index: 1; color: var(--mt-ink); font-weight: 700; }
+body.unified-shell #partners.pr-explore .glide-select__option[aria-selected="true"] { font-weight: 900; }
+
+/* 16. The home is one night: the page takes the Earth's own ground, so the planet rises out of the page and not out of a box.
+   (The night tokens above apply to the home in either theme; only the ground and the sky band are set here.) */
+html:has(#home-landing:not([hidden])) { --mt-ground: #0b1220; --mt-concourse: #131c2e; --mt-rule: #26324a; --uw-surface: #101a2c; color-scheme: dark;
+  /* the older design-system tokens (dialogs, pickers, forms) take the night values too, so no text is dark on dark */
+  --page: #0b1220; --surface: #0f1522; --surface-soft: #171f30; --surface-elevated: #101a2cf0; --surface-selected: #14304a;
+  --ink: #f5f7fa; --ink-soft: #a7afbb; --ink-faint: #8a94a2; --line: #26324a; }
+html:has(#home-landing:not([hidden])), html:has(#home-landing:not([hidden])) body { background: #0b1220; }
+#home-landing .mt-sky { background: transparent; overflow: visible; }
+#home-landing .mt-earth { overflow: hidden; }
+html:has(#home-landing:not([hidden])) #home-landing .hm-route-card { background: var(--mt-board); color: var(--mt-on-board); border: 2px solid var(--mt-rule-strong); }
+html:has(#home-landing:not([hidden])) #home-landing :is(.hm-route-card-top, .hm-route-card-bottom, .hm-route-card span, .hm-route-title) { color: var(--mt-on-board); }
+html:has(#home-landing:not([hidden])) #home-landing .hm-route-card-top .hm-route-index { color: var(--mt-orange); }
+/* The Earth dissolves into the page along its lower edge instead of ending on a line. */
+#home-landing .mt-earth { -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+
+/* 17. School marks: every school its own hue, strong enough to tell apart (they were one pale blue). */
+.school-emblem { background: hsl(var(--school-tint, 200) 82% 86%); color: hsl(var(--school-tint, 200) 75% 22%); box-shadow: inset 0 0 0 2px hsl(var(--school-tint, 200) 62% 42%); }
+html[data-theme="dark"] .school-emblem, html:has(#home-landing:not([hidden])) .school-emblem { background: hsl(var(--school-tint, 200) 50% 24%); color: hsl(var(--school-tint, 200) 90% 86%); box-shadow: inset 0 0 0 2px hsl(var(--school-tint, 200) 70% 58%); }
+
+/* 18. 我的申請: boxes sized to what is in them and laid side by side, instead of full-width bars of one short line each. */
+#application-path .plan-choice select { max-width: 420px; }
+#application-path .plan-choice label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (min-width: 701px) {
+  #application-path .plan-strip { flex-wrap: wrap; justify-content: flex-start; gap: 10px 36px; }
+  #application-path .plan-choice { flex: 0 1 520px; }
+  #application-path .plan-progress { margin-left: auto; width: 240px; }
+  #application-path .hub-tabs { flex: 1 0 100%; padding: 4px 0 0; }
+}
+#application-path .today { gap: 14px; margin-top: 12px; }
+#application-path .today-top { grid-template-columns: minmax(0, 1.7fr) minmax(250px, 1fr); gap: 14px; }
+#application-path .today-focus { min-height: 0; gap: 8px; padding: 18px 22px 20px; border-radius: 12px; }
+#application-path .today-focus::after { display: none; }
+#application-path .today-focus h2 { max-width: none; font-size: 24px; }
+#application-path .today-focus p { max-width: 60ch; }
+#application-path .today-panel, #application-path .today-stages { padding: 14px 18px 16px; border: 2px solid var(--mt-ink); border-radius: 12px; background: var(--mt-ground); }
+#application-path .today-date { font-size: 36px; }
+#application-path .today-head { margin-bottom: 8px; }
+#application-path .today-head h2 { font-size: 16px; font-weight: 900; }
+#application-path .today-stage-now { font-size: 14px; font-weight: 700; color: var(--mt-ink-2); }
+#application-path .today-stage-now b { color: var(--mt-ink); }
+#application-path .today-bottom { grid-template-columns: minmax(0, 1fr) 270px; gap: 14px; }
+#application-path .today-queue h2 { margin-bottom: 8px; font-size: 16px; font-weight: 900; }
+#application-path .today-stage { font-weight: 700; color: var(--mt-ink-2); }
+#application-path .today-queue ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+#application-path .today-queue li { border: 2px solid var(--mt-ink); border-radius: 10px; background: var(--mt-ground); }
+#application-path .today-queue li a { min-height: 54px; padding: 8px 12px; }
+#application-path .today-queue li a:hover { background: var(--mt-concourse); border-radius: 8px; }
+#application-path .today-queue > .today-link { margin-top: 6px; }
+#application-path .today-own { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 16px; align-items: center; padding: 10px 14px; border: 2px solid var(--mt-ink); border-radius: 12px; }
+#application-path .today-own h3 { margin: 0; font-size: 15px; font-weight: 900; }
+#application-path .today-own ul { grid-column: 1 / -1; }
+#application-path .today-quick { margin: 0; flex-wrap: nowrap; }
+#application-path .today-quick .form-status:empty { display: none; }
+@media (max-width: 760px) {
+  #application-path .today-top, #application-path .today-bottom { grid-template-columns: minmax(0, 1fr); }
+  #application-path .today-own { grid-template-columns: minmax(0, 1fr); }
+  #application-path .today-quick { flex-wrap: wrap; }
+}
+#application-path .plan-strip .plan-choice { flex: 0 1 520px; max-width: 520px; }
+#application-path .plan-strip .plan-choice .glide-select, #application-path .plan-strip .plan-choice select { max-width: 100%; }
+#application-path .today-quick input[name=title] { flex: 1 1 260px; }
+#application-path .today-quick input[type=date] { flex: 0 0 170px; }
+#application-path .today-quick .today-add { flex: none; min-width: 72px; white-space: nowrap; }
