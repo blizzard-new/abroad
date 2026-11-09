@@ -15,7 +15,7 @@ BUNDLE = Path(__file__).resolve().parent / "official_data" / "ccu"
 @lru_cache(maxsize=1)
 def source_security_reviews():
     path = BUNDLE / "tls-source-impact.json"
-    return json.loads(path.read_text())["historical_sources"] if path.exists() else {}
+    return json.loads(path.read_text(encoding="utf-8"))["historical_sources"] if path.exists() else {}
 
 
 def source_security_record(source):
@@ -40,7 +40,7 @@ def require_usable_source(source):
 
 @lru_cache(maxsize=1)
 def source_formats():
-    rows = json.loads((BUNDLE / "overseas-source-registry.json").read_text())
+    rows = json.loads((BUNDLE / "overseas-source-registry.json").read_text(encoding="utf-8"))
     return {row["source_url"]: row.get("status", "") for row in rows}
 
 

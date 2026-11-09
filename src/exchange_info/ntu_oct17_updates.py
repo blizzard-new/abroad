@@ -64,7 +64,7 @@ def load_update(path: Path = SOURCE) -> dict:
             pid = cells[4].find("a")["href"].rsplit("/", 1)[-1]
             actual[pid] = (cells[0].find("a").get_text(" ", strip=True), cells[2].get_text(" ", strip=True), cells[3].get_text(" ", strip=True))
     rows = {r["portal_id"]: r for r in receipt["rows"]}
-    old = json.loads((ROOT / "sources/ntu/2026-10-14-official-update.json").read_text())
+    old = json.loads((ROOT / "sources/ntu/2026-10-14-official-update.json").read_text(encoding="utf-8"))
     prior = {r["portal_id"]: (r["name"], r["quota"], r["headcount"]) for r in old["list_receipt"]["rows"]}
     if (len(rows) != 289 or len(receipt["rows"]) != 289 or actual != prior or "2027/2028" not in soup.get_text()
             or receipt["source_academic_year"] != "2027/2028"
@@ -119,9 +119,9 @@ def load_update(path: Path = SOURCE) -> dict:
 
 def apply_updates(bundle: Path, path: Path = SOURCE) -> dict:
     data = load_update(path)
-    partners = [PartnerUniversity.model_validate_json(r) for r in (bundle / "partners.jsonl").read_text().splitlines()]
-    profiles = [DestinationProfile.model_validate_json(r) for r in (bundle / "destination_profiles.jsonl").read_text().splitlines()]
-    ledger = json.loads((bundle / "verification_status.json").read_text())
+    partners = [PartnerUniversity.model_validate_json(r) for r in (bundle / "partners.jsonl").read_text(encoding="utf-8").splitlines()]
+    profiles = [DestinationProfile.model_validate_json(r) for r in (bundle / "destination_profiles.jsonl").read_text(encoding="utf-8").splitlines()]
+    ledger = json.loads((bundle / "verification_status.json").read_text(encoding="utf-8"))
     schools = {s["portal_id"]: s for s in data["schools"]}
     rows = {r["portal_id"]: r for r in data["list_receipt"]["rows"]}
     if len(partners) != 289 or {p.source_url.rsplit("/", 1)[-1] for p in partners} != set(rows):
@@ -220,7 +220,7 @@ def apply_updates(bundle: Path, path: Path = SOURCE) -> dict:
                "verification_status.json": json.dumps(ledger, ensure_ascii=False, indent=2) + "\n",
                "list_verification.json": json.dumps(data["list_receipt"], ensure_ascii=False, indent=2) + "\n"}
     for filename in ("catalog-completeness.json", "import_provenance.json"):
-        payload = json.loads((bundle / filename).read_text())
+        payload = json.loads((bundle / filename).read_text(encoding="utf-8"))
         payload["source_update_20261017"] = {"source_snapshot": path.name, "sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "checked_at": data["checked_at"], "detail_pages": 25, "pending_warning_pages": 21, "warning_free_UK_pages": 4, "formal_quota_changed": False, "all_current_cycle_fields_verified": False}
         if filename == "catalog-completeness.json": payload["latest_official_list_checked_at"] = data["list_receipt"]["checked_at"]
         outputs[filename] = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"

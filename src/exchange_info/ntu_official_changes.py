@@ -45,14 +45,14 @@ def apply_official_changes(bundle: Path, snapshot_path: Path = SNAPSHOT) -> dict
             or sum(row["quota"] == "0 名" for row in receipt["rows"]) != 6):
         raise ValueError("list receipt does not retain the verified inventory")
     partners_path = bundle / "partners.jsonl"
-    partners = [PartnerUniversity.model_validate_json(line) for line in partners_path.read_text().splitlines()]
+    partners = [PartnerUniversity.model_validate_json(line) for line in partners_path.read_text(encoding="utf-8").splitlines()]
     from .ntu_current_updates import historical_selection_view
     historical = historical_selection_view(partners)
     historical_by_url = {p.source_url: p for p in historical}
     destinations_path = bundle / "destination_profiles.jsonl"
-    destinations = [DestinationProfile.model_validate_json(line) for line in destinations_path.read_text().splitlines()]
+    destinations = [DestinationProfile.model_validate_json(line) for line in destinations_path.read_text(encoding="utf-8").splitlines()]
     ledger_path = bundle / "verification_status.json"
-    ledger = json.loads(ledger_path.read_text())
+    ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
     ledger_map = {row["portal_id"]: row for row in ledger}
     destination_map = {row.school_name: row for row in destinations}
     touched = set()
@@ -138,14 +138,14 @@ def apply_official_changes(bundle: Path, snapshot_path: Path = SNAPSHOT) -> dict
     destinations_path.write_text("".join(destination_map[p.school_name].model_dump_json() + "\n" for p in destinations), encoding="utf-8")
     ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     provenance_path = bundle / "import_provenance.json"
-    provenance = json.loads(provenance_path.read_text())
+    provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
     provenance["official_portal_changes"] = {"source_snapshot": snapshot_path.name,
         "sha256": hashlib.sha256(snapshot_path.read_bytes()).hexdigest(), "school_count": len(changes),
         "checked_at": snapshot["checked_at"], "current_cycle_finality": "not_confirmed"}
     provenance_path.write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (bundle / "list_verification.json").write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     completeness_path = bundle / "catalog-completeness.json"
-    completeness = json.loads(completeness_path.read_text())
+    completeness = json.loads(completeness_path.read_text(encoding="utf-8"))
     completeness["official_portal_checked_at"] = snapshot["checked_at"]
     completeness["official_portal_changed_school_count"] = 20
     completeness_path.write_text(json.dumps(completeness, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

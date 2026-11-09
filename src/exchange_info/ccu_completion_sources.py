@@ -24,7 +24,7 @@ def validate_completion_source(bundle: Path, evidence: dict, checked: dict):
         if expected != checked[sid]:
             raise ValueError("Inconsistent CCU completion evidence hashes")
         return
-    record = json.loads(receipt_path.read_text())
+    record = json.loads(receipt_path.read_text(encoding="utf-8"))
     raw_path = (bundle / record["bundled_file"]).resolve()
     if not raw_path.is_relative_to(bundle.resolve()):
         raise ValueError("CCU response archive must stay inside its school bundle")

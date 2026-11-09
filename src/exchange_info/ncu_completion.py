@@ -15,7 +15,7 @@ LOCATIONS = ASSETS.with_name("campus-locations.json")
 
 @lru_cache(maxsize=1)
 def _locations_snapshot(signature):
-    data = json.loads(LOCATIONS.read_text())
+    data = json.loads(LOCATIONS.read_text(encoding="utf-8"))
     rows = {}
     for row in data["locations"]:
         location = UniversityLocation.model_validate(row)
@@ -44,7 +44,7 @@ def campus_location(partner, fallback, data_dir=None):
 
 @lru_cache(maxsize=1)
 def _assets_snapshot(signature):
-    data = json.loads(ASSETS.read_text())
+    data = json.loads(ASSETS.read_text(encoding="utf-8"))
     return {(school_identity_key(row["school_name"]), row["country"]): row for row in data["photos"]}
 
 

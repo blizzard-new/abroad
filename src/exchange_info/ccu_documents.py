@@ -18,7 +18,7 @@ from .models import (
 
 @lru_cache(maxsize=1)
 def reviewed_documents() -> dict[int, dict]:
-    rows = json.loads((BUNDLE / "partner-document-requirements.json").read_text())
+    rows = json.loads((BUNDLE / "partner-document-requirements.json").read_text(encoding="utf-8"))
     if len({r["ccu_page"] for r in rows}) != len(rows):
         raise ValueError("Duplicate CCU document school")
     for row in rows:
@@ -41,7 +41,7 @@ def reviewed_documents() -> dict[int, dict]:
                 source = json.loads(
                     (
                         BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
-                    ).read_text()
+                    ).read_text(encoding="utf-8")
                 )
                 require_usable_source(source)
                 if source.get("access_result") in {
@@ -86,13 +86,13 @@ def reviewed_documents() -> dict[int, dict]:
 
 @lru_cache(maxsize=1)
 def verified_form_urls() -> set[str]:
-    registry = json.loads((BUNDLE / "overseas-source-registry.json").read_text())
+    registry = json.loads((BUNDLE / "overseas-source-registry.json").read_text(encoding="utf-8"))
     result = set()
     for entry in registry:
         if entry.get("status") not in {"pdf", "docx", "xls", "xlsx", "doc"}:
             continue
         source = json.loads(
-            (BUNDLE / "overseas_sources" / (entry["source_id"] + ".json")).read_text()
+            (BUNDLE / "overseas_sources" / (entry["source_id"] + ".json")).read_text(encoding="utf-8")
         )
         file = source.get("bundled_file")
         if (

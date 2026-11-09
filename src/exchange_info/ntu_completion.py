@@ -29,7 +29,7 @@ SECTION = "【接待校公開來源補查，2026-10-11】"
 
 
 def read_rows(path: Path) -> list[dict]:
-    return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
 def validate(snapshot: dict, partners: list[PartnerUniversity], *, package: Path = PACKAGE) -> None:
@@ -147,11 +147,11 @@ def validate(snapshot: dict, partners: list[PartnerUniversity], *, package: Path
 
 def apply_completion(bundle: Path, snapshot_path: Path = SOURCE, *, apply_assets: bool = False,
                      package: Path = PACKAGE) -> dict:
-    snapshot = json.loads(snapshot_path.read_text())
+    snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
     partners = [PartnerUniversity.model_validate(r) for r in read_rows(bundle / "partners.jsonl")]
     validate(snapshot, partners, package=package)  # Check the entire batch before writing.
     entries = {r["portal_id"]: r for r in snapshot["schools"]}
-    ledger = json.loads((bundle / "verification_status.json").read_text())
+    ledger = json.loads((bundle / "verification_status.json").read_text(encoding="utf-8"))
     ledger_map = {r["portal_id"]: r for r in ledger}
     profiles = [DestinationProfile.model_validate(r) for r in read_rows(bundle / "destination_profiles.jsonl")]
     profile_map = {r.school_name: r for r in profiles}
@@ -234,22 +234,22 @@ def apply_completion(bundle: Path, snapshot_path: Path = SOURCE, *, apply_assets
         "verification_status.json": json.dumps(ledger, ensure_ascii=False, indent=2) + "\n",
         "list_verification.json": json.dumps(snapshot["list_receipt"], ensure_ascii=False, indent=2) + "\n",
     }
-    provenance = json.loads((bundle / "import_provenance.json").read_text())
+    provenance = json.loads((bundle / "import_provenance.json").read_text(encoding="utf-8"))
     provenance["completion_review"] = {"source_snapshot": snapshot_path.name,
         "sha256": hashlib.sha256(snapshot_path.read_bytes()).hexdigest(), "checked_at": snapshot["reviewed_at"],
         "inventory_schools": 288, "reviewed_reference_schools": sum(bool(r.get("observations")) for r in entries.values()),
         "observations": observation_count, "current_cycle_finality": "not_confirmed"}
     outputs["import_provenance.json"] = json.dumps(provenance, ensure_ascii=False, indent=2) + "\n"
-    completeness = json.loads((bundle / "catalog-completeness.json").read_text())
+    completeness = json.loads((bundle / "catalog-completeness.json").read_text(encoding="utf-8"))
     completeness["completion_review"] = provenance["completion_review"]
     completeness["latest_official_list_checked_at"] = snapshot["list_receipt"]["checked_at"]
     outputs["catalog-completeness.json"] = json.dumps(completeness, ensure_ascii=False, indent=2) + "\n"
-    home = json.loads((bundle / "home_rules.json").read_text())
+    home = json.loads((bundle / "home_rules.json").read_text(encoding="utf-8"))
     home["latest_source_checks"] = snapshot["home_source_checks"]
     outputs["home_rules.json"] = json.dumps(home, ensure_ascii=False, indent=2) + "\n"
     if apply_assets:
         manifest_path = package / "static/assets/school-images.json"
-        manifest = json.loads(manifest_path.read_text())
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         images = {(school_identity_key(r["school_name"]), r.get("country") or ""): r for r in manifest["schools"]}
         locations_path = package / "official_data/university_locations.jsonl"
         locations = {location_key(r["school_name"], r.get("country")): r for r in read_rows(locations_path)}

@@ -116,7 +116,7 @@ def _recover(root):
     journal = root / ".content-governance-command.json"
     if not journal.exists():
         return
-    record = json.loads(journal.read_text())
+    record = json.loads(journal.read_text(encoding="utf-8"))
     if record.get("state") not in {"pending", "committed"} or not record.get("files"):
         raise RuntimeError("治理命令復原資料不完整，已停止讀寫。")
     side = "after" if record["state"] == "committed" else "before"
@@ -258,7 +258,7 @@ def local_commit_workflow_command(store, expected, changed, published, *, operat
             local = read_jsonl(paths["application_workflows"], m.UniversityApplicationWorkflow)
             replacements[paths["application_workflows"].name] = _bytes(merge_application_workflows(local, published))
         audit_path = paths["application_workflows"].parent / "application_workflow_audit_log.jsonl"
-        audit = [json.loads(line) for line in audit_path.read_text().splitlines()] if audit_path.exists() else []
+        audit = [json.loads(line) for line in audit_path.read_text(encoding="utf-8").splitlines()] if audit_path.exists() else []
         audit.append({"id": str(uuid4()), "operation": operation, "actor_id": actor,
             "created_at": m.utc_now().isoformat(), "starting_snapshot": expected,
             "revisions_before": [canonical(row) for row in revisions if row.id in {r.id for r in changed}],
@@ -422,7 +422,7 @@ def local_commit_destination_command(store, expected, added, *, profiles, operat
         paths = {"reviews": store.path, "promotions": store.promotion_path, "rollbacks": store.rollback_path}
         replacements = {paths[key].name: _bytes([*rows[key], *values]) for key, values in added.items() if values}
         audit_path = store.path.parent / "application_workflow_audit_log.jsonl"
-        audit = [json.loads(line) for line in audit_path.read_text().splitlines()] if audit_path.exists() else []
+        audit = [json.loads(line) for line in audit_path.read_text(encoding="utf-8").splitlines()] if audit_path.exists() else []
         audit.append({"id": str(uuid4()), "operation": operation, "actor_id": actor,
             "created_at": m.utc_now().isoformat(), "starting_snapshot": expected,
             "source_profiles": [canonical(row) for row in profiles],

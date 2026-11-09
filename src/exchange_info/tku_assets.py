@@ -11,14 +11,14 @@ from .university_locations import UniversityLocation
 
 @lru_cache(maxsize=1)
 def campus_photos():
-    return {r["id"]:r for r in json.loads((BUNDLE/"campus_asset_manifest.json").read_text())
+    return {r["id"]:r for r in json.loads((BUNDLE/"campus_asset_manifest.json").read_text(encoding="utf-8"))
             if r.get("review_status")=="verified_asset" and r.get("local_path")
             and r.get('capture_year_status')=='verified_capture_period'}
 
 
 @lru_cache(maxsize=1)
 def campus_locations():
-    return {r["id"]:r for r in json.loads((BUNDLE/"campus_location_manifest.json").read_text())}
+    return {r["id"]:r for r in json.loads((BUNDLE/"campus_location_manifest.json").read_text(encoding="utf-8"))}
 
 
 def photo_modification_note(photo):
@@ -67,7 +67,7 @@ def complete_profile(profile):
         row=school_audit_by_id(identifier)
         # Supplement the preserved original NICS profile without rewriting it.
         from .models import StudentGuideSection,SourceReference
-        reviewed=next(r for r in json.loads((BUNDLE/'milestone3_reviewed_host_facts.json').read_text()) if r['id']==row['id'])
+        reviewed=next(r for r in json.loads((BUNDLE/'milestone3_reviewed_host_facts.json').read_text(encoding="utf-8")) if r['id']==row['id'])
         sections=list(profile.student_guide_sections);sources={s.source_url:s for s in profile.sources}
         for key,fact in reviewed['fields'].items():
             section_key='reviewed_host_reference_'+key

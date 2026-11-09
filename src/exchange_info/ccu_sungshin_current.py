@@ -16,7 +16,7 @@ from .models import ApplicationDocumentRequirement, ApplicationSubmissionMethod
 
 @lru_cache(maxsize=1)
 def reviewed_sungshin_documents():
-    row = json.loads((BUNDLE / "completion-sungshin-documents.json").read_text())
+    row = json.loads((BUNDLE / "completion-sungshin-documents.json").read_text(encoding="utf-8"))
     if row["ccu_page"] != 49 or row["academic_year"] != "Spring2027":
         raise ValueError("Unexpected Sungshin programme/year")
     checked = {}
