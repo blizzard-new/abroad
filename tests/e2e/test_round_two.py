@@ -151,3 +151,65 @@ def test_the_top_bar_fits_the_narrowest_desktop_widths(page, live_server, width)
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     # Without their labels the links still have names for assistive technology.
     expect(page.locator('#glass-navigation').get_by_role("link", name="論壇", exact=True)).to_have_count(1)
+
+
+@pytest.mark.parametrize("route", ["home", "partners", "forum", "guide", "feedback"])
+def test_the_logo_stays_in_view_while_the_app_scrolls(page, live_server, route):
+    for width, selector in ((1440, ".uniway-header-brand"), (393, ".glass-mobile-header a[href='#home']")):
+        page.set_viewport_size({"width": width, "height": 800})
+        enter_public_site(page, live_server, route)
+        page.wait_for_timeout(600)
+        page.evaluate("window.scrollTo(0, document.documentElement.scrollHeight)")
+        page.wait_for_timeout(300)
+        box = page.locator(selector).first.bounding_box()
+        assert box and 0 <= box["y"] and box["y"] + box["height"] <= 80, (route, width, box)
+        expect(page.locator(selector).first).to_be_visible()
+
+
+@pytest.mark.parametrize("path", ["/guides", "/schools", "/privacy", "/terms"])
+def test_the_logo_stays_in_view_on_the_server_rendered_pages(page, live_server, path):
+    page.set_viewport_size({"width": 1440, "height": 800})
+    page.goto(f"{live_server.base_url}{path}")
+    page.evaluate("window.scrollTo(0, document.documentElement.scrollHeight)")
+    page.wait_for_timeout(300)
+    assert page.evaluate("scrollY") > 300, path
+    brand = page.locator(".reading-header .brand, .legal-bar .brand").first
+    expect(brand).to_be_visible()
+    box = brand.bounding_box()
+    assert 0 <= box["y"] and box["y"] + box["height"] <= 90, (path, box)
+    expect(brand).to_contain_text("UniWay")
+
+
+def test_the_earth_on_the_home_turns_visibly(page, live_server):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    enter_public_site(page, live_server, "home")
+    read = "() => new DOMMatrixReadOnly(getComputedStyle(document.querySelector('.mt-earth-strip')).transform).m41"
+    first = page.evaluate(read)
+    page.wait_for_timeout(2000)
+    moved = abs(page.evaluate(read) - first)
+    # About 40 px a second on a wide screen: a turn takes 90 seconds, so the motion is seen, not guessed at.
+    assert 40 < moved < 400, moved
+
+
+def test_the_earth_holds_still_when_the_visitor_asks_for_less_motion(page, live_server):
+    page.emulate_media(reduced_motion="reduce")
+    page.set_viewport_size({"width": 1440, "height": 900})
+    enter_public_site(page, live_server, "home")
+    read = "() => new DOMMatrixReadOnly(getComputedStyle(document.querySelector('.mt-earth-strip')).transform).m41"
+    first = page.evaluate(read)
+    page.wait_for_timeout(1500)
+    assert page.evaluate(read) == first
+
+
+@pytest.mark.parametrize("width", [901, 1024, 1440])
+def test_the_wordmark_is_always_beside_the_logo_not_only_on_hover(page, live_server, width):
+    page.set_viewport_size({"width": width, "height": 800})
+    enter_public_site(page, live_server, "home")
+    page.mouse.move(width / 2, 600)
+    page.wait_for_timeout(600)
+    word = page.locator("#glass-navigation .uniway-header-brand strong")
+    expect(word).to_be_visible()
+    expect(word).to_have_text("UniWay")
+    assert word.bounding_box()["width"] > 60
+    assert page.locator("#glass-navigation .uniway-header-brand").bounding_box()["width"] > 100
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")

@@ -538,7 +538,7 @@ body.unified-shell #home-landing .mt-hero { grid-template-columns: minmax(0, 1fr
 #home-landing .mt-sky .mt-board { grid-area: auto; width: min(1120px, 100%); outline: 2px solid #ffffff33; outline-offset: 0; }
 #home-landing .mt-earth { position: relative; overflow: hidden; width: 100%; height: clamp(112px, 20svh, 220px); margin-top: clamp(6px, 2.2svh, 22px); pointer-events: none; }
 #home-landing .mt-earth-disc { --d: min(1760px, 130cqi); position: absolute; left: 50%; top: 0; width: var(--d); height: var(--d); transform: translateX(-50%); border-radius: 50%; overflow: hidden; background: #0a2a52; box-shadow: 0 -4px 40px 4px #5ab0ff80, 0 0 0 2px #a8d8ff80; }
-#home-landing .mt-earth-strip { position: absolute; left: 0; top: 0; width: calc(var(--d) * 5); height: var(--d); background: url("/static/assets/partner-map/earth-equirect.jpg?v=20261109-1") repeat-x 0 calc(var(--d) * -.235) / calc(var(--d) * 2) var(--d); transform: translateX(calc(var(--d) * -1.11)); animation: mt-earth-spin 420s linear infinite; will-change: transform; }
+#home-landing .mt-earth-strip { position: absolute; left: 0; top: 0; width: calc(var(--d) * 5); height: var(--d); background: url("/static/assets/partner-map/earth-equirect.jpg?v=20261109-1") repeat-x 0 calc(var(--d) * -.235) / calc(var(--d) * 2) var(--d); transform: translateX(calc(var(--d) * -1.11)); animation: mt-earth-spin 90s linear infinite; will-change: transform; }
 #home-landing .mt-earth-disc::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 50% 0%, #0000 0 42%, #0208125c 76%, #020812c4 100%); }
 /* It opens over Asia, where the students are leaving from, and turns one full circle in seven minutes. */
 @keyframes mt-earth-spin { from { transform: translateX(calc(var(--d) * -1.11)); } to { transform: translateX(calc(var(--d) * -3.11)); } }
@@ -640,7 +640,11 @@ html[data-theme="dark"] .school-emblem, html:has(#home-landing:not([hidden])) .s
   }
   html body.unified-shell .glass-navigation-rail .glass-menu-close { display: none !important; }
   html body.unified-shell .glass-navigation-rail .uniway-header-brand { order: 0; width: auto !important; min-height: 0 !important; padding: 0 !important; flex: none; }
-  html body.unified-shell .glass-navigation-rail .uniway-header-brand strong { font-size: 22px; }
+  /* The wordmark is always there. The old rail showed only the mark until the pointer touched it, which is why "UniWay" came and went. */
+  html body.unified-shell .glass-navigation-rail .uniway-header-brand { justify-content: flex-start !important; gap: 10px !important; }
+  html body.unified-shell .glass-navigation-rail .uniway-header-brand strong {
+    display: inline !important; inline-size: auto !important; width: auto !important; opacity: 1 !important; visibility: visible !important; transform: none !important; overflow: visible !important; font-size: 22px;
+  }
   html body.unified-shell .glass-navigation-rail .uniway-public-nav { order: 1; flex-direction: row !important; flex: 1 1 auto; width: auto !important; margin: 0 !important; gap: 4px !important; align-items: center; }
   html body.unified-shell .glass-navigation-rail .uniway-public-nav a[data-public-route],
   html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] {
@@ -677,5 +681,18 @@ html[data-theme="dark"] .school-emblem, html:has(#home-landing:not([hidden])) .s
   html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] { width: 48px !important; padding: 0 !important; }
   html body.unified-shell .glass-navigation-rail #account-button { max-width: 120px; }
 }
+@media (min-width: 1101px) {
+  html body.unified-shell .glass-navigation-rail #account-button-label { display: inline !important; font-size: 14px; font-weight: 800; inline-size: auto !important; opacity: 1 !important; visibility: visible !important; transform: none !important; overflow: visible !important; }
+}
 /* With the route map gone nothing follows the Earth but the next section, so the hero adds no space of its own below it. */
 body.unified-shell #home-landing .mt-hero { padding-bottom: 0; }
+
+/* 20. The logo never scrolls away. The app's bar is fixed; the server-rendered pages (guides, schools, partners) had a header that
+   scrolled off with the page, so it now sticks to the top the same way, flush and full width like the app's bar. */
+body.reading-shell .reading-header { position: sticky; top: 0; z-index: 60; max-width: none; margin: 0; padding: 10px 24px; border-radius: 0; }
+html:has(body.reading-shell) { scroll-padding-top: 104px; }
+@media (max-width: 700px) { body.reading-shell .reading-header { padding: 8px 12px; } }
+.legal-bar { position: sticky; top: 0; z-index: 60; margin: -28px -16px 24px; display: flex; align-items: center; padding: 10px 24px; border-bottom: 2px solid var(--mt-ink); background: var(--mt-ground); }
+.legal-bar .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--mt-ink); font-size: 22px; font-weight: 900; letter-spacing: -.01em; text-decoration: none; }
+.legal-bar .brand img { width: 40px; height: 40px; }
+@media (max-width: 700px) { .legal-bar { padding: 8px 12px; } }
