@@ -1604,6 +1604,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="臺東大學規定返國後 1 個月內（學海計畫 2 週內）須繳交 2,000 字以上心得報告（含照片至少 4 張）並出席經驗分享會，始得辦理獎助學金尾款核銷；這裡只合計下方各欄。",
     ),
+    ("tcu", "study-plan"): _rules(
+        (
+            "慈濟大學全球事務處（Office of Global Affairs, OGA）《出國交換學生甄選及補助辦法》及《與國外大學校院辦理跨國雙學位制實施辦法》規定，申請出國交換、跨國雙／三聯學位（德墨三國聯授 TRIM 全球研究碩士、英國密德薩斯大學 3+1 雙學士、美國安德魯大學 1+1 MBA 雙碩士、泰國瑪希敦／納黎萱大學生物醫學雙博士）及教育部《學海飛颺／惜珠／築夢》須繳交中英文《讀書計畫與自傳（Study Plan & Autobiography）》，供全球事務處書面審查、面試及國際學術交流審議委員會複審評分。",
+            "內容應具體說明申請動機、個人學業表現與外語能力準備（修業滿一學期以上，建議 GPA 3.0 或百分制 75 分以上；外語達 CEFR B1：TOEIC 550 / TOEFL iBT 42 / IELTS 4.0、歐美雙聯達 IELTS 6.0 / TOEFL iBT 79 或日檢 JLPT N2–N3／韓檢 TOPIK 2–4 級）、擬於志願姊妹校修習之專業課程與學分規劃（雙聯學位累計修習學分須達兩校規定總學分數三分之一以上），以及返國後之學分抵免與職涯目標。",
+        ),
+        evidence="慈濟大學出國交換學生甄選及補助辦法、與國外大學校院辦理跨國雙學位制實施辦法及全球事務處出國交換申請指引",
+        minimum=1000,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="慈濟大學出國交換與雙聯學位讀書計畫含自傳、修課研究計畫與預期成果（建議合計約 1,000–2,500 字）；這裡只合計下方各欄。",
+    ),
+    ("tcu", "return-report"): _rules(
+        (
+            "依《慈濟大學出國交換學生甄選及補助辦法》、《慈濟大學補助學生參加境外交流活動實施要點》及教育部學海系列計畫規定，獲選及受補助學生須於境外研修或實習結束返國後 1 個月內，向全球事務處國際交流組繳交 1,500 字以上之《出國交換／雙聯／實習成果心得報告》電子檔（含活動與修課照片），並配合出席全球事務處舉辦之海外交流成果分享會。",
+            "獲校內《出國交換學生甄選及補助辦法》獎助學金、境外交流活動補助或教育部《學海飛颺》、《學海惜珠》、《學海築夢／新南向學海築夢》補助者，須完成心得報告繳交、提交國外姊妹校正式成績單與修業證明、護照出入境紀錄及登機證正本，始得辦理補助款核銷結案。",
+        ),
+        evidence="慈濟大學出國交換學生甄選及補助辦法、補助學生參加境外交流活動實施要點及全球事務處國際交流學生經驗分享規範",
+        minimum=1500,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="慈濟大學規定返國後 1 個月內須繳交出國研修／交換／實習心得報告（含照片）並出席成果分享會，始得辦理獎助學金核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1673,6 +1695,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "npu": ("https://www.npu.edu.tw/content/index.aspx?Parser=1,6,174,163", "2026-11-04"),
     "ntunhs": ("https://icsed-rnd.ntunhs.edu.tw/p/412-1035-2523.php?Lang=zh-tw", "2026-11-06"),
     "nttu": ("https://rd.nttu.edu.tw/p/412-1007-9902.php?Lang=zh-tw", "2026-11-06"),
+    "tcu": ("https://oga.tcu.edu.tw/outbound-exchange-student-program/", "2026-11-09"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

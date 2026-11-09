@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, TCU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -149,6 +149,7 @@ NPTU_SOURCE_CHECKED_AT = datetime(2026, 11, 5, tzinfo=timezone.utc)
 NPU_SOURCE_CHECKED_AT = datetime(2026, 11, 4, tzinfo=timezone.utc)
 NTUNHS_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 NTTU_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
+TCU_SOURCE_CHECKED_AT = datetime(2026, 11, 9, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3796,6 +3797,57 @@ def _nttu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _tcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "依慈濟大學全球事務處《出國交換學生甄選及補助辦法》與《與國外大學校院辦理跨國雙學位制實施辦法》整理校內出國交換與跨國雙／三聯學位（德墨三國聯授 TRIM 碩士、英國密德薩斯大學 3+1、美國安德魯大學 1+1 MBA、泰國瑪希敦／納黎萱博士雙聯）申請表、家長同意書、中英文歷年成績單、外語檢定證明及校內補助／教育部學海計畫基本資料欄位。",
+        "study-plan": "慈濟大學出國交換、跨國雙／三聯學位及教育部《學海飛颺／惜珠／築夢》甄選要求繳交之讀書計畫與自傳（Study Plan & Autobiography），應敘明申請動機、外語能力準備、志願姊妹校擬修讀課程與學分規劃、研究計畫及返國後學分抵免與職涯目標。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙／三聯學位（德墨臺 TRIM 三聯碩士、英國密德薩斯大學 3+1 雙學士、美國安德魯斯大學 1+1 MBA 雙碩士、泰國瑪希敦／納黎萱博士雙聯）之選課預審與教務核備（出國期間須維持慈濟大學在學註冊）。",
+        "predeparture-notice": "通過慈濟大學全球事務處書面審查與面試（並經國際學術交流審議委員會複審）錄取後，辦理姊妹校提名（Nomination）、簽署家長同意書與行政契約、出國役男兵役緩徵、海外醫療及意外保險與慈濟大學全額學雜費註冊檢核。",
+        "return-report": "交換或雙聯研修結束返國後 1 個月內（教育部學海計畫依計畫規定），向慈濟大學全球事務處國際交流組繳交出國研修／交換心得報告電子檔（含國外修課與生活照片），並配合出席海外交流成果分享會以完成獎助學金核銷結案。",
+        "credit-transfer": "境外交換或雙／三聯研修期滿返國後，持國外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《慈濟大學學生抵免學分辦法》及《與國外大學校院辦理跨國雙學位制實施辦法》向所屬學系（所）及教務處註冊組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "慈濟大學").replace("長庚", "慈大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "慈濟大學規定：申請出國交換或跨國雙／三聯學位須為本校在學學生（修滿至少一學期以上），檢附中英文歷年學業成績單正本及排名證明；若同時申請教育部《學海飛颺／學海惜珠》或校內《出國交換學生甄選及補助辦法》獎助學金，建議學業總平均達 GPA 3.0（或百分制 75–80 分、班排名前 50%）以上。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語檢定 CEFR B1（慈大校定外語基準：TOEIC 550 / TOEFL iBT 42 / TOEFL ITP 460 / IELTS 4.0 / GEPT 中級）",
+                "英語檢定 CEFR B2（歐美雙／三聯學位及學海飛颺基準：IELTS 6.0 / TOEFL iBT 72–79 / TOEIC 785）",
+                "日語檢定 JLPT N2–N3（日本佛教大學、天理大學、尚絅大學、愛知學院、淑德、聖隸基督教、新潟、神戶學院等交換）",
+                "韓語檢定 TOPIK 2–4 級或英語授課（韓國淑明女子大學、翰林大學、大邱韓醫大學、高神大學、信韓大學等交換）",
+                "大陸地區姊妹校交換（北京大學、復旦大學、上海交大、南京大學、浙江大學、蘭州大學等 24 校中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依《慈濟大學出國交換學生甄選及補助辦法》、《與國外大學校院辦理跨國雙學位制實施辦法》及教務處 CEFR B1 英外語能力檢定標準對照表填報有效語言能力證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oga.tcu.edu.tw/outbound-exchange-student-program/",
+        source_checked_at=TCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="慈濟大學出國交換學生／跨國雙聯學位甄選申請表（含家長同意書、教授推薦函及獎助學金申請表）" if template.id == "exchange-application-data" else ("慈濟大學出國交換／跨國雙聯讀書計畫與自傳（Study Plan & Autobiography）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oga.tcu.edu.tw/downloads/",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師／指導教授、系（所）主任及院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經全球事務處書審與面試錄取後完成確認、配合辦理姊妹校提名與簽證，並完成慈濟大學在學註冊", "return-report": "返國後 1 個月內繳交出國交換／雙聯／實習心得報告（含照片）並出席海外交流成果分享會辦理獎助學金核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處註冊組申請境外學分抵免"}.get(template.id, "於校內收件截止前備齊申請表、家長同意書、中英文歷年成績單、讀書計畫與自傳、推薦信及語檢證明送交全球事務處國際交流組"),
+        version="115-2準備工具-2026-11-09.1",
+        destinations=["慈濟大學全球事務處國際交流組（970374 花蓮市中央路三段 701 號 大愛樓 L0102）"],
+        conditional_note="此為個人準備工具；慈濟大學出國交換、跨國雙／三聯學位及教育部學海系列計畫由全球事務處國際交流組辦理初審與面試，並送國際學術交流審議委員會複審。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3932,6 +3984,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntunhs_template(template)) is not None]
     if university.id == NTTU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nttu_template(template)) is not None]
+    if university.id == TCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _tcu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

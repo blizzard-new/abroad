@@ -2481,7 +2481,51 @@ NTTU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU)
+TCU = UniversityProfile(
+    id="tcu",
+    school_name="慈濟大學",
+    short_name="慈大",
+    english_name="Tzu Chi University",
+    aliases=(
+        "tcu",
+        "慈濟大學",
+        "慈大",
+        "慈濟",
+        "慈濟醫學院",
+        "慈濟技術學院",
+        "慈濟科技大學",
+        "TCU",
+        "Tzu Chi University",
+        "Tzu Chi University, Taiwan",
+        "Tzu-Chi University",
+    ),
+    hero_image="/static/assets/tcu-campus.svg",
+    official_url="https://oga.tcu.edu.tw/outbound-exchange-student-program/",
+    coverage_note="完整支援：已整合慈濟大學全球事務處（Office of Global Affairs, OGA，原國際暨兩岸事務處 OIA）交流組《出國交換學生計畫（outbound-exchange-student-program）》、《跨國雙聯與三聯學位計畫（dual-double-degree-program / a-double-degree）》、《大陸地區學生交換研習申請資訊》、《全球合作姊妹校名錄（sister-schools-3，50校）》、《與境外學校辦理雙聯學制實施辦法（1070508教育部備查版）》、《英語主要檢測參考對照表暨 CEFR B1（含）級以上或同等語言能力對照表》、《學生海外交流補助辦法》、《教育部學海系列獎助計畫》及《經驗分享與學生故事專區（15校16篇）》官方資料：（1）校內甄選時程、在學資格與成績門檻：每年 11 月公告次學年度出國交換生甄選簡章、12 月中旬起更新姊妹校名額至 12 月 31 日截止收件，限本校在學全職學位生（大學部二年級（含）以上、碩士班、博士班在學學生；大一新生於大一下學期得申請大二赴外交換；不含在職專班、延畢生及休學生），歷年學業成績排名須達全班前 50%（約折合平均 75 分或 GPA 2.5 以上；美國加州州立大學海峽群島分校明訂 GPA 2.5+）且操行優良，外語能力須符合《CEFR B1（含）級以上語言能力對照表》（TOEIC 550 / TOEFL iBT 42 / ITP 460 / IELTS 4.0）及各接待校門檻。（2）全球 17 國／地區 50 所合作姊妹校與跨洲際三聯／英美泰雙聯學位：完整收錄 25 所當期開放申請之國際交換、大陸交換與雙聯／三聯合作校及 25 所正式締約代表性姊妹校，涵蓋德墨臺「跨洲際全球研究三聯碩士學位（TRIM，與德國卡爾斯魯厄應用科技大學 HKA 及墨西哥蒙特雷大學 UDEM 共同授位）」、英國倫敦密德薩斯大學 3+1 雙學士（限公衛、生科、分遺、外語、國管學程）、美國安德魯斯大學 1+1 MBA 雙碩士（全校各科系適用）、泰國瑪希敦大學與納黎萱大學醫學科學研究所博士雙聯，以及日本京都佛教大學、奈良天理大學、熊本尚絅大學（限女生）與大陸蘭州大學「學雜費及住宿費雙全免」交換專案。（3）三大獎助體系與學長姐心得：涵蓋教育部《學海飛颺／惜珠／築夢／新南向學海築夢》（第一階段每年 2–3 月、第二階段每年 8 月）、校內《學生海外交流活動補助》（暑期 3/1–3/15、5/1–5/15；寒假 12/1–12/15；學期中出發前 1 個月；依計畫完整性 40%、含服務學習時數之學習成效 40%、交流風險性 20% 評定）及 15 所合作大學共 16 篇歷屆學長姐交換與雙聯心得報告。",
+    support_level="full",
+    partner_count_hint=50,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "慈濟大學",
+        "慈濟科技大學",
+        "慈大",
+        "TZUCHIUNIVERSITY",
+        "TZU CHI UNIVERSITY",
+        "TCU",
+    ),
+    # https://www.tcu.edu.tw/p/412-1033-4801.php?Lang=zh-tw — checked 2026-11-09.
+    colleges=(
+        "醫學院",
+        "護理學院",
+        "工程科技學院",
+        "人文傳播暨社會科學院",
+        "智慧永續管理學院",
+        "國際學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, TCU)
 DEFAULT_UNIVERSITY = CGU
 
 
