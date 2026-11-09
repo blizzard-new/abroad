@@ -109,7 +109,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   let colors = PALETTES[themeName()];
   const globalCamera = () => {
     const width = canvasHost.clientWidth || 960, height = canvasHost.clientHeight || 600;
-    return { center: [120, 22], zoom: Math.max(.25, Math.min(2.5, Math.log2(Math.min(width * .88, height * .88) * Math.PI / 512))), bearing: 0, pitch: 0 };
+    return { center: [120, 22], zoom: Math.max(.25, Math.min(2.5, Math.log2(Math.min(width * 1.08, height * 1.08) * Math.PI / 512))), bearing: 0, pitch: 0 };
   };
   let map;
   try {
