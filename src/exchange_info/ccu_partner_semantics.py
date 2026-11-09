@@ -357,7 +357,7 @@ def apply_ccu_semantic_review(row: PartnerUniversity):
     assert row.source_pages[0] in LANGUAGE_REVIEW, (
         "New table entry requires semantic review"
     )
-    lock = json.loads((BUNDLE / "semantic-review-lock.json").read_text())["pages"][
+    lock = json.loads((BUNDLE / "semantic-review-lock.json").read_text(encoding="utf-8"))["pages"][
         str(row.source_pages[0])
     ]
     for field in ("language_requirement", "partner_documents"):

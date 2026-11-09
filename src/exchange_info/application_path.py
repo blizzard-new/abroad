@@ -86,6 +86,110 @@ class PathArchive(BaseModel):
     archived: bool
 
 
+class PathProfile(BaseModel):
+    """Conditions the student supplies from a gate that cannot be judged without them.
+
+    Only fields present in the request change; an empty value clears one. They live beside the plan context, not in it,
+    so the plan id (a hash of the context) never changes when a student fills in a missing grade or score.
+    """
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+    revision: int = Field(ge=1)
+    college: str | None = Field(default=None, max_length=120)
+    department: str | None = Field(default=None, max_length=120)
+    degree_level: str | None = Field(default=None, max_length=80)
+    current_year: str | None = Field(default=None, max_length=40)
+    academic_score: float | None = Field(default=None, ge=0, le=100)
+    academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
+    class_rank_percent: float | None = Field(default=None, gt=0, le=100)
+    language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
+    language_score: float | None = Field(default=None, ge=0, le=1000)
+    jlpt_level: Literal["N1", "N2", "N3", "N4", "N5"] | None = None
+    application_round: str | None = Field(default=None, max_length=80)
+
+    @field_validator("*", mode="before")
+    @classmethod
+    def blank_clears(cls, value):
+        # An emptied form control arrives as "": that is the student taking a value back, not a malformed number.
+        return None if value == "" else value
+
+
+PROFILE_FIELDS = ("college", "department", "degree_level", "current_year", "academic_score", "academic_gpa",
+                  "class_rank_percent", "language_test", "language_score", "jlpt_level", "application_round")
+# The most each test can score; a score above it is a typo, not a result.
+LANGUAGE_SCORE_LIMIT = {"toeic": 990, "ielts": 9, "toefl": 120, "toefl_new": 6, "duolingo": 160}
+# Which of the student's conditions each rule check reads. A gate that says "not provided" asks for exactly these.
+CHECK_INPUTS = {
+    "college": ("college", "department"),
+    "degree_level": ("degree_level", "current_year"),
+    "partner_degree_level": ("degree_level", "current_year"),
+    "home_year": ("current_year",),
+    "home_language_score": ("language_test", "language_score"),
+    "language_score": ("language_test", "language_score"),
+    "application_round": ("application_round",),
+    "academic_score": ("academic_score", "academic_gpa", "class_rank_percent"),
+    "academic_gpa": ("academic_gpa",),
+}
+# Schools measure academic standing differently; ask only for what their rule reads.
+ACADEMIC_INPUTS_BY_HOME = {"ncu": ("academic_score",), "ntu": ("academic_gpa", "class_rank_percent")}
+JLPT_HINT = re.compile(r"JLPT|日語能力|日本語能力")
+RANK_OR_GPA_HINT = re.compile(r"GPA|排名|排行|百分比")
+# The wording the rules use when the student's own data is what is absent ("尚未提供目前學制", "尚未填寫外語檢定成績").
+ASKS_FOR_DATA = re.compile(r"尚未(提供|填寫|填入|選擇|輸入|設定)|未提供|未填")
+
+
+def effective_profile(plan):
+    """The student's conditions for evaluation: what they filled in at the gate, else what the plan was created with."""
+    context = plan["context"]
+    saved = plan.get("profile") or {}
+    values = {key: context.get(key) or None for key in ("college", "department", "degree_level", "application_round")}
+    for key in PROFILE_FIELDS:
+        if saved.get(key) not in (None, ""):
+            values[key] = saved[key]
+        else:
+            values.setdefault(key, None)
+    return values
+
+
+def validate_profile(profile):
+    test, score = profile.get("language_test"), profile.get("language_score")
+    if score is not None and test in LANGUAGE_SCORE_LIMIT and score > LANGUAGE_SCORE_LIMIT[test]:
+        raise HTTPException(422, f"這項測驗的分數最高是 {LANGUAGE_SCORE_LIMIT[test]}，請再確認填寫的分數。")
+    if score is not None and not test:
+        raise HTTPException(422, "請一併選擇語言測驗，再填分數。")
+
+
+def input_spec(check, values, home_school):
+    """What a rule check needs from the student, and what is still missing, so the gate can ask for it in place.
+
+    A gate that is undecided for its own reasons (a rule the school has not settled, a window not announced) is not
+    waiting for the student, so it asks for nothing and nothing blocks it.
+    """
+    fields = list(CHECK_INPUTS.get(check.code, ()))
+    detail = check.detail or ""
+    asks = bool(ASKS_FOR_DATA.search(detail))
+    if not fields:
+        return {}
+    if check.status == "needs_confirmation" and not asks and not any(values.get(k) not in (None, "") for k in fields):
+        return {}
+    if check.code == "academic_score":
+        from .university_registry import resolve_university
+        home = resolve_university(home_school)
+        fields = list(ACADEMIC_INPUTS_BY_HOME.get(home.id if home else "", ())) or (
+            fields if RANK_OR_GPA_HINT.search(detail) else ["academic_score"])
+    if check.code == "home_language_score" and JLPT_HINT.search(detail):
+        fields.append("jlpt_level")
+    given = {key: values.get(key) for key in fields}
+    if check.code == "academic_score":
+        missing = [] if any(value is not None for value in given.values()) else list(fields)
+    elif check.code in ("home_language_score", "language_score"):
+        missing = [key for key in fields if key in ("language_test", "language_score") and given[key] is None]
+    else:
+        missing = [key for key in fields if given[key] in (None, "")]
+    if check.status != "needs_confirmation":
+        missing = []
+    return {"input_fields": fields, "input_values": given, "missing_inputs": missing}
+
+
 def identity(context: dict) -> str:
     return hashlib.sha256(json.dumps(context, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:32]
 
@@ -119,7 +223,7 @@ def level(level_id, title, kind, prompt, stage, **extra):
                 external=kind == "notice", source_urls=[], dependency_ids=[], **extra)
 
 
-def build_levels(context, evaluated, catalog):
+def build_levels(context, evaluated, catalog, values=None):
     """Use scoped service output; never invent institution requirements or dates."""
     choice = evaluated.choices[0]
     levels = [
@@ -132,6 +236,7 @@ def build_levels(context, evaluated, catalog):
         item.update(source_urls=[check.source_url] if check.source_url else [],
                     check_status=check.status,
                     warning={"pass":"規則比對通過，仍以校方審核為準。", "fail":"目前條件不符合此項規則；個人確認不會改變資格判斷。", "needs_confirmation":"資料或個人條件待確認。"}[check.status])
+        item.update(input_spec(check, values or {}, context["home_school"]))
         levels.append(item)
     documents = [d for d in catalog.items if not d.applicability or d.applicability.status not in {"not_applicable", "deferred"}]
     study_docs = [d for d in documents if re.search(r"研修計畫|讀書計畫|學習計畫|study.plan", d.name, re.I)]
@@ -232,15 +337,18 @@ def register_application_path(app, *, authenticate, university_for, evaluate, ca
 
     def catalog(plan):
         c = plan["context"]
+        v = effective_profile(plan)
         result = evaluate(PersonalApplicationPlanRequest(home_school=c["home_school"], academic_year=c["academic_year"],
-            application_round=c["application_round"] or None, college=c["college"] or None,
-            department=c["department"] or None, degree_level=c["degree_level"] or None,
+            application_round=v["application_round"], college=v["college"], department=v["department"],
+            degree_level=v["degree_level"], current_year=v["current_year"], academic_score=v["academic_score"],
+            academic_gpa=v["academic_gpa"], class_rank_percent=v["class_rank_percent"], language_test=v["language_test"],
+            language_score=v["language_score"], jlpt_level=v["jlpt_level"],
             preferences=[{"rank":1, "school_name":c["target_school"]}]))
-        docs = catalog_for(school=c["home_school"], target_school=c["target_school"], college=c["college"] or None,
-            department=c["department"] or None, degree_level=c["degree_level"] or None, program_type="exchange",
-            academic_year=c["academic_year"], application_round=c["application_round"] or None,
+        docs = catalog_for(school=c["home_school"], target_school=c["target_school"], college=v["college"],
+            department=v["department"], degree_level=v["degree_level"], program_type="exchange",
+            academic_year=c["academic_year"], application_round=v["application_round"],
             host_admission_status="unknown", housing_choice="unknown", semester=c["semester"])
-        return build_levels(c, result, docs)
+        return build_levels(c, result, docs, v)
 
     def summary(plan):
         return {k:plan[k] for k in ("id", "context", "archived", "updated_at")}
@@ -419,6 +527,31 @@ def register_application_path(app, *, authenticate, university_for, evaluate, ca
         record.update(updated_at=utc_now().isoformat(), recorded_by="student", source_signature=item.get("source_signature"))
         plan["steps"][step_id] = record
         plan["updated_at"] = record["updated_at"]
+        commit(account, home, registry)
+        return envelope(registry, plan, account)
+
+    @app.put("/account/application-paths/{plan_id}/profile")
+    def update_profile(plan_id: str, payload: PathProfile, request: Request,
+                       home_school: str = Query(min_length=2, max_length=80)):
+        """Save conditions a gate was missing, then judge the gates again with them."""
+        account, _ = authenticate(request)
+        home = home_name(home_school)
+        registry = read(account, home)
+        plan = locate(registry, plan_id)
+        check_revision(registry, payload.revision)
+        if plan["archived"]:
+            raise HTTPException(409, "請先恢復這份封存計畫。")
+        profile = dict(plan.get("profile") or {})
+        for key, value in payload.model_dump(exclude={"revision"}, exclude_unset=True).items():
+            if value in (None, ""):
+                profile.pop(key, None)
+            else:
+                profile[key] = value
+        validate_profile({**effective_profile({**plan, "profile": profile})})
+        trial = {**plan, "profile": profile}
+        catalog(trial)  # Judges with the new values before anything is saved.
+        plan["profile"] = profile
+        plan["updated_at"] = utc_now().isoformat()
         commit(account, home, registry)
         return envelope(registry, plan, account)
 

@@ -4283,7 +4283,7 @@ function renderPersonalPlanSnapshot() {
   const conditions = profile ? [profile.college, profile.degree, profile.languageLabel, targetTermLabel(profile.targetTerm)].filter(Boolean).join(" · ") : "先填學院、學制、成績與語言能力，系統會整理合適的候選學校。";
   container.innerHTML = `
     <article class="planning-profile-summary"><span class="plan-snapshot-icon"><i data-lucide="sliders-horizontal" aria-hidden="true"></i></span><div><small>我的條件</small><strong>${escapeHtml(conditions)}</strong><a href="#advisor">${profile ? "更新條件與推薦" : "開始選校規劃"}<i data-lucide="arrow-right" aria-hidden="true"></i></a></div></article>
-    <article class="planning-target-card"><span class="plan-snapshot-icon"><i data-lucide="goal" aria-hidden="true"></i></span><div><small>我的目標</small><strong>${escapeHtml(target || "尚未選定目標學校")}</strong><span>${target ? "文件工作區會帶入這所學校，接著依上方提示確認資格與安排時程。" : "查看推薦後，由你確認要申請的學校。"}</span></div></article>`;
+    <article class="planning-target-card"><span class="plan-snapshot-icon"><i data-lucide="goal" aria-hidden="true"></i></span><div><small>我的目標</small><strong>${escapeHtml(target || "尚未選定目標學校")}</strong></div></article>`;
   renderApplicationJourney();
   renderPlanningWorkspace();
   renderPlanningNextAction();
@@ -4506,7 +4506,7 @@ function renderRecommendedMatches() {
   if (!container || !state.dashboard) return;
   const recommendations = state.planningPlanProfileKey === planningProfileKey() ? state.advisorPlan?.recommendations || [] : [];
   if (!recommendations.length) {
-    container.innerHTML = `<div class="match-empty"><i data-lucide="scan-search" aria-hidden="true"></i><span><strong>${state.eligibilityProfile ? "條件已保存，接著查看推薦" : "從你的條件，找到合適的下一站"}</strong><small>依你的學院、語言能力與偏好整理候選，正式資格仍需核對。</small></span><a class="primary-button" href="#advisor">${state.eligibilityProfile ? "更新選校推薦" : "填寫條件並配對"}</a></div>`;
+    container.innerHTML = `<div class="match-empty"><i data-lucide="scan-search" aria-hidden="true"></i><span><strong>${state.eligibilityProfile ? "條件已保存，接著查看推薦" : "從你的條件，找到合適的下一站"}</strong></span><a class="primary-button" href="#advisor">${state.eligibilityProfile ? "更新選校推薦" : "填寫條件並配對"}</a></div>`;
     initIcons();
     refreshPlanningRecommendations();
     return;
@@ -8609,21 +8609,47 @@ function setPartnerView(view) {
   syncPartnerView();
 }
 
+// The few figures that decide whether to look further, short enough to read at a glance. The rest is one tap away.
+function mapPreviewLanguage(item) {
+  const points = partnerSummaryPoints(item, "eligibility_points");
+  const text = [...points, item.eligibility || ""].join("；");
+  const found = [];
+  const add = (label) => { if (label && !found.includes(label)) found.push(label); };
+  const match = (pattern, format) => { const hit = text.match(pattern); if (hit) add(format(hit)); };
+  match(/CEFR\s*([ABC][12])/i, (m) => `CEFR ${m[1].toUpperCase()}`);
+  match(/IELTS[^0-9]{0,14}(\d(?:\.\d)?)/i, (m) => `IELTS ${m[1]}`);
+  match(/TOEFL[^0-9]{0,24}(\d{2,3})/i, (m) => `TOEFL ${m[1]}`);
+  match(/TOEIC[^0-9]{0,14}(\d{3})/i, (m) => `TOEIC ${m[1]}`);
+  match(/JLPT\s*(N[1-5])|日語能力測驗\s*(N[1-5])/i, (m) => `JLPT ${m[1] || m[2]}`);
+  if (found.length) return found.slice(0, 3).join("・");
+  // Otherwise the clause that names a language, without links, so a note about a list or a date is never mistaken for it.
+  const clause = points.map((point) => String(point).replace(/https?:\/\/\S+/g, "").match(/[^。；;]*(語文|語言|英語|日語|English|language|CEFR|IELTS|TOEFL|TOEIC|JLPT)[^。；;]*/i)?.[0]).find(Boolean);
+  return clause ? truncate(clause.trim(), 34) : "";
+}
+
 function renderMapPreview(item) {
   const location = item.location || {}, availability = partnerAvailabilityMeta(item);
-  const language = partnerSummaryPoints(item, "eligibility_points");
+  const language = mapPreviewLanguage(item);
+  const name = String(item.school_name || ""), split = name.search(/[A-Za-z]/);
+  const chinese = split > 0 ? name.slice(0, split).trim() : name, english = split > 0 ? name.slice(split).trim() : "";
+  const deadline = localizedPartnerValue(item, "application_deadline", "application_deadline", "");
+  const facts = [
+    ["交換名額", item.quota || "待公告"],
+    ["研修期間", localizedPartnerValue(item, "study_period", "study_period")],
+    ["語言門檻", language || "見完整資料"],
+    ["申請截止", deadline || ""],
+    ["費用", discoveryCostSummary(item)],
+  ];
+  // A figure nobody has published yet says so once, in one line, instead of taking a tile of its own.
+  const unknown = (value) => !value || /^(待|尚無|尚未|依公告|見完整資料|未公告|無資料)|(待確認|待公告|待核實)$/.test(String(value).trim());
+  const known = facts.filter(([, value]) => !unknown(value)), missing = facts.filter(([, value]) => unknown(value));
   return `<div class="map-preview-top">
     <button type="button" class="map-preview-close" data-close-map-preview aria-label="關閉學校預覽">×</button>
-    ${renderSchoolPhoto(item, "map")}
     <div class="map-preview-place">${escapeHtml([location.city, item.country].filter(Boolean).join(" · "))}</div>
-    <h4>${escapeHtml(item.school_name)}</h4>
+    <h4>${escapeHtml(chinese)}${english ? ` <span lang="en">${escapeHtml(english)}</span>` : ""}</h4>
     <span class="coverage-chip ${availability.blocked ? "empty" : ""}">${escapeHtml(availability.shortLabel)}</span>
-  </div><div class="map-preview-body"><dl>
-    <dt>交換名額</dt><dd>${escapeHtml(item.quota || "待公告")}</dd>
-    <dt>研修期間</dt><dd>${escapeHtml(localizedPartnerValue(item, "study_period", "study_period"))}</dd>
-    <dt>語言與資格</dt><dd>${escapeHtml(truncate(language.join("；") || item.eligibility || "待確認", 160))}</dd>
-  </dl>${discoveryMatchBadge(item)}${discoveryPreviewExtras(item)}
-    <div class="map-preview-actions"><button type="button" class="primary-button school-detail-trigger" data-school-name="${escapeHtml(item.school_name)}">查看詳細資料 <span aria-hidden="true">↗</span></button>${renderFavoriteButton(item)}</div>
+  </div><div class="map-preview-body"><dl class="map-facts">${known.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>${missing.length ? `<p class="map-facts-pending"><b>待確認</b>${escapeHtml(missing.map(([label]) => label).join("、"))}</p>` : ""}${discoveryMatchBadge(item)}${discoveryPreviewExtras(item)}
+    <div class="map-preview-actions"><button type="button" class="primary-button school-detail-trigger" data-school-name="${escapeHtml(item.school_name)}">查看完整資料 <span aria-hidden="true">↗</span></button>${renderFavoriteButton(item)}</div>
     <details class="map-location-note"><summary>校區與資料來源</summary><p>${escapeHtml(location.note || "校級代表位置，實際校區以錄取資訊為準。")}</p>${renderPartnerLinks(item)}</details>
   </div>`;
 }
@@ -11593,9 +11619,7 @@ function initDiscussionReader() {
       return `<div class="discussion-welcome" role="status">
         <div class="discussion-welcome-art" aria-hidden="true"><span class="discussion-art-orbit"></span><span class="discussion-art-globe"><i data-lucide="globe-2"></i></span><span class="discussion-art-bubble"><i data-lucide="messages-square"></i></span><span class="discussion-art-spark"><i data-lucide="sparkles"></i></span></div>
         <span class="discussion-welcome-kicker">下一站，從一場對話開始</span><h3>來分享第一篇交換經驗</h3>
-        <p>正在準備申請，還是已經走過一趟旅程？<br />你的問題與經驗，都值得被聽見。</p>
         <button type="button" class="primary-button" data-open-global-community-composer><i data-lucide="square-pen" aria-hidden="true"></i>發表文章</button>
-        <small>寫下國家、年份與目前階段，讓交流更有方向。</small>
       </div>`;
     },
     composer(post) {

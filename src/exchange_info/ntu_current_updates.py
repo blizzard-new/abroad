@@ -333,9 +333,9 @@ def _ensure_new_partners(bundle: Path, data: dict, partners: list[PartnerUnivers
 
 def apply_current_updates(bundle: Path, path: Path = SOURCE) -> dict:
     data = load_update(path)  # Validate the complete batch before any write.
-    partners = [PartnerUniversity.model_validate_json(line) for line in (bundle / "partners.jsonl").read_text().splitlines()]
-    profiles = [DestinationProfile.model_validate_json(line) for line in (bundle / "destination_profiles.jsonl").read_text().splitlines()]
-    ledger = json.loads((bundle / "verification_status.json").read_text())
+    partners = [PartnerUniversity.model_validate_json(line) for line in (bundle / "partners.jsonl").read_text(encoding="utf-8").splitlines()]
+    profiles = [DestinationProfile.model_validate_json(line) for line in (bundle / "destination_profiles.jsonl").read_text(encoding="utf-8").splitlines()]
+    ledger = json.loads((bundle / "verification_status.json").read_text(encoding="utf-8"))
     rows = {r["portal_id"]: r for r in data["list_receipt"]["rows"]}
     current_pids = {p.source_url.rsplit("/", 1)[-1] for p in partners}
     expected_before_new = set(rows) - NEW_PARTNER_IDS
@@ -503,7 +503,7 @@ def apply_current_updates(bundle: Path, path: Path = SOURCE) -> dict:
     (bundle / "verification_status.json").write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (bundle / "list_verification.json").write_text(json.dumps(data["list_receipt"], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     for filename in ["catalog-completeness.json", "import_provenance.json"]:
-        payload = json.loads((bundle / filename).read_text())
+        payload = json.loads((bundle / filename).read_text(encoding="utf-8"))
         payload["current_official_update"] = {"source_snapshot": path.name, "sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "checked_at": data["checked_at"], "counts": data["counts"], "application_open_confirmed": False, "all_current_cycle_fields_verified": False}
         if filename == "catalog-completeness.json":
             payload.update(partner_count=289, quota_pending_count=262, zero_quota_count=7, published_positive_quota_count=20, selection_academic_year_slots=43, selection_maximum_persons=81, latest_official_list_checked_at=data["list_receipt"]["checked_at"])

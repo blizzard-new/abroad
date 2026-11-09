@@ -1,0 +1,706 @@
+/* UniWay metro world. Loaded last, so it re-points the shared tokens that the older stylesheets read (--uw-*, --glass-*)
+   and then draws the parts that belong to this world: the station-board search, the route map and the line system.
+   One ground, one ink, five line colours. No gradients, no glass, no blur. */
+
+/* ---------- 1. Tokens ---------- */
+:root, html[data-theme="light"] {
+  --mt-ground: #fff; --mt-concourse: #f3f4f6; --mt-ink: #1a1d23; --mt-ink-2: #2b303a; --mt-ink-3: #4a5160;
+  --mt-rule: #d6dae1; --mt-rule-strong: #8d95a3; --mt-board: #1a1d23; --mt-on-board: #fff; --mt-on-board-2: #c7cdd8;
+  --mt-red: #d9262c; --mt-orange: #f2a81d; --mt-blue: #1f6fd1; --mt-green: #0c7d56; --mt-brown: #8c5a2e;
+  --mt-on-red: #fff; --mt-on-orange: #1a1d23; --mt-on-blue: #fff; --mt-on-green: #fff; --mt-on-brown: #fff;
+  --mt-red-text: #b81c22; --mt-blue-text: #165cb4;
+  --mt-focus: #1f6fd1; --mt-radius: 8px; --mt-radius-lg: 12px;
+  --mt-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 1' preserveAspectRatio='none'%3E%3Crect width='1' height='1' fill='%23d9262c'/%3E%3Crect x='1' width='1' height='1' fill='%23f2a81d'/%3E%3Crect x='2' width='1' height='1' fill='%231f6fd1'/%3E%3Crect x='3' width='1' height='1' fill='%230c7d56'/%3E%3Crect x='4' width='1' height='1' fill='%238c5a2e'/%3E%3C/svg%3E");
+  --mt-font: "UniWay Sign", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+
+  /* The older sheets read these; re-pointing them carries every page into the one world. */
+  --uw-font-ui: var(--mt-font);
+  --uw-page: var(--mt-ground); --uw-surface: var(--mt-ground); --uw-surface-soft: var(--mt-concourse);
+  --uw-navy: var(--mt-ink); --uw-text: var(--mt-ink); --uw-muted: var(--mt-ink-2);
+  --uw-accent: var(--mt-ink); --uw-accent-hover: #000; --uw-on-accent: #fff; --uw-accent-edge: var(--mt-ink); --uw-accent-wash: var(--mt-concourse);
+  --uw-blue: var(--mt-blue); --uw-blue-strong: var(--mt-blue-text); --uw-blue-soft: #e8f1fc; --uw-cyan-soft: #e8f1fc;
+  --uw-line: var(--mt-rule); --uw-line-strong: var(--mt-rule-strong); --uw-hairline: var(--mt-rule);
+  --uw-radius: var(--mt-radius-lg); --uw-radius-lg: 16px; --uw-shadow-soft: 0 1px 2px #1a1d2314; --uw-shadow: 0 6px 18px #1a1d2318;
+  --uw-page-bg: var(--mt-ground); --ink-soft: var(--mt-ink-2);
+  --uw-lilac-ink: var(--mt-ink); --uw-amber-soft: #fdf1d6; --uw-amber-ink: #7a4e00;
+  --uw-ph-a: #e9ecf1; --uw-ph-b: #f3f4f6;
+  --glass-surface: var(--mt-ground); --glass-strong: var(--mt-ground); --glass-edge: var(--mt-rule); --glass-hi: transparent;
+  --glass-shadow: 0 1px 2px #1a1d2314; --glass-blue: #e8f1fc; --glass-lilac: var(--mt-concourse); --glass-peach: #fdecec;
+  --glass-coral: var(--mt-red); --glass-coral-strong: var(--mt-red-text);
+  --amber: #8a4b00; --green: #0e6a49; --journal-coral: var(--mt-red-text);
+}
+html[data-theme="dark"] {
+  --mt-ground: #11151c; --mt-concourse: #1a2029; --mt-ink: #eef0f4; --mt-ink-2: #b9c0cc; --mt-ink-3: #8f98a8;
+  --mt-rule: #2f3846; --mt-rule-strong: #5d6879; --mt-board: #000; --mt-on-board: #fff; --mt-on-board-2: #c7cdd8;
+  --mt-red: #ff5a60; --mt-orange: #ffbf47; --mt-blue: #5aa2ff; --mt-green: #38d69b; --mt-brown: #d2a074;
+  --mt-on-red: #1a1d23; --mt-on-orange: #1a1d23; --mt-on-blue: #0b1220; --mt-on-green: #0b1220; --mt-on-brown: #1a1d23;
+  --mt-red-text: #ff8a8e; --mt-blue-text: #8ebcff; --mt-focus: #8ebcff;
+  --mt-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 1' preserveAspectRatio='none'%3E%3Crect width='1' height='1' fill='%23ff5a60'/%3E%3Crect x='1' width='1' height='1' fill='%23ffbf47'/%3E%3Crect x='2' width='1' height='1' fill='%235aa2ff'/%3E%3Crect x='3' width='1' height='1' fill='%2338d69b'/%3E%3Crect x='4' width='1' height='1' fill='%23d2a074'/%3E%3C/svg%3E");
+
+  --uw-page: var(--mt-ground); --uw-surface: #161b23; --uw-surface-soft: var(--mt-concourse);
+  --uw-navy: var(--mt-ink); --uw-text: var(--mt-ink); --uw-muted: var(--mt-ink-2);
+  --uw-accent: var(--mt-ink); --uw-accent-hover: #fff; --uw-on-accent: #11151c; --uw-accent-wash: #232b36;
+  --uw-blue: var(--mt-blue); --uw-blue-strong: var(--mt-blue-text); --uw-blue-soft: #1c2b44; --uw-cyan-soft: #1c2b44;
+  --uw-line: var(--mt-rule); --uw-line-strong: var(--mt-rule-strong); --uw-hairline: var(--mt-rule);
+  --uw-shadow-soft: 0 1px 2px #00000066; --uw-shadow: 0 6px 18px #00000066;
+  --uw-page-bg: var(--mt-ground);
+  --uw-lilac-ink: var(--mt-ink); --uw-amber-soft: #3a2f14; --uw-amber-ink: #ffd98a;
+  --uw-ph-a: #1f2630; --uw-ph-b: #181e26;
+  --glass-surface: #161b23; --glass-strong: #161b23; --glass-edge: var(--mt-rule); --glass-hi: transparent;
+  --glass-shadow: 0 1px 2px #00000066; --glass-blue: #1c2b44; --glass-lilac: #232b36; --glass-peach: #3a1f21;
+  --glass-coral: var(--mt-red); --glass-coral-strong: var(--mt-red-text);
+  --amber: #ffbf47; --green: #38d69b; --journal-coral: var(--mt-red-text);
+}
+
+/* ---------- 2. Base ---------- */
+:root, html[data-theme] { font-family: var(--mt-font); }
+body, button, input, select, option, optgroup, textarea, input::placeholder, textarea::placeholder, ::file-selector-button { font-family: var(--mt-font); }
+body.unified-shell { background: var(--mt-ground); color: var(--mt-ink); }
+::selection { background: var(--mt-ink); color: var(--mt-ground); }
+html { scrollbar-color: var(--mt-rule-strong) var(--mt-ground); caret-color: var(--mt-red); accent-color: var(--mt-blue); }
+:where(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible { outline: 3px solid var(--mt-focus); outline-offset: 2px; }
+.mt-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ---------- 3. Home hero ---------- */
+body.unified-shell #home-landing .mt-hero {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "copy copy" "board board" "route route" "plan plan" "cue cue";
+  gap: clamp(14px, 2.2svh, 22px) 28px; align-items: start; min-height: 0;
+  padding: clamp(14px, 2.4svh, 28px) 0 clamp(28px, 4svh, 48px);
+}
+#home-landing .mt-hero .pr-hero-copy { grid-area: copy; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 6px 28px; }
+#home-landing .mt-hero h1 {
+  margin: 0; max-width: 22em; color: var(--mt-ink); font-size: clamp(28px, 4.05cqi, 58px); font-weight: 900; line-height: 1.12;
+  letter-spacing: -.02em; text-wrap: balance;
+}
+#home-landing .mt-hero h1 span { color: inherit; text-decoration: underline; text-decoration-color: var(--mt-red); text-decoration-thickness: .13em; text-underline-offset: .12em; text-decoration-skip-ink: none; }
+@container (min-width: 900px) { #home-landing .mt-hero h1 br { display: none; } #home-landing .mt-hero h1 { max-width: none; } }
+#home-landing .mt-hero .pr-hero-socials { margin: 0 0 .5em; gap: 0 14px; }
+#home-landing .mt-hero .pr-hero-socials-label { color: var(--mt-ink-3); font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+#home-landing .mt-hero .pr-social-pill { color: var(--mt-ink); font-size: 13px; }
+
+/* 3a. Station board: the search. */
+#home-landing .mt-board {
+  grid-area: board; display: grid; grid-template-columns: minmax(170px, 1.1fr) minmax(220px, 1.7fr) minmax(130px, .8fr) minmax(130px, .8fr) auto;
+  align-items: stretch; margin: 0; background: var(--mt-board); color: var(--mt-on-board); border-radius: 0; overflow: hidden;
+}
+#home-landing .mt-board-cell {
+  position: relative; display: grid; gap: 2px; align-content: center; min-width: 0; min-height: 72px; margin: 0; padding: 12px 18px 10px;
+  border: 0; border-top: 6px solid var(--cell-line, var(--mt-red)); border-right: 1px solid #ffffff33; border-radius: 0; background-color: transparent;
+  color: var(--mt-on-board); text-align: left; cursor: pointer; box-shadow: none;
+}
+#home-landing .mt-board-cell:nth-child(1) { --cell-line: var(--mt-red); }
+#home-landing .mt-board-cell:nth-child(2) { --cell-line: var(--mt-orange); cursor: text; }
+#home-landing .mt-board-cell:nth-child(3) { --cell-line: var(--mt-blue); }
+#home-landing .mt-board-cell:nth-child(4) { --cell-line: var(--mt-green); }
+#home-landing .mt-board-cell small { color: var(--mt-on-board-2); font-size: 11.5px; font-weight: 700; letter-spacing: .1em; }
+body.unified-shell #home-landing .mt-board-cell strong, body.unified-shell #home-landing .mt-board-cell input, body.unified-shell #home-landing .mt-board-cell select {
+  width: 100%; min-width: 0; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; outline: 0;
+  color: var(--mt-on-board); font: 800 17px/1.3 var(--mt-font); letter-spacing: 0; text-overflow: ellipsis;
+}
+#home-landing .mt-board-cell strong { overflow: hidden; white-space: nowrap; }
+#home-landing .mt-board-cell input::placeholder { color: #aab2c0; font-weight: 600; opacity: 1; }
+body.unified-shell #home-landing .mt-board-cell select {
+  appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 22px; height: auto; min-height: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 2px center / 12px 8px no-repeat;
+}
+body.unified-shell #home-landing .mt-board-cell select option { background: #fff; color: #1a1d23; }
+#home-landing .mt-board-cell:hover { background-color: #ffffff14; }
+#home-landing .mt-board-cell:focus-within, #home-landing .mt-board-cell:focus-visible { outline: 3px solid var(--mt-on-board); outline-offset: -3px; }
+#home-landing .mt-board-edit { position: absolute; right: 14px; bottom: 11px; padding: 2px 8px; border: 1.5px solid #ffffff8c; border-radius: 999px; color: var(--mt-on-board); font-size: 11.5px; font-weight: 700; }
+#home-landing .mt-board-school strong { padding-right: 54px; }
+#home-landing .mt-board-go {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-width: 150px; margin: 0; padding: 0 28px; border: 0; border-radius: 0;
+  background: var(--mt-orange); color: var(--mt-on-orange); font: 900 19px/1 var(--mt-font); letter-spacing: .02em; cursor: pointer; box-shadow: none;
+}
+#home-landing .mt-board-go .lucide { width: 22px; height: 22px; stroke-width: 3; }
+#home-landing .mt-board-go:hover { background: #ffc24d; }
+#home-landing .mt-board-go:focus-visible { outline: 3px solid var(--mt-on-board); outline-offset: -5px; }
+
+/* 3b. The route map. */
+#home-landing .mt-route { grid-area: route; position: relative; min-width: 0; }
+#home-landing .mt-stage { position: relative; max-width: 1180px; margin-inline: auto; container-type: inline-size; container-name: mtstage; }
+#home-landing .mt-map { position: relative; width: 100%; }
+#home-landing .mt-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+#home-landing .mt-path { fill: none; stroke: var(--line); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; transition: opacity .25s ease; }
+#home-landing .mt-line, #home-landing .mt-path { --line: var(--mt-red); --on-line: var(--mt-on-red); }
+#home-landing [data-line="southeast"] { --line: var(--mt-orange); --on-line: var(--mt-on-orange); }
+#home-landing [data-line="europe"] { --line: var(--mt-blue); --on-line: var(--mt-on-blue); }
+#home-landing [data-line="americas"] { --line: var(--mt-green); --on-line: var(--mt-on-green); }
+#home-landing [data-line="elsewhere"] { --line: var(--mt-brown); --on-line: var(--mt-on-brown); }
+#home-landing .mt-route[data-focus="east-asia"] .mt-path:not([data-line="east-asia"]), #home-landing .mt-route[data-focus="southeast"] .mt-path:not([data-line="southeast"]),
+#home-landing .mt-route[data-focus="europe"] .mt-path:not([data-line="europe"]), #home-landing .mt-route[data-focus="americas"] .mt-path:not([data-line="americas"]),
+#home-landing .mt-route[data-focus="elsewhere"] .mt-path:not([data-line="elsewhere"]) { opacity: .18; }
+#home-landing .mt-route[data-focus]:not([data-focus=""]) .mt-line { transition: opacity .25s ease; }
+#home-landing .mt-route[data-focus="east-asia"] .mt-line:not([data-line="east-asia"]), #home-landing .mt-route[data-focus="southeast"] .mt-line:not([data-line="southeast"]),
+#home-landing .mt-route[data-focus="europe"] .mt-line:not([data-line="europe"]), #home-landing .mt-route[data-focus="americas"] .mt-line:not([data-line="americas"]),
+#home-landing .mt-route[data-focus="elsewhere"] .mt-line:not([data-line="elsewhere"]) { opacity: .25; }
+
+#home-landing .mt-stops { margin: 0; padding: 0; list-style: none; }
+#home-landing .mt-stop, #home-landing .mt-line-tag, #home-landing .mt-origin { position: absolute; left: calc(var(--x) / 1000 * 100%); top: calc(var(--y) / 500 * 100%); }
+#home-landing .mt-stop { width: 0; height: 0; }
+#home-landing .mt-station {
+  position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); display: block; width: 20px; height: 20px; min-width: 0; min-height: 0; margin: 0; padding: 0; border: 0; border-radius: 50%;
+  background: transparent; color: var(--mt-ink); font: inherit; cursor: pointer; box-shadow: none;
+}
+#home-landing .mt-station::after { content: ""; position: absolute; inset: -12px -34px; }
+#home-landing .mt-dot { position: absolute; inset: 0; box-sizing: border-box; border: 4px solid var(--mt-ink); border-radius: 50%; background: var(--mt-ground); transition: transform .15s ease, background-color .15s ease; }
+#home-landing .mt-station[data-filled="true"] .mt-dot { background: var(--line); }
+#home-landing .mt-station:hover .mt-dot, #home-landing .mt-station:focus-visible .mt-dot { transform: scale(1.22); }
+#home-landing .mt-label { position: absolute; left: 50%; display: grid; justify-items: center; gap: 1px; transform: translateX(-50%); text-align: center; white-space: nowrap; line-height: 1.25; pointer-events: none; }
+#home-landing .is-down .mt-label { top: 27px; }
+#home-landing .is-up .mt-label { bottom: 27px; }
+#home-landing .mt-label b { color: var(--mt-ink); font-size: 16px; font-weight: 800; }
+#home-landing .mt-label small { color: var(--mt-ink-2); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+#home-landing .mt-label small em { color: var(--mt-ink); font-style: normal; font-weight: 800; }
+#home-landing .mt-station:hover .mt-label b { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+#home-landing .mt-line-tag {
+  display: grid; gap: 1px; width: max-content; min-width: 0; min-height: 0; margin: 0; padding: 6px 12px 7px 11px; transform: translate(0, -50%); border: 0; border-radius: var(--mt-radius); white-space: nowrap;
+  background: var(--line); color: var(--on-line); text-align: left; cursor: pointer; box-shadow: none; line-height: 1.25;
+}
+#home-landing .mt-line-name { font-size: 15px; font-weight: 900; }
+#home-landing .mt-line-meta { display: flex; flex-wrap: wrap; gap: 0 6px; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+#home-landing .mt-line-meta small { font-size: 12px; font-weight: 700; }
+#home-landing .mt-line-tag[aria-pressed="true"] { outline: 3px solid var(--mt-ink); outline-offset: 2px; }
+
+#home-landing .mt-origin { width: 0; height: 0; }
+#home-landing .mt-origin-ring { position: absolute; left: -34px; top: -34px; width: 68px; height: 68px; box-sizing: border-box; border: 8px solid var(--mt-ink); border-radius: 50%; background: var(--mt-ground); }
+#home-landing .mt-origin-ring::after { content: ""; position: absolute; inset: 12px; border-radius: 50%; background: var(--mt-red); }
+#home-landing .mt-origin-label {
+  position: absolute; left: calc(96 / 1000 * 100%); top: calc(250 / 500 * 100% + 44px); transform: translateX(-50%); display: grid; gap: 1px; justify-items: center; width: 150px; margin: 0;
+  padding: 8px 10px 9px; border: 0; border-radius: var(--mt-radius); background: var(--mt-board); color: var(--mt-on-board); text-align: center; cursor: pointer; box-shadow: none;
+}
+#home-landing .mt-origin-label small { color: var(--mt-on-board-2); font-size: 11px; font-weight: 700; letter-spacing: .1em; }
+#home-landing .mt-origin-label strong { max-width: 100%; overflow: hidden; color: var(--mt-on-board); font-size: 17px; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
+#home-landing .mt-origin-edit { margin-top: 3px; padding: 1px 9px; border: 1.5px solid #ffffff8c; border-radius: 999px; font-size: 11px; font-weight: 700; }
+#home-landing .mt-origin-label:hover { background: #000; }
+
+/* The suitcase stands on the origin station: you are here. */
+#home-landing .mt-stage .pr-collage-mascot {
+  position: absolute; z-index: 3; left: calc(96 / 1000 * 100% - var(--uw-mascot-size) / 2); top: calc(250 / 500 * 100% - 38px - var(--uw-mascot-size) * 1.2);
+  margin: 0; --uw-mascot-size: clamp(76px, 9.4cqi, 118px);
+}
+#home-landing .mt-empty { margin: 0; padding: 48px 0; color: var(--mt-ink-2); font-size: 16px; font-weight: 600; }
+
+#home-landing .mt-route-note { margin: 10px 0 0; max-width: 1180px; margin-inline: auto; color: var(--mt-ink-2); font-size: 13px; line-height: 1.7; }
+#home-landing .mt-legend { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-left: 12px; color: var(--mt-ink); font-weight: 700; white-space: nowrap; }
+#home-landing .mt-key { display: inline-block; width: 13px; height: 13px; margin-right: 6px; box-sizing: border-box; border: 3px solid var(--mt-ink); border-radius: 50%; vertical-align: -2px; background: var(--mt-ground); }
+#home-landing .mt-key-open { background: var(--mt-blue); }
+
+/* 3c. The plan: four stations on one line. */
+#home-landing .mt-hero .pr-collage { grid-area: plan; display: block; position: static; transform: none; }
+#home-landing .mt-hero .pr-plan-card { width: auto; max-width: 1180px; margin-inline: auto; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; transform: none; }
+#home-landing .mt-hero .pr-plan-card header { justify-content: flex-start; gap: 12px; margin-bottom: 12px; }
+#home-landing .mt-hero .pr-plan-card header strong { color: var(--mt-ink); font-size: 15px; font-weight: 900; }
+#home-landing .mt-hero .pr-badge-peach { padding: 2px 10px; border-radius: 999px; background: var(--mt-ink); color: var(--mt-ground); font-size: 12px; font-weight: 800; }
+#home-landing .mt-hero .pr-plan-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
+#home-landing .mt-hero .pr-plan-steps li { position: relative; display: grid; grid-template-columns: 1fr; gap: 6px; padding: 0 14px 0 0; border: 0; justify-items: start; }
+#home-landing .mt-hero .pr-plan-steps li::before { content: ""; position: absolute; left: 30px; right: 4px; top: 11px; height: 8px; border-radius: 4px; background: var(--mt-rule); }
+#home-landing .mt-hero .pr-plan-steps li:last-child::before { display: none; }
+#home-landing .mt-hero .pr-plan-steps li.done::before { background: var(--mt-blue); }
+#home-landing .mt-hero .pr-step-ring { position: relative; z-index: 1; width: 30px; height: 30px; flex: none; border: 4px solid var(--mt-ink); border-radius: 50%; background: var(--mt-ground); color: var(--mt-ink); }
+#home-landing .mt-hero .pr-step-ring .lucide { width: 13px; height: 13px; stroke-width: 3; }
+#home-landing .mt-hero .pr-plan-steps .done .pr-step-ring { border-color: var(--mt-blue); background: var(--mt-blue); color: var(--mt-on-blue); }
+#home-landing .mt-hero .pr-plan-steps .now .pr-step-ring { border-color: var(--mt-red); background: var(--mt-red); color: var(--mt-on-red); }
+#home-landing .mt-hero .pr-plan-steps .todo .pr-step-ring { border: 4px solid var(--mt-ink); background: var(--mt-ground); color: transparent; }
+#home-landing .mt-hero .pr-step-title { max-width: 100%; overflow: visible; color: var(--mt-ink); font-size: 15px; font-weight: 800; text-overflow: clip; white-space: normal; }
+#home-landing .mt-hero .pr-plan-steps small { color: var(--mt-ink-2); font-size: 12px; font-weight: 700; }
+#home-landing .mt-hero .pr-plan-steps .now small { color: var(--mt-red-text); }
+#home-landing .mt-hero .pr-plan-steps .now .pr-step-title { font-weight: 900; }
+
+/* ---------- 4. Narrow: the route map becomes a route sheet ---------- */
+@container mtstage (max-width: 719px) {
+  #home-landing .mt-map { aspect-ratio: auto !important; display: grid; gap: 10px; }
+  #home-landing .mt-lines { display: none; }
+  #home-landing .mt-origin { display: none; }
+  #home-landing .mt-origin-label {
+    position: static; transform: none; width: auto; grid-template-columns: 1fr auto; justify-items: start; align-items: center; gap: 0 12px; margin: 0; padding: 12px 14px 12px 96px;
+    text-align: left;
+  }
+  #home-landing .mt-origin-label small { grid-column: 1; }
+  #home-landing .mt-origin-label strong { grid-column: 1; font-size: 19px; }
+  #home-landing .mt-origin-edit { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
+  #home-landing .mt-stage .pr-collage-mascot { left: 8px; top: -6px; --uw-mascot-size: 78px; }
+  #home-landing .mt-line { position: relative; display: grid; border-radius: var(--mt-radius); }
+  #home-landing .mt-line-tag { position: static; max-width: none; width: 100%; transform: none; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 12px 14px; }
+  #home-landing .mt-line-name { font-size: 17px; }
+  #home-landing .mt-line-tag::after { content: "+"; font-size: 22px; font-weight: 700; line-height: 1; }
+  #home-landing .mt-line-tag[aria-pressed="true"]::after { content: "–"; }
+  #home-landing .mt-line-tag[aria-pressed="true"] { outline: 0; }
+  #home-landing .mt-stops { display: none; position: relative; margin: 0 0 4px 22px; padding: 8px 0 8px 28px; }
+  #home-landing .mt-stops::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; border-radius: 4px; background: var(--line); }
+  #home-landing .mt-route[data-focus=""] .mt-origin-label + .mt-line .mt-stops,
+  #home-landing .mt-route[data-focus="east-asia"] .mt-line[data-line="east-asia"] .mt-stops, #home-landing .mt-route[data-focus="southeast"] .mt-line[data-line="southeast"] .mt-stops,
+  #home-landing .mt-route[data-focus="europe"] .mt-line[data-line="europe"] .mt-stops, #home-landing .mt-route[data-focus="americas"] .mt-line[data-line="americas"] .mt-stops,
+  #home-landing .mt-route[data-focus="elsewhere"] .mt-line[data-line="elsewhere"] .mt-stops { display: block; }
+  #home-landing .mt-route[data-focus]:not([data-focus=""]) .mt-line { opacity: 1 !important; }
+  #home-landing .mt-route[data-focus=""] .mt-origin-label + .mt-line .mt-line-tag::after { content: "–"; }
+  #home-landing .mt-stop { position: static; width: auto; height: auto; }
+  #home-landing .mt-station { position: relative; left: auto; top: auto; transform: none; display: flex; align-items: center; gap: 14px; width: 100%; height: auto; min-height: 48px; padding: 6px 4px 6px 0; border-radius: 0; text-align: left; }
+  #home-landing .mt-station::after { display: none; }
+  #home-landing .mt-dot { position: absolute; left: -38px; top: 50%; width: 20px; height: 20px; inset: auto auto auto -38px; transform: translateY(-50%); }
+  #home-landing .mt-station:hover .mt-dot, #home-landing .mt-station:focus-visible .mt-dot { transform: translateY(-50%) scale(1.15); }
+  #home-landing .mt-label { position: static; transform: none; display: flex; width: 100%; align-items: baseline; justify-content: space-between; gap: 12px; text-align: left; }
+  #home-landing .mt-label b { font-size: 16px; }
+  #home-landing .mt-label small { font-size: 13px; }
+}
+
+/* ---------- 5. Wide hero: board and map use the full row; narrow: the board stacks ---------- */
+@container (max-width: 1060px) {
+  #home-landing .mt-board { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  #home-landing .mt-board-cell { min-height: 64px; padding: 10px 16px 8px; border-right: 0; border-bottom: 1px solid #ffffff33; }
+  #home-landing .mt-board-cell:nth-child(3) { border-right: 1px solid #ffffff33; }
+  #home-landing .mt-board-school { grid-column: 1 / -1; order: 1; }
+  #home-landing .mt-board-dest { grid-column: 1 / -1; order: 2; }
+  #home-landing .mt-board-cell:nth-child(3) { order: 3; }
+  #home-landing .mt-board-cell:nth-child(4) { order: 4; }
+  #home-landing .mt-board-go { grid-column: 1 / -1; order: 5; min-height: 56px; }
+}
+@container (max-width: 640px) {
+  #home-landing .mt-hero .pr-plan-steps { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); row-gap: 18px; }
+  #home-landing .mt-hero .pr-plan-steps li:nth-child(2)::before { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #home-landing .mt-path, #home-landing .mt-dot, #home-landing .mt-line { transition: none; }
+}
+
+/* ---------- 6. Shell: the five-line band, the rail, the school switcher ---------- */
+html body.unified-shell:not(#mt)::before, html body.reading-shell:not(#mt)::before {
+  content: ""; position: fixed; z-index: 70; inset: 0 0 auto 0; height: 6px; pointer-events: none;
+  background: var(--mt-band) 0 0 / 100% 100% no-repeat;
+  filter: none; opacity: 1;
+}
+body.unified-shell .glass-navigation-rail {
+  border: 2px solid var(--mt-ink); border-radius: 14px; background: var(--mt-ground); box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+body.unified-shell .glass-navigation-rail .uniway-header-brand strong { font-weight: 900; letter-spacing: -.01em; }
+body.unified-shell .glass-navigation-rail .uniway-public-nav a[data-public-route] {
+  position: relative; border: 0; border-radius: 10px; background: transparent; color: var(--mt-ink-2); font-weight: 800; box-shadow: none;
+}
+body.unified-shell .glass-navigation-rail .uniway-public-nav a[data-public-route]:hover { background: var(--mt-concourse); color: var(--mt-ink); }
+body.unified-shell .glass-navigation-rail .uniway-public-nav a[data-public-route]:is([aria-current="page"], .active) { background: var(--mt-ink); color: var(--mt-ground); }
+body.unified-shell .glass-navigation-rail .uniway-public-nav a[data-public-route]:is([aria-current="page"], .active) :is(span, svg, .lucide) { color: var(--mt-ground); }
+body.unified-shell .glass-navigation-rail .topbar-actions { border-top: 2px solid var(--mt-rule); }
+body.unified-shell .glass-navigation-rail .topbar-actions .icon-button, body.unified-shell .glass-navigation-rail #account-button {
+  border: 2px solid var(--mt-ink); border-radius: 10px; background: var(--mt-ground); color: var(--mt-ink); box-shadow: none;
+}
+body.unified-shell .glass-navigation-rail .topbar-actions .icon-button:hover, body.unified-shell .glass-navigation-rail #account-button:hover { background: var(--mt-concourse); }
+
+body.unified-shell .page-back-bar .route-back { border: 2px solid var(--mt-rule); border-radius: 10px; background: var(--mt-ground); color: var(--mt-ink); font-weight: 800; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+body.unified-shell .page-back-bar #school-switcher {
+  border: 2px solid var(--mt-ink); border-radius: 10px; background: var(--mt-ground); color: var(--mt-ink); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+body.unified-shell .page-back-bar #school-switcher:hover:not(:disabled) { border-color: var(--mt-ink); background: var(--mt-concourse); transform: none; }
+body.unified-shell .page-back-bar #school-switcher .school-switcher-icon,
+body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) .page-back-bar #school-switcher .school-switcher-icon { border-radius: 50%; background: var(--mt-ink); color: var(--mt-ground); }
+body.unified-shell .page-back-bar #school-switcher small { color: var(--mt-ink-3); font-weight: 800; letter-spacing: .06em; }
+body.unified-shell .page-back-bar #school-switcher strong { color: var(--mt-ink); font-weight: 900; }
+body.unified-shell .page-back-bar #school-switcher > .lucide { color: var(--mt-ink); }
+body.unified-shell .glass-mobile-header { border: 0; border-bottom: 2px solid var(--mt-ink); border-radius: 0; background: var(--mt-ground); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+body.unified-shell .glass-mobile-header a { color: var(--mt-ink); font-weight: 900; }
+body.unified-shell .glass-mobile-header .mobile-guide-link { border: 0; border-radius: 8px; background: var(--mt-ink); color: var(--mt-ground); }
+
+/* ---------- 7. Buttons and chips used across the site ---------- */
+body.unified-shell .primary-button, html[data-theme="dark"] body.unified-shell .primary-button, body.unified-shell #community-hub .discussion-welcome .primary-button {
+  border: 2px solid var(--mt-ink); border-radius: 10px; background: var(--mt-ink); color: var(--mt-ground); font-weight: 800; box-shadow: none;
+}
+body.unified-shell .primary-button:hover, html[data-theme="dark"] body.unified-shell .primary-button:hover { background: var(--mt-ink-2); border-color: var(--mt-ink-2); }
+#home-landing .pr-chip { border-radius: 8px; background: var(--mt-ink); color: var(--mt-ground); }
+#home-landing .pr-chip-blue { background: var(--mt-blue); color: var(--mt-on-blue); }
+#home-landing .pr-chip-lilac { background: var(--mt-green); color: var(--mt-on-green); }
+#home-landing .pr-chip-peach { background: var(--mt-red); color: var(--mt-on-red); }
+#home-landing .pr-chip-cyan { background: var(--mt-orange); color: var(--mt-on-orange); }
+#home-landing .pr-chip-amber { background: var(--mt-brown); color: var(--mt-on-brown); }
+#home-landing .pr-link { color: var(--mt-blue-text); font-weight: 800; }
+#home-landing .pr-link:hover { color: var(--mt-ink); }
+#home-landing .pr-tag { border-radius: 6px; font-weight: 800; }
+#home-landing .pr-tag-ok { background: var(--mt-blue); color: var(--mt-on-blue); }
+#home-landing .pr-tag-warn { background: var(--mt-concourse); color: var(--mt-ink); box-shadow: inset 0 0 0 2px var(--mt-ink); }
+
+/* ---------- 8. Home below the hero ---------- */
+#home-landing .pr-section { margin-top: clamp(56px, 7cqi, 104px); }
+#home-landing .pr-section h2 { margin: 0; color: var(--mt-ink); font-size: clamp(26px, 3cqi, 42px); font-weight: 900; letter-spacing: -.02em; line-height: 1.18; text-wrap: balance; }
+#home-landing .pr-section-head p { color: var(--mt-ink-2); font-size: 16px; line-height: 1.75; }
+
+/* the marquee: a destination ticker */
+body.unified-shell #home-landing .pr-supported { margin-top: 4px; padding: 0; gap: 0; border: 0; border-radius: var(--mt-radius-lg); background: var(--mt-board); color: var(--mt-on-board); overflow: hidden; }
+#home-landing .pr-supported-label { align-self: stretch; padding: 12px 18px; border: 0; border-radius: 0; background: var(--mt-orange); color: var(--mt-on-orange); box-shadow: none; }
+#home-landing .pr-supported-label > .lucide { background: var(--mt-ink); color: var(--mt-orange); }
+#home-landing .pr-supported-label b { color: var(--mt-on-orange); font-weight: 900; }
+#home-landing .pr-supported-label small { color: var(--mt-on-orange); font-weight: 700; }
+#home-landing .pr-marquee { -webkit-mask-image: none; mask-image: none; }
+#home-landing .pr-supported strong { color: var(--mt-on-board); font-size: 16px; font-weight: 800; }
+#home-landing .pr-supported li span { color: var(--mt-on-board-2); font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+#home-landing .pr-marquee-toggle { margin-right: 12px; border: 2px solid #ffffff8c; border-radius: 8px; background: transparent; color: var(--mt-on-board); }
+#home-landing .pr-marquee-toggle:hover { border-color: var(--mt-on-board); color: var(--mt-on-board); }
+
+/* guides: plain photographs on a ruled card */
+#home-landing .pr-guide-cards { gap: 20px; }
+#home-landing .pr-guide-card { border: 2px solid var(--mt-ink); border-radius: var(--mt-radius-lg); background: var(--mt-ground); box-shadow: none; overflow: hidden; }
+#home-landing .pr-guide-card h3 { color: var(--mt-ink); font-weight: 900; }
+#home-landing .pr-guide-card p { color: var(--mt-ink-2); }
+#home-landing .pr-guide-card:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+/* tools: station information boards, each headed by its line colour */
+#home-landing .pr-tile { position: relative; border: 2px solid var(--mt-ink); border-radius: var(--mt-radius-lg); background: var(--mt-ground); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; overflow: hidden; }
+#home-landing [data-home-tile="search"] .pr-chip { background: var(--mt-orange); color: var(--mt-on-orange); }
+#home-landing [data-home-tile="fit"] .pr-chip { background: var(--mt-green); color: var(--mt-on-green); }
+#home-landing [data-home-tile="calendar"] .pr-chip { background: var(--mt-red); color: var(--mt-on-red); }
+#home-landing [data-home-tile="documents"] .pr-chip { background: var(--mt-blue); color: var(--mt-on-blue); }
+#home-landing [data-home-tile="budget"] .pr-chip { background: var(--mt-brown); color: var(--mt-on-brown); }
+#home-landing .pr-tile h3 { color: var(--mt-ink); font-weight: 900; }
+#home-landing .pr-tile p, #home-landing .pr-tile small { color: var(--mt-ink-2); }
+#home-landing .pr-tile .pr-mini-input, #home-landing .pr-tile .pr-mini-chip { border: 2px solid var(--mt-ink); border-radius: 8px; background: var(--mt-ground); color: var(--mt-ink); box-shadow: none; }
+#home-landing .pr-tile .pr-mini-chip b { color: var(--mt-ink); }
+#home-landing .pr-mini-row { border-radius: 8px; }
+#home-landing .pr-mini-row:hover { background: var(--mt-concourse); }
+#home-landing .pr-mini-foot { border-radius: 8px; background: var(--mt-concourse); }
+
+/* the real-world map keeps its own band, drawn like a platform board */
+#home-landing .pr-map-band { border: 0; border-radius: var(--mt-radius-lg); background: var(--mt-board); color: var(--mt-on-board); box-shadow: none; }
+#home-landing .pr-map-band h2, #home-landing .pr-map-band p, #home-landing .pr-map-band dt { color: var(--mt-on-board); }
+#home-landing .pr-map-band dd { color: var(--mt-on-board-2); }
+#home-landing .pr-map-band .pr-map-host { --map-land: #2c3441; --map-edge: #3c4656; --map-tw: var(--mt-red); --map-dot: var(--mt-orange); --map-halo: #f2a81d33; --map-arc: #f2a81d66; }
+#home-landing .pr-band-button { border: 0; border-radius: 10px; background: var(--mt-orange); color: var(--mt-on-orange); font-weight: 900; box-shadow: none; }
+#home-landing .pr-band-button:hover { background: #ffc24d; color: var(--mt-on-orange); }
+#home-landing .pr-stats dt { font-weight: 900; font-variant-numeric: tabular-nums; }
+
+/* the journey: one vertical line with four stations */
+#home-landing .hm-route-card { border: 2px solid var(--mt-ink); border-radius: var(--mt-radius-lg); background: var(--mt-ground); box-shadow: none; color: var(--mt-ink); }
+#home-landing .hm-route-card-top, #home-landing .hm-route-card-bottom, #home-landing .hm-route-card span, #home-landing .hm-route-title { color: var(--mt-ink); }
+#home-landing .hm-route-art text { fill: var(--mt-ink); font-weight: 800; }
+#home-landing .hm-route-track { stroke: var(--mt-rule); }
+#home-landing .hm-route-trace { stroke: var(--mt-red); }
+#home-landing .hm-orbit { stroke: var(--mt-rule); }
+#home-landing .hm-route-origin, #home-landing .hm-route-destination { fill: var(--mt-ink); }
+#home-landing .hm-route-plane circle { fill: var(--mt-ink); }
+#home-landing .hm-route-plane path { fill: var(--mt-ground); }
+#home-landing .hm-route-meter { background: var(--mt-rule); }
+#home-landing .hm-route-meter span { background: var(--mt-red); }
+#home-landing .pr-stages > li { border: 2px solid var(--mt-ink); border-radius: var(--mt-radius-lg); background: var(--mt-ground); box-shadow: none; }
+#home-landing .pr-stage-no { color: var(--mt-ink); font-weight: 900; font-variant-numeric: tabular-nums; }
+#home-landing .pr-stage-line { background: var(--mt-rule); }
+#home-landing .pr-stages h3 { color: var(--mt-ink); font-weight: 900; }
+#home-landing .pr-stages p { color: var(--mt-ink-2); }
+
+/* forum boards and the follow banner */
+#home-landing .pr-board, #home-landing .pr-social-banner { border: 2px solid var(--mt-ink); border-radius: var(--mt-radius-lg); background: var(--mt-ground); box-shadow: none; }
+#home-landing .pr-board:hover { background: var(--mt-concourse); }
+#home-landing .pr-board strong, #home-landing .pr-social-banner h3 { color: var(--mt-ink); font-weight: 900; }
+#home-landing .pr-board small, #home-landing .pr-board span, #home-landing .pr-social-banner p { color: var(--mt-ink-2); }
+#home-landing .pr-board-icon { border-radius: 8px; background: var(--mt-ink); color: var(--mt-ground); }
+#home-landing .pr-board-icon.pr-chip-blue { background: var(--mt-blue); color: var(--mt-on-blue); }
+#home-landing .pr-board-icon.pr-chip-lilac { background: var(--mt-green); color: var(--mt-on-green); }
+#home-landing .pr-board-icon.pr-chip-peach { background: var(--mt-red); color: var(--mt-on-red); }
+#home-landing .pr-social-card { border: 2px solid var(--mt-ink); border-radius: 10px; background: var(--mt-ground); box-shadow: none; color: var(--mt-ink); }
+#home-landing .pr-social-card:hover { background: var(--mt-concourse); }
+
+/* The scroll cue is a real control: it sits under the plan line instead of on top of it. */
+body.unified-shell #home-landing .mt-hero .hm-scroll-cue { position: static; grid-area: cue; justify-self: start; margin-top: -4px; color: var(--mt-ink-2); font-weight: 800; }
+body.unified-shell #home-landing .mt-hero .hm-scroll-cue:hover { color: var(--mt-ink); }
+/* Reduced motion: the school list stays one scrollable row instead of a wall of 66 names. */
+@media (prefers-reduced-motion: reduce) {
+  body.unified-shell #home-landing .pr-marquee { overflow-x: auto; scrollbar-width: thin; }
+  body.unified-shell #home-landing .pr-marquee-track { flex-wrap: nowrap; width: max-content; }
+}
+
+/* ---------- 9. School search and map: the old space theme becomes the same world (day or night follows the theme) ---------- */
+body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])),
+body.unified-shell #partners.pr-explore {
+  --uw-page: var(--mt-ground); --uw-surface: var(--mt-ground); --uw-surface-soft: var(--mt-concourse);
+  --uw-text: var(--mt-ink); --uw-navy: var(--mt-ink); --uw-muted: var(--mt-ink-2);
+  --uw-blue: var(--mt-blue); --uw-blue-strong: var(--mt-blue-text); --uw-blue-soft: color-mix(in srgb, var(--mt-blue) 14%, var(--mt-ground));
+  --uw-line: var(--mt-rule); --uw-line-strong: var(--mt-rule-strong);
+  --glass-surface: var(--mt-ground); --glass-strong: var(--mt-ground); --glass-edge: var(--mt-rule);
+}
+html:has(#dashboard-view:not([hidden]) #partners:not([hidden])) { background: var(--mt-ground); color-scheme: light; }
+html[data-theme="dark"]:has(#dashboard-view:not([hidden]) #partners:not([hidden])) { color-scheme: dark; }
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden]))::before {
+  background: var(--mt-band) 0 0 / 100% 100% no-repeat;
+  filter: none;
+}
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) .glass-navigation-rail { background: var(--mt-ground); border: 2px solid var(--mt-ink); }
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) .glass-navigation-rail:is(:hover, :focus-within) { background: var(--mt-ground); }
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) .glass-mobile-header { background: var(--mt-ground); border-bottom: 2px solid var(--mt-ink); }
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) :is(.glass-navigation-rail a, .glass-navigation-rail button, .route-back, #school-switcher) { color: var(--mt-ink); }
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) .glass-navigation-rail .uniway-public-nav a[data-public-route]:is([aria-current="page"], .active), html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) .glass-navigation-rail .uniway-public-nav a[data-public-route]:is([aria-current="page"], .active) :is(span, svg, .lucide) { color: var(--mt-ground); background-color: transparent; }
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) .glass-navigation-rail .uniway-public-nav a[data-public-route]:is([aria-current="page"], .active) { background: var(--mt-ink); }
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) .glass-navigation-rail :is(.topbar-actions .icon-button, #account-button) { border: 2px solid var(--mt-ink); }
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) .route-back { border: 2px solid var(--mt-rule); }
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) #school-switcher { border: 2px solid var(--mt-ink); }
+html body.unified-shell:has(#dashboard-view:not([hidden]) #partners:not([hidden])) .glass-rail-brand { color: var(--mt-ink); }
+
+/* The search is the same station board as on the home page. */
+body.unified-shell #partners.pr-explore h1 { color: var(--mt-ink); font-weight: 900; letter-spacing: -.02em; }
+body.unified-shell #dashboard-view #partners.pr-explore .pr-search {
+  display: grid; grid-template-columns: minmax(220px, 1.7fr) minmax(150px, 1fr) minmax(150px, 1fr) auto; gap: 0; margin: 20px 0 12px; padding: 0;
+  background: var(--mt-board); color: var(--mt-on-board); border-radius: 0; overflow: hidden;
+}
+body.unified-shell #dashboard-view #partners.pr-explore .pr-search .pr-field {
+  position: relative; display: grid; align-content: center; gap: 2px; min-width: 0; min-height: 72px; margin: 0; padding: 12px 18px 10px;
+  border: 0; border-top: 6px solid var(--cell-line, var(--mt-orange)); border-right: 1px solid #ffffff33; border-radius: 0; background-color: transparent;
+}
+body.unified-shell #partners.pr-explore .pr-search .pr-field:nth-child(1) { --cell-line: var(--mt-orange); }
+body.unified-shell #partners.pr-explore .pr-search .pr-field:nth-child(2) { --cell-line: var(--mt-blue); }
+body.unified-shell #partners.pr-explore .pr-search .pr-field:nth-child(3) { --cell-line: var(--mt-green); }
+body.unified-shell #partners.pr-explore .pr-search .pr-field-icon { display: none; }
+body.unified-shell #partners.pr-explore .pr-search .pr-field-body { display: grid; gap: 2px; min-width: 0; }
+body.unified-shell #partners.pr-explore .pr-search .pr-field-body small { color: var(--mt-on-board-2); font-size: 11.5px; font-weight: 700; letter-spacing: .1em; }
+body.unified-shell #partners.pr-explore .pr-search .pr-field-body :is(input, select) { width: 100%; min-width: 0; color: var(--mt-on-board); font: 800 17px/1.3 var(--mt-font); background: transparent; border: 0; outline: 0; padding: 0; min-height: 0; }
+body.unified-shell #partners.pr-explore .pr-search .pr-field-body input::placeholder { color: #aab2c0; font-weight: 600; opacity: 1; }
+body.unified-shell #partners.pr-explore .pr-search .glide-select__trigger { min-height: 0; padding: 0; border: 0; background: transparent; color: var(--mt-on-board); font: 800 17px/1.3 var(--mt-font); box-shadow: none; }
+body.unified-shell #partners.pr-explore .pr-search .glide-select__trigger .lucide, body.unified-shell #partners.pr-explore .pr-search .glide-select__trigger svg { color: var(--mt-on-board); }
+body.unified-shell #partners.pr-explore .pr-search .pr-field:focus-within { outline: 3px solid var(--mt-on-board); outline-offset: -3px; }
+body.unified-shell #partners.pr-explore .pr-search-button { min-width: 150px; margin: 0; padding: 0 28px; border: 0; border-radius: 0; background: var(--mt-orange); color: var(--mt-on-orange); font: 900 19px/1 var(--mt-font); box-shadow: none; }
+body.unified-shell #partners.pr-explore .pr-search-button:hover { background: #ffc24d; }
+body.unified-shell #partners.pr-explore .glide-select__menu { background: var(--mt-ground); color: var(--mt-ink); border: 2px solid var(--mt-ink); border-radius: 10px; box-shadow: 0 6px 18px #1a1d2326; }
+body.unified-shell #partners.pr-explore .glide-select__pill { background: var(--mt-ink); color: var(--mt-ground); }
+
+/* The rest of the page: ink on white (or light on night), rules instead of glow. */
+body.unified-shell #partners.pr-explore .pr-view-toggle button { color: var(--mt-ink-2); border-radius: 10px; font-weight: 800; }
+body.unified-shell #partners.pr-explore .pr-view-toggle button[aria-pressed="true"] { background: var(--mt-ink); color: var(--mt-ground); }
+body.unified-shell #partners.pr-explore :is(.partner-result-count, .pr-applied, .discovery-muted), body.unified-shell #partners.pr-explore :is(.partner-map-access p, .partner-map-heading p) { color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore .partner-map-heading h2 { color: var(--mt-ink); font-weight: 900; }
+body.unified-shell #partners.pr-explore .partner-map-actions .secondary-button { border: 2px solid var(--mt-ink); border-radius: 10px; background: var(--mt-ground); color: var(--mt-ink); font-weight: 800; }
+body.unified-shell #partners.pr-explore .partner-map-list strong, body.unified-shell #partners.pr-explore .partner-map-list small { color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .partner-map-list small { color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore .partner-map-list { scrollbar-color: var(--mt-rule-strong) transparent; }
+body.unified-shell #partners.pr-explore .partner-map-preview { background: var(--mt-ground); color: var(--mt-ink); border: 2px solid var(--mt-ink); border-radius: 12px; box-shadow: 0 8px 22px #1a1d2326; backdrop-filter: none; }
+body.unified-shell #partners.pr-explore .partner-map-status { background: var(--mt-ground); color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore :is(.partner-map-legend, .partner-map-footer) { color: var(--mt-ink-2); font-weight: 700; }
+body.unified-shell #partners.pr-explore #partner-globe .maplibregl-ctrl-group { border: 2px solid var(--mt-ink); border-radius: 10px; background: var(--mt-ground); }
+body.unified-shell #partners.pr-explore #partner-globe .maplibregl-ctrl-icon { filter: none; }
+html[data-theme="dark"] body.unified-shell #partners.pr-explore #partner-globe .maplibregl-ctrl-icon { filter: invert(1); }
+body.unified-shell #partners.pr-explore #partner-globe .maplibregl-ctrl-attrib { background: var(--mt-ground); color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore #partner-globe .maplibregl-ctrl-attrib a { color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore #partner-globe .maplibregl-canvas { filter: none; }
+body.unified-shell #partners.pr-explore .maplibregl-popup-content { background: var(--mt-ground); color: var(--mt-ink); border: 2px solid var(--mt-ink); border-radius: 10px; }
+body.unified-shell #partners.pr-explore .glide-select__trigger { background: var(--mt-ground); color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .pr-facets :is(legend, label, small, strong, summary, .pr-clear, .glide-select__trigger, .glide-select__menu),
+body.unified-shell #partners.pr-explore .pr-facets :is(.pr-facet-selects label > span, .pr-check > span:not(.pr-check-box)) { color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore:has([data-partner-view="map"][aria-pressed="true"]) .pr-facets > summary { color: var(--mt-ink); font-weight: 800; }
+body.unified-shell #partners.pr-explore .pr-facets .pr-check-box { border: 2px solid var(--mt-ink); border-radius: 4px; }
+body.unified-shell #partners.pr-explore .pr-facets input:checked + .pr-check-box { background: var(--mt-blue); color: var(--mt-on-blue); border-color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .map-tooltip, body.unified-shell #partners.pr-explore .map-tooltip strong, body.unified-shell #partners.pr-explore .map-tooltip small,
+body.unified-shell #partners.pr-explore .map-preview-top h4, body.unified-shell #partners.pr-explore .map-preview-place { color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .map-home-marker { background: var(--mt-ink); color: var(--mt-ground); border-color: var(--mt-ink); box-shadow: none; }
+body.unified-shell #partners.pr-explore .map-home-marker::after { border-color: var(--mt-ink); }
+@media (max-width: 900px) {
+  body.unified-shell #dashboard-view #partners.pr-explore .pr-search { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  body.unified-shell #partners.pr-explore .pr-search .pr-field:nth-child(1) { grid-column: 1 / -1; }
+  body.unified-shell #partners.pr-explore .pr-search-button { grid-column: 1 / -1; min-height: 56px; }
+}
+
+/* The shared select component (glide-select) wraps the native selects; on the station board it is plain white-on-ink text. */
+body.unified-shell #home-landing .mt-board .glide-select { width: 100%; }
+body.unified-shell #home-landing .mt-board .glide-select .glide-select__trigger, html[data-theme="dark"] body.unified-shell #home-landing .mt-board .glide-select .glide-select__trigger {
+  min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; color: var(--mt-on-board); font: 800 17px/1.3 var(--mt-font);
+}
+body.unified-shell #home-landing .mt-board .glide-select__label, body.unified-shell #home-landing .mt-board .glide-select__chevron { color: var(--mt-on-board); }
+body.unified-shell #home-landing .mt-board .glide-select .glide-select__trigger:focus-visible { outline: 0; }
+
+/* The plan line is a line: no tilt and no parallax from the old home motion. */
+body.unified-shell #home-landing .mt-hero .pr-plan-card { rotate: none; }
+body.unified-shell #home-landing .mt-hero .pr-collage { translate: none; }
+
+/* Icon beside the heading, never a tile stacked on top of it; the numbered rail already orders the journey stages. */
+#home-landing .pr-tile > div:first-child, #home-landing .pr-tile-head > div:first-child { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 6px 12px; }
+#home-landing .pr-tile > div:first-child .pr-chip, #home-landing .pr-tile-head > div:first-child .pr-chip { grid-column: 1; grid-row: 1; width: 34px; height: 34px; }
+#home-landing .pr-tile > div:first-child h3, #home-landing .pr-tile-head > div:first-child h3 { grid-column: 2; grid-row: 1; margin: 0; }
+#home-landing .pr-tile > div:first-child p, #home-landing .pr-tile-head > div:first-child p { grid-column: 1 / -1; margin: 0; }
+#home-landing .pr-stages .pr-chip { display: none; }
+
+/* The page's context line (school and partner count) reads under the heading, not as a label above it. */
+body.unified-shell #partners.pr-explore .pr-explore-head > div:first-child { display: flex; flex-direction: column; }
+body.unified-shell #partners.pr-explore .pr-explore-context { order: 2; margin: 6px 0 0; padding: 0; border: 0; background: transparent; color: var(--mt-ink-2); font-size: 14px; font-weight: 700; }
+
+/* ---------- 10. Reading pages: guides and articles (server-rendered, outside the single-page app) ---------- */
+body.reading-shell { background: var(--mt-ground); color: var(--mt-ink); }
+body.reading-shell .reading-header { border: 0; border-bottom: 2px solid var(--mt-ink); border-radius: 0; background: var(--mt-ground); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+body.reading-shell .reading-header .brand strong { font-weight: 900; }
+body.reading-shell .reading-header nav a { border-radius: 8px; color: var(--mt-ink-2); font-weight: 800; }
+body.reading-shell .reading-header nav a:hover { background: var(--mt-concourse); color: var(--mt-ink); }
+body.reading-shell .reading-header nav a[aria-current="page"] { background: var(--mt-ink); color: var(--mt-ground); }
+body.reading-shell .reading-planner, body.reading-shell .reading-theme-toggle { border-radius: 10px; font-weight: 800; }
+body.reading-shell .eyebrow { display: none; }
+body.reading-shell :is(h1, h2, h3) { color: var(--mt-ink); font-weight: 900; letter-spacing: -.01em; }
+body.reading-shell .lead, body.reading-shell .article-body p { color: var(--mt-ink); }
+body.reading-shell :is(.editorial-card, .article-heading, .article-toc, .article-body, .article-sources, .article-faq, .article-next, .notice) { border: 2px solid var(--mt-ink); border-radius: var(--mt-radius-lg); box-shadow: none; }
+body.reading-shell .editorial-card:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+body.reading-shell .editorial-categories a { border: 2px solid var(--mt-ink); border-radius: 8px; color: var(--mt-ink); font-weight: 800; }
+body.reading-shell .editorial-categories a:hover { background: var(--mt-ink); color: var(--mt-ground); }
+body.reading-shell :is(.card-action, .article-button) { color: var(--mt-blue-text); font-weight: 800; }
+body.reading-shell .article-button { border: 2px solid var(--mt-ink); border-radius: 10px; background: var(--mt-ink); color: var(--mt-ground); }
+body.reading-shell .breadcrumbs a { color: var(--mt-blue-text); }
+
+/* Narrow screens: nothing on the route sheet or the tool tiles is squeezed to a sliver or spills out of its box. */
+#home-landing .mt-line-meta small, #home-landing .mt-line-sum { white-space: nowrap; }
+@container mtstage (max-width: 719px) {
+  #home-landing .mt-line-tag { flex-wrap: wrap; }
+  #home-landing .mt-line-meta { justify-content: flex-end; flex: 1 1 auto; }
+}
+@container mtstage (max-width: 400px) { #home-landing .mt-line-meta small { display: none; } }
+#home-landing .pr-tile-head { flex-wrap: wrap; gap: 8px 14px; }
+#home-landing .pr-tile-head > div:first-child { flex: 1 1 220px; }
+#home-landing .pr-tile .pr-link { white-space: normal; }
+
+/* Rail labels sit on the 11px floor; the mini search form inside a tool tile is not a second card. */
+body.unified-shell .glass-navigation-rail .uniway-public-nav a[data-public-route] > span { font-size: 11px; }
+#home-landing .pr-mini-search { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+
+/* The rail's compact labels are held to the 11px floor even in the collapsed rail; buttons carry no gradient in this world. */
+html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span { font-size: 11px !important; }
+body.unified-shell :is(button, .primary-button, .secondary-button, .icon-button, .back-button, .nav-button, .account-button) { background-image: none; }
+
+
+/* ---------- 11. Review fixes ---------- */
+/* Station state is drawn: every school open is solid, some open is ringed with a dot, none open is hollow. */
+#home-landing .mt-station[data-fill="all"] .mt-dot { background: var(--line); }
+#home-landing .mt-station[data-fill="some"] .mt-dot { background: var(--mt-ground); }
+#home-landing .mt-station[data-fill="some"] .mt-dot::after { content: ""; position: absolute; inset: 2px; border-radius: 50%; background: var(--line); }
+#home-landing .mt-station[data-fill="none"] .mt-dot { background: var(--mt-ground); }
+#home-landing .mt-key-open { background: var(--mt-blue); }
+#home-landing .mt-key-some { background: var(--mt-blue); box-shadow: inset 0 0 0 2px var(--mt-ground); }
+
+/* The next stop: the nearest real application deadline, read like a platform announcement. */
+#home-landing .mt-next { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; max-width: 1180px; margin: 14px auto 0; padding: 12px 18px; background: var(--mt-board); color: var(--mt-on-board); text-decoration: none; }
+#home-landing .mt-next[hidden] { display: none; }
+#home-landing .mt-next:hover { background: #000; }
+#home-landing .mt-next-label { align-self: center; padding: 2px 10px; border-radius: 4px; background: var(--mt-orange); color: var(--mt-on-orange); font-size: 13px; font-weight: 900; letter-spacing: .08em; }
+#home-landing .mt-next-date { color: var(--mt-on-board); font-size: 26px; font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1.1; }
+#home-landing .mt-next-text { color: var(--mt-on-board); font-size: 15px; font-weight: 700; }
+#home-landing .mt-next-pending { margin-left: auto; color: var(--mt-on-board-2); font-size: 13px; font-weight: 700; }
+
+/* The school picker on the home page: three controls name the same thing, so the page-level pill is quiet (kept at its size). */
+body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) .page-back-bar #school-switcher { border: 2px solid var(--mt-ink); border-radius: 10px; box-shadow: none; }
+body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) .page-back-bar #school-switcher::before { display: none; }
+
+/* Labels that sat above headings are gone: the heading carries itself. A school's country stays, under its name. */
+body.unified-shell :is(.eyebrow, .section-kicker):not(#application-form-stage):not(#school-detail-country) { display: none; }
+#community-hub .discussion-welcome-kicker { display: none; }
+#home-landing .hm-route-card-top > span:first-child, #home-landing .hm-route-card-bottom > span { display: none; }
+body.unified-shell .school-detail-copy .travel-detail-heading { display: flex; flex-direction: column; }
+body.unified-shell #school-detail-country { order: 2; margin: 6px 0 0; padding: 0; border: 0; background: transparent; color: var(--mt-ink-2); font-size: 14px; font-weight: 700; letter-spacing: 0; }
+body.unified-shell #community-hub .discussion-welcome-art { display: none; }
+.mt-star { width: 1em; height: 1em; fill: currentColor; vertical-align: -.14em; margin-right: .3em; }
+.map-legend-star .mt-star { margin: 0; }
+
+/* The real-world map is a plain ruled panel with the facts in one line; no glowing arcs, no stat triple. */
+#home-landing .pr-map-band { border: 2px solid var(--mt-ink); border-radius: var(--mt-radius-lg); background: var(--mt-ground); color: var(--mt-ink); }
+#home-landing .pr-map-band h2 { color: var(--mt-ink); }
+#home-landing .pr-map-band-copy > p { color: var(--mt-ink-2); }
+#home-landing .pr-map-band .pr-map-host, html[data-theme="dark"] #home-landing .pr-map-band .pr-map-host { --map-land: var(--mt-concourse); --map-edge: var(--mt-rule-strong); --map-tw: var(--mt-red); --map-dot: var(--mt-ink); --map-halo: transparent; --map-arc: transparent; }
+#home-landing .pr-map-band .arcs { display: none; }
+#home-landing .pr-map-band .halo { display: none; }
+#home-landing .pr-stats { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 18px 0 0; padding: 0; border: 0; }
+#home-landing .pr-stats > div { display: flex; align-items: baseline; gap: 6px; padding: 0; border: 0; }
+#home-landing .pr-stats dt { color: var(--mt-ink); font-size: 18px; font-weight: 900; font-variant-numeric: tabular-nums; }
+#home-landing .pr-stats dd { margin: 0; color: var(--mt-ink-2); font-size: 14px; font-weight: 700; }
+#home-landing .pr-band-button, #home-landing .pr-band-button:hover { margin-top: 20px; background: var(--mt-ink); color: var(--mt-ground); }
+#home-landing .pr-band-button:hover { background: var(--mt-ink-2); }
+
+/* The journey: the reading position is a platform sign, the four stages are stations on one vertical line. */
+#home-landing .hm-route-art { position: absolute; width: 0; height: 0; margin: 0; overflow: hidden; }
+#home-landing .hm-route-card { border: 0; border-radius: 0; background: var(--mt-board); color: var(--mt-on-board); }
+#home-landing .hm-route-card-top { padding: 18px 22px 0; }
+#home-landing .hm-route-card-top .hm-route-index { margin-left: 0; color: var(--mt-orange); font-size: 30px; font-weight: 900; letter-spacing: 0; }
+#home-landing .hm-route-card-bottom { padding: 6px 22px 22px; }
+#home-landing .hm-route-title { color: var(--mt-on-board); font-size: 22px; font-weight: 900; }
+#home-landing .hm-route-meter { height: 6px; background: #ffffff33; }
+#home-landing .hm-route-meter span { background: var(--mt-red); }
+#home-landing .pr-stages { position: relative; gap: 0; padding: 0 0 0 48px; border: 0; }
+#home-landing .pr-stages::before { content: ""; position: absolute; left: 12px; top: 18px; bottom: 28px; width: 8px; border-radius: 4px; background: var(--mt-blue); }
+#home-landing .pr-stages > li { min-height: 280px; padding: 0 0 44px; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+#home-landing .pr-stages > li:last-child { min-height: 0; padding-bottom: 0; }
+#home-landing .pr-stages > li::before { content: ""; position: absolute; left: -48px; top: 2px; width: 32px; height: 32px; box-sizing: border-box; border: 4px solid var(--mt-ink); border-radius: 50%; background: var(--mt-ground); }
+#home-landing .pr-stages > li[data-reading] { border: 0; background: transparent; box-shadow: none; }
+#home-landing .pr-stages > li[data-reading]::before { border-color: var(--mt-red); background: var(--mt-red); }
+#home-landing .pr-stage-rail { display: none; }
+#home-landing .pr-stages h3 { margin: 0; font-size: clamp(20px, 2.1cqi, 26px); }
+#home-landing .pr-stages p { margin: 8px 0 12px; }
+@media (max-width: 700px) { #home-landing .pr-stages { padding-left: 48px; border-left: 0; } }
+
+/* Phone: the supported-school ticker is one row, and the explore search says what it does. */
+@media (max-width: 700px) {
+  body.unified-shell #home-landing .pr-supported { flex-wrap: nowrap; }
+  #home-landing .pr-supported-label { padding: 10px 12px; }
+  #home-landing .pr-supported-label b { display: none; }
+  #home-landing .mt-hero h1 { margin-bottom: 12px; }
+}
+body.unified-shell #dashboard-view #partners.pr-explore .pr-search-button .pr-search-label { position: static; display: inline; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; clip-path: none; white-space: nowrap; }
+
+/* 13. The school card on the globe: the five figures that decide whether to look further, then one button for the rest.
+   It is sized by its content and never scrolls; long text is clamped, the full text is behind 查看完整資料. */
+body.unified-shell #partners.pr-explore .partner-map-preview { right: 68px; width: min(344px, calc(100% - 92px)); max-height: none; overflow: visible; background: var(--mt-ground); color: var(--mt-ink); border: 2px solid var(--mt-ink); border-radius: 12px; box-shadow: 0 10px 28px #1a1d2333; backdrop-filter: none; }
+body.unified-shell #partners.pr-explore .map-preview-top { padding: 14px 46px 12px 16px; background: transparent; border-bottom: 2px solid var(--mt-ink); }
+body.unified-shell #partners.pr-explore .map-preview-place { color: var(--mt-ink-2); font-size: 13px; font-weight: 800; letter-spacing: 0; }
+body.unified-shell #partners.pr-explore .map-preview-top h4 { margin: 4px 0 8px; font-size: 21px; line-height: 1.25; color: var(--mt-ink); font-weight: 900; }
+body.unified-shell #partners.pr-explore .map-preview-top h4 > span { display: block; margin-top: 3px; font-size: 14px; font-weight: 700; line-height: 1.3; color: var(--mt-ink-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+body.unified-shell #partners.pr-explore .map-preview-close { color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .map-preview-body { padding: 12px 16px 14px; }
+body.unified-shell #partners.pr-explore .map-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin: 0 0 10px; padding: 0; border: 2px solid var(--mt-ink); border-radius: 10px; overflow: hidden; }
+body.unified-shell #partners.pr-explore .map-facts > div { min-width: 0; padding: 8px 10px 9px; border-top: 1.5px solid var(--mt-rule-strong); border-left: 1.5px solid var(--mt-rule-strong); }
+body.unified-shell #partners.pr-explore .map-facts > div:nth-child(-n+2) { border-top: 0; }
+body.unified-shell #partners.pr-explore .map-facts > div:nth-child(odd) { border-left: 0; }
+body.unified-shell #partners.pr-explore .map-facts > div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+body.unified-shell #partners.pr-explore .map-facts dt { margin: 0 0 2px; font-size: 12px; font-weight: 800; color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore .map-facts dd { margin: 0; font-size: 15px; font-weight: 800; line-height: 1.35; color: var(--mt-ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+body.unified-shell #partners.pr-explore .discovery-preview-extras { margin: 0 0 10px; padding: 0; border: 0; }
+body.unified-shell #partners.pr-explore .discovery-preview-extras section { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "head action" "body body"; gap: 2px 10px; align-items: center; }
+body.unified-shell #partners.pr-explore .discovery-preview-extras h5 { grid-area: head; margin: 0; font-size: 13px; font-weight: 800; color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore .discovery-preview-extras p { grid-area: body; }
+body.unified-shell #partners.pr-explore .discovery-preview-extras :is(button, a) { grid-area: action; justify-self: end; }
+body.unified-shell #partners.pr-explore .map-facts-pending { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 0 0 10px; font-size: 13px; font-weight: 700; color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore .map-facts-pending b { padding: 1px 8px; border: 1.5px solid var(--mt-ink-2); border-radius: 999px; font-size: 12px; font-weight: 800; color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .discovery-preview-extras p { font-size: 14px; line-height: 1.5; color: var(--mt-ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+body.unified-shell #partners.pr-explore .discovery-preview-extras :is(button, a) { font-size: 13px; font-weight: 800; color: var(--mt-blue); white-space: nowrap; }
+body.unified-shell #partners.pr-explore .discovery-match { margin: 0 0 8px; font-size: 13px; font-weight: 800; }
+body.unified-shell #partners.pr-explore .map-preview-actions { flex-direction: row; gap: 8px; margin: 0; }
+body.unified-shell #partners.pr-explore .map-preview-actions .primary-button { flex: 1 1 auto; min-height: 46px; margin: 0; padding: 0 14px; justify-content: center; font-size: 15px; }
+body.unified-shell #partners.pr-explore .map-preview-actions .favorite-toggle { flex: none; min-height: 46px; padding-inline: 12px; }
+body.unified-shell #partners.pr-explore .map-location-note { margin: 8px 0 0; font-size: 13px; color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore .map-location-note summary { min-height: 32px; display: flex; align-items: center; cursor: pointer; font-weight: 700; }
+body.unified-shell #partners.pr-explore .map-location-note[open] > :not(summary) { max-height: 6.5em; overflow: auto; }
+@media (max-width: 700px) {
+  body.unified-shell #partners.pr-explore .partner-map-preview { left: 8px; right: 8px; bottom: 8px; width: auto; border-radius: 12px; }
+  body.unified-shell #partners.pr-explore .partner-map-preview::before { content: none; }
+  body.unified-shell #partners.pr-explore .map-preview-top { padding: 10px 44px 10px 14px; }
+  body.unified-shell #partners.pr-explore .map-preview-top h4 { margin: 2px 0 6px; font-size: 18px; }
+  body.unified-shell #partners.pr-explore .map-preview-top h4 > span { -webkit-line-clamp: 1; font-size: 13px; }
+  body.unified-shell #partners.pr-explore .map-preview-body { padding: 10px 14px 12px; }
+  body.unified-shell #partners.pr-explore .map-facts > div { padding: 6px 9px 7px; }
+  body.unified-shell #partners.pr-explore .map-facts dd { font-size: 14px; -webkit-line-clamp: 1; }
+  body.unified-shell #partners.pr-explore .discovery-preview-extras { display: none; }
+}
+
+/* 14. Home hero: one sentence, centred, over a night sky; the search board beneath it; the real Earth rising under both.
+   Nothing here is a sample of anyone's school — it is the planet the partner schools are on. */
+body.unified-shell #home-landing .mt-hero { grid-template-columns: minmax(0, 1fr); grid-template-areas: "sky" "route" "plan" "cue"; gap: clamp(26px, 4.4svh, 48px) 0; padding-top: clamp(8px, 1.6svh, 16px); }
+#home-landing .mt-sky { grid-area: sky; position: relative; container-type: inline-size; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: clamp(22px, 3.6svh, 40px); padding: clamp(34px, 7.5svh, 84px) clamp(14px, 3cqi, 44px) 0; background: #0b1220; color: #fff; overflow: hidden; isolation: isolate; }
+#home-landing .mt-sky h1 { margin: 0; max-width: none; text-align: center; color: #fff; font-size: clamp(30px, 7.2cqi, 96px); font-weight: 900; line-height: 1.16; letter-spacing: -.02em; text-wrap: balance; }
+#home-landing .mt-sky h1 br { display: inline; }
+#home-landing .mt-sky h1 span { display: block; text-wrap: balance; color: inherit; text-decoration: underline; text-decoration-color: var(--mt-red); text-decoration-thickness: .1em; text-underline-offset: .14em; text-decoration-skip-ink: none; }
+#home-landing .mt-sky .mt-board { grid-area: auto; width: min(1120px, 100%); outline: 2px solid #ffffff33; outline-offset: 0; }
+#home-landing .mt-earth { position: relative; overflow: hidden; width: 100%; height: clamp(112px, 20svh, 220px); margin-top: clamp(6px, 2.2svh, 22px); pointer-events: none; }
+#home-landing .mt-earth-disc { --d: min(1760px, 130cqi); position: absolute; left: 50%; top: 0; width: var(--d); height: var(--d); transform: translateX(-50%); border-radius: 50%; overflow: hidden; background: #0a2a52; box-shadow: 0 -4px 40px 4px #5ab0ff80, 0 0 0 2px #a8d8ff80; }
+#home-landing .mt-earth-strip { position: absolute; left: 0; top: 0; width: calc(var(--d) * 5); height: var(--d); background: url("/static/assets/partner-map/earth-equirect.jpg?v=20261109-1") repeat-x 0 calc(var(--d) * -.235) / calc(var(--d) * 2) var(--d); transform: translateX(calc(var(--d) * -1.11)); animation: mt-earth-spin 420s linear infinite; will-change: transform; }
+#home-landing .mt-earth-disc::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 50% 0%, #0000 0 42%, #0208125c 76%, #020812c4 100%); }
+/* It opens over Asia, where the students are leaving from, and turns one full circle in seven minutes. */
+@keyframes mt-earth-spin { from { transform: translateX(calc(var(--d) * -1.11)); } to { transform: translateX(calc(var(--d) * -3.11)); } }
+@media (prefers-reduced-motion: reduce) { #home-landing .mt-earth-strip { animation: none; } }
+#home-landing .mt-route-title { margin: 0 0 clamp(10px, 1.8svh, 18px); text-align: center; color: var(--mt-ink); font-size: clamp(24px, 3.4vw, 46px); font-weight: 900; line-height: 1.2; letter-spacing: -.015em; text-wrap: balance; }
+#home-landing .mt-route-title span { color: inherit; text-decoration: underline; text-decoration-color: var(--mt-red); text-decoration-thickness: .13em; text-underline-offset: .12em; text-decoration-skip-ink: none; }
+@media (max-width: 700px) {
+  #home-landing .mt-sky { padding-top: 28px; gap: 18px; }
+  #home-landing .mt-earth { height: 96px; }
+}
+
+/* Lines the scripts still write (for assistive technology and tests) but that carry no decision: they stay out of sight. */
+:is(#partner-map-context, #partner-map-missing, #partner-map-home-status, #community-home-description, #discovery-save-note, #planning-period-hint, #discussion-bookmark-status)[hidden] { display: none !important; }
+
+/* The two official accounts sit in the corner of the sky, white on night, with no caption of their own. */
+#home-landing .mt-sky .pr-hero-socials { justify-self: end; margin: 0; padding: 0; gap: 4px 16px; flex-wrap: wrap; justify-content: flex-end; }
+#home-landing .mt-sky .pr-social-pill { color: #fff; font-size: 13px; }
+#home-landing .mt-sky .pr-social-pill b { color: inherit; }
+@media (max-width: 700px) { #home-landing .mt-sky .pr-hero-socials { justify-self: center; justify-content: center; } }

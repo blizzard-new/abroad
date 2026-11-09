@@ -13,6 +13,9 @@ def start(page, live_server, route="home"):
     page.add_init_script("localStorage.setItem('exchange-guide-home-school', '長庚大學')")
     enter_public_site(page, live_server, route)
     page.wait_for_function("() => document.querySelector('#boot-splash') === null", timeout=60_000)
+    if route == "home":
+        # The mascot stands on the route map, under the sentence and the Earth; bring it on screen so a pointer can reach it.
+        page.locator(HERO).scroll_into_view_if_needed()
 
 
 def z_of(page, selector):

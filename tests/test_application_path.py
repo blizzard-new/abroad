@@ -40,9 +40,10 @@ def client(tmp_path):
         return accounts[key], None
     app.state.path_catalog = ApplicationDocumentCatalog(context=ApplicationCenterContext(school_name=CONTEXT["home_school"]), contact_unit="國際處")
     app.state.path_feature = False
+    app.state.path_evaluate = lambda request:result(request.preferences[0].school_name)
     register_application_path(app, authenticate=authenticate,
         university_for=lambda home:type("University", (), {"school_name":home})(),
-        evaluate=lambda request:result(request.preferences[0].school_name),
+        evaluate=lambda request:app.state.path_evaluate(request),
         catalog_for=lambda **kwargs:app.state.path_catalog,
         release_mode=lambda:ProductReleaseMode.PUBLIC, feature_enabled=lambda *args:app.state.path_feature)
     app.state.test_accounts = accounts
@@ -254,3 +255,148 @@ def test_rule_check_levels_expose_the_status_the_student_must_see(client):
     levels = {l["id"]: l for s in plan["stages"] for l in s["levels"]}
     assert levels["check-college"]["check_status"] == "needs_confirmation"
     assert all("check_status" not in l for key, l in levels.items() if not key.startswith("check-"))
+
+
+def gated_result(request):
+    """Judges the way the real rules do: a gate stays open until the student has supplied what it reads."""
+    checks = [
+        dict(code="college", status="pass" if request.college and request.department else "needs_confirmation",
+             title="學院／學系範圍", detail="尚未提供學院或學系，無法套用合作校範圍。"),
+        dict(code="home_language_score", title="語言成績",
+             status=("pass" if (request.language_score or 0) >= 600 else "fail") if request.language_test and request.language_score is not None else "needs_confirmation",
+             detail="校內語言門檻：多益 600。" if request.language_score is not None else "尚未填寫語言檢定成績。校內語言門檻：多益 600。"),
+        dict(code="academic_score", title="學業成績",
+             status="pass" if request.academic_score is not None else "needs_confirmation",
+             detail="尚未提供學業平均；公開基本門檻為 70 分。"),
+        dict(code="degree_level", title="學制與學籍", status="needs_confirmation",
+             detail="須確認在學身分、實際就讀學期，僅有學制不足以判定。"),
+        dict(code="home_deadline", status="needs_confirmation", title="校內截止日", detail="待校方公告"),
+    ]
+    base = result(request.preferences[0].school_name).model_dump()
+    base["choices"][0]["checks"] = checks
+    return PersonalApplicationPlanResult.model_validate(base)
+
+
+def gate_levels(plan):
+    return {l["id"]: l for s in plan["stages"] for l in s["levels"]}
+
+
+def save_profile(client, plan, revision=None, owner="alice", **fields):
+    return client.put(f'/account/application-paths/{plan["plan"]["id"]}/profile',
+        params={"home_school":CONTEXT["home_school"]}, headers={"Authorization":owner},
+        json={"revision":revision or plan["revision"], **fields})
+
+
+def test_a_gate_asks_for_the_data_it_lacks_and_is_judged_again_once_the_student_fills_it_in(client):
+    client.app.state.path_evaluate = gated_result
+    plan = create(client).json()
+    gates = gate_levels(plan)
+    college = gates["check-college"]
+    assert college["check_status"] == "needs_confirmation"
+    assert college["input_fields"] == ["college", "department"]
+    assert college["missing_inputs"] == ["college", "department"]
+    assert gates["check-home_language_score"]["missing_inputs"] == ["language_test", "language_score"]
+    assert gates["check-academic_score"]["input_fields"]
+    # A gate about a date, or one the school has not settled, is not waiting for the student: nothing to type, nothing blocks it.
+    assert "input_fields" not in gates["check-home_deadline"]
+    assert "input_fields" not in gates["check-degree_level"] and "missing_inputs" not in gates["check-degree_level"]
+    # The score gate reads the average alone here: it does not ask for a GPA or a rank its text never mentions.
+    assert gates["check-academic_score"]["input_fields"] == ["academic_score"]
+
+    saved = save_profile(client, plan, college="管理學院", department="資訊管理學系")
+    assert saved.status_code == 200, saved.text
+    body = saved.json()
+    after = gate_levels(body)["check-college"]
+    assert after["check_status"] == "pass"
+    assert after["missing_inputs"] == []
+    assert after["input_values"] == {"college": "管理學院", "department": "資訊管理學系"}
+    assert body["revision"] == plan["revision"] + 1
+    # The plan is the same plan: what the student filled in does not create a second one.
+    assert body["plan"]["id"] == plan["plan"]["id"]
+    loaded = client.get(f'/account/application-paths/{plan["plan"]["id"]}', params={"home_school":CONTEXT["home_school"]},
+                        headers={"Authorization":"alice"}).json()
+    assert gate_levels(loaded)["check-college"]["check_status"] == "pass"
+    assert len(client.get("/account/application-paths", params={"home_school":CONTEXT["home_school"]},
+                          headers={"Authorization":"alice"}).json()["items"]) == 1
+
+
+def test_a_language_score_is_judged_against_the_test_it_belongs_to(client):
+    client.app.state.path_evaluate = gated_result
+    plan = create(client).json()
+    failing = save_profile(client, plan, language_test="toeic", language_score=450).json()
+    gate = gate_levels(failing)["check-home_language_score"]
+    assert gate["check_status"] == "fail" and gate["missing_inputs"] == []
+    passing = save_profile(client, failing, language_test="toeic", language_score=720).json()
+    assert gate_levels(passing)["check-home_language_score"]["check_status"] == "pass"
+
+
+def test_clearing_a_value_opens_the_gate_again(client):
+    client.app.state.path_evaluate = gated_result
+    plan = create(client).json()
+    filled = save_profile(client, plan, academic_score=82.5).json()
+    assert gate_levels(filled)["check-academic_score"]["check_status"] == "pass"
+    cleared = save_profile(client, filled, academic_score="")
+    assert cleared.status_code == 200, cleared.text
+    assert gate_levels(cleared.json())["check-academic_score"]["missing_inputs"]
+
+
+def test_a_field_left_out_of_the_request_keeps_its_saved_value(client):
+    client.app.state.path_evaluate = gated_result
+    plan = create(client).json()
+    first = save_profile(client, plan, college="管理學院", department="資訊管理學系").json()
+    second = save_profile(client, first, academic_score=80).json()
+    gates = gate_levels(second)
+    assert gates["check-college"]["check_status"] == "pass"
+    assert gates["check-academic_score"]["check_status"] == "pass"
+
+
+@pytest.mark.parametrize("fields", [
+    {"academic_score": 120}, {"academic_gpa": 5}, {"class_rank_percent": 0}, {"language_test": "klingon"},
+    {"language_test": "toeic", "language_score": 1200}, {"language_test": "ielts", "language_score": 90},
+    {"language_score": 600}, {"unknown_field": 1},
+])
+def test_an_impossible_value_is_refused_and_nothing_is_saved(client, fields):
+    client.app.state.path_evaluate = gated_result
+    plan = create(client).json()
+    response = save_profile(client, plan, **fields)
+    assert response.status_code == 422, response.text
+    loaded = client.get(f'/account/application-paths/{plan["plan"]["id"]}', params={"home_school":CONTEXT["home_school"]},
+                        headers={"Authorization":"alice"}).json()
+    assert loaded["revision"] == plan["revision"]
+    assert gate_levels(loaded)["check-academic_score"]["missing_inputs"]
+
+
+def test_profile_is_owner_only_revision_checked_and_blocked_on_archived_plans(client):
+    client.app.state.path_evaluate = gated_result
+    plan = create(client).json()
+    assert save_profile(client, plan, owner="bob", college="管理學院").status_code == 404
+    assert client.put(f'/account/application-paths/{plan["plan"]["id"]}/profile',
+        params={"home_school":CONTEXT["home_school"]}, json={"revision":plan["revision"], "college":"x"}).status_code == 401
+    saved = save_profile(client, plan, college="管理學院")
+    assert saved.status_code == 200
+    stale = save_profile(client, plan, department="資訊管理學系")
+    assert stale.status_code == 409
+    archived = client.put(f'/account/application-paths/{plan["plan"]["id"]}/archive',
+        params={"home_school":CONTEXT["home_school"]}, headers={"Authorization":"alice"},
+        json={"revision":saved.json()["revision"], "archived":True}).json()
+    assert save_profile(client, archived, department="資訊管理學系").status_code == 409
+
+
+def test_a_round_chosen_at_the_gate_is_what_the_plan_is_judged_with(client):
+    seen = []
+
+    def evaluate(request):
+        seen.append(request.application_round)
+        base = result(request.preferences[0].school_name).model_dump()
+        base["choices"][0]["checks"] = [dict(
+            code="application_round", title="申請梯次", status="pass" if request.application_round else "needs_confirmation",
+            detail="已套用結構化流程。" if request.application_round else "尚未選擇申請梯次，不能確認這份流程是否適用。")]
+        return PersonalApplicationPlanResult.model_validate(base)
+
+    client.app.state.path_evaluate = evaluate
+    plan = create(client, application_round="").json()
+    assert gate_levels(plan)["check-application_round"]["missing_inputs"] == ["application_round"]
+    saved = save_profile(client, plan, application_round="第一梯次").json()
+    assert gate_levels(saved)["check-application_round"]["check_status"] == "pass"
+    assert seen[-1] == "第一梯次"
+    assert saved["plan"]["id"] == plan["plan"]["id"]

@@ -94,9 +94,15 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     type: "Feature", properties: { name: f.properties.name.normalize("NFD").replace(/[^\x20-\x7E]/g, "") },
     geometry: { type: "Point", coordinates: [f.properties.label_lon, f.properties.label_lat] },
   })) };
-  // Space remains the canvas in either site theme. Globe projection keeps real
-  // school coordinates, clustering and keyboard/touch navigation on one engine.
-  const colors = { sea: "#0b3356", land: "#427c83", border: "#91c4be", label: "#ffffff", halo: "#14354c", water: "#0b3356", coast: "#57bbcf", grid: "#95c8eb" };
+  // The globe is the real Earth (NASA Blue Marble, public domain, reprojected to web mercator): deep sea, green land,
+  // tan desert, white ice. Night keeps the same planet, only dimmer; the school markers sit on top in warm ink and white.
+  // Globe projection keeps real school coordinates, clustering and keyboard/touch navigation on one engine.
+  const PALETTES = {
+    light: { sea: "#0b2f63", border: "#ffffff", borderOpacity: .5, label: "#ffffff", halo: "#0b2447", grid: "#ffffff", gridOpacity: .14, brightnessMin: .1, brightnessMax: 1, contrast: .08, saturation: .18 },
+    dark: { sea: "#050b16", border: "#cfe0ff", borderOpacity: .4, label: "#eef3ff", halo: "#050b16", grid: "#9fb4d6", gridOpacity: .16, brightnessMin: 0, brightnessMax: .62, contrast: .05, saturation: .05 },
+  };
+  const themeName = () => (document.documentElement.dataset.theme === "dark" ? "dark" : "light");
+  let colors = PALETTES[themeName()];
   const globalCamera = () => {
     const width = canvasHost.clientWidth || 960, height = canvasHost.clientHeight || 600;
     return { center: [120, 22], zoom: Math.max(.25, Math.min(2.5, Math.log2(Math.min(width * .88, height * .88) * Math.PI / 512))), bearing: 0, pitch: 0 };
@@ -118,21 +124,33 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
       canvasContextAttributes: { antialias: true },
       style: {
         version: 8, projection: { type: "globe" }, glyphs: `${ASSETS}/fonts/{fontstack}/{range}.pbf`,
-        sources: { countries: { type: "geojson", data: countries }, labels: { type: "geojson", data: labels }, lakes: { type: "geojson", data: lakes }, rivers: { type: "geojson", data: rivers }, graticule: { type: "geojson", data: graticule() } },
+        sources: { earth: { type: "image", url: `${ASSETS}/earth-mercator.jpg`, coordinates: [[-180, 85.0511], [180, 85.0511], [180, -85.0511], [-180, -85.0511]] }, countries: { type: "geojson", data: countries }, labels: { type: "geojson", data: labels }, lakes: { type: "geojson", data: lakes }, rivers: { type: "geojson", data: rivers }, graticule: { type: "geojson", data: graticule() } },
+        sky: { "sky-color": "#4f9bff", "horizon-color": "#bfe0ff", "fog-color": "#ffffff", "sky-horizon-blend": .7, "atmosphere-blend": ["interpolate", ["linear"], ["zoom"], 0, 1, 4, .8, 7, 0] },
         layers: [
           { id: "ocean", type: "background", paint: { "background-color": colors.sea } },
-          { id: "graticule", type: "line", source: "graticule", maxzoom: 5, paint: { "line-color": colors.grid, "line-width": .65, "line-opacity": .2 } },
-          { id: "coast-shelf", type: "line", source: "countries", paint: { "line-color": colors.coast, "line-width": 5, "line-blur": 2, "line-opacity": .48 } },
-          { id: "land", type: "fill", source: "countries", paint: { "fill-color": colors.land } },
-          { id: "country-hover", type: "fill", source: "countries", filter: ["==", ["get", "name"], ""], paint: { "fill-color": "#ffffff", "fill-opacity": .18, "fill-opacity-transition": { duration: 180 } } },
-          { id: "lakes", type: "fill", source: "lakes", paint: { "fill-color": colors.water } },
-          { id: "rivers", type: "line", source: "rivers", minzoom: 1.6, paint: { "line-color": colors.water, "line-width": ["interpolate", ["linear"], ["zoom"], 1, .4, 5, 1.1], "line-opacity": .65 } },
-          { id: "borders", type: "line", source: "countries", paint: { "line-color": colors.border, "line-width": ["interpolate", ["linear"], ["zoom"], 1, .55, 5, 1.2], "line-opacity": .85 } },
-          { id: "country-labels", type: "symbol", source: "labels", minzoom: 2.2, layout: { "text-field": ["get", "name"], "text-font": ["Poppins Medium"], "text-size": 14, "text-max-width": 8 }, paint: { "text-color": colors.label, "text-halo-color": colors.halo, "text-halo-width": 1.6 } },
+          { id: "earth", type: "raster", source: "earth", paint: { "raster-fade-duration": 0, "raster-resampling": "linear", "raster-brightness-min": colors.brightnessMin, "raster-brightness-max": colors.brightnessMax, "raster-contrast": colors.contrast, "raster-saturation": colors.saturation } },
+          { id: "graticule", type: "line", source: "graticule", maxzoom: 5, paint: { "line-color": colors.grid, "line-width": .65, "line-opacity": colors.gridOpacity } },
+          { id: "land", type: "fill", source: "countries", paint: { "fill-color": "#ffffff", "fill-opacity": 0 } },
+          { id: "country-hover", type: "fill", source: "countries", filter: ["==", ["get", "name"], ""], paint: { "fill-color": "#ffffff", "fill-opacity": .16, "fill-opacity-transition": { duration: 180 } } },
+          { id: "borders", type: "line", source: "countries", paint: { "line-color": colors.border, "line-width": ["interpolate", ["linear"], ["zoom"], 1, .5, 5, 1.1], "line-opacity": colors.borderOpacity } },
+          { id: "country-labels", type: "symbol", source: "labels", minzoom: 2.2, layout: { "text-field": ["get", "name"], "text-font": ["Poppins Medium"], "text-size": 14, "text-max-width": 8 }, paint: { "text-color": colors.label, "text-halo-color": colors.halo, "text-halo-width": 1.8 } },
         ],
       },
     });
   } catch (error) { canvasHost.replaceChildren(); throw error; }
+  // Switching the site theme repaints the globe in place; nothing is reloaded.
+  function applyPalette() {
+    colors = PALETTES[themeName()];
+    const set = (layer, property, value) => { if (map.getLayer(layer)) map.setPaintProperty(layer, property, value); };
+    set("ocean", "background-color", colors.sea);
+    set("earth", "raster-brightness-min", colors.brightnessMin); set("earth", "raster-brightness-max", colors.brightnessMax);
+    set("earth", "raster-contrast", colors.contrast); set("earth", "raster-saturation", colors.saturation);
+    set("graticule", "line-color", colors.grid); set("graticule", "line-opacity", colors.gridOpacity);
+    set("borders", "line-color", colors.border); set("borders", "line-opacity", colors.borderOpacity);
+    set("country-labels", "text-color", colors.label); set("country-labels", "text-halo-color", colors.halo);
+  }
+  const themeWatch = new MutationObserver(() => { if (map.isStyleLoaded()) applyPalette(); else map.once("load", applyPalette); });
+  themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   let loaded = false, disposed = false, visible = true, failed = false;
   let current = { partners: [], home: null, filterKey: "", country: "" };
   let dataKey = "", cameraKey = null, selectedName = "", lastFocus = null, homeMarker = null, homeKey = "", hoveredName = "";
@@ -142,7 +160,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   const popup = new lib.Popup({ closeButton: false, closeOnClick: false, offset: 12, maxWidth: "320px" });
   const navigation = new lib.NavigationControl({ showCompass: true, visualizePitch: false });
   map.addControl(navigation, "top-right");
-  map.addControl(new lib.AttributionControl({ compact: true, customAttribution: '<a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noreferrer">Natural Earth</a> · <a href="https://www.wikidata.org/" target="_blank" rel="noreferrer">Wikidata</a> / <a href="https://ror.org/" target="_blank" rel="noreferrer">ROR</a>' }), "bottom-right");
+  map.addControl(new lib.AttributionControl({ compact: true, customAttribution: '<a href="https://visibleearth.nasa.gov/collection/1484/blue-marble" target="_blank" rel="noreferrer">NASA Blue Marble</a> · <a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noreferrer">Natural Earth</a> · <a href="https://www.wikidata.org/" target="_blank" rel="noreferrer">Wikidata</a> / <a href="https://ror.org/" target="_blank" rel="noreferrer">ROR</a>' }), "bottom-right");
   map.getCanvas().setAttribute("aria-label", "互動 3D 地球。拖曳或方向鍵旋轉，滾輪或加減鍵縮放；也可用下方定位選單選校。");
   const controlLabels = { ".maplibregl-ctrl-zoom-in": "放大地圖", ".maplibregl-ctrl-zoom-out": "縮小地圖", ".maplibregl-ctrl-compass": "重設北方" };
   Object.entries(controlLabels).forEach(([selector, label]) => { canvasHost.querySelector(selector)?.setAttribute("aria-label", label); });
@@ -251,10 +269,11 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     $("#map-home").disabled = !usable;
     $("#map-home").title = usable ? home.school_name : "所屬大學座標待確認";
     const homeStatus = $("#partner-map-home-status");
-    homeStatus.textContent = usable ? `★ ${home.school_name}：${home.location.city || "母校"}代表位置已核對。` : `★ ${home?.school_name || "所屬大學"}座標待確認；合作校與申請資訊仍可瀏覽。`;
+    homeStatus.textContent = usable ? `${home.school_name}：${home.location.city || "母校"}代表位置已核對。` : `${home?.school_name || "所屬大學"}座標待確認；合作校與申請資訊仍可瀏覽。`;
     if (!usable) return;
     const button = document.createElement("button"); button.type = "button"; button.className = "map-home-marker";
-    const star = document.createElement("span"); star.textContent = "★"; star.setAttribute("aria-hidden", "true");
+    const star = document.createElement("span"); star.setAttribute("aria-hidden", "true");
+    star.innerHTML = '<svg class="mt-star" viewBox="0 0 24 24" focusable="false"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg>';
     const text = document.createElement("span"); text.textContent = home.short_name || home.school_name;
     button.append(star, text); button.setAttribute("aria-label", `${current.homeSelected ? "我的大學" : "瀏覽中的出發學校"}：${home.school_name}`);
     button.onclick = homeView;
@@ -373,10 +392,10 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     if (disposed || failed) return;
     clearTimeout(timer); loaded = true;
     map.addSource("schools", { type: "geojson", data: EMPTY(), cluster: true, clusterMaxZoom: 9, clusterRadius: 42 });
-    map.addLayer({ id: "cluster-halo", type: "circle", source: "schools", filter: ["has", "point_count"], paint: { "circle-color": "#ffffff", "circle-radius": ["step", ["get", "point_count"], 23, 10, 27, 50, 32], "circle-opacity": .2 } });
-    map.addLayer({ id: "clusters", type: "circle", source: "schools", filter: ["has", "point_count"], paint: { "circle-color": "#23324a", "circle-radius": ["step", ["get", "point_count"], 17, 10, 21, 50, 26], "circle-stroke-width": 2.5, "circle-stroke-color": "#ffffff", "circle-stroke-opacity": .95 } });
+    map.addLayer({ id: "cluster-halo", type: "circle", source: "schools", filter: ["has", "point_count"], paint: { "circle-color": "#ffd23f", "circle-radius": ["step", ["get", "point_count"], 23, 10, 27, 50, 32], "circle-opacity": .28 } });
+    map.addLayer({ id: "clusters", type: "circle", source: "schools", filter: ["has", "point_count"], paint: { "circle-color": "#14213d", "circle-radius": ["step", ["get", "point_count"], 17, 10, 21, 50, 26], "circle-stroke-width": 3, "circle-stroke-color": "#ffd23f", "circle-stroke-opacity": 1 } });
     map.addLayer({ id: "cluster-count", type: "symbol", source: "schools", filter: ["has", "point_count"], layout: { "text-field": ["get", "point_count_abbreviated"], "text-font": ["Poppins Medium"], "text-size": 15, "text-allow-overlap": true }, paint: { "text-color": "#ffffff" } });
-    map.addLayer({ id: "school-points", type: "circle", source: "schools", filter: ["!", ["has", "point_count"]], paint: { "circle-color": "#23324a", "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 5, 5, 8], "circle-stroke-width": 2.5, "circle-stroke-color": "#ffffff" } });
+    map.addLayer({ id: "school-points", type: "circle", source: "schools", filter: ["!", ["has", "point_count"]], paint: { "circle-color": "#14213d", "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 5.5, 5, 9], "circle-stroke-width": 3, "circle-stroke-color": "#ffd23f" } });
     map.addLayer({ id: "school-hit-area", type: "circle", source: "schools", filter: ["!", ["has", "point_count"]], paint: { "circle-radius": 20, "circle-color": "#23324a", "circle-opacity": 0 } });
     map.addLayer({ id: "selected-halo", type: "circle", source: "schools", filter: ["==", ["get", "name"], ""], paint: { "circle-color": "#f3bd55", "circle-radius": 17, "circle-opacity": .3, "circle-stroke-width": 1, "circle-stroke-color": "#fff3cc", "circle-stroke-opacity": .8, "circle-radius-transition": { duration: 0 } } });
     map.addLayer({ id: "selected-school", type: "circle", source: "schools", filter: ["==", ["get", "name"], ""], paint: { "circle-color": "#b7802c", "circle-radius": 10, "circle-stroke-width": 3, "circle-stroke-color": "#ffffff" } });
@@ -454,7 +473,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     },
     setVisible(next) { visible = next; if (next) { map.resize(); } else { map.stop(); popup.remove(); } syncMotion(); },
     destroy() {
-      stopMotion(); disposed = true; clearTimeout(timer); resize.disconnect(); intersection.disconnect(); homeMarker?.remove(); popup.remove();
+      stopMotion(); disposed = true; clearTimeout(timer); resize.disconnect(); intersection.disconnect(); themeWatch.disconnect(); homeMarker?.remove(); popup.remove();
       motionButton.removeEventListener("click", toggleMotion); reducedMotion.removeEventListener("change", syncMotion); document.removeEventListener("visibilitychange", syncMotion);
       canvasHost.removeEventListener("mouseleave", leave); $("#partner-map-panel").removeEventListener("keydown", escape);
       select.removeEventListener("change", onSelect); $("#map-global").removeEventListener("click", globalView); $("#map-home").removeEventListener("click", homeView); $("#map-gaps-open").removeEventListener("click", openGaps); list.removeEventListener("click", onListClick);

@@ -72,6 +72,31 @@
 #application-path .check-status.pass { background: #e6f3ec; color: #14573a; }
 #application-path .check-status.fail { background: #f8e9e7; color: #7e2b29; }
 #application-path .check-status.needs { background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; }
+
+/* A gate that lacks the student's data asks for it in place; the confirm button waits until it has it. */
+#application-path .gate-inputs { margin: 0 0 16px; padding: 16px 18px 18px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 14px; background: var(--uw-surface, #fff); min-inline-size: 0; }
+#application-path .gate-inputs[data-state="missing"] { border-color: var(--uw-amber-ink, #8a5a00); box-shadow: inset 4px 0 0 var(--uw-amber-ink, #8a5a00); }
+#application-path .gate-inputs > legend { padding: 0 8px; font-size: 15px; font-weight: 800; color: var(--uw-text, #23324a); }
+#application-path .gate-inputs[data-state="given"] { margin-top: 10px; }
+#application-path .gate-inputs[data-state="given"] > legend { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+#application-path .gate-hint { margin: 0 0 12px; font-size: 13.5px; line-height: 1.6; color: var(--uw-muted, #586579); }
+#application-path .gate-offered { margin: 0 0 12px; padding: 8px 12px; border-radius: 10px; font-size: 13px; line-height: 1.55; background: var(--uw-surface-soft, #edf0f4); color: var(--uw-text, #23324a); }
+#application-path .gate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 14px; }
+#application-path .gate-grid label { margin: 0; }
+#application-path .gate-grid label > span { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; font-size: 13px; font-weight: 700; }
+#application-path .gate-grid label > span em { font-style: normal; font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; }
+#application-path .gate-grid :is(input, select) { width: 100%; box-sizing: border-box; min-height: 44px; }
+#application-path .gate-grid [data-missing="true"] { border-color: var(--uw-amber-ink, #8a5a00); }
+#application-path .gate-inputs .error-box { margin: 12px 0 0; }
+#application-path .gate-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; margin-top: 14px; }
+#application-path .gate-later { font-size: 12.5px; line-height: 1.5; color: var(--uw-muted, #586579); }
+#application-path .gate-details { margin: 0 0 16px; }
+#application-path .gate-details > summary { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-size: 13.5px; font-weight: 700; cursor: pointer; }
+@media (max-width: 640px) {
+  #application-path .gate-grid { grid-template-columns: minmax(0, 1fr); }
+  #application-path .gate-inputs { padding: 14px; }
+  #application-path .gate-actions .primary-button { width: 100%; }
+}
 #application-path .level-card .level-progress { padding: 16px 22px 0; }
 
 @media (max-width: 760px) {

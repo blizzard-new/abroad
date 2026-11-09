@@ -83,7 +83,7 @@ def _validate_reviewed_row(row):
             source = json.loads(
                 (
                     BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
-                ).read_text()
+                ).read_text(encoding="utf-8")
             )
             require_usable_source(source)
             if ev["status"] == "verified_current" and source.get(

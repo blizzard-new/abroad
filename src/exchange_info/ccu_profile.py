@@ -31,7 +31,7 @@ LABELS = {
 
 @lru_cache(maxsize=1)
 def reviewed_profiles() -> dict[int, dict]:
-    rows = json.loads((BUNDLE / "profile-reviewed-fields.json").read_text())
+    rows = json.loads((BUNDLE / "profile-reviewed-fields.json").read_text(encoding="utf-8"))
     if len(rows) != 55 or len({r["ccu_page"] for r in rows}) != 55:
         raise ValueError("CCU profiles must cover 55 distinct receiving identities")
     for row in rows:
@@ -50,7 +50,7 @@ def reviewed_profiles() -> dict[int, dict]:
                 source = json.loads(
                     (
                         BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
-                    ).read_text()
+                    ).read_text(encoding="utf-8")
                 )
                 require_usable_source(source)
                 text_hash = hashlib.sha256(
@@ -178,7 +178,7 @@ def _operator_country(country):
 def _operator_locations(path, mtime_ns, size):
     from .school_identity import school_identity_key
     records = {}
-    for line in path.read_text().splitlines():
+    for line in path.read_text(encoding="utf-8").splitlines():
         try:
             row = json.loads(line)
         except ValueError:
@@ -197,7 +197,7 @@ def _operator_locations(path, mtime_ns, size):
 @lru_cache(maxsize=1)
 def _completion_target_names():
     path = BUNDLE / "completion-targets.json"
-    return {row["ccu_page"]: row["canonical_name"] for row in json.loads(path.read_text())} if path.exists() else {}
+    return {row["ccu_page"]: row["canonical_name"] for row in json.loads(path.read_text(encoding="utf-8"))} if path.exists() else {}
 
 
 def profile_life(

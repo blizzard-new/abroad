@@ -245,6 +245,7 @@ async function save(complete=false,{quiet=false}={}){
   if(quiet&&drafts.get(draftKey())?.conflict)return false;
   const data=readStep(), run=epoch,captured=key(),id=plan().id,cacheKey=draftKey(),version=editVersion;
   if(complete&&l.kind==='submission'&&!data.confirmed){error('請先確認你已在校方系統送件。');return false;}
+  if(complete&&gateBlocked(l)){error('請先在上方補齊資料並儲存，系統才能判斷這一關。');return false;}
   if(complete&&!l.external)data.confirmed=true;
   else data.confirmed=!!record(l.id).confirmed&&stepContent(data)===stepContent(record(l.id));
   const wasDone=isDone(l),before={...record(l.id)};
@@ -279,15 +280,124 @@ async function save(complete=false,{quiet=false}={}){
       if(!quiet)error(msg);else {$('#level-error').hidden=false;$('#level-error').textContent=msg;}
       $('#save-note').textContent='尚未儲存，請重試';if(e.status===409)$('#conflict-reload').hidden=false;
     }return false;
-  }finally{if(run===epoch){saving=false;$$('#save-draft,#level-form button[type=submit],#conflict-reload').forEach(b=>b.disabled=plan().archived);}}
+  }finally{if(run===epoch){saving=false;$$('#save-draft,#level-form button[type=submit],#conflict-reload').forEach(b=>b.disabled=plan().archived||(b.type==='submit'&&gateBlocked(find(activeId))));}}
 }
 const CHECK_TEXT={pass:['符合','pass','規則比對通過，仍以校方審核為準。'],
   fail:['不符合','fail','目前條件不符合這項規則。你仍可以記下「已看過」，但這不會改變資格判斷。'],
   needs_confirmation:['待確認','needs','系統還無法判斷。先補齊你的條件，或向承辦單位確認。']};
 const CHECK_STANDARD=new Set(['規則比對通過，仍以校方審核為準。','目前條件不符合此項規則；個人確認不會改變資格判斷。','資料或個人條件待確認。']);
 function checkStatus(l){const c=CHECK_TEXT[l.check_status];return c?'<p class="check-status '+c[1]+'" role="status"><b>'+c[0]+'</b>'+esc(c[2])+'</p>':'';}
+// A gate that cannot be judged says what it lacks and lets the student supply it here, then judges again.
+const YEARS=['大一','大二','大三','大四','碩士班','博士班'];
+const GATE_FIELDS={
+  college:{label:'學院',type:'text',hint:'例如：管理學院'},
+  department:{label:'學系',type:'text',hint:'例如：資訊管理學系'},
+  degree_level:{label:'學制',type:'select',options:[['大學部'],['碩士班'],['博士班'],['研究所','研究所（尚未區分碩博士）']]},
+  current_year:{label:'年級',type:'select',options:YEARS.map(y=>[y])},
+  academic_score:{label:'學業平均',type:'number',min:0,max:100,hint:'例如 82'},
+  academic_gpa:{label:'適用學年 GPA（4.3 制）',type:'number',min:0,max:4.3,hint:'例如 2.44；與排名擇一'},
+  class_rank_percent:{label:'適用學年班排名（前幾 %）',type:'number',min:0.01,max:100,hint:'例如前 30% 填 30'},
+  language_test:{label:'語言測驗',type:'select',options:[['toeic','TOEIC'],['ielts','IELTS Academic'],['toefl','TOEFL iBT（舊制 120 分）'],['toefl_new','TOEFL iBT（新制 6 分）'],['duolingo','Duolingo'],['other','其他']]},
+  language_score:{label:'語言分數',type:'number',min:0,max:1000,hint:'尚未考請留空'},
+  jlpt_level:{label:'JLPT 級別',type:'select',options:['N1','N2','N3','N4','N5'].map(n=>[n])},
+  application_round:{label:'申請梯次',type:'select',options:[['第一梯次'],['第二梯次'],['其他／尚未公告']]}
+};
+// Where the same condition already lives in 我的條件, so it can be offered instead of typed again.
+const GLOBAL_KEY={college:'college',department:'department',degree_level:'degree',current_year:'currentYear',academic_score:'academicScore',academic_gpa:'academicGpa',class_rank_percent:'classRankPercent',language_test:'languageTest',language_score:'languageScore',jlpt_level:'jlptLevel',application_round:'applicationRound'};
+const GATE_TITLE={college:'補上你的學院與學系',degree_level:'補上你的學制與年級',partner_degree_level:'補上你的學制與年級',home_year:'補上你的年級',home_language_score:'補上你的語言成績',language_score:'補上你的語言成績',application_round:'選擇你要申請的梯次',academic_score:'補上你的學業成績',academic_gpa:'補上你的學業成績'};
+const gateBlocked=l=>!!l&&l.kind==='confirm'&&(l.missing_inputs||[]).length>0;
+function gateValue(l,key){
+  const saved=l.input_values?.[key];
+  if(saved!==null&&saved!==undefined&&saved!=='')return {value:saved,offered:false};
+  const global=state.eligibilityProfile?.[GLOBAL_KEY[key]];
+  return global===null||global===undefined||global===''?{value:'',offered:false}:{value:global,offered:true};
+}
+function gateControl(l,key){
+  const d=GATE_FIELDS[key],{value}=gateValue(l,key),id='gate-'+key,lacking=(l.missing_inputs||[]).includes(key);
+  const attrs=' id="'+id+'" name="'+key+'"'+(lacking?' data-missing="true"':'')+' aria-describedby="gate-hint"';
+  let control;
+  if(d.type==='select'){
+    const options=d.options.slice();
+    if(value!==''&&!options.some(o=>o[0]===String(value)))options.unshift([String(value)]);
+    control='<select'+attrs+'><option value="">尚未提供</option>'+options.map(o=>'<option value="'+esc(o[0])+'"'+(String(value)===o[0]?' selected':'')+'>'+esc(o[1]||o[0])+'</option>').join('')+'</select>';
+  }else if(d.type==='number'){
+    control='<input type="number"'+attrs+' inputmode="decimal" min="'+d.min+'" max="'+d.max+'" step="any" placeholder="'+esc(d.hint||'')+'" value="'+esc(value)+'">';
+  }else control='<input type="text"'+attrs+' maxlength="120" autocomplete="off" placeholder="'+esc(d.hint||'')+'" value="'+esc(value)+'">';
+  return '<label for="'+id+'"><span>'+esc(d.label)+(lacking?'<em>需要填寫</em>':'')+'</span>'+control+'</label>';
+}
+function gateInputs(l){
+  const fields=(l.input_fields||[]).filter(k=>GATE_FIELDS[k]);
+  if(!fields.length)return '';
+  const lacking=(l.missing_inputs||[]).length>0,offered=fields.some(k=>gateValue(l,k).offered);
+  const body='<p id="gate-hint" class="gate-hint">'+(lacking?'這一關要有下列資料才能判斷。填好後儲存，系統會立刻重新比對。':'這是目前用來判斷的資料。修改後儲存，系統會重新比對。')+'</p>'+
+    (offered?'<p class="gate-offered">已帶入你在「我的條件」填寫的資料；按下儲存後才會用來判斷。</p>':'')+
+    '<div class="gate-grid">'+fields.map(k=>gateControl(l,k)).join('')+'</div><p id="gate-error" class="error-box" role="alert" hidden></p>'+
+    '<div class="gate-actions"><button type="button" id="gate-save" class="primary-button">儲存資料並重新判斷</button>'+(lacking?'<span class="gate-later">還沒有這項資料？可以先離開，這一關會維持「待確認」。</span>':'')+'</div>';
+  const title=GATE_TITLE[(l.id||'').replace(/^check-/,'')]||'補上需要的資料';
+  return lacking?'<fieldset id="gate-inputs" class="gate-inputs" data-state="missing"><legend>'+esc(title)+'</legend>'+body+'</fieldset>':
+    '<details class="gate-details"><summary>我填的資料（可修改）'+icon('chevron-down')+'</summary><fieldset id="gate-inputs" class="gate-inputs" data-state="given"><legend>'+esc(title)+'</legend>'+body+'</fieldset></details>';
+}
+function gateValues(l){return Object.fromEntries((l.input_fields||[]).map(k=>[k,$('#gate-'+k)?.value??'']));}
+function gateError(text,control=null){
+  const el=$('#gate-error');if(!el)return;
+  el.hidden=false;el.textContent=text;
+  (control||el).focus?.();
+}
+async function saveGate(){
+  const l=find(activeId);if(!l||!view||saving||plan().archived||!$('#gate-inputs'))return;
+  const body={revision:view.revision};
+  for(const key of l.input_fields||[]){
+    const input=$('#gate-'+key),d=GATE_FIELDS[key];if(!input)continue;
+    const raw=input.value.trim();
+    if(d.type==='number'&&raw!==''){
+      const n=Number(raw);
+      if(!Number.isFinite(n)||n<d.min||n>d.max){gateError(d.label+'需要介於 '+d.min+' 到 '+d.max+' 之間。',input);return;}
+      body[key]=n;
+    }else body[key]=raw;
+  }
+  const given=(l.input_fields||[]).filter(k=>body[k]!==undefined&&body[k]!=='');
+  if(!given.length&&gateBlocked(l)){gateError('請先填寫至少一項資料，系統才能判斷這一關。',$('#gate-'+l.input_fields[0]));return;}
+  const run=epoch,captured=key(),id=plan().id,button=$('#gate-save');
+  $('#gate-error').hidden=true;button.disabled=true;button.textContent='正在重新判斷…';saving=true;
+  try{
+    const saved=await fetchJson(pathUrl()+'/profile'+query(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(run!==epoch||captured!==key()||view?.plan.id!==id)return;
+    view=saved;listing.revision=saved.revision;saving=false;
+    track('gate_input_saved',{check:l.id,result:find(l.id)?.check_status||''});
+    if(!active||activeId!==l.id||route().get('view')!=='level')return;
+    renderLevel(l.id);
+    const after=find(l.id);
+    $('.check-status')?.setAttribute('tabindex','-1');$('.check-status')?.focus();
+    toast(after?.check_status==='pass'?'已儲存。這一關現在判斷為「符合」。':after?.check_status==='fail'?'已儲存。這一關現在判斷為「不符合」。':'已儲存。系統仍無法判斷，請向承辦單位確認。');
+  }catch(e){
+    if(run!==epoch||captured!==key())return;
+    saving=false;
+    if(e.status===409){
+      // Another tab saved first: take its state, keep what was typed, and let the student press save again.
+      const typed=gateValues(l);
+      try{
+        const latest=await fetchJson(pathUrl()+query());
+        if(run!==epoch||captured!==key()||view?.plan.id!==id)return;
+        view=latest;listing.revision=latest.revision;renderLevel(l.id);
+        for(const [k,v] of Object.entries(typed)){const input=$('#gate-'+k);if(input)input.value=v;}
+        gateError('其他分頁已更新這份計畫。你填的內容還在，請再按一次儲存。');
+      }catch(err){gateError(err.message);}
+      return;
+    }
+    if(!$('#gate-error'))return;
+    button.disabled=false;button.textContent='儲存資料並重新判斷';
+    gateError(e.message);
+  }finally{if(run===epoch)saving=false;}
+}
+function wireGate(){
+  const box=$('#gate-inputs');if(!box)return;
+  // These fields are not the step's own text: they must not start the step autosave or submit the form.
+  box.addEventListener('input',e=>{e.stopPropagation();if($('#gate-error'))$('#gate-error').hidden=true;});
+  box.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('input')){e.preventDefault();saveGate();}});
+  $('#gate-save').onclick=saveGate;
+}
 function field(l,r){
-  if(l.kind==='confirm')return checkStatus(l)+'<div class="choice-box">'+icon(l.icon)+'<strong>'+esc(l.prompt)+'</strong></div>';
+  if(l.kind==='confirm')return checkStatus(l)+gateInputs(l)+'<div class="choice-box">'+icon(l.icon)+'<strong>'+esc(l.prompt)+'</strong></div>';
   if(l.kind==='assemble')return '<div class="document-preview">'+levels().filter(x=>x.kind==='write').map(x=>'<section><h3>'+esc(x.title)+'</h3><p>'+esc(record(x.id).value||'尚未填寫')+'</p><a href="'+href('level',x.id)+'">編輯這一段</a></section>').join('')+'</div><button type="button" id="download-writing" class="outline-button">'+icon('download')+'下載文字草稿</button><a class="outline-button" href="'+pathUrl()+'/writing.docx'+query()+'">'+icon('file-down')+'下載 Word 草稿</a>';
   return (l.conditional?'<label for="file-applicable">這份條件式文件適用於你嗎？</label><select id="file-applicable"><option value="">待確認（暫不計入進度）</option><option value="yes" '+(r.applicable===true?'selected':'')+'>適用</option><option value="no" '+(r.applicable===false?'selected':'')+'>不適用</option></select>':'')+(l.external?'<div class="external-notice">學生自行記錄，不代表校方確認。</div>':'')+
     (l.kind==='submission'?'<p class="small-warning">請在官方系統送件；UniWay 不代送申請。</p>':'')+
@@ -302,12 +412,13 @@ function renderLevel(id,success=false){
   const dependencies=missing(l);
   $('#level-view').innerHTML='<div class="level-topline"><a class="back-link" href="'+href()+'">'+icon('arrow-left')+'回到準備清單</a><span class="level-plan-name">'+esc(shortSchool(c.target_school)+' · '+c.departure_year+' '+termName(c.semester))+'</span></div><div class="level-layout"><div class="level-card"><div class="level-heading"><span class="square-icon">'+icon(l.icon)+'</span><div><p class="eyebrow">'+esc(l.stageTitle)+'</p><h2 id="level-title" tabindex="-1">'+esc(l.title)+'</h2></div></div><div class="level-progress"><div><span>準備狀態</span><strong>'+(isDone(l)?'已完成':hasContent(l)?'進行中':'尚未開始')+'</strong></div>'+meter(l.progress,l.title+'進度',{big:true,gold:isDone(l)})+'</div>'+
     (success?'<div class="success-state" tabindex="-1" role="status"><div class="success-emblem">'+icon('check')+'</div><h3>'+esc(successLabel(l))+'</h3><p>已同步至這份申請計畫 · 準備進度 '+totals().done+' / '+totals().count+'</p><a class="primary-button" href="'+(next()?href('level',next().id):href('progress'))+'">'+(next()?'下一項準備':'查看總覽')+icon('arrow-right')+'</a><button id="edit-level" class="quiet-button">回頭查看／修改</button></div>':
-    '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning&&!(l.check_status&&CHECK_STANDARD.has(l.warning))?'<details class="ap-warning"><summary>需要確認的事項</summary><p>'+esc(l.warning)+'</p></details>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+(l.kind==='submission'?'<label class="check-row confirmation"><input type="checkbox" id="self-confirm" '+(r.confirmed?'checked':'')+'><span>'+(l.kind==='submission'?'我已自行送件，這是個人紀錄':'我已確認這一小步準備好了')+'</span></label>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+(dirty?'已恢復未儲存內容':isDone(l)?'已完成 · 已儲存':'輸入後自動儲存')+'</span><button type="button" id="save-draft" class="outline-button">儲存草稿</button><button type="submit" class="primary-button" '+(plan().archived?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button></footer></form>')+'</div><aside class="level-support"><section class="support-card"><details class="source-details"><summary>完整規則與官方來源'+icon('chevron-down')+'</summary><p>'+esc(l.prompt)+'</p>'+urls(l).map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(i?'相關官方文件':'官方來源')+icon('arrow-up-right')+'</a>').join('')+'</details>'+(l.official_deadline_at?'<p class="ap-deadline">'+(confirmedDeadline(l)?'官方期限：':'參考日期（待核對）：')+esc(new Date(l.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))+'（臺灣時間）'+(new Date(l.official_deadline_at)<new Date()?'（已過期）':'')+'</p>':'')+(l.action_url&&/^https?:\/\//i.test(l.action_url)?'<a class="outline-button" href="'+esc(l.action_url)+'" target="_blank" rel="noopener noreferrer">開啟官方表格'+icon('external-link')+'</a>':'')+(l.kind==='submission'&&urls(l).length?'<a class="outline-button" href="'+esc(urls(l)[0])+'" target="_blank" rel="noopener noreferrer">校方公告與入口'+icon('external-link')+'</a>':'')+'</section><div class="context-card"><strong>'+esc(c.home_school)+'</strong>'+esc(c.academic_year)+' 學年度 · '+esc(c.application_round||'梯次待確認')+'<br>個人準備 ≠ 校方受理或錄取</div></aside></div>';
+    '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning&&!(l.check_status&&CHECK_STANDARD.has(l.warning))?'<details class="ap-warning"><summary>需要確認的事項</summary><p>'+esc(l.warning)+'</p></details>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+(l.kind==='submission'?'<label class="check-row confirmation"><input type="checkbox" id="self-confirm" '+(r.confirmed?'checked':'')+'><span>'+(l.kind==='submission'?'我已自行送件，這是個人紀錄':'我已確認這一小步準備好了')+'</span></label>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+(gateBlocked(l)?'補齊上方資料後，才能確認這一關':dirty?'已恢復未儲存內容':isDone(l)?'已完成 · 已儲存':'輸入後自動儲存')+'</span><button type="button" id="save-draft" class="outline-button">儲存草稿</button><button type="submit" class="primary-button" '+(plan().archived||gateBlocked(l)?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button></footer></form>')+'</div><aside class="level-support"><section class="support-card"><details class="source-details"><summary>完整規則與官方來源'+icon('chevron-down')+'</summary><p>'+esc(l.prompt)+'</p>'+urls(l).map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(i?'相關官方文件':'官方來源')+icon('arrow-up-right')+'</a>').join('')+'</details>'+(l.official_deadline_at?'<p class="ap-deadline">'+(confirmedDeadline(l)?'官方期限：':'參考日期（待核對）：')+esc(new Date(l.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))+'（臺灣時間）'+(new Date(l.official_deadline_at)<new Date()?'（已過期）':'')+'</p>':'')+(l.action_url&&/^https?:\/\//i.test(l.action_url)?'<a class="outline-button" href="'+esc(l.action_url)+'" target="_blank" rel="noopener noreferrer">開啟官方表格'+icon('external-link')+'</a>':'')+(l.kind==='submission'&&urls(l).length?'<a class="outline-button" href="'+esc(urls(l)[0])+'" target="_blank" rel="noopener noreferrer">校方公告與入口'+icon('external-link')+'</a>':'')+'</section><div class="context-card"><strong>'+esc(c.home_school)+'</strong>'+esc(c.academic_year)+' 學年度 · '+esc(c.application_round||'梯次待確認')+'<br>個人準備 ≠ 校方受理或錄取</div></aside></div>';
   if(success)$('#edit-level').onclick=()=>renderLevel(id);
   else{
     $('#level-form').oninput=edit;
     $('#level-form').onsubmit=e=>{e.preventDefault();save(true);};
     $('#save-draft').onclick=()=>save(false);
+    wireGate();
     $('#conflict-reload').onclick=async()=>{
       clearTimeout(autosaveTimer);
       const run=epoch,captured=key(),planId=plan().id;

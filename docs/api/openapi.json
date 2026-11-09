@@ -15410,6 +15410,171 @@
         "title": "PathCreate",
         "type": "object"
       },
+      "PathProfile": {
+        "additionalProperties": false,
+        "description": "Conditions the student supplies from a gate that cannot be judged without them.\n\nOnly fields present in the request change; an empty value clears one. They live beside the plan context, not in it,\nso the plan id (a hash of the context) never changes when a student fills in a missing grade or score.",
+        "properties": {
+          "academic_gpa": {
+            "anyOf": [
+              {
+                "maximum": 4.3,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa"
+          },
+          "academic_score": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Score"
+          },
+          "application_round": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Round"
+          },
+          "class_rank_percent": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 100.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Class Rank Percent"
+          },
+          "college": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College"
+          },
+          "current_year": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Year"
+          },
+          "degree_level": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Degree Level"
+          },
+          "department": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Department"
+          },
+          "jlpt_level": {
+            "anyOf": [
+              {
+                "enum": [
+                  "N1",
+                  "N2",
+                  "N3",
+                  "N4",
+                  "N5"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jlpt Level"
+          },
+          "language_score": {
+            "anyOf": [
+              {
+                "maximum": 1000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language Score"
+          },
+          "language_test": {
+            "anyOf": [
+              {
+                "enum": [
+                  "toeic",
+                  "ielts",
+                  "toefl",
+                  "toefl_new",
+                  "duolingo",
+                  "other"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language Test"
+          },
+          "revision": {
+            "minimum": 1.0,
+            "title": "Revision",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "revision"
+        ],
+        "title": "PathProfile",
+        "type": "object"
+      },
       "PathStep": {
         "additionalProperties": false,
         "properties": {
@@ -20765,6 +20930,65 @@
           }
         },
         "summary": "Archive Path"
+      }
+    },
+    "/account/application-paths/{plan_id}/profile": {
+      "put": {
+        "description": "Save conditions a gate was missing, then judge the gates again with them.",
+        "operationId": "update_profile_account_application_paths__plan_id__profile_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "title": "Home School",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PathProfile"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Profile"
       }
     },
     "/account/application-paths/{plan_id}/steps/{step_id}": {
