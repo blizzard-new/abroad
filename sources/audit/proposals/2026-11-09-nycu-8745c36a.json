@@ -1,0 +1,34 @@
+{
+  "detail": "公告列表最新一則是 2026-11-09 的「116學年度 AY 2027/2028 出國交換展暨校內甄選申請說明會」，平台尚未收錄。UST 第一梯次（12/31 截止）與列表相符。平台記載的 10/13 轉知政大阿聯青年交流計畫，這次列表沒看到。列表也沒有 116 學年度校級簡章。",
+  "edits": [
+    {
+      "basis": "公告內文：Dates December 3 (Thu) and December 4 (Fri), 2026, 11:00–15:00；Registration deadline November 23, 2026 (Mon), 12:00 noon；Location 6F Library, Guangfu Campus",
+      "current": "…官網列表目前尚未公布陽明交大自身116學年校級出國交換簡章（最近一則校級為115學年第二梯次，07/10已截止）。",
+      "proposed": "在原文後補一句：國際處2026-11-09公告「116學年度 AY 2027/2028出國交換展暨校內甄選申請說明會」，12/03（四）、12/04（五）11:00–15:00，光復校區浩然圖書館6樓，並有 Google Meet 線上同步；線上報名截止 2026/11/23（一）12:00。此為說明會，非校內甄選報名；116學年度校級簡章與甄選時程列表仍未公布，以校方官方公告為準。",
+      "target": "verified_window_deadlines.py → nycu → online_deadline.value_text"
+    },
+    {
+      "basis": "公告列表第1則 2026-11-09 說明會公告，內文日期 12/03、12/04；列表無116學年度校級簡章",
+      "current": "台聯大UST 12/31 16:00電子郵件收件 · 校級新期日程待確認",
+      "proposed": "台聯大UST 12/31 16:00電子郵件收件 · 校級說明會12/03–12/04 · 校級新期日程待確認",
+      "target": "verified_window_deadlines.py → nycu → window_badge"
+    }
+  ],
+  "note": "AI 同事讀取學校官網後整理的提案，不是已核實的資料；修改清單只是建議，合併前請人工對照官方來源。合併這個檔案不會自動更新平台資料。",
+  "official_url": "https://oia.nycu.edu.tw/oia/ch/app/data/list?module=nycu0006&id=286",
+  "platform_record": "已核對國際處出國交換申請公告列表（module=nycu0006&id=286）：2026/10/07 公告「116年度第一梯次臺灣聯合大學系統（UST）交換學生計畫」校內收件至 2026/12/31（週四）16:00 截止（PDF 寄至 ex-out@nycu.edu.tw）；2026/10/13 轉知政大辦理「2027 臺灣與阿拉伯聯合大公國（阿聯）青年交流計畫」遴選（全額補助機票及食宿）；116 學年度校級出國交換簡章尚未公布（最新校級為 115-2，已於 2026/07/10 截止）。243 筆合作資料中 182 筆對上 115-2 已截止名額表、4 筆對上 116 台聯大第一梯次方案",
+  "proposed_by": "dora2",
+  "proposed_on": "2026-11-09",
+  "schema": "uniway-office-proposal/2",
+  "school_id": "nycu",
+  "school_name": "國立陽明交通大學",
+  "source_url": "https://oia.nycu.edu.tw/oia/ch/app/data/view?module=nycu0006&id=286&serno=f31e8bb1-bfc0-4aa7-b6a6-ac2d26881717",
+  "status": "new_notice",
+  "suggested_update": "新增 2026-11-09 公告「116學年度 AY 2027/2028出國交換展暨校內甄選申請說明會」。活動日期要點進公告確認後再填；116 學年度校級簡章維持未公布。",
+  "verification": {
+    "note": "",
+    "reason": "公告列表最新一則為 2026-11-09「116學年度 AY 2027/2028出國交換展暨校內甄選申請說明會」，點進內文確認有日期、報名截止與地點，平台尚未收錄。列表仍沒有 116 學年度校級簡章，UST 第一梯次 12/31 也與列表一致。10/13 轉知政大阿聯計畫這次列表（共 9 則）沒出現，未能證實，不動它。",
+    "verdict": "confirmed_update",
+    "verified_by": "小公主"
+  }
+}
