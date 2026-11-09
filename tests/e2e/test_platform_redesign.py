@@ -37,7 +37,8 @@ def test_home_landing_shows_the_product_story_without_login(page, live_server) -
     enter_public_site(page, live_server, "home")
     expect(page.locator("#home-landing")).to_be_visible()
     expect(page.locator("#home-landing-title")).to_contain_text("世界這麼大，別讓資訊限制你的選擇。")
-    expect(page.locator("#mt-route-title")).to_contain_text("你能去哪些交換學校")
+    # The route map of countries is gone from the home: the sentence, the board and the Earth are the first screen.
+    assert page.locator("[data-metro-route], .mt-stage, #home-plan-steps").count() == 0
     # The Earth under the search board is a still photograph on the page itself, so it needs no WebGL.
     expect(page.locator(".mt-earth")).to_be_visible()
     assert page.locator("[data-home-globe]").count() == 0
@@ -46,18 +47,18 @@ def test_home_landing_shows_the_product_story_without_login(page, live_server) -
 
 
 def _gaps_beside_the_rail(page, selector: str) -> tuple[float, float]:
-    """Space between the rail-side edge of the content area and the page, and between the page and the window edge."""
+    """Space between the left window edge and the page, and between the page and the right window edge."""
     return page.evaluate(
         """(selector) => {
           const box = document.querySelector(selector).getBoundingClientRect();
-          return [box.left - 112, innerWidth - 32 - box.right];
+          return [box.left, innerWidth - box.right];
         }""",
         selector,
     )
 
 
 @pytest.mark.parametrize("width", [1440, 1920, 2560])
-def test_every_page_sits_in_the_middle_of_the_area_beside_the_rail(browser, live_server, width) -> None:
+def test_every_page_sits_in_the_middle_of_the_window_under_the_top_bar(browser, live_server, width) -> None:
     context = browser.new_context(viewport={"width": width, "height": 900})
     page = context.new_page()
     try:
@@ -200,18 +201,30 @@ def test_home_school_switcher_is_bigger_than_on_other_pages(browser, live_server
         context.close()
 
 
-def test_rail_logo_sits_on_the_rails_centre_line(page, live_server) -> None:
+def test_the_navigation_is_one_bar_across_the_top(page, live_server) -> None:
     page.set_viewport_size({"width": 1440, "height": 900})
     enter_public_site(page, live_server, "home")
-    centres = page.evaluate(
+    boxes = page.evaluate(
         """() => {
-          const centre = (element) => { const box = element.getBoundingClientRect(); return box.left + box.width / 2; };
-          const rail = document.querySelector('#glass-navigation');
-          return [centre(rail), centre(rail.querySelector('.uniway-header-brand .brand-mark')), centre(rail.querySelector('a[data-public-route]'))];
+          const box = (element) => { const r = element.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
+          const bar = document.querySelector('#glass-navigation');
+          return {bar: box(bar), brand: box(bar.querySelector('.uniway-header-brand')),
+                  links: [...bar.querySelectorAll('a[data-public-route]')].map(box), theme: box(bar.querySelector('#theme-toggle'))};
         }"""
     )
-    assert abs(centres[1] - centres[0]) <= 1, f"the logo is {centres[1] - centres[0]:.1f}px off the rail's centre line"
-    assert abs(centres[2] - centres[0]) <= 1
+    bar = boxes["bar"]
+    assert bar[0] == 0 and bar[1] == 0 and abs(bar[2] - 1440) <= 1 and bar[3] <= 76, bar
+    assert boxes["brand"][0] < boxes["links"][0][0], "the logo comes first, at the left"
+    tops = {round(link[1]) for link in boxes["links"]}
+    assert len(tops) == 1, "the links sit in one row"
+    assert boxes["theme"][0] > boxes["links"][-1][2], "the buttons sit at the right, after the links"
+    # Nothing in the page hides under it.
+    first = page.evaluate("document.querySelector('.page-back-bar').getBoundingClientRect().top")
+    assert first >= bar[3] - 1, (first, bar)
+    # Hovering it does not widen it into a column.
+    page.mouse.move(60, 30)
+    page.wait_for_timeout(300)
+    assert page.evaluate("document.querySelector('#glass-navigation').getBoundingClientRect().width") >= 1439
 
 
 def test_application_workspace_tools_are_available_on_demand(page, live_server) -> None:

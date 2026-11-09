@@ -94,6 +94,8 @@ function next(){
   unfinished.sort((a,b)=>(record(b.id).updated_at||'').localeCompare(record(a.id).updated_at||''));
   return unfinished.find(l=>drafts.has(draftKey(l.id)))||unfinished[0]||available[0];
 }
+// "Synced" is the normal state and says nothing; only a state the student should know about is written out.
+function setSync(text){const el=$('#sync-message');if(!el)return;el.textContent=text;const box=el.closest('.ap-status');if(box)box.hidden=text==='已同步至帳號'||text==='已連接帳號';}
 function nextReason(l){return !l?'校方結果請以正式通知為準。':drafts.has(draftKey(l.id))?'接著處理尚未儲存的內容。':confirmedDeadline(l)&&Date.parse(l.official_deadline_at)>=Date.now()&&Date.parse(l.official_deadline_at)-Date.now()<=14*86400000?'官方期限將近，先處理這項。':status(l)==='started'?'接著完成上次的草稿。':'下一項可開始的準備。';}
 
 const pct=p=>p.total?Math.round(p.value/p.total*100):0;
@@ -193,8 +195,8 @@ async function load(force=false){
     listing=list;window.UniWayPlanIndex?.accept(list);
     const requested=route().get('plan');
     const selected=list.items.find(p=>p.id===requested)||list.items.filter(p=>!p.archived).sort((a,b)=>(b.updated_at||'').localeCompare(a.updated_at||''))[0]||list.items[0];
-    if(!selected&&route().get('view')==='schedule'){view=null;$('#sync-message').textContent='已連接帳號';showScheduleWithoutPlan();return;}
-    if(!selected){view=null;$('#sync-message').textContent='已連接帳號';message('從你的交換目標開始','<a href="#partners" class="primary-button next-action">找適合的學校</a><button data-path-new class="outline-button">我已有目標</button>'+((listing.legacy?.schools||[]).length?'<a href="#my-application?view=schedule" class="quiet-button">查看時程</a>':''));maybeOpenTarget();return;}
+    if(!selected&&route().get('view')==='schedule'){view=null;setSync('已連接帳號');showScheduleWithoutPlan();return;}
+    if(!selected){view=null;setSync('已連接帳號');message('從你的交換目標開始','<a href="#partners" class="primary-button next-action">找適合的學校</a><button data-path-new class="outline-button">我已有目標</button>'+((listing.legacy?.schools||[]).length?'<a href="#my-application?view=schedule" class="quiet-button">查看時程</a>':''));maybeOpenTarget();return;}
     const data=await fetchJson('/account/application-paths/'+selected.id+query());
     if(run!==epoch||captured!==key())return;
     if(route().get('plan')!==requested){load();return;}
@@ -211,7 +213,7 @@ function render(){
   const id=route().get('level'), tab=route().get('view')||'today';
   
   $('#hub').hidden=tab==='level';$('#level-view').hidden=tab!=='level';
-  $('#sync-message').textContent=plan().archived?'已封存 · 紀錄保留':'已同步至帳號';
+  setSync(plan().archived?'已封存 · 紀錄保留':'已同步至帳號');
   $('#archive-plan').hidden=false;$('#archive-plan').textContent=plan().archived?'恢復計畫':'封存計畫';
   const c=plan().context;
   $('#plan-select').innerHTML=listing.items.map(p=>'<option value="'+p.id+'" '+(p.id===plan().id?'selected':'')+'>'+esc(shortSchool(p.context.target_school)+' · '+p.context.departure_year+' '+termName(p.context.semester)+(p.archived?'（已封存）':''))+'</option>').join('');
@@ -738,7 +740,7 @@ function renderSchedule(){
   if(mismatch&&!state.applicationContext.target_school)applyPlanContext().then(()=>{if(active&&route().get('view')==='schedule')renderSchedule();}).catch(()=>{});
   $('#schedule-dynamic').innerHTML=(mismatch&&state.applicationContext.target_school?'<div class="sched-context"><p>排時程的目標目前是「'+esc(state.applicationContext.target_school.split(/[（(]/)[0].trim())+'」。要改用這份計畫嗎？</p><button type="button" class="today-add" data-use-plan-context>改用「'+esc(planName(plan()))+'」排時程</button></div>':'')+'<section class="sched-deadlines" aria-labelledby="sched-deadlines-title"><div class="today-head"><h2 id="sched-deadlines-title">已確認的官方期限</h2><p>'+esc(planName(plan()))+' · '+esc(planTerm(plan()))+'</p></div>'+
     (list.length?'<ol>'+list.map(l=>{const d=new Date(l.official_deadline_at),left=Math.ceil((d-Date.now())/86400000);return '<li><a href="'+href('level',l.id)+'"><span class="sched-date"><b>'+fmt(d,{month:'numeric',day:'numeric'})+'</b><small>'+fmt(d,{weekday:'short'})+'</small></span><span class="today-row"><b>'+esc(l.title)+'</b><small>'+esc(l.stageTitle)+'</small></span><span class="today-pill '+(d<new Date()?'late':left<=14?'soon':'')+'">'+(d<new Date()?'已過期':left<=0?'今天':'還有 '+left+' 天')+'</span></a></li>';}).join('')+'</ol>':
-      '<p class="today-empty">目前沒有已確認的期限。</p><p class="today-hint">UniWay 只倒數有官方來源、已確認的日期，不會猜。查到日期後，可以在下面「待辦與期限」記一則個人提醒。</p>'+(source?'<a class="today-link" href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">查看官方公告'+icon('arrow-up-right')+'</a>':''))+'</section>';
+      '<p class="today-empty">目前沒有已確認的期限。</p>'+(source?'<a class="today-link" href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">查看官方公告'+icon('arrow-up-right')+'</a>':''))+'</section>';
   icons();
 }
 // Tasks of the open plan for the list on 時程: what is in progress, the next few that can start, and what is done.
@@ -763,13 +765,13 @@ function stageGroups(){
   return groups.map(g=>({...g,...totals(g.levels)})).filter(g=>g.count>0);
 }
 function deadlineHtml(due,source){
-  if(!due)return '<h3>下一個已確認的官方期限</h3><p class="today-empty">目前沒有已確認的期限。</p><p class="today-hint">UniWay 只倒數有官方來源、已確認的日期，不會猜。</p>'+(source?'<a class="today-link" href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">查看官方公告'+icon('arrow-up-right')+'</a>':'');
+  if(!due)return '<h3>下一個已確認的官方期限</h3><p class="today-empty">目前沒有已確認的期限。</p>'+(source?'<a class="today-link" href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">查看官方公告'+icon('arrow-up-right')+'</a>':'');
   const d=new Date(due.official_deadline_at),tz={timeZone:'Asia/Taipei'},past=d<new Date(),left=Math.ceil((d-Date.now())/86400000);
   return '<h3>下一個已確認的官方期限</h3><p class="today-date">'+d.toLocaleDateString('zh-TW',{...tz,month:'numeric',day:'numeric'})+'</p><p><b>'+d.toLocaleDateString('zh-TW',{...tz,weekday:'short'})+' '+d.toLocaleTimeString('zh-TW',{...tz,hour:'2-digit',minute:'2-digit',hour12:false})+'</b> <span class="today-pill '+(past?'late':left<=14?'soon':'')+'">'+(past?'已過期':left<=0?'今天截止':'還有 '+left+' 天')+'</span></p><p>'+esc(due.title)+'</p><a class="today-link" href="'+href('level',due.id)+'">前往這一項'+icon('arrow-right')+'</a>';
 }
 function personalTasks(){
   const own=(state.calendarEvents||[]).filter(e=>e.origin!=='official'&&e.title&&e.status!=='ready').sort((a,b)=>(a.date||'').localeCompare(b.date||'')).slice(0,4);
-  return '<div class="today-own"><h3>我加的待辦</h3>'+(own.length?'<ul>'+own.map(e=>'<li><span>'+esc(e.title)+'</span><small>'+esc(e.date||'')+'</small></li>').join('')+'</ul>':'<p class="today-hint">還沒有。記下你自己要做的小事，例如請系主任簽名。</p>')+
+  return '<div class="today-own"><h3>我加的待辦</h3>'+(own.length?'<ul>'+own.map(e=>'<li><span>'+esc(e.title)+'</span><small>'+esc(e.date||'')+'</small></li>').join('')+'</ul>':'')+
     '<form class="today-quick" data-today-quick><input name="title" maxlength="80" required aria-label="新增待辦" placeholder="新增待辦，例如：請系主任簽名…"><input name="date" type="date" required aria-label="日期" value="'+localDateKey()+'"><button type="submit" class="today-add">加入</button><span class="form-status" role="status"></span></form></div>';
 }
 function renderToday(){
@@ -785,18 +787,18 @@ function renderToday(){
   const open=checks.find(l=>l.check_status!=='pass');
   const tag=l=>drafts.has(draftKey(l.id))?'草稿未儲存':status(l)==='started'?'進行中':l.conditional&&record(l.id).applicable==null?'待確認適用性':'';
   $('#today-view').innerHTML='<div class="today">'+
-    '<div class="today-top"><section class="today-focus" aria-labelledby="today-focus-title"><span class="today-label">'+(n?'現在做這件事':'目前進度')+'</span><h2 id="today-focus-title">'+esc(n?n.title:'已完成已知的準備事項')+'</h2>'+(n&&n.prompt?'<p>'+esc(n.prompt.length>110?n.prompt.slice(0,110)+'…':n.prompt)+'</p>':'')+'<p class="today-why">'+esc(nextReason(n))+'</p>'+
-      (n?'<div class="today-meta"><span>'+esc(KIND_LABEL[n.kind]||'事項')+'</span><span>'+esc(n.stageTitle)+'</span>'+(urls(n)[0]?'<a href="'+esc(urls(n)[0])+'" target="_blank" rel="noopener noreferrer">官方來源'+icon('arrow-up-right')+'</a>':'')+'</div>':'')+
+    '<div class="today-top"><section class="today-focus" aria-labelledby="today-focus-title"><span class="today-label">'+(n?'現在做這件事':'目前進度')+'</span><h2 id="today-focus-title">'+esc(n?n.title:'已完成已知的準備事項')+'</h2>'+(n&&n.prompt?'<p>'+esc(n.prompt.length>110?n.prompt.slice(0,110)+'…':n.prompt)+'</p>':'')+(nextReason(n)==='下一項可開始的準備。'?'':'<p class="today-why">'+esc(nextReason(n))+'</p>')+
+      (n?'<div class="today-meta">'+(urls(n)[0]?'<a href="'+esc(urls(n)[0])+'" target="_blank" rel="noopener noreferrer">官方來源'+icon('arrow-up-right')+'</a>':'')+'</div>':'')+
       '<div class="today-actions"><a class="today-primary" href="'+(n?href('level',n.id):href('progress'))+'">'+(n?(resume?'繼續填寫':'開始'):'查看清單')+icon('arrow-right')+'</a></div></section>'+
       '<aside class="today-panel" aria-label="期限">'+deadlineHtml(due,source)+'</aside></div>'+
-    '<section class="today-stages" aria-labelledby="today-stages-title"><div class="today-head"><h2 id="today-stages-title">申請階段</h2><p>個人準備進度 <b>'+t.done+' / '+t.count+'</b> 項 <button type="button" class="today-text" data-open-info>這怎麼計算？</button></p></div>'+
+    '<section class="today-stages" aria-labelledby="today-stages-title"><div class="today-head"><h2 id="today-stages-title">申請階段'+(g?' <span class="today-stage-now">第 '+(current+1)+' / '+groups.length+'・<b>'+esc(g.title)+'</b>（'+g.done+' / '+g.count+'）</span>':'')+'</h2><p><b>'+t.done+' / '+t.count+'</b> 項 <button type="button" class="today-text" data-open-info>這怎麼計算？</button></p></div>'+
       '<ol class="today-track" aria-label="各階段進度">'+groups.map((x,i)=>'<li data-s="'+(x.done===x.count?'done':i===current?'now':'todo')+'"><span class="visually-hidden">'+esc(x.title)+'：'+x.done+' / '+x.count+'</span></li>').join('')+'</ol>'+
-      (g?'<p class="today-stage-now">目前階段：<b>'+esc(g.title)+'</b>（'+g.done+' / '+g.count+'）· 第 '+(current+1)+' / '+groups.length+' 階段</p>':'')+'</section>'+
-    '<div class="today-bottom"><section class="today-queue" aria-labelledby="today-queue-title"><h2 id="today-queue-title">接下來</h2>'+
-      (queue.length?'<ul>'+queue.map(l=>'<li><a href="'+href('level',l.id)+'"><span class="today-row"><b>'+esc(l.title)+'</b><small>'+esc(l.stageTitle)+' · '+esc(KIND_LABEL[l.kind]||'事項')+'</small></span>'+(tag(l)?'<span class="today-tag">'+tag(l)+'</span>':'')+icon('chevron-right')+'</a></li>').join('')+'</ul>':'<p class="today-empty">沒有其他可以現在開始的項目。</p>')+
-      '<a class="today-link" href="'+href('progress')+'">查看全部準備清單'+icon('arrow-right')+'</a>'+personalTasks()+'</section>'+
-      (checks.length?'<aside class="today-panel" aria-labelledby="today-checks-title"><h3 id="today-checks-title">資格條件檢查</h3><ul class="today-counts"><li class="pass"><b>'+counts.pass+'</b>符合</li><li class="fail"><b>'+counts.fail+'</b>不符合</li><li class="needs"><b>'+counts.needs_confirmation+'</b>待確認</li></ul><p class="today-hint">依已查核的規則比對，仍以校方審核為準。</p>'+(open?'<a class="today-link" href="'+href('level',open.id)+'">查看需要處理的條件'+icon('arrow-right')+'</a>':'')+'</aside>':'')+'</div>'+
-    '<p class="today-boundary">'+icon('info')+'圓圈與進度只代表你自己的準備，不代表校方受理或錄取。</p></div>';
+      '</section>'+
+    '<div class="today-bottom"><section class="today-queue" aria-labelledby="today-queue-title"><h2 id="today-queue-title">接下來'+(g?'<span class="today-stage"> · '+esc(g.title)+'</span>':'')+'</h2>'+
+      (queue.length?'<ul>'+queue.map(l=>'<li><a href="'+href('level',l.id)+'"><span class="today-row"><b>'+esc(l.title)+'</b>'+(l.stageTitle!==g?.title?'<small>'+esc(l.stageTitle)+'</small>':'')+'</span>'+(tag(l)?'<span class="today-tag">'+tag(l)+'</span>':'')+icon('chevron-right')+'</a></li>').join('')+'</ul>':'<p class="today-empty">沒有其他可以現在開始的項目。</p>')+
+      '<a class="today-link" href="'+href('progress')+'">查看全部準備清單'+icon('arrow-right')+'</a></section>'+
+      (checks.length?'<aside class="today-panel" aria-labelledby="today-checks-title"><h3 id="today-checks-title">資格條件檢查</h3><ul class="today-counts"><li class="pass"><b>'+counts.pass+'</b>符合</li><li class="fail"><b>'+counts.fail+'</b>不符合</li><li class="needs"><b>'+counts.needs_confirmation+'</b>待確認</li></ul>'+(open?'<a class="today-link" href="'+href('level',open.id)+'">查看需要處理的條件'+icon('arrow-right')+'</a>':'')+'</aside>':'')+'</div>'+
+    personalTasks()+'<p class="today-boundary">'+icon('info')+'圓圈與進度只代表你自己的準備，不代表校方受理或錄取。</p></div>';
 }
 function renderOverview(){
   const t=totals();

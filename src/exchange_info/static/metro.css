@@ -11,7 +11,7 @@
   --mt-red-text: #b81c22; --mt-blue-text: #165cb4;
   --mt-focus: #1f6fd1; --mt-radius: 8px; --mt-radius-lg: 12px;
   --mt-band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 1' preserveAspectRatio='none'%3E%3Crect width='1' height='1' fill='%23d9262c'/%3E%3Crect x='1' width='1' height='1' fill='%23f2a81d'/%3E%3Crect x='2' width='1' height='1' fill='%231f6fd1'/%3E%3Crect x='3' width='1' height='1' fill='%230c7d56'/%3E%3Crect x='4' width='1' height='1' fill='%238c5a2e'/%3E%3C/svg%3E");
-  --mt-font: "UniWay Sign", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --mt-font: "Poppins", "GenJyuuGothic", "UniWay Sign", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif; /* Latin: Poppins; Chinese: 源柔黑體 (GenJyuu Gothic); Noto Sans TC only for glyphs it lacks */
 
   /* The older sheets read these; re-pointing them carries every page into the one world. */
   --uw-font-ui: var(--mt-font);
@@ -29,7 +29,7 @@
   --glass-coral: var(--mt-red); --glass-coral-strong: var(--mt-red-text);
   --amber: #8a4b00; --green: #0e6a49; --journal-coral: var(--mt-red-text);
 }
-html[data-theme="dark"] {
+html[data-theme="dark"], html:has(#home-landing:not([hidden])) {
   --mt-ground: #11151c; --mt-concourse: #1a2029; --mt-ink: #eef0f4; --mt-ink-2: #b9c0cc; --mt-ink-3: #8f98a8;
   --mt-rule: #2f3846; --mt-rule-strong: #5d6879; --mt-board: #000; --mt-on-board: #fff; --mt-on-board-2: #c7cdd8;
   --mt-red: #ff5a60; --mt-orange: #ffbf47; --mt-blue: #5aa2ff; --mt-green: #38d69b; --mt-brown: #d2a074;
@@ -115,135 +115,6 @@ body.unified-shell #home-landing .mt-board-cell select option { background: #fff
 #home-landing .mt-board-go .lucide { width: 22px; height: 22px; stroke-width: 3; }
 #home-landing .mt-board-go:hover { background: #ffc24d; }
 #home-landing .mt-board-go:focus-visible { outline: 3px solid var(--mt-on-board); outline-offset: -5px; }
-
-/* 3b. The route map. */
-#home-landing .mt-route { grid-area: route; position: relative; min-width: 0; }
-#home-landing .mt-stage { position: relative; max-width: 1180px; margin-inline: auto; container-type: inline-size; container-name: mtstage; }
-#home-landing .mt-map { position: relative; width: 100%; }
-#home-landing .mt-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-#home-landing .mt-path { fill: none; stroke: var(--line); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; transition: opacity .25s ease; }
-#home-landing .mt-line, #home-landing .mt-path { --line: var(--mt-red); --on-line: var(--mt-on-red); }
-#home-landing [data-line="southeast"] { --line: var(--mt-orange); --on-line: var(--mt-on-orange); }
-#home-landing [data-line="europe"] { --line: var(--mt-blue); --on-line: var(--mt-on-blue); }
-#home-landing [data-line="americas"] { --line: var(--mt-green); --on-line: var(--mt-on-green); }
-#home-landing [data-line="elsewhere"] { --line: var(--mt-brown); --on-line: var(--mt-on-brown); }
-#home-landing .mt-route[data-focus="east-asia"] .mt-path:not([data-line="east-asia"]), #home-landing .mt-route[data-focus="southeast"] .mt-path:not([data-line="southeast"]),
-#home-landing .mt-route[data-focus="europe"] .mt-path:not([data-line="europe"]), #home-landing .mt-route[data-focus="americas"] .mt-path:not([data-line="americas"]),
-#home-landing .mt-route[data-focus="elsewhere"] .mt-path:not([data-line="elsewhere"]) { opacity: .18; }
-#home-landing .mt-route[data-focus]:not([data-focus=""]) .mt-line { transition: opacity .25s ease; }
-#home-landing .mt-route[data-focus="east-asia"] .mt-line:not([data-line="east-asia"]), #home-landing .mt-route[data-focus="southeast"] .mt-line:not([data-line="southeast"]),
-#home-landing .mt-route[data-focus="europe"] .mt-line:not([data-line="europe"]), #home-landing .mt-route[data-focus="americas"] .mt-line:not([data-line="americas"]),
-#home-landing .mt-route[data-focus="elsewhere"] .mt-line:not([data-line="elsewhere"]) { opacity: .25; }
-
-#home-landing .mt-stops { margin: 0; padding: 0; list-style: none; }
-#home-landing .mt-stop, #home-landing .mt-line-tag, #home-landing .mt-origin { position: absolute; left: calc(var(--x) / 1000 * 100%); top: calc(var(--y) / 500 * 100%); }
-#home-landing .mt-stop { width: 0; height: 0; }
-#home-landing .mt-station {
-  position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); display: block; width: 20px; height: 20px; min-width: 0; min-height: 0; margin: 0; padding: 0; border: 0; border-radius: 50%;
-  background: transparent; color: var(--mt-ink); font: inherit; cursor: pointer; box-shadow: none;
-}
-#home-landing .mt-station::after { content: ""; position: absolute; inset: -12px -34px; }
-#home-landing .mt-dot { position: absolute; inset: 0; box-sizing: border-box; border: 4px solid var(--mt-ink); border-radius: 50%; background: var(--mt-ground); transition: transform .15s ease, background-color .15s ease; }
-#home-landing .mt-station[data-filled="true"] .mt-dot { background: var(--line); }
-#home-landing .mt-station:hover .mt-dot, #home-landing .mt-station:focus-visible .mt-dot { transform: scale(1.22); }
-#home-landing .mt-label { position: absolute; left: 50%; display: grid; justify-items: center; gap: 1px; transform: translateX(-50%); text-align: center; white-space: nowrap; line-height: 1.25; pointer-events: none; }
-#home-landing .is-down .mt-label { top: 27px; }
-#home-landing .is-up .mt-label { bottom: 27px; }
-#home-landing .mt-label b { color: var(--mt-ink); font-size: 16px; font-weight: 800; }
-#home-landing .mt-label small { color: var(--mt-ink-2); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
-#home-landing .mt-label small em { color: var(--mt-ink); font-style: normal; font-weight: 800; }
-#home-landing .mt-station:hover .mt-label b { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
-
-#home-landing .mt-line-tag {
-  display: grid; gap: 1px; width: max-content; min-width: 0; min-height: 0; margin: 0; padding: 6px 12px 7px 11px; transform: translate(0, -50%); border: 0; border-radius: var(--mt-radius); white-space: nowrap;
-  background: var(--line); color: var(--on-line); text-align: left; cursor: pointer; box-shadow: none; line-height: 1.25;
-}
-#home-landing .mt-line-name { font-size: 15px; font-weight: 900; }
-#home-landing .mt-line-meta { display: flex; flex-wrap: wrap; gap: 0 6px; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
-#home-landing .mt-line-meta small { font-size: 12px; font-weight: 700; }
-#home-landing .mt-line-tag[aria-pressed="true"] { outline: 3px solid var(--mt-ink); outline-offset: 2px; }
-
-#home-landing .mt-origin { width: 0; height: 0; }
-#home-landing .mt-origin-ring { position: absolute; left: -34px; top: -34px; width: 68px; height: 68px; box-sizing: border-box; border: 8px solid var(--mt-ink); border-radius: 50%; background: var(--mt-ground); }
-#home-landing .mt-origin-ring::after { content: ""; position: absolute; inset: 12px; border-radius: 50%; background: var(--mt-red); }
-#home-landing .mt-origin-label {
-  position: absolute; left: calc(96 / 1000 * 100%); top: calc(250 / 500 * 100% + 44px); transform: translateX(-50%); display: grid; gap: 1px; justify-items: center; width: 150px; margin: 0;
-  padding: 8px 10px 9px; border: 0; border-radius: var(--mt-radius); background: var(--mt-board); color: var(--mt-on-board); text-align: center; cursor: pointer; box-shadow: none;
-}
-#home-landing .mt-origin-label small { color: var(--mt-on-board-2); font-size: 11px; font-weight: 700; letter-spacing: .1em; }
-#home-landing .mt-origin-label strong { max-width: 100%; overflow: hidden; color: var(--mt-on-board); font-size: 17px; font-weight: 900; text-overflow: ellipsis; white-space: nowrap; }
-#home-landing .mt-origin-edit { margin-top: 3px; padding: 1px 9px; border: 1.5px solid #ffffff8c; border-radius: 999px; font-size: 11px; font-weight: 700; }
-#home-landing .mt-origin-label:hover { background: #000; }
-
-/* The suitcase stands on the origin station: you are here. */
-#home-landing .mt-stage .pr-collage-mascot {
-  position: absolute; z-index: 3; left: calc(96 / 1000 * 100% - var(--uw-mascot-size) / 2); top: calc(250 / 500 * 100% - 38px - var(--uw-mascot-size) * 1.2);
-  margin: 0; --uw-mascot-size: clamp(76px, 9.4cqi, 118px);
-}
-#home-landing .mt-empty { margin: 0; padding: 48px 0; color: var(--mt-ink-2); font-size: 16px; font-weight: 600; }
-
-#home-landing .mt-route-note { margin: 10px 0 0; max-width: 1180px; margin-inline: auto; color: var(--mt-ink-2); font-size: 13px; line-height: 1.7; }
-#home-landing .mt-legend { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-left: 12px; color: var(--mt-ink); font-weight: 700; white-space: nowrap; }
-#home-landing .mt-key { display: inline-block; width: 13px; height: 13px; margin-right: 6px; box-sizing: border-box; border: 3px solid var(--mt-ink); border-radius: 50%; vertical-align: -2px; background: var(--mt-ground); }
-#home-landing .mt-key-open { background: var(--mt-blue); }
-
-/* 3c. The plan: four stations on one line. */
-#home-landing .mt-hero .pr-collage { grid-area: plan; display: block; position: static; transform: none; }
-#home-landing .mt-hero .pr-plan-card { width: auto; max-width: 1180px; margin-inline: auto; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; transform: none; }
-#home-landing .mt-hero .pr-plan-card header { justify-content: flex-start; gap: 12px; margin-bottom: 12px; }
-#home-landing .mt-hero .pr-plan-card header strong { color: var(--mt-ink); font-size: 15px; font-weight: 900; }
-#home-landing .mt-hero .pr-badge-peach { padding: 2px 10px; border-radius: 999px; background: var(--mt-ink); color: var(--mt-ground); font-size: 12px; font-weight: 800; }
-#home-landing .mt-hero .pr-plan-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
-#home-landing .mt-hero .pr-plan-steps li { position: relative; display: grid; grid-template-columns: 1fr; gap: 6px; padding: 0 14px 0 0; border: 0; justify-items: start; }
-#home-landing .mt-hero .pr-plan-steps li::before { content: ""; position: absolute; left: 30px; right: 4px; top: 11px; height: 8px; border-radius: 4px; background: var(--mt-rule); }
-#home-landing .mt-hero .pr-plan-steps li:last-child::before { display: none; }
-#home-landing .mt-hero .pr-plan-steps li.done::before { background: var(--mt-blue); }
-#home-landing .mt-hero .pr-step-ring { position: relative; z-index: 1; width: 30px; height: 30px; flex: none; border: 4px solid var(--mt-ink); border-radius: 50%; background: var(--mt-ground); color: var(--mt-ink); }
-#home-landing .mt-hero .pr-step-ring .lucide { width: 13px; height: 13px; stroke-width: 3; }
-#home-landing .mt-hero .pr-plan-steps .done .pr-step-ring { border-color: var(--mt-blue); background: var(--mt-blue); color: var(--mt-on-blue); }
-#home-landing .mt-hero .pr-plan-steps .now .pr-step-ring { border-color: var(--mt-red); background: var(--mt-red); color: var(--mt-on-red); }
-#home-landing .mt-hero .pr-plan-steps .todo .pr-step-ring { border: 4px solid var(--mt-ink); background: var(--mt-ground); color: transparent; }
-#home-landing .mt-hero .pr-step-title { max-width: 100%; overflow: visible; color: var(--mt-ink); font-size: 15px; font-weight: 800; text-overflow: clip; white-space: normal; }
-#home-landing .mt-hero .pr-plan-steps small { color: var(--mt-ink-2); font-size: 12px; font-weight: 700; }
-#home-landing .mt-hero .pr-plan-steps .now small { color: var(--mt-red-text); }
-#home-landing .mt-hero .pr-plan-steps .now .pr-step-title { font-weight: 900; }
-
-/* ---------- 4. Narrow: the route map becomes a route sheet ---------- */
-@container mtstage (max-width: 719px) {
-  #home-landing .mt-map { aspect-ratio: auto !important; display: grid; gap: 10px; }
-  #home-landing .mt-lines { display: none; }
-  #home-landing .mt-origin { display: none; }
-  #home-landing .mt-origin-label {
-    position: static; transform: none; width: auto; grid-template-columns: 1fr auto; justify-items: start; align-items: center; gap: 0 12px; margin: 0; padding: 12px 14px 12px 96px;
-    text-align: left;
-  }
-  #home-landing .mt-origin-label small { grid-column: 1; }
-  #home-landing .mt-origin-label strong { grid-column: 1; font-size: 19px; }
-  #home-landing .mt-origin-edit { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
-  #home-landing .mt-stage .pr-collage-mascot { left: 8px; top: -6px; --uw-mascot-size: 78px; }
-  #home-landing .mt-line { position: relative; display: grid; border-radius: var(--mt-radius); }
-  #home-landing .mt-line-tag { position: static; max-width: none; width: 100%; transform: none; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 12px 14px; }
-  #home-landing .mt-line-name { font-size: 17px; }
-  #home-landing .mt-line-tag::after { content: "+"; font-size: 22px; font-weight: 700; line-height: 1; }
-  #home-landing .mt-line-tag[aria-pressed="true"]::after { content: "–"; }
-  #home-landing .mt-line-tag[aria-pressed="true"] { outline: 0; }
-  #home-landing .mt-stops { display: none; position: relative; margin: 0 0 4px 22px; padding: 8px 0 8px 28px; }
-  #home-landing .mt-stops::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; border-radius: 4px; background: var(--line); }
-  #home-landing .mt-route[data-focus=""] .mt-origin-label + .mt-line .mt-stops,
-  #home-landing .mt-route[data-focus="east-asia"] .mt-line[data-line="east-asia"] .mt-stops, #home-landing .mt-route[data-focus="southeast"] .mt-line[data-line="southeast"] .mt-stops,
-  #home-landing .mt-route[data-focus="europe"] .mt-line[data-line="europe"] .mt-stops, #home-landing .mt-route[data-focus="americas"] .mt-line[data-line="americas"] .mt-stops,
-  #home-landing .mt-route[data-focus="elsewhere"] .mt-line[data-line="elsewhere"] .mt-stops { display: block; }
-  #home-landing .mt-route[data-focus]:not([data-focus=""]) .mt-line { opacity: 1 !important; }
-  #home-landing .mt-route[data-focus=""] .mt-origin-label + .mt-line .mt-line-tag::after { content: "–"; }
-  #home-landing .mt-stop { position: static; width: auto; height: auto; }
-  #home-landing .mt-station { position: relative; left: auto; top: auto; transform: none; display: flex; align-items: center; gap: 14px; width: 100%; height: auto; min-height: 48px; padding: 6px 4px 6px 0; border-radius: 0; text-align: left; }
-  #home-landing .mt-station::after { display: none; }
-  #home-landing .mt-dot { position: absolute; left: -38px; top: 50%; width: 20px; height: 20px; inset: auto auto auto -38px; transform: translateY(-50%); }
-  #home-landing .mt-station:hover .mt-dot, #home-landing .mt-station:focus-visible .mt-dot { transform: translateY(-50%) scale(1.15); }
-  #home-landing .mt-label { position: static; transform: none; display: flex; width: 100%; align-items: baseline; justify-content: space-between; gap: 12px; text-align: left; }
-  #home-landing .mt-label b { font-size: 16px; }
-  #home-landing .mt-label small { font-size: 13px; }
-}
 
 /* ---------- 5. Wide hero: board and map use the full row; narrow: the board stacks ---------- */
 @container (max-width: 1060px) {
@@ -501,8 +372,6 @@ body.unified-shell #home-landing .mt-board .glide-select__label, body.unified-sh
 body.unified-shell #home-landing .mt-board .glide-select .glide-select__trigger:focus-visible { outline: 0; }
 
 /* The plan line is a line: no tilt and no parallax from the old home motion. */
-body.unified-shell #home-landing .mt-hero .pr-plan-card { rotate: none; }
-body.unified-shell #home-landing .mt-hero .pr-collage { translate: none; }
 
 /* Icon beside the heading, never a tile stacked on top of it; the numbered rail already orders the journey stages. */
 #home-landing .pr-tile > div:first-child, #home-landing .pr-tile-head > div:first-child { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 6px 12px; }
@@ -535,12 +404,10 @@ body.reading-shell .article-button { border: 2px solid var(--mt-ink); border-rad
 body.reading-shell .breadcrumbs a { color: var(--mt-blue-text); }
 
 /* Narrow screens: nothing on the route sheet or the tool tiles is squeezed to a sliver or spills out of its box. */
-#home-landing .mt-line-meta small, #home-landing .mt-line-sum { white-space: nowrap; }
 @container mtstage (max-width: 719px) {
   #home-landing .mt-line-tag { flex-wrap: wrap; }
   #home-landing .mt-line-meta { justify-content: flex-end; flex: 1 1 auto; }
 }
-@container mtstage (max-width: 400px) { #home-landing .mt-line-meta small { display: none; } }
 #home-landing .pr-tile-head { flex-wrap: wrap; gap: 8px 14px; }
 #home-landing .pr-tile-head > div:first-child { flex: 1 1 220px; }
 #home-landing .pr-tile .pr-link { white-space: normal; }
@@ -556,21 +423,8 @@ body.unified-shell :is(button, .primary-button, .secondary-button, .icon-button,
 
 /* ---------- 11. Review fixes ---------- */
 /* Station state is drawn: every school open is solid, some open is ringed with a dot, none open is hollow. */
-#home-landing .mt-station[data-fill="all"] .mt-dot { background: var(--line); }
-#home-landing .mt-station[data-fill="some"] .mt-dot { background: var(--mt-ground); }
-#home-landing .mt-station[data-fill="some"] .mt-dot::after { content: ""; position: absolute; inset: 2px; border-radius: 50%; background: var(--line); }
-#home-landing .mt-station[data-fill="none"] .mt-dot { background: var(--mt-ground); }
-#home-landing .mt-key-open { background: var(--mt-blue); }
-#home-landing .mt-key-some { background: var(--mt-blue); box-shadow: inset 0 0 0 2px var(--mt-ground); }
 
 /* The next stop: the nearest real application deadline, read like a platform announcement. */
-#home-landing .mt-next { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; max-width: 1180px; margin: 14px auto 0; padding: 12px 18px; background: var(--mt-board); color: var(--mt-on-board); text-decoration: none; }
-#home-landing .mt-next[hidden] { display: none; }
-#home-landing .mt-next:hover { background: #000; }
-#home-landing .mt-next-label { align-self: center; padding: 2px 10px; border-radius: 4px; background: var(--mt-orange); color: var(--mt-on-orange); font-size: 13px; font-weight: 900; letter-spacing: .08em; }
-#home-landing .mt-next-date { color: var(--mt-on-board); font-size: 26px; font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1.1; }
-#home-landing .mt-next-text { color: var(--mt-on-board); font-size: 15px; font-weight: 700; }
-#home-landing .mt-next-pending { margin-left: auto; color: var(--mt-on-board-2); font-size: 13px; font-weight: 700; }
 
 /* The school picker on the home page: three controls name the same thing, so the page-level pill is quiet (kept at its size). */
 body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) .page-back-bar #school-switcher { border: 2px solid var(--mt-ink); border-radius: 10px; box-shadow: none; }
@@ -689,8 +543,6 @@ body.unified-shell #home-landing .mt-hero { grid-template-columns: minmax(0, 1fr
 /* It opens over Asia, where the students are leaving from, and turns one full circle in seven minutes. */
 @keyframes mt-earth-spin { from { transform: translateX(calc(var(--d) * -1.11)); } to { transform: translateX(calc(var(--d) * -3.11)); } }
 @media (prefers-reduced-motion: reduce) { #home-landing .mt-earth-strip { animation: none; } }
-#home-landing .mt-route-title { margin: 0 0 clamp(10px, 1.8svh, 18px); text-align: center; color: var(--mt-ink); font-size: clamp(24px, 3.4vw, 46px); font-weight: 900; line-height: 1.2; letter-spacing: -.015em; text-wrap: balance; }
-#home-landing .mt-route-title span { color: inherit; text-decoration: underline; text-decoration-color: var(--mt-red); text-decoration-thickness: .13em; text-underline-offset: .12em; text-decoration-skip-ink: none; }
 @media (max-width: 700px) {
   #home-landing .mt-sky { padding-top: 28px; gap: 18px; }
   #home-landing .mt-earth { height: 96px; }
@@ -704,3 +556,126 @@ body.unified-shell #home-landing .mt-hero { grid-template-columns: minmax(0, 1fr
 #home-landing .mt-sky .pr-social-pill { color: #fff; font-size: 13px; }
 #home-landing .mt-sky .pr-social-pill b { color: inherit; }
 @media (max-width: 700px) { #home-landing .mt-sky .pr-hero-socials { justify-self: center; justify-content: center; } }
+
+/* 15. The language-test (and every other) dropdown on the search bar: the highlighted row is a tint with an outline, never
+   a solid bar the same colour as its text, in both themes. */
+body.unified-shell #partners.pr-explore .glide-select__pill { background: var(--mt-concourse); background: color-mix(in srgb, var(--mt-ink) 12%, transparent); box-shadow: inset 0 0 0 2px var(--mt-ink); color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .glide-select__option { position: relative; z-index: 1; color: var(--mt-ink); font-weight: 700; }
+body.unified-shell #partners.pr-explore .glide-select__option[aria-selected="true"] { font-weight: 900; }
+
+/* 16. The home is one night: the page takes the Earth's own ground, so the planet rises out of the page and not out of a box.
+   (The night tokens above apply to the home in either theme; only the ground and the sky band are set here.) */
+html:has(#home-landing:not([hidden])) { --mt-ground: #0b1220; --mt-concourse: #131c2e; --mt-rule: #26324a; --uw-surface: #101a2c; color-scheme: dark;
+  /* the older design-system tokens (dialogs, pickers, forms) take the night values too, so no text is dark on dark */
+  --page: #0b1220; --surface: #0f1522; --surface-soft: #171f30; --surface-elevated: #101a2cf0; --surface-selected: #14304a;
+  --ink: #f5f7fa; --ink-soft: #a7afbb; --ink-faint: #8a94a2; --line: #26324a; }
+html:has(#home-landing:not([hidden])), html:has(#home-landing:not([hidden])) body { background: #0b1220; }
+#home-landing .mt-sky { background: transparent; overflow: visible; }
+#home-landing .mt-earth { overflow: hidden; }
+html:has(#home-landing:not([hidden])) #home-landing .hm-route-card { background: var(--mt-board); color: var(--mt-on-board); border: 2px solid var(--mt-rule-strong); }
+html:has(#home-landing:not([hidden])) #home-landing :is(.hm-route-card-top, .hm-route-card-bottom, .hm-route-card span, .hm-route-title) { color: var(--mt-on-board); }
+html:has(#home-landing:not([hidden])) #home-landing .hm-route-card-top .hm-route-index { color: var(--mt-orange); }
+/* The Earth dissolves into the page along its lower edge instead of ending on a line. */
+#home-landing .mt-earth { -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+
+/* 17. School marks: every school its own hue, strong enough to tell apart (they were one pale blue). */
+.school-emblem { background: hsl(var(--school-tint, 200) 82% 86%); color: hsl(var(--school-tint, 200) 75% 22%); box-shadow: inset 0 0 0 2px hsl(var(--school-tint, 200) 62% 42%); }
+html[data-theme="dark"] .school-emblem, html:has(#home-landing:not([hidden])) .school-emblem { background: hsl(var(--school-tint, 200) 50% 24%); color: hsl(var(--school-tint, 200) 90% 86%); box-shadow: inset 0 0 0 2px hsl(var(--school-tint, 200) 70% 58%); }
+
+/* 18. 我的申請: boxes sized to what is in them and laid side by side, instead of full-width bars of one short line each. */
+#application-path .plan-choice select { max-width: 420px; }
+#application-path .plan-choice label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (min-width: 701px) {
+  #application-path .plan-strip { flex-wrap: wrap; justify-content: flex-start; gap: 10px 36px; }
+  #application-path .plan-choice { flex: 0 1 520px; }
+  #application-path .plan-progress { margin-left: auto; width: 240px; }
+  #application-path .hub-tabs { flex: 1 0 100%; padding: 4px 0 0; }
+}
+#application-path .today { gap: 14px; margin-top: 12px; }
+#application-path .today-top { grid-template-columns: minmax(0, 1.7fr) minmax(250px, 1fr); gap: 14px; }
+#application-path .today-focus { min-height: 0; gap: 8px; padding: 18px 22px 20px; border-radius: 12px; }
+#application-path .today-focus::after { display: none; }
+#application-path .today-focus h2 { max-width: none; font-size: 24px; }
+#application-path .today-focus p { max-width: 60ch; }
+#application-path .today-panel, #application-path .today-stages { padding: 14px 18px 16px; border: 2px solid var(--mt-ink); border-radius: 12px; background: var(--mt-ground); }
+#application-path .today-date { font-size: 36px; }
+#application-path .today-head { margin-bottom: 8px; }
+#application-path .today-head h2 { font-size: 16px; font-weight: 900; }
+#application-path .today-stage-now { font-size: 14px; font-weight: 700; color: var(--mt-ink-2); }
+#application-path .today-stage-now b { color: var(--mt-ink); }
+#application-path .today-bottom { grid-template-columns: minmax(0, 1fr) 270px; gap: 14px; }
+#application-path .today-queue h2 { margin-bottom: 8px; font-size: 16px; font-weight: 900; }
+#application-path .today-stage { font-weight: 700; color: var(--mt-ink-2); }
+#application-path .today-queue ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+#application-path .today-queue li { border: 2px solid var(--mt-ink); border-radius: 10px; background: var(--mt-ground); }
+#application-path .today-queue li a { min-height: 54px; padding: 8px 12px; }
+#application-path .today-queue li a:hover { background: var(--mt-concourse); border-radius: 8px; }
+#application-path .today-queue > .today-link { margin-top: 6px; }
+#application-path .today-own { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 16px; align-items: center; padding: 10px 14px; border: 2px solid var(--mt-ink); border-radius: 12px; }
+#application-path .today-own h3 { margin: 0; font-size: 15px; font-weight: 900; }
+#application-path .today-own ul { grid-column: 1 / -1; }
+#application-path .today-quick { margin: 0; flex-wrap: nowrap; }
+#application-path .today-quick .form-status:empty { display: none; }
+@media (max-width: 760px) {
+  #application-path .today-top, #application-path .today-bottom { grid-template-columns: minmax(0, 1fr); }
+  #application-path .today-own { grid-template-columns: minmax(0, 1fr); }
+  #application-path .today-quick { flex-wrap: wrap; }
+}
+#application-path .plan-strip .plan-choice { flex: 0 1 520px; max-width: 520px; }
+#application-path .plan-strip .plan-choice .glide-select, #application-path .plan-strip .plan-choice select { max-width: 100%; }
+#application-path .today-quick input[name=title] { flex: 1 1 260px; }
+#application-path .today-quick input[type=date] { flex: 0 0 170px; }
+#application-path .today-quick .today-add { flex: none; min-width: 72px; white-space: nowrap; }
+
+/* 19. The navigation is a top bar (it was a rail down the left edge, widening on hover). Narrow screens keep their drawer.
+   The older sheets place every page 112px from the left edge to clear the rail; here they are centred, full width. */
+@media (min-width: 901px) {
+  html { scroll-padding-top: 80px; }
+  html body.unified-shell { padding-top: 68px; --nav-header-height: 68px; --nav-toolbar-height: 0px; }
+  html body.unified-shell .glass-navigation-rail {
+    position: fixed !important; inset: 0 0 auto 0 !important; width: auto !important; height: 68px !important; padding: 0 24px !important; gap: 20px !important;
+    flex-direction: row !important; align-items: center !important; overflow: visible !important; border: 0 !important; border-bottom: 2px solid var(--mt-ink) !important;
+    border-radius: 0 !important; background: var(--mt-ground) !important; box-shadow: none !important; backdrop-filter: none !important; transform: none !important;
+    visibility: visible !important; z-index: 60;
+  }
+  html body.unified-shell .glass-navigation-rail .glass-menu-close { display: none !important; }
+  html body.unified-shell .glass-navigation-rail .uniway-header-brand { order: 0; width: auto !important; min-height: 0 !important; padding: 0 !important; flex: none; }
+  html body.unified-shell .glass-navigation-rail .uniway-header-brand strong { font-size: 22px; }
+  html body.unified-shell .glass-navigation-rail .uniway-public-nav { order: 1; flex-direction: row !important; flex: 1 1 auto; width: auto !important; margin: 0 !important; gap: 4px !important; align-items: center; }
+  html body.unified-shell .glass-navigation-rail .uniway-public-nav a[data-public-route],
+  html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] {
+    flex-direction: row !important; justify-content: center; width: auto !important; height: 44px !important; min-height: 0 !important; padding: 0 14px !important; gap: 8px !important;
+    border-radius: 8px; border: 2px solid transparent; color: var(--mt-ink); font-weight: 800;
+  }
+  html body.unified-shell .glass-navigation-rail .uniway-public-nav a > span,
+  html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span {
+    position: static !important; display: inline !important; width: auto !important; inline-size: auto !important; max-inline-size: none !important; height: auto !important; opacity: 1 !important; clip: auto !important; overflow: visible !important; margin: 0 !important; font-size: 15px !important; font-weight: 800 !important; letter-spacing: 0 !important; line-height: 1 !important;
+  }
+  html body.unified-shell .glass-navigation-rail .uniway-public-nav a:hover { background: var(--mt-concourse); border-color: var(--mt-rule-strong); }
+  html body.unified-shell .glass-navigation-rail .uniway-public-nav a[aria-current="page"] { background: var(--mt-ink); color: var(--mt-ground); border-color: var(--mt-ink); }
+  html body.unified-shell .glass-navigation-rail .topbar-actions {
+    order: 3; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center; width: auto !important; margin: 0 0 0 auto !important; padding: 0 !important; border: 0 !important; gap: 8px !important;
+  }
+  html body.unified-shell .glass-navigation-rail .topbar-status, html body.unified-shell .glass-navigation-rail .rail-action-label { display: none !important; }
+  html body.unified-shell .glass-navigation-rail .topbar-actions .icon-button { width: 44px !important; min-height: 44px !important; }
+  html body.unified-shell .glass-navigation-rail .workspace-sync-control:not([hidden]) { width: auto !important; order: 2; }
+  html body.unified-shell .glass-navigation-rail #account-button { order: 4; width: auto !important; max-width: 200px; min-height: 44px; padding: 0 12px !important; }
+  /* pages: centred across the full width instead of 112px from the left */
+  html body.unified-shell #dashboard-view > :is(#home-landing, #guide, #profile, #feedback, #search-panel, #application-workspace, #application-path, #sources.sources-disclosure, #partners, [data-university-page]),
+  html body.unified-shell :is(.school-detail-view, #community-hub.global-community-section, .global-community-section, .page-back-bar, .route-toolbar) {
+    width: calc(100% - 64px) !important; max-width: var(--pr-page-max, 1400px) !important; margin-left: auto !important; margin-right: auto !important;
+  }
+}
+/* Just above the drawer breakpoint the links keep their icons and say their names only to assistive technology. */
+@media (min-width: 901px) and (max-width: 1100px) {
+  html body.unified-shell .glass-navigation-rail { gap: 12px !important; padding: 0 16px !important; }
+  html body.unified-shell .glass-navigation-rail .uniway-public-nav a > span,
+  html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span {
+    position: absolute !important; width: 1px !important; inline-size: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important;
+  }
+  html body.unified-shell .glass-navigation-rail .uniway-public-nav a[data-public-route],
+  html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] { width: 48px !important; padding: 0 !important; }
+  html body.unified-shell .glass-navigation-rail #account-button { max-width: 120px; }
+}
+/* With the route map gone nothing follows the Earth but the next section, so the hero adds no space of its own below it. */
+body.unified-shell #home-landing .mt-hero { padding-bottom: 0; }

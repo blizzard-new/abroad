@@ -263,7 +263,7 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
 <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2">
 <link rel="stylesheet" href="/static/seo.css?v=20261020-1">{article_head}
 <link rel="stylesheet" href="/static/midnight-theme.css?v=20261029-1">
-<link rel="stylesheet" href="/static/assets/fonts/notosans-tc/notosans-tc.css?v=20261108-metro-1"><link rel="stylesheet" href="/static/metro.css?v=20261109-earth-1">
+<link rel="stylesheet" href="/static/assets/fonts/notosans-tc/notosans-tc.css?v=20261108-metro-1"><link rel="stylesheet" href="/static/metro.css?v=20261109-ui-6">
 {select_assets}
 <script src="/static/reading-theme.js?v=20261020-1"></script></head>
 <body class="reading-shell"><a class="skip" href="#content">跳到內容</a><header class="reading-header">

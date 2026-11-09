@@ -5,9 +5,7 @@
 window.UniWayHome = (() => {
   "use strict";
   const LAND_URL = "/static/assets/home/world-land.json?v=20261015-redesign-1";
-  const STAGES = ["找到想去的學校", "準備校內甄選", "完成合作校申請", "安排出發與生活"];
   // The student's own "目前階段" decides how many steps are behind them.
-  const STAGE_PROGRESS = { exploring: 0, preparing: 1, submitted: 2, accepted: 3, abroad: 4, returned: 4 };
   const TAIWAN = [121.56, 25.04];
   const MAX_ARCS = 22;
   let land = null, landPromise = null, scheduled = 0, lastKey = "";
@@ -135,25 +133,6 @@ window.UniWayHome = (() => {
       list.innerHTML = schools.map((item) => `<li><strong>${escapeHtml(item.school_name)}</strong></li>`).join("");
       layoutMarquee(host);
     }
-  }
-
-  function completedSteps() {
-    if (!state.homeSchool) return -1;
-    const stage = state.account?.application_stage;
-    if (stage in STAGE_PROGRESS) return STAGE_PROGRESS[stage];
-    return state.applications?.size ? 1 : 0;
-  }
-
-  function renderPlan(host) {
-    const done = completedSteps();
-    const badge = host.querySelector("#home-plan-badge");
-    badge.textContent = done < 0 ? "共 4 步" : done >= STAGES.length ? "已完成 4 步" : `第 ${done + 1} 步 / 共 4 步`;
-    host.querySelector("#home-plan-steps").innerHTML = STAGES.map((stage, index) => {
-      const state_ = done < 0 || index > done ? "todo" : index < done ? "done" : "now";
-      const icon = state_ === "done" ? "check" : state_ === "now" ? "notebook-pen" : "plus";
-      const label = state_ === "done" ? "已完成" : state_ === "now" ? "進行中" : "未開始";
-      return `<li class="${state_}"><span class="pr-step-ring"><i data-lucide="${icon}" aria-hidden="true"></i></span><span class="pr-step-title">${stage}</span><small>${label}</small></li>`;
-    }).join("");
   }
 
   const html = (value) => escapeHtml(String(value ?? ""));
@@ -361,10 +340,8 @@ window.UniWayHome = (() => {
     if (key === lastKey) return;
     lastKey = key;
     renderSchools(host);
-    renderPlan(host);
     renderTiles(host);
     renderMaps(host);
-    window.UniWayMetro?.render(host);
     initIcons();
   }
 
