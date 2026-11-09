@@ -1604,6 +1604,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="臺東大學規定返國後 1 個月內（學海計畫 2 週內）須繳交 2,000 字以上心得報告（含照片至少 4 張）並出席經驗分享會，始得辦理獎助學金尾款核銷；這裡只合計下方各欄。",
     ),
+    ("mcut", "study-plan"): _rules(
+        (
+            "明志科技大學國際事務處全球交流組《學生出國雙聯學位學習及交換學習實施及補助辦法（A2Q1040008）》及當期甄選簡章規定，申請海外交換學習或跨國碩士雙聯學位（美國辛辛那提大學 UC、北伊利諾大學 NIU、舊金山州立大學 SFSU、西班牙 ELISAVA、法國 ESIEE Paris、希臘 ALBA 等）須先填寫線上 Google 表單領取《申請表（表號 A2Q1040108）》（內含 300～500 字「個人說明申請理由 Statement of Purpose」，詳述赴境外地區研修動機及修讀計畫），並檢附《中、英文自傳》（格式自訂，各嚴格限制以一頁 A4 為限）。",
+            "內容應具體說明申請動機、個人學業與操行表現（交換與 UC／SFSU 雙聯 GPA ≥ 3.0、NIU／ELISAVA／ESIEE／ALBA 雙聯 GPA ≥ 2.75，操行平均 ≥ 80 分且無記過）、外語能力準備（交換達 CEFR B1 如 TOEIC 550／iBT 42／IELTS 4.0／JLPT N3／TOPIK 3 級；雙聯達 iBT 72–100／IELTS 5.5–6.5）及擬於唯一志願姊妹校修習之專業課程規劃（大二升大三擬以一學年交換抵免大三工讀實務實習者，每學期至少須修讀 6 學分［歐洲 2 ECTS = 1 學分］；申請碩士雙聯者另須檢附通過母系所審查之「論文計畫書審查／專業實務報告初稿」）。",
+        ),
+        evidence="明志科技大學學生出國雙聯學位學習及交換學習實施及補助辦法（A2Q1040008）、大學部海外交換學習課程實施辦法（A2Q1060001）及 2026–2027 海外交換與雙聯甄選簡章",
+        minimum=300,
+        maximum=1500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="明志科技大學規定《申請表（A2Q1040108）》內之「個人說明申請理由（Statement of Purpose）」為 300～500 字，另須檢附中、英文自傳（各以 1 頁 A4 為限）；這裡只合計下方各欄。",
+    ),
+    ("mcut", "return-report"): _rules(
+        (
+            "依《明志科技大學學生出國雙聯學位學習及交換學習實施及補助辦法（A2Q1040008）》第 10 條及《大學部海外交換學習課程實施辦法（A2Q1060001）》規定，獲校內雙聯補助（最高 24 萬元）、交換補助（最高 16 萬元）或教育部學海飛颺／惜珠獎學金之學生，須於返國後 1 週內（7 日內）向國際事務處全球交流組繳交至少 2 頁之《出國雙聯學位或交換學習報告（表號 A2Q1040508）》電子檔（另大二升大三以一學年交換抵免大三工讀實務實習者，於交換期間須每三個月繳交共四階段之海外交換學習報告）。",
+            "辦理補助核銷與學分抵免時，除繳交《出國雙聯學位或交換學習報告（A2Q1040508）》電子檔外，須一併檢附來回機票登機證正本、護照基本資料頁與出入境章戳影本，以及國外合作大學核發之正式成績單，並有義務出席國際事務處舉辦之經驗分享說明會。",
+        ),
+        evidence="明志科技大學學生出國雙聯學位學習及交換學習實施及補助辦法（A2Q1040008）第10條及大學部海外交換學習課程實施辦法（A2Q1060001）",
+        minimum=1000,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="明志科技大學規定返國後 1 週內須繳交至少 2 頁之《出國雙聯學位或交換學習報告（表號 A2Q1040508）》電子檔（建議約 1,000–3,000 字）及登機證、出入境章與成績單始得完成核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1673,6 +1695,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "npu": ("https://www.npu.edu.tw/content/index.aspx?Parser=1,6,174,163", "2026-11-04"),
     "ntunhs": ("https://icsed-rnd.ntunhs.edu.tw/p/412-1035-2523.php?Lang=zh-tw", "2026-11-06"),
     "nttu": ("https://rd.nttu.edu.tw/p/412-1007-9902.php?Lang=zh-tw", "2026-11-06"),
+    "mcut": ("https://oia.mcut.edu.tw/p/406-1012-76292,r840.php?Lang=zh-tw", "2026-11-09"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

@@ -111,6 +111,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
         "docs.google.com",
     ],
     "nttu": ["rd.nttu.edu.tw", "aa.nttu.edu.tw", "lc.nttu.edu.tw", "www.nttu.edu.tw", "nttu.edu.tw"],
+    "mcut": ["ciae.mcut.edu.tw", "www.mcut.edu.tw", "mcut.edu.tw"],
 }
 
 
@@ -2036,6 +2037,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["nttu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="nttu", partner_rows=nttu_rows, default_cycle_label="115"
+        )
+
+    # 67. MCUT partners.jsonl (130 partner schools)
+    mcut_partners_path = official_data_root / "mcut" / "partners.jsonl"
+    if mcut_partners_path.exists():
+        mcut_rows = []
+        for line in mcut_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            mcut_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://ciae.mcut.edu.tw/p/412-1010-6306.php?Lang=zh-tw",
+            })
+        school_reports["mcut"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="mcut", partner_rows=mcut_rows, default_cycle_label="115"
         )
 
     if store.current_release_id is None:

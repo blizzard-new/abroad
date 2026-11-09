@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, MCUT, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -149,6 +149,7 @@ NPTU_SOURCE_CHECKED_AT = datetime(2026, 11, 5, tzinfo=timezone.utc)
 NPU_SOURCE_CHECKED_AT = datetime(2026, 11, 4, tzinfo=timezone.utc)
 NTUNHS_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 NTTU_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
+MCUT_SOURCE_CHECKED_AT = datetime(2026, 11, 9, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3796,6 +3797,57 @@ def _nttu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _mcut_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理明志科技大學（國際事務處國際合作交流中心 CIAE，新北市泰山區工專路 84 號 創新大樓 1 樓，電話 02-2908-9899 分機 3008／3029）《選送學生出國進修與交流實施辦法》（表單編號 A2Q1040008）及海外姊妹校交換／雙聯學位甄選應繳資料：1. 明志科技大學學生出國進修交流申請表（表單編號 A2Q1040108，每人限申請 1 所志願學校，須經導師／指導教授、系主任及院長簽核）、2. 中英文歷年學業成績單正本（歷年學業成績總平均須達 75 分或 GPA 3.0 以上，NIU／ELISAVA／ESIEE／ALBA 雙聯專案 GPA 2.75 以上；操行成績達 80 分以上且無申誡以上處分）、3. 語言能力檢定證明（英語區 CEFR B1：TOEIC 550／TOEFL iBT 42／TOEFL ITP 460／IELTS 4.0／Duolingo 60；雙聯學位如辛辛那提大學 UC 3+2 須 TOEFL iBT 80／IELTS 6.5／Duolingo 110、北伊利諾大學 NIU 須 TOEFL iBT 79／IELTS 6.5、羅德島大學 URI 須 TOEFL iBT 79–80／IELTS 6.5；日語組 JLPT N1–N3；韓語組 TOPIK 3–4 級）、4. 中英文讀書計畫（Study Plan）、5. 中英文履歷自傳（CV／Autobiography）、6. 教授推薦信（雙聯學位必備）、7. 家長或監護人同意書及學生出國進修交流切結書（表單編號 A2Q1040208）。",
+        "study-plan": "撰寫明志科技大學選送學生出國進修與交流、跨國雙聯學位（美國辛辛那提大學 UC 3+2 本碩雙聯、北伊利諾大學 NIU 3+1+1／1+1、羅德島大學 URI 3+1+1／1+1、威斯康辛大學密爾瓦基分校 UWM 1+1、澳洲墨爾本皇家理工大學 RMIT 2+2、法國 ESIEE Paris 1+1.5、西班牙 ELISAVA 1+1、奧地利上奧地利應用科技大學 FH OÖ 1+1 等 12 校）及教育部《學海飛颺／惜珠》必繳之《中英文讀書計畫（Study Plan）與履歷自傳》。請具體說明申請動機、擬於姊妹校修習之專業課程（大二升大三以「一年期交換取代全學年工讀實務實習」者須詳列上下學期各至少 6 學分、歐洲 2 ECTS 折算 1 學分之修課規劃，並配合每季繳交 1 次共 4 次工讀實習季報告）及返國後學分抵免與職涯規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備：依《明志科技大學選送學生出國進修與交流實施辦法》（A2Q1040008）、《與國外大學辦理雙聯學制實施辦法》（A2Q1040001）及《學生抵免學分辦法》，出國期間須於明志科技大學辦理註冊並保留學籍；大二升大三學生申請「以一年期海外交換取代大三全學年工讀實務實習（上學期 16 學分＋下學期 18 學分）」者，須事先經系上及教務處核准修課計畫（每學期至少修讀 6 學分，歐洲學分依 2 ECTS = 1 學分換算）。",
+        "predeparture-notice": "經系所推薦與校級國際事務委員會書面暨面試審查錄取公告後，須於 1 週內向國際事務處繳交《明志科技大學學生出國進修交流切結書》（表單編號 A2Q1040208）及家長同意書，配合國際合作交流中心辦理姊妹校提名與入學／簽證申請（如美國 I-20、澳洲 CoE、歐洲申根學習簽證、日本 COE、韓國標準入學許可書、大陸入學通知書與台胞證），並於出國前辦妥明志註冊選課、役男出境核准及海外醫療與意外保險。",
+        "return-report": "境外交換或雙聯研修期滿返國後，須依《明志科技大學選送學生出國進修與交流實施辦法》（表單編號 A2Q1040008）第 10 條規定，於返國後 1 週內向國際事務處繳交《明志科技大學學生出國進修交流心得報告》（表單編號 A2Q1040508，A4 至少 2 頁，含研修照片與授權同意）、《學分抵免暨成績轉換申請表》（表單編號 A2Q1040308）、姊妹校正式成績單、護照出入境紀錄及電子機票與登機證正本，並配合國際事務處舉辦之成果發表與經驗分享會，始得辦理校內機票／生活費獎助學金（雙聯最高 24 萬元／年＋辛辛那提大學鹿江基金會獎學金；交換最高 8 萬元／學期、16 萬元／學年）核銷結案。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，填具《明志科技大學學生出國進修交流學分抵免暨成績轉換申請表》（表單編號 A2Q1040308），檢附境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《選送學生出國進修與交流實施辦法》及《學生抵免學分辦法》（大二升大三一年期交換取代工讀實務實習者須同時檢附 4 次工讀實習季報告，歐洲學分依 2 ECTS = 1 學分折算）向所屬系（所、學位學程）、國際事務處及教務處申請學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "明志科技大學").replace("長庚", "明志")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "明志科技大學規定：申請人須為本校具正式學籍之在學學生（大二以上或碩博班在學生），歷年學業成績總平均達 75 分（GPA 3.0）以上（NIU／ELISAVA／ESIEE／ALBA 雙聯專案 GPA 2.75 以上），操行成績達 80 分以上且無申誡以上處分；每人限填 1 所志願學校。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語檢定 CEFR B1（明志校內出國進修交流及學海飛颺基準：TOEIC 550 / TOEFL iBT 42 / TOEFL ITP 460 / IELTS 4.0 / Duolingo 60）",
+                "英語檢定 CEFR B2（歐美雙聯學位基準：辛辛那提大學 UC 3+2 須 TOEFL iBT 80 / IELTS 6.5 / Duolingo 110；北伊利諾大學 NIU 及羅德島大學 URI 須 TOEFL iBT 79–80 / IELTS 6.5；RMIT 須 IELTS 6.5）",
+                "日語檢定 JLPT（日本福岡工業大學、廣島大學、九州工業大學、岡山大學、近畿大學、東北大學等交換建議 JLPT N2–N3 或英語授課 B1+）",
+                "韓語檢定 TOPIK（韓國檀國大學、韓밭大學、金烏工科大學、靈山大學、東명大學等交換建議 TOPIK 3 級以上或英語授課 B1+）",
+                "大陸地區姊妹校交換（北京科技大學、中南大學、南京理工大學、北京化工大學、福州大學、深圳技術大學等 30 校中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依《明志科技大學選送學生出國進修與交流實施辦法》（A2Q1040008）第 4 條及各雙聯／交換姊妹校簡章規定填報有效語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://ciae.mcut.edu.tw/p/412-1010-6306.php?Lang=zh-tw",
+        source_checked_at=MCUT_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="明志科技大學學生出國進修交流申請表（表單編號 A2Q1040108）及出國進修交流切結書（表單編號 A2Q1040208）" if template.id == "exchange-application-data" else ("明志科技大學學生出國進修交流中英文讀書計畫與履歷自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://ciae.mcut.edu.tw/var/file/10/1010/img/456/781020224.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師／指導教授、系（所）主任及院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所、學位學程）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經錄取公告後 1 週內繳交《學生出國進修交流切結書》（A2Q1040208）與家長同意書，配合國際事務處辦理姊妹校提名與簽證，並完成明志註冊", "return-report": "返國後 1 週內繳交《學生出國進修交流心得報告》（A2Q1040508，A4 至少 2 頁）、《學分抵免暨成績轉換申請表》（A2Q1040308）、成績單與登機證正本辦理獎助金核銷", "credit-transfer": "返國後填具《學分抵免暨成績轉換申請表》（A2Q1040308）檢附姊妹校正式成績單正本與課程大綱（大三實習替代者加附 4 次工讀季報告）向系所與教務處申請抵免"}.get(template.id, "於校內收件截止前備齊《出國進修交流申請表》（A2Q1040108，限填 1 所志願）、中英文歷年成績單、語檢證明、中英文讀書計畫與履歷自傳送交國際事務處國際合作交流中心（創新大樓 1 樓）"),
+        version="115準備工具-2026-11-09.1",
+        destinations=["明志科技大學國際事務處國際合作交流中心（243303 新北市泰山區工專路 84 號 創新大樓 1 樓）"],
+        conditional_note="此為個人準備工具；明志科技大學出國交換與雙聯學位每人限申請 1 所志願學校，錄取後須於 1 週內繳交切結書（A2Q1040208），返國後 1 週內繳交心得報告（A2Q1040508）及學分抵免表（A2Q1040308）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3932,6 +3984,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntunhs_template(template)) is not None]
     if university.id == NTTU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nttu_template(template)) is not None]
+    if university.id == MCUT.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _mcut_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

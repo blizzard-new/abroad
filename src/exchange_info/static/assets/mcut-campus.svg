@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="mcutTitle mcutDesc">
+  <title id="mcutTitle">明志科技大學 Ming Chi University of Technology</title>
+  <desc id="mcutDesc">Campus illustration of Ming Chi University of Technology (MCUT) in Taishan, New Taipei City, featuring the modern Innovation Building, historic Ming Chi Academy heritage arch, and lush green hillside campus.</desc>
+  <defs>
+    <linearGradient id="mcutSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f3d4c"/>
+      <stop offset="58%" stop-color="#1b6b7d"/>
+      <stop offset="100%" stop-color="#e3f0ea"/>
+    </linearGradient>
+    <linearGradient id="mcutHill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#235c46"/>
+      <stop offset="100%" stop-color="#133829"/>
+    </linearGradient>
+    <linearGradient id="mcutFacade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8faf9"/>
+      <stop offset="100%" stop-color="#d5e1dd"/>
+    </linearGradient>
+    <linearGradient id="mcutGlass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2c7a8c"/>
+      <stop offset="100%" stop-color="#134654"/>
+    </linearGradient>
+    <linearGradient id="mcutBrick" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b8563d"/>
+      <stop offset="100%" stop-color="#873824"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky & Warm Sunlight over Taishan Hillside -->
+  <rect width="1200" height="630" fill="url(#mcutSky)"/>
+  <circle cx="965" cy="145" r="68" fill="#ffe7a3" opacity="0.88"/>
+  <circle cx="965" cy="145" r="105" fill="#ffe7a3" opacity="0.22"/>
+
+  <!-- Linkou Tableland & Taishan Forest Hills -->
+  <polygon points="0,425 190,260 430,350 690,240 940,335 1200,265 1200,490 0,490" fill="url(#mcutHill)" opacity="0.78"/>
+  <polygon points="0,455 290,330 580,395 850,315 1200,395 1200,500 0,500" fill="#174432" opacity="0.88"/>
+
+  <!-- Innovation Building (創新大樓) & Library Complex -->
+  <g transform="translate(220, 165)">
+    <!-- Left Academic Wing -->
+    <rect x="30" y="95" width="230" height="230" rx="6" fill="url(#mcutFacade)" stroke="#9ab0a9" stroke-width="2.5"/>
+    <rect x="52" y="120" width="186" height="36" rx="3" fill="url(#mcutGlass)"/>
+    <rect x="52" y="172" width="186" height="36" rx="3" fill="url(#mcutGlass)"/>
+    <rect x="52" y="224" width="186" height="36" rx="3" fill="url(#mcutGlass)"/>
+
+    <!-- Central Innovation Tower -->
+    <rect x="245" y="25" width="280" height="300" rx="8" fill="url(#mcutFacade)" stroke="#8fa69f" stroke-width="3"/>
+    <rect x="245" y="25" width="280" height="22" rx="4" fill="#164e63"/>
+    <rect x="275" y="65" width="220" height="190" rx="4" fill="url(#mcutGlass)"/>
+    <!-- Vertical Mullions -->
+    <line x1="330" y1="65" x2="330" y2="255" stroke="#e4efec" stroke-width="3"/>
+    <line x1="385" y1="65" x2="385" y2="255" stroke="#e4efec" stroke-width="3"/>
+    <line x1="440" y1="65" x2="440" y2="255" stroke="#e4efec" stroke-width="3"/>
+    <!-- Horizontal Mullions -->
+    <line x1="275" y1="112" x2="495" y2="112" stroke="#e4efec" stroke-width="3"/>
+    <line x1="275" y1="160" x2="495" y2="160" stroke="#e4efec" stroke-width="3"/>
+    <line x1="275" y1="208" x2="495" y2="208" stroke="#e4efec" stroke-width="3"/>
+    <!-- Entrance Canopy -->
+    <rect x="315" y="268" width="140" height="57" rx="4" fill="#0d313f"/>
+    <rect x="295" y="260" width="180" height="10" rx="3" fill="#cbb57d"/>
+
+    <!-- Right Ming Chi Heritage Brick Pavilion -->
+    <rect x="515" y="130" width="215" height="195" rx="6" fill="url(#mcutBrick)" stroke="#6e2b1b" stroke-width="2.5"/>
+    <polygon points="498,132 622,78 748,132" fill="#5c2416"/>
+    <rect x="548" y="162" width="60" height="72" rx="30" fill="#1d353d" stroke="#f2e6d8" stroke-width="3"/>
+    <rect x="635" y="162" width="60" height="72" rx="30" fill="#1d353d" stroke="#f2e6d8" stroke-width="3"/>
+    <rect x="588" y="255" width="68" height="70" rx="34" fill="#12242b"/>
+  </g>
+
+  <!-- Campus Green Lawn & Promenade -->
+  <rect x="0" y="490" width="1200" height="140" fill="#1f543c"/>
+  <polygon points="460,490 740,490 910,630 290,630" fill="#d9dfd8" opacity="0.88"/>
+  <line x1="600" y1="490" x2="600" y2="630" stroke="#cbb57d" stroke-width="4" stroke-dasharray="14,10"/>
+
+  <!-- Badge & Title Overlay -->
+  <rect x="55" y="45" width="520" height="92" rx="14" fill="#0f3d4c" opacity="0.9" stroke="#cbb57d" stroke-width="2"/>
+  <text x="82" y="86" font-family="'Noto Sans TC', 'Microsoft JhengHei', sans-serif" font-size="28" font-weight="700" fill="#ffffff" letter-spacing="2">明志科技大學 MCUT</text>
+  <text x="82" y="116" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="500" fill="#e6d7a8" letter-spacing="0.8">Ming Chi University of Technology</text>
+</svg>

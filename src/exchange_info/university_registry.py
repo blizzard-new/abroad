@@ -2481,7 +2481,43 @@ NTTU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU)
+MCUT = UniversityProfile(
+    id="mcut",
+    school_name="明志科技大學",
+    short_name="明志",
+    english_name="Ming Chi University of Technology",
+    aliases=(
+        "mcut",
+        "明志科技大學",
+        "明志科大",
+        "明志工專",
+        "明志",
+        "MCUT",
+        "Ming Chi University of Technology",
+    ),
+    hero_image="/static/assets/mcut-campus.svg",
+    official_url="https://oia.mcut.edu.tw/?Lang=zh-tw",
+    coverage_note="完整支援：已整合明志科技大學國際事務處全球交流組（OIA）《2026–2027 學年度海外交換學習計畫甄選簡章（59所當期開放校）》、《跨國碩士雙聯學位甄選公告（美國辛辛那提大學 UC、北伊利諾大學 NIU、舊金山州立大學 SFSU、西班牙巴塞隆納高等設計學院 ELISAVA、法國 ESIEE Paris、希臘雅典 ALBA 商學院）》、《全球暨兩岸合作姊妹校名錄（130校）》、《學生出國雙聯學位學習及交換學習實施及補助辦法（A2Q1040008，114.08.12修訂）》、《大學部海外交換學習課程實施辦法（A2Q1060001，大三工讀實習海外交換抵免）》、《學生出國短期研習實施及補助辦法（A2Q1030010）》、《各類語言檢定證照等級對照表（CEFR A1–C2）》及《出國交換暨雙聯學位心得報告專區（13校48篇）》官方資料：（1）校內甄選時程、GPA 3.0 門檻與大三工讀實習抵免制度：交換生每年 1 月公告、2 月初截止（2026–2027 學年於 2026/02/06 17:00 截止；春季班補充收件依辦法第 5 條於 10/31 前），碩士雙聯分春季班（9/24 17:00 截止）與秋季班（2/6 17:00 截止）兩梯次；限日間部大二、大三及碩博士班在學學生（不含大一及在職專班；僅大二升大三擬以海外交換抵免大三全學年「工讀實務實習」課程［上學期 16 學分、下學期 18 學分］者可申請一學年交換，每學期至少修讀 6 學分［歐洲 2 ECTS = 1 學分］並每三個月繳交四階段學習報告，其餘以一學期為原則），歷年 GPA 須達 3.0（百分制約 75 分；NIU、ELISAVA、ESIEE、ALBA 雙聯為 GPA 2.75）以上、操行平均 80 分以上無記過，且語言達 CEFR B1（TOEIC 550 / TOEFL iBT 42 / IELTS 4.0 / JLPT N3 / TOPIK 3級）或雙聯指定門檻（iBT 72–100 / IELTS 5.5–6.5），每人限填 1 所志願校。（2）全球 21 國／地區 130 所合作姊妹校與 12 所雙聯合作校：完整收錄 59 所當期開放申請之歐美日韓東南亞及大陸交換與雙聯合作校及 71 所正式締約姊妹校。（3）雙聯最高 24 萬／交換最高 16 萬元校內補助與學海計畫：涵蓋校內雙聯補助（非亞洲區一學年最高 NT$240,000、亞洲區最高 NT$150,000；美國 UC 另享校友「鹿江基金會」專屬獎學金）、校內交換補助（非亞洲區一學期最高 NT$80,000／一學年最高 NT$160,000、亞洲區一學期最高 NT$50,000／一學年最高 NT$100,000）、短期研習補助（最高 NT$47,000）、教育部《學海飛颺／惜珠／築夢》（每人 5 萬至 30 萬元）及 13 校 48 篇歷屆學長姐心得報告。",
+    support_level="full",
+    partner_count_hint=130,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "明志科技大學",
+        "明志科大",
+        "MINGCHIUNIVERSITYOFTECHNOLOGY",
+        "MING CHI UNIVERSITY OF TECHNOLOGY",
+        "MCUT",
+    ),
+    # https://www.mcut.edu.tw/ — checked 2026-11-09.
+    colleges=(
+        "工程學院",
+        "環境資源學院",
+        "管理暨設計學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, MCUT)
 DEFAULT_UNIVERSITY = CGU
 
 
