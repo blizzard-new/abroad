@@ -89,7 +89,7 @@ def test_the_home_is_one_night_that_the_earth_rises_out_of(page, live_server, th
     assert page.locator(".mt-sky").evaluate("el => getComputedStyle(el).backgroundColor") == "rgba(0, 0, 0, 0)"
     assert "linear-gradient" in page.locator(".mt-earth").evaluate("el => getComputedStyle(el).maskImage || getComputedStyle(el).webkitMaskImage")
     # Text on it is light, not dark on dark.
-    ink, _ = luminance_and_alpha(page.locator("#mt-route-title").evaluate("el => getComputedStyle(el).color"))
+    ink, _ = luminance_and_alpha(page.locator("#home-guides-title").evaluate("el => getComputedStyle(el).color"))
     assert ink > 200
 
 
@@ -108,3 +108,46 @@ def test_every_school_mark_has_its_own_colour(page, live_server):
     name = page.locator(".school-option-name").nth(3)
     colour, _ = luminance_and_alpha(name.evaluate("el => getComputedStyle(el).color"))
     assert colour > 180
+
+
+def test_the_fonts_are_poppins_for_latin_and_genjyuu_for_chinese(page, live_server):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    enter_public_site(page, live_server, "home")
+    page.wait_for_timeout(1500)
+    stack = page.evaluate("getComputedStyle(document.body).fontFamily")
+    assert stack.startswith('Poppins, GenJyuuGothic'), stack
+    # The faces really load (not only named): Latin from Poppins, a Chinese sentence from 源柔黑體.
+    page.evaluate("Promise.all([document.fonts.load('700 20px Poppins', 'UniWay 116'), document.fonts.load('700 20px GenJyuuGothic', '世界這麼大')])")
+    assert page.evaluate("document.fonts.check('700 20px Poppins', 'UniWay 116')")
+    assert page.evaluate("document.fonts.check('700 20px GenJyuuGothic', '世界這麼大')")
+    for selector in ("#home-landing-title", "#mt-board-school-name", ".pr-link", "#theme-toggle"):
+        assert page.locator(selector).first.evaluate("el => getComputedStyle(el).fontFamily").startswith("Poppins"), selector
+    # Native controls and a server-rendered page use the same stack.
+    privacy = page.request.get(f"{live_server.base_url}/privacy")
+    assert "typography.css" in privacy.text()
+
+
+def test_the_home_has_no_route_map_and_the_navigation_is_a_top_bar(page, live_server):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    enter_public_site(page, live_server, "home")
+    assert page.locator("[data-metro-route], .mt-stage, #home-plan-steps, .pr-collage-mascot").count() == 0
+    # After the Earth the next thing on the page is the list of supported schools.
+    earth = page.locator(".mt-earth").bounding_box()
+    supported = page.locator(".pr-supported").bounding_box()
+    assert 0 <= supported["y"] - (earth["y"] + earth["height"]) < 140, (earth, supported)
+    bar = page.locator("#glass-navigation").bounding_box()
+    assert bar["x"] == 0 and bar["y"] == 0 and bar["width"] >= 1439 and bar["height"] <= 76
+    links = [page.locator(f'#glass-navigation a[data-public-route="{route}"]').bounding_box() for route in ("home", "partners", "forum")]
+    assert len({round(box["y"]) for box in links}) == 1 and links[0]["x"] < links[1]["x"] < links[2]["x"]
+
+
+@pytest.mark.parametrize("width", [901, 1024])
+def test_the_top_bar_fits_the_narrowest_desktop_widths(page, live_server, width):
+    page.set_viewport_size({"width": width, "height": 800})
+    enter_public_site(page, live_server, "home")
+    page.wait_for_timeout(800)
+    right = page.evaluate("Math.max(...[...document.querySelectorAll('#glass-navigation a[data-public-route], #glass-navigation #theme-toggle, #glass-navigation #account-button')].map((el) => el.getBoundingClientRect().right))")
+    assert right <= width, right
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    # Without their labels the links still have names for assistive technology.
+    expect(page.locator('#glass-navigation').get_by_role("link", name="論壇", exact=True)).to_have_count(1)

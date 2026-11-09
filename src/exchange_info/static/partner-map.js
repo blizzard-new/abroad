@@ -92,6 +92,8 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   } finally { clearTimeout(fetchTimeout); }
   // Country names are in Traditional Chinese (Natural Earth NAME_ZHT, with the platform's own wording for the ones it uses);
   // a country with no Chinese name keeps its English one.
+  // Chinese labels are drawn once into the map's glyph atlas, so the font slices they need must be in before the first draw.
+  try { await Promise.race([document.fonts.load('500 14px "GenJyuuGothic"', Object.values(zhNames).join("")), new Promise((resolve) => setTimeout(resolve, 4000))]); } catch (_) { /* the fallback face draws instead */ }
   const labels = { type: "FeatureCollection", features: countries.features.filter((f) => f.properties.name !== "Antarctica").map((f) => ({
     type: "Feature", properties: { name: zhNames[f.properties.name] || f.properties.name.normalize("NFD").replace(/[^\x20-\x7E]/g, "") },
     geometry: { type: "Point", coordinates: [f.properties.label_lon, f.properties.label_lat] },
@@ -125,7 +127,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
       },
       canvasContextAttributes: { antialias: true },
       // Chinese labels are drawn from the page's own Traditional Chinese face; the glyph files only carry Latin.
-      localIdeographFontFamily: '"UniWay Sign", "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif',
+      localIdeographFontFamily: '"GenJyuuGothic", "UniWay Sign", "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif',
       style: {
         version: 8, projection: { type: "globe" }, glyphs: `${ASSETS}/fonts/{fontstack}/{range}.pbf`,
         sources: { earth: { type: "image", url: `${ASSETS}/earth-mercator.jpg`, coordinates: [[-180, 85.0511], [180, 85.0511], [180, -85.0511], [-180, -85.0511]] }, countries: { type: "geojson", data: countries }, labels: { type: "geojson", data: labels }, lakes: { type: "geojson", data: lakes }, rivers: { type: "geojson", data: rivers }, graticule: { type: "geojson", data: graticule() } },

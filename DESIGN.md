@@ -22,30 +22,30 @@ colors:
   focus: "#1f6fd1"
 typography:
   display:
-    fontFamily: "UniWay Sign, Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif"
+    fontFamily: "Poppins, GenJyuuGothic, UniWay Sign, Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif"
     fontSize: "clamp(28px, 4.05cqi, 58px)"
     fontWeight: 900
     lineHeight: 1.12
     letterSpacing: "-0.02em"
   headline:
-    fontFamily: "UniWay Sign, Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif"
+    fontFamily: "Poppins, GenJyuuGothic, UniWay Sign, Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif"
     fontSize: "clamp(26px, 3cqi, 42px)"
     fontWeight: 900
     lineHeight: 1.18
     letterSpacing: "-0.02em"
   title:
-    fontFamily: "UniWay Sign, Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif"
+    fontFamily: "Poppins, GenJyuuGothic, UniWay Sign, Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif"
     fontSize: "17px"
     fontWeight: 800
     lineHeight: 1.3
     letterSpacing: "0em"
   body:
-    fontFamily: "UniWay Sign, Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif"
+    fontFamily: "Poppins, GenJyuuGothic, UniWay Sign, Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif"
     fontSize: "16px"
     fontWeight: 400
     lineHeight: 1.75
   label:
-    fontFamily: "UniWay Sign, Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif"
+    fontFamily: "Poppins, GenJyuuGothic, UniWay Sign, Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif"
     fontSize: "11.5px"
     fontWeight: 700
     letterSpacing: "0.1em"
@@ -129,7 +129,7 @@ Only the home page was designed as a surface. Other routes (search and map, scho
 **Key Characteristics:**
 - White ground, ink #1a1d23, five region line colours, no gradients, glass or blur.
 - Station-board controls: black bars with a 6px line-coloured top rule per cell and one orange action.
-- Heavy gothic (weight 800-900) for every name and heading, in Noto Sans TC self-hosted as "UniWay Sign".
+- Heavy gothic (weight 700, the heaviest cut of both faces) for every name and heading: Poppins for Latin letters and digits, 源柔黑體 (GenJyuu Gothic) for Chinese, both self-hosted (`typography.css`). Noto Sans TC ("UniWay Sign") is only the fallback for glyphs 源柔黑體 lacks.
 - Ruled 2px ink outlines for containers; flat, no resting shadow.
 - A five-colour band, 6px tall, fixed at the top of every page.
 
@@ -170,7 +170,7 @@ metro.css re-points these so unmigrated stylesheets render in the world: `--uw-p
 
 ## Typography
 
-**Display Font:** UniWay Sign (Noto Sans TC variable, weight 100-900, self-hosted WOFF2 slices loaded by unicode-range from `assets/fonts/notosans-tc/`), with Noto Sans TC, PingFang TC, Microsoft JhengHei, system-ui, sans-serif.
+**Display Font:** Poppins (Latin, 400/500/700 TTF from `assets/fonts/poppins/`) with 源柔黑體 / GenJyuu Gothic (Chinese, Regular/Medium/Bold WOFF2 slices loaded by unicode-range from `assets/fonts/genjyuu/`), then UniWay Sign (Noto Sans TC) for missing glyphs, then PingFang TC, Microsoft JhengHei, system-ui.
 **Body Font:** the same family; one family for the whole site (`--mt-font`, applied to body, buttons and form controls).
 **Label/Mono Font:** none. Numerals use `font-variant-numeric: tabular-nums`.
 
@@ -256,7 +256,7 @@ A board-coloured sign with an orange "01 — 04" position index (30px 900), a 22
 - **Do** keep one ground and one ink; draw containers with 2px `ink` outlines and no resting shadow.
 - **Do** use a line colour only for its region, or for the tool category it already marks, and pair it with its `--mt-on-*` text colour.
 - **Do** make the primary search action orange with ink text; make every other primary button ink.
-- **Do** set names and headings at weight 800-900 in UniWay Sign, 11px minimum anywhere.
+- **Do** set names and headings at weight 800-900 in Poppins and 源柔黑體 (weights 800-900 resolve to their Bold cut), 11px minimum anywhere.
 - **Do** draw state: solid for open, dot for some, hollow for none, and state the same fact in text.
 - **Do** reference `--mt-*` tokens in new rules and test both `data-theme` values.
 - **Do** keep the 3px `focus` outline on every interactive element.
@@ -282,3 +282,6 @@ A board-coloured sign with an orange "01 — 04" position index (30px 900), a 22
 - **School marks**: every school has its own hue (`SCHOOL_BADGES` presets, then a wheel in `app.js` that never repeats between neighbours); light and night variants in `metro.css` section 17.
 - **我的申請 今天**: boxes are sized to their contents and laid side by side (focus card + deadline card in one row, next tasks as cards in a grid, the to-do form on one line). The "synced" line is not shown; a sentence that restates its heading or the obvious is not written.
 - **Cache versions**: `tests/static_asset_versions.json` records the `?v=` tag and content hash of every versioned static file; `scripts/update_static_versions.py` refuses a file whose content changed under the same tag. Static files with a `?v=` are cached for a year as immutable, so a forgotten bump serves visitors the old file.
+- **Fonts**: the type system is the platform's own, Poppins for Latin and 源柔黑體 for Chinese. The Noto Sans TC stack the metro redesign introduced is only a fallback. 源柔黑體 is built from the Japanese cut of Source Han Sans, so a few Han characters take their Japanese glyph shapes.
+- **Navigation**: one bar across the top on screens wider than 900px (logo, links, then theme, refresh, notifications, sync and account at the right); below that the drawer and bottom bar are unchanged. Pages are centred across the full width, 32px from each edge.
+- **The home has no route map**: the first screen is the sentence, the search board and the Earth; the sections below it start with the supported schools.
