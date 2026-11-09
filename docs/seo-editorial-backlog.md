@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-09 每日批次：AI 聽寫／托福學術閱讀兩篇（待建立 PR）
+## 2026-11-09 每日批次：AI 聽寫／托福學術閱讀兩篇（PR #272 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261109`，基於 main `aeb46b7089b3c4a180a7c4fad1fae02bfee08b5a`。盤點 main 41 篇並重讀相關正文、workflow 與 backlog；核對全部四個 open PR #267、#269、#270、#271 的說明及完整檔案清單，沒有新增 editorial JSON。#255、#266 均已於 11/8 合併，四篇已在 main，排除重做。開始前無同日分支／任何狀態同日 PR；#78、#92 已合併，無未合併基礎相依。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 17：用 AI 練英文聽力怎麼做？聽寫 Prompt、漏聽分類與重聽訂正 | `ai-english-listening-dictation` | 完整文章與驗收完成；待建立本日唯一 PR，後續排除 |
-| 19：托福學術閱讀怎麼練？主旨、細節與推論的原創題目解析 | `toefl-academic-reading` | 同批完整文章與驗收完成，待同一個 PR，後續排除 |
+| 17：用 AI 練英文聽力怎麼做？聽寫 Prompt、漏聽分類與重聽訂正 | `ai-english-listening-dictation` | [PR #272](https://github.com/blizzard-new/abroad/pull/272) 待審，完整文章與驗收完成；後續排除 |
+| 19：托福學術閱讀怎麼練？主旨、細節與推論的原創題目解析 | `toefl-academic-reading` | 同一個 PR #272 待審，完整文章與驗收完成；後續排除 |
 
 選題依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。聽寫篇新增三輪填寫 Prompt、原稿／錯稿及未看稿的新材料流程，將文字差異與聲音原因分開，與可見文字精讀、作文文法與四技能安排不同。學術閱讀篇以有 EPA 科學來源的兩段原創材料及六題解析，處理主旨、支持與有限推論，與部分字母補全及一般總覽分工，不以品牌／年份改標題重發。
 
