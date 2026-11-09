@@ -84,7 +84,7 @@ window.UniWayTracker = (() => {
   }
 
   function emptyHtml() {
-    if (!state.account) return `<div class="pr-empty"><i data-lucide="log-in" aria-hidden="true"></i><div><strong>登入後，這裡會列出你的準備任務</strong><p>把學校加入志願，系統會整理成同一份任務清單，並記錄你的進度。</p></div><button type="button" class="pr-navy-button" data-tracker-login>登入</button></div>`;
+    if (!state.account) return `<div class="pr-empty"><i data-lucide="log-in" aria-hidden="true"></i><div><strong>登入後，這裡會列出你的準備任務</strong></div><button type="button" class="pr-navy-button" data-tracker-login>登入</button></div>`;
     if (window.UniWayPlanIndex?.current()?.items?.length) return `<div class="pr-empty"><div><strong>繼續上方的申請計畫</strong><p>這裡可安排額外待辦與個人時程。</p></div><button type="button" data-tracker-add>新增待辦</button></div>`;
     if (!state.applications.size) return `<div class="pr-empty"><i data-lucide="bookmark" aria-hidden="true"></i><div><strong>還沒有志願</strong><p>先到「找交換學校」把想去的學校加入志願，任務就會出現在這裡。</p></div><a class="pr-navy-button" href="#partners">找交換學校</a></div>`;
     return `<div class="pr-empty"><i data-lucide="loader-circle" aria-hidden="true"></i><div><strong>正在整理你的準備任務</strong><p>完成後會依期限與狀態分組顯示。</p></div></div>`;

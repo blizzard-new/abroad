@@ -4,7 +4,7 @@
 
 /* ---------- 1. Tokens ---------- */
 :root, html[data-theme="light"] {
-  --mt-ground: #fff; --mt-concourse: #f3f4f6; --mt-ink: #1a1d23; --mt-ink-2: #454c5a; --mt-ink-3: #6a7282;
+  --mt-ground: #fff; --mt-concourse: #f3f4f6; --mt-ink: #1a1d23; --mt-ink-2: #2b303a; --mt-ink-3: #4a5160;
   --mt-rule: #d6dae1; --mt-rule-strong: #8d95a3; --mt-board: #1a1d23; --mt-on-board: #fff; --mt-on-board-2: #c7cdd8;
   --mt-red: #d9262c; --mt-orange: #f2a81d; --mt-blue: #1f6fd1; --mt-green: #0c7d56; --mt-brown: #8c5a2e;
   --mt-on-red: #fff; --mt-on-orange: #1a1d23; --mt-on-blue: #fff; --mt-on-green: #fff; --mt-on-brown: #fff;
@@ -77,21 +77,6 @@ body.unified-shell #home-landing .mt-hero {
 #home-landing .mt-hero .pr-hero-socials { margin: 0 0 .5em; gap: 0 14px; }
 #home-landing .mt-hero .pr-hero-socials-label { color: var(--mt-ink-3); font-size: 12px; font-weight: 700; letter-spacing: .04em; }
 #home-landing .mt-hero .pr-social-pill { color: var(--mt-ink); font-size: 13px; }
-
-/* The old half-globe is kept (its state machine feeds the map host) but becomes a small inset of real geography. */
-#home-landing .mt-stage .pr-globe {
-  position: absolute; z-index: 1; top: auto; left: auto; right: 0; bottom: 0; width: 196px; height: 112px; margin: 0; aspect-ratio: auto;
-  border: 2px solid var(--mt-ink); border-radius: var(--mt-radius); background: var(--mt-concourse); overflow: hidden; pointer-events: none;
-  -webkit-mask-image: none; mask-image: none;
-}
-#home-landing .mt-stage .pr-globe::after {
-  content: "實際位置"; position: absolute; left: 6px; bottom: 6px; padding: 1px 8px; border-radius: 999px; background: var(--mt-ink); color: var(--mt-ground);
-  font-size: 11px; font-weight: 800; letter-spacing: .06em; line-height: 1.5;
-}
-#home-landing .mt-stage .pr-globe-canvas { width: 100%; height: 100%; }
-#home-landing .mt-stage .pr-globe[data-state="fallback"] .pr-globe-fallback { padding: 4px; }
-#home-landing .mt-stage .pr-map-host { --map-land: #c9ced8; --map-edge: #aeb5c2; --map-tw: var(--mt-red); --map-dot: var(--mt-ink); --map-halo: #1a1d2322; --map-arc: #1a1d2340; }
-html[data-theme="dark"] #home-landing .mt-stage .pr-map-host { --map-land: #2a3340; --map-edge: #3b4656; --map-tw: var(--mt-red); --map-dot: var(--mt-ink); --map-halo: #eef0f422; --map-arc: #eef0f440; }
 
 /* 3a. Station board: the search. */
 #home-landing .mt-board {
@@ -275,7 +260,6 @@ body.unified-shell #home-landing .mt-board-cell select option { background: #fff
   #home-landing .mt-hero .pr-plan-steps { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); row-gap: 18px; }
   #home-landing .mt-hero .pr-plan-steps li:nth-child(2)::before { display: none; }
 }
-@media (max-width: 700px) { #home-landing .mt-stage .pr-globe { display: none; } }
 @media (prefers-reduced-motion: reduce) {
   #home-landing .mt-path, #home-landing .mt-dot, #home-landing .mt-line { transition: none; }
 }
@@ -645,3 +629,78 @@ body.unified-shell #community-hub .discussion-welcome-art { display: none; }
   #home-landing .mt-hero h1 { margin-bottom: 12px; }
 }
 body.unified-shell #dashboard-view #partners.pr-explore .pr-search-button .pr-search-label { position: static; display: inline; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; clip-path: none; white-space: nowrap; }
+
+/* 13. The school card on the globe: the five figures that decide whether to look further, then one button for the rest.
+   It is sized by its content and never scrolls; long text is clamped, the full text is behind 查看完整資料. */
+body.unified-shell #partners.pr-explore .partner-map-preview { right: 68px; width: min(344px, calc(100% - 92px)); max-height: none; overflow: visible; background: var(--mt-ground); color: var(--mt-ink); border: 2px solid var(--mt-ink); border-radius: 12px; box-shadow: 0 10px 28px #1a1d2333; backdrop-filter: none; }
+body.unified-shell #partners.pr-explore .map-preview-top { padding: 14px 46px 12px 16px; background: transparent; border-bottom: 2px solid var(--mt-ink); }
+body.unified-shell #partners.pr-explore .map-preview-place { color: var(--mt-ink-2); font-size: 13px; font-weight: 800; letter-spacing: 0; }
+body.unified-shell #partners.pr-explore .map-preview-top h4 { margin: 4px 0 8px; font-size: 21px; line-height: 1.25; color: var(--mt-ink); font-weight: 900; }
+body.unified-shell #partners.pr-explore .map-preview-top h4 > span { display: block; margin-top: 3px; font-size: 14px; font-weight: 700; line-height: 1.3; color: var(--mt-ink-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+body.unified-shell #partners.pr-explore .map-preview-close { color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .map-preview-body { padding: 12px 16px 14px; }
+body.unified-shell #partners.pr-explore .map-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin: 0 0 10px; padding: 0; border: 2px solid var(--mt-ink); border-radius: 10px; overflow: hidden; }
+body.unified-shell #partners.pr-explore .map-facts > div { min-width: 0; padding: 8px 10px 9px; border-top: 1.5px solid var(--mt-rule-strong); border-left: 1.5px solid var(--mt-rule-strong); }
+body.unified-shell #partners.pr-explore .map-facts > div:nth-child(-n+2) { border-top: 0; }
+body.unified-shell #partners.pr-explore .map-facts > div:nth-child(odd) { border-left: 0; }
+body.unified-shell #partners.pr-explore .map-facts > div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+body.unified-shell #partners.pr-explore .map-facts dt { margin: 0 0 2px; font-size: 12px; font-weight: 800; color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore .map-facts dd { margin: 0; font-size: 15px; font-weight: 800; line-height: 1.35; color: var(--mt-ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+body.unified-shell #partners.pr-explore .discovery-preview-extras { margin: 0 0 10px; padding: 0; border: 0; }
+body.unified-shell #partners.pr-explore .discovery-preview-extras section { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "head action" "body body"; gap: 2px 10px; align-items: center; }
+body.unified-shell #partners.pr-explore .discovery-preview-extras h5 { grid-area: head; margin: 0; font-size: 13px; font-weight: 800; color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore .discovery-preview-extras p { grid-area: body; }
+body.unified-shell #partners.pr-explore .discovery-preview-extras :is(button, a) { grid-area: action; justify-self: end; }
+body.unified-shell #partners.pr-explore .map-facts-pending { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 0 0 10px; font-size: 13px; font-weight: 700; color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore .map-facts-pending b { padding: 1px 8px; border: 1.5px solid var(--mt-ink-2); border-radius: 999px; font-size: 12px; font-weight: 800; color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .discovery-preview-extras p { font-size: 14px; line-height: 1.5; color: var(--mt-ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+body.unified-shell #partners.pr-explore .discovery-preview-extras :is(button, a) { font-size: 13px; font-weight: 800; color: var(--mt-blue); white-space: nowrap; }
+body.unified-shell #partners.pr-explore .discovery-match { margin: 0 0 8px; font-size: 13px; font-weight: 800; }
+body.unified-shell #partners.pr-explore .map-preview-actions { flex-direction: row; gap: 8px; margin: 0; }
+body.unified-shell #partners.pr-explore .map-preview-actions .primary-button { flex: 1 1 auto; min-height: 46px; margin: 0; padding: 0 14px; justify-content: center; font-size: 15px; }
+body.unified-shell #partners.pr-explore .map-preview-actions .favorite-toggle { flex: none; min-height: 46px; padding-inline: 12px; }
+body.unified-shell #partners.pr-explore .map-location-note { margin: 8px 0 0; font-size: 13px; color: var(--mt-ink-2); }
+body.unified-shell #partners.pr-explore .map-location-note summary { min-height: 32px; display: flex; align-items: center; cursor: pointer; font-weight: 700; }
+body.unified-shell #partners.pr-explore .map-location-note[open] > :not(summary) { max-height: 6.5em; overflow: auto; }
+@media (max-width: 700px) {
+  body.unified-shell #partners.pr-explore .partner-map-preview { left: 8px; right: 8px; bottom: 8px; width: auto; border-radius: 12px; }
+  body.unified-shell #partners.pr-explore .partner-map-preview::before { content: none; }
+  body.unified-shell #partners.pr-explore .map-preview-top { padding: 10px 44px 10px 14px; }
+  body.unified-shell #partners.pr-explore .map-preview-top h4 { margin: 2px 0 6px; font-size: 18px; }
+  body.unified-shell #partners.pr-explore .map-preview-top h4 > span { -webkit-line-clamp: 1; font-size: 13px; }
+  body.unified-shell #partners.pr-explore .map-preview-body { padding: 10px 14px 12px; }
+  body.unified-shell #partners.pr-explore .map-facts > div { padding: 6px 9px 7px; }
+  body.unified-shell #partners.pr-explore .map-facts dd { font-size: 14px; -webkit-line-clamp: 1; }
+  body.unified-shell #partners.pr-explore .discovery-preview-extras { display: none; }
+}
+
+/* 14. Home hero: one sentence, centred, over a night sky; the search board beneath it; the real Earth rising under both.
+   Nothing here is a sample of anyone's school — it is the planet the partner schools are on. */
+body.unified-shell #home-landing .mt-hero { grid-template-columns: minmax(0, 1fr); grid-template-areas: "sky" "route" "plan" "cue"; gap: clamp(26px, 4.4svh, 48px) 0; padding-top: clamp(8px, 1.6svh, 16px); }
+#home-landing .mt-sky { grid-area: sky; position: relative; container-type: inline-size; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: clamp(22px, 3.6svh, 40px); padding: clamp(34px, 7.5svh, 84px) clamp(14px, 3cqi, 44px) 0; background: #0b1220; color: #fff; overflow: hidden; isolation: isolate; }
+#home-landing .mt-sky h1 { margin: 0; max-width: none; text-align: center; color: #fff; font-size: clamp(30px, 7.2cqi, 96px); font-weight: 900; line-height: 1.16; letter-spacing: -.02em; text-wrap: balance; }
+#home-landing .mt-sky h1 br { display: inline; }
+#home-landing .mt-sky h1 span { display: block; text-wrap: balance; color: inherit; text-decoration: underline; text-decoration-color: var(--mt-red); text-decoration-thickness: .1em; text-underline-offset: .14em; text-decoration-skip-ink: none; }
+#home-landing .mt-sky .mt-board { grid-area: auto; width: min(1120px, 100%); outline: 2px solid #ffffff33; outline-offset: 0; }
+#home-landing .mt-earth { position: relative; overflow: hidden; width: 100%; height: clamp(112px, 20svh, 220px); margin-top: clamp(6px, 2.2svh, 22px); pointer-events: none; }
+#home-landing .mt-earth-disc { --d: min(1760px, 130cqi); position: absolute; left: 50%; top: 0; width: var(--d); height: var(--d); transform: translateX(-50%); border-radius: 50%; overflow: hidden; background: #0a2a52; box-shadow: 0 -4px 40px 4px #5ab0ff80, 0 0 0 2px #a8d8ff80; }
+#home-landing .mt-earth-strip { position: absolute; left: 0; top: 0; width: calc(var(--d) * 5); height: var(--d); background: url("/static/assets/partner-map/earth-equirect.jpg?v=20261109-1") repeat-x 0 calc(var(--d) * -.235) / calc(var(--d) * 2) var(--d); transform: translateX(calc(var(--d) * -1.11)); animation: mt-earth-spin 420s linear infinite; will-change: transform; }
+#home-landing .mt-earth-disc::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 50% 0%, #0000 0 42%, #0208125c 76%, #020812c4 100%); }
+/* It opens over Asia, where the students are leaving from, and turns one full circle in seven minutes. */
+@keyframes mt-earth-spin { from { transform: translateX(calc(var(--d) * -1.11)); } to { transform: translateX(calc(var(--d) * -3.11)); } }
+@media (prefers-reduced-motion: reduce) { #home-landing .mt-earth-strip { animation: none; } }
+#home-landing .mt-route-title { margin: 0 0 clamp(10px, 1.8svh, 18px); text-align: center; color: var(--mt-ink); font-size: clamp(24px, 3.4vw, 46px); font-weight: 900; line-height: 1.2; letter-spacing: -.015em; text-wrap: balance; }
+#home-landing .mt-route-title span { color: inherit; text-decoration: underline; text-decoration-color: var(--mt-red); text-decoration-thickness: .13em; text-underline-offset: .12em; text-decoration-skip-ink: none; }
+@media (max-width: 700px) {
+  #home-landing .mt-sky { padding-top: 28px; gap: 18px; }
+  #home-landing .mt-earth { height: 96px; }
+}
+
+/* Lines the scripts still write (for assistive technology and tests) but that carry no decision: they stay out of sight. */
+:is(#partner-map-context, #partner-map-missing, #partner-map-home-status, #community-home-description, #discovery-save-note, #planning-period-hint, #discussion-bookmark-status)[hidden] { display: none !important; }
+
+/* The two official accounts sit in the corner of the sky, white on night, with no caption of their own. */
+#home-landing .mt-sky .pr-hero-socials { justify-self: end; margin: 0; padding: 0; gap: 4px 16px; flex-wrap: wrap; justify-content: flex-end; }
+#home-landing .mt-sky .pr-social-pill { color: #fff; font-size: 13px; }
+#home-landing .mt-sky .pr-social-pill b { color: inherit; }
+@media (max-width: 700px) { #home-landing .mt-sky .pr-hero-socials { justify-self: center; justify-content: center; } }

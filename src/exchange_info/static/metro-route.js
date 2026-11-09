@@ -147,17 +147,6 @@ window.UniWayMetro = (() => {
     return `<span class="mt-next-label">下一站</span><b class="mt-next-date">${when}</b><span class="mt-next-text">${[away, who].filter(Boolean).map(esc).join(" · ")}</span>${pending}`;
   }
 
-  function noteText(name, chosen, partners) {
-    const checked = state.dashboard?.last_checked;
-    let date = "";
-    if (checked) {
-      const parsed = new Date(checked);
-      if (!Number.isNaN(parsed.getTime())) date = `資料更新 ${parsed.getFullYear()}/${String(parsed.getMonth() + 1).padStart(2, "0")}/${String(parsed.getDate()).padStart(2, "0")}。`;
-    }
-    const scope = chosen ? `${name}的 ${partners.length} 間合作校。` : `尚未選擇就讀學校，目前顯示${name}的 ${partners.length} 間合作校。`;
-    return `${scope}${date}站的順序依合作校數量排列，不代表實際距離。`;
-  }
-
   function sync(canvas, model) {
     const route = canvas.closest("[data-metro-route]");
     for (const tag of canvas.querySelectorAll("[data-line-tag]")) tag.setAttribute("aria-pressed", String(tag.dataset.lineTag === focusLine));
@@ -179,13 +168,11 @@ window.UniWayMetro = (() => {
     if (label && label.textContent !== boardName) label.textContent = boardName;
     if (key === signature) return;
     signature = key;
-    const note = route.querySelector("[data-metro-note]");
     const next = route.querySelector("[data-metro-next]");
     if (next) { next.innerHTML = partners.length ? nextStopHtml(partners) : ""; next.hidden = !next.innerHTML; }
     if (!partners.length) {
       canvas.innerHTML = `<p class="mt-empty">${chosen ? "合作校資料載入中…" : "選擇就讀學校後，這裡會畫出你能去的合作校路線。"}</p>`;
       route.dataset.state = "empty";
-      if (note) note.textContent = "";
       return;
     }
     const model = buildModel(partners);
@@ -195,10 +182,6 @@ window.UniWayMetro = (() => {
     canvas.innerHTML = `<div class="mt-map" style="aspect-ratio:${W} / ${H}">
       <svg class="mt-lines" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">${paths}</svg>
       ${originHtml(name, chosen)}${model.map(lineHtml).join("")}</div>`;
-    if (note) {
-      note.textContent = noteText(name, chosen, partners);
-      note.insertAdjacentHTML("beforeend", `<span class="mt-legend" aria-hidden="true"><i class="mt-key mt-key-open"></i>全部開放<i class="mt-key mt-key-some"></i>部分開放<i class="mt-key mt-key-file"></i>合作備查或待確認</span>`);
-    }
     sync(canvas, model);
   }
 

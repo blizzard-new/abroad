@@ -149,8 +149,8 @@ function renderDiscoveryWorkspace() {
       <div class="discovery-interest" role="group" aria-label="${name}的喜愛度">${[1,2,3,4,5].map(n => `<button type="button" data-interest-school="${name}" data-interest="${n}" aria-pressed="${pref.interest >= n}" aria-label="${n} 顆愛心">♥</button>`).join("")}<small>${pref.interest >= 4 ? "很想去" : pref.interest ? "考慮中" : "我的喜愛度"}</small></div>
       <label class="discovery-note-label"><span class="visually-hidden">${name}的私人備註</span><textarea data-school-note="${name}" maxlength="1000" rows="2" placeholder="留下選校理由…">${escapeHtml(pref.note)}</textarea></label>
       <footer><label><input type="checkbox" data-compare-school="${name}" ${discoveryCompare.has(item.school_name) ? "checked" : ""}> 比較</label><button type="button" class="secondary-button" data-preference-toggle="${name}" aria-pressed="${inOrder}">${inOrder ? "移出志願" : "加入志願"}</button></footer></article>`;
-    }).join("") : '<div class="discovery-empty"><i data-lucide="heart" aria-hidden="true"></i><p>把想去的學校留在這裡。</p><a href="#partners">開始找學校 ↗</a></div>'}</section>
-    <aside class="discovery-ranking"><div class="discovery-ranking-title"><h3>我的志願</h3><span>${data.preference_order.length} 所</span></div><ol id="discovery-preference-list">${data.preference_order.map((name,i) => `<li draggable="true" data-rank-school="${escapeHtml(name)}" tabindex="0" aria-label="第 ${i+1} 志願 ${escapeHtml(name)}，Alt 加上下鍵調整"><span class="discovery-rank-number">${i+1}</span><div><strong>${escapeHtml(name)}</strong><small>${escapeHtml(partnerByName(name)?.country || "資料待更新")}</small></div><div class="discovery-rank-controls"><button type="button" data-rank-up="${escapeHtml(name)}" aria-label="上移${escapeHtml(name)}" ${i === 0 ? "disabled" : ""}>↑</button><button type="button" data-rank-down="${escapeHtml(name)}" aria-label="下移${escapeHtml(name)}" ${i === data.preference_order.length-1 ? "disabled" : ""}>↓</button><button type="button" data-preference-toggle="${escapeHtml(name)}" aria-label="移出志願${escapeHtml(name)}">×</button></div></li>`).join("")}</ol>${!data.preference_order.length ? '<p class="discovery-muted">從候選學校加入志願。</p>' : '<small class="discovery-muted">拖曳或使用上下箭頭調整</small><button type="button" class="primary-button" id="discovery-use-preferences">帶入申請清單</button>'}</aside>
+    }).join("") : '<div class="discovery-empty"><i data-lucide="heart" aria-hidden="true"></i><a href="#partners">開始找學校 ↗</a></div>'}</section>
+    <aside class="discovery-ranking"><div class="discovery-ranking-title"><h3>我的志願</h3><span>${data.preference_order.length} 所</span></div><ol id="discovery-preference-list">${data.preference_order.map((name,i) => `<li draggable="true" data-rank-school="${escapeHtml(name)}" tabindex="0" aria-label="第 ${i+1} 志願 ${escapeHtml(name)}，Alt 加上下鍵調整"><span class="discovery-rank-number">${i+1}</span><div><strong>${escapeHtml(name)}</strong><small>${escapeHtml(partnerByName(name)?.country || "資料待更新")}</small></div><div class="discovery-rank-controls"><button type="button" data-rank-up="${escapeHtml(name)}" aria-label="上移${escapeHtml(name)}" ${i === 0 ? "disabled" : ""}>↑</button><button type="button" data-rank-down="${escapeHtml(name)}" aria-label="下移${escapeHtml(name)}" ${i === data.preference_order.length-1 ? "disabled" : ""}>↓</button><button type="button" data-preference-toggle="${escapeHtml(name)}" aria-label="移出志願${escapeHtml(name)}">×</button></div></li>`).join("")}</ol>${!data.preference_order.length ? '' : '<button type="button" class="primary-button" id="discovery-use-preferences">帶入申請清單</button>'}</aside>
     <section class="discovery-comparison" id="discovery-comparison" aria-label="學校比較">${schools.length > 1 ? renderComparison(schools.filter(p => discoveryCompare.has(p.school_name))) : ""}</section></div>
     <section id="discovery-saved-experiences" ${discoveryShelf !== "experiences" ? "hidden" : ""}></section>`;
   renderSavedDiscoveryExperiences(); updateFavoriteCounts(); initIcons();
@@ -249,17 +249,14 @@ function discoveryCostInfo(item) {
 }
 function discoveryCostSummary(item) { return discoveryCostInfo(item).text; }
 function discoveryPreviewExtras(item) {
+  // One teaser line of what students wrote; the cost is a fact on the card, and the full reading is behind the button.
   const key = `${activeHomeSchool()}::${item.school_name}`, digest = state.experienceCache.get(item.school_name);
-  const cost = discoveryCostInfo(item);
   const source = digest?.sources?.find(s => s.summary_zh) || digest?.sources?.[0];
   const failed = discoveryPreviewErrors.has(key);
   const experience = source
     ? `<p>${escapeHtml(truncate(discoveryChineseSummary(source) || "中文摘要待補", 130))}</p><button type="button" class="text-action" data-read-experience="${escapeHtml(registerDiscoverySource(source))}">閱讀心得 ↗</button>`
     : `<p>${digest ? "尚無公開心得" : failed ? "心得載入失敗" : "正在讀取心得…"}</p>${failed ? `<button type="button" data-preview-retry="${escapeHtml(item.school_name)}">重試</button>` : ""}`;
-  return `<div class="discovery-preview-extras">
-    <section><h5>費用</h5><p>${escapeHtml(cost.text)}</p>${cost.url ? `<a href="${escapeHtml(cost.url)}" target="_blank" rel="noreferrer">費用來源 ↗</a>` : ""}</section>
-    <section><h5>學生心得 ${digest ? `<span>${digest.total_sources}</span>` : ""}</h5>${experience}</section>
-  </div>`;
+  return `<div class="discovery-preview-extras"><section><h5>學生心得${digest ? ` <span>${digest.total_sources}</span>` : ""}</h5>${experience}</section></div>`;
 }
 function loadDiscoveryPreview(item) {
   if (!item) return;

@@ -49,7 +49,7 @@ def test_home_motion_fits_and_remains_readable(browser, live_server, width, them
     page.add_init_script(f"localStorage.setItem('exchange-guide-theme', '{theme}')")
     try:
         enter_public_site(page, live_server)
-        page.get_by_role("button", name="往下探索你的交換旅程").click()
+        page.locator("#home-guides-title").scroll_into_view_if_needed()
         expect(page.locator("#home-guides-title")).to_be_in_viewport()
         for selector in [".pr-features", ".pr-map-band", ".pr-journey", ".pr-forum-preview", ".pr-footer"]:
             page.locator(selector).scroll_into_view_if_needed()
