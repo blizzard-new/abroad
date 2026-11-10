@@ -514,3 +514,59 @@ html[data-skin="metro"] body.unified-shell #partners.pr-explore.pr-explore .part
 @media (min-width: 901px) {
   html:not([data-skin="metro"]) body.unified-shell .glass-navigation-rail { background: var(--mt-band) 0 0 / 100% 3px no-repeat, var(--mt-ground) !important; }
 }
+/* Plan-owned preparation workspace: shared tokens also cover dark mode. */
+html[data-skin="metro"] #application-path #hub[data-tab="workspace"] > :is(.next-sidebar,.preparation-boundary) { display:none; }
+html[data-skin="metro"] #application-path .exchange-workspace { margin-top: 24px; }
+html[data-skin="metro"] #application-path :is(.ex-head,.ex-actions,.ex-filters,.ex-counts,.ex-tabs) { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+html[data-skin="metro"] #application-path .ex-head { justify-content:space-between; align-items:flex-start; }
+html[data-skin="metro"] #application-path .ex-head p { margin-top:8px; color:var(--uw-muted); max-width:65ch; }
+html[data-skin="metro"] #application-path .ex-tabs { margin-block:20px; padding-bottom:12px; border-bottom:1px solid var(--uw-line); }
+html[data-skin="metro"] #application-path .ex-tabs button { padding:10px 14px; border-radius:12px; color:var(--uw-text); }
+html[data-skin="metro"] #application-path .ex-tabs [aria-pressed="true"] { background:var(--uw-accent-wash); color:var(--uw-accent); font-weight:700; }
+html[data-skin="metro"] #application-path :is(.ex-counts,.ex-note) { padding:16px; background:var(--uw-surface-soft); border-radius:12px; margin-bottom:16px; }
+html[data-skin="metro"] #application-path .ex-counts span:last-child { margin-left:auto; color:var(--uw-muted); font-size:13px; }
+html[data-skin="metro"] #application-path .ex-filters { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:end; margin-block:16px; }
+html[data-skin="metro"] #application-path .ex-filters>.ex-actions { grid-column:1/-1; margin-top:0; }
+html[data-skin="metro"] #application-path .exchange-workspace button { box-shadow:none; }
+html[data-skin="metro"] #application-path :is(.exchange-workspace .primary-button,.hub-tabs>a.active) { color:var(--uw-on-accent); }
+html[data-skin="metro"] #application-path .ex-task h3 button { background:transparent; border:0; }
+html[data-skin="metro"] #application-path .ex-actions { margin-block:12px; }
+html[data-skin="metro"] #application-path .ex-actions button:not(.primary-button) { padding:8px 12px; border:1px solid var(--uw-line); border-radius:12px; }
+html[data-skin="metro"] #application-path :is(.ex-task,.ex-preview,.ex-pack,.ex-course,.ex-summary,.ex-empty) { padding:20px; border:1px solid var(--uw-line); border-radius:16px; background:var(--uw-surface); margin-bottom:12px; min-width:0; }
+html[data-skin="metro"] #application-path .ex-task { display:flex; justify-content:space-between; gap:20px; }
+html[data-skin="metro"] #application-path .ex-task>div:first-child { min-width:0; }
+html[data-skin="metro"] #application-path .ex-task h3 button { padding:4px 0; text-align:left; font-weight:700; font-size:18px; overflow-wrap:anywhere; }
+html[data-skin="metro"] #application-path .ex-task p { margin-top:6px; overflow-wrap:anywhere; }
+html[data-skin="metro"] #application-path :is(.ex-meta,.ex-task-action>span) { color:var(--uw-muted); font-size:13px; }
+html[data-skin="metro"] #application-path .ex-task-action { display:grid; align-content:start; justify-items:end; gap:8px; flex-shrink:0; }
+html[data-skin="metro"] #application-path .ex-wait { color:var(--uw-muted); }
+html[data-skin="metro"] #application-path :is(.ex-summary h3,.ex-course h3,.ex-notice h3,.ex-peers h3) { font-size:20px; margin-bottom:8px; }
+html[data-skin="metro"] #application-path .ex-summary { margin-block:20px; }
+html[data-skin="metro"] #application-path .ex-summary ul { list-style:none; padding:0; margin:12px 0; }
+html[data-skin="metro"] #application-path .ex-summary li a { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; padding-block:12px; border-bottom:1px solid var(--uw-line); }
+html[data-skin="metro"] #application-path .ex-summary li span { color:var(--uw-muted); font-size:13px; }
+html[data-skin="metro"] #application-path .exchange-workspace label { display:grid; gap:6px; margin-block:10px; font-size:14px; min-width:0; }
+html[data-skin="metro"] #application-path .exchange-workspace :is(input:not([type="checkbox"]):not([type="file"]),textarea,select) { width:100%; min-width:0; padding:10px 12px; border:1px solid var(--uw-line-strong); border-radius:12px; color:var(--uw-text); background:var(--uw-surface); font-size:16px; min-height:48px; }
+html[data-skin="metro"] #application-path .exchange-workspace textarea { resize:vertical; }
+html[data-skin="metro"] #application-path .exchange-workspace .ex-check { display:flex; align-items:flex-start; gap:10px; padding-block:8px; }
+html[data-skin="metro"] #application-path .ex-check input { width:20px; height:20px; min-height:20px; flex:none; margin-top:3px; }
+html[data-skin="metro"] #application-path .ex-check small { display:block; font-size:13px; color:var(--uw-muted); line-height:1.7; margin-top:4px; }
+html[data-skin="metro"] #application-path .ex-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 16px; }
+html[data-skin="metro"] #application-path .exchange-workspace details { padding:12px 0; }
+html[data-skin="metro"] #application-path .exchange-workspace summary { min-height:44px; cursor:pointer; font-weight:500; }
+html[data-skin="metro"] #application-path .exchange-workspace fieldset { border:0; padding:0; min-width:0; }
+html[data-skin="metro"] #application-path .exchange-workspace blockquote { margin:8px 0; padding:12px; background:var(--uw-surface-soft); white-space:pre-wrap; overflow-wrap:anywhere; }
+html[data-skin="metro"] #application-path .exchange-workspace input[type="file"] { width:100%; max-width:100%; }
+html[data-skin="metro"] #application-path #exchange-task-dialog { width:min(760px,calc(100vw - 32px)); max-height:90svh; padding:24px; border:1px solid var(--uw-line); border-radius:20px; background:var(--uw-surface); color:var(--uw-text); }
+html[data-skin="metro"] #application-path #exchange-task-dialog::backdrop { background:rgb(0 0 0 / .42); }
+html[data-skin="metro"] #application-path .exchange-workspace .is-error,html[data-skin="metro"] #application-path #exchange-edit-error { color:var(--ap-bad); }
+@media(max-width:700px) {
+  html[data-skin="metro"] #application-path .hub-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); width:100%; gap:4px; }
+  html[data-skin="metro"] #application-path .hub-tabs>a { justify-content:center; padding:10px 4px; gap:4px; }
+  html[data-skin="metro"] #application-path .hub-tabs>a svg { width:18px; }
+  html[data-skin="metro"] #application-path .ex-grid { grid-template-columns:minmax(0,1fr); }
+  html[data-skin="metro"] #application-path .ex-filters { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  html[data-skin="metro"] #application-path .ex-task { flex-direction:column; gap:8px; padding:16px; }
+  html[data-skin="metro"] #application-path .ex-task-action { display:flex; align-items:center; justify-content:space-between; }
+  html[data-skin="metro"] #application-path #exchange-task-dialog { padding:16px; }
+}

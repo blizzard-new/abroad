@@ -4958,7 +4958,7 @@ function workflowDeadlineEvents(workflows = state.workflowCache.values()) {
 }
 
 function allApplicationCalendarEvents() {
-  const combined = [...officialCalendarEvents(), ...state.calendarEvents]
+  const combined = [...officialCalendarEvents(), ...state.calendarEvents, ...(window.UniWayApplicationPath?.workspaceCalendarEvents?.() || [])]
     .filter((event) => parseLocalDate(event.date) && event.title)
     .sort((left, right) => left.date.localeCompare(right.date) || left.title.localeCompare(right.title, "zh-Hant"));
   const seen = new Set();
@@ -5090,6 +5090,7 @@ function downloadCalendarEvents(events, filename = "exchange-application-calenda
 function renderCalendarEvent(event) {
   const category = calendarCategory(event.category);
   const official = event.origin === "official";
+  const workspace = Boolean(event.workspaceTaskHref);
   const generated = Boolean(event.generatedFromEventId || event.generated_from_event_id);
   const completed = event.status === "ready";
   const conflicting = calendarConflictingEventIds().has(String(event.id));
@@ -5105,8 +5106,8 @@ function renderCalendarEvent(event) {
           <a href="${escapeHtml(googleCalendarUrl(event))}" target="_blank" rel="noreferrer" class="calendar-action-link"><i data-lucide="calendar-plus" aria-hidden="true"></i><span>Google 日曆</span></a>
           <button type="button" class="calendar-action-link" data-download-calendar-event="${escapeHtml(event.id)}"><i data-lucide="download" aria-hidden="true"></i><span>Apple／其他</span></button>
           ${official && event.sourceUrl ? `<a href="${escapeHtml(event.sourceUrl)}" target="_blank" rel="noreferrer" class="calendar-action-link"><i data-lucide="external-link" aria-hidden="true"></i><span>來源</span></a>` : ""}
-          ${!official && !generated ? `<label class="calendar-task-status"><span class="visually-hidden">${escapeHtml(event.title)}狀態</span><select data-calendar-task-status="${escapeHtml(event.id)}" aria-label="${escapeHtml(event.title)}狀態"><option value="todo" ${event.status !== "preparing" && event.status !== "ready" ? "selected" : ""}>未開始</option><option value="preparing" ${event.status === "preparing" ? "selected" : ""}>準備中</option><option value="ready" ${event.status === "ready" ? "selected" : ""}>已完成</option></select></label>` : ""}
-          ${official ? '<span class="official-event-label"><i data-lucide="badge-check" aria-hidden="true"></i>官方日期</span>' : generated ? '<span class="official-event-label calendar-generated-label"><i data-lucide="sparkles" aria-hidden="true"></i>系統安排</span>' : `<button type="button" class="calendar-action-link danger" data-delete-calendar-event="${escapeHtml(event.id)}"><i data-lucide="trash-2" aria-hidden="true"></i><span>刪除</span></button>`}
+          ${!official && !generated && !workspace ? `<label class="calendar-task-status"><span class="visually-hidden">${escapeHtml(event.title)}狀態</span><select data-calendar-task-status="${escapeHtml(event.id)}" aria-label="${escapeHtml(event.title)}狀態"><option value="todo" ${event.status !== "preparing" && event.status !== "ready" ? "selected" : ""}>未開始</option><option value="preparing" ${event.status === "preparing" ? "selected" : ""}>準備中</option><option value="ready" ${event.status === "ready" ? "selected" : ""}>已完成</option></select></label>` : ""}
+          ${workspace ? `<span>${escapeHtml(event.workspaceDateLabel)}</span><a class="calendar-action-link" href="${escapeHtml(event.workspaceTaskHref)}">開啟準備任務 →</a>` : official ? '<span class="official-event-label"><i data-lucide="badge-check" aria-hidden="true"></i>官方日期</span>' : generated ? '<span class="official-event-label calendar-generated-label"><i data-lucide="sparkles" aria-hidden="true"></i>系統安排</span>' : `<button type="button" class="calendar-action-link danger" data-delete-calendar-event="${escapeHtml(event.id)}"><i data-lucide="trash-2" aria-hidden="true"></i><span>刪除</span></button>`}
         </div>
       </div>
     </article>`;
