@@ -399,6 +399,16 @@ window.UniWayHome = (() => {
       initIcons();
       return;
     }
+    const earthToggle = event.target.closest("#mt-earth-toggle");
+    if (earthToggle) {
+      const paused = earthToggle.getAttribute("aria-pressed") !== "true";
+      earthToggle.setAttribute("aria-pressed", String(paused));
+      earthToggle.setAttribute("aria-label", paused ? "繼續地球轉動" : "暫停地球轉動");
+      earthToggle.closest(".mt-earth").dataset.paused = String(paused);
+      earthToggle.innerHTML = `<i data-lucide="${paused ? "play" : "pause"}" aria-hidden="true"></i>`;
+      initIcons();
+      return;
+    }
     const map = event.target.closest("[data-home-open-map]");
     if (map) { openMap(event); return; }
     if (event.target.closest("[data-home-pick-school]")) { openSchoolOnboarding(); return; }
