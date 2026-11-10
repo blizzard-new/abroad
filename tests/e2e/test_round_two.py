@@ -176,7 +176,7 @@ def test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full(page, 
 
 
 @pytest.mark.parametrize("theme", ["light", "dark"])
-def test_the_search_page_controls_are_soft_pills_without_outlines(page, live_server, theme):
+def test_search_controls_are_readable_and_the_primary_action_is_clear(page, live_server, theme):
     page.set_viewport_size({"width": 1360, "height": 800})
     page.add_init_script(f"localStorage.setItem('exchange-guide-theme', '{theme}')")
     page.goto(f"{live_server.base_url}/?view=map#partners")
@@ -186,10 +186,10 @@ def test_the_search_page_controls_are_soft_pills_without_outlines(page, live_ser
     for selector in ("#map-global", "#map-home", ".discovery-open-workspace", ".discovery-criteria", ".pr-view-toggle"):
         width, radius, background = page.evaluate(style, selector)
         assert width == "0px" and radius >= 20 and background != "rgba(0, 0, 0, 0)", (selector, width, radius, background)
-    for selector in (".pr-search", ".pr-search-button", ".partner-map-stage"):
+    for selector in (".pr-search", ".pr-search-button"):
         _, radius, _ = page.evaluate(style, selector)
-        assert radius >= 20, (selector, radius)
-    # The search board is no longer a black slab: its text is readable on the bubbles it holds.
+        assert radius == 12, (selector, radius)
+    # The unified fields retain readable text in both themes.
     ink, _ = luminance_and_alpha(page.locator("#partner-search").evaluate("el => getComputedStyle(el).color"))
     bubble, _ = luminance_and_alpha(page.locator(".pr-search .pr-field").first.evaluate("el => getComputedStyle(el).backgroundColor"))
     assert abs(ink - bubble) > 120, (ink, bubble)

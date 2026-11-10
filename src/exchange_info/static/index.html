@@ -53,7 +53,7 @@
     <link rel="stylesheet" href="/static/ux-task-first.css?v=20261101-1" />
     <link rel="stylesheet" href="/static/application-today.css?v=20261109-gate-1" />
     <link rel="stylesheet" href="/static/assets/fonts/notosans-tc/notosans-tc.css?v=20261108-metro-1" />
-    <link rel="stylesheet" href="/static/metro.css?v=20261110-skin-1" />
+    <link rel="stylesheet" href="/static/metro.css?v=20261110-uniiway-clarity-8" />
   </head>
   <body class="global-home-mode unified-shell">
     <noscript><section style="position:relative;z-index:100;padding:2rem;background:#fff;color:#142c35"><h1>UniWay 交換學生申請與選校資訊</h1><p>依就讀大學查詢合作校、名額狀態、申請條件與官方來源。</p><a href="/schools">瀏覽交換學校指南（不需 JavaScript）</a><p>互動選校、收藏及申請工具需要啟用 JavaScript。</p></section></noscript>
@@ -1141,7 +1141,7 @@
 
           <section id="favorites" class="page-section favorites-section" data-university-page="favorites" aria-labelledby="favorites-title" hidden>
             <div class="section-heading">
-              <div><h2 id="favorites-title" role="heading" aria-level="1">我的選校</h2><p id="discovery-save-note" hidden></p></div>
+              <div><h1 id="favorites-title">我的選校</h1><p id="discovery-save-note" hidden></p></div>
               <span class="count-badge" id="favorite-count">0 所</span>
             </div>
             <div id="favorite-list" class="favorite-list"></div>
@@ -1151,7 +1151,7 @@
 
           <section id="calendar" class="page-section application-calendar-section" data-university-page="calendar" aria-labelledby="application-calendar-title" hidden>
             <header class="calendar-header glass-panel">
-              <div><h2 id="application-calendar-title" role="heading" aria-level="1">我的申請日曆</h2><p>掌握期限，把準備任務安排在出發之前。</p></div>
+              <div><h1 id="application-calendar-title">我的申請日曆</h1><p>掌握期限，把準備任務安排在出發之前。</p></div>
               <div id="calendar-next-summary" class="calendar-next-summary"><span class="skeleton skeleton-stat"></span></div>
             </header>
             <div id="calendar-verified-window-hook" class="verified-window-hook-container" aria-live="polite"></div>
@@ -1230,19 +1230,19 @@
           </section>
 
           <section id="deadlines" class="page-section standalone-route-page" data-university-page="deadlines" aria-labelledby="deadlines-title" hidden>
-            <div class="section-heading compact-heading"><div><h2 id="deadlines-title">校內梯次與申請時程</h2><p>請留意日期的適用年度與申請身分。</p></div><i class="heading-icon" data-lucide="calendar-days" aria-hidden="true"></i></div>
+            <div class="section-heading compact-heading"><div><h1 id="deadlines-title">校內梯次與申請時程</h1><p>請留意日期的適用年度與申請身分。</p></div><i class="heading-icon" data-lucide="calendar-days" aria-hidden="true"></i></div>
             <div id="deadlines-verified-window-card" class="verified-window-card-container" aria-live="polite"></div>
             <div id="period-list" class="deadline-list" aria-busy="true"><div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div></div>
           </section>
 
           <section id="scholarships" class="page-section standalone-route-page" data-university-page="scholarships" aria-labelledby="scholarships-title" hidden>
-            <div class="section-heading compact-heading"><div><h2 id="scholarships-title">補助資訊</h2></div><i class="heading-icon" data-lucide="badge-dollar-sign" aria-hidden="true"></i></div>
+            <div class="section-heading compact-heading"><div><h1 id="scholarships-title">補助資訊</h1></div><i class="heading-icon" data-lucide="badge-dollar-sign" aria-hidden="true"></i></div>
             <div id="scholarship-match-summary" class="scholarship-match-summary"></div>
             <div id="scholarship-list" class="scholarship-list" aria-busy="true"><div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div></div>
           </section>
 
           <section id="budget" class="page-section budget-section" data-university-page="budget" aria-labelledby="budget-title" hidden>
-            <div class="section-heading"><div><h2 id="budget-title" role="heading" aria-level="1">交換預算</h2><p>用同一幣別估算總成本，並保留學校官方生活費來源。</p></div><i class="heading-icon" data-lucide="calculator" aria-hidden="true"></i></div>
+            <div class="section-heading"><div><h1 id="budget-title">交換預算</h1><p>用同一幣別估算總成本，並保留學校官方生活費來源。</p></div><i class="heading-icon" data-lucide="calculator" aria-hidden="true"></i></div>
             <div class="budget-layout">
               <form id="budget-form" class="budget-form">
                 <label class="budget-school-field"><span>估算學校</span><select id="budget-school" name="school_name" required></select></label>
@@ -1265,7 +1265,7 @@
           </section>
 
           <section id="eligibility" class="page-section eligibility-section" data-university-page="eligibility" aria-labelledby="eligibility-title" hidden>
-            <div class="section-heading"><div><h2 id="eligibility-title">資格與志願清單</h2><p>資格初判供參考，正式結果以校方認定為準。</p></div></div>
+            <div class="section-heading"><div><h1 id="eligibility-title">資格與志願清單</h1><p>資格初判供參考，正式結果以校方認定為準。</p></div></div>
             <div class="eligibility-layout">
               <div id="eligibility-result" class="eligibility-result" role="status" aria-live="polite"><div class="result-placeholder"><i data-lucide="clipboard-check" aria-hidden="true"></i><strong>還沒開始檢查</strong><span>填入資料後，系統會比對校內基本門檻與合作校公開條件。</span></div></div>
             </div>
@@ -1273,7 +1273,7 @@
 
           <section id="application-center" class="page-section application-center-section" data-university-page="application-center" aria-labelledby="application-center-title" hidden>
             <header class="application-center-hero">
-              <div><h2 id="application-center-title" role="heading" aria-level="1">申請文件</h2><p class="application-center-intro">先確認申請設定，再選一份本階段的文件開始填寫。可隨時保存，下次接著完成。</p></div>
+              <div><h1 id="application-center-title">申請文件</h1><p class="application-center-intro">先確認申請設定，再選一份本階段的文件開始填寫。可隨時保存，下次接著完成。</p></div>
               <div class="application-center-hero-actions"><a href="#document-check" class="secondary-button"><i data-lucide="scan-search" aria-hidden="true"></i><span>檢查已寫文件</span></a><div class="application-center-hero-mark" aria-hidden="true"><i data-lucide="file-check-2"></i></div></div>
             </header>
 
@@ -1378,7 +1378,7 @@
 
           <section id="document-check" class="page-section document-check-section" data-university-page="document-check" aria-labelledby="document-check-title" hidden>
             <header class="document-check-hero">
-              <div><h2 id="document-check-title" role="heading" aria-level="1">文件檢查</h2><p>找出漏填、字數與簽名風險。</p></div>
+              <div><h1 id="document-check-title">文件檢查</h1><p>找出漏填、字數與簽名風險。</p></div>
               <span aria-hidden="true"><i data-lucide="scan-search"></i></span>
             </header>
             <section id="document-check-gate" class="document-check-gate glass-panel" aria-live="polite"><div class="skeleton skeleton-card"></div></section>
@@ -1648,13 +1648,13 @@
     <script src="/static/application-path-select.js?v=20261029-level-tools-3" defer></script>
     <script src="/static/application-path-template.js?v=20261102-3" defer></script>
     <script src="/static/application-path.js?v=20261109-ui-2" defer></script>
-    <script src="/static/app.js?v=20261110-skin-1" defer></script>
+    <script src="/static/app.js?v=20261110-uniiway-clarity-2" defer></script>
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261029-midnight-1" defer></script>
     <script src="/static/platform-home.js?v=20261027-search-first-1" defer></script>
     <script src="/static/home-motion.js?v=20261027-remove-home-cta-1" defer></script>
-    <script src="/static/platform-explore.js?v=20261030-space-1" defer></script>
-    <script src="/static/platform-detail.js?v=20261017-ntu-reference-1" defer></script>
+    <script src="/static/platform-explore.js?v=20261110-uniiway-clarity-2" defer></script>
+    <script src="/static/platform-detail.js?v=20261110-uniiway-clarity-3" defer></script>
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-tracker.js?v=20261109-earth-1" defer></script>
     <script src="/static/platform-forum.js?v=20261015-redesign-1" defer></script>

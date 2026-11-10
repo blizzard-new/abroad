@@ -28,7 +28,7 @@ def test_school_search_and_my_application_are_in_the_metro_world(page, live_serv
     assert skin(page) == "metro"
     # The five-line band across the top is the world's own, and the names the older stylesheets read point at its ink.
     assert BAND in backdrop(page)
-    assert token(page, "--uw-accent") == token(page, "--mt-ink")
+    assert token(page, "--uw-accent") == token(page, "--mt-action")
 
 
 @pytest.mark.parametrize("route", CLASSIC)
@@ -81,8 +81,13 @@ def test_on_a_phone_a_classic_page_keeps_its_own_header_and_drawer(page, live_se
     header = page.locator(".glass-mobile-header")
     assert header.evaluate("el => getComputedStyle(el).borderTopLeftRadius") != "0px", "the rounded glass header"
     assert header.evaluate("el => getComputedStyle(el).borderBottomWidth") == "1px"
+    expect(header.locator(".mobile-guide-link")).to_have_attribute("href", "/guides")
     enter_public_site(page, live_server, "partners")
-    assert header.evaluate("el => getComputedStyle(el).borderBottomWidth") == "2px", "the metro header rule"
+    assert header.evaluate("el => getComputedStyle(el).borderBottomWidth") == "1px", "the shared fine divider"
+    assert header.evaluate("el => getComputedStyle(el).borderTopLeftRadius") == "0px", "the metro header stays flat"
+    expect(header.get_by_role("link", name="找學校")).to_have_attribute("href", "#partners")
+    enter_public_site(page, live_server, "forum")
+    expect(header.locator(".mobile-guide-link")).to_have_attribute("href", "/guides")
 
 
 def test_moving_between_pages_switches_the_world_and_back(page, live_server):
@@ -95,6 +100,7 @@ def test_moving_between_pages_switches_the_world_and_back(page, live_server):
     expect(page.locator("#partners")).to_be_visible()
     assert skin(page) == "metro"
     # The school page opened from the search belongs to it.
+    page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     expect(page.locator("#school-detail-view")).to_be_visible()
     assert skin(page) == "metro"

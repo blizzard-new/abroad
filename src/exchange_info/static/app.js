@@ -8989,7 +8989,7 @@ function renderPartnerTable() {
 
 function partnerCardBadge(availability, match) {
   if (availability.blocked || availability.pending) return { tone: "warn", label: availability.cardLabel };
-  if (state.eligibilityProfile) return match.tone === "strong" ? { tone: "ok", label: "符合資格" } : { tone: "warn", label: match.label };
+  if (state.eligibilityProfile) return match.tone === "strong" ? { tone: "ok", label: "已知條件相符" } : { tone: "warn", label: match.label };
   return { tone: "ok", label: availability.cardLabel };
 }
 
@@ -14191,6 +14191,13 @@ function syncSkin() {
   const metro = document.body.classList.contains("school-detail-open") || METRO_PAGES.has(document.body.dataset.activeUniversityPage);
   if (metro) document.documentElement.dataset.skin = "metro";
   else delete document.documentElement.dataset.skin;
+  const mobileAction = document.querySelector(".glass-mobile-header .mobile-guide-link");
+  if (mobileAction) {
+    mobileAction.setAttribute("href", metro ? "#partners" : "/guides");
+    mobileAction.innerHTML = metro
+      ? '找學校 <span aria-hidden="true">→</span>'
+      : '交換指南 <span aria-hidden="true">↗</span>';
+  }
 }
 
 function showUniversityPage(pageId, { resetScroll = true, focusHeading = true } = {}) {
@@ -15493,4 +15500,4 @@ async function boot() {
 }
 
 // The loading screen goes when starting is over, however it ended; it can never stay in front of the page for good.
-boot().finally(() => window.UniWaySplash?.done());
+const appReady = boot().finally(() => window.UniWaySplash?.done());

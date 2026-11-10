@@ -4,6 +4,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from bs4 import BeautifulSoup
+
 STATIC = Path("src/exchange_info/static")
 HTML = (STATIC / "index.html").read_text(encoding="utf-8")
 CSS = (STATIC / "mascot.css").read_text(encoding="utf-8")
@@ -13,7 +15,11 @@ BODY = HTML[HTML.index("<body"):]
 
 
 def test_the_loading_screen_is_the_first_thing_in_the_body_and_is_announced_politely() -> None:
-    assert re.match(r'<body[^>]*>\s*<div id="boot-splash" class="boot-splash" role="status" aria-live="polite">', BODY)
+    body = BeautifulSoup(HTML, "html.parser").body
+    # The no-JavaScript fallback is not rendered when the application runs.
+    first = next(child for child in body.find_all(recursive=False) if child.name != "noscript")
+    assert first.get("id") == "boot-splash"
+    assert first.get("role") == "status" and first.get("aria-live") == "polite"
     screen = BODY[:BODY.index("</div>")]
     assert "正在載入中" in screen
     assert 'class="uw-mascot" data-mood="busy" data-play data-tilt aria-hidden="true"' in screen

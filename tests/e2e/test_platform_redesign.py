@@ -91,7 +91,7 @@ def test_home_has_no_decorative_guide_lines_or_sample_cards(page, live_server) -
 
 
 def test_home_cards_show_the_visitors_real_schools_not_samples(browser, live_server) -> None:
-    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    context = browser.new_context(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
     page = context.new_page()
     errors: list[str] = []
     page.on("pageerror", lambda error: errors.append(str(error)))
@@ -109,6 +109,7 @@ def test_home_cards_show_the_visitors_real_schools_not_samples(browser, live_ser
         # Searching from the card carries the words to the explore page.
         page.locator("#home-search-input").fill("日本")
         page.locator("#home-search-form button[type=submit]").click()
+        assert not errors
         expect(page.locator("#partners")).to_be_visible()
         assert page.evaluate("new URLSearchParams(location.search).get('q')") == "日本"
         assert not errors
@@ -170,6 +171,7 @@ def test_home_hero_is_a_half_globe_that_fades_away_while_scrolling(browser, live
 
 def test_explore_sorts_and_compares_schools(page, live_server) -> None:
     enter_public_site(page, live_server, "partners")
+    page.locator('[data-partner-view="list"]').click()
     cards = page.locator("#partner-table .pr-school-card")
     expect(cards.first).to_be_visible(timeout=30_000)
     tab = page.locator('[data-partner-sort="quota"]')
@@ -347,16 +349,18 @@ def test_application_workspace_tools_are_available_on_demand(page, live_server) 
     live_server.register(email)
     login_through_web(page, live_server, email)
     page.evaluate("location.hash = '#advisor'")
-    tools = page.locator("#application-workspace-tools")
+    tools = page.locator('.application-tools-heading nav[aria-label="我的申請工具"]')
     expect(tools).to_be_hidden()
-    page.locator("#application-workspace-tool-menu > summary").click()
-    expect(tools.locator("a")).to_have_count(3)
-    expect(tools.locator("a").nth(0)).to_have_attribute("aria-current", "page")
-    expect(page.get_by_role("link", name="候選與比較", exact=True)).to_be_visible()
+    expect(page.locator('.application-tools-heading a[href="#my-application"]')).to_be_visible()
     page.evaluate("location.hash = '#overview'")
+    expect(page.locator("#schedule-view")).to_be_visible()
     expect(tools).to_be_hidden()
-    page.locator("#application-workspace-tool-menu > summary").click()
+    page.evaluate("location.hash = '#calendar'")
+    expect(tools).to_be_visible()
     expect(tools.locator("a")).to_have_count(5)
+    expect(tools.locator('a[href="#calendar"]')).to_have_attribute("aria-current", "page")
+    tools.get_by_role("link", name="預算", exact=True).click()
+    expect(page.locator("#budget")).to_be_visible()
 
 
 def _card_names(page) -> list[str]:
@@ -365,6 +369,7 @@ def _card_names(page) -> list[str]:
 
 def test_explore_language_and_term_dropdowns_change_the_school_list(page, live_server) -> None:
     enter_public_site(page, live_server, "partners")
+    page.locator('[data-partner-view="list"]').click()
     expect(page.locator("#partner-table .pr-school-card").first).to_be_visible(timeout=30_000)
     # Three schools that say something about tests and intakes, the rest say nothing.
     names = page.evaluate(
@@ -440,10 +445,11 @@ def test_tracker_lists_tasks_and_switches_views(page, live_server) -> None:
     login_through_web(page, live_server, email)
     page.evaluate("location.hash = '#overview'")
     expect(page.locator("#my-applications")).to_be_visible()
-    expect(page.locator("#tracker-title")).to_have_text("我的準備任務")
+    expect(page.locator("#tracker-title")).to_have_text("待辦與期限")
     expect(page.locator(".pr-views")).to_be_hidden()
     page.locator("#tracker-add").click()
-    form = page.locator("#calendar-event-form")
+    form = page.locator("#my-applications [data-tracker-quick]")
+    expect(form).to_be_visible()
     form.locator('[name="title"]').fill("準備交換申請資料")
     form.locator('[name="date"]').fill("2027-02-01")
     form.locator('button[type="submit"]').click()
