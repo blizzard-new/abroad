@@ -111,8 +111,8 @@ def test_the_mascot_is_a_solid_with_sides_a_front_and_light() -> None:
         assert 'class="uw-mascot-slab"' in markup and 'class="uw-mascot-sheen"' in markup and "data-tilt" in markup
 
 
-def test_the_home_page_has_no_traveller_drawing_and_no_route_map() -> None:
+def test_the_home_page_shows_the_mascot_where_the_traveller_drawing_was() -> None:
     assert "journey-guide-art" not in HTML and "journey/explorer.webp" not in HTML
     landing = HTML[HTML.index('<section id="home-landing"'):HTML.index('<section id="guide"')]
-    assert "data-metro-route" not in landing and "home-plan-steps" not in landing
+    assert 'class="uw-mascot pr-collage-mascot" data-play data-tilt' in landing
     assert "journey-guide-art" not in (STATIC / "journey.css").read_text(encoding="utf-8")

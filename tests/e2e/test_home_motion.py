@@ -16,6 +16,7 @@ def test_scroll_story_is_reversible_and_keeps_real_navigation(page, live_server)
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     enter_public_site(page, live_server)
+    original_plan = page.locator("#home-plan-steps").inner_text()
     center_stage(page, 0)
     first_plane = page.locator(".hm-route-plane").get_attribute("transform")
     center_stage(page, 1)
@@ -26,6 +27,8 @@ def test_scroll_story_is_reversible_and_keeps_real_navigation(page, live_server)
     expect(page.locator(".hm-route-title")).to_have_text("完成合作校申請")
     center_stage(page, 1)
     expect(page.locator(".hm-route-title")).to_have_text("準備校內甄選")
+    # The illustration describes the section being read, never changes the saved plan.
+    assert page.locator("#home-plan-steps").inner_text() == original_plan
     page.locator(".pr-stages > li").first.get_by_role("link").click()
     expect(page.locator("#partners")).to_be_visible()
     assert page.evaluate(
@@ -46,7 +49,7 @@ def test_home_motion_fits_and_remains_readable(browser, live_server, width, them
     page.add_init_script(f"localStorage.setItem('exchange-guide-theme', '{theme}')")
     try:
         enter_public_site(page, live_server)
-        page.locator("#home-guides-title").scroll_into_view_if_needed()
+        page.get_by_role("button", name="往下探索你的交換旅程").click()
         expect(page.locator("#home-guides-title")).to_be_in_viewport()
         for selector in [".pr-features", ".pr-map-band", ".pr-journey", ".pr-forum-preview", ".pr-footer"]:
             page.locator(selector).scroll_into_view_if_needed()

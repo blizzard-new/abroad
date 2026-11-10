@@ -116,6 +116,20 @@ components:
 
 # Design System: UniWay
 
+## Scope: which pages this system draws
+
+This system draws two sections of the Web app and the top bar. Everything else keeps the look it had before the metro redesign (the "classic" look: midnight blue, glass panels, soft gradients, from the older stylesheets).
+
+| Drawn in the metro world | Classic look, unchanged |
+|---|---|
+| School search (`#partners`, `#search`) and the school page it opens (`#school=…`) | Home (`#home`) |
+| Everything the top bar lights 我的申請 for: `#my-application`, `#eligibility`, `#application-center`, `#application-form=…`, `#calendar`, `#deadlines`, `#budget`, `#scholarships`, `#favorites`, `#document-check`, `#writing-assistant`, `#documents`, `#advisor`, and the in-app guide `#guide` | Forum and school boards (`#forum`, `#public-board`, `#university-posts`, …), 用戶評價 (`#feedback`), profile (`#profile`) |
+| The top bar, on screens wider than 900px, on **every** page | The server-rendered pages (`/guides`, `/schools`, `/partners`, `/privacy`, `/terms`); the phone header and drawer on classic pages |
+
+How it is switched: `app.js` sets `html[data-skin="metro"]` while a metro page is on screen (`syncSkin`, driven by the page shown, not by the address). In `metro.css` every rule that paints a page is written under `[data-skin="metro"]`, including the re-pointing of the legacy tokens. Only the `--mt-*` tokens and the wide-screen top bar (section 19, with the page centring it needs) are global. A new rule for a metro page must start with `[data-skin="metro"]`; a rule without it changes the classic pages too. To move another page into the metro world, add its page id to `METRO_PAGES` in `app.js` and check it against `tests/e2e/test_skin_scope.py`.
+
+The metro design of the home (night sky, one sentence, the search board, the turning Earth) and of the reading pages is **not in the build**. It is described below because the document was written with it; the code for it is in the history at commit `bff878ea`. Read every passage below about the home hero, the Earth, the home board, the supported-school ticker, the journey sign and the reading pages as describing that parked design.
+
 ## Overview
 
 **Creative North Star: "The Route Map From Your Own Campus"**
@@ -291,3 +305,4 @@ A board-coloured sign with an orange "01 — 04" position index (30px 900), a 22
 - **The home board's button** fills the search page's own term and language-test fields and opens `#partners` with the typed place (`syncBoard` and the `mt-board` submit handler in `platform-home.js`). That wiring once lived in the deleted route-map script and was lost with it; `test_round_two.py` now covers it.
 - **The Earth turns for everyone, and can be paused**: the system's "reduce motion" setting does not stop it (it runs at 270 s a turn instead of 90 s; `motion.css` switches every animation off with `!important` in that case, so `metro.css` has to say it again, as strongly), and a round button at the right of the Earth (`#mt-earth-toggle`) pauses and resumes it for anyone. The map's own "動態效果" button stays disabled under that setting.
 - **The home board is soft and round too** (`metro.css` section 22): a cream tray on the night sky, white bubbles with dark text and tinted captions, the same chunky button as the school search. Its colours are fixed rather than tokens, because the home is always night while the bubbles are always light.
+- **Two sections, not the whole site** (see Scope at the top): school search with its school page, and 我的申請, are the metro world; the home, the forum, 用戶評價, the profile and the server-rendered pages went back to the classic look they have on the live site, and the home's markup and script (`platform-home.js`) are the classic ones again. The top bar is shared by every page on wide screens. On a classic page `body::before` is that page's own backdrop, so the five-colour band is drawn as the top edge of the bar instead (`metro.css` section 23). School marks take the colour wheel only on metro pages; classic pages keep the one blue. The footer note under every page keeps the fuller classic wording.

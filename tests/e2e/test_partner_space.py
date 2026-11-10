@@ -41,7 +41,7 @@ def test_space_globe_drag_zoom_filters_and_route_cleanup(page, live_server, size
     output.mkdir(exist_ok=True)
     page.evaluate('scrollTo(0, 0)')
     page.screenshot(path=str(output / f'globe-{size[0]}.png'), full_page=True)
-    # The whole route sits in the same world as every page (the theme's ground and the five-line band across the top)
+    # The whole route sits in the metro world (the theme's ground and the five-line band across the top)
     # and has no enclosing map surface.
     assert page.locator('#partner-map-panel').evaluate('el => getComputedStyle(el).borderTopWidth') == '0px'
     assert page.locator('#partner-map-panel').evaluate('el => getComputedStyle(el).backgroundColor') == 'rgba(0, 0, 0, 0)'
@@ -70,9 +70,11 @@ def test_space_globe_drag_zoom_filters_and_route_cleanup(page, live_server, size
     page.locator('[data-partner-view="map"]').click()
     ready(page)
     page.evaluate("document.documentElement.dataset.theme = 'dark'")
-    # Night follows the theme: the same dark ground as every other page, not a separate space canvas.
+    # Night follows the theme: the metro world's dark ground, not a separate space canvas.
     page.wait_for_function("() => getComputedStyle(document.documentElement).backgroundColor === 'rgb(17, 21, 28)'")
     page.evaluate("location.hash = '#home'")
     expect(page.locator('#partners')).to_be_hidden()
-    assert 'data:image/svg+xml' in page.locator('body').evaluate('el => getComputedStyle(el, "::before").backgroundImage')
+    # Leaving the search page leaves the metro world: the home draws its own backdrop there, not the five-line band.
+    assert page.evaluate("document.documentElement.dataset.skin") is None
+    assert 'data:image/svg+xml' not in page.locator('body').evaluate('el => getComputedStyle(el, "::before").backgroundImage')
     assert not errors
