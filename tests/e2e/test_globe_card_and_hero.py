@@ -44,22 +44,33 @@ def test_the_school_card_shows_its_figures_and_never_needs_a_scroll(page, live_s
     assert not errors
 
 
-def test_the_globe_is_the_real_earth_with_markers_that_read_on_sea_and_land(page, live_server):
+def test_the_search_globe_is_a_pastel_toy_with_coral_markers_on_the_pages_own_white(page, live_server):
     page.set_viewport_size({'width': 1440, 'height': 1000})
     page.add_init_script(INSTRUMENT)
     page.goto(f'{live_server.base_url}/#partners')
     expect(page.locator('#boot-splash')).to_be_hidden(timeout=90000)
     ready(page)
     assert page.evaluate('window.__testedMap.getProjection().type') == 'globe'
-    assert page.evaluate("window.__testedMap.getLayer('earth').type") == 'raster'
-    assert page.evaluate("window.__testedMap.getSource('earth').type") == 'image'
-    # Saturated, not washed out: the photograph is shown at full colour in daylight and only dimmed at night.
-    assert page.evaluate("window.__testedMap.getPaintProperty('earth', 'raster-brightness-max')") == 1
-    assert page.evaluate("window.__testedMap.getPaintProperty('school-points', 'circle-stroke-color')") != '#ffffff'
+    # Not a photograph: no raster Earth, flat tinted countries on a light-blue sea, and no glow around the planet.
+    assert page.evaluate("window.__testedMap.getLayer('earth') === undefined && window.__testedMap.getSource('earth') === undefined")
+    fill = page.evaluate("window.__testedMap.getPaintProperty('land', 'fill-color')")
+    assert fill[0] == 'match' and len({value for value in fill if isinstance(value, str) and value.startswith('#')}) >= 6, fill
+    assert page.evaluate("window.__testedMap.getPaintProperty('ocean', 'background-color')") == '#bfe4ff'
+    assert page.evaluate("window.__testedMap.getStyle().sky['atmosphere-blend']") == 0
+    # The markers are coral with a white ring, so they read on every tint.
+    assert page.evaluate("window.__testedMap.getPaintProperty('school-points', 'circle-color')") == '#ff6f91'
+    assert page.evaluate("window.__testedMap.getPaintProperty('school-points', 'circle-stroke-color')") == '#ffffff'
+    # Its window has no colour of its own: the stage is the same white as the page around it.
+    stage = page.locator('.partner-map-stage').evaluate("el => [getComputedStyle(el).backgroundColor, getComputedStyle(el).backgroundImage]")
+    assert stage == ['rgb(255, 255, 255)', 'none'], stage
+    assert page.evaluate("getComputedStyle(document.body).backgroundColor") == 'rgb(255, 255, 255)'
+    # Night repaints the same toy in deeper colours.
     page.evaluate("document.documentElement.dataset.theme = 'dark'")
-    page.wait_for_function("() => window.__testedMap.getPaintProperty('earth', 'raster-brightness-max') < 1")
+    page.wait_for_function("() => window.__testedMap.getPaintProperty('ocean', 'background-color') === '#2b3f73'")
     page.evaluate("document.documentElement.dataset.theme = 'light'")
-    response = page.request.get(f'{live_server.base_url}/static/assets/partner-map/earth-mercator.jpg')
+    # The photograph is gone from the app; the home's own strip of the Earth is still served.
+    assert page.request.get(f'{live_server.base_url}/static/assets/partner-map/earth-mercator.jpg').status == 404
+    response = page.request.get(f'{live_server.base_url}/static/assets/partner-map/earth-equirect.jpg')
     assert response.ok and response.headers['content-type'].startswith('image/jpeg')
 
 

@@ -542,7 +542,18 @@ body.unified-shell #home-landing .mt-hero { grid-template-columns: minmax(0, 1fr
 #home-landing .mt-earth-disc::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 50% 0%, #0000 0 42%, #0208125c 76%, #020812c4 100%); }
 /* It opens over Asia, where the students are leaving from, and turns one full circle in seven minutes. */
 @keyframes mt-earth-spin { from { transform: translateX(calc(var(--d) * -1.11)); } to { transform: translateX(calc(var(--d) * -3.11)); } }
-@media (prefers-reduced-motion: reduce) { #home-landing .mt-earth-strip { animation: none; } }
+/* The Earth turns for everyone: a visitor whose system asks for less motion gets a third of the speed, and the button pauses it. */
+/* (motion.css switches every animation off under that preference with !important, so the Earth has to say it again, as strongly.) */
+@media (prefers-reduced-motion: reduce) { html body.unified-shell #home-landing .mt-earth-strip { animation: mt-earth-spin 270s linear infinite !important; } }
+#home-landing .mt-earth[data-paused="true"] .mt-earth-strip, html body.unified-shell #home-landing .mt-earth[data-paused="true"] .mt-earth-strip { animation-play-state: paused !important; }
+#home-landing .mt-earth-toggle {
+  position: absolute; z-index: 2; top: 6px; right: max(14px, 2.5cqi); display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 999px;
+  background: #ffffff26; color: #fff; cursor: pointer; pointer-events: auto; transition: background 140ms ease, transform 140ms ease;
+}
+#home-landing .mt-earth-toggle:hover { background: #ffffff40; transform: translateY(-2px); }
+#home-landing .mt-earth-toggle:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+#home-landing .mt-earth-toggle .lucide { width: 18px; height: 18px; }
+@media (prefers-reduced-motion: reduce) { #home-landing .mt-earth-toggle { transition: none; } #home-landing .mt-earth-toggle:hover { transform: none; } }
 @media (max-width: 700px) {
   #home-landing .mt-sky { padding-top: 28px; gap: 18px; }
   #home-landing .mt-earth { height: 96px; }
@@ -754,17 +765,49 @@ body.unified-shell #partners.pr-explore .partner-map-list button[aria-current] {
 html body.unified-shell #partners.pr-explore.pr-explore .pr-sort-tabs { padding: 6px; border: 0; border-radius: 28px; background: var(--cute-soft); box-shadow: none; }
 html body.unified-shell #partners.pr-explore.pr-explore .pr-sort-tabs button { border: 0; border-radius: 22px; }
 html body.unified-shell #partners.pr-explore.pr-explore .pr-sort-tabs button.on { background: var(--mt-ground); box-shadow: var(--cute-shadow); }
-/* the window: round, a pastel sky behind the Earth, and tall enough that the globe fills it */
-html body.unified-shell #partners.pr-explore.pr-explore .partner-map-stage {
-  border-radius: 34px; overflow: hidden;
-  background: radial-gradient(circle at 14% 10%, color-mix(in srgb, var(--mt-orange) 30%, transparent) 0, transparent 40%),
-    radial-gradient(circle at 90% 88%, color-mix(in srgb, var(--mt-red) 20%, transparent) 0, transparent 44%),
-    color-mix(in srgb, var(--mt-blue) 13%, var(--mt-ground));
-}
+/* the window: no colour of its own, the same white as the page around it, so the globe floats on the page; it is tall enough that the globe fills it */
+html body.unified-shell #partners.pr-explore.pr-explore .partner-map-stage { border-radius: 34px; overflow: hidden; background: var(--mt-ground); }
+body.unified-shell #partners.pr-explore #partner-globe .maplibregl-canvas { filter: drop-shadow(0 16px 16px color-mix(in srgb, var(--mt-blue) 26%, transparent)); }
+body.unified-shell #partners.pr-explore .map-home-marker { border-color: #fff; background: #ff6f91; color: #fff; }
+body.unified-shell #partners.pr-explore .map-home-marker::after { border-color: #ff6f91; }
 @media (min-width: 901px) {
   html body.unified-shell #partners.pr-explore.pr-explore .partner-map-stage { height: clamp(700px, calc(100dvh - 88px), 1100px); }
 }
 @media (prefers-reduced-motion: reduce) {
   body.unified-shell #partners.pr-explore :is(.pr-search-button, .partner-map-actions .secondary-button) { transition: none; }
   body.unified-shell #partners.pr-explore :is(.pr-search-button:hover, .pr-search-button:active, .partner-map-actions .secondary-button:hover:not(:disabled)) { transform: none; }
+}
+
+/* 22. The home board is soft and round too: a cream tray under the night sky, white bubbles, tinted captions and the same chunky button as the
+   school search. The colours are fixed (not tokens) because the home is always night while the bubbles are always light. */
+html body.unified-shell #home-landing .mt-sky .mt-board {
+  gap: 8px; padding: 8px; border-radius: 30px; background: #ffe2a1; outline: 0; overflow: visible; box-shadow: 0 12px 34px #00000059;
+}
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell {
+  min-height: 68px; padding: 10px 22px; border: 0; border-radius: 22px; background-color: #fff; color: #1a1d23;
+}
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell:hover { background-color: #fff6e0; }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell:focus-within, html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell:focus-visible { outline: 3px solid #1f6fd1; outline-offset: 2px; }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell small { font-weight: 800; letter-spacing: .04em; }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell:nth-child(1) small { color: #c81f26; }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell:nth-child(2) small { color: #a35f00; }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell:nth-child(3) small { color: #165cb4; }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell:nth-child(4) small { color: #0c7d56; }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell :is(strong, input, select) { color: #1a1d23; }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell input::placeholder { color: #6b7280; }
+html body.unified-shell #home-landing .mt-sky .mt-board .glide-select .glide-select__trigger, html body.unified-shell #home-landing .mt-sky .mt-board :is(.glide-select__label, .glide-select__chevron) { color: #1a1d23; }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-edit { border: 0; background: #ffe2a1; color: #1a1d23; }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-go {
+  border-radius: 22px; background: var(--mt-orange); color: var(--mt-on-orange); box-shadow: 0 5px 0 color-mix(in srgb, var(--mt-orange) 55%, #5a3a00);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-go:hover { background: var(--mt-orange); transform: translateY(-2px); box-shadow: 0 7px 0 color-mix(in srgb, var(--mt-orange) 55%, #5a3a00); }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-go:active { transform: translateY(3px); box-shadow: 0 2px 0 color-mix(in srgb, var(--mt-orange) 55%, #5a3a00); }
+html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-go:focus-visible { outline: 3px solid #1f6fd1; outline-offset: 3px; }
+@container (max-width: 1060px) {
+  html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell, html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-cell:nth-child(3) { border: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-go { transition: none; }
+  html body.unified-shell #home-landing .mt-sky .mt-board .mt-board-go:is(:hover, :active) { transform: none; }
 }

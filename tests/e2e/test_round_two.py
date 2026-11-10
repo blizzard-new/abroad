@@ -191,15 +191,46 @@ def test_the_earth_on_the_home_turns_visibly(page, live_server):
     assert 40 < moved < 400, moved
 
 
-def test_the_earth_holds_still_when_the_visitor_asks_for_less_motion(page, live_server):
+def test_the_earth_still_turns_slowly_when_the_system_asks_for_less_motion_and_can_be_paused(page, live_server):
     page.emulate_media(reduced_motion="reduce")
     page.set_viewport_size({"width": 1440, "height": 900})
     enter_public_site(page, live_server, "home")
     read = "() => new DOMMatrixReadOnly(getComputedStyle(document.querySelector('.mt-earth-strip')).transform).m41"
     first = page.evaluate(read)
-    page.wait_for_timeout(1500)
-    assert page.evaluate(read) == first
+    page.wait_for_timeout(2000)
+    moved = abs(page.evaluate(read) - first)
+    assert 8 < moved < 60, moved   # a third of the normal speed, still plainly moving
+    # The button stops it and starts it again.
+    toggle = page.locator("#mt-earth-toggle")
+    toggle.click()
+    expect(toggle).to_have_attribute("aria-pressed", "true")
+    expect(toggle).to_have_attribute("aria-label", "繼續地球轉動")
+    held = page.evaluate(read)
+    page.wait_for_timeout(1200)
+    assert page.evaluate(read) == held
+    toggle.click()
+    expect(toggle).to_have_attribute("aria-pressed", "false")
+    page.wait_for_timeout(1200)
+    assert page.evaluate(read) != held
 
+
+def test_the_home_search_board_is_a_soft_tray_of_round_bubbles(page, live_server):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    enter_public_site(page, live_server, "home")
+    style = "(sel) => { const cs = getComputedStyle(document.querySelector(sel)); return [cs.borderTopWidth, parseFloat(cs.borderTopLeftRadius), cs.backgroundColor]; }"
+    for selector in ("#mt-board", "#mt-board .mt-board-cell", "#mt-board .mt-board-go"):
+        width, radius, _ = page.evaluate(style, selector)
+        assert radius >= 20 and width == "0px", (selector, width, radius)
+    bubble, _ = luminance_and_alpha(page.locator("#mt-board .mt-board-cell").first.evaluate("el => getComputedStyle(el).backgroundColor"))
+    text, _ = luminance_and_alpha(page.locator("#mt-board-q").evaluate("el => getComputedStyle(el).color"))
+    assert bubble > 240 and text < 80, (bubble, text)
+    # Nothing is clipped: the board fits the screen at every width.
+    for width in (1440, 900, 393):
+        page.set_viewport_size({"width": width, "height": 900})
+        page.wait_for_timeout(300)
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), width
+        box = page.locator("#mt-board").bounding_box()
+        assert box["x"] >= 0 and box["x"] + box["width"] <= width, (width, box)
 
 @pytest.mark.parametrize("width", [901, 1024, 1440])
 def test_the_wordmark_is_always_beside_the_logo_not_only_on_hover(page, live_server, width):
