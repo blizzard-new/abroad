@@ -16,7 +16,7 @@
   const index = root.querySelector(".hm-route-index");
   const title = root.querySelector(".hm-route-title");
   const revealTargets = [...root.querySelectorAll(
-    ".pr-hero-copy, .pr-plan-card, .pr-collage-mascot, .pr-supported, .pr-editorial .pr-section-head, .pr-guide-card, .pr-features .pr-section-head, .pr-tile, .pr-map-band-copy, .pr-forum-preview .pr-section-head, .pr-board, .pr-social-banner"
+    ".pr-hero-copy, .pr-collage-mascot, .pr-supported, .pr-editorial .pr-section-head, .pr-guide-card, .pr-features .pr-section-head, .pr-tile, .pr-map-band-copy, .pr-forum-preview .pr-section-head, .pr-board, .pr-social-banner"
   )];
   const seen = new WeakSet();
   const animations = new Map();
@@ -67,7 +67,6 @@
     const focus = innerHeight * .52;
     const heroProgress = clamp(-heroBox.top / Math.max(heroBox.height, 1));
     set(collage, "--hm-hero-offset", `${desktop.matches ? -heroProgress * 56 : 0}px`);
-    set(root, "--hm-plan-rotate", `${desktop.matches ? 1.5 * (1 - heroProgress) : 0}deg`);
     if (mapBox.bottom > 0 && mapBox.top < innerHeight) {
       const progress = clamp((innerHeight - mapBox.top) / (innerHeight + mapBox.height));
       set(map, "--hm-map-offset", `${desktop.matches ? (progress - .5) * -64 : 0}px`);
@@ -98,7 +97,7 @@
   }
   function reset() {
     [root, collage, map, journey].forEach(element => {
-      ["--hm-hero-offset", "--hm-plan-rotate", "--hm-map-offset", "--hm-map-scale", "--hm-arc-offset", "--hm-route-progress"]
+      ["--hm-hero-offset", "--hm-map-offset", "--hm-map-scale", "--hm-arc-offset", "--hm-route-progress"]
         .forEach(key => element?.style.removeProperty(key));
     });
     stages.forEach(stage => stage.removeAttribute("data-reading"));

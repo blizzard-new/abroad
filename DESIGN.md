@@ -11,13 +11,16 @@ The owner approved a partial upgrade, based on PR #299:
 | School search (`#partners`, `#search`) and school details | Refined metro section |
 | 我的申請 and its qualification, document, calendar, deadline, budget, scholarship, saved-school, writing and guide tools | Refined metro section |
 | Desktop navigation, above 900px | Shared top bar |
-| Home, forum, school boards, feedback, profile | Existing live appearance |
+| Home hero | Existing palette, centred slogan and rotating globe; remove the exchange-plan card |
+| Rest of home, forum, school boards, feedback, profile | Existing live appearance |
 | Server-rendered `/guides`, `/schools`, `/partners`, `/privacy`, `/terms` | Existing live appearance |
 | Mobile header and drawer on classic pages | Existing live appearance |
 
 `syncSkin()` in `app.js` sets `html[data-skin="metro"]` from the **visible page**, including school detail and fallback routes. Every content rule in `metro.css` must use that attribute. Only the desktop top bar and its existing centering rules are shared. Mobile's primary link is **找學校** within the upgraded sections; it returns to the original **交換指南** link on classic pages.
 
 The full-site metro homepage proposal is archived in Git history at `bff878ea`; it is not the selected production direction. Do not reinstate it or restyle classic pages as part of this refinement.
+
+The owner subsequently requested the limited home-hero changes above. Keep the suitcase mascot clear of the centred text, preserve the globe's reduced-motion and slow-renderer fallback, and leave the actual 我的申請 workflow intact.
 
 ## Tokens and hierarchy
 

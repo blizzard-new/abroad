@@ -41,11 +41,11 @@ def test_every_other_page_keeps_its_own_look(page, live_server, route):
     assert token(page, "--uw-accent") != token(page, "--mt-ink")
 
 
-def test_the_home_is_the_one_visitors_already_know(page, live_server):
+def test_the_home_keeps_its_classic_design_with_the_requested_simpler_hero(page, live_server):
     page.set_viewport_size({"width": 1440, "height": 900})
     enter_public_site(page, live_server, "home")
     expect(page.locator("#home-landing-title")).to_contain_text("你能去哪些交換學校")
-    expect(page.locator("#home-plan-steps li")).to_have_count(4)
+    expect(page.locator(".pr-plan-card")).to_have_count(0)
     expect(page.locator(".pr-collage-mascot")).to_be_visible()
     # Labels above headings and the lines under them belong to this look; the metro pages hide them.
     expect(page.locator("#home-landing .pr-kicker").first).to_be_visible()
