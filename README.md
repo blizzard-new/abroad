@@ -24,6 +24,10 @@ https://new.ntpu.edu.tw/oia
 
 正式唯讀稽核結果未改變：280 workflows、0 published；生活情報 137 verified／143 pending destination profiles、470 pending sources；共 9 類 blockers，CLI exit code 2。三個 fingerprint 維持總指紋 `6c88731481993e0bcf3da9627153db86731a13403605607478fba4f9cb9df49d`、申請流程子指紋 `e72b8c4a35ae34294ad497af9988d740e9f4236caaa9fe3396dbe32f4af4d57c`、生活情報子指紋 `d73804f1ec16ddc7e61e71fc8a199a021b285cd2a7a658e9ec9186077b070011`。
 
+## 長庚黑客松獨立展示版
+
+`UniWay CGU｜長庚交換申請導航` 提供交換參考資訊、來源與六階段可保存待辦。以 `uvicorn exchange_info.cgu_demo:create_demo_app --factory --host 127.0.0.1 --port 8765` 獨立啟動，不接正式帳號或資料庫。操作腳本、隔離設計、來源限制、測試與未來部署準備見 [展示版文件](docs/cgu-demo/README.md)。目標網域 `demo.uniway-tw.com` 尚未部署或設定 DNS。
+
 ## 專案結構
 
 ```text
