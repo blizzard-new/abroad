@@ -52,6 +52,7 @@ uvicorn exchange_info.cgu_demo:create_demo_app --factory --host 127.0.0.1 --port
 1. 審查 PR、來源限制、測試紀錄與下面的已知限制；決定是否允許公開虛構情境，或要在既有反向代理加入真正的服務端保護。
 2. 在既有平台建立獨立 Web service／process，使用審查後的 commit。不要修改正式服務的啟動命令、登入環境、資料庫或掛載資料卷。不要照搬正式環境變數群組；展示無任何金鑰需求。
 3. 使用既有 Python 3.12 工具鏈安裝專案，啟動命令指定上述 **demo factory**，host 設為 `0.0.0.0`、port 使用平台指定值。Docker 若沿用既有 image，僅在新的展示容器覆寫 CMD 為 demo factory；不掛正式資料卷。既有 image build／TLS 稽核規則維持不變。
+   既有 TLS installed-artifact gate 在本環境的預設 Playwright Node 失敗；官方 SHA-256 核對的 Node 24.22.1 以 `PLAYWRIGHT_NODEJS_PATH` 指定後通過。部署前須提供符合 gate 的持久化 Node，不能用前端設定或放寬驗證避開；不要照抄本機 `/tmp` 路徑。
 4. 健康檢查 `/health` 應回 `mode=cgu-demo`、`persistence=browser-only`。驗證 `/auth/session`、`/account/workspace`、`/static/app.js` 不可用；確認沒有 Set-Cookie、資料庫連線、出信或私人文件端點。
 5. 先在獨立平台暫時網址走完主線，再由使用者授權設定 `demo.uniway-tw.com` 的自訂網域、DNS 與 HTTPS。這次不推測 CNAME 目標，需平台建立服務後才能取得。只路由至展示服務，不代理正式 API。
 6. HTTPS 下再重跑桌面／手機、重新整理、來源跳轉、reset、noindex／CSP 與 cookie scope 檢查。正式網域和子網域的 localStorage 不共用；現場請在實際展示網域載入固定情境。

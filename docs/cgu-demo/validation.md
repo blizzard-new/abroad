@@ -1,6 +1,36 @@
 # 驗證紀錄
 
-2026-11-11（Asia/Taipei）。展示測試及回歸全部使用 `/tmp` 隔離資料，不使用正式資料庫。開始基準為 18622eec；建立 PR 前另整合最新 main，最終結果將在此更新。
+2026-11-11（Asia/Taipei）。展示測試及回歸全部使用 `/tmp` 隔離資料，不使用正式資料庫。開始基準為 18622eec；已將分支重新基於最新 main `bff878ea`，並重新執行下列驗證。
+
+## 最終結果（bff878ea + 展示變更）
+
+| 檢查 | 實際結果 |
+| --- | --- |
+| 展示 API／隔離及 Chromium E2E | **18 passed**，41.29 秒；6 個 API／資料測試、12 個瀏覽器案例 |
+| 正式相關回歸 | **93 passed / 3 failed**，145.83 秒；同樣三個既有問題，未隱藏或跳過 |
+| Python compileall、JS／shell 語法、diff check | 通過 |
+| uv lock --check | 通過，83 packages；未新增依賴 |
+| 正式 OpenAPI contract | current，通過 |
+| TLS installed-artifact gate | 預設 Playwright Node 失敗；改用官方 SHA-256 核對的 **Node 24.22.1** 後通過（119 CA roots） |
+| wheel build | 通過；最終檔案大小及必要內容一致性見 evidence/build-result.json |
+| wheel 來源目錄外啟動、展示內容、所有允許資產 | 通過 |
+| 部署啟動腳本 | sh 語法及新 process /health 的 cgu-demo 模式驗證通過 |
+
+TLS 檢查未被放寬。安全的 Node 只安裝於 `/tmp` 並以 `PLAYWRIGHT_NODEJS_PATH` 指定，沒有寫入 repo 或改全域 runtime；之後用相同已修補 Node 重跑 18 項展示測試，全部通過。部署前必須提供符合既有 TLS gate 的持久化 Node 路徑；不能直接複製本機 `/tmp`。完整 Docker build／system CA gate 未跑，不能宣稱通過。
+
+PR 保持 **Draft**：展示主線可操作，但有三個既有回歸失敗，完整主站 suite／遠端 CI 未在本機全部驗證。它們沒有被當成展示成功項目。
+
+測試命令（瀏覽器已安裝於隔離路徑，Node 需符合現有 TLS gate）：
+
+```sh
+PLAYWRIGHT_NODEJS_PATH=/path/to/verified-node \
+PLAYWRIGHT_BROWSERS_PATH=/path/to/playwright-browsers \
+EXCHANGE_INFO_DATA_DIR=/tmp/uniway-cgu-tests \
+.venv/bin/python -m pytest tests/test_cgu_demo.py tests/e2e/test_cgu_demo.py -q
+
+EXCHANGE_INFO_DATA_DIR=/tmp/uniway-cgu-regression \
+.venv/bin/python -m pytest tests/test_cgu_catalogue_recovery.py tests/test_api.py tests/test_brand_assets.py tests/test_frontend_contract.py -q
+```
 
 ## 首輪結果（18622eec + 展示變更）
 

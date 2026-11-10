@@ -4,9 +4,9 @@ CONFTEST LOADED!
 =================================== FAILURES ===================================
 ________ test_dashboard_and_workflow_share_success_failure_and_recovery ________
 
-tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-1/test_dashboard_and_workflow_sh0')
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-6/test_dashboard_and_workflow_sh0')
 seed = {'format_version': 1, 'home_school': '長庚大學', 'source_state': 'complete_successful_fetch', 'fetched_at': '2026-10-11T09:58:47.453586+00:00', ...}
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f98b475e2d0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3f4de6a090>
 
     def test_dashboard_and_workflow_share_success_failure_and_recovery(tmp_path, seed, monkeypatch):
         tick=[0.0]; state=[None]
@@ -23,15 +23,22 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f98b475e2d0>
         assert client.get('/application-workflow',params=params).status_code==200
         state[0]=changed(seed); tick[0]=61; store.refresh()
         second=client.get('/student-dashboard').json()
->       assert len(second['partner_universities'])==76 and second['catalogue_source']['status']=='retrieved'
-E       AssertionError: assert (77 == 76)
-E        +  where 77 = len([{'program_type': '交換學生 / 自費研修', 'availability_status': 'open', 'availability_note': None, 'agreement_type': None, ......gram_type': '交換學生 / 自費研修', 'availability_status': 'open', 'availability_note': None, 'agreement_type': None, ...}, ...])
+        assert len(second['partner_universities'])==76 and second['catalogue_source']['status']=='retrieved'
+        assert client.get('/application-workflow',params=params).status_code==404
+        state[0]=None; tick[0]=662; store.refresh()
+        third=client.get('/student-dashboard').json()
+>       assert len(third['partner_universities'])==76 and third['catalogue_source']['status']=='saved_reference'
+E       AssertionError: assert (76 == 76 and 'retrieved' == 'saved_reference'
+E        +  where 76 = len([{'program_type': '交換學生 / 自費研修', 'availability_status': 'open', 'availability_note': None, 'agreement_type': None, ......gram_type': '交換學生 / 自費研修', 'availability_status': 'open', 'availability_note': None, 'agreement_type': None, ...}, ...])
+E
+E         - saved_reference
+E         + retrieved)
 
-tests/test_cgu_catalogue_recovery.py:159: AssertionError
+tests/test_cgu_catalogue_recovery.py:163: AssertionError
 _ test_no_snapshot_returns_explicit_unavailable_and_retryable_lookup_only_for_cgu _
 
-tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-1/test_no_snapshot_returns_expli0')
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f98b5af49e0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-6/test_no_snapshot_returns_expli0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3f4de6a5d0>
 
     def test_no_snapshot_returns_explicit_unavailable_and_retryable_lookup_only_for_cgu(tmp_path, monkeypatch):
         def fetch():raise cgu.CatalogueFetchError('timeout')
@@ -44,12 +51,12 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f98b5af49e0>
         lookup=client.get('/application-workflow',params={'school':'林肯大學 Lincoln University','home_school':'長庚大學'})
         assert lookup.status_code==503 and lookup.headers['retry-after']=='60'
 >       assert len(client.get('/universities').json())==18
-E       AssertionError: assert 60 == 18
-E        +  where 60 = len([{'id': 'cgu', 'school_name': '長庚大學', 'short_name': '長庚', 'english_name': 'Chang Gung University', ...}, {'id': 'ntpu'...rsity', ...}, {'id': 'tku', 'school_name': '淡江大學', 'short_name': '淡江', 'english_name': 'Tamkang University', ...}, ...])
+E       AssertionError: assert 66 == 18
+E        +  where 66 = len([{'id': 'cgu', 'school_name': '長庚大學', 'short_name': '長庚', 'english_name': 'Chang Gung University', ...}, {'id': 'ntpu'...rsity', ...}, {'id': 'tku', 'school_name': '淡江大學', 'short_name': '淡江', 'english_name': 'Tamkang University', ...}, ...])
 E        +    where [{'id': 'cgu', 'school_name': '長庚大學', 'short_name': '長庚', 'english_name': 'Chang Gung University', ...}, {'id': 'ntpu'...rsity', ...}, {'id': 'tku', 'school_name': '淡江大學', 'short_name': '淡江', 'english_name': 'Tamkang University', ...}, ...] = json()
 E        +      where json = <Response [200 OK]>.json
 E        +        where <Response [200 OK]> = get('/universities')
-E        +          where get = <starlette.testclient.TestClient object at 0x7f98804d9940>.get
+E        +          where get = <starlette.testclient.TestClient object at 0x7f3f06930350>.get
 
 tests/test_cgu_catalogue_recovery.py:177: AssertionError
 _ test_account_workspace_sync_has_conflict_merge_offline_retry_and_sensitive_boundary _
@@ -58,7 +65,7 @@ _ test_account_workspace_sync_has_conflict_merge_offline_retry_and_sensitive_bou
         html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
         script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
         styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
-    
+
         assert "accountWorkspaceRevisions" in script
         assert "accountWorkspaceBases" in script
         assert "accountWorkspacePending" in script
@@ -131,4 +138,4 @@ tests/test_frontend_contract.py:1693: AssertionError
 FAILED tests/test_cgu_catalogue_recovery.py::test_dashboard_and_workflow_share_success_failure_and_recovery
 FAILED tests/test_cgu_catalogue_recovery.py::test_no_snapshot_returns_explicit_unavailable_and_retryable_lookup_only_for_cgu
 FAILED tests/test_frontend_contract.py::test_account_workspace_sync_has_conflict_merge_offline_retry_and_sensitive_boundary
-3 failed, 93 passed in 100.75s (0:01:40)
+3 failed, 93 passed in 145.83s (0:02:25)
