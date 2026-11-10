@@ -111,6 +111,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
         "docs.google.com",
     ],
     "nttu": ["rd.nttu.edu.tw", "aa.nttu.edu.tw", "lc.nttu.edu.tw", "www.nttu.edu.tw", "nttu.edu.tw"],
+    "cyut": ["icsc.cyut.edu.tw", "acad.cyut.edu.tw", "staf.cyut.edu.tw", "lsc.cyut.edu.tw", "www.cyut.edu.tw", "cyut.edu.tw"],
 }
 
 
@@ -2036,6 +2037,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["nttu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="nttu", partner_rows=nttu_rows, default_cycle_label="115"
+        )
+
+    # 62. CYUT partners.jsonl (70 partner schools)
+    cyut_partners_path = official_data_root / "cyut" / "partners.jsonl"
+    if cyut_partners_path.exists():
+        cyut_rows = []
+        for line in cyut_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            cyut_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "114",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://icsc.cyut.edu.tw/p/404-1008-53437.php?Lang=zh-tw",
+            })
+        school_reports["cyut"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="cyut", partner_rows=cyut_rows, default_cycle_label="114"
         )
 
     if store.current_release_id is None:

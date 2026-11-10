@@ -2481,7 +2481,45 @@ NTTU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU)
+CYUT = UniversityProfile(
+    id="cyut",
+    school_name="朝陽科技大學",
+    short_name="朝陽",
+    english_name="Chaoyang University of Technology",
+    aliases=(
+        "cyut",
+        "朝陽科技大學",
+        "朝陽科大",
+        "朝陽",
+        "CYUT",
+        "Chaoyang University of Technology",
+    ),
+    hero_image="/static/assets/cyut-campus.svg",
+    official_url="https://icsc.cyut.edu.tw/",
+    coverage_note="完整支援：已整合朝陽科技大學國際事務處（OIA，原國際暨兩岸合作處，下設學術交流組、學生服務組、國際專修部及國際學生就業輔導中心）《115學年度赴亞洲（日韓）及歐美墨姊妹校交換學生甄選簡章》、《跨國雙聯學位甄選簡章（英美澳日德 12 校）》、《選送優秀學生寒暑假赴海外姐妹校英語研習營甄選簡章（菲律賓拉普拉普宿霧國際大學 LCIC）》、《與境外大學辦理交換學生實施要點》、《學生赴國外姐妹校交換學習補助要點》、《跨國雙聯學位獎助學金實施要點》、《千人海外體驗計畫補助要點》、《辦理學生抵免學分要點》及《全球 40 國姊妹校名錄與海外學習成果專區》官方資料：（1）校內甄選時程、在學資格與最低修課規範：每學期分兩梯次（秋季班於當年 3 月中旬截止，如 115-1 於 2026/03/13 17:00 截止；春季班於前一年 10 月中旬截止，如 115-2 於 2026/10/16 17:00 截止；寒暑假菲律賓英語研習營分別於 11/09 及 12/14 17:00 截止）受理報名，交換生限日間部四技（修滿 1–2 年）、二技及碩博士班（修滿 1 年）在學學生（不含延修生），歷年學業總平均達 70 分（GPA 2.7）或班排前 50%、操行達 80 分以上，交換期間每學期至少應修習 2 門（或 6 學分）以上科目，錄取後繳交保證金 NT$5,000（返國完成心得報告無息退還）。（2）70 所全球與兩岸合作姊妹校（含 34 所當期開放申請合作校）：涵蓋日本芝浦工業大學（三明治交換與研究交流）、岩手縣立大學、會津大學、長野大學、公立函館未來大學；韓國東義大學（免學費且免收校內宿舍住宿費！）、三育大學、水原大學、龍仁大學、國立順天大學、忠清大學；歐洲捷克馬薩里克大學、丹麥維亞大學（ETEN 歐洲教師教育網絡重點夥伴）、丹麥哥本哈根應用科學大學（UCC）、德國東巴伐利亞雷根斯堡應用科學大學（OTH Regensburg）、德國烏茲堡應用科學大學（THWS）、德國帕紹大學、荷蘭格羅寧根漢斯應用科學大學（Hanze）、海牙應用科學大學（THUAS）、漢恩應用科學大學（HAN）、比利時天主教林堡大學（UCLL）、西班牙蒙德拉貢大學、維克大學、俄羅斯秋明大學；墨西哥蒙特雷科技大學；以及英國密德薩斯大學、德蒙福特大學、桑德蘭大學、西蘇格蘭大學、澳洲南十字星大學、西雪梨大學、美國明州西南州立大學、漢弗萊斯大學等 3+1／2+2 雙學士與 1+1／1.5+1 雙碩士名校。（3）四大海外學習補助與教育部學海計畫：通過校內交換甄選即補助經濟艙來回機票（亞洲上限 NT$18,000–20,000、歐美上限 NT$45,000）、雙聯學位機票與獎助金（NT$15,000–50,000）、菲律賓 LCIC 英語研習營（補助 50% 研習費上限 NT$30,000＋機票上限 NT$10,000）及教育部《學海飛颺》（每人 6–24 萬元）、《學海惜珠》、《學海築夢／新南向學海築夢》，並收錄 15 校 19 篇官方錄取與海外研修實錄。",
+    support_level="full",
+    partner_count_hint=70,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "朝陽科技大學",
+        "朝陽科大",
+        "CHAOYANGUNIVERSITYOFTECHNOLOGY",
+        "CHAOYANG UNIVERSITY OF TECHNOLOGY",
+        "CYUT",
+    ),
+    # https://www.cyut.edu.tw/ — checked 2026-11-10.
+    colleges=(
+        "管理學院",
+        "理工學院",
+        "設計學院",
+        "人文暨社會學院",
+        "資訊學院",
+        "航空學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, CYUT)
 DEFAULT_UNIVERSITY = CGU
 
 

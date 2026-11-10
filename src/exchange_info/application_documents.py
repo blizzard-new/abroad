@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, CYUT, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -149,6 +149,7 @@ NPTU_SOURCE_CHECKED_AT = datetime(2026, 11, 5, tzinfo=timezone.utc)
 NPU_SOURCE_CHECKED_AT = datetime(2026, 11, 4, tzinfo=timezone.utc)
 NTUNHS_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 NTTU_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
+CYUT_SOURCE_CHECKED_AT = datetime(2026, 11, 10, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3796,6 +3797,57 @@ def _nttu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _cyut_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理朝陽科技大學（國際事務處 OIA，413310 臺中市霧峰區吉峰東路 168 號 行政大樓 3 樓，電話 04-2332-3000 分機 3124／3135／3137／3138／3129／3931）《與境外大學辦理交換學生實施要點》及當期交換生與雙聯學位甄選簡章應繳資料：1. 赴國外姐妹校交換學生／跨國雙聯學位申請表（須經導師、系主任及學院院長簽章）、2. 家長同意書及切結書、3. 中英文自傳與中英文讀書計畫（Study Plan）、4. 中文及英文歷年學業成績單正本（含學業總平均 70 分以上／班排前 50% 及操行 80 分以上證明）、5. 有效外語能力檢定證明影本（歐美墨組 IELTS 5.0–5.5 / TOEFL iBT 61–72、日韓組 CEFR B2 或 JLPT N2–N3 / TOPIK 3 級、英美澳雙聯 IELTS 6.0–6.5）、6. 專任教師推薦信及優良表現佐證資料。",
+        "study-plan": "撰寫朝陽科技大學出國交換、跨國雙聯學位（英國密德薩斯／德蒙福特／桑德蘭／西蘇格蘭 3+1 及 2+2、澳洲南十字星 2+2、西雪梨社工碩士 1.5+1、美國明州西南州立大學企管碩士 1+1、日本會津／岩手縣大／函館未來及德國 OTH Regensburg 資訊碩士 1+1）及教育部《學海飛颺／惜珠》必繳之中英文讀書計畫（Study Plan，約 1,000–2,000 字）。請具體說明申請動機、預計於姊妹校修習之專業科目清單（依規定每學期至少修習 2 門或 6 學分以上科目）與返國後之學涯規劃。",
+        "course-preapproval": "辦理赴國外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《朝陽科技大學與境外大學辦理交換學生實施要點》第 8 點及《辦理學生抵免學分要點》規定，交換期間仍須於朝陽科技大學辦理註冊並繳交全額學雜費以保留學籍，且在姊妹校每學期至少應修習 2 門或 6 學分以上科目）。",
+        "predeparture-notice": "經國際事務處書面審查與外語口試面試錄取公告後，須依限繳交保證金新臺幣 5,000 元（返國完成心得報告無息退還）、配合國際事務處辦理姊妹校提名（Nomination）與簽證申請，並完成朝陽科技大學註冊選課、役男緩徵出境核准及海外全程醫療與意外保險。",
+        "return-report": "國外交換、雙聯學位或寒暑假菲律賓拉普拉普宿霧國際大學（LCIC）英語密集研習營期滿返國後，須依《朝陽科技大學學生赴國外姐妹校交換學習補助要點》及教育部《學海計畫》規定，於返國後兩週內向國際事務處繳交《海外學習心得報告》電子檔（含活動照片，約 1,500–3,000 字）、國外正式成績單、登機證正本及電子機票收據（Ticket Receipt），始得辦理來回機票補助（亞洲上限 1.8–2 萬、歐美上限 4.5 萬、雙聯上限 5 萬）核銷並退還 NT$5,000 保證金。",
+        "credit-transfer": "國外交換或雙聯研修期滿返國後，持國外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《朝陽科技大學辦理學生抵免學分要點》向所屬學系（所）及教務處註冊組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "朝陽科技大學").replace("長庚", "朝陽")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "朝陽科技大學規定：報名出國交換或雙聯須檢附中英文歷年學業成績單正本（歷年總平均達 70 分／GPA 2.7 以上或班級排名前 50%，且操行成績達 80 分以上）；若同時申請教育部《學海飛颺／學海惜珠》或寒暑假赴菲律賓 LCIC 英語研習營，學業成績須達班級排名前 50%。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語檢定 CEFR B1/B2（歐美墨交換組及日韓英語組：IELTS 5.0–5.5 / TOEFL iBT 61–80 / TOEIC 550–785＋校內英語口試）",
+                "英語檢定 IELTS 6.0–6.5（英、美、澳、日、德跨國雙聯學位組：IELTS UKVI 6.0–6.5 / TOEFL iBT 80）",
+                "日語檢定 JLPT（日本芝浦工業大學、岩手縣立大學日語組 N2；會津大學、長野大學、公立函館未來大學建議 N3）",
+                "韓語檢定 TOPIK（韓國東義大學［免學費且免收校內宿舍費］、三育、水原、龍仁、順天、忠清大學建議 TOPIK 3 級或英語檢定）",
+                "寒暑假菲律賓拉普拉普宿霧國際大學（LCIC）英語研習營（全民英檢初級或 TOEIC 350 分以上＋英語口試）",
+            ]
+            field["help_text"] = "依《朝陽科技大學與境外大學辦理交換學生實施要點》及當期《赴亞洲／歐美姊妹校交換生暨雙聯學位甄選簡章》填報有效語言能力證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://icsc.cyut.edu.tw/p/412-1008-4642.php?Lang=zh-tw",
+        source_checked_at=CYUT_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="朝陽科技大學赴國外姐妹校交換學生／雙聯學位申請表（含家長同意書、切結書及讀書計畫）" if template.id == "exchange-application-data" else ("朝陽科技大學出國交換中英文讀書計畫（Study Plan）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://icsc.cyut.edu.tw/var/file/8/1008/img/303441068.pdf" if template.id != "study-plan" else "https://icsc.cyut.edu.tw/var/file/8/1008/img/492389236.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或法定監護人親筆簽名蓋章", "導師／指導教授、系（所）主任及學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經書審與外語口試錄取後繳交 NT$5,000 保證金、配合國際事務處辦理姊妹校提名與簽證，並完成朝陽註冊選課（每學期至少 2 門或 6 學分）", "return-report": "返國後兩週內繳交海外學習心得報告、國外成績單、登機證正本及電子機票收據，辦理機票補助核銷並無息退還 NT$5,000 保證金", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分抵免"}.get(template.id, "於校內收件截止前備齊經系主任及院長核章之申請表、家長同意書、切結書、中英文歷年成績單、中英文自傳與讀書計畫及語檢證明送交行政大樓 3 樓國際事務處"),
+        version="115-2準備工具-2026-11-10.1",
+        destinations=["朝陽科技大學國際事務處學術交流組／學生服務組（413310 臺中市霧峰區吉峰東路 168 號 行政大樓 3 樓）"],
+        conditional_note="此為個人準備工具；朝陽科技大學出國交換每年分兩梯次（秋季班於 3 月中旬、春季班於 10 月中旬）收件，通過甄選者享經濟艙來回機票補助（亞洲上限 NT$18,000–20,000、歐美上限 NT$45,000）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3932,6 +3984,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntunhs_template(template)) is not None]
     if university.id == NTTU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nttu_template(template)) is not None]
+    if university.id == CYUT.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _cyut_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

@@ -134,7 +134,7 @@ def reference_record(partner: PartnerUniversity) -> dict:
 @lru_cache(maxsize=1)
 def _bundled_ntnu_student_experiences() -> dict[tuple[str, str], tuple[StudentExperienceSource, ...]]:
     by_key: dict[tuple[str, str], list[StudentExperienceSource]] = {}
-    for school_code in ("ntnu", "cycu", "ntust", "yzu", "fcu", "nsysu", "nchu", "ntut", "nccu", "ncku", "nycu", "nthu", "pccu", "wzu", "nkust", "yuntech", "ntou", "ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub", "ncnu", "ndhu", "thu", "shu", "pu", "usc", "nuk", "ncyu", "nutc", "nfu", "utaipei", "ntcu", "tnua", "ntua", "ntue", "ncut", "npust", "cjcu", "nqu", "isu", "fgu", "nkuht", "nuu", "tnnua", "tpcu", "au", "knu", "nutn", "niu", "nptu", "npu", "ntunhs", "nttu"):
+    for school_code in ("ntnu", "cycu", "ntust", "yzu", "fcu", "nsysu", "nchu", "ntut", "nccu", "ncku", "nycu", "nthu", "pccu", "wzu", "nkust", "yuntech", "ntou", "ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub", "ncnu", "ndhu", "thu", "shu", "pu", "usc", "nuk", "ncyu", "nutc", "nfu", "utaipei", "ntcu", "tnua", "ntua", "ntue", "ncut", "npust", "cjcu", "nqu", "isu", "fgu", "nkuht", "nuu", "tnnua", "tpcu", "au", "knu", "nutn", "niu", "nptu", "npu", "ntunhs", "nttu", "cyut"):
         exp_path = Path(__file__).parent / "official_data" / school_code / "student_experiences.jsonl"
         if exp_path.exists():
             with exp_path.open(encoding="utf-8") as handle:
@@ -286,6 +286,7 @@ def _bundled_extra_research() -> Mapping[tuple[str, str], LifeResearchSnapshot]:
         Path(__file__).parent / "official_data" / "npu" / "student_life.jsonl",
         Path(__file__).parent / "official_data" / "ntunhs" / "student_life.jsonl",
         Path(__file__).parent / "official_data" / "nttu" / "student_life.jsonl",
+        Path(__file__).parent / "official_data" / "cyut" / "student_life.jsonl",
     )
     for life_path in bundled_files:
         if life_path.exists():
