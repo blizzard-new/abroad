@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-10 每日批次：新宿區住址登記／多益獨白兩篇（驗收完成，待開 PR）
+## 2026-11-10 每日批次：新宿區住址登記／多益獨白兩篇（PR #285 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261110`，基於 main `d7ec093dbf1abfdfff8aece59c37b09256901800`。讀取 workflow、backlog、41 篇庫存及相關正文，核對全部 14 個 open PR 的說明與完整變更清單。#272 的 `ai-english-listening-dictation`、`toefl-academic-reading` 仍待審，兩題已選並排除；未搬入或重做。#78、#92、#255、#266 已合併。開始前無同日分支／任何狀態同日 PR；下方歷史待審狀態以本日盤點優先。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 6：日本交換生住址登記怎麼辦？以新宿區為例，核對文件、期限與窗口 | `japan-residence-registration` | 完整文章與驗收完成；待建立本日唯一 PR，後續排除 |
-| 20：多益 Part 4 怎麼練？簡短獨白的目的、關鍵資訊與原創題組解析 | `toeic-part-four-talks` | 同批完整文章與驗收完成，待同一個 PR，後續排除 |
+| 6：日本交換生住址登記怎麼辦？以新宿區為例，核對文件、期限與窗口 | `japan-residence-registration` | [PR #285](https://github.com/blizzard-new/abroad/pull/285) 待審，完整文章與驗收完成；後續排除 |
+| 20：多益 Part 4 怎麼練？簡短獨白的目的、關鍵資訊與原創題組解析 | `toeic-part-four-talks` | 同一個 PR #285 待審，完整文章與驗收完成；後續排除 |
 
 選題為編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。登記篇深入自治體、身分、日期／官方版本差異、文件條件、窗口詢問與辦後核對，與抵達第一週總覽及日本預算分工；Part 4 篇提供兩段原創獨白、六題解析、範圍／否定／尚未指派狀態與條件換題，與單句應答、雙人圖表對話及各閱讀任務分工。兩篇都有實讀官方來源、授權真實攝影、HTML 圖解、FAQ、相關文章與選校連結。
 
