@@ -328,6 +328,7 @@ window.UniWayHome = (() => {
 
   function render() {
     scheduled = 0;
+    syncBoard();
     const host = root();
     if (!host || !state.supportedUniversities) return;
     const key = JSON.stringify([
@@ -343,6 +344,16 @@ window.UniWayHome = (() => {
     renderTiles(host);
     renderMaps(host);
     initIcons();
+  }
+
+  // The conditions board under the sentence: it names the student's school, offers the same language tests as the search page,
+  // and its button fills that page's own criteria fields before opening it, so the two pages always agree.
+  function syncBoard() {
+    const label = document.querySelector("#mt-board-school-name");
+    const name = state.homeSchool || "選擇就讀學校";
+    if (label && label.textContent !== name) label.textContent = name;
+    const source = document.querySelector("#partner-test-tile"), target = document.querySelector("#mt-board-test");
+    if (source && target && target.options.length <= 1 && source.options.length > 1) target.innerHTML = source.innerHTML;
   }
 
   function schedule() {
@@ -393,6 +404,16 @@ window.UniWayHome = (() => {
     if (event.target.closest("[data-home-pick-school]")) { openSchoolOnboarding(); return; }
     const country = event.target.closest("[data-home-country]");
     if (country) goPartners({ country: country.dataset.homeCountry });
+  });
+  document.addEventListener("submit", (event) => {
+    if (event.target.id !== "mt-board") return;
+    event.preventDefault();
+    const form = event.target.elements;
+    for (const [tile, value] of [["#partner-term-tile", form.term.value], ["#partner-test-tile", form.test.value]]) {
+      const field = document.querySelector(tile);
+      if (field && field.value !== value) { field.value = value; field.dispatchEvent(new Event("change", { bubbles: true })); }
+    }
+    goPartners({ q: form.q.value.trim() });
   });
   document.addEventListener("submit", (event) => {
     if (event.target.id !== "home-search-form") return;

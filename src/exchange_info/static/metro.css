@@ -538,7 +538,7 @@ body.unified-shell #home-landing .mt-hero { grid-template-columns: minmax(0, 1fr
 #home-landing .mt-sky .mt-board { grid-area: auto; width: min(1120px, 100%); outline: 2px solid #ffffff33; outline-offset: 0; }
 #home-landing .mt-earth { position: relative; overflow: hidden; width: 100%; height: clamp(112px, 20svh, 220px); margin-top: clamp(6px, 2.2svh, 22px); pointer-events: none; }
 #home-landing .mt-earth-disc { --d: min(1760px, 130cqi); position: absolute; left: 50%; top: 0; width: var(--d); height: var(--d); transform: translateX(-50%); border-radius: 50%; overflow: hidden; background: #0a2a52; box-shadow: 0 -4px 40px 4px #5ab0ff80, 0 0 0 2px #a8d8ff80; }
-#home-landing .mt-earth-strip { position: absolute; left: 0; top: 0; width: calc(var(--d) * 5); height: var(--d); background: url("/static/assets/partner-map/earth-equirect.jpg?v=20261109-1") repeat-x 0 calc(var(--d) * -.235) / calc(var(--d) * 2) var(--d); transform: translateX(calc(var(--d) * -1.11)); animation: mt-earth-spin 420s linear infinite; will-change: transform; }
+#home-landing .mt-earth-strip { position: absolute; left: 0; top: 0; width: calc(var(--d) * 5); height: var(--d); background: url("/static/assets/partner-map/earth-equirect.jpg?v=20261109-1") repeat-x 0 calc(var(--d) * -.235) / calc(var(--d) * 2) var(--d); transform: translateX(calc(var(--d) * -1.11)); animation: mt-earth-spin 90s linear infinite; will-change: transform; }
 #home-landing .mt-earth-disc::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 50% 0%, #0000 0 42%, #0208125c 76%, #020812c4 100%); }
 /* It opens over Asia, where the students are leaving from, and turns one full circle in seven minutes. */
 @keyframes mt-earth-spin { from { transform: translateX(calc(var(--d) * -1.11)); } to { transform: translateX(calc(var(--d) * -3.11)); } }
@@ -640,7 +640,11 @@ html[data-theme="dark"] .school-emblem, html:has(#home-landing:not([hidden])) .s
   }
   html body.unified-shell .glass-navigation-rail .glass-menu-close { display: none !important; }
   html body.unified-shell .glass-navigation-rail .uniway-header-brand { order: 0; width: auto !important; min-height: 0 !important; padding: 0 !important; flex: none; }
-  html body.unified-shell .glass-navigation-rail .uniway-header-brand strong { font-size: 22px; }
+  /* The wordmark is always there. The old rail showed only the mark until the pointer touched it, which is why "UniWay" came and went. */
+  html body.unified-shell .glass-navigation-rail .uniway-header-brand { justify-content: flex-start !important; gap: 10px !important; }
+  html body.unified-shell .glass-navigation-rail .uniway-header-brand strong {
+    display: inline !important; inline-size: auto !important; width: auto !important; opacity: 1 !important; visibility: visible !important; transform: none !important; overflow: visible !important; font-size: 22px;
+  }
   html body.unified-shell .glass-navigation-rail .uniway-public-nav { order: 1; flex-direction: row !important; flex: 1 1 auto; width: auto !important; margin: 0 !important; gap: 4px !important; align-items: center; }
   html body.unified-shell .glass-navigation-rail .uniway-public-nav a[data-public-route],
   html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] {
@@ -677,5 +681,90 @@ html[data-theme="dark"] .school-emblem, html:has(#home-landing:not([hidden])) .s
   html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] { width: 48px !important; padding: 0 !important; }
   html body.unified-shell .glass-navigation-rail #account-button { max-width: 120px; }
 }
+@media (min-width: 1101px) {
+  html body.unified-shell .glass-navigation-rail #account-button-label { display: inline !important; font-size: 14px; font-weight: 800; inline-size: auto !important; opacity: 1 !important; visibility: visible !important; transform: none !important; overflow: visible !important; }
+}
 /* With the route map gone nothing follows the Earth but the next section, so the hero adds no space of its own below it. */
 body.unified-shell #home-landing .mt-hero { padding-bottom: 0; }
+
+/* 20. The logo never scrolls away. The app's bar is fixed; the server-rendered pages (guides, schools, partners) had a header that
+   scrolled off with the page, so it now sticks to the top the same way, flush and full width like the app's bar. */
+body.reading-shell .reading-header { position: sticky; top: 0; z-index: 60; max-width: none; margin: 0; padding: 10px 24px; border-radius: 0; }
+html:has(body.reading-shell) { scroll-padding-top: 104px; }
+@media (max-width: 700px) { body.reading-shell .reading-header { padding: 8px 12px; } }
+.legal-bar { position: sticky; top: 0; z-index: 60; margin: -28px -16px 24px; display: flex; align-items: center; padding: 10px 24px; border-bottom: 2px solid var(--mt-ink); background: var(--mt-ground); }
+.legal-bar .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--mt-ink); font-size: 22px; font-weight: 900; letter-spacing: -.01em; text-decoration: none; }
+.legal-bar .brand img { width: 40px; height: 40px; }
+@media (max-width: 700px) { .legal-bar { padding: 8px 12px; } }
+
+/* 21. The search page is soft and round: pastel pills and bubbles instead of ink outlines and a black slab, nothing pressed against an edge,
+   and a taller window so the globe is bigger. Colours are mixed from the same tokens, so night mode follows by itself. */
+body.unified-shell #partners.pr-explore {
+  --cute-pink: color-mix(in srgb, var(--mt-red) 14%, var(--mt-ground)); --cute-yellow: color-mix(in srgb, var(--mt-orange) 26%, var(--mt-ground));
+  --cute-blue: color-mix(in srgb, var(--mt-blue) 15%, var(--mt-ground)); --cute-mint: color-mix(in srgb, var(--mt-green) 16%, var(--mt-ground));
+  --cute-soft: color-mix(in srgb, var(--mt-ink) 7%, var(--mt-ground)); --cute-shadow: 0 6px 18px color-mix(in srgb, var(--mt-ink) 11%, transparent);
+}
+/* the search board: a warm tray holding round white bubbles and a chunky button */
+body.unified-shell #dashboard-view #partners.pr-explore .pr-search { gap: 8px; padding: 8px; border-radius: 30px; background: var(--cute-yellow); box-shadow: var(--cute-shadow); overflow: visible; }
+body.unified-shell #dashboard-view #partners.pr-explore .pr-search .pr-field { min-height: 68px; padding: 10px 22px; border: 0; border-radius: 22px; background-color: var(--mt-ground); }
+body.unified-shell #partners.pr-explore .pr-search .pr-field:nth-child(1) .pr-field-body small { color: var(--mt-red-text); }
+body.unified-shell #partners.pr-explore .pr-search .pr-field:nth-child(2) .pr-field-body small { color: var(--mt-blue-text); }
+body.unified-shell #partners.pr-explore .pr-search .pr-field:nth-child(3) .pr-field-body small { color: var(--mt-green); }
+body.unified-shell #partners.pr-explore .pr-search .pr-field-body small { font-weight: 800; letter-spacing: .04em; }
+body.unified-shell #partners.pr-explore .pr-search .pr-field-body :is(input, select), body.unified-shell #partners.pr-explore .pr-search .glide-select__trigger, body.unified-shell #partners.pr-explore .pr-search .glide-select__trigger :is(.lucide, svg) { color: var(--mt-ink); }
+body.unified-shell #partners.pr-explore .pr-search .pr-field-body input::placeholder { color: var(--mt-ink-3); }
+body.unified-shell #partners.pr-explore .pr-search .pr-field:focus-within { outline: 3px solid var(--mt-focus); outline-offset: 2px; }
+body.unified-shell #partners.pr-explore .pr-search-button {
+  border-radius: 22px; background: var(--mt-orange); color: var(--mt-on-orange); box-shadow: 0 5px 0 color-mix(in srgb, var(--mt-orange) 55%, #5a3a00);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+body.unified-shell #partners.pr-explore .pr-search-button:hover { background: var(--mt-orange); transform: translateY(-2px); box-shadow: 0 7px 0 color-mix(in srgb, var(--mt-orange) 55%, #5a3a00); }
+body.unified-shell #partners.pr-explore .pr-search-button:active { transform: translateY(3px); box-shadow: 0 2px 0 color-mix(in srgb, var(--mt-orange) 55%, #5a3a00); }
+/* the rows of small controls: tinted pills, no outlines */
+html body.unified-shell #partners.pr-explore.pr-explore :is(.discovery-criteria, .discovery-recents, .discovery-open-workspace, .journey-filter-drawer) { border: 0; border-radius: 26px; background: var(--cute-soft); box-shadow: none; }
+html body.unified-shell #partners.pr-explore.pr-explore .journey-filter-drawer { background: transparent; }
+body.unified-shell #partners.pr-explore .journey-filter-drawer > summary { width: max-content; min-height: 44px; padding: 0 18px; border-radius: 999px; background: var(--cute-blue); }
+html body.unified-shell #partners.pr-explore.pr-explore .discovery-criteria { background: var(--cute-blue); }
+html body.unified-shell #partners.pr-explore.pr-explore .discovery-recents { background: var(--cute-mint); }
+html body.unified-shell #partners.pr-explore.pr-explore .discovery-open-workspace { background: var(--cute-yellow); }
+body.unified-shell #partners.pr-explore :is(.discovery-criteria, .discovery-recents) > summary, body.unified-shell #partners.pr-explore .discovery-open-workspace { min-height: 44px; padding-block: 0; font-weight: 800; color: var(--mt-ink); }
+html body.unified-shell #partners.pr-explore.pr-explore :is(.discovery-criteria, .discovery-recents)[open] { border-radius: 26px; background: var(--cute-blue); color: var(--mt-ink); }
+html body.unified-shell #partners.pr-explore.pr-explore .discovery-recents[open] { background: var(--cute-mint); }
+html body.unified-shell #partners.pr-explore.pr-explore .pr-view-toggle { padding: 4px; border: 0; border-radius: 999px; background: var(--cute-soft); }
+html body.unified-shell #partners.pr-explore .pr-view-toggle button { border-radius: 999px; }
+html body.unified-shell #partners.pr-explore .pr-view-toggle button[aria-pressed="true"] { background: var(--mt-orange); color: var(--mt-on-orange); box-shadow: var(--cute-shadow); }
+/* the globe's own buttons sit inside the window with room around them, so none is clipped by its edge */
+body.unified-shell #partners.pr-explore .partner-map-actions { padding: 14px 20px 0 0; }
+body.unified-shell #partners.pr-explore .partner-map-actions .secondary-button {
+  min-height: 42px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--cute-soft); color: var(--mt-ink); font: 800 13px/1 var(--mt-font);
+  box-shadow: var(--cute-shadow); transition: transform 140ms ease;
+}
+body.unified-shell #partners.pr-explore .partner-map-actions .secondary-button:hover:not(:disabled) { transform: translateY(-2px); }
+body.unified-shell #partners.pr-explore .partner-map-actions #map-motion { background: var(--cute-yellow); }
+body.unified-shell #partners.pr-explore .partner-map-actions #map-home { background: var(--cute-pink); }
+body.unified-shell #partners.pr-explore .partner-map-actions #map-global { background: var(--cute-blue); }
+body.unified-shell #partners.pr-explore .partner-map-actions #map-gaps-open { background: var(--cute-mint); }
+body.unified-shell #partners.pr-explore .partner-map-actions #map-motion[aria-pressed="false"] { opacity: .75; }
+body.unified-shell #partners.pr-explore #partner-globe .maplibregl-ctrl-group { border: 0; border-radius: 26px; background: var(--mt-ground); box-shadow: var(--cute-shadow); overflow: hidden; }
+body.unified-shell #partners.pr-explore #partner-globe .maplibregl-ctrl-group button { width: 40px; height: 40px; }
+body.unified-shell #partners.pr-explore #partner-globe .maplibregl-ctrl-group button:hover { background: var(--cute-yellow); }
+body.unified-shell #partners.pr-explore .partner-map-list button { border-radius: 18px; }
+body.unified-shell #partners.pr-explore .partner-map-list button:hover { background: var(--cute-yellow); }
+body.unified-shell #partners.pr-explore .partner-map-list button[aria-current] { background: var(--cute-blue); }
+html body.unified-shell #partners.pr-explore.pr-explore .pr-sort-tabs { padding: 6px; border: 0; border-radius: 28px; background: var(--cute-soft); box-shadow: none; }
+html body.unified-shell #partners.pr-explore.pr-explore .pr-sort-tabs button { border: 0; border-radius: 22px; }
+html body.unified-shell #partners.pr-explore.pr-explore .pr-sort-tabs button.on { background: var(--mt-ground); box-shadow: var(--cute-shadow); }
+/* the window: round, a pastel sky behind the Earth, and tall enough that the globe fills it */
+html body.unified-shell #partners.pr-explore.pr-explore .partner-map-stage {
+  border-radius: 34px; overflow: hidden;
+  background: radial-gradient(circle at 14% 10%, color-mix(in srgb, var(--mt-orange) 30%, transparent) 0, transparent 40%),
+    radial-gradient(circle at 90% 88%, color-mix(in srgb, var(--mt-red) 20%, transparent) 0, transparent 44%),
+    color-mix(in srgb, var(--mt-blue) 13%, var(--mt-ground));
+}
+@media (min-width: 901px) {
+  html body.unified-shell #partners.pr-explore.pr-explore .partner-map-stage { height: clamp(700px, calc(100dvh - 88px), 1100px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.unified-shell #partners.pr-explore :is(.pr-search-button, .partner-map-actions .secondary-button) { transition: none; }
+  body.unified-shell #partners.pr-explore :is(.pr-search-button:hover, .pr-search-button:active, .partner-map-actions .secondary-button:hover:not(:disabled)) { transform: none; }
+}

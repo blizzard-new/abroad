@@ -151,3 +151,138 @@ def test_the_top_bar_fits_the_narrowest_desktop_widths(page, live_server, width)
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     # Without their labels the links still have names for assistive technology.
     expect(page.locator('#glass-navigation').get_by_role("link", name="論壇", exact=True)).to_have_count(1)
+
+
+@pytest.mark.parametrize("route", ["home", "partners", "forum", "guide", "feedback"])
+def test_the_logo_stays_in_view_while_the_app_scrolls(page, live_server, route):
+    for width, selector in ((1440, ".uniway-header-brand"), (393, ".glass-mobile-header a[href='#home']")):
+        page.set_viewport_size({"width": width, "height": 800})
+        enter_public_site(page, live_server, route)
+        page.wait_for_timeout(600)
+        page.evaluate("window.scrollTo(0, document.documentElement.scrollHeight)")
+        page.wait_for_timeout(300)
+        box = page.locator(selector).first.bounding_box()
+        assert box and 0 <= box["y"] and box["y"] + box["height"] <= 80, (route, width, box)
+        expect(page.locator(selector).first).to_be_visible()
+
+
+@pytest.mark.parametrize("path", ["/guides", "/schools", "/privacy", "/terms"])
+def test_the_logo_stays_in_view_on_the_server_rendered_pages(page, live_server, path):
+    page.set_viewport_size({"width": 1440, "height": 800})
+    page.goto(f"{live_server.base_url}{path}")
+    page.evaluate("window.scrollTo(0, document.documentElement.scrollHeight)")
+    page.wait_for_timeout(300)
+    assert page.evaluate("scrollY") > 300, path
+    brand = page.locator(".reading-header .brand, .legal-bar .brand").first
+    expect(brand).to_be_visible()
+    box = brand.bounding_box()
+    assert 0 <= box["y"] and box["y"] + box["height"] <= 90, (path, box)
+    expect(brand).to_contain_text("UniWay")
+
+
+def test_the_earth_on_the_home_turns_visibly(page, live_server):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    enter_public_site(page, live_server, "home")
+    read = "() => new DOMMatrixReadOnly(getComputedStyle(document.querySelector('.mt-earth-strip')).transform).m41"
+    first = page.evaluate(read)
+    page.wait_for_timeout(2000)
+    moved = abs(page.evaluate(read) - first)
+    # About 40 px a second on a wide screen: a turn takes 90 seconds, so the motion is seen, not guessed at.
+    assert 40 < moved < 400, moved
+
+
+def test_the_earth_holds_still_when_the_visitor_asks_for_less_motion(page, live_server):
+    page.emulate_media(reduced_motion="reduce")
+    page.set_viewport_size({"width": 1440, "height": 900})
+    enter_public_site(page, live_server, "home")
+    read = "() => new DOMMatrixReadOnly(getComputedStyle(document.querySelector('.mt-earth-strip')).transform).m41"
+    first = page.evaluate(read)
+    page.wait_for_timeout(1500)
+    assert page.evaluate(read) == first
+
+
+@pytest.mark.parametrize("width", [901, 1024, 1440])
+def test_the_wordmark_is_always_beside_the_logo_not_only_on_hover(page, live_server, width):
+    page.set_viewport_size({"width": width, "height": 800})
+    enter_public_site(page, live_server, "home")
+    page.mouse.move(width / 2, 600)
+    page.wait_for_timeout(600)
+    word = page.locator("#glass-navigation .uniway-header-brand strong")
+    expect(word).to_be_visible()
+    expect(word).to_have_text("UniWay")
+    assert word.bounding_box()["width"] > 60
+    assert page.locator("#glass-navigation .uniway-header-brand").bounding_box()["width"] > 100
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+
+
+def test_the_home_search_button_opens_the_school_search_with_the_chosen_conditions(page, live_server):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    enter_public_site(page, live_server, "home")
+    page.locator("#mt-board-q").fill("日本")
+    page.locator("#mt-board-term").select_option("fall")
+    page.locator("#mt-board .mt-board-go").click()
+    # It leaves the home for the search page instead of reloading the home.
+    expect(page.locator("#partners")).to_be_visible(timeout=15000)
+    expect(page.locator("#home-landing")).to_be_hidden()
+    assert page.evaluate("location.hash") == "#partners"
+    assert "q=" in page.evaluate("location.search") and "view=list" in page.evaluate("location.search")
+    expect(page.locator("#partner-search")).to_have_value("日本")
+    assert page.locator("#partner-term-tile").input_value() == "fall"
+
+
+def test_the_home_search_button_works_with_nothing_filled_in(page, live_server):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    enter_public_site(page, live_server, "home")
+    page.locator("#mt-board .mt-board-go").click()
+    expect(page.locator("#partners")).to_be_visible(timeout=15000)
+    assert page.evaluate("location.hash") == "#partners"
+
+
+def test_the_home_board_names_the_school_the_student_chose(page, live_server):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    page.add_init_script("localStorage.setItem('exchange-guide-home-school', '長庚大學')")
+    enter_public_site(page, live_server, "home")
+    page.wait_for_timeout(2500)
+    expect(page.locator("#mt-board-school-name")).not_to_have_text("選擇就讀學校")
+
+
+@pytest.mark.parametrize("size", [(1360, 800), (1100, 800), (1440, 900)])
+def test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full(page, live_server, size):
+    page.set_viewport_size({"width": size[0], "height": size[1]})
+    page.add_init_script(INSTRUMENT)
+    page.goto(f"{live_server.base_url}/?view=map#partners")
+    expect(page.locator("#boot-splash")).to_be_hidden(timeout=90000)
+    ready(page)
+    stage = page.locator(".partner-map-stage").bounding_box()
+    assert stage["height"] >= 680, stage
+    chips = page.locator(".partner-map-actions button:visible")
+    assert chips.count() >= 3
+    for index in range(chips.count()):
+        box = chips.nth(index).bounding_box()
+        # inside the window with room to spare, so no edge clips a border
+        assert box["x"] + box["width"] <= stage["x"] + stage["width"] - 12, (index, box, stage)
+        assert box["y"] >= stage["y"] and box["y"] + box["height"] <= stage["y"] + stage["height"], (index, box, stage)
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    # The globe is sized to fill the window: at least as large as the height of the window it is in.
+    expected = page.evaluate("(h) => Math.log2(h * Math.PI / 512)", min(stage["height"], stage["width"] - 260))
+    assert page.evaluate("window.__testedMap.getZoom()") >= expected - 0.02
+
+
+@pytest.mark.parametrize("theme", ["light", "dark"])
+def test_the_search_page_controls_are_soft_pills_without_outlines(page, live_server, theme):
+    page.set_viewport_size({"width": 1360, "height": 800})
+    page.add_init_script(f"localStorage.setItem('exchange-guide-theme', '{theme}')")
+    page.goto(f"{live_server.base_url}/?view=map#partners")
+    expect(page.locator("#boot-splash")).to_be_hidden(timeout=90000)
+    page.wait_for_timeout(800)
+    style = "(sel) => { const cs = getComputedStyle(document.querySelector(sel)); return [cs.borderTopWidth, parseFloat(cs.borderTopLeftRadius), cs.backgroundColor]; }"
+    for selector in ("#map-global", "#map-home", ".discovery-open-workspace", ".discovery-criteria", ".pr-view-toggle"):
+        width, radius, background = page.evaluate(style, selector)
+        assert width == "0px" and radius >= 20 and background != "rgba(0, 0, 0, 0)", (selector, width, radius, background)
+    for selector in (".pr-search", ".pr-search-button", ".partner-map-stage"):
+        _, radius, _ = page.evaluate(style, selector)
+        assert radius >= 20, (selector, radius)
+    # The search board is no longer a black slab: its text is readable on the bubbles it holds.
+    ink, _ = luminance_and_alpha(page.locator("#partner-search").evaluate("el => getComputedStyle(el).color"))
+    bubble, _ = luminance_and_alpha(page.locator(".pr-search .pr-field").first.evaluate("el => getComputedStyle(el).backgroundColor"))
+    assert abs(ink - bubble) > 120, (ink, bubble)
