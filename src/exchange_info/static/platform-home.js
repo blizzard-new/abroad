@@ -165,16 +165,12 @@ window.UniWayHome = (() => {
 
   function renderSearch(host, list) {
     const rows = host.querySelector("#home-search-rows"), foot = host.querySelector("#home-search-foot");
-    const lede = host.querySelector("#home-search-lede");
     if (!list.length) {
       rows.innerHTML = emptyTile(state.homeSchool ? "合作校資料載入中…" : "選擇就讀學校後，這裡會列出你能申請的合作校。", !state.homeSchool);
       foot.innerHTML = "";
       return;
     }
     const profile = state.eligibilityProfile;
-    const groups = { open: 0, pending: 0, blocked: 0 };
-    list.forEach((item) => { groups[availabilityGroup(item)] += 1; });
-    lede.textContent = `${state.homeSchool || "目前"}的 ${formatNumber(list.length)} 間合作校，${groups.open ? `${formatNumber(groups.open)} 間本期可申請` : "可依國家與學期篩選"}。`;
     rows.innerHTML = featured(list, 3).map((item) => {
       const meta = partnerAvailabilityMeta(item);
       const match = profile ? partnerMatch(item) : null;

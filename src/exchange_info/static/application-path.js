@@ -487,7 +487,7 @@ function renderTools(l){
   const toolContext={...c,semester:({fall:'第一學期',spring:'第二學期',full_year:'一學年',undecided:''})[c.semester]};
   const matching=['target_school','academic_year','application_round','semester','college','department','degree_level'].every(k=>(state.applicationContext[k]||'')===(toolContext[k]||''));
   if(!sharedSelection&&!matching){
-    $('#path-tool-host').innerHTML='<div class="path-context-gate"><p>使用 '+esc(c.target_school)+' · '+esc(c.academic_year)+' · '+esc(termName(c.semester))+' 的文件規則</p><button id="path-use-context" class="primary-button">載入本計畫的文件工具</button><small>切換工具的查看目標，保留現有草稿與其他計畫進度。</small><p id="path-tool-error" role="alert"></p></div>';
+    $('#path-tool-host').innerHTML='<div class="path-context-gate"><p>使用 '+esc(c.target_school)+' · '+esc(c.academic_year)+' · '+esc(termName(c.semester))+' 的文件規則</p><button id="path-use-context" class="primary-button">載入本計畫的文件工具</button><p id="path-tool-error" role="alert"></p></div>';
     $('#path-use-context').onclick=async()=>{
       const captured=key(),run=epoch,url=location.hash,b=$('#path-use-context');b.disabled=true;
       try{

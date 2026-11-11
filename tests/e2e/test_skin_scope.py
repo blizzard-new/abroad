@@ -48,7 +48,7 @@ def test_the_home_keeps_its_classic_design_with_the_requested_simpler_hero(page,
     expect(page.locator(".pr-plan-card")).to_have_count(0)
     expect(page.locator(".pr-collage-mascot")).to_be_visible()
     # Labels above headings and the lines under them belong to this look; the metro pages hide them.
-    expect(page.locator("#home-landing .pr-kicker").first).to_be_visible()
+    expect(page.locator("#home-landing .pr-kicker")).to_have_count(0)
     assert page.locator(".mt-board, .mt-earth").count() == 0
     # The switcher still says what it does.
     expect(page.locator("#school-switcher small")).to_be_visible()

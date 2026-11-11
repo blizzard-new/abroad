@@ -1,0 +1,40 @@
+CONFTEST LOADED!
+F
+=================================== FAILURES ===================================
+_________ test_space_globe_drag_zoom_filters_and_route_cleanup[size0] __________
+
+page = <Page url='http://127.0.0.1:47797/?view=map&home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:47797', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-30/web-e2e-data0'))
+size = (1440, 1000)
+
+    @pytest.mark.parametrize('size', [(1440, 1000), (393, 852)])
+    def test_space_globe_drag_zoom_filters_and_route_cleanup(page, live_server, size):
+        page.set_viewport_size({'width': size[0], 'height': size[1]})
+        page.add_init_script(INSTRUMENT)
+        page.emulate_media(reduced_motion='reduce')
+        errors = []
+        page.on('pageerror', lambda error: errors.append(str(error)))
+        page.goto(f'{live_server.base_url}/#partners')
+        # The common splash has a 60-second fallback on a software renderer.
+>       expect(page.locator('#boot-splash')).to_be_hidden(timeout=90000)
+E       AssertionError: Locator expected to be hidden
+E       Actual value: visible 
+E       Call log:
+E         - Expect "to_be_hidden" locator("#boot-splash") with timeout 90000ms
+E         - waiting for locator("#boot-splash")
+E           16 × locator resolved to <div role="status" id="boot-splash" aria-live="polite" class="boot-splash">…</div>
+E              - unexpected value "visible"
+E           27 × locator resolved to <div role="status" id="boot-splash" aria-live="polite" class="boot-splash is-slow">…</div>
+E              - unexpected value "visible"
+E       
+E       Aria snapshot:
+E       - status:
+E         - paragraph: 正在載入中
+
+tests/e2e/test_partner_space.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_partner_space.py::test_space_globe_drag_zoom_filters_and_route_cleanup[size0]
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/workspace/abroad/tests/e2e/test_partner_globe.py:41: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+1 failed in 127.46s (0:02:07)

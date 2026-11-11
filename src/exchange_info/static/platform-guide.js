@@ -190,7 +190,7 @@ window.UniWayGuide = (() => {
       <button id="guide-toc-toggle" type="button" class="pr-toc-toggle" aria-expanded="false" aria-controls="guide-toc-panel"><i data-lucide="book-open" aria-hidden="true"></i><span>目錄 · ${html(article.title)}</span><i data-lucide="chevron-down" aria-hidden="true"></i></button>
       <nav class="pr-crumbs" aria-label="路徑"><a href="#guide">申請指南</a><span aria-hidden="true">/</span><span>${html(article.group)}</span></nav>
       <h1 id="guide-title">${html(article.title)}</h1>
-      <p class="pr-guide-meta"><span><i data-lucide="clock" aria-hidden="true"></i>閱讀約 ${minutes(article)} 分鐘</span><span>更新於 ${UPDATED}</span><span>${html(schoolLine())}</span></p>
+      <p class="pr-guide-meta"><span>更新於 ${UPDATED}</span><span>${html(schoolLine())}</span></p>
       <p class="pr-guide-lead">${html(article.lead)}</p>
       ${callout}
       ${article.sections.map((section, index) => sectionHtml(section, index, article)).join("")}

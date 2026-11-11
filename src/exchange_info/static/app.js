@@ -1738,8 +1738,6 @@ function updateSchoolContext() {
   document.querySelectorAll("[data-home-school-advisor-question]").forEach((item) => {
     item.dataset.advisorQuestion = `${contextSchool}交換申請的語言門檻是什麼？`;
   });
-  const featuredDescription = $("#featured-home-school-description");
-  if (featuredDescription) featuredDescription.textContent = `${shortName}學生的交換申請資訊與討論。`;
   document.querySelectorAll(".university-sidebar-nav, .university-mobile-nav").forEach((item) => {
     item.setAttribute("aria-label", `${contextSchool}板功能導覽`);
   });
@@ -8726,7 +8724,7 @@ function syncPartnerView() {
   if (partnerMapLoadPromise || partnerMapLoadFailed) return;
   showPartnerMapStatus("正在準備你的世界地圖", "首次載入需要一點時間。", { loading: true });
   const generation = partnerMapGeneration;
-  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261110-ui-1&attempt=${generation}`)
+  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261111-search-copy-1&attempt=${generation}`)
     .then((module) => module.createPartnerMap({ renderPreview: renderMapPreview, onSchoolSelect: loadDiscoveryPreview, onList: () => setPartnerView("list"), onRetry: retryPartnerMap, onIcons: initIcons, freshEngine: generation > 0 }))
     .then((controller) => {
       if (generation !== partnerMapGeneration) { controller.destroy(); return; }
@@ -11509,15 +11507,8 @@ function renderCommunityPageContext(isUniversityBoard = false) {
             : "學長姐心得";
   }
   if (description) {
-    description.textContent = isUniversityBoard
-      ? `校級看板限已驗證 Email 的會員查看、發文與留言，不限同校。這裡顯示${school}板的交換申請與校內討論。`
-      : languageBoard
-        ? "交流課程選擇、簽證、住宿與城市生活；目前不提供完整語言學校申請流程。"
-        : publicBoard
-          ? "跨校討論交換申請、簽證、住宿與海外生活。"
-          : following
-            ? "集中查看你已追蹤學校看板的最新文章。"
-            : "每一段旅程，都有人同行。";
+    description.textContent = isUniversityBoard ? "校級看板需驗證 Email，不限同校。" : "";
+    description.hidden = !isUniversityBoard;
   }
   window.UniWayForum?.render();
 }
@@ -11628,10 +11619,8 @@ function initDiscussionReader() {
       if (filters.sort === "unanswered") return renderCommunityEmpty("目前沒有待回覆的問題", "有新的申請問題時，就能在這裡一起幫忙。");
       return `<div class="discussion-welcome" role="status">
         <div class="discussion-welcome-art" aria-hidden="true"><span class="discussion-art-orbit"></span><span class="discussion-art-globe"><i data-lucide="globe-2"></i></span><span class="discussion-art-bubble"><i data-lucide="messages-square"></i></span><span class="discussion-art-spark"><i data-lucide="sparkles"></i></span></div>
-        <span class="discussion-welcome-kicker">下一站，從一場對話開始</span><h3>來分享第一篇交換經驗</h3>
-        <p>正在準備申請，還是已經走過一趟旅程？<br />你的問題與經驗，都值得被聽見。</p>
+        <h3>來分享第一篇交換經驗</h3>
         <button type="button" class="primary-button" data-open-global-community-composer><i data-lucide="square-pen" aria-hidden="true"></i>發表文章</button>
-        <small>寫下國家、年份與目前階段，讓交流更有方向。</small>
       </div>`;
     },
     composer(post) {
