@@ -91,7 +91,8 @@ class SeoSettings:
             raise ValueError("SEO requires EXCHANGE_PUBLIC_BASE_URL to be an HTTPS origin without a path")
         # Development and staging must opt in deliberately. Never trust Host or forwarded headers.
         enabled = env.get("EXCHANGE_SEO_INDEXABLE", "").strip().lower()
-        indexable = enabled in {"1", "true", "yes", "on"} if enabled else env.get("EXCHANGE_ENVIRONMENT") == "production"
+        from .request_origin import is_production_environment
+        indexable = enabled in {"1", "true", "yes", "on"} if enabled else is_production_environment(env)
         policy = env.get("EXCHANGE_AI_CRAWLERS", "").strip().lower() or "allow"
         if policy not in AI_CRAWLER_POLICIES:
             # A typo in a crawler preference must not stop the site from starting; fall back to the default.

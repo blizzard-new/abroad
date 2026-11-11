@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/external_links.dart';
 import '../core/school_visuals.dart';
 import '../core/student_plan.dart';
 import '../core/student_ui.dart';
@@ -913,7 +913,5 @@ String _scholarshipBadge(StudentInfoItem item, StudentPlanProfile? profile) {
 }
 
 Future<void> _openUrl(String value) async {
-  final uri = Uri.tryParse(value);
-  if (uri == null) return;
-  await launchUrl(uri, mode: LaunchMode.externalApplication);
+  await launchSafeExternalHttpsUrl(value);
 }

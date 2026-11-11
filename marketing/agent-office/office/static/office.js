@@ -631,6 +631,8 @@ function passHTML(d) {
   </article>`;
 }
 
+const safeLink = (url, text) => (/^https?:\/\//i.test(url || "") ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(text || url)}</a>` : esc(url || "（沒有附）"));
+
 function previewHTML(d) {
   const p = d.payload || {};
   const m = d.media || {};
@@ -638,7 +640,6 @@ function previewHTML(d) {
   if (d.format === "data_update") {
     // The finding is text a colleague read off a web page: it is escaped like everything else, and only an http(s)
     // link becomes clickable.
-    const link = (url) => (/^https?:\/\//i.test(url || "") ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(url)}</a>` : esc(url || "（沒有附）"));
     const verification = p.verified_by
       ? `<p class="sub"><b>${esc(p.verified_by)} 重新打開官網驗證：需要更新平台</b>\n${esc(p.verdict_reason)}</p>`
       : p.verification_note
@@ -648,7 +649,7 @@ function previewHTML(d) {
       ? p.edits.map((e, i) => `<p class="sub"><b>修改 ${i + 1}：${esc(e.target)}</b>\n目前：${esc(e.current)}\n建議：${esc(e.proposed)}\n依據：${esc(e.basis)}</p>`).join("")
       : p.suggested_update ? `<p class="sub"><b>${esc(p.author)} 的建議</b>\n${esc(p.suggested_update)}</p>` : `<p class="sub">沒有具體的修改清單，請依官方來源確認要改什麼。</p>`;
     return `<p class="post">${esc(p.detail)}</p>${verification}${edits}` +
-      `<p class="sub"><b>官方來源</b>\n${link(p.source_url)}</p><p class="sub"><b>平台目前的紀錄</b>\n${esc(p.platform_note)}\n${esc(p.author)} 於 ${esc(p.day)} 巡查發現</p>` +
+      `<p class="sub"><b>官方來源</b>\n${safeLink(p.source_url)}</p><p class="sub"><b>平台目前的紀錄</b>\n${esc(p.platform_note)}\n${esc(p.author)} 於 ${esc(p.day)} 巡查發現</p>` +
       `<p class="sub">核准後 Pat 會開一個 draft PR（只新增一個提案檔，不改平台資料），合併由你在 GitHub 按。</p>`;
   }
   if (d.format === "reply") {
@@ -658,7 +659,7 @@ function previewHTML(d) {
     // A multi-image post (format carousel) has several pictures; a plain post has one card.
     const pictures = m.images && m.images.length ? m.images : m.image ? [m.image] : [];
     const card = pictures.length ? `<div class="thumbs">${pictures.map((r) => `<button type="button" data-zoom="${media(r)}"><img src="${media(r)}" alt="Threads 配圖" loading="lazy" /></button>`).join("")}</div>` : "";
-    return `${card}<p class="post">${esc(p.text)}</p><p class="sub"><b>第一則留言</b>\n${esc(p.first_reply)}</p><p class="sub">主題標籤：${esc(p.topic_tag)}${p.source_url ? `｜<a href="${esc(p.source_url)}" target="_blank" rel="noopener">官方來源</a>` : ""}</p>`;
+    return `${card}<p class="post">${esc(p.text)}</p><p class="sub"><b>第一則留言</b>\n${esc(p.first_reply)}</p><p class="sub">主題標籤：${esc(p.topic_tag)}${p.source_url ? `｜${safeLink(p.source_url, "官方來源")}` : ""}</p>`;
   }
   if (d.format === "carousel") {
     const thumbs = (m.images || []).map((r) => `<button type="button" data-zoom="${media(r)}"><img src="${media(r)}" alt="輪播圖" loading="lazy" /></button>`).join("");
@@ -749,7 +750,7 @@ function renderSchedule() {
   }
   host.innerHTML = [...groups].map(([day, list]) => `<section class="sched-group"><h3>${esc(day)}</h3>${list.map((d) => {
     const ch = CHANNEL[d.channel];
-    const link = d.remote_url ? `<a href="${esc(d.remote_url)}" target="_blank" rel="noopener">${d.channel === "github" ? "查看 draft PR" : "查看貼文"}</a>` : d.note ? `<span class="chip">${esc(d.note.slice(0, 6))}</span>` : "";
+    const link = d.remote_url && /^https?:\/\//i.test(d.remote_url) ? safeLink(d.remote_url, d.channel === "github" ? "查看 draft PR" : "查看貼文") : d.note ? `<span class="chip">${esc(d.note.slice(0, 6))}</span>` : "";
     return `<div class="sched-item"><span class="t">${d.scheduled_at ? hhmm(d.scheduled_at) : "--:--"}</span><span class="ttl"><span class="chip"><i style="--c:${ch.color}"></i>${ch.label} ${FORMAT[d.format] || ""}</span> ${esc(d.title)}</span><span class="chip state-${d.status}">${STATUS[d.status]}</span>${link ? `<span></span><span style="grid-column:2/-1;font-size:13px">${link}</span>` : ""}${d.error ? `<span class="err">${esc(d.error)}</span>` : ""}</div>`;
   }).join("")}</section>`).join("");
 }

@@ -30,8 +30,9 @@ Keep 'JWT_SECRET'   { New-RandomHex 32 }
 # the two keys are signed with JWT_SECRET; regenerate them only if the secret changed (or they are missing)
 $e['ANON_KEY']         = New-SupabaseJwt $e['JWT_SECRET'] 'anon'
 $e['SERVICE_ROLE_KEY'] = New-SupabaseJwt $e['JWT_SECRET'] 'service_role'
-Keep 'VAULT_MASTER_KEY'          { ConvertTo-Base64Url (New-RandomBytes 32) }
-Keep 'EMAIL_VERIFICATION_SECRET' { ConvertTo-Base64Url (New-RandomBytes 32) }
+Keep 'VAULT_MASTER_KEY'             { ConvertTo-Base64Url (New-RandomBytes 32) }
+Keep 'EMAIL_VERIFICATION_SECRET'    { ConvertTo-Base64Url (New-RandomBytes 32) }
+Keep 'MAINTENANCE_AUTOMATION_TOKEN' { ConvertTo-Base64Url (New-RandomBytes 32) }
 if ($ContactEmail) { $e['CONTACT_EMAIL'] = $ContactEmail } elseif (-not $e.Contains('CONTACT_EMAIL')) { $e['CONTACT_EMAIL'] = '' }
 if ($AdminEmails)  { $e['ADMIN_EMAILS']  = $AdminEmails }  elseif (-not $e.Contains('ADMIN_EMAILS'))  { $e['ADMIN_EMAILS'] = '' }
 if (-not $e.Contains('GOOGLE_OAUTH_CLIENT_ID'))     { $e['GOOGLE_OAUTH_CLIENT_ID'] = '' }

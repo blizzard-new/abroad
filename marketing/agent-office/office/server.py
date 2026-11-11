@@ -4,6 +4,7 @@ boss's inbox for approving drafts."""
 from __future__ import annotations
 
 import asyncio
+import ipaddress
 import json
 import mimetypes
 import secrets
@@ -12,7 +13,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import Body, FastAPI, HTTPException, Request
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from . import mobile, scheduler
@@ -56,18 +57,68 @@ def create_app(settings: Settings, *, clock: bool = True, office: Office | None 
         response = await call_next(request)
         if request.url.path.startswith("/static/"):
             response.headers["Cache-Control"] = "no-cache"
+        response.headers.setdefault("X-Content-Type-Options", "nosniff")
+        response.headers.setdefault("X-Frame-Options", "DENY")
+        response.headers.setdefault("Referrer-Policy", "no-referrer")
+        response.headers.setdefault("Cross-Origin-Opener-Policy", "same-origin")
+        response.headers.setdefault(
+            "Content-Security-Policy",
+            "frame-ancestors 'none'; object-src 'none'; base-uri 'self'",
+        )
         return response
 
     limit = FailureLimit()
     app.state.failure_limit = limit
 
+    def _client_key(request: Request) -> str:
+        peer = request.client.host if request.client else ""
+        if peer in {"127.0.0.1", "::1"}:
+            cf_ip = (request.headers.get("cf-connecting-ip") or "").strip()
+            if cf_ip:
+                try:
+                    return f"cf:{ipaddress.ip_address(cf_ip)}"
+                except ValueError:
+                    pass
+        return peer
+
+    def _is_https(request: Request) -> bool:
+        if request.url.scheme == "https":
+            return True
+        peer = request.client.host if request.client else ""
+        if peer in {"127.0.0.1", "::1"}:
+            forwarded_proto = (request.headers.get("x-forwarded-proto") or "").split(",", 1)[0].strip().lower()
+            if forwarded_proto == "https":
+                return True
+        return False
+
     @app.middleware("http")
     async def require_token(request: Request, call_next):
+        if (
+            request.method in {"POST", "PUT", "PATCH", "DELETE"}
+            and not request.headers.get("authorization", "").lower().startswith("bearer ")
+        ):
+            sec_fetch_site = (request.headers.get("sec-fetch-site") or "").strip().lower()
+            origin = (request.headers.get("origin") or "").strip().rstrip("/")
+            if sec_fetch_site == "cross-site":
+                return JSONResponse({"detail": "跨站請求已被拒絕"}, status_code=403)
+            if origin:
+                forwarded_proto = (request.headers.get("x-forwarded-proto") or "").split(",", 1)[0].strip().lower()
+                host = (request.headers.get("host") or request.base_url.netloc).strip()
+                allowed_origins = {
+                    f"{request.base_url.scheme}://{request.base_url.netloc}".rstrip("/"),
+                    f"http://{host}".rstrip("/"),
+                    f"https://{host}".rstrip("/"),
+                }
+                if forwarded_proto in {"http", "https"} and host:
+                    allowed_origins.add(f"{forwarded_proto}://{host}".rstrip("/"))
+                if origin == "null" or origin not in allowed_origins:
+                    return JSONResponse({"detail": "跨站請求來源驗證失敗"}, status_code=403)
+
         # Media stays public (Instagram and Threads fetch it); everything else needs the token when one is set.
         # The token comes in the address (?token=…), a cookie, or the phone app's "Authorization: Bearer …" header.
         if not access_token or request.url.path.startswith("/media/"):
             return await call_next(request)
-        who = request.client.host if request.client else ""
+        who = _client_key(request)
         wait = limit.wait(who)
         if wait:
             return JSONResponse({"detail": f"錯誤太多次，請 {wait // 60 + 1} 分鐘後再試"}, status_code=429, headers={"Retry-After": str(wait)})
@@ -78,9 +129,28 @@ def create_app(settings: Settings, *, clock: bool = True, office: Office | None 
                 limit.failed(who)
             return JSONResponse({"detail": "需要辦公室通行碼（網址加上 ?token=…）"}, status_code=401)
         limit.succeeded(who)
+        cookie_secure = _is_https(request)
+        if request.method == "GET" and request.url.path in {"/", "/m"} and "token" in request.query_params:
+            redirect = RedirectResponse(url=request.url.path, status_code=303)
+            redirect.set_cookie(
+                "office_token",
+                access_token,
+                httponly=True,
+                secure=cookie_secure,
+                samesite="strict",
+                max_age=30 * 86400,
+            )
+            return redirect
         response = await call_next(request)
         if request.cookies.get("office_token") != access_token:
-            response.set_cookie("office_token", access_token, httponly=True, samesite="strict", max_age=30 * 86400)
+            response.set_cookie(
+                "office_token",
+                access_token,
+                httponly=True,
+                secure=cookie_secure,
+                samesite="strict",
+                max_age=30 * 86400,
+            )
         return response
 
     @app.get("/")

@@ -740,15 +740,34 @@ class DocumentVaultService:
 
                 with ZipFile(BytesIO(content)) as archive:
                     infos = archive.infolist()
+                    max_decompressed_bytes = 50 * 1024 * 1024
                     if (
                         len(infos) > 1000
-                        or sum(max(0, info.file_size) for info in infos) > 50 * 1024 * 1024
+                        or sum(max(0, info.file_size) for info in infos) > max_decompressed_bytes
                     ):
                         valid = False
                     else:
+                        actual_bytes = 0
+                        too_large = False
+                        for info in infos:
+                            if info.is_dir():
+                                continue
+                            with archive.open(info, "r") as member:
+                                while True:
+                                    chunk = member.read(65536)
+                                    if not chunk:
+                                        break
+                                    actual_bytes += len(chunk)
+                                    if actual_bytes > max_decompressed_bytes:
+                                        too_large = True
+                                        break
+                            if too_large:
+                                break
                         names = [info.filename for info in infos]
-                        valid = "[Content_Types].xml" in names and any(
-                            item.startswith("word/") for item in names
+                        valid = (
+                            not too_large
+                            and "[Content_Types].xml" in names
+                            and any(item.startswith("word/") for item in names)
                         )
             except BadZipFile:
                 valid = False

@@ -9915,11 +9915,11 @@ function guideEvidenceLabel(type) {
 }
 
 function renderGuideSourceLinks(urls, profile, label = "查看依據") {
-  const uniqueUrls = unique((urls || []).filter(Boolean));
+  const uniqueUrls = unique((urls || []).map(safeSourceUrl).filter(Boolean));
   if (!uniqueUrls.length) return "";
-  const sourceTitles = new Map((profile.sources || []).map((source) => [source.source_url, source.title]));
+  const sourceTitles = new Map((profile.sources || []).map((source) => [safeSourceUrl(source.source_url) || source.source_url, source.title]));
   return `<div class="student-guide-source-links" aria-label="${escapeHtml(label)}">${uniqueUrls.map((url, index) => `
-    <a href="${escapeHtml(url)}" target="_blank" rel="noreferrer" title="${escapeHtml(sourceTitles.get(url) || `來源 ${index + 1}`)}">
+    <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(sourceTitles.get(url) || `來源 ${index + 1}`)}">
       <span>${escapeHtml(label)} ${index + 1}</span><i data-lucide="external-link" aria-hidden="true"></i>
     </a>`).join("")}</div>`;
 }
@@ -10889,7 +10889,7 @@ function renderWorkflowStep(step, index, workflow) {
         ${renderWorkflowSubmissionProgress(workflow, step)}
         ${step.details?.length ? `<div><h4>具體要做</h4><ul>${step.details.map((detail) => `<li>${highlightHtml(detail)}</li>`).join("")}</ul></div>` : ""}
         ${requirements.length ? `<div><h4>這一步要準備</h4><ul class="workflow-documents">${requirements.map((requirement) => renderWorkflowDocumentRequirement(requirement, { showReferenceForm: workflow.home_university === "國立中央大學" })).join("")}</ul></div>` : ""}
-        ${step.action_url ? `<a class="official-link workflow-action" href="${escapeHtml(step.action_url)}" target="_blank" rel="noreferrer"><span>開啟這一步的官方頁面</span><i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}
+        ${safeSourceUrl(step.action_url) ? `<a class="official-link workflow-action" href="${escapeHtml(safeSourceUrl(step.action_url))}" target="_blank" rel="noopener noreferrer"><span>開啟這一步的官方頁面</span><i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}
         ${workflow.workflow_id && workflow.issue_report_snapshot && step.rule_id ? `<div class="workflow-step-report"><span>發現資格、期限、文件或送件資訊不一致？</span><button type="button" class="text-button" data-workflow-issue-report data-step-rule-id="${escapeHtml(step.rule_id)}"><i data-lucide="message-square-warning" aria-hidden="true"></i>回報此步驟</button></div>` : ""}
       </div>
     </details>`;
@@ -10994,13 +10994,12 @@ function renderWorkflowDocumentRequirement(requirement, { showReferenceForm = fa
   metadata.push(WORKFLOW_COPY_LABELS[requirement.copy_type] || "文件形式待確認");
   if (requirement.signatures?.length) metadata.push(`簽署：${requirement.signatures.join("、")}`);
   if (requirement.stamps?.length) metadata.push(`核章：${requirement.stamps.join("、")}`);
-  const referenceUrl = showReferenceForm && requirement.official_form_url
-    ? safeSourceUrl(requirement.official_form_url)
-    : null;
+  const officialFormUrl = safeSourceUrl(requirement.official_form_url);
+  const referenceUrl = showReferenceForm ? officialFormUrl : "";
   return `
     <li class="${requirement.needs_confirmation ? "needs-confirmation" : ""}">
       <i data-lucide="${requirement.needs_confirmation ? "circle-help" : "file-check-2"}" aria-hidden="true"></i>
-      <span><b>${highlightHtml(requirement.name)}</b><small>${metadata.map(escapeHtml).join(" · ")}${requirement.needs_confirmation ? " · 適用性及送件細節待確認" : ""}</small>${!showReferenceForm && safeSourceUrl(requirement.official_form_url) ? (requirement.official_form_verified ? `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">開啟已核實官方表格／文件</a><small>官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。</small>` : `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">查看官方表格來源（待核實）</a><small>原檔下載未核實，適用年度仍待確認。</small>`) : ""}${referenceUrl && referenceUrl !== "#" ? `<small><a href="${escapeHtml(referenceUrl)}" target="_blank" rel="noopener noreferrer">官方參考表格（當期適用待確認）</a></small>` : ""}</span>
+      <span><b>${highlightHtml(requirement.name)}</b><small>${metadata.map(escapeHtml).join(" · ")}${requirement.needs_confirmation ? " · 適用性及送件細節待確認" : ""}</small>${!showReferenceForm && officialFormUrl ? (requirement.official_form_verified ? `<a href="${escapeHtml(officialFormUrl)}" target="_blank" rel="noopener noreferrer">開啟已核實官方表格／文件</a><small>官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。</small>` : `<a href="${escapeHtml(officialFormUrl)}" target="_blank" rel="noopener noreferrer">查看官方表格來源（待核實）</a><small>原檔下載未核實，適用年度仍待確認。</small>`) : ""}${referenceUrl ? `<small><a href="${escapeHtml(referenceUrl)}" target="_blank" rel="noopener noreferrer">官方參考表格（當期適用待確認）</a></small>` : ""}</span>
     </li>`;
 }
 
@@ -11063,7 +11062,7 @@ function renderExperienceDecisionSummary(digest) {
           const insights = digest[group.key] || [];
           return `<article class="experience-insight ${group.tone}">
             <div class="experience-insight-heading"><i data-lucide="${group.icon}" aria-hidden="true"></i><h4>${escapeHtml(group.label)}</h4></div>
-            ${insights.length ? `<ul>${insights.slice(0, 3).map((item) => `<li><strong>${escapeHtml(item.title.replace(/^常見優點：|^常見提醒：|^看法分歧：/, ""))}</strong><span>${highlightHtml(truncate(item.summary, 180))}</span><small>${item.source_count} 個來源統整</small>${(item.source_urls || []).length ? `<div class="experience-insight-sources">${item.source_urls.slice(0, 4).map((url, index) => `<a href="${escapeHtml(url)}" target="_blank" rel="noreferrer"><span>依據 ${index + 1}</span><i data-lucide="external-link" aria-hidden="true"></i></a>`).join("")}</div>` : ""}</li>`).join("")}</ul>` : `<p>${escapeHtml(group.empty)}</p>`}
+            ${insights.length ? `<ul>${insights.slice(0, 3).map((item) => { const safeUrls = (item.source_urls || []).map(safeSourceUrl).filter(Boolean).slice(0, 4); return `<li><strong>${escapeHtml(item.title.replace(/^常見優點：|^常見提醒：|^看法分歧：/, ""))}</strong><span>${highlightHtml(truncate(item.summary, 180))}</span><small>${item.source_count} 個來源統整</small>${safeUrls.length ? `<div class="experience-insight-sources">${safeUrls.map((url, index) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer"><span>依據 ${index + 1}</span><i data-lucide="external-link" aria-hidden="true"></i></a>`).join("")}</div>` : ""}</li>`; }).join("")}</ul>` : `<p>${escapeHtml(group.empty)}</p>`}
           </article>`;
         }).join("")}
       </div>

@@ -376,7 +376,7 @@ def fetch_official_page_text(
     try:
         from .http_client import get_safe_session
 
-        response = get_safe_session(require_https=False).get(
+        response = get_safe_session(require_https=True).get(
             url,
             timeout=timeout_seconds,
             headers={"User-Agent": "ExchangeInfoMVP/0.1 (+public academic information index)"},

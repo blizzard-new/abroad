@@ -14,9 +14,14 @@ function Write-CheckLog([string]$Msg) {
 }
 
 Write-CheckLog "Starting scheduled official source check for all registered home universities..."
+$envMap = Read-EnvFile
+$maintToken = if ($envMap.Contains('MAINTENANCE_AUTOMATION_TOKEN')) { $envMap['MAINTENANCE_AUTOMATION_TOKEN'] } else { '' }
+if (-not $maintToken -or $maintToken.Length -lt 32) {
+    Write-CheckLog "ERROR: MAINTENANCE_AUTOMATION_TOKEN is missing or too short in deploy/selfhost/.env. Run 02-generate-secrets.ps1 first."
+    exit 1
+}
 $headers = @{
-    "X-Admin-Id"   = "system_daily_scheduler"
-    "X-Admin-Role" = "super_admin"
+    "X-Maintenance-Token" = $maintToken
 }
 
 try {

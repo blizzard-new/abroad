@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../core/application_calendar.dart';
 import '../core/connected_calendar.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/external_links.dart';
 import '../core/student_ui.dart';
 import '../state/exchange_store.dart';
 
@@ -910,10 +910,7 @@ class _AgendaCard extends StatelessWidget {
                     if (event.sourceUrl.isNotEmpty)
                       IconButton(
                         tooltip: '官方來源',
-                        onPressed: () => launchUrl(
-                          Uri.parse(event.sourceUrl),
-                          mode: LaunchMode.externalApplication,
-                        ),
+                        onPressed: () => launchSafeExternalHttpsUrl(event.sourceUrl),
                         icon: const Icon(Icons.open_in_new_rounded, size: 20),
                       ),
                     if (onEdit != null)

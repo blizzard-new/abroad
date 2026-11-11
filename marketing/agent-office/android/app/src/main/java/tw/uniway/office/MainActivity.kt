@@ -80,6 +80,8 @@ class MainActivity : Activity() {
         web = WebView(this).apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
+            settings.allowFileAccess = false
+            settings.allowContentAccess = false
             settings.setSupportZoom(false)
             settings.userAgentString = settings.userAgentString + " UniWayOffice/" + versionName()
             addJavascriptInterface(Bridge(), "UniWayApp")

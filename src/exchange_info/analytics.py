@@ -415,21 +415,35 @@ class RateLimiter:
 
     def __init__(self, max_batches: int = 60, max_events: int = 600, window_seconds: float = 60.0,
                  max_keys: int = 5000) -> None:
+        from collections import OrderedDict
         self.max_batches = max_batches
         self.max_events = max_events
         self.window = window_seconds
-        self.max_keys = max_keys
-        self._hits: dict[str, deque[tuple[float, int]]] = {}
+        self.max_keys = max(1, max_keys)
+        self._hits: OrderedDict[str, deque[tuple[float, int]]] = OrderedDict()
         self._lock = threading.Lock()
 
     def allow(self, key: str, events: int, now: float | None = None) -> bool:
         now = time.monotonic() if now is None else now
         with self._lock:
-            if len(self._hits) > self.max_keys:
-                self._hits = {k: v for k, v in self._hits.items() if v and now - v[-1][0] < self.window}
-            hits = self._hits.setdefault(key, deque())
-            while hits and now - hits[0][0] >= self.window:
-                hits.popleft()
+            hits = self._hits.get(key)
+            if hits is not None:
+                while hits and now - hits[0][0] >= self.window:
+                    hits.popleft()
+                if not hits:
+                    self._hits.pop(key, None)
+                    hits = None
+            if hits is None:
+                if len(self._hits) >= self.max_keys:
+                    expired = [k for k, v in self._hits.items() if not v or now - v[-1][0] >= self.window]
+                    for k in expired:
+                        self._hits.pop(k, None)
+                    while len(self._hits) >= self.max_keys:
+                        self._hits.popitem(last=False)
+                hits = deque()
+                self._hits[key] = hits
+            else:
+                self._hits.move_to_end(key)
             if len(hits) >= self.max_batches or sum(count for _, count in hits) + events > self.max_events:
                 return False
             hits.append((now, events))

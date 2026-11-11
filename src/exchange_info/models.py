@@ -3564,6 +3564,22 @@ class AccountProfileUpdate(BaseModel):
     notification_preferences: AccountNotificationPreferences | None = None
     content_updates_seen_at: datetime | None = None
 
+    @field_validator("avatar_url")
+    @classmethod
+    def _validate_avatar_url(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        cleaned = value.strip()
+        if not cleaned:
+            return None
+        from urllib.parse import urlsplit
+        parsed = urlsplit(cleaned)
+        if parsed.scheme.lower() != "https" or not parsed.hostname or parsed.username or parsed.password:
+            raise ValueError("大頭貼網址必須使用 HTTPS。")
+        if any(ch.isspace() or ord(ch) < 32 for ch in cleaned):
+            raise ValueError("大頭貼網址格式無效。")
+        return cleaned
+
 
 class AccountCalendarEvent(BaseModel):
     id: str = Field(min_length=1, max_length=180)

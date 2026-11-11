@@ -97,9 +97,10 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
 
     @app.get("/admin/session", response_model=m.AccountProfile)
     def session(request: Request, response: Response):
+        from .api import _account_profile
         account = authorize(request, response)
         # The response model removes password hashes and all server-only fields.
-        return account.model_dump()
+        return _account_profile(account)
 
     @app.get("/admin/application-workflow-review-backlog", response_model=m.ApplicationWorkflowReviewBacklog)
     def backlog(request: Request, response: Response, expected_snapshot: str | None = OPTIONAL_SNAPSHOT):

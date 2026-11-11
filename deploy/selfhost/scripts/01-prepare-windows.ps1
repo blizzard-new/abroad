@@ -11,11 +11,14 @@ Write-Step 'Folders'
 foreach ($d in 'logs', 'backups\db', 'backups\storage', 'caddy') {
     New-Item -ItemType Directory -Force -Path (Join-Path $script:UniwayHome $d) | Out-Null
 }
-foreach ($secureDir in 'logs', 'backups', 'caddy') {
+& icacls $script:UniwayHome /inheritance:r /grant:r ("{0}:(OI)(CI)F" -f $env:USERNAME) 'SYSTEM:(OI)(CI)F' 'Administrators:(OI)(CI)F' | Out-Null
+foreach ($secureDir in 'app', 'logs', 'backups', 'caddy') {
     $targetPath = Join-Path $script:UniwayHome $secureDir
-    & icacls $targetPath /inheritance:r /grant:r ("{0}:(OI)(CI)F" -f $env:USERNAME) 'SYSTEM:(OI)(CI)F' 'Administrators:(OI)(CI)F' | Out-Null
+    if (Test-Path $targetPath) {
+        & icacls $targetPath /inheritance:r /grant:r ("{0}:(OI)(CI)F" -f $env:USERNAME) 'SYSTEM:(OI)(CI)F' 'Administrators:(OI)(CI)F' | Out-Null
+    }
 }
-Write-Ok ("created and locked down {0}\{{logs,backups,caddy}}" -f $script:UniwayHome)
+Write-Ok ("created and locked down {0} and its subdirectories" -f $script:UniwayHome)
 
 Write-Step 'Power: never sleep or hibernate while plugged in (the screen may still turn off)'
 & powercfg /change standby-timeout-ac 0 | Out-Null
@@ -28,7 +31,8 @@ Write-Step 'Firewall: allow inbound web traffic to Caddy only'
 $caddy = Join-Path $script:UniwayHome 'caddy\caddy.exe'
 Get-NetFirewallRule -DisplayName 'UniWay Caddy web' -ErrorAction SilentlyContinue | Remove-NetFirewallRule
 New-NetFirewallRule -DisplayName 'UniWay Caddy web' -Direction Inbound -Action Allow -Protocol TCP -LocalPort 80, 443 -Program $caddy -Profile Any | Out-Null
-Write-Ok 'inbound TCP 80 and 443 allowed for caddy.exe (the rule applies once Caddy is installed in step 5)'
+Get-NetFirewallRule -Name 'WINRM-HTTP-In-TCP', 'WINRM-HTTP-In-TCP-PUBLIC' -ErrorAction SilentlyContinue | Disable-NetFirewallRule | Out-Null
+Write-Ok 'inbound TCP 80 and 443 allowed for caddy.exe (and WinRM inbound rules disabled)'
 Write-Warn 'Nothing else is opened: the web service (8000), database and storage listen only inside this computer.'
 Write-Warn 'Never forward port 3389 (Remote Desktop) from the router to the internet; use a VPN such as Tailscale to reach this computer from outside.'
 

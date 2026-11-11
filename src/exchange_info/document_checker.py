@@ -13,6 +13,7 @@ from .models import DocumentCheckIssue, DocumentCheckResult
 
 
 MAX_DOCUMENT_BYTES = 10 * 1024 * 1024
+MAX_DOCX_UNCOMPRESSED_BYTES = 50 * 1024 * 1024
 SUPPORTED_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
 
@@ -231,18 +232,39 @@ def _extract_text(extension: str, content: bytes) -> tuple[str, int]:
             reader = PdfReader(BytesIO(content))
             if len(reader.pages) > 100:
                 raise ValueError("PDF 頁數過多，單次檢查上限為 100 頁。")
-            return "\n".join(page.extract_text() or "" for page in reader.pages), len(reader.pages)
+            page_texts: list[str] = []
+            total_chars = 0
+            for page in reader.pages:
+                piece = page.extract_text() or ""
+                total_chars += len(piece)
+                if total_chars > 500_000:
+                    raise ValueError("PDF 文字內容過長，無法安全解析。")
+                page_texts.append(piece)
+            return "\n".join(page_texts), len(reader.pages)
         if extension == ".docx":
             from zipfile import BadZipFile, ZipFile
 
+            max_decompressed_bytes = MAX_DOCX_UNCOMPRESSED_BYTES
             try:
                 with ZipFile(BytesIO(content)) as archive:
                     infos = archive.infolist()
                     if (
                         len(infos) > 1000
-                        or sum(max(0, info.file_size) for info in infos) > 50 * 1024 * 1024
+                        or sum(max(0, info.file_size) for info in infos) > max_decompressed_bytes
                     ):
                         raise ValueError("DOCX 壓縮內容過大或異常，無法安全解析。")
+                    actual_bytes = 0
+                    for info in infos:
+                        if info.is_dir():
+                            continue
+                        with archive.open(info, "r") as member:
+                            while True:
+                                chunk = member.read(65536)
+                                if not chunk:
+                                    break
+                                actual_bytes += len(chunk)
+                                if actual_bytes > max_decompressed_bytes:
+                                    raise ValueError("DOCX 壓縮內容過大或異常，無法安全解析。")
             except BadZipFile as error:
                 raise ValueError("檔案內容無法解析，請確認檔案沒有損壞或加密。") from error
             document = Document(BytesIO(content))
@@ -252,7 +274,13 @@ def _extract_text(extension: str, content: bytes) -> tuple[str, int]:
                     paragraphs.append(" | ".join(cell.text for cell in row.cells))
             return "\n".join(paragraphs), 1
         return content.decode("utf-8-sig"), 1
-    except (OSError, ValueError, UnicodeDecodeError) as error:
+    except UnicodeDecodeError as error:
+        raise ValueError("檔案內容無法解析，請確認檔案沒有損壞或加密。") from error
+    except ValueError as error:
+        if str(error).startswith(("PDF ", "DOCX ", "檔案")):
+            raise
+        raise ValueError("檔案內容無法解析，請確認檔案沒有損壞或加密。") from error
+    except OSError as error:
         raise ValueError("檔案內容無法解析，請確認檔案沒有損壞或加密。") from error
 
 
