@@ -4334,7 +4334,7 @@ function partnerAvailabilityMeta(item) {
   if (additional[status]) {
     const meta = additional[status];
     return { status, shortLabel: meta.label, cardLabel: meta.label, matchLabel: meta.label,
-      reason: meta.reason, blocked: true };
+      reason: meta.reason, blocked: true, pending: status === "quota_unconfirmed" };
   }
   if (status === "departmental_reference") {
     return {
@@ -9449,6 +9449,7 @@ function updateDetailFavoriteButton() {
   );
   button.innerHTML = `<i data-lucide="${icon}" aria-hidden="true"></i><span>${label}</span>`;
   initIcons();
+  window.UniWayDetail?.render();
 }
 
 function updateDetailApplicationButton() {

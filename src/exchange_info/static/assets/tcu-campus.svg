@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="tcuTitle tcuDesc">
+  <title id="tcuTitle">慈濟大學 Tzu Chi University</title>
+  <desc id="tcuDesc">Campus illustration of Tzu Chi University (TCU) in Hualien, Taiwan, featuring the Central Mountain Range, iconic grey-tiled gable roofs and washed-stone facades of He-Jing and Da-Ai Buildings, lotus pond, and Hualien Pacific morning light.</desc>
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f2942"/>
+      <stop offset="55%" stop-color="#285b84"/>
+      <stop offset="100%" stop-color="#d8e6f2"/>
+    </linearGradient>
+    <linearGradient id="mtnBack" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#244b6b"/>
+      <stop offset="100%" stop-color="#17334a"/>
+    </linearGradient>
+    <linearGradient id="mtnFront" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2c5d4f"/>
+      <stop offset="100%" stop-color="#193b32"/>
+    </linearGradient>
+    <linearGradient id="roofGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5c646d"/>
+      <stop offset="100%" stop-color="#3c434a"/>
+    </linearGradient>
+    <linearGradient id="wallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ebe9e4"/>
+      <stop offset="100%" stop-color="#cfccc4"/>
+    </linearGradient>
+    <linearGradient id="pondGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1f5f78"/>
+      <stop offset="100%" stop-color="#0e3747"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Hualien Morning Sky & Pacific Sun -->
+  <rect width="1200" height="630" fill="url(#skyGrad)"/>
+  <circle cx="980" cy="140" r="64" fill="#fff0b3" opacity="0.9"/>
+  <circle cx="980" cy="140" r="98" fill="#fff0b3" opacity="0.22"/>
+
+  <!-- Central Mountain Range (花蓮中央山脈與奇萊山稜線) -->
+  <polygon points="0,420 180,220 390,310 610,185 830,295 1040,210 1200,290 1200,480 0,480" fill="url(#mtnBack)" opacity="0.78"/>
+  <polygon points="0,450 240,305 510,375 780,280 1050,360 1200,320 1200,490 0,490" fill="url(#mtnFront)" opacity="0.85"/>
+
+  <!-- Tzu Chi Iconic Grey-Tiled Gable Roof Architecture (和敬樓・大愛樓 人字形斜屋頂與洗石子迴廊) -->
+  <g transform="translate(150, 175)">
+    <!-- Left Wing -->
+    <polygon points="30,135 160,65 290,135" fill="url(#roofGrad)" stroke="#e0ddd5" stroke-width="4"/>
+    <rect x="55" y="135" width="210" height="175" fill="url(#wallGrad)" stroke="#b5b1a8" stroke-width="2"/>
+    <!-- Right Wing -->
+    <polygon points="610,135 740,65 870,135" fill="url(#roofGrad)" stroke="#e0ddd5" stroke-width="4"/>
+    <rect x="635" y="135" width="210" height="175" fill="url(#wallGrad)" stroke="#b5b1a8" stroke-width="2"/>
+
+    <!-- Central Main Hall (和敬樓主樓) -->
+    <polygon points="230,110 450,8 670,110" fill="url(#roofGrad)" stroke="#f2efe9" stroke-width="5"/>
+    <polygon points="270,115 450,32 630,115" fill="#4b525a"/>
+    <rect x="260" y="110" width="380" height="200" fill="url(#wallGrad)" stroke="#b5b1a8" stroke-width="2"/>
+
+    <!-- Lotus & Book Emblem Accent -->
+    <circle cx="450" cy="76" r="18" fill="#f5f3ee" opacity="0.92"/>
+    <path d="M438,80 Q450,64 462,80 Q450,86 438,80 Z" fill="#1e5c8a"/>
+
+    <!-- Arched & Pillar Colonnade (洗石子長廊與方柱) -->
+    <rect x="290" y="140" width="20" height="170" fill="#dedbd2"/>
+    <rect x="350" y="140" width="20" height="170" fill="#dedbd2"/>
+    <rect x="410" y="140" width="20" height="170" fill="#dedbd2"/>
+    <rect x="470" y="140" width="20" height="170" fill="#dedbd2"/>
+    <rect x="530" y="140" width="20" height="170" fill="#dedbd2"/>
+    <rect x="590" y="140" width="20" height="170" fill="#dedbd2"/>
+
+    <!-- Windows -->
+    <rect x="85" y="165" width="36" height="48" rx="4" fill="#234861"/>
+    <rect x="145" y="165" width="36" height="48" rx="4" fill="#234861"/>
+    <rect x="205" y="165" width="36" height="48" rx="4" fill="#234861"/>
+    <rect x="85" y="230" width="36" height="48" rx="4" fill="#234861"/>
+    <rect x="145" y="230" width="36" height="48" rx="4" fill="#234861"/>
+    <rect x="205" y="230" width="36" height="48" rx="4" fill="#234861"/>
+
+    <rect x="665" y="165" width="36" height="48" rx="4" fill="#234861"/>
+    <rect x="725" y="165" width="36" height="48" rx="4" fill="#234861"/>
+    <rect x="785" y="165" width="36" height="48" rx="4" fill="#234861"/>
+    <rect x="665" y="230" width="36" height="48" rx="4" fill="#234861"/>
+    <rect x="725" y="230" width="36" height="48" rx="4" fill="#234861"/>
+    <rect x="785" y="230" width="36" height="48" rx="4" fill="#234861"/>
+  </g>
+
+  <!-- Campus Green Boulevard & Lotus Pond (慈大竹軒與生態景觀池) -->
+  <rect x="0" y="485" width="1200" height="145" fill="#2a6847"/>
+  <path d="M90 510 Q 600 475 1130 515 L 1200 630 L 0 630 Z" fill="url(#pondGrad)"/>
+  <path d="M440 540 L760 540 M485 570 L715 570 M530 600 L670 600" stroke="#fff0b3" stroke-width="2.5" opacity="0.45" stroke-linecap="round"/>
+
+  <!-- Badge & Title Overlay -->
+  <rect x="55" y="45" width="460" height="92" rx="14" fill="#0f2942" opacity="0.9" stroke="#7fa8c9" stroke-width="2"/>
+  <text x="82" y="86" font-family="'Noto Sans TC', 'Microsoft JhengHei', sans-serif" font-size="28" font-weight="700" fill="#ffffff" letter-spacing="2">慈濟大學 TCU</text>
+  <text x="82" y="116" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="500" fill="#a8cbe8" letter-spacing="1">Tzu Chi University, Hualien</text>
+</svg>

@@ -2481,7 +2481,205 @@ NTTU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU)
+ASIA = UniversityProfile(
+    id="asia",
+    school_name="亞洲大學",
+    short_name="亞大",
+    english_name="Asia University",
+    aliases=(
+        "asia",
+        "亞洲大學",
+        "亞大",
+        "臺中健康暨管理學院",
+        "台中健康暨管理學院",
+        "ASIA",
+        "Asia University",
+        "Asia University Taiwan",
+        "Asia University, Taiwan",
+    ),
+    hero_image="/static/assets/asia-campus.svg",
+    official_url="https://oia.asia.edu.tw/p/412-1008-258.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合亞洲大學國際事務處（OIA）《2026–2027 出國交換學生甄選簡章與學校一覽表（Fact Sheet）》、《全球合作姊妹校名錄（29 國 106 校）》、《亞洲大學學生出國交換生實施辦法》、《亞洲大學與國外大學辦理雙聯學制實施辦法》、《亞洲大學雙聯學位獎助學金辦法》、《亞洲大學 318 國際交流亮點計畫補助要點》、《亞洲大學學海計畫-選送優秀學生出國研修助學金審查要點》、《學生出國期間有關學業及學籍處理要點》、《學生抵免學分要點》及《出國交換暨學海計畫學生心得報告（12 校 14 篇）》官方資料：（1）校內甄選時程與資格門檻：每學期定期公告學期交換甄選（如 2027 春季班於 2026/10/19 截止收件、2026 秋季班於 2026/02/26 截止收件），限本校具中華民國國籍且修業滿一學期以上之全職在學學生（不含在職專班、延修生及休學生），在校學業總平均須達 75 分以上或名列全系（所）前 50%、操行成績 80 分以上，並具備目標姊妹校要求之外語檢定證明（英語組 TOEFL iBT 60–90 / IELTS 5.5–6.5 / TOEIC 550–800、日語組 JLPT N2–N4、韓語組 TOPIK 2–3 級）。（2）全球 29 國 106 所合作姊妹校與 9 校歐美亞跨國雙聯學位：完整收錄 40 所當期開放申請之學期交換與雙聯學位重點盟校（含加拿大維多利亞大學 UVic 3+1+1、美國北伊利諾大學 NIU 雙聯、美國蒙clair州立大學、瑞士 BHMS 飯店與商業管理學院雙聯、法國蒙彼利埃商學院 MBS 雙聯、英國西蘇格蘭大學 UWS 雙聯、捷克馬薩里克大學與奧斯特拉瓦大學、波蘭華沙經濟大學 SGH、義大利天主教聖心大學、日本近畿大學、日本亞細亞大學、日本關西國際大學、韓國成均館大學 SKKU、韓國慶熙大學、韓國外國語大學 HUFS、新加坡南洋理工大學 NTU、馬來西亞拉曼大學 UTAR 等）及 66 所正式締約姊妹校。（3）多元出國獎助學金與經驗傳承：涵蓋《亞大 318 國際交流亮點計畫》（依地區與天數定額補助機票與生活費）、《雙聯學位獎助學金》（每名最高補助 NT$200,000）、教育部《學海飛颺》、《學海惜珠》、《學海築夢／新南向學海築夢》及 12 所歐美日韓新馬姊妹校共 14 篇歷屆學長姐研修心得。",
+    support_level="full",
+    partner_count_hint=106,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "亞洲大學",
+        "亞大",
+        "ASIAUNIVERSITY",
+        "ASIA UNIVERSITY",
+        "ASIA",
+    ),
+    # https://www.asia.edu.tw/zh_tw/academics — checked 2026-11-08.
+    colleges=(
+        "醫學暨健康學院",
+        "資訊電機學院",
+        "管理學院",
+        "人文社會學院",
+        "創意設計學院",
+        "護理學院",
+        "國際學院",
+    ),
+)
+
+
+TTU = UniversityProfile(
+    id="ttu",
+    school_name="大同大學",
+    short_name="大同",
+    english_name="Tatung University",
+    aliases=(
+        "ttu",
+        "大同大學",
+        "大同",
+        "私立大同大學",
+        "大同工學院",
+        "TTU",
+        "Tatung University",
+        "Tatung",
+    ),
+    hero_image="/static/assets/ttu-campus.svg",
+    official_url="https://oia.ttu.edu.tw/",
+    coverage_note="完整支援：已整合大同大學國際暨兩岸事務處《2027 春季／2026 秋季／2026 春季／2025 秋季赴外交換及雙聯學位甄選公告》、《115 年度教育部學海飛颺與學海惜珠簡章及候補申請公告》、《全球與兩岸締約姊妹校名錄（104校）》、《交換學生計畫實施辦法（rid=1049）》、《與境外大學校院辦理雙聯學制實施辦法（rid=232）》、《學生出國期間有關學業及學籍處理要點（rid=225）》、《學生抵免學分辦法（rid=224）》、《校友捐助國際交流專案獎助學金辦法（rid=1124）》、《鼓勵學生出國交換研修助學金辦法（rid=1045）》、《學生暑期赴境外語言學習助學金辦法（rid=1129）》及《人在他鄉大同人（痞客邦官方交換網誌 28 校 146 篇）》官方資料：（1）兩階段校內甄選、量化評分與至多 2 志願規定：每學期分第一階段与第二階段收件（秋季班約 2 月下旬／3 月上旬 16:00 截止；春季班約 9 月上旬／10 月中旬 16:00 截止），每人每階段至多選填 2 個志願；申請人須為本校正式學籍在學學生（不含在職專班），實際出國時須在大同大學就讀滿一學年以上（即大二以上、碩士班或博士班），歷年學業總平均達 GPA 3.0（百分制約 75 分）以上（英國倫敦布魯內爾大學 Brunel 1+1／4+1 雙聯達 70 分以上即可）；校內甄選採量化審查「在校成績 40% + 語文能力 40% + 讀書計畫 20%」，總分達 70 分以上始得推薦，第一階段獲推薦者不得放棄並改申請第二階段，簽署家長同意書及本人聲明書後無故放棄者兩年內不得再申請；交換期間須維持大同在學註冊並繳交全額學雜費（免繳接待校學費）。（2）全球 20 國／地區 104 所合作姊妹校與英美德法澳日 9 校跨國雙聯學位：完整收錄 53 所常態開放申請之交換與雙聯合作校（含日本京都工藝纖維大學、千葉大學、東京都市大學、芝浦工業大學、東京電機大學、長岡造形大學、札幌市立大學、東北工業大學、岡山大學、熊本大學、琉球大學、縣立廣島大學、同志社大學、專修大學等 22 所日本名校，德國斯圖加特應用科技大學 HFT Stuttgart、奧斯納布魯克應用科技大學、德根多夫應用科技大學 DIT、巴登符騰堡雙元制大學 DHBW、卡爾斯魯厄應用科技大學 HKA，芬蘭東南芬蘭應用科技大學 Xamk，法國貢比涅科技大學 UTC，韓國仁川大學，泰國法政大學 SIIT，美國匹茲堡州立大學 PSU 及大陸 12 所重點高校），以及美國愛荷華州立大學 ISU（1+1／3.5+1.5）、韋恩州立大學 WSU（1+1 碩士，每名大同生享 USD 3,000/學期獎學金）、拉瑪大學 Lamar（1+1 免 GRE）、英國密德薩斯大學 Middlesex（3+1／1+1／3+1.5）、倫敦布魯內爾大學 Brunel（1+1／4+1 數位設計與 AI，每年 10 名享 15% 學費減免）、德國 HFT Stuttgart（1+1 雙碩士）、法國 ESIEE-Amiens / UniLaSalle（1+1 雙碩士）、澳洲紐卡索大學（1+1 雙碩士）與日本千葉大學雙聯學位。（3）豐厚校友捐助獎助與返國心得：涵蓋教育部《學海飛颺／惜珠》（申請學海自動聯審《大同大學校友捐助國際交流獎助學金》）、電機系 66 級校友捐助《鼓勵學生出國交換研修助學金》（最高 NT$100,000）、《暑期赴境外語言學習助學金》（最高 NT$50,000），並收錄《人在他鄉大同人》官方網誌 28 所合作大學共 146 篇歷屆學長姐交換與雙聯心得報告。",
+    support_level="full",
+    partner_count_hint=104,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "大同大學",
+        "TATUNGUNIVERSITY",
+        "TATUNG UNIVERSITY",
+        "TTU",
+    ),
+    # https://www.ttu.edu.tw/p/412-1000-99.php?Lang=zh-tw — checked 2026-11-08.
+    colleges=(
+        "工程學院",
+        "電機資訊學院",
+        "經營學院",
+        "設計學院",
+        "國際學院",
+    ),
+)
+
+
+TCU = UniversityProfile(
+    id="tcu",
+    school_name="慈濟大學",
+    short_name="慈大",
+    english_name="Tzu Chi University",
+    aliases=(
+        "tcu",
+        "慈濟大學",
+        "慈大",
+        "慈濟",
+        "慈濟醫學院",
+        "慈濟技術學院",
+        "慈濟科技大學",
+        "TCU",
+        "Tzu Chi University",
+        "Tzu Chi University, Taiwan",
+        "Tzu-Chi University",
+    ),
+    hero_image="/static/assets/tcu-campus.svg",
+    official_url="https://oga.tcu.edu.tw/outbound-exchange-student-program/",
+    coverage_note="完整支援：已整合慈濟大學全球事務處（Office of Global Affairs, OGA，原國際暨兩岸事務處 OIA）交流組《出國交換學生計畫（outbound-exchange-student-program）》、《跨國雙聯與三聯學位計畫（dual-double-degree-program / a-double-degree）》、《大陸地區學生交換研習申請資訊》、《全球合作姊妹校名錄（sister-schools-3，50校）》、《與境外學校辦理雙聯學制實施辦法（1070508教育部備查版）》、《英語主要檢測參考對照表暨 CEFR B1（含）級以上或同等語言能力對照表》、《學生海外交流補助辦法》、《教育部學海系列獎助計畫》及《經驗分享與學生故事專區（15校16篇）》官方資料：（1）校內甄選時程、在學資格與成績門檻：每年 11 月公告次學年度出國交換生甄選簡章、12 月中旬起更新姊妹校名額至 12 月 31 日截止收件，限本校在學全職學位生（大學部二年級（含）以上、碩士班、博士班在學學生；大一新生於大一下學期得申請大二赴外交換；不含在職專班、延畢生及休學生），歷年學業成績排名須達全班前 50%（約折合平均 75 分或 GPA 2.5 以上；美國加州州立大學海峽群島分校明訂 GPA 2.5+）且操行優良，外語能力須符合《CEFR B1（含）級以上語言能力對照表》（TOEIC 550 / TOEFL iBT 42 / ITP 460 / IELTS 4.0）及各接待校門檻。（2）全球 17 國／地區 50 所合作姊妹校與跨洲際三聯／英美泰雙聯學位：完整收錄 25 所當期開放申請之國際交換、大陸交換與雙聯／三聯合作校及 25 所正式締約代表性姊妹校，涵蓋德墨臺「跨洲際全球研究三聯碩士學位（TRIM，與德國卡爾斯魯厄應用科技大學 HKA 及墨西哥蒙特雷大學 UDEM 共同授位）」、英國倫敦密德薩斯大學 3+1 雙學士（限公衛、生科、分遺、外語、國管學程）、美國安德魯斯大學 1+1 MBA 雙碩士（全校各科系適用）、泰國瑪希敦大學與納黎萱大學醫學科學研究所博士雙聯，以及日本京都佛教大學、奈良天理大學、熊本尚絅大學（限女生）與大陸蘭州大學「學雜費及住宿費雙全免」交換專案。（3）三大獎助體系與學長姐心得：涵蓋教育部《學海飛颺／惜珠／築夢／新南向學海築夢》（第一階段每年 2–3 月、第二階段每年 8 月）、校內《學生海外交流活動補助》（暑期 3/1–3/15、5/1–5/15；寒假 12/1–12/15；學期中出發前 1 個月；依計畫完整性 40%、含服務學習時數之學習成效 40%、交流風險性 20% 評定）及 15 所合作大學共 16 篇歷屆學長姐交換與雙聯心得報告。",
+    support_level="full",
+    partner_count_hint=50,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "慈濟大學",
+        "慈濟科技大學",
+        "慈大",
+        "TZUCHIUNIVERSITY",
+        "TZU CHI UNIVERSITY",
+        "TCU",
+    ),
+    # https://www.tcu.edu.tw/p/412-1033-4801.php?Lang=zh-tw — checked 2026-11-09.
+    colleges=(
+        "醫學院",
+        "護理學院",
+        "工程科技學院",
+        "人文傳播暨社會科學院",
+        "智慧永續管理學院",
+        "國際學院",
+    ),
+)
+
+
+MCUT = UniversityProfile(
+    id="mcut",
+    school_name="明志科技大學",
+    short_name="明志",
+    english_name="Ming Chi University of Technology",
+    aliases=(
+        "mcut",
+        "明志科技大學",
+        "明志科大",
+        "明志工專",
+        "明志",
+        "MCUT",
+        "Ming Chi University of Technology",
+    ),
+    hero_image="/static/assets/mcut-campus.svg",
+    official_url="https://oia.mcut.edu.tw/?Lang=zh-tw",
+    coverage_note="完整支援：已整合明志科技大學國際事務處全球交流組（OIA）《2026–2027 學年度海外交換學習計畫甄選簡章（59所當期開放校）》、《跨國碩士雙聯學位甄選公告（美國辛辛那提大學 UC、北伊利諾大學 NIU、舊金山州立大學 SFSU、西班牙巴塞隆納高等設計學院 ELISAVA、法國 ESIEE Paris、希臘雅典 ALBA 商學院）》、《全球暨兩岸合作姊妹校名錄（130校）》、《學生出國雙聯學位學習及交換學習實施及補助辦法（A2Q1040008，114.08.12修訂）》、《大學部海外交換學習課程實施辦法（A2Q1060001，大三工讀實習海外交換抵免）》、《學生出國短期研習實施及補助辦法（A2Q1030010）》、《各類語言檢定證照等級對照表（CEFR A1–C2）》及《出國交換暨雙聯學位心得報告專區（13校48篇）》官方資料：（1）校內甄選時程、GPA 3.0 門檻與大三工讀實習抵免制度：交換生每年 1 月公告、2 月初截止（2026–2027 學年於 2026/02/06 17:00 截止；春季班補充收件依辦法第 5 條於 10/31 前），碩士雙聯分春季班（9/24 17:00 截止）與秋季班（2/6 17:00 截止）兩梯次；限日間部大二、大三及碩博士班在學學生（不含大一及在職專班；僅大二升大三擬以海外交換抵免大三全學年「工讀實務實習」課程［上學期 16 學分、下學期 18 學分］者可申請一學年交換，每學期至少修讀 6 學分［歐洲 2 ECTS = 1 學分］並每三個月繳交四階段學習報告，其餘以一學期為原則），歷年 GPA 須達 3.0（百分制約 75 分；NIU、ELISAVA、ESIEE、ALBA 雙聯為 GPA 2.75）以上、操行平均 80 分以上無記過，且語言達 CEFR B1（TOEIC 550 / TOEFL iBT 42 / IELTS 4.0 / JLPT N3 / TOPIK 3級）或雙聯指定門檻（iBT 72–100 / IELTS 5.5–6.5），每人限填 1 所志願校。（2）全球 21 國／地區 130 所合作姊妹校與 12 所雙聯合作校：完整收錄 59 所當期開放申請之歐美日韓東南亞及大陸交換與雙聯合作校及 71 所正式締約姊妹校。（3）雙聯最高 24 萬／交換最高 16 萬元校內補助與學海計畫：涵蓋校內雙聯補助（非亞洲區一學年最高 NT$240,000、亞洲區最高 NT$150,000；美國 UC 另享校友「鹿江基金會」專屬獎學金）、校內交換補助（非亞洲區一學期最高 NT$80,000／一學年最高 NT$160,000、亞洲區一學期最高 NT$50,000／一學年最高 NT$100,000）、短期研習補助（最高 NT$47,000）、教育部《學海飛颺／惜珠／築夢》（每人 5 萬至 30 萬元）及 13 校 48 篇歷屆學長姐心得報告。",
+    support_level="full",
+    partner_count_hint=130,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "明志科技大學",
+        "明志科大",
+        "MINGCHIUNIVERSITYOFTECHNOLOGY",
+        "MING CHI UNIVERSITY OF TECHNOLOGY",
+        "MCUT",
+    ),
+    # https://www.mcut.edu.tw/ — checked 2026-11-09.
+    colleges=(
+        "工程學院",
+        "環境資源學院",
+        "管理暨設計學院",
+    ),
+)
+
+
+CYUT = UniversityProfile(
+    id="cyut",
+    school_name="朝陽科技大學",
+    short_name="朝陽",
+    english_name="Chaoyang University of Technology",
+    aliases=(
+        "cyut",
+        "朝陽科技大學",
+        "朝陽科大",
+        "朝陽",
+        "CYUT",
+        "Chaoyang University of Technology",
+    ),
+    hero_image="/static/assets/cyut-campus.svg",
+    official_url="https://icsc.cyut.edu.tw/",
+    coverage_note="完整支援：已整合朝陽科技大學國際事務處（OIA，原國際暨兩岸合作處，下設學術交流組、學生服務組、國際專修部及國際學生就業輔導中心）《115學年度赴亞洲（日韓）及歐美墨姊妹校交換學生甄選簡章》、《跨國雙聯學位甄選簡章（英美澳日德 12 校）》、《選送優秀學生寒暑假赴海外姐妹校英語研習營甄選簡章（菲律賓拉普拉普宿霧國際大學 LCIC）》、《與境外大學辦理交換學生實施要點》、《學生赴國外姐妹校交換學習補助要點》、《跨國雙聯學位獎助學金實施要點》、《千人海外體驗計畫補助要點》、《辦理學生抵免學分要點》及《全球 40 國姊妹校名錄與海外學習成果專區》官方資料：（1）校內甄選時程、在學資格與最低修課規範：每學期分兩梯次（秋季班於當年 3 月中旬截止，如 115-1 於 2026/03/13 17:00 截止；春季班於前一年 10 月中旬截止，如 115-2 於 2026/10/16 17:00 截止；寒暑假菲律賓英語研習營分別於 11/09 及 12/14 17:00 截止）受理報名，交換生限日間部四技（修滿 1–2 年）、二技及碩博士班（修滿 1 年）在學學生（不含延修生），歷年學業總平均達 70 分（GPA 2.7）或班排前 50%、操行達 80 分以上，交換期間每學期至少應修習 2 門（或 6 學分）以上科目，錄取後繳交保證金 NT$5,000（返國完成心得報告無息退還）。（2）70 所全球與兩岸合作姊妹校（含 34 所當期開放申請合作校）：涵蓋日本芝浦工業大學（三明治交換與研究交流）、岩手縣立大學、會津大學、長野大學、公立函館未來大學；韓國東義大學（免學費且免收校內宿舍住宿費！）、三育大學、水原大學、龍仁大學、國立順天大學、忠清大學；歐洲捷克馬薩里克大學、丹麥維亞大學（ETEN 歐洲教師教育網絡重點夥伴）、丹麥哥本哈根應用科學大學（UCC）、德國東巴伐利亞雷根斯堡應用科學大學（OTH Regensburg）、德國烏茲堡應用科學大學（THWS）、德國帕紹大學、荷蘭格羅寧根漢斯應用科學大學（Hanze）、海牙應用科學大學（THUAS）、漢恩應用科學大學（HAN）、比利時天主教林堡大學（UCLL）、西班牙蒙德拉貢大學、維克大學、俄羅斯秋明大學；墨西哥蒙特雷科技大學；以及英國密德薩斯大學、德蒙福特大學、桑德蘭大學、西蘇格蘭大學、澳洲南十字星大學、西雪梨大學、美國明州西南州立大學、漢弗萊斯大學等 3+1／2+2 雙學士與 1+1／1.5+1 雙碩士名校。（3）四大海外學習補助與教育部學海計畫：通過校內交換甄選即補助經濟艙來回機票（亞洲上限 NT$18,000–20,000、歐美上限 NT$45,000）、雙聯學位機票與獎助金（NT$15,000–50,000）、菲律賓 LCIC 英語研習營（補助 50% 研習費上限 NT$30,000＋機票上限 NT$10,000）及教育部《學海飛颺》（每人 6–24 萬元）、《學海惜珠》、《學海築夢／新南向學海築夢》，並收錄 15 校 19 篇官方錄取與海外研修實錄。",
+    support_level="full",
+    partner_count_hint=70,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "朝陽科技大學",
+        "朝陽科大",
+        "CHAOYANGUNIVERSITYOFTECHNOLOGY",
+        "CHAOYANG UNIVERSITY OF TECHNOLOGY",
+        "CYUT",
+    ),
+    # https://www.cyut.edu.tw/ — checked 2026-11-10.
+    colleges=(
+        "管理學院",
+        "理工學院",
+        "設計學院",
+        "人文暨社會學院",
+        "資訊學院",
+        "航空學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, CJCU, NQU, ISU, FGU, NKUHT, NUU, TNNUA, TPCU, AU, KNU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, ASIA, TTU, TCU, MCUT, CYUT)
 DEFAULT_UNIVERSITY = CGU
 
 

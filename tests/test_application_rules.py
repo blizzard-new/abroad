@@ -280,3 +280,14 @@ def test_personal_plan_blocks_departmental_reference_until_current_opening_is_co
     assert availability_check.status == "fail"
     assert "中央當期名單未列" in availability_check.detail
     assert "中央當期名單未列" in choice.summary
+
+
+def test_unconfirmed_quota_is_unknown_not_a_confirmed_rejection() -> None:
+    result = build_personal_application_plan(
+        _plan_request(ApplicationPlanPreference(rank=1, school_name='名額待確認校')),
+        [_partner('名額待確認校', availability_status='quota_unconfirmed')],
+        [_workflow()], academic_score_minimum=70,
+    )
+    choice = result.choices[0]
+    assert choice.status != ApplicationPlanEligibilityStatus.UNAVAILABLE
+    assert next(check for check in choice.checks if check.code == 'availability').status == 'needs_confirmation'

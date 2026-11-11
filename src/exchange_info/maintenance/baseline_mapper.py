@@ -111,6 +111,19 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
         "docs.google.com",
     ],
     "nttu": ["rd.nttu.edu.tw", "aa.nttu.edu.tw", "lc.nttu.edu.tw", "www.nttu.edu.tw", "nttu.edu.tw"],
+    "asia": ["oia.asia.edu.tw", "ac.asia.edu.tw", "www.asia.edu.tw", "asia.edu.tw"],
+    "ttu": [
+        "oia.ttu.edu.tw",
+        "ao.ttu.edu.tw",
+        "admission.ttu.edu.tw",
+        "tturule.ttu.edu.tw",
+        "www.ttu.edu.tw",
+        "ttu.edu.tw",
+        "tatunguni.pixnet.net",
+    ],
+    "tcu": ["oga.tcu.edu.tw", "oia.tcu.edu.tw", "academic.tcu.edu.tw", "law.tcu.edu.tw", "www.tcu.edu.tw", "tcu.edu.tw"],
+    "mcut": ["ciae.mcut.edu.tw", "www.mcut.edu.tw", "mcut.edu.tw"],
+    "cyut": ["icsc.cyut.edu.tw", "acad.cyut.edu.tw", "staf.cyut.edu.tw", "lsc.cyut.edu.tw", "www.cyut.edu.tw", "cyut.edu.tw"],
 }
 
 
@@ -2036,6 +2049,121 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["nttu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="nttu", partner_rows=nttu_rows, default_cycle_label="115"
+        )
+
+    # 62. ASIA partners.jsonl (106 partner schools)
+    asia_partners_path = official_data_root / "asia" / "partners.jsonl"
+    if asia_partners_path.exists():
+        asia_rows = []
+        for line in asia_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            asia_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.asia.edu.tw/p/412-1008-258.php?Lang=zh-tw",
+            })
+        school_reports["asia"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="asia", partner_rows=asia_rows, default_cycle_label="115"
+        )
+
+    # 62. TTU partners.jsonl (104 partner schools)
+    ttu_partners_path = official_data_root / "ttu" / "partners.jsonl"
+    if ttu_partners_path.exists():
+        ttu_rows = []
+        for line in ttu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            ttu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.ttu.edu.tw/",
+            })
+        school_reports["ttu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="ttu", partner_rows=ttu_rows, default_cycle_label="115"
+        )
+
+    # 62. TCU partners.jsonl (50 partner schools)
+    tcu_partners_path = official_data_root / "tcu" / "partners.jsonl"
+    if tcu_partners_path.exists():
+        tcu_rows = []
+        for line in tcu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            tcu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oga.tcu.edu.tw/outbound-exchange-student-program/",
+            })
+        school_reports["tcu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="tcu", partner_rows=tcu_rows, default_cycle_label="115"
+        )
+
+    # 67. MCUT partners.jsonl (130 partner schools)
+    mcut_partners_path = official_data_root / "mcut" / "partners.jsonl"
+    if mcut_partners_path.exists():
+        mcut_rows = []
+        for line in mcut_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            mcut_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://ciae.mcut.edu.tw/p/412-1010-6306.php?Lang=zh-tw",
+            })
+        school_reports["mcut"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="mcut", partner_rows=mcut_rows, default_cycle_label="115"
+        )
+
+    # 62. CYUT partners.jsonl (70 partner schools)
+    cyut_partners_path = official_data_root / "cyut" / "partners.jsonl"
+    if cyut_partners_path.exists():
+        cyut_rows = []
+        for line in cyut_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            cyut_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "114",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://icsc.cyut.edu.tw/p/404-1008-53437.php?Lang=zh-tw",
+            })
+        school_reports["cyut"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="cyut", partner_rows=cyut_rows, default_cycle_label="114"
         )
 
     if store.current_release_id is None:

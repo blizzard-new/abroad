@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="asiaTitle asiaDesc">
+  <title id="asiaTitle">亞洲大學 Asia University</title>
+  <desc id="asiaDesc">Campus illustration of Asia University (ASIA) in Wufeng, Taichung, featuring the iconic Greco-Roman green-domed Administration and Library Building, colonnade, Tadao Ando triangular Museum of Modern Art, and Taiye Lake.</desc>
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#102b46"/>
+      <stop offset="55%" stop-color="#1e5c8a"/>
+      <stop offset="100%" stop-color="#f5d598"/>
+    </linearGradient>
+    <linearGradient id="domeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4db6ac"/>
+      <stop offset="55%" stop-color="#00897b"/>
+      <stop offset="100%" stop-color="#004d40"/>
+    </linearGradient>
+    <linearGradient id="stoneGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbf7ee"/>
+      <stop offset="100%" stop-color="#dfd5c3"/>
+    </linearGradient>
+    <linearGradient id="andoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e4e7e9"/>
+      <stop offset="100%" stop-color="#aeb6bc"/>
+    </linearGradient>
+    <linearGradient id="lakeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#19647e"/>
+      <stop offset="100%" stop-color="#0c3747"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Wufeng Sky & Warm Sunlight -->
+  <rect width="1200" height="630" fill="url(#skyGrad)"/>
+  <circle cx="990" cy="145" r="68" fill="#ffe699" opacity="0.9"/>
+  <circle cx="990" cy="145" r="102" fill="#ffe699" opacity="0.24"/>
+
+  <!-- Distant Wufeng Hills -->
+  <polygon points="0,450 220,330 480,390 760,310 1020,380 1200,340 1200,490 0,490" fill="#1b4d3e" opacity="0.55"/>
+
+  <!-- Greco-Roman Green-Domed Administration & Library Building (行政大樓暨圖書館) -->
+  <g transform="translate(150, 125)">
+    <!-- Central Green Dome & Lantern -->
+    <rect x="330" y="25" width="40" height="28" fill="url(#stoneGrad)"/>
+    <polygon points="350,4 326,25 374,25" fill="url(#domeGrad)"/>
+    <path d="M230,145 A120,105 0 0,1 470,145 Z" fill="url(#domeGrad)"/>
+    <rect x="215" y="145" width="270" height="22" fill="url(#stoneGrad)" stroke="#c7bba6" stroke-width="2"/>
+
+    <!-- Main Building Wings -->
+    <rect x="40" y="195" width="620" height="165" fill="url(#stoneGrad)" stroke="#c7bba6" stroke-width="2"/>
+    <!-- Triangular Pediment -->
+    <polygon points="185,195 350,128 515,195" fill="url(#stoneGrad)" stroke="#b8ab93" stroke-width="3"/>
+    <polygon points="210,190 350,136 490,190" fill="#e6dcc8"/>
+
+    <!-- Roman Colonnade Pillars -->
+    <rect x="210" y="195" width="18" height="165" fill="#f7f2e7"/>
+    <rect x="252" y="195" width="18" height="165" fill="#f7f2e7"/>
+    <rect x="294" y="195" width="18" height="165" fill="#f7f2e7"/>
+    <rect x="336" y="195" width="18" height="165" fill="#f7f2e7"/>
+    <rect x="378" y="195" width="18" height="165" fill="#f7f2e7"/>
+    <rect x="420" y="195" width="18" height="165" fill="#f7f2e7"/>
+    <rect x="462" y="195" width="18" height="165" fill="#f7f2e7"/>
+
+    <!-- Side Arched Windows -->
+    <rect x="75" y="225" width="32" height="55" rx="16" fill="#23495d"/>
+    <rect x="130" y="225" width="32" height="55" rx="16" fill="#23495d"/>
+    <rect x="535" y="225" width="32" height="55" rx="16" fill="#23495d"/>
+    <rect x="590" y="225" width="32" height="55" rx="16" fill="#23495d"/>
+  </g>
+
+  <!-- Tadao Ando Asia Modern Museum Triangular Concrete Volume (亞洲大學現代美術館) -->
+  <g transform="translate(835, 285)">
+    <polygon points="0,195 295,125 245,195" fill="#8d979e"/>
+    <polygon points="20,145 315,75 265,145" fill="url(#andoGrad)" stroke="#7b858c" stroke-width="2"/>
+    <polygon points="45,95 285,35 235,95" fill="url(#andoGrad)" stroke="#7b858c" stroke-width="2"/>
+    <rect x="85" y="145" width="140" height="50" fill="#1e3f52" opacity="0.88"/>
+  </g>
+
+  <!-- Taiye Lake (太液池) & Green Campus Lawn -->
+  <rect x="0" y="480" width="1200" height="150" fill="#266340"/>
+  <path d="M120 500 Q 580 468 1120 508 L 1200 630 L 0 630 Z" fill="url(#lakeGrad)"/>
+  <path d="M430 530 L740 530 M475 560 L695 560 M520 590 L650 590" stroke="#ffe699" stroke-width="2.5" opacity="0.45" stroke-linecap="round"/>
+
+  <!-- Badge & Title Overlay -->
+  <rect x="55" y="45" width="460" height="92" rx="14" fill="#102b46" opacity="0.88" stroke="#4db6ac" stroke-width="2"/>
+  <text x="82" y="86" font-family="'Noto Sans TC', 'Microsoft JhengHei', sans-serif" font-size="28" font-weight="700" fill="#ffffff" letter-spacing="2">亞洲大學 ASIA</text>
+  <text x="82" y="116" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="500" fill="#80cbc4" letter-spacing="1">Asia University, Taiwan</text>
+</svg>

@@ -1,0 +1,140 @@
+CONFTEST LOADED!
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________ test_dashboard_and_workflow_share_success_failure_and_recovery ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-4/test_dashboard_and_workflow_sh0')
+seed = {'format_version': 1, 'home_school': '長庚大學', 'source_state': 'complete_successful_fetch', 'fetched_at': '2026-10-11T09:58:47.453586+00:00', ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe1c986f8f0>
+
+    def test_dashboard_and_workflow_share_success_failure_and_recovery(tmp_path, seed, monkeypatch):
+        tick=[0.0]; state=[None]
+        def fetch():
+            if state[0] is None: raise cgu.CatalogueFetchError('timeout')
+            return state[0]
+        store=cgu.CguCatalogue(tmp_path/'snapshot.json', fetcher=fetch, clock=lambda:tick[0]); store.refresh()
+        monkeypatch.setattr(api, 'create_cgu_catalogue', lambda _:store)
+        monkeypatch.setattr('exchange_info.student_view.fetch_document_explanations', lambda **_:[])
+        client=TestClient(api.create_app(tmp_path))
+        params={'school':'林肯大學 Lincoln University','home_school':'長庚大學'}
+        first=client.get('/student-dashboard').json()
+        assert len(first['partner_universities'])==77 and first['catalogue_source']['failure_reason']=='timeout'
+        assert client.get('/application-workflow',params=params).status_code==200
+        state[0]=changed(seed); tick[0]=61; store.refresh()
+        second=client.get('/student-dashboard').json()
+        assert len(second['partner_universities'])==76 and second['catalogue_source']['status']=='retrieved'
+        assert client.get('/application-workflow',params=params).status_code==404
+        state[0]=None; tick[0]=662; store.refresh()
+        third=client.get('/student-dashboard').json()
+>       assert len(third['partner_universities'])==76 and third['catalogue_source']['status']=='saved_reference'
+E       AssertionError: assert (76 == 76 and 'retrieved' == 'saved_reference'
+E        +  where 76 = len([{'program_type': '交換學生 / 自費研修', 'availability_status': 'open', 'availability_note': None, 'agreement_type': None, ......gram_type': '交換學生 / 自費研修', 'availability_status': 'open', 'availability_note': None, 'agreement_type': None, ...}, ...])
+E
+E         - saved_reference
+E         + retrieved)
+
+tests/test_cgu_catalogue_recovery.py:163: AssertionError
+_ test_no_snapshot_returns_explicit_unavailable_and_retryable_lookup_only_for_cgu _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-4/test_no_snapshot_returns_expli0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe1be7a2e40>
+
+    def test_no_snapshot_returns_explicit_unavailable_and_retryable_lookup_only_for_cgu(tmp_path, monkeypatch):
+        def fetch():raise cgu.CatalogueFetchError('timeout')
+        store=cgu.CguCatalogue(tmp_path/'snapshot.json', bundled=None, fetcher=fetch);store.refresh()
+        monkeypatch.setattr(api,'create_cgu_catalogue',lambda _:store)
+        monkeypatch.setattr('exchange_info.student_view.fetch_document_explanations',lambda **_:[])
+        client=TestClient(api.create_app(tmp_path))
+        dash=client.get('/student-dashboard',params={'school':'長庚大學'}).json()
+        assert dash['partner_universities']==[] and dash['catalogue_source']['status']=='unavailable'
+        lookup=client.get('/application-workflow',params={'school':'林肯大學 Lincoln University','home_school':'長庚大學'})
+        assert lookup.status_code==503 and lookup.headers['retry-after']=='60'
+>       assert len(client.get('/universities').json())==18
+E       AssertionError: assert 60 == 18
+E        +  where 60 = len([{'id': 'cgu', 'school_name': '長庚大學', 'short_name': '長庚', 'english_name': 'Chang Gung University', ...}, {'id': 'ntpu'...rsity', ...}, {'id': 'tku', 'school_name': '淡江大學', 'short_name': '淡江', 'english_name': 'Tamkang University', ...}, ...])
+E        +    where [{'id': 'cgu', 'school_name': '長庚大學', 'short_name': '長庚', 'english_name': 'Chang Gung University', ...}, {'id': 'ntpu'...rsity', ...}, {'id': 'tku', 'school_name': '淡江大學', 'short_name': '淡江', 'english_name': 'Tamkang University', ...}, ...] = json()
+E        +      where json = <Response [200 OK]>.json
+E        +        where <Response [200 OK]> = get('/universities')
+E        +          where get = <starlette.testclient.TestClient object at 0x7fe1955f4a10>.get
+
+tests/test_cgu_catalogue_recovery.py:177: AssertionError
+_ test_account_workspace_sync_has_conflict_merge_offline_retry_and_sensitive_boundary _
+
+    def test_account_workspace_sync_has_conflict_merge_offline_retry_and_sensitive_boundary() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+
+        assert "accountWorkspaceRevisions" in script
+        assert "accountWorkspaceBases" in script
+        assert "accountWorkspacePending" in script
+        assert "accountWorkspaceSyncLanes" in script
+        assert "function sanitizeAccountWorkspacePayload" in script
+        assert "function mergeAccountWorkspaces" not in script
+        assert "function mergeAccountWorkspaceConflict" in script
+        assert "function mergeWorkspaceSet" in script
+        assert "function mergeWorkspaceRecord" in script
+        assert "error.status === 409" in script
+        assert "function drainAccountWorkspaceSync" in script
+        assert "function startAccountWorkspaceDrain" in script
+        assert "workspaceComparable(pending) === workspaceComparable(outgoing)" in script
+        assert "state.accountWorkspacePending[key] || outgoing" in script
+        assert "state.accountWorkspaceBases[key] = savedWorkspace" in script
+        conflict_base_update = script.index(
+            "state.accountWorkspaceBases[key] = sanitizeAccountWorkspacePayload("
+        )
+        assert script.index("const mergedPending = mergeAccountWorkspaceConflict(") < conflict_base_update
+        assert conflict_base_update < script.index(
+            "state.accountWorkspacePending[key] = mergedPending;"
+        )
+        assert script.index(
+            "state.accountWorkspacePending[key] = mergedPending;"
+        ) < script.index("applyAccountWorkspace(mergedPending);")
+        assert "loadedAccountWorkspaceCanApply(savedWorkspace.home_school" in script
+        assert "Math.max(" in script
+        assert "function retryPendingWorkspaceSyncs" in script
+        assert 'window.addEventListener("online", handleAccountConnectivityRestored)' in script
+        assert 'window.addEventListener("offline", renderAccountWorkspaceSyncStatus)' in script
+        assert 'authRestoreState: "pending"' in script
+        assert "function readStoredAuthenticatedState(accountId)" in script
+        assert "function clearStoredAuthenticatedState(" in script
+        assert "async function handleAccountConnectivityRestored()" in script
+        assert "state.authRestoreState === \"unavailable\"" in script
+        assert "readStoredAuthenticatedState(state.account.id);" in script
+        assert "state.authToken" not in script
+        assert "function storeAuthToken" not in script
+        initial_read_block = script.split("function readStoredState()", 1)[1].split(
+            "async function loadSupportedUniversities", 1
+        )[0]
+        for private_state in (
+            "state.favorites =",
+            "state.applications =",
+            "state.applicationProgress =",
+            "state.documentReadiness =",
+            "state.anonymousIdentity = parseStoredJson",
+            "state.applicationProfile =",
+            "state.applicationAnswers =",
+        ):
+            assert private_state not in initial_read_block
+        restore_block = script.split("async function restoreAccount", 1)[1].split(
+            "async function handleAccountConnectivityRestored", 1
+        )[0]
+        unavailable_block = restore_block.split("if (!error?.status)", 1)[1].split(
+            "clearAuthenticatedClientState();", 1
+        )[0]
+        assert 'state.authRestoreState = "unavailable";' in unavailable_block
+        assert "clearAuthenticatedClientState();" not in unavailable_block
+        assert "accountWorkspaceSyncAccountId" in script
+        assert "accountWorkspaceSyncErrors" in script
+        assert "function resetAccountWorkspaceOwnerScopedState" in script
+        assert "function clearAccountWorkspaceClientState()" in script
+        assert "window.localStorage.removeItem(STORAGE_KEYS.workspaceSync)" in script
+>       assert "function clearAuthenticatedClientState()" in script
+E       assert 'function clearAuthenticatedClientState()' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "map",\n  partnerDataLoading: ...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1693: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_cgu_catalogue_recovery.py::test_dashboard_and_workflow_share_success_failure_and_recovery
+FAILED tests/test_cgu_catalogue_recovery.py::test_no_snapshot_returns_explicit_unavailable_and_retryable_lookup_only_for_cgu
+FAILED tests/test_frontend_contract.py::test_account_workspace_sync_has_conflict_merge_offline_retry_and_sensitive_boundary
+3 failed in 43.48s

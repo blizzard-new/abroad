@@ -1,0 +1,94 @@
+2026-11-11 Asia/Taipei; isolated codex/seo-daily-20261111
+Base:bff878eaf829230e2da1de027652300aa6cad5de
+Python:/workspace/abroad/.venv/bin/python3.12
+
+Release gate command:
+EXCHANGE_INFO_DATA_DIR=<cache>/gate-final-import-data PYTHONPATH=src python scripts/check_editorial.py --base-ref origin/main
+{
+  "ok": true,
+  "article_count": 43,
+  "errors": [],
+  "scope": "Editorial structure/assets/revision dates; not proof of factual accuracy, indexing or rankings"
+}
+Full gate output:docs/seo-editorial-checks-2026-11-11.json
+
+SEO command (initial and final distinct data dirs):
+EXCHANGE_INFO_DATA_DIR=<cache>/<run>-import-data PYTHONPATH=src python -m pytest -q tests/test_seo_articles.py tests/test_seo.py tests/test_seo_content.py tests/test_seo_quality.py tests/test_seo_reporting.py tests/test_editorial_release_gate.py
+E2E command:
+EXCHANGE_INFO_DATA_DIR=<cache>/e2e-import-data PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium PYTHONPATH=src python -m pytest -q tests/e2e/test_seo_articles.py tests/e2e/test_seo_pages.py tests/e2e/test_seo_analytics.py
+Final E2E selection:
+tests/e2e/test_seo_articles.py::test_every_article_has_no_mobile_overflow_and_loads_illustration[ai-english-clarification]
+tests/e2e/test_seo_articles.py::test_every_article_has_no_mobile_overflow_and_loads_illustration[toeic-part-one-photographs]
+
+SEO initial run;164passed/1failed due simultaneous content edit; raw output preserved
+CONFTEST LOADED!
+........................................................................ [ 43%]
+........................................................................ [ 87%]
+...................F.                                                    [100%]
+=================================== FAILURES ===================================
+________ test_unchanged_shipped_json_is_equivalent_to_validated_content ________
+
+    def test_unchanged_shipped_json_is_equivalent_to_validated_content():
+        for slug, article in ARTICLES.items():
+            raw = json.loads((ROOT / f"src/exchange_info/editorial/{slug}.json").read_text())
+>           assert gate.meaningful_content(raw) == gate.meaningful_content(article.model_dump(mode="json"))
+E           AssertionError: assert {'slug': 'toe...: '申請準備', ...} == {'slug': 'toe...: '申請準備', ...}
+E
+E             Omitting 15 identical items, use -vv to show
+E             Differing items:
+E             {'sections': [{'id': 'format-and-evidence', 'title': '先確認題型：選最符合圖片的敘述，不替照片編故事', 'paragraphs': ['台灣官方內容表列 Part 1 照片描述六題...正依據，再記下下一次複習日期。熟題重播可以幫助辨認聲音，但不能單獨證明新圖一次理解已改善；自編兩題也不能換算正式分數。要安排完整準備，接續多益聽讀總覽，按自己的聽讀弱點分配時間。'], 'bullets': [], ...}, ...]} != {'sections': [{'id': 'format-and-evidence', 'title': '先確認題型：選最符合圖片的敘述，不替照片編故事', 'paragraphs': ['台灣官方內容表列 Part 1 照片描述六題...正依據，再記下下一次複習日期。熟題重播可以幫助辨認聲音，但不能單獨證明新圖一次理解已改善；自編兩題也不能換算正式分數。要安排完整準備，接續多益聽讀總覽，按自己的聽讀弱點分配時間。'], 'bullets': [], ...}, ...]}
+E             Use -v to get more diff
+
+tests/test_editorial_release_gate.py:18: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_editorial_release_gate.py::test_unchanged_shipped_json_is_equivalent_to_validated_content
+1 failed, 164 passed in 67.20s (0:01:07)
+
+SEO final run after freezing content; same six modules
+CONFTEST LOADED!
+........................................................................ [ 43%]
+........................................................................ [ 87%]
+.....................                                                    [100%]
+165 passed in 76.19s (0:01:16)
+
+E2E full three modules
+CONFTEST LOADED!
+.....................................................                    [100%]
+53 passed in 125.92s (0:02:05)
+
+E2E final two new article mobile cases; same cases are not added to unique coverage count
+CONFTEST LOADED!
+..                                                                       [100%]
+2 passed in 13.18s
+
+Browser:
+EXCHANGE_INFO_DATA_DIR=<cache>/preview-final-import-data PYTHONPATH=src python <cache>/qa.py preview --repo <checkout> --date 2026-11-11 --slugs ai-english-clarification toeic-part-one-photographs
+{
+  "passed": 6,
+  "capture_note": "Only long element captures temporarily hide fixed decorative6px stripe and fixed reading header via screenshot style to avoid stitching over text. Full-page previews and application/assertions unmodified.",
+  "visual_review": "All15finalimages viewed by authoring agent: desktop/mobile,crops,2photos,2diagrams,8content sections. Text and prompts readable, originalphoto evidence checked and subjects retained. Horizontal tables remain intentionally scrollable.",
+  "run_history": "Three preview passes: initial content, post-content-correction, final screenshot refinement for fixed reading header. Each passed6checks; repeated runs not counted as new coverage. Final15images are from last pass."
+}
+Full checks and15screenshot hashes:docs/seo-editorial-browser-2026-11-11.json
+
+Package:
+uv build --wheel --out-dir <cache>/wheel
+python <cache>/qa.py package --repo <checkout> --date 2026-11-11 --slugs ai-english-clarification toeic-part-one-photographs
+Successfully built /workspace/scratch/uniway-seo-20261111/wheel/taiwan_exchange_info-0.1.0-py3-none-any.whl
+{
+  "checked": "2026-11-11",
+  "build_command": "uv build --wheel",
+  "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+  "wheel_bytes": 2411960732,
+  "article_json_count": 43,
+  "image_count": 27,
+  "checked_files": 608,
+  "runtime_import": {
+    "module": "/workspace/scratch/uniway-seo-20261111/wheel-extracted/exchange_info/seo_articles.py",
+    "loaded_articles": 43,
+    "new_slugs_present": true
+  },
+  "outside_checkout": true,
+  "passed": true
+}
+Full608file manifest:docs/seo-editorial-package-2026-11-11.json

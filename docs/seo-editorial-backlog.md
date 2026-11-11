@@ -1,5 +1,33 @@
 # Editorial intentions and next topics
 
+## 2026-11-11 每日批次：AI 英文澄清／多益照片兩篇（PR #302 待審）
+
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261111`，基於 main `bff878eaf829230e2da1de027652300aa6cad5de`。讀取 workflow、backlog、41 篇庫存及相關正文；核對全部 29 個 open PR 的完整清單與相關說明。#272 的 `ai-english-listening-dictation`、`toefl-academic-reading`，以及 #285 的 `japan-residence-registration`、`toeic-part-four-talks` 仍待審，四題已選並排除，保持原批次。#78／#92 已合併，無基礎相依。開始前無同日分支或任何狀態同日 PR。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 17：英文沒聽懂怎麼問？用 AI 練澄清、確認意思與接回對話的 Prompt | `ai-english-clarification` | [PR #302](https://github.com/blizzard-new/abroad/pull/302) 待審，完整文章與驗收完成；後續排除 |
+| 20：多益 Part 1 照片描述怎麼練？可見證據、動作與狀態的原創題解析 | `toeic-part-one-photographs` | 同一個 PR #302 待審，完整文章與驗收完成；後續排除 |
+
+依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。澄清篇有三種缺口、三輪可填 Prompt、原創來回與錯誤回饋查核，與四技能總覽、面試經歷追問、讀寫及待審聽寫分工；Part 1 有真實授權圖、兩組八選項、逐項解析及主被動／動作狀態比較，與應答、對話、獨白及閱讀任務分工，不以品牌或年份重發。所有教材與預期輸出明示編輯設計，不冒稱模型實測、官方試題或成效。
+
+原有 41 篇 JSON、URL、published 與 lastmod 不變，本分支共 43 篇。10/30 `exchange-study-plan` 更新 `97de3fda` 未重做；候選 15 沒有三工具實測，不捏造比較。來源、攝影、畫面、各跑次與套件見[本批驗收](seo-editorial-validation-2026-11-11.md)。下方歷史待審描述以本日查核及 #272／#285 保留狀態優先。最終 165 項 SEO、53 項完整 E2E 加兩篇手機案例補跑、六組無 JavaScript、15 張目視與 wheel 608 檔核對通過。SEO 初跑 164／1 因校對時檔案與快取不同而失敗，固定內容後完整重跑通過，保留各跑次。本批未合併或部署。
+
+
+## 2026-11-10 每日批次：新宿區住址登記／多益獨白兩篇（PR #285 待審）
+
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261110`，基於 main `d7ec093dbf1abfdfff8aece59c37b09256901800`。讀取 workflow、backlog、41 篇庫存及相關正文，核對全部 14 個 open PR 的說明與完整變更清單。#272 的 `ai-english-listening-dictation`、`toefl-academic-reading` 仍待審，兩題已選並排除；未搬入或重做。#78、#92、#255、#266 已合併。開始前無同日分支／任何狀態同日 PR；下方歷史待審狀態以本日盤點優先。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 6：日本交換生住址登記怎麼辦？以新宿區為例，核對文件、期限與窗口 | `japan-residence-registration` | [PR #285](https://github.com/blizzard-new/abroad/pull/285) 待審，完整文章與驗收完成；後續排除 |
+| 20：多益 Part 4 怎麼練？簡短獨白的目的、關鍵資訊與原創題組解析 | `toeic-part-four-talks` | 同一個 PR #285 待審，完整文章與驗收完成；後續排除 |
+
+選題為編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。登記篇深入自治體、身分、日期／官方版本差異、文件條件、窗口詢問與辦後核對，與抵達第一週總覽及日本預算分工；Part 4 篇提供兩段原創獨白、六題解析、範圍／否定／尚未指派狀態與條件換題，與單句應答、雙人圖表對話及各閱讀任務分工。兩篇都有實讀官方來源、授權真實攝影、HTML 圖解、FAQ、相關文章與選校連結。
+
+原有 41 篇內容、URL、刊載日與 lastmod 不變，本分支共 43 篇。10/30 `exchange-study-plan` 更新仍保留 `97de3fda`；候選 15 無三工具實測，不捏造比較。入管兩頁 403，改用可讀新宿區一手資料並限定範圍；日中英文期限措辭差異及 2021 舊疫情頁限制已揭露，不自行套用個案期限。來源、照片與驗收見[本批紀錄](seo-editorial-validation-2026-11-10.md)。165 項 SEO 測試、53 項 E2E 首次通過，六組無 JavaScript 閱讀檢查、15 張目視圖與 wheel 608 檔核對完成。本批未合併或部署。
+
+
 ## 2026-11-09 每日批次：AI 聽寫／托福學術閱讀兩篇（PR #272 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261109`，基於 main `aeb46b7089b3c4a180a7c4fad1fae02bfee08b5a`。盤點 main 41 篇並重讀相關正文、workflow 與 backlog；核對全部四個 open PR #267、#269、#270、#271 的說明及完整檔案清單，沒有新增 editorial JSON。#255、#266 均已於 11/8 合併，四篇已在 main，排除重做。開始前無同日分支／任何狀態同日 PR；#78、#92 已合併，無未合併基礎相依。

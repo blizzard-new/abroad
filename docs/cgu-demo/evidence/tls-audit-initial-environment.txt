@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/abroad/src/exchange_info/tls_audit.py", line 51, in <module>
+    print(json.dumps(audit(system=parser.parse_args().system), sort_keys=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad/src/exchange_info/tls_audit.py", line 32, in audit
+    raise ValueError("Playwright Node has unverified version or incident CA roots")
+ValueError: Playwright Node has unverified version or incident CA roots
