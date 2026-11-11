@@ -38,6 +38,7 @@ def page(browser):
 def ready(page, url, suffix=''):
     page.goto(url + '/' + suffix, wait_until='domcontentloaded')
     page.locator('#boot-splash').wait_for(state='hidden')
+    page.evaluate('appReady')
     expect(page.locator('#school-switcher-label')).to_have_text('長庚大學')
 
 
@@ -54,12 +55,11 @@ def screenshot(page, name):
 
 def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     ready(page, demo_url, '?home=國立臺灣大學')
-    expect(page.locator('#home-landing-title')).to_contain_text('世界這麼大')
-    expect(page.locator('#mt-board-school-name')).to_have_text('長庚大學')
+    expect(page.locator('#home-landing-title')).to_contain_text('你能去哪些交換學校')
     assert page.locator('#home-search-rows').inner_text().find('截止') == -1
     screenshot(page, 'desktop-home.png')
-    page.locator('#mt-board-q').fill('Lincoln')
-    page.locator('#mt-board button[type=submit]').click()
+    page.locator('#home-search-input').fill('Lincoln')
+    page.locator('#home-search-form button[type=submit]').click()
     expect(page.locator('#partner-table')).to_contain_text('林肯')
     page.locator('#partner-table .school-detail-trigger').first.click()
     page.locator('#detail-favorite-button').wait_for(state='visible')
@@ -79,6 +79,34 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     expect(page.locator('#cgu-demo-dialog a')).to_have_count(3)
     page.keyboard.press('Escape')
     expect(page.locator('#cgu-demo-dialog')).not_to_be_visible()
+
+
+def test_native_preparation_workspace_personal_date_and_notice_preview(page, demo_url):
+    ready(page, demo_url)
+    seed(page)
+    page.locator('.hub-tabs [data-tab=workspace]').click()
+    page.locator('[data-ex-new]').click()
+    form = page.locator('#exchange-task-form')
+    form.locator('[name=title]').fill('確認示範住宿用品')
+    form.locator('[name=notes]').fill('展示資料：先整理用品清單，再向住宿單位確認。')
+    form.locator('[name=date_kind]').select_option('personal')
+    form.locator('[name=due_date]').fill('2027-06-01')
+    form.get_by_role('button', name='保存任務', exact=True).click()
+    expect(page.locator('#exchange-task-dialog')).not_to_be_visible()
+    expect(page.locator('.ex-task')).to_contain_text('個人目標 2027-06-01')
+    page.reload(wait_until='domcontentloaded')
+    page.evaluate('appReady')
+    expect(page.locator('.ex-task')).to_contain_text('確認示範住宿用品')
+    screenshot(page, 'desktop-workspace.png')
+    page.locator('[data-ex-tab=notice]').click()
+    notice = page.locator('#exchange-notice-form')
+    notice.locator('[name=source_label]').fill('虛構展示通知')
+    notice.locator('[name=text]').fill('展示情境：請於 2027/1/10 前回傳申請書。')
+    notice.get_by_role('button', name='整理待辦草稿').click()
+    expect(page.locator('[data-ex-preview]')).to_have_count(1)
+    expect(page.locator('[data-ex-preview] [name=due_date]')).to_have_value('2027-01-10')
+    expect(page.locator('#exchange-notice-file')).to_be_disabled()
+    expect(page.locator('[data-ex-extract]')).to_be_disabled()
 
 
 def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):

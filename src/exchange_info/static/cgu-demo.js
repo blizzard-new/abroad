@@ -6,6 +6,14 @@
     return;
   }
   if (window.cguDemoStorageLimited) $('#cgu-demo-strip span').textContent += '・瀏覽器儲存受限，本機偏好不會保留';
+  // Shared workspaces render their controls later. Keep private upload and public
+  // posting visibly disabled as well as denied by the server allowlist.
+  const restrictControls = () => document.querySelectorAll('input[type="file"], [data-ex-upload], [data-ex-extract], [data-ex-files], [data-ex-download-file], #exchange-peer-form button[type="submit"]').forEach(control => {
+    control.disabled = true;
+    control.title = '展示未開放私人文件上傳、附件解析或公開發布；請使用虛構文字情境。';
+  });
+  restrictControls();
+  new MutationObserver(restrictControls).observe(document.body, {childList:true, subtree:true});
   const dialog = $('#cgu-demo-dialog');
   const body = $('#cgu-demo-dialog-body');
   const status = $('#cgu-demo-status');

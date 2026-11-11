@@ -1,11 +1,12 @@
 # 長庚專屬平台實作決策
 
-目標是「同一套 UniWay UI/UX，只提供長庚學生情境」，以原平台維護單一介面。開始時無適用 AGENTS.md；沿用 FastAPI、原生 JS、pytest／Playwright、既有部署工具。分支 `codex/cgu-hackathon-demo`，基於 main `bff878ea`。
+目標是「同一套 UniWay UI/UX，只提供長庚學生情境」，以原平台維護單一介面。開始時無適用 AGENTS.md；沿用 FastAPI、原生 JS、pytest／Playwright、既有部署工具。分支 `codex/cgu-hackathon-demo` 已同步 main `87277daf`，以使用者指定的 PR #299 及其 DESIGN.md 為準，保留首頁原風格與搜尋／我的申請的局部升級。
 
 | 盤點 | 證據與處理 |
 | --- | --- |
 | 首頁、搜尋、地球、詳細頁、收藏比較 | 真正實作在 index.html、app.js、platform-home.js、metro.css；直接共用 |
 | 我的申請 | application_path.py、application-path.js 有帳號擁有權、加密草稿、版本衝突、下一步、地圖；重用原流程，以可選注入點提供六階段內容 |
+| PR #299 準備工作台 | 同步個人任務、筆記、日期及通知文字整理；伺服器寫入允許清單排除附件解析，動態產生的私人上傳及公開發布按鈕停用 |
 | 日曆、文件工作台 | 已有 UI／API，保留原組件；個人行程與準備可操作，外部同步／私人檔案寫入封鎖；未發布表單不繞過閘門 |
 | 正式身份與資料 | 原 factory 初始化多個儲存服務，因此必須在獨立進程先隔離環境／資料路徑，再建立共用 app；不掛入正式進程 |
 | 本機測試版 | scripts/staging_runner.py 已有隔離 JSONL、虛構帳號與共用 UI 先例；本次採每位訪客獨立 session，沒有公用帳密或高權限管理帳號 |

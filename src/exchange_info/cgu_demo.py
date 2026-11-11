@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import secrets
 import sys
 import tempfile
@@ -144,8 +145,11 @@ def create_demo_app() -> FastAPI:
         forbidden = path.startswith(('/admin', '/auth/oauth', '/auth/email', '/auth/register', '/auth/login',
             '/auth/student', '/auth/me', '/account/vault', '/calendar/feed', '/analytics', '/feedback',
             '/maintenance', '/docs', '/redoc', '/openapi.json'))
-        allowed_write = (path == '/account/workspace' and request.method == 'PUT') or (
-            path.startswith(('/account/application-paths', '/account/application-drafts/')) and request.method in ('POST','PUT')) or (
+        plan_write = (path == '/account/application-paths' and request.method == 'POST') or (
+            re.fullmatch(r'/account/application-paths/[^/]+/(?:profile|archive|workspace|steps/[^/]+)', path) and request.method == 'PUT') or (
+            re.fullmatch(r'/account/application-paths/[^/]+/workspace/preview', path) and request.method == 'POST')
+        allowed_write = plan_write or (path == '/account/workspace' and request.method == 'PUT') or (
+            path.startswith('/account/application-drafts/') and request.method in ('POST','PUT')) or (
             path in ('/application-plan', '/application-plan/evaluate', '/application-plan/schedule', '/advisor/plan',
                      '/application-center/pdf', '/application-center/docx', '/public-translations', '/auth/community-identity') and request.method == 'POST')
         if forbidden or (request.method not in ('GET','HEAD') and not allowed_write and path != '/demo/reset'):

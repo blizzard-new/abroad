@@ -87,7 +87,7 @@ def test_isolated_auth_guards_and_shared_assets(demo_url):
     assert 'uniway_cgu_demo_session' in client.cookies
     assert 'exchange_guide_session' not in client.cookies
     assert requests.get(demo_url + '/auth/session', cookies={'exchange_guide_session':'formal-sentinel'}).json() is None
-    for path in ['/auth/login', '/account/vault/documents', '/calendar-sync/enable', '/ai/chat', '/community/posts', '/admin/demo']:
+    for path in ['/auth/login', '/account/vault/documents', '/calendar-sync/enable', '/ai/chat', '/community/posts', '/admin/demo', '/account/application-paths/example/workspace/extract']:
         assert client.post(demo_url + path, json={}).status_code == 403
     assert client.post(demo_url + '/demo/reset', headers={'Origin':'https://elsewhere.test'}).status_code == 403
     for name in ['app.js', 'metro.css', 'application-path.js', 'platform-home.js']:
