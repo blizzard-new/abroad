@@ -40,8 +40,11 @@ def test_match_missing_profile_fields_and_real_mismatches():
     const homeCollegeValue = value => ['工學院', '管理學院', '醫學院'].includes(value) ? value : '';
     const homeSelectionRules = () => ({partner_requirements_need_confirmation:false,pending_quota_planning:true});
     const partnerSummaryPoints = item => item.eligibility_points || [];
-    for (const name of ['activeHomeSchool', 'normalize', 'escapeHtml', 'academicScopeNeedsConfirmation', 'collegeMatches', 'degreeMatches', 'coupledAcademicScopeOptions', 'coupledAcademicScopeMatches', 'resolvedDegreeLevel', 'partnerDegreeScopeMatches',
-      'languageThresholdFromPartner', 'partnerAvailabilityMeta', 'partnerMatch',
+    const partnerStudentSummary = () => ({});
+    const partnerDeadlineCache = new WeakMap();
+    const ENGLISH_MONTH_INDEX = {jan:0,january:0,feb:1,february:1,mar:2,march:2,apr:3,april:3,may:4,jun:5,june:5,jul:6,july:6,aug:7,august:7,sep:8,sept:8,september:8,oct:9,october:9,nov:10,november:10,dec:11,december:11};
+    for (const name of ['activeHomeSchool', 'normalize', 'escapeHtml', 'positiveScopeText', 'academicScopeNeedsConfirmation', 'collegeMatches', 'degreeMatches', 'coupledAcademicScopeOptions', 'coupledAcademicScopeMatches', 'resolvedDegreeLevel', 'partnerDegreeScopeMatches',
+      'languageThresholdFromPartner', 'partnerAvailabilityMeta', 'partnerMatch', 'validLocalNoonDate', 'rollUpcomingDate', 'partnerNextDeadline',
       'renderPartnerMatchExplanation', 'visualSchoolIdentity', 'visualCountryIdentity', 'visualSchoolAliases', 'schoolVisualRecordFor', 'schoolImageFor', 'renderSchoolPhoto']) {
       const match = source.match(new RegExp('^function ' + name + '\\([^]*?^}', 'm'));
       assert.ok(match, name); eval(match[0]);
@@ -59,8 +62,12 @@ def test_match_missing_profile_fields_and_real_mismatches():
     }
     assert.notEqual(partnerMatch(school, {...full, college: '春季班)'}).tone, 'blocked');
     const degree = partnerMatch(school, {...full, degree: '研究所'});
-    assert.equal(degree.label, '學制範圍待確認');
+    assert.equal(degree.label, '學制條件不符');
     assert.ok(degree.risks.some(x => x.includes('研究所') && x.includes('大學部')));
+    assert.equal(academicScopeNeedsConfirmation({degree_levels: '大學部、碩士班※不含博士班'}, 'degree_levels'), false);
+    assert.equal(degreeMatches('大學部、碩士班※不含博士班', '博士班'), false);
+    assert.ok(partnerNextDeadline({application_deadline: '春季班：11/15', reference_data: {}}, new Date('2026-11-11T00:00:00Z')));
+    assert.ok(partnerNextDeadline({application_deadline: 'Spring: 15 November', reference_data: {}}, new Date('2026-11-11T00:00:00Z')));
     const language = partnerMatch(school, {...full, languageScore: 600});
     assert.equal(language.label, '語言分數未達門檻');
     assert.ok(language.risks.some(x => x.includes('600') && x.includes('700')));

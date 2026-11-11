@@ -419,9 +419,9 @@ def test_existing_cgu_and_ntpu_scope_counts_unchanged():
     # The official CGU sheet is bundled; this check uses it without live requests.
     workflows=storage.load_bundled_application_workflows()
     cgu=[w for w in workflows if w.home_university=="長庚大學"]
-    assert Counter(w.academic_year for w in cgu)=={"115":77,"116":77}
+    assert Counter(w.academic_year for w in cgu)=={"115":77,"116":78}
     current=[w for w in cgu if w.academic_year=="116"]
-    assert len({w.school_name for w in current})==77
+    assert len({w.school_name for w in current})==78
     assert sum("參考" in w.program_type for w in current)==2
 
 

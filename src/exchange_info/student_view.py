@@ -9,6 +9,7 @@ from html import unescape
 from io import BytesIO
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from xml.etree import ElementTree
 
 import requests
@@ -51,7 +52,11 @@ CGU_1152_SELECTION_RESULT_URL = (
 )
 CGU_APPLICATION_PERIOD_CHECKED_AT = datetime(2026, 7, 29, tzinfo=timezone.utc)
 CGU_SELECTION_GUIDE_URL = "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656"
-CGU_FALL_ANNOUNCEMENT_CHECKED_AT = datetime(2026, 10, 3, tzinfo=timezone.utc)
+CGU_1161_APPLICATION_NOTICE_URL = (
+    "https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817"
+)
+CGU_1161_ONLINE_FORM_URL = "https://forms.gle/JbdGkA9i7wkNdtvX8"
+CGU_FALL_ANNOUNCEMENT_CHECKED_AT = datetime(2026, 11, 11, tzinfo=timezone.utc)
 TAIPEI_TIMEZONE = timezone(timedelta(hours=8))
 CGU_MANAGEMENT_2026_REFERENCE_URL = (
     "https://www.cgu.edu.tw/Uploads/upload/"
@@ -174,7 +179,17 @@ def build_student_dashboard(
         for page in pages
         if page.title != "國際事務處" and page.category != PageCategory.OTHER
     ]
-    sources = _dedupe_sources([*sources, *(item.source for item in document_explanations)])
+    sources = _dedupe_sources(
+        [
+            SourceReference(
+                title="本校116學年度第1學期出國交換及雙聯學位計畫申請公告",
+                source_url=CGU_1161_APPLICATION_NOTICE_URL,
+                category=PageCategory.DEADLINE,
+            ),
+            *sources,
+            *(item.source for item in document_explanations),
+        ]
+    )
 
     return StudentDashboard(
         school_name="長庚大學",
@@ -367,7 +382,14 @@ def _merge_partner_universities(
                 school_name=primary.school_name,
                 website=(
                     PARTNER_WEBSITE_CORRECTIONS.get(key)
-                    or next((row.website for row in group if row.website), None)
+                    or next(
+                        (
+                            cleaned
+                            for row in group
+                            if (cleaned := _clean_partner_website(row.website))
+                        ),
+                        None,
+                    )
                 ),
                 colleges=_join_partner_values(group, "colleges"),
                 degree_levels=_join_partner_values(group, "degree_levels"),
@@ -503,7 +525,7 @@ def _partner_rows_from_payload(payload: dict[str, Any], *, program_type: str, so
                 program_type=program_type,
                 country=_plain(item.get("國家")),
                 school_name=school_name,
-                website=_plain(item.get("學校網站")),
+                website=_clean_partner_website(_plain(item.get("學校網站"))),
                 colleges=_plain(item.get("可申請學院") or item.get("本校可申請學院")),
                 degree_levels=_plain(item.get("可申請學制") or item.get("本校可申請學制")),
                 study_period=study_period,
@@ -963,7 +985,7 @@ def _application_periods(
     application_status_note = {
         ApplicationPeriodStatus.UPCOMING: "本梯次尚未開放；請先準備校內文件，不要提前送件。",
         ApplicationPeriodStatus.OPEN: "本梯次正在受理；線上表單與紙本資料都必須在校方期限內完成。",
-        ApplicationPeriodStatus.CLOSED: "本梯次已截止；下一梯次（秋季班）國際處預告自 11/01 開放，見下一項；不能沿用這組日期送件。",
+        ApplicationPeriodStatus.CLOSED: "本梯次已截止；116學年度第1學期（秋季班）校內申請自 2026/11/02 開放至 2026/12/21 17:00，見下方當期項目；不能沿用這組日期送件。",
     }[application_status]
     items: list[ApplicationPeriodItem] = [
         ApplicationPeriodItem(
@@ -1041,27 +1063,30 @@ def _application_periods(
         )
     )
 
-    # The fall round is announced with an opening day only. The selection guide
-    # lists 11/01-12/20 without a year or a cut-off time and no round-specific
-    # notice exists yet, so the deadline stays unconfirmed and creates no reminder.
-    fall_opens_at = datetime(2026, 11, 1, 0, 0, tzinfo=TAIPEI_TIMEZONE)
-    fall_status = (
-        ApplicationPeriodStatus.UPCOMING
-        if now.astimezone(TAIPEI_TIMEZONE) < fall_opens_at
-        else ApplicationPeriodStatus.NEEDS_CONFIRMATION
+    fall_opens_at = datetime(2026, 11, 2, 0, 0, tzinfo=TAIPEI_TIMEZONE)
+    fall_deadline_at = datetime(2026, 12, 21, 17, 0, tzinfo=TAIPEI_TIMEZONE)
+    fall_status = _application_period_status(
+        now,
+        opens_at=fall_opens_at,
+        deadline_at=fall_deadline_at,
     )
+    fall_status_note = {
+        ApplicationPeriodStatus.UPCOMING: "本梯次尚未開放；請先準備校內文件，不要提前送件。",
+        ApplicationPeriodStatus.OPEN: "本梯次正在受理；線上申請表單與紙本申請資料都必須在校方期限內完成。",
+        ApplicationPeriodStatus.CLOSED: "本梯次已截止；請留意國際事務處後續初審公告與下一梯次申請時程。",
+    }[fall_status]
     items.append(
         ApplicationPeriodItem(
             title="116學年度第1學期交換／雙聯校內申請（秋季班）",
             details=[
-                "國際處公告：秋季班出國研修一學期或一學年（8–9 月出國），自 11/01 開放申請，請提早準備文件。",
-                "選送須知列出秋季班申請期間為 11/01–12/20；須知沒有標示年度與截止時刻。",
-                "預計 2027 年 8–9 月出國；可申請學校與入學要求見國際處官網的合作校名單。",
+                f"線上申請表單（{CGU_1161_ONLINE_FORM_URL}，出國交換及雙聯學位共用）自 2026/11/02（一）開放，至 2026/12/21（一）17:00 截止。",
+                "紙本申請資料亦須於截止日前繳交國際事務處；公告未另列獨立紙本收件時刻，不能直接把線上 17:00 當成紙本收件時間。",
+                "本梯次預計於 2027 年 8–9 月出國研修一學期或一學年；實際報到與開課時間依合作校行事曆。",
                 "補助提醒（國際處公告，出國研修補助說明頁同樣載明）：同一學制期間已領取本校短期學分課程補助（例：金澤暑期課程）或其他出國研修／實習補助者，已領金額會自本補助額度中扣除。",
             ],
             source=SourceReference(
-                title="長庚大學校內申請選送須知",
-                source_url=CGU_SELECTION_GUIDE_URL,
+                title="本校116學年度第1學期出國交換及雙聯學位計畫申請公告",
+                source_url=CGU_1161_APPLICATION_NOTICE_URL,
                 category=PageCategory.DEADLINE,
             ),
             scope="home_application",
@@ -1070,17 +1095,13 @@ def _application_periods(
             application_round="第1學期",
             audience=ApplicationPeriodAudience.ALL_STUDENTS,
             opens_at=fall_opens_at,
-            deadline_at=None,
-            date_status=ApplicationPeriodDateStatus.NEEDS_CONFIRMATION,
+            deadline_at=fall_deadline_at,
+            date_status=ApplicationPeriodDateStatus.VERIFIED_EXACT,
             status=fall_status,
-            status_note=(
-                "本梯次尚未開放；請先準備校內文件，不要提前送件。截止日與送件方式以國際處本梯次公告為準。"
-                if fall_status == ApplicationPeriodStatus.UPCOMING
-                else "已過預告的開放日；請到國際處官網確認本梯次是否開放與正式截止時間，系統不自行判定。"
-            ),
+            status_note=fall_status_note,
             deadline_note=(
-                "選送須知列出 12/20 為秋季班申請截止日，但沒有年度與截止時刻；"
-                "本梯次專屬公告發布前，系統不建立提醒也不排進日曆。"
+                "線上截止時間（2026/12/21 17:00）已由官方公告確認；紙本只寫明須於截止日前繳交國際事務處，"
+                "未提供可安全建立提醒的獨立收件時刻。"
             ),
             reminder_eligible=False,
             checked_at=CGU_FALL_ANNOUNCEMENT_CHECKED_AT,
@@ -1312,6 +1333,32 @@ def _compact_long_text(text: str, limit: int = 360) -> str | None:
     if not text:
         return None
     return text if len(text) <= limit else text[: limit - 1].rstrip() + "..."
+
+
+def _clean_partner_website(value: str | None) -> str | None:
+    text = _plain(value)
+    if not text:
+        return None
+    try:
+        parts = urlsplit(text)
+    except ValueError:
+        return text
+    if not parts.scheme or not parts.netloc:
+        return text
+    filtered_query = [
+        (k, v)
+        for k, v in parse_qsl(parts.query, keep_blank_values=True)
+        if not k.lower().startswith("utm_")
+    ]
+    return urlunsplit(
+        (
+            parts.scheme,
+            parts.netloc,
+            parts.path or "/",
+            urlencode(filtered_query, doseq=True),
+            parts.fragment,
+        )
+    )
 
 
 def _plain(value: Any) -> str:

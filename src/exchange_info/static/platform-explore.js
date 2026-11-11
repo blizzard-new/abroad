@@ -17,20 +17,21 @@ window.UniWayExplore = (() => {
   function sortMetrics(list) {
     const profile = Boolean(state.eligibilityProfile);
     const fit = profile ? list.filter((item) => partnerMatch(item).tone === "strong").length : 0;
-    const quotas = list.map(partnerQuotaNumber).filter((value) => value !== null);
+    const openList = list.filter((item) => !partnerAvailabilityMeta(item).blocked);
+    const quotas = openList.map(partnerQuotaNumber).filter((value) => value !== null);
     let deadline = "依官方公告";
     try {
+      const partnerDates = openList.map(partnerNextDeadline).filter(Boolean).sort((a, b) => a - b);
       const official = upcomingDeadlines(1)[0];
-      const partner = list.map(partnerNextDeadline).filter(Boolean).sort((a, b) => a - b)[0];
-      if (official) deadline = `最近 ${shortDate(official.date)} ${official.scope}`;
-      else if (partner) deadline = `最近 ${shortDate(partner)} 合作校申請`;
+      if (partnerDates.length) deadline = `最近 ${shortDate(partnerDates[0])} · ${partnerDates.length} 間有時程`;
+      else if (official) deadline = `最近 ${shortDate(official.date)} ${official.scope}`;
     } catch (_) { /* the tab then says the deadline follows the official notice */ }
     const picked = UniWayDiscovery.hasCriteria(discoveryCriteria);
     const fits = picked ? list.filter((item) => UniWayDiscovery.assess(item, discoveryCriteria).matched).length : 0;
     return {
       match: picked ? `${fits} 間符合所選條件` : profile ? `${fit} 間已知條件相符` : "填寫條件後可比對",
       deadline,
-      quota: quotas.length ? `最多 ${Math.max(...quotas)} 名` : "依官方公告",
+      quota: quotas.length ? `最多 ${Math.max(...quotas)} 名 · ${quotas.length} 間已列` : "依官方公告",
     };
   }
 

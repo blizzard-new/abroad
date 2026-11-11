@@ -45,7 +45,7 @@ def test_saved_outage_rows_and_detail_show_actual_source_time_then_recover(page,
     page.goto(url+'/?view=list#partners',wait_until='domcontentloaded')
     expect(page.locator('#boot-splash')).to_be_hidden(timeout=60000)
     assert page.locator('#catalogue-source-status').count()==0
-    assert page.evaluate('state.dashboard.partner_universities.length')==77
+    assert page.evaluate('state.dashboard.partner_universities.length')==78
     page.screenshot(path=str(ARTIFACTS/f'outage-saved-{width}.png'),full_page=True)
     if width < 820: page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()
@@ -54,8 +54,8 @@ def test_saved_outage_rows_and_detail_show_actual_source_time_then_recover(page,
     page.screenshot(path=str(ARTIFACTS/f'outage-detail-{width}.png'),full_page=True)
     store.fetcher=lambda:json.loads(cgu.BUNDLED_SNAPSHOT.read_text());tick[0]=61;store.refresh()
     page.evaluate('loadDashboard({ refreshed: true })')
-    expect(page.locator('#partner-result-count')).to_contain_text('77')
-    assert page.evaluate('state.dashboard.partner_universities.length')==77
+    expect(page.locator('#partner-result-count')).to_contain_text('78')
+    assert page.evaluate('state.dashboard.partner_universities.length')==78
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
     assert not errors
 
@@ -79,6 +79,6 @@ def test_empty_start_says_unavailable_in_list_map_and_count_then_recovers(page,r
     store.fetcher=lambda:json.loads(cgu.BUNDLED_SNAPSHOT.read_text());tick[0]=61;store.refresh()
     page.evaluate('loadDashboard({ refreshed: true })')
     page.locator('[data-partner-view="list"]').click()
-    expect(page.locator('#partner-result-count')).to_contain_text('77')
+    expect(page.locator('#partner-result-count')).to_contain_text('78')
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
     assert not errors

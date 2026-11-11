@@ -2751,16 +2751,30 @@ def create_app(
             partners.append(partner.model_copy(update={"location": location}))
         return dashboard.model_copy(update={"partner_universities": partners})
 
-    def dashboard_response_signature() -> tuple:
+    def dashboard_response_signature(university: UniversityProfile) -> tuple:
         paths = data_paths(resolved_data_dir)
         lifetime = min(PUBLIC_DASHBOARD_RESPONSE_SECONDS, DASHBOARD_CACHE_SECONDS)
         bucket = int(time.monotonic() / lifetime) if lifetime > 0 else time.monotonic()
+        cgu_sig = None
+        if university.id == "cgu":
+            cgu_view = cgu_catalogue_view()
+            store_obj = getattr(cgu_catalogue, "store", cgu_catalogue)
+            state_tuple = getattr(store_obj, "_state", None)
+            cgu_sig = (
+                file_signature(store_obj.path) if getattr(store_obj, "path", None) is not None else None,
+                (state_tuple[0] or {}).get("records_sha256") if state_tuple else None,
+                len(cgu_view.partners),
+                cgu_view.source.status,
+                cgu_view.source.last_attempt_result,
+                cgu_view.source.failure_reason,
+                cgu_view.source.last_success_at,
+            )
         return (
             bucket,
             file_signature(paths["processed_pages"]),
             file_signature(paths["exchange_info"]),
             file_signature(paths["partner_research"]),
-            file_signature(resolved_data_dir / "source_cache" / "cgu_catalogue.json"),
+            cgu_sig,
             file_signature(resolved_data_dir / "processed" / "university_locations.jsonl"),
             file_signature(SCHOOL_IMAGE_MANIFEST),
         )
@@ -2770,7 +2784,7 @@ def create_app(
         *,
         base_url: str,
     ) -> tuple[bytes, bytes, str]:
-        key = (university.id, base_url.rstrip("/"), dashboard_response_signature())
+        key = (university.id, base_url.rstrip("/"), dashboard_response_signature(university))
         with dashboard_response_lock:
             cached = dashboard_response_cache.get(key)
             if cached is not None:

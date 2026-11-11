@@ -73,12 +73,13 @@ def test_no_fabricated_2359_deadlines_for_schools_without_official_2359_time() -
     catalog = build_verified_window_deadline_catalog()
     by_id = {card.school_id: card for card in catalog.items}
 
-    for pending_id in ("cgu", "fcu", "nsysu", "ntut"):
+    for pending_id in ("fcu", "nsysu", "ntut"):
         card = by_id[pending_id]
         assert card.primary_deadline_at is None, f"{pending_id} must not fabricate exact timestamp"
         assert card.online_deadline.exact_deadline_at is None, f"{pending_id} must not fabricate 23:59"
 
     for daytime_id, expected_hour in (
+        ("cgu", 17),
         ("ntu", 16),
         ("fju", 16),
         ("nccu", 16),

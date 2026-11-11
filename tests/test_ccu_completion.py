@@ -161,7 +161,7 @@ def test_real_api_serves_all_profiles_and_local_photographs_without_other_school
     assert coverage["destination_profile_count"] == 104
     profiles = load_destination_profiles(tmp_path, include_bundled_baseline=True)
     assert sum(p.home_university == HOME for p in profiles) == 104
-    assert sum(p.home_university == "長庚大學" for p in profiles) == 77
+    assert sum(p.home_university == "長庚大學" for p in profiles) == 78
     assert sum(p.home_university == "國立臺北大學" for p in profiles) == 206
 
 

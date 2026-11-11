@@ -7,7 +7,7 @@
 | 功能 | 展示行為 |
 | --- | --- |
 | 原平台首頁、地球、搜尋、學校詳細頁 | 同一份 HTML、CSS、JS，母校固定長庚；保留主題與響應式設計 |
-| 長庚資料 | 77 筆歷史瀏覽項目，混合交換、自費、雙學位及院級參考；不是 77 所當期可申請校。當期名額、目的校日期與語言待確認 |
+| 長庚資料 | 與 UniWay 主站同步 78 所合作校（含中央當期名單與院級官方參考）、表列名額、語言門檻、合作校參考截止日及 116-1 校內申請期間（2026/11/02–12/21 17:00） |
 | 收藏與比較 | 使用原有 UI、workspace 與隔離的瀏覽器偏好 |
 | 我的申請 | 原有計畫建立、今日下一步、準備清單、路徑地圖、進度及版本衝突處理；新增六階段的準備建議 |
 | 準備工作台 | 沿用 PR #299 的個人任務、筆記、個人目標日期與貼上虛構通知後的待辦草稿；規則整理不稱為 AI。附件解析與私人上傳停用 |
@@ -40,7 +40,7 @@ uvicorn exchange_info.cgu_demo:create_demo_app --factory --host 127.0.0.1 --port
 - 使用 `uniway_cgu_demo_session` 的 HTTPOnly、SameSite Strict、host-only Cookie。剝除外來 Cookie、Authorization、匿名 token，只將展示 token 交給內層 API；不接收或設定正式 session cookie。
 - `localStorage` 及 `sessionStorage` 都使用 `uniway-cgu-platform:` namespace。重設只刪除此 namespace 與該展示帳號／草稿；不對全站原始 storage 呼叫清空。儲存被封鎖時顯示暫存限制。
 - 寫入採允許清單、同 Origin 驗證、內容大小上限；私人上傳、OAuth、驗證信、正式送件、社群發布、AI 呼叫及外部日曆同步回 403。原 UI 有對應停用及說明。
-- 長庚 catalogue 只讀取已驗證雜湊的 bundled snapshot，停用背景更新。所有當期名額／截止日欄位收斂為待確認；保留歷史參考來源。
+- 長庚 catalogue 只讀取已驗證雜湊的 bundled snapshot（與主站同步之 78 所合作校），停用背景網路更新，確保離線隔離與主站一致的名額／截止日顯示。
 - 回應有 noindex 與原有 CSP；動態資料 no-store，公開靜態資產可快取一小時。noindex 不是存取控制，預設是可公開操作的虛構展示。
 
 主程式增加可選的 catalogue、dashboard、旅程內容與母校 scope 注入點；一般 `create_app()` 預設維持原流程。共用程式修正「名額待確認」應計入待確認，而非不開放／資格不符，並同步收藏後的比較按鈕狀態。原版 HTML 與所有樣式不另複製維護。

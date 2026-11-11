@@ -4456,10 +4456,10 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
   const degreePass = degreeKnown && degreeMatch;
   if (!collegeKnown) risks.push(college ? "合作校學院範圍待確認" : "尚未填寫學院");
   else if (collegePass) { score += 30; reasons.push("符合學院範圍"); }
-  else { mismatches.push("學院範圍待確認"); risks.push(`你的學院：${college}；學校範圍：${item.colleges}`); }
+  else { mismatches.push("學院條件不符"); risks.push(`你的學院：${college}；學校範圍：${item.colleges}`); }
   if (!degreeKnown) risks.push(profile.degree ? degreeMatch === null && degree === "研究所" ? "研究所尚未區分碩博士；合作校學制範圍待確認" : "合作校學制範圍待確認" : "尚未填寫學制");
   else if (degreePass) { score += 20; reasons.push("符合目前學制"); }
-  else { mismatches.push("學制範圍待確認"); risks.push(coupledMatch === false ? `學院／學制配對不符：${college}／${degree}；學校配對：${item.degree_levels}` : `你的學制：${degree}；學校範圍：${item.degree_levels}`); }
+  else { mismatches.push("學制條件不符"); risks.push(coupledMatch === false ? `學院／學制配對不符：${college}／${degree}；學校配對：${item.degree_levels}` : `你的學制：${degree}；學校範圍：${item.degree_levels}`); }
   if (profile.preferredCountry && item.country === profile.preferredCountry) { score += 15; reasons.push(`位於優先國家 ${item.country}`); }
   const threshold = languageThresholdFromPartner(item, profile.languageTest, profile.degree);
   const hasLanguageScore = Boolean(profile.languageTest) && Number.isFinite(Number(profile.languageScore)) && Number(profile.languageScore) > 0;
@@ -8785,6 +8785,21 @@ function partnerQuotaNumber(item) {
 
 // The earliest upcoming date written in the partner's deadline fields; null when the text names none.
 const partnerDeadlineCache = new WeakMap();
+const ENGLISH_MONTH_INDEX = {
+  jan: 0, january: 0, feb: 1, february: 1, mar: 2, march: 2, apr: 3, april: 3,
+  may: 4, jun: 5, june: 5, jul: 6, july: 6, aug: 7, august: 7,
+  sep: 8, sept: 8, september: 8, oct: 9, october: 9, nov: 10, november: 10, dec: 11, december: 11,
+};
+function validLocalNoonDate(year, month, day) {
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+  const built = new Date(year, month - 1, day, 12);
+  return !Number.isNaN(built.getTime()) && built.getFullYear() === year && built.getMonth() === month - 1 && built.getDate() === day ? built : null;
+}
+function rollUpcomingDate(today, month, day) {
+  const thisYear = validLocalNoonDate(today.getFullYear(), month, day);
+  if (!thisYear) return null;
+  return thisYear >= today ? thisYear : validLocalNoonDate(today.getFullYear() + 1, month, day);
+}
 function partnerNextDeadline(item) {
   if (partnerDeadlineCache.has(item)) return partnerDeadlineCache.get(item);
   const sources = [item?.partner_exchange_details?.application_deadline?.value, item?.nomination_deadline, item?.partner_application_deadline,
@@ -8793,15 +8808,37 @@ function partnerNextDeadline(item) {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12);
   let best = null;
-  for (const text of sources.map((value) => String(value || ""))) {
+  for (const raw of sources.map((value) => String(value || ""))) {
+    const withoutUrls = raw.replace(/https?:\/\/\S+/gi, " ");
     const dates = [];
-    for (const [, year, month, day] of text.matchAll(/(20\d{2})\s*[-/.年]\s*(\d{1,2})\s*[-/.月]\s*(\d{1,2})/g)) dates.push(new Date(Number(year), Number(month) - 1, Number(day), 12));
-    for (const [, month, day] of text.replace(/20\d{2}\s*[-/.年]\s*\d{1,2}\s*[-/.月]\s*\d{1,2}/g, " ").matchAll(/(\d{1,2})\s*月\s*(\d{1,2})\s*日?/g)) {
-      const candidate = new Date(today.getFullYear(), Number(month) - 1, Number(day), 12);
-      if (candidate < today) candidate.setFullYear(candidate.getFullYear() + 1);
-      dates.push(candidate);
+    for (const [, year, month, day] of withoutUrls.matchAll(/(20\d{2})\s*[-/.年]\s*(\d{1,2})\s*[-/.月]\s*(\d{1,2})/g)) {
+      const parsed = validLocalNoonDate(Number(year), Number(month), Number(day));
+      if (parsed) dates.push(parsed);
     }
-    const upcoming = dates.filter((date) => !Number.isNaN(date.getTime()) && date >= today).sort((a, b) => a - b)[0];
+    const remainder = withoutUrls
+      .replace(/20\d{2}\s*[-/.年]\s*\d{1,2}\s*[-/.月]\s*\d{1,2}\s*日?/g, " ")
+      .replace(/\b20\d{2}\s*[/／-]\s*\d{2,4}\b/g, " ")
+      .replace(/\b1\d{2}\s*[/／-]\s*1\d{2}\b/g, " ")
+      .replace(/\d+\.\d+\s*[/／]\s*\d+(?:\.\d+)?/g, " ");
+    for (const [, month, day] of remainder.matchAll(/(\d{1,2})\s*月\s*(\d{1,2})\s*日?/g)) {
+      const parsed = rollUpcomingDate(today, Number(month), Number(day));
+      if (parsed) dates.push(parsed);
+    }
+    for (const [, month, day] of remainder.matchAll(/(?:^|[^\d/.-])(\d{1,2})\s*[/／]\s*(\d{1,2})(?![\d/.-])/g)) {
+      const parsed = rollUpcomingDate(today, Number(month), Number(day));
+      if (parsed) dates.push(parsed);
+    }
+    for (const [, day, mon, year] of remainder.matchAll(/\b(\d{1,2})(?:st|nd|rd|th)?\s+(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?(?:[\s,]+(20\d{2}))?\b/gi)) {
+      const m = ENGLISH_MONTH_INDEX[mon.toLowerCase()] + 1;
+      const parsed = year ? validLocalNoonDate(Number(year), m, Number(day)) : rollUpcomingDate(today, m, Number(day));
+      if (parsed) dates.push(parsed);
+    }
+    for (const [, mon, day, year] of remainder.matchAll(/\b(jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+(\d{1,2})(?:st|nd|rd|th)?(?:[\s,]+(20\d{2}))?\b/gi)) {
+      const m = ENGLISH_MONTH_INDEX[mon.toLowerCase()] + 1;
+      const parsed = year ? validLocalNoonDate(Number(year), m, Number(day)) : rollUpcomingDate(today, m, Number(day));
+      if (parsed) dates.push(parsed);
+    }
+    const upcoming = dates.filter((date) => date >= today).sort((a, b) => a - b)[0];
     if (upcoming && (!best || upcoming < best)) best = upcoming;
     if (best) break;
   }
@@ -8846,9 +8883,15 @@ function filteredPartners({ ignore = "", sort = true } = {}) {
   });
   if (!sort) return partners;
   if (state.partnerSort === "deadline") {
-    partners.sort((left, right) => (partnerNextDeadline(left)?.getTime() ?? Infinity) - (partnerNextDeadline(right)?.getTime() ?? Infinity));
+    partners.sort((left, right) => Number(partnerAvailabilityMeta(left).blocked) - Number(partnerAvailabilityMeta(right).blocked)
+      || (partnerNextDeadline(left)?.getTime() ?? Infinity) - (partnerNextDeadline(right)?.getTime() ?? Infinity)
+      || (partnerQuotaNumber(right) ?? -1) - (partnerQuotaNumber(left) ?? -1)
+      || left.school_name.localeCompare(right.school_name, "zh-Hant"));
   } else if (state.partnerSort === "quota") {
-    partners.sort((left, right) => (partnerQuotaNumber(right) ?? -1) - (partnerQuotaNumber(left) ?? -1));
+    partners.sort((left, right) => Number(partnerAvailabilityMeta(left).blocked) - Number(partnerAvailabilityMeta(right).blocked)
+      || (partnerQuotaNumber(right) ?? -1) - (partnerQuotaNumber(left) ?? -1)
+      || (partnerNextDeadline(left)?.getTime() ?? Infinity) - (partnerNextDeadline(right)?.getTime() ?? Infinity)
+      || left.school_name.localeCompare(right.school_name, "zh-Hant"));
   } else {
     // Schools whose published conditions fit what was picked above (a term, a language test ...) come first, then the
     // ones the data cannot settle; the order within each group is the student's own fit, when there is one.
@@ -8879,15 +8922,32 @@ function partnerCriteriaNote() {
   return parts.length ? parts.join("、") : "學校資料大多未列這項條件，暫時無法縮小範圍";
 }
 
+function positiveScopeText(value) {
+  return String(value ?? "")
+    .normalize("NFKC")
+    .replace(/[（(]\s*校內報名資格[：:][^）)]*[）)]/g, " ")
+    .replace(/[（(][^）)]*(?:依當期|依協議|依合作|依簡章|依該校)[^）)]*[）)]/g, " ")
+    .replace(/※?\s*(?:不含|不開放|不接受|不包括|限不含)[^；;。，,）)]*/g, " ")
+    .replace(/[^；;。，,（(]*除外/g, " ")
+    .replace(/\b(?:excluding|except(?:\s+for)?|not\s+open\s+to)\b[^.;,)]*/gi, " ")
+    .replace(/依(?:當期|協議|合作|簡章|該校)[^；;。，,）)]*/g, " ")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+}
+
 function academicScopeNeedsConfirmation(item, key) {
   const status = item.field_evidence?.[key]?.status;
   if (status && status !== "verified_current") return true;
-  const text = normalize(item[key]);
-  if (!text || ["無", "none", "n/a", "na", "--", "—", "待補"].includes(text)
-      || ["待確認", "依當期", "依協議", "依合作", "另洽", "未提供", "不含", "除外", "excluding", "except"].some(term => text.includes(term))) return true;
+  const raw = normalize(item[key]).normalize("NFKC");
+  const emptyTokens = ["", "無", "none", "n/a", "na", "--", "—", "待補"];
+  if (emptyTokens.includes(raw)
+      || ["待確認", "跨期資料待核對", "請洽", "另洽", "未提供", "尚待", "待公告", "限特定", "部分學院", "部分院系", "部分系所", "特定院系"].some(term => raw.includes(term))) return true;
+  const text = positiveScopeText(item[key]);
+  if (emptyTokens.includes(text)) return true;
   const terms = key === "colleges"
-    ? ["學院", "全校", "不限", "四院皆可", "工程", "工學", "管理", "商", "人文", "法律", "法學", "理學", "社科", "社會", "醫", "生命", "資訊", "藝術", "engineering", "business", "management", "law", "science", "humanities", "arts", "medicine", "faculty", "college"]
-    : ["大學部", "學士", "本科", "研究所", "碩士", "博士", "不限", "全校", "undergraduate", "bachelor", "graduate", "master", "doctoral", "phd"];
+    ? ["學院", "全校", "不限", "四院皆可", "學系", "學程", "工程", "工學", "管理", "商", "人文", "法律", "法學", "理學", "社科", "社會", "醫", "藥", "護", "生命", "資訊", "電機", "藝術", "設計", "教育", "外語", "傳播", "農", "engineering", "business", "management", "law", "science", "humanities", "arts", "medicine", "nursing", "pharmacy", "design", "education", "faculty", "college", "department"]
+    : ["大學部", "學士", "本科", "大一", "大二", "大三", "大四", "四技", "二技", "五專", "研究所", "碩士", "碩班", "碩博", "博士", "博班", "不限", "全校", "undergraduate", "bachelor", "graduate", "master", "doctoral", "phd"];
   return !terms.some(term => text.includes(term)) && !(key === "colleges" && /\ball\b/i.test(text));
 }
 
@@ -8921,22 +8981,26 @@ function partnerDegreeScopeMatches(item, college, degree) {
 }
 
 function collegeMatches(value, selected) {
-  const text = normalize(value).normalize("NFKC");
+  if (!value) return true;
+  const text = positiveScopeText(value) || normalize(value).normalize("NFKC");
   if (["不限", "全校", "各學院", "四院皆可"].some(term => text.includes(term)) || /\ball\b/i.test(text)) return true;
   const aliases = {"醫學院":["醫學","medicine","medical"],"工學院":["工學","工程","engineering"],"法律學院":["法律","法學","law"],"智慧運算學院":["智慧運算","資訊","computer","informatics"],"管理學院":["管理","商學","business","management"],"資訊工程學系":["資訊","電腦","computer","informatics"]};
   return [selected, ...(aliases[selected] || [])].some(term => term && text.includes(normalize(term).normalize("NFKC")));
 }
 
 function degreeMatches(value, selected) {
-  const text = normalize(value);
+  if (!value) return true;
+  const text = positiveScopeText(value);
+  if (!text) return false;
+  if (["不限學制", "不限年級", "各學制"].some(term => text.includes(term)) || ["不限", "全校"].includes(text)) return true;
   if (selected === "研究所") {
     const master = degreeMatches(value, "碩士班"), doctoral = degreeMatches(value, "博士班");
     return master && doctoral ? true : master || doctoral ? null : false;
   }
-  const aliases = {"大學部":["大學部","學士","undergraduate","bachelor"],"碩士班":["碩士","研究所","master","graduate"],"博士班":["博士","研究所","doctoral","phd","graduate"],"研究所":["研究所","碩士","博士","graduate","master","doctoral","phd"]};
+  const aliases = {"大學部":["大學部","學士","本科","大一","大二","大三","大四","四技","二技","五專","undergraduate","bachelor"],"碩士班":["碩士","碩班","碩博","研究所","master","graduate"],"博士班":["博士","博班","碩博","研究所","doctoral","phd","graduate"],"研究所":["研究所","碩士","碩班","碩博","博士","博班","graduate","master","doctoral","phd"]};
   return (aliases[selected] || [selected]).some(term => /^[a-z]+$/i.test(term)
     ? new RegExp(`(?<![a-z])${term}(?![a-z])`, "i").test(text)
-    : text.normalize("NFKC").includes(normalize(term).normalize("NFKC")));
+    : text.includes(normalize(term).normalize("NFKC")));
 }
 
 // How many schools one page of the list shows, and how many each "show more" adds.
@@ -8988,7 +9052,7 @@ function renderPartnerTable() {
 
 function partnerCardBadge(availability, match) {
   if (availability.blocked || availability.pending) return { tone: "warn", label: availability.cardLabel };
-  if (state.eligibilityProfile) return match.tone === "strong" ? { tone: "ok", label: "已知條件相符" } : { tone: "warn", label: match.label };
+  if (state.eligibilityProfile && match.tone === "strong") return { tone: "ok", label: "已知條件相符" };
   return { tone: "ok", label: availability.cardLabel };
 }
 
@@ -10309,23 +10373,23 @@ function renderApplicationWorkflow(workflow) {
       <div>
         <strong>${fullyVerified ? "官方來源與送件細節已查核" : `官方來源已整理，${pendingStepCount} 個步驟仍需確認`}</strong>
         <p>${escapeHtml(workflow.coverage_note)}</p>
-        <small>適用學年度：${workflow.academic_year ? escapeHtml(workflow.academic_year) : "待確認"} · 申請梯次：${applicationRounds.length ? applicationRounds.map(escapeHtml).join("、") : "待確認"} · 版本 ${escapeHtml(workflow.version || 1)} · 最後查核：${escapeHtml(formatDate(workflow.last_checked))}</small>
+        <small>適用學年度：${workflow.academic_year ? escapeHtml(workflow.academic_year) : "待確認"} · 申請梯次：${applicationRounds.length ? applicationRounds.map(escapeHtml).join("、") : "待確認"} · 版本 ${escapeHtml(workflow.version || 1)} · 最後查核：${escapeHtml(formatDate(workflow.last_checked))}${publicationVerified ? ` · 已正式發布（${escapeHtml(formatDate(workflow.published_at))}）` : ""}</small>
       </div>
     </div>
-    <div class="workflow-warning${applicabilityVerified ? " is-verified" : ""}">
-      <i data-lucide="${applicabilityVerified ? "badge-check" : "calendar-x-2"}" aria-hidden="true"></i>
+    ${applicabilityVerified ? "" : `<div class="workflow-warning">
+      <i data-lucide="calendar-x-2" aria-hidden="true"></i>
       <div>
-        <strong>${applicabilityVerified ? "適用年度與梯次已有官方來源" : "適用年度或梯次仍待確認"}</strong>
+        <strong>適用年度或梯次仍待確認</strong>
         <span>${escapeHtml(workflow.applicability_note || "不能把你選擇的年度或梯次自動套用到未標示版本的流程。")}</span>
       </div>
-    </div>
-    <div class="workflow-warning${publicationVerified ? " is-verified" : ""}">
-      <i data-lucide="${publicationVerified ? "shield-check" : "shield-alert"}" aria-hidden="true"></i>
+    </div>`}
+    ${publicationVerified ? "" : `<div class="workflow-warning">
+      <i data-lucide="shield-alert" aria-hidden="true"></i>
       <div>
-        <strong>${publicationVerified ? "這份流程已完成正式發布" : "這是尚未完成正式發布的參考流程"}</strong>
-        <span>${publicationVerified ? `發布時間：${escapeHtml(formatDate(workflow.published_at))}` : "可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。"}</span>
+        <strong>這是尚未完成正式發布的參考流程</strong>
+        <span>可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。</span>
       </div>
-    </div>
+    </div>`}
     <div class="workflow-toolbar">
       <strong>共 ${workflow.steps.length} 個步驟</strong>
       <div class="workflow-toolbar-actions">
@@ -10760,7 +10824,7 @@ function renderWorkflowSubmissionProgress(workflow, step) {
           ? `參考時程：${step.timing}（精確日期待確認，不會自動提醒）`
           : "期限待官方確認，不會自動提醒"];
   if (method === "unknown") {
-    return `<div class="workflow-progress is-disabled"><div><h4>我的送件紀錄</h4><strong>送件方式待確認</strong><small>官方方式確認前不能標記完成。</small></div></div>`;
+    return "";
   }
   const proofKind = submissionDefaultProofKind(method);
   return `
@@ -10974,6 +11038,8 @@ function renderWorkflowSubmission(step) {
     arrivalPending ? "必須送達：待確認（不要只以寄出日判斷）" : "",
     submission.deadline_note ? `期限說明：${submission.deadline_note}` : "",
   ].filter(Boolean);
+  const hasDocuments = Boolean(step.document_requirements?.length || step.required_documents?.length);
+  if (method === "unknown" && !details.length && !hasDocuments) return "";
   return `
     <div class="workflow-submission${method === "unknown" || arrivalPending ? " is-pending" : ""}">
       <h4>送件方式</h4>
