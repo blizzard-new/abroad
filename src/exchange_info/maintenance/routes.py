@@ -823,6 +823,10 @@ def create_maintenance_router(
             <option value="npu">國立澎湖科技大學（共 37 所姊妹校）</option>
             <option value="ntunhs">國立臺北護理健康大學（共 84 所姊妹校）</option>
             <option value="nttu">國立臺東大學（共 59 所姊妹校）</option>
+            <option value="asia">亞洲大學（共 106 所姊妹校）</option>
+            <option value="ttu">大同大學（共 104 所姊妹校）</option>
+            <option value="tcu">慈濟大學（共 50 所姊妹校）</option>
+            <option value="mcut">明志科技大學（共 130 所姊妹校）</option>
             <option value="cyut">朝陽科技大學（共 70 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
@@ -961,6 +965,10 @@ def create_maintenance_router(
     npu: "國立澎湖科技大學 (NPU)",
     ntunhs: "國立臺北護理健康大學 (NTUNHS)",
     nttu: "國立臺東大學 (NTTU)",
+    asia: "亞洲大學 (ASIA)",
+    ttu: "大同大學 (TTU)",
+    tcu: "慈濟大學 (TCU)",
+    mcut: "明志科技大學 (MCUT)",
     cyut: "朝陽科技大學 (CYUT)"
   };
 

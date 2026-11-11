@@ -131,6 +131,7 @@ function message(text,action=''){
 }
 function clear({preserveDrafts=false}={}){
   stash();clearTimeout(autosaveTimer);
+  window.UniWayExchangeWorkspace?.clear();
   if(state.account)stopOAuthRecovery();
   if(!preserveDrafts||(state.account&&draftOwner&&draftOwner!==state.account.id))resetDrafts();
   if(state.account&&state.account.id===draftOwner)clearTimeout(recoveryTimer);
@@ -177,7 +178,7 @@ function init(){
   new ResizeObserver(()=>requestAnimationFrame(drawPaths)).observe($('#map-scroll'));
 }
 function refresh(){if(!root)return;if(owner!==key()){clear({preserveDrafts:true});owner=key();if(active)load();}}
-function show(page){init();stash();clearTimeout(autosaveTimer);active=page==='my-application';picker.close();if(owner!==key()){clear({preserveDrafts:true});owner=key();}
+function show(page){init();stash();window.UniWayExchangeWorkspace?.snapshot();clearTimeout(autosaveTimer);active=page==='my-application';picker.close();if(owner!==key()){clear({preserveDrafts:true});owner=key();}
   if(!active)return;
   if(!state.account){message(state.authRestoreState==='pending'?'正在確認登入狀態…':'登入後，接著完成你的申請。','<button data-path-login class="primary-button">登入並繼續</button><a href="#partners" class="quiet-button">先找交換學校</a>');if(route().get('view')==='schedule')showScheduleWithoutPlan(true);return;}
   const requested=route().get('plan');
@@ -230,10 +231,12 @@ function render(){
   const due=levels().filter(l=>confirmedDeadline(l)&&!l.external&&status(l)!=='skipped'&&!isDone(l)).sort((a,b)=>a.official_deadline_at.localeCompare(b.official_deadline_at))[0];
   $('#deadline-card').innerHTML=icon('calendar-search')+'<div><h3>'+(due?'官方期限':'官方日期待確認')+'</h3><p>'+esc(due?new Date(due.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})+'（臺灣時間）'+(new Date(due.official_deadline_at)<new Date()?' · 已過期':''):'請核對當期官方公告。')+'</p>'+(due?'<a href="'+href('level',due.id)+'">'+esc(due.title)+icon('arrow-right')+'</a>':'')+'</div>';
   $('#hub').dataset.tab=tab;$('#today-view').hidden=tab!=='today';$('#plans-view').hidden=tab!=='plans';$('#schedule-view').hidden=tab!=='schedule';$('#map-tools').hidden=tab!=='map';$('#map-view').hidden=tab!=='map';$('#progress-view').hidden=tab!=='progress';
+  $('#exchange-workspace-view').hidden=tab!=='workspace';
   if(tab==='level'){if(!dirty||activeId!==id)renderLevel(id);}
   else if(tab==='today'){activeId=null;renderToday();}
   else if(tab==='plans'){activeId=null;renderPlans();}
   else if(tab==='schedule'){activeId=null;renderSchedule();}
+  else if(tab==='workspace'){activeId=null;renderExchangeWorkspace();}
   else if(tab==='progress'){activeId=null;renderOverview();}
   else{activeId=null;renderMap();requestAnimationFrame(()=>{if(mapPosition!==null&&mapPositionPlan===plan().id)$('#map-scroll').scrollTop=mapPosition;else scrollMap(n?.id,'instant');});}
   icons();
@@ -484,7 +487,7 @@ function renderTools(l){
   const toolContext={...c,semester:({fall:'第一學期',spring:'第二學期',full_year:'一學年',undecided:''})[c.semester]};
   const matching=['target_school','academic_year','application_round','semester','college','department','degree_level'].every(k=>(state.applicationContext[k]||'')===(toolContext[k]||''));
   if(!sharedSelection&&!matching){
-    $('#path-tool-host').innerHTML='<div class="path-context-gate"><p>使用 '+esc(c.target_school)+' · '+esc(c.academic_year)+' · '+esc(termName(c.semester))+' 的文件規則</p><button id="path-use-context" class="primary-button">載入本計畫的文件工具</button><small>切換工具的查看目標，保留現有草稿與其他計畫進度。</small><p id="path-tool-error" role="alert"></p></div>';
+    $('#path-tool-host').innerHTML='<div class="path-context-gate"><p>使用 '+esc(c.target_school)+' · '+esc(c.academic_year)+' · '+esc(termName(c.semester))+' 的文件規則</p><button id="path-use-context" class="primary-button">載入本計畫的文件工具</button><p id="path-tool-error" role="alert"></p></div>';
     $('#path-use-context').onclick=async()=>{
       const captured=key(),run=epoch,url=location.hash,b=$('#path-use-context');b.disabled=true;
       try{
@@ -522,6 +525,7 @@ async function uploadFile(){
 }
 async function archive(){
   if(!view||saving)return;
+  if(window.UniWayExchangeWorkspace?.hasDrafts()||window.UniWayExchangeWorkspace?.isSaving()){toast('請先保存準備工作台的內容，再封存計畫。',true);return;}
   const archived=!plan().archived;
   stash();
   const pending=[...drafts.keys()].map(k=>JSON.parse(k)).find(([home,id])=>home===plan().context.home_school&&id===plan().id);
@@ -741,10 +745,49 @@ function renderSchedule(){
   $('#schedule-dynamic').innerHTML=(mismatch&&state.applicationContext.target_school?'<div class="sched-context"><p>排時程的目標目前是「'+esc(state.applicationContext.target_school.split(/[（(]/)[0].trim())+'」。要改用這份計畫嗎？</p><button type="button" class="today-add" data-use-plan-context>改用「'+esc(planName(plan()))+'」排時程</button></div>':'')+'<section class="sched-deadlines" aria-labelledby="sched-deadlines-title"><div class="today-head"><h2 id="sched-deadlines-title">已確認的官方期限</h2><p>'+esc(planName(plan()))+' · '+esc(planTerm(plan()))+'</p></div>'+
     (list.length?'<ol>'+list.map(l=>{const d=new Date(l.official_deadline_at),left=Math.ceil((d-Date.now())/86400000);return '<li><a href="'+href('level',l.id)+'"><span class="sched-date"><b>'+fmt(d,{month:'numeric',day:'numeric'})+'</b><small>'+fmt(d,{weekday:'short'})+'</small></span><span class="today-row"><b>'+esc(l.title)+'</b><small>'+esc(l.stageTitle)+'</small></span><span class="today-pill '+(d<new Date()?'late':left<=14?'soon':'')+'">'+(d<new Date()?'已過期':left<=0?'今天':'還有 '+left+' 天')+'</span></a></li>';}).join('')+'</ol>':
       '<p class="today-empty">目前沒有已確認的期限。</p>'+(source?'<a class="today-link" href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">查看官方公告'+icon('arrow-up-right')+'</a>':''))+'</section>';
+  $('#schedule-dynamic').insertAdjacentHTML('beforeend',window.UniWayExchangeWorkspace?.summary(view,true)||'');
   icons();
 }
+
+function cohortContext(){
+  const c=plan().context,label=c.departure_year+' '+termName(c.semester);
+  return {title:('【'+label+'同梯】'+c.target_school).slice(0,120),prefix:'交換目的校：'+c.target_school+'\n出發學期：'+label+'\n\n'};
+}
+function renderExchangeWorkspace(){
+  window.UniWayExchangeWorkspace.mount($('#exchange-workspace-view'),{
+    get:()=>view,render,
+    save:async payload=>{
+      const captured=key(),run=epoch,id=plan().id;
+      const saved=await fetchJson(pathUrl()+'/workspace'+query(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      if(captured!==key()||run!==epoch||view?.plan.id!==id)throw new Error('目前已切換帳號或計畫，請回原計畫查看保存結果。');
+      view=saved;renderApplicationCalendar();
+    },
+    peers:async()=>{
+      const c=cohortContext(),rows=await fetchJson('/community/posts?'+new URLSearchParams({board_id:'public-study-abroad',topic:'pre_departure',q:c.title.slice(0,80),limit:'120'}));
+      return rows.map(r=>r.post).filter(p=>p.title===c.title&&p.body.startsWith(c.prefix)).map(p=>({...p,url:'/?'+new URLSearchParams({discussion:p.id})+'#public-board'}));
+    },
+    postPeer:async body=>{
+      const captured=key(),c=cohortContext();
+      await ensureAnonymousIdentity();
+      if(captured!==key())throw new Error('登入狀態已改變，請重新確認後發布。');
+      return submitCommunityJson('/community/posts',{board_id:'public-study-abroad',post_type:'discussion',topic:'pre_departure',title:c.title,body:c.prefix+body,identity_mode:'anonymous'});
+    }
+  });
+}
 // Tasks of the open plan for the list on 時程: what is in progress, the next few that can start, and what is done.
-function workbenchTotals(){if(!view||plan().archived)return null;const t=totals();return {done:t.done,total:t.count};}
+function workbenchTotals(){if(!view||plan().archived)return null;const t=totals(),own=(view.workspace?.tasks||[]).filter(x=>!x.optional);return {done:t.done+own.filter(x=>x.effective_status==='done').length,total:t.count+own.length};}
+function workspaceCalendarEvents(){
+  if(!view||plan().archived||owner!==key())return [];
+  return (view.workspace?.tasks||[]).filter(t=>t.due_date).map(t=>({
+    id:'workspace-'+plan().id+'-'+t.id,title:t.title,date:t.due_date,
+    category:t.kind==='document'?'documents':t.kind==='interview'?'home':'other',
+    status:t.effective_status==='done'?'ready':t.effective_status==='doing'?'preparing':'todo',
+    note:(t.waiting_for?'等待：'+t.waiting_for+'。':'')+t.notes,sourceUrl:t.source_url,
+    schoolName:plan().context.target_school,origin:'personal',reminderDays:0,
+    workspaceTaskHref:href('workspace')+'&task='+encodeURIComponent(t.id),
+    workspaceDateLabel:t.date_kind==='notice'?'通知期限・本人核對':'個人目標'
+  }));
+}
 function workbenchRows(){
   if(!view||plan().archived)return [];
   const school=plan().context.target_school;
@@ -754,7 +797,11 @@ function workbenchRows(){
   const dateOf=l=>confirmedDeadline(l)?new Date(l.official_deadline_at).toLocaleDateString('sv-SE',{timeZone:'Asia/Taipei'}):'';
   const order=new Map(levels().map((l,i)=>[l.id,i]));
   const row=(l,state)=>({key:'path-'+l.id,title:l.title,status:state,school,date:dateOf(l),plan:false,href:href('level',l.id),order:order.get(l.id)});
-  return [...started.map(l=>row(l,'preparing')),...ready.map(l=>row(l,'todo')),...all.filter(isDone).map(l=>row(l,'ready'))];
+  const own=(view.workspace?.tasks||[]).map(t=>({key:'workspace-'+plan().id+'-'+t.id,
+    title:(t.optional?'自選 · ':'')+t.title+(t.effective_status==='waiting'?'（等待中）':''),
+    status:t.effective_status==='done'?'ready':t.effective_status==='doing'?'preparing':'todo',
+    school,date:t.due_date||'',plan:false,href:href('workspace')+'&task='+encodeURIComponent(t.id)}));
+  return [...started.map(l=>row(l,'preparing')),...ready.map(l=>row(l,'todo')),...all.filter(isDone).map(l=>row(l,'ready')),...own];
 }
 // 今天: one task to do now, the next confirmed deadline, where the student is, and what comes next.
 // It reads the same plan as the checklist and the map; nothing here is stored separately.
@@ -798,7 +845,7 @@ function renderToday(){
       (queue.length?'<ul>'+queue.map(l=>'<li><a href="'+href('level',l.id)+'"><span class="today-row"><b>'+esc(l.title)+'</b>'+(l.stageTitle!==g?.title?'<small>'+esc(l.stageTitle)+'</small>':'')+'</span>'+(tag(l)?'<span class="today-tag">'+tag(l)+'</span>':'')+icon('chevron-right')+'</a></li>').join('')+'</ul>':'<p class="today-empty">沒有其他可以現在開始的項目。</p>')+
       '<a class="today-link" href="'+href('progress')+'">查看全部準備清單'+icon('arrow-right')+'</a></section>'+
       (checks.length?'<aside class="today-panel" aria-labelledby="today-checks-title"><h3 id="today-checks-title">資格條件檢查</h3><ul class="today-counts"><li class="pass"><b>'+counts.pass+'</b>符合</li><li class="fail"><b>'+counts.fail+'</b>不符合</li><li class="needs"><b>'+counts.needs_confirmation+'</b>待確認</li></ul>'+(open?'<a class="today-link" href="'+href('level',open.id)+'">查看需要處理的條件'+icon('arrow-right')+'</a>':'')+'</aside>':'')+'</div>'+
-    personalTasks()+'<p class="today-boundary">'+icon('info')+'圓圈與進度只代表你自己的準備，不代表校方受理或錄取。</p></div>';
+    (window.UniWayExchangeWorkspace?.summary(view)||'')+personalTasks()+'<p class="today-boundary">'+icon('info')+'圓圈與進度只代表你自己的準備，不代表校方受理或錄取。</p></div>';
 }
 function renderOverview(){
   const t=totals();
@@ -835,5 +882,5 @@ function startTarget(schoolName){
   location.hash='#my-application?'+new URLSearchParams(existing?{plan:existing.id,view:'today'}:{target:schoolName});
 }
 
-return {init,show,refresh,clear,toolHref,formToolActive,selectTarget,startTarget,resumeOAuth,workbenchRows,workbenchTotals,hasRecoverableDrafts:()=>drafts.size>0};
+return {init,show,refresh,clear,toolHref,formToolActive,selectTarget,startTarget,resumeOAuth,workbenchRows,workbenchTotals,workspaceCalendarEvents,hasRecoverableDrafts:()=>drafts.size>0};
 })();

@@ -1,0 +1,93 @@
+{
+  "date": "2026-11-10",
+  "latest_unique_results": {
+    "workspace_api": 21,
+    "existing_application_path_api": 29,
+    "loading_caching_static_versions": 20,
+    "workspace_browser": 10,
+    "existing_application_workbench_browser": 14,
+    "classic_home_and_route_scope_browser": 2
+  },
+  "runs": [
+    {
+      "file": "workspace-api.xml",
+      "executed": 50,
+      "failed": 0,
+      "failures": []
+    },
+    {
+      "file": "workspace-static.xml",
+      "executed": 41,
+      "failed": 0,
+      "failures": []
+    },
+    {
+      "file": "workspace-browser-first.xml",
+      "executed": 7,
+      "failed": 2,
+      "failures": [
+        "test_notice_review_batches_today_schedule_and_reload",
+        "test_destination_pack_interview_answers_and_idempotent_import"
+      ]
+    },
+    {
+      "file": "workspace-browser-second.xml",
+      "executed": 23,
+      "failed": 3,
+      "failures": [
+        "test_phone_personal_goal_waiting_notes_and_no_overflow[light]",
+        "test_phone_personal_goal_waiting_notes_and_no_overflow[dark]",
+        "test_task_draft_is_scoped_to_its_plan"
+      ]
+    },
+    {
+      "file": "workspace-browser-final.xml",
+      "executed": 11,
+      "failed": 0,
+      "failures": []
+    },
+    {
+      "file": "workspace-browser-last.xml",
+      "executed": 3,
+      "failed": 0,
+      "failures": []
+    },
+    {
+      "file": "workspace-browser-drafts.xml",
+      "executed": 10,
+      "failed": 0,
+      "failures": []
+    },
+    {
+      "file": "workspace-assets-last.xml",
+      "executed": 2,
+      "failed": 0,
+      "failures": []
+    }
+  ],
+  "initial_failures": [
+    "First browser run: two selectors matched multiple elements (including a hidden summary).",
+    "Second browser run: native selects are intentionally 1px because Glide Select renders the visible control; width assertion changed to visible combobox.",
+    "Second browser run: a second plan created through the test API was not in the already loaded picker; fixture now reloads before entering the draft."
+  ],
+  "ui_findings_fixed": [
+    "Mobile filters were compressed by inherited flex layout; replaced with explicit grid.",
+    "Light blue dark-mode buttons inherited white text; use foreground token, verify contrast >=4.5.",
+    "Saving a manual task now preserves a separate unfinished notice draft for the same plan."
+  ],
+  "checks": [
+    "OpenAPI contract check",
+    "JavaScript syntax",
+    "git diff --check",
+    "static asset version check"
+  ],
+  "limitations": [
+    "Local synthetic accounts/data; no production writes or external formal submissions.",
+    "New vault link ownership and expiry tested with backend service; existing upload/download endpoints reused.",
+    "Prior main-branch school-data failures described in README are outside this feature run."
+  ],
+  "latest_total_unique": {
+    "api_and_static": 70,
+    "browser": 26
+  }
+}

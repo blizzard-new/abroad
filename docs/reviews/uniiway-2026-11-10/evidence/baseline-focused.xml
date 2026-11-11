@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="15" skipped="0" tests="113" time="1488.187" timestamp="2026-11-10T12:26:57.020705+00:00" hostname="009910d1d950"><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[partners]" time="68.832"><failure message="playwright._impl._errors.TimeoutError: Timeout 60000ms exceeded.">tests/e2e/test_skin_scope.py:27: in test_school_search_and_my_application_are_in_the_metro_world
+    enter_public_site(page, live_server, route)
+tests/e2e/conftest.py:503: in enter_public_site
+    page.wait_for_load_state("networkidle", timeout=60_000)
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:21296: in wait_for_load_state
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:584: in wait_for_load_state
+    return await self._main_frame.wait_for_load_state(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:299: in wait_for_load_state
+    return await self._wait_for_load_state_impl(state, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:327: in _wait_for_load_state_impl
+    await waiter.result()
+E   playwright._impl._errors.TimeoutError: Timeout 60000ms exceeded.</failure></testcase><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[search]" time="3.893" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[my-application]" time="6.518" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[eligibility]" time="4.177" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[application-center]" time="5.238" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[calendar]" time="8.081" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[deadlines]" time="5.317" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[budget]" time="3.951" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[scholarships]" time="3.843" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[favorites]" time="6.400" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[document-check]" time="3.678" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_search_and_my_application_are_in_the_metro_world[guide]" time="3.794" /><testcase classname="tests.e2e.test_skin_scope" name="test_every_other_page_keeps_its_own_look[home]" time="4.366" /><testcase classname="tests.e2e.test_skin_scope" name="test_every_other_page_keeps_its_own_look[forum]" time="5.715" /><testcase classname="tests.e2e.test_skin_scope" name="test_every_other_page_keeps_its_own_look[public-board]" time="3.371" /><testcase classname="tests.e2e.test_skin_scope" name="test_every_other_page_keeps_its_own_look[feedback]" time="3.167" /><testcase classname="tests.e2e.test_skin_scope" name="test_the_home_is_the_one_visitors_already_know" time="4.086" /><testcase classname="tests.e2e.test_skin_scope" name="test_the_top_bar_is_the_same_on_a_classic_page_and_a_metro_page" time="9.253" /><testcase classname="tests.e2e.test_skin_scope" name="test_on_a_phone_a_classic_page_keeps_its_own_header_and_drawer" time="3.448" /><testcase classname="tests.e2e.test_skin_scope" name="test_moving_between_pages_switches_the_world_and_back" time="34.749"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;#partner-table .school-detail-trigger:visible&quot;).first">tests/e2e/test_skin_scope.py:98: in test_moving_between_pages_switches_the_world_and_back
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:11021: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:174: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:598: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:636: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#partner-table .school-detail-trigger:visible").first</failure></testcase><testcase classname="tests.e2e.test_skin_scope" name="test_the_world_follows_the_page_on_screen_not_the_address" time="4.858" /><testcase classname="tests.e2e.test_skin_scope" name="test_school_marks_keep_their_one_blue_on_the_classic_pages" time="5.248" /><testcase classname="tests.e2e.test_round_two" name="test_the_highlighted_dropdown_row_never_hides_its_own_text[light]" time="13.379" /><testcase classname="tests.e2e.test_round_two" name="test_the_highlighted_dropdown_row_never_hides_its_own_text[dark]" time="6.457" /><testcase classname="tests.e2e.test_round_two" name="test_the_globe_names_countries_in_chinese" time="13.478" /><testcase classname="tests.e2e.test_round_two" name="test_my_application_today_lays_its_boxes_side_by_side_and_says_less" time="10.655" /><testcase classname="tests.e2e.test_round_two" name="test_every_school_mark_has_its_own_colour_on_the_metro_pages" time="16.034" /><testcase classname="tests.e2e.test_round_two" name="test_the_fonts_are_poppins_for_latin_and_genjyuu_for_chinese" time="12.282" /><testcase classname="tests.e2e.test_round_two" name="test_the_navigation_is_a_top_bar_on_classic_and_metro_pages_alike[home]" time="4.491" /><testcase classname="tests.e2e.test_round_two" name="test_the_navigation_is_a_top_bar_on_classic_and_metro_pages_alike[partners]" time="15.163" /><testcase classname="tests.e2e.test_round_two" name="test_the_navigation_is_a_top_bar_on_classic_and_metro_pages_alike[forum]" time="3.616" /><testcase classname="tests.e2e.test_round_two" name="test_the_top_bar_fits_the_narrowest_desktop_widths[901]" time="8.622" /><testcase classname="tests.e2e.test_round_two" name="test_the_top_bar_fits_the_narrowest_desktop_widths[1024]" time="5.462" /><testcase classname="tests.e2e.test_round_two" name="test_the_logo_stays_in_view_while_the_app_scrolls[home]" time="9.543" /><testcase classname="tests.e2e.test_round_two" name="test_the_logo_stays_in_view_while_the_app_scrolls[partners]" time="37.031" /><testcase classname="tests.e2e.test_round_two" name="test_the_logo_stays_in_view_while_the_app_scrolls[forum]" time="7.028" /><testcase classname="tests.e2e.test_round_two" name="test_the_logo_stays_in_view_while_the_app_scrolls[guide]" time="7.493" /><testcase classname="tests.e2e.test_round_two" name="test_the_logo_stays_in_view_while_the_app_scrolls[feedback]" time="6.433" /><testcase classname="tests.e2e.test_round_two" name="test_the_wordmark_is_always_beside_the_logo_not_only_on_hover[901]" time="5.287" /><testcase classname="tests.e2e.test_round_two" name="test_the_wordmark_is_always_beside_the_logo_not_only_on_hover[1024]" time="6.960" /><testcase classname="tests.e2e.test_round_two" name="test_the_wordmark_is_always_beside_the_logo_not_only_on_hover[1440]" time="4.566" /><testcase classname="tests.e2e.test_round_two" name="test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full[size0]" time="12.377" /><testcase classname="tests.e2e.test_round_two" name="test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full[size1]" time="12.860" /><testcase classname="tests.e2e.test_round_two" name="test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full[size2]" time="14.621" /><testcase classname="tests.e2e.test_round_two" name="test_the_search_page_controls_are_soft_pills_without_outlines[light]" time="12.696" /><testcase classname="tests.e2e.test_round_two" name="test_the_search_page_controls_are_soft_pills_without_outlines[dark]" time="12.668" /><testcase classname="tests.e2e.test_globe_card_and_hero" name="test_the_school_card_shows_its_figures_and_never_needs_a_scroll[size0]" time="25.119" /><testcase classname="tests.e2e.test_globe_card_and_hero" name="test_the_school_card_shows_its_figures_and_never_needs_a_scroll[size1]" time="13.235" /><testcase classname="tests.e2e.test_globe_card_and_hero" name="test_the_school_card_shows_its_figures_and_never_needs_a_scroll[size2]" time="14.524" /><testcase classname="tests.e2e.test_globe_card_and_hero" name="test_the_search_globe_is_a_pastel_toy_with_coral_markers_on_the_pages_own_white" time="20.306" /><testcase classname="tests.e2e.test_platform_redesign" name="test_redesigned_pages_fit_every_width_and_theme[light-1440]" time="19.167" /><testcase classname="tests.e2e.test_platform_redesign" name="test_redesigned_pages_fit_every_width_and_theme[light-834]" time="9.183" /><testcase classname="tests.e2e.test_platform_redesign" name="test_redesigned_pages_fit_every_width_and_theme[light-393]" time="9.391" /><testcase classname="tests.e2e.test_platform_redesign" name="test_redesigned_pages_fit_every_width_and_theme[dark-1440]" time="13.549" /><testcase classname="tests.e2e.test_platform_redesign" name="test_redesigned_pages_fit_every_width_and_theme[dark-834]" time="10.250" /><testcase classname="tests.e2e.test_platform_redesign" name="test_redesigned_pages_fit_every_width_and_theme[dark-393]" time="9.335" /><testcase classname="tests.e2e.test_platform_redesign" name="test_home_landing_shows_the_product_story_without_login" time="5.303" /><testcase classname="tests.e2e.test_platform_redesign" name="test_every_page_sits_in_the_middle_of_the_window_under_the_top_bar[1440]" time="11.705" /><testcase classname="tests.e2e.test_platform_redesign" name="test_every_page_sits_in_the_middle_of_the_window_under_the_top_bar[1920]" time="9.622" /><testcase classname="tests.e2e.test_platform_redesign" name="test_every_page_sits_in_the_middle_of_the_window_under_the_top_bar[2560]" time="8.873" /><testcase classname="tests.e2e.test_platform_redesign" name="test_home_has_no_decorative_guide_lines_or_sample_cards" time="7.733" /><testcase classname="tests.e2e.test_platform_redesign" name="test_home_cards_show_the_visitors_real_schools_not_samples" time="6.567" /><testcase classname="tests.e2e.test_platform_redesign" name="test_home_hero_is_a_half_globe_that_fades_away_while_scrolling[as-is]" time="4.668" /><testcase classname="tests.e2e.test_platform_redesign" name="test_home_hero_is_a_half_globe_that_fades_away_while_scrolling[with-a-gpu]" time="20.982" /><testcase classname="tests.e2e.test_platform_redesign" name="test_explore_sorts_and_compares_schools" time="34.931"><failure message="AssertionError: Locator expected to be visible&#10;Actual value: hidden &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; locator(&quot;#partner-table .pr-school-card&quot;).first with timeout 30000ms&#10;  - waiting for locator(&quot;#partner-table .pr-school-card&quot;).first&#10;    50 × locator resolved to &lt;article class=&quot;pr-school-card&quot; data-school-card=&quot;林肯大學 Lincoln University&quot;&gt;…&lt;/article&gt;&#10;       - unexpected value &quot;hidden&quot;&#10;&#10;Aria snapshot:&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- complementary &quot;系統功能&quot;:&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - navigation &quot;公開探索導覽&quot;:&#10;    - link &quot;首頁&quot;:&#10;      - /url: &quot;#home&quot;&#10;    - link &quot;學校搜尋&quot;:&#10;      - /url: &quot;#partners&quot;&#10;    - link &quot;論壇&quot;:&#10;      - /url: &quot;#forum&quot;&#10;    - link &quot;我的申請&quot;:&#10;      - /url: &quot;#my-application&quot;&#10;    - link &quot;交換指南&quot;:&#10;      - /url: /guides&#10;    - link &quot;用戶評價&quot;:&#10;      - /url: &quot;#feedback&quot;&#10;  - button &quot;切換為深色模式&quot;&#10;  - button &quot;重新整理最新資料&quot;&#10;  - button &quot;登入或建立帳號&quot;: 登入&#10;- main:&#10;  - navigation &quot;頁面操作&quot;:&#10;    - button &quot;返回首頁&quot;: 返回&#10;    - button &quot;切換就讀學校 選擇就讀學校&quot;:&#10;      - text: 切換就讀學校&#10;      - strong: 選擇就讀學校&#10;  - status&#10;  - region &quot;找交換學校&quot;:&#10;    - text: 長庚大學 · 18 間合作校&#10;    - heading &quot;找交換學校&quot; [level=1]&#10;    - group &quot;合作學校檢視方式&quot;:&#10;      - button &quot;卡片&quot;&#10;      - button &quot;地圖&quot; [pressed]&#10;    - search:&#10;      - text: 國家、城市或學校&#10;      - textbox &quot;國家、城市或學校&quot;:&#10;        - /placeholder: 例如：日本、仙台、東北大學&#10;      - text: 出發學期&#10;      - combobox &quot;出發學期&quot;: 不限&#10;      - text: 語言檢定&#10;      - combobox &quot;語言檢定&quot;: 不限&#10;      - button &quot;搜尋學校&quot;&#10;    - group: 篩選&#10;    - group: 我的條件&#10;    - link &quot;我的選校&quot;:&#10;      - /url: &quot;#favorites&quot;&#10;    - paragraph: 共 18 所&#10;    - status&#10;    - region &quot;全球交換合作網絡&quot;:&#10;      - heading &quot;全球合作學校&quot; [level=2]&#10;      - button &quot;動態效果：開&quot; [pressed]&#10;      - button &quot;所屬大學&quot;&#10;      - button &quot;全球視角&quot;&#10;      - button &quot;未定位 5 所&quot;&#10;      - navigation &quot;地圖上的學校&quot;:&#10;        - list:&#10;          - listitem:&#10;            - button &quot;明治大學 Meiji University Tokyo · 日本&quot;:&#10;              - strong: 明治大學 Meiji University&#10;              - text: Tokyo · 日本&#10;          - listitem:&#10;            - button &quot;比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences Lier · 比利時&quot;:&#10;              - strong: 比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences&#10;              - text: Lier · 比利時&#10;          - listitem:&#10;            - button &quot;印度昌迪加爾大學 Chandigarh University Mohali · 印度&quot;:&#10;              - strong: 印度昌迪加爾大學 Chandigarh University&#10;              - text: Mohali · 印度&#10;          - listitem:&#10;            - button &quot;法國薩克雷大學 University of Paris-Saclay Gif-sur-Yvette · 法國&quot;:&#10;              - strong: 法國薩克雷大學 University of Paris-Saclay&#10;              - text: Gif-sur-Yvette · 法國&#10;          - listitem:&#10;            - button &quot;雷恩商學院 Rennes School of Business Rennes · 法國&quot;:&#10;              - strong: 雷恩商學院 Rennes School of Business&#10;              - text: Rennes · 法國&#10;          - listitem:&#10;            - button &quot;威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee Milwaukee · 美國&quot;:&#10;              - strong: 威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee&#10;              - text: Milwaukee · 美國&#10;          - listitem:&#10;            - button &quot;林肯大學 Lincoln University Lincoln · 紐西蘭&quot;:&#10;              - strong: 林肯大學 Lincoln University&#10;              - text: Lincoln · 紐西蘭&#10;          - listitem:&#10;            - button &quot;馬來西亞馬來亞大學 Universiti Malaya Kuala Lumpur · 馬來西亞&quot;:&#10;              - strong: 馬來西亞馬來亞大學 Universiti Malaya&#10;              - text: Kuala Lumpur · 馬來西亞&#10;          - listitem:&#10;            - button &quot;馬來西亞管理與科技大學 Management and Science University Shah Alam · 馬來西亞&quot;:&#10;              - strong: 馬來西亞管理與科技大學 Management and Science University&#10;              - text: Shah Alam · 馬來西亞&#10;          - listitem:&#10;            - button &quot;捷克布拉格紐約大學 University of New York in Prague (UNYP) Prague · 捷克&quot;:&#10;              - strong: 捷克布拉格紐約大學 University of New York in Prague (UNYP)&#10;              - text: Prague · 捷克&#10;          - listitem:&#10;            - button &quot;荷蘭恩荷芬理工大學 Eindhoven University of Technology Eindhoven · 荷蘭&quot;:&#10;              - strong: 荷蘭恩荷芬理工大學 Eindhoven University of Technology&#10;              - text: Eindhoven · 荷蘭&#10;          - listitem:&#10;            - button &quot;德國呂貝克應用科技大學 Technische Hochschule Lübeck Lübeck · 德國&quot;:&#10;              - strong: 德國呂貝克應用科技大學 Technische Hochschule Lübeck&#10;              - text: Lübeck · 德國&#10;          - listitem:&#10;            - button &quot;韓國江原國立大學 Kangwon National University Chuncheon · 韓國&quot;:&#10;              - strong: 韓國江原國立大學 Kangwon National University&#10;              - text: Chuncheon · 韓國&#10;      - region &quot;互動 3D 地球。拖曳或方向鍵旋轉，滾輪或加減鍵縮放；也可用下方定位選單選校。&quot;&#10;      - button &quot;瀏覽中的出發學校：長庚大學&quot;: 長庚&#10;      - button &quot;放大地圖&quot;&#10;      - button &quot;縮小地圖&quot;&#10;      - button &quot;重設北方&quot;&#10;      - group:&#10;        - link &quot;Natural Earth&quot;:&#10;          - /url: https://www.naturalearthdata.com/about/terms-of-use/&#10;        - text: ·&#10;        - link &quot;Wikidata&quot;:&#10;          - /url: https://www.wikidata.org/&#10;        - text: /&#10;        - link &quot;ROR&quot;:&#10;          - /url: https://ror.org/&#10;      - paragraph: 拖曳旋轉地球，滾輪或雙指縮放，點選學校探索&#10;      - text: 13 所已定位 / 18 所符合條件 定位學校&#10;      - combobox &quot;定位學校&quot;: 選擇地圖上的學校&#10;      - group: 查看 5 所待定位學校與來源&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站的第一方匿名使用統計不使用 cookie；Google 使用分析需另行同意，&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">tests/e2e/test_platform_redesign.py:174: in test_explore_sorts_and_compares_schools
+    expect(cards.first).to_be_visible(timeout=30_000)
+E   AssertionError: Locator expected to be visible
+E   Actual value: hidden
+E   Call log:
+E     - Expect "to_be_visible" locator("#partner-table .pr-school-card").first with timeout 30000ms
+E     - waiting for locator("#partner-table .pr-school-card").first
+E       50 × locator resolved to &lt;article class="pr-school-card" data-school-card="林肯大學 Lincoln University"&gt;…&lt;/article&gt;
+E          - unexpected value "hidden"
+E
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "我的申請":
+E         - /url: "#my-application"
+E       - link "交換指南":
+E         - /url: /guides
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "登入或建立帳號": 登入
+E   - main:
+E     - navigation "頁面操作":
+E       - button "返回首頁": 返回
+E       - button "切換就讀學校 選擇就讀學校":
+E         - text: 切換就讀學校
+E         - strong: 選擇就讀學校
+E     - status
+E     - region "找交換學校":
+E       - text: 長庚大學 · 18 間合作校
+E       - heading "找交換學校" [level=1]
+E       - group "合作學校檢視方式":
+E         - button "卡片"
+E         - button "地圖" [pressed]
+E       - search:
+E         - text: 國家、城市或學校
+E         - textbox "國家、城市或學校":
+E           - /placeholder: 例如：日本、仙台、東北大學
+E         - text: 出發學期
+E         - combobox "出發學期": 不限
+E         - text: 語言檢定
+E         - combobox "語言檢定": 不限
+E         - button "搜尋學校"
+E       - group: 篩選
+E       - group: 我的條件
+E       - link "我的選校":
+E         - /url: "#favorites"
+E       - paragraph: 共 18 所
+E       - status
+E       - region "全球交換合作網絡":
+E         - heading "全球合作學校" [level=2]
+E         - button "動態效果：開" [pressed]
+E         - button "所屬大學"
+E         - button "全球視角"
+E         - button "未定位 5 所"
+E         - navigation "地圖上的學校":
+E           - list:
+E             - listitem:
+E               - button "明治大學 Meiji University Tokyo · 日本":
+E                 - strong: 明治大學 Meiji University
+E                 - text: Tokyo · 日本
+E             - listitem:
+E               - button "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences Lier · 比利時":
+E                 - strong: 比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences
+E                 - text: Lier · 比利時
+E             - listitem:
+E               - button "印度昌迪加爾大學 Chandigarh University Mohali · 印度":
+E                 - strong: 印度昌迪加爾大學 Chandigarh University
+E                 - text: Mohali · 印度
+E             - listitem:
+E               - button "法國薩克雷大學 University of Paris-Saclay Gif-sur-Yvette · 法國":
+E                 - strong: 法國薩克雷大學 University of Paris-Saclay
+E                 - text: Gif-sur-Yvette · 法國
+E             - listitem:
+E               - button "雷恩商學院 Rennes School of Business Rennes · 法國":
+E                 - strong: 雷恩商學院 Rennes School of Business
+E                 - text: Rennes · 法國
+E             - listitem:
+E               - button "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee Milwaukee · 美國":
+E                 - strong: 威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee
+E                 - text: Milwaukee · 美國
+E             - listitem:
+E               - button "林肯大學 Lincoln University Lincoln · 紐西蘭":
+E                 - strong: 林肯大學 Lincoln University
+E                 - text: Lincoln · 紐西蘭
+E             - listitem:
+E               - button "馬來西亞馬來亞大學 Universiti Malaya Kuala Lumpur · 馬來西亞":
+E                 - strong: 馬來西亞馬來亞大學 Universiti Malaya
+E                 - text: Kuala Lumpur · 馬來西亞
+E             - listitem:
+E               - button "馬來西亞管理與科技大學 Management and Science University Shah Alam · 馬來西亞":
+E                 - strong: 馬來西亞管理與科技大學 Management and Science University
+E                 - text: Shah Alam · 馬來西亞
+E             - listitem:
+E               - button "捷克布拉格紐約大學 University of New York in Prague (UNYP) Prague · 捷克":
+E                 - strong: 捷克布拉格紐約大學 University of New York in Prague (UNYP)
+E                 - text: Prague · 捷克
+E             - listitem:
+E               - button "荷蘭恩荷芬理工大學 Eindhoven University of Technology Eindhoven · 荷蘭":
+E                 - strong: 荷蘭恩荷芬理工大學 Eindhoven University of Technology
+E                 - text: Eindhoven · 荷蘭
+E             - listitem:
+E               - button "德國呂貝克應用科技大學 Technische Hochschule Lübeck Lübeck · 德國":
+E                 - strong: 德國呂貝克應用科技大學 Technische Hochschule Lübeck
+E                 - text: Lübeck · 德國
+E             - listitem:
+E               - button "韓國江原國立大學 Kangwon National University Chuncheon · 韓國":
+E                 - strong: 韓國江原國立大學 Kangwon National University
+E                 - text: Chuncheon · 韓國
+E         - region "互動 3D 地球。拖曳或方向鍵旋轉，滾輪或加減鍵縮放；也可用下方定位選單選校。"
+E         - button "瀏覽中的出發學校：長庚大學": 長庚
+E         - button "放大地圖"
+E         - button "縮小地圖"
+E         - button "重設北方"
+E         - group:
+E           - link "Natural Earth":
+E             - /url: https://www.naturalearthdata.com/about/terms-of-use/
+E           - text: ·
+E           - link "Wikidata":
+E             - /url: https://www.wikidata.org/
+E           - text: /
+E           - link "ROR":
+E             - /url: https://ror.org/
+E         - paragraph: 拖曳旋轉地球，滾輪或雙指縮放，點選學校探索
+E         - text: 13 所已定位 / 18 所符合條件 定位學校
+E         - combobox "定位學校": 選擇地圖上的學校
+E         - group: 查看 5 所待定位學校與來源
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站的第一方匿名使用統計不使用 cookie；Google 使用分析需另行同意，
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms</failure></testcase><testcase classname="tests.e2e.test_platform_redesign" name="test_the_globe_survives_stalls_while_the_page_boots" time="8.100" /><testcase classname="tests.e2e.test_platform_redesign" name="test_the_globe_gives_way_to_the_flat_map_when_every_draw_is_slow" time="15.085" /><testcase classname="tests.e2e.test_platform_redesign" name="test_the_globe_is_left_to_the_flat_map_on_a_software_renderer" time="4.585" /><testcase classname="tests.e2e.test_platform_redesign" name="test_home_supported_schools_drift_left_and_can_be_paused" time="5.891" /><testcase classname="tests.e2e.test_platform_redesign" name="test_home_supported_schools_stand_still_for_reduced_motion" time="3.796" /><testcase classname="tests.e2e.test_platform_redesign" name="test_home_school_switcher_is_bigger_than_on_other_pages" time="8.120" /><testcase classname="tests.e2e.test_platform_redesign" name="test_the_navigation_is_one_bar_across_the_top" time="7.803" /><testcase classname="tests.e2e.test_platform_redesign" name="test_application_workspace_tools_are_available_on_demand" time="38.085"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;#application-workspace-tool-menu &gt; summary&quot;)">tests/e2e/test_platform_redesign.py:352: in test_application_workspace_tools_are_available_on_demand
+    page.locator("#application-workspace-tool-menu &gt; summary").click()
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:11021: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:174: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:598: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:636: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#application-workspace-tool-menu &gt; summary")</failure></testcase><testcase classname="tests.e2e.test_platform_redesign" name="test_explore_language_and_term_dropdowns_change_the_school_list" time="36.748"><failure message="AssertionError: Locator expected to be visible&#10;Actual value: hidden &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; locator(&quot;#partner-table .pr-school-card&quot;).first with timeout 30000ms&#10;  - waiting for locator(&quot;#partner-table .pr-school-card&quot;).first&#10;    39 × locator resolved to &lt;article class=&quot;pr-school-card&quot; data-school-card=&quot;林肯大學 Lincoln University&quot;&gt;…&lt;/article&gt;&#10;       - unexpected value &quot;hidden&quot;&#10;&#10;Aria snapshot:&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- complementary &quot;系統功能&quot;:&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - navigation &quot;公開探索導覽&quot;:&#10;    - link &quot;首頁&quot;:&#10;      - /url: &quot;#home&quot;&#10;    - link &quot;學校搜尋&quot;:&#10;      - /url: &quot;#partners&quot;&#10;    - link &quot;論壇&quot;:&#10;      - /url: &quot;#forum&quot;&#10;    - link &quot;我的申請&quot;:&#10;      - /url: &quot;#my-application&quot;&#10;    - link &quot;交換指南&quot;:&#10;      - /url: /guides&#10;    - link &quot;用戶評價&quot;:&#10;      - /url: &quot;#feedback&quot;&#10;  - button &quot;切換為深色模式&quot;&#10;  - button &quot;重新整理最新資料&quot;&#10;  - button &quot;登入或建立帳號&quot;: 登入&#10;- main:&#10;  - navigation &quot;頁面操作&quot;:&#10;    - button &quot;返回首頁&quot;: 返回&#10;    - button &quot;切換就讀學校 選擇就讀學校&quot;:&#10;      - text: 切換就讀學校&#10;      - strong: 選擇就讀學校&#10;  - status&#10;  - region &quot;找交換學校&quot;:&#10;    - text: 長庚大學 · 18 間合作校&#10;    - heading &quot;找交換學校&quot; [level=1]&#10;    - group &quot;合作學校檢視方式&quot;:&#10;      - button &quot;卡片&quot;&#10;      - button &quot;地圖&quot; [pressed]&#10;    - search:&#10;      - text: 國家、城市或學校&#10;      - textbox &quot;國家、城市或學校&quot;:&#10;        - /placeholder: 例如：日本、仙台、東北大學&#10;      - text: 出發學期&#10;      - combobox &quot;出發學期&quot;: 不限&#10;      - text: 語言檢定&#10;      - combobox &quot;語言檢定&quot;: 不限&#10;      - button &quot;搜尋學校&quot;&#10;    - group: 篩選&#10;    - group: 我的條件&#10;    - link &quot;我的選校&quot;:&#10;      - /url: &quot;#favorites&quot;&#10;    - paragraph: 共 18 所&#10;    - status&#10;    - region &quot;全球交換合作網絡&quot;:&#10;      - heading &quot;全球合作學校&quot; [level=2]&#10;      - button &quot;動態效果：開&quot; [pressed]&#10;      - button &quot;所屬大學&quot;&#10;      - button &quot;全球視角&quot;&#10;      - button &quot;未定位 5 所&quot;&#10;      - navigation &quot;地圖上的學校&quot;:&#10;        - list:&#10;          - listitem:&#10;            - button &quot;明治大學 Meiji University Tokyo · 日本&quot;:&#10;              - strong: 明治大學 Meiji University&#10;              - text: Tokyo · 日本&#10;          - listitem:&#10;            - button &quot;比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences Lier · 比利時&quot;:&#10;              - strong: 比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences&#10;              - text: Lier · 比利時&#10;          - listitem:&#10;            - button &quot;印度昌迪加爾大學 Chandigarh University Mohali · 印度&quot;:&#10;              - strong: 印度昌迪加爾大學 Chandigarh University&#10;              - text: Mohali · 印度&#10;          - listitem:&#10;            - button &quot;法國薩克雷大學 University of Paris-Saclay Gif-sur-Yvette · 法國&quot;:&#10;              - strong: 法國薩克雷大學 University of Paris-Saclay&#10;              - text: Gif-sur-Yvette · 法國&#10;          - listitem:&#10;            - button &quot;雷恩商學院 Rennes School of Business Rennes · 法國&quot;:&#10;              - strong: 雷恩商學院 Rennes School of Business&#10;              - text: Rennes · 法國&#10;          - listitem:&#10;            - button &quot;威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee Milwaukee · 美國&quot;:&#10;              - strong: 威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee&#10;              - text: Milwaukee · 美國&#10;          - listitem:&#10;            - button &quot;林肯大學 Lincoln University Lincoln · 紐西蘭&quot;:&#10;              - strong: 林肯大學 Lincoln University&#10;              - text: Lincoln · 紐西蘭&#10;          - listitem:&#10;            - button &quot;馬來西亞馬來亞大學 Universiti Malaya Kuala Lumpur · 馬來西亞&quot;:&#10;              - strong: 馬來西亞馬來亞大學 Universiti Malaya&#10;              - text: Kuala Lumpur · 馬來西亞&#10;          - listitem:&#10;            - button &quot;馬來西亞管理與科技大學 Management and Science University Shah Alam · 馬來西亞&quot;:&#10;              - strong: 馬來西亞管理與科技大學 Management and Science University&#10;              - text: Shah Alam · 馬來西亞&#10;          - listitem:&#10;            - button &quot;捷克布拉格紐約大學 University of New York in Prague (UNYP) Prague · 捷克&quot;:&#10;              - strong: 捷克布拉格紐約大學 University of New York in Prague (UNYP)&#10;              - text: Prague · 捷克&#10;          - listitem:&#10;            - button &quot;荷蘭恩荷芬理工大學 Eindhoven University of Technology Eindhoven · 荷蘭&quot;:&#10;              - strong: 荷蘭恩荷芬理工大學 Eindhoven University of Technology&#10;              - text: Eindhoven · 荷蘭&#10;          - listitem:&#10;            - button &quot;德國呂貝克應用科技大學 Technische Hochschule Lübeck Lübeck · 德國&quot;:&#10;              - strong: 德國呂貝克應用科技大學 Technische Hochschule Lübeck&#10;              - text: Lübeck · 德國&#10;          - listitem:&#10;            - button &quot;韓國江原國立大學 Kangwon National University Chuncheon · 韓國&quot;:&#10;              - strong: 韓國江原國立大學 Kangwon National University&#10;              - text: Chuncheon · 韓國&#10;      - region &quot;互動 3D 地球。拖曳或方向鍵旋轉，滾輪或加減鍵縮放；也可用下方定位選單選校。&quot;&#10;      - button &quot;瀏覽中的出發學校：長庚大學&quot;: 長庚&#10;      - button &quot;放大地圖&quot;&#10;      - button &quot;縮小地圖&quot;&#10;      - button &quot;重設北方&quot;&#10;      - group:&#10;        - link &quot;Natural Earth&quot;:&#10;          - /url: https://www.naturalearthdata.com/about/terms-of-use/&#10;        - text: ·&#10;        - link &quot;Wikidata&quot;:&#10;          - /url: https://www.wikidata.org/&#10;        - text: /&#10;        - link &quot;ROR&quot;:&#10;          - /url: https://ror.org/&#10;      - paragraph: 拖曳旋轉地球，滾輪或雙指縮放，點選學校探索&#10;      - text: 13 所已定位 / 18 所符合條件 定位學校&#10;      - combobox &quot;定位學校&quot;: 選擇地圖上的學校&#10;      - group: 查看 5 所待定位學校與來源&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站的第一方匿名使用統計不使用 cookie；Google 使用分析需另行同意，&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">tests/e2e/test_platform_redesign.py:368: in test_explore_language_and_term_dropdowns_change_the_school_list
+    expect(page.locator("#partner-table .pr-school-card").first).to_be_visible(timeout=30_000)
+E   AssertionError: Locator expected to be visible
+E   Actual value: hidden
+E   Call log:
+E     - Expect "to_be_visible" locator("#partner-table .pr-school-card").first with timeout 30000ms
+E     - waiting for locator("#partner-table .pr-school-card").first
+E       39 × locator resolved to &lt;article class="pr-school-card" data-school-card="林肯大學 Lincoln University"&gt;…&lt;/article&gt;
+E          - unexpected value "hidden"
+E
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "我的申請":
+E         - /url: "#my-application"
+E       - link "交換指南":
+E         - /url: /guides
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "登入或建立帳號": 登入
+E   - main:
+E     - navigation "頁面操作":
+E       - button "返回首頁": 返回
+E       - button "切換就讀學校 選擇就讀學校":
+E         - text: 切換就讀學校
+E         - strong: 選擇就讀學校
+E     - status
+E     - region "找交換學校":
+E       - text: 長庚大學 · 18 間合作校
+E       - heading "找交換學校" [level=1]
+E       - group "合作學校檢視方式":
+E         - button "卡片"
+E         - button "地圖" [pressed]
+E       - search:
+E         - text: 國家、城市或學校
+E         - textbox "國家、城市或學校":
+E           - /placeholder: 例如：日本、仙台、東北大學
+E         - text: 出發學期
+E         - combobox "出發學期": 不限
+E         - text: 語言檢定
+E         - combobox "語言檢定": 不限
+E         - button "搜尋學校"
+E       - group: 篩選
+E       - group: 我的條件
+E       - link "我的選校":
+E         - /url: "#favorites"
+E       - paragraph: 共 18 所
+E       - status
+E       - region "全球交換合作網絡":
+E         - heading "全球合作學校" [level=2]
+E         - button "動態效果：開" [pressed]
+E         - button "所屬大學"
+E         - button "全球視角"
+E         - button "未定位 5 所"
+E         - navigation "地圖上的學校":
+E           - list:
+E             - listitem:
+E               - button "明治大學 Meiji University Tokyo · 日本":
+E                 - strong: 明治大學 Meiji University
+E                 - text: Tokyo · 日本
+E             - listitem:
+E               - button "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences Lier · 比利時":
+E                 - strong: 比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences
+E                 - text: Lier · 比利時
+E             - listitem:
+E               - button "印度昌迪加爾大學 Chandigarh University Mohali · 印度":
+E                 - strong: 印度昌迪加爾大學 Chandigarh University
+E                 - text: Mohali · 印度
+E             - listitem:
+E               - button "法國薩克雷大學 University of Paris-Saclay Gif-sur-Yvette · 法國":
+E                 - strong: 法國薩克雷大學 University of Paris-Saclay
+E                 - text: Gif-sur-Yvette · 法國
+E             - listitem:
+E               - button "雷恩商學院 Rennes School of Business Rennes · 法國":
+E                 - strong: 雷恩商學院 Rennes School of Business
+E                 - text: Rennes · 法國
+E             - listitem:
+E               - button "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee Milwaukee · 美國":
+E                 - strong: 威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee
+E                 - text: Milwaukee · 美國
+E             - listitem:
+E               - button "林肯大學 Lincoln University Lincoln · 紐西蘭":
+E                 - strong: 林肯大學 Lincoln University
+E                 - text: Lincoln · 紐西蘭
+E             - listitem:
+E               - button "馬來西亞馬來亞大學 Universiti Malaya Kuala Lumpur · 馬來西亞":
+E                 - strong: 馬來西亞馬來亞大學 Universiti Malaya
+E                 - text: Kuala Lumpur · 馬來西亞
+E             - listitem:
+E               - button "馬來西亞管理與科技大學 Management and Science University Shah Alam · 馬來西亞":
+E                 - strong: 馬來西亞管理與科技大學 Management and Science University
+E                 - text: Shah Alam · 馬來西亞
+E             - listitem:
+E               - button "捷克布拉格紐約大學 University of New York in Prague (UNYP) Prague · 捷克":
+E                 - strong: 捷克布拉格紐約大學 University of New York in Prague (UNYP)
+E                 - text: Prague · 捷克
+E             - listitem:
+E               - button "荷蘭恩荷芬理工大學 Eindhoven University of Technology Eindhoven · 荷蘭":
+E                 - strong: 荷蘭恩荷芬理工大學 Eindhoven University of Technology
+E                 - text: Eindhoven · 荷蘭
+E             - listitem:
+E               - button "德國呂貝克應用科技大學 Technische Hochschule Lübeck Lübeck · 德國":
+E                 - strong: 德國呂貝克應用科技大學 Technische Hochschule Lübeck
+E                 - text: Lübeck · 德國
+E             - listitem:
+E               - button "韓國江原國立大學 Kangwon National University Chuncheon · 韓國":
+E                 - strong: 韓國江原國立大學 Kangwon National University
+E                 - text: Chuncheon · 韓國
+E         - region "互動 3D 地球。拖曳或方向鍵旋轉，滾輪或加減鍵縮放；也可用下方定位選單選校。"
+E         - button "瀏覽中的出發學校：長庚大學": 長庚
+E         - button "放大地圖"
+E         - button "縮小地圖"
+E         - button "重設北方"
+E         - group:
+E           - link "Natural Earth":
+E             - /url: https://www.naturalearthdata.com/about/terms-of-use/
+E           - text: ·
+E           - link "Wikidata":
+E             - /url: https://www.wikidata.org/
+E           - text: /
+E           - link "ROR":
+E             - /url: https://ror.org/
+E         - paragraph: 拖曳旋轉地球，滾輪或雙指縮放，點選學校探索
+E         - text: 13 所已定位 / 18 所符合條件 定位學校
+E         - combobox "定位學校": 選擇地圖上的學校
+E         - group: 查看 5 所待定位學校與來源
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站的第一方匿名使用統計不使用 cookie；Google 使用分析需另行同意，
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms</failure></testcase><testcase classname="tests.e2e.test_platform_redesign" name="test_guide_has_a_table_of_contents_and_deep_links" time="4.436" /><testcase classname="tests.e2e.test_platform_redesign" name="test_forum_modes_filter_stories_and_questions" time="3.775" /><testcase classname="tests.e2e.test_platform_redesign" name="test_tracker_lists_tasks_and_switches_views" time="16.207"><failure message="AssertionError: Locator expected to have text '我的準備任務'&#10;Actual value: 待辦與期限 &#10;Call log:&#10;  - Expect &quot;to_have_text&quot; locator(&quot;#tracker-title&quot;) with timeout 5000ms&#10;  - waiting for locator(&quot;#tracker-title&quot;)&#10;    14 × locator resolved to &lt;h2 id=&quot;tracker-title&quot;&gt;待辦與期限&lt;/h2&gt;&#10;       - unexpected value &quot;待辦與期限&quot;&#10;&#10;Aria snapshot:&#10;- heading &quot;待辦與期限&quot; [level=2]">tests/e2e/test_platform_redesign.py:443: in test_tracker_lists_tasks_and_switches_views
+    expect(page.locator("#tracker-title")).to_have_text("我的準備任務")
+E   AssertionError: Locator expected to have text '我的準備任務'
+E   Actual value: 待辦與期限
+E   Call log:
+E     - Expect "to_have_text" locator("#tracker-title") with timeout 5000ms
+E     - waiting for locator("#tracker-title")
+E       14 × locator resolved to &lt;h2 id="tracker-title"&gt;待辦與期限&lt;/h2&gt;
+E          - unexpected value "待辦與期限"
+E
+E   Aria snapshot:
+E   - heading "待辦與期限" [level=2]</failure></testcase><testcase classname="tests.e2e.test_platform_redesign" name="test_profile_page_replaces_the_dialog_and_saves_the_same_fields" time="12.517" /><testcase classname="tests.e2e.test_platform_redesign" name="test_profile_appearance_choice_includes_following_the_system" time="11.761" /><testcase classname="tests.e2e.test_platform_redesign" name="test_profile_deep_link_asks_visitors_to_sign_in_and_stays_off_the_page" time="4.707" /><testcase classname="tests.e2e.test_home_motion" name="test_scroll_story_is_reversible_and_keeps_real_navigation" time="26.306" /><testcase classname="tests.e2e.test_home_motion" name="test_home_motion_fits_and_remains_readable[1440-light]" time="5.612" /><testcase classname="tests.e2e.test_home_motion" name="test_home_motion_fits_and_remains_readable[834-dark]" time="4.884" /><testcase classname="tests.e2e.test_home_motion" name="test_home_motion_fits_and_remains_readable[393-light]" time="5.366" /><testcase classname="tests.e2e.test_home_motion" name="test_home_motion_fits_and_remains_readable[360-dark]" time="5.084" /><testcase classname="tests.e2e.test_home_motion" name="test_live_reduced_motion_and_unavailable_motion_script_are_readable" time="9.488" /><testcase classname="tests.e2e.test_partner_space" name="test_space_globe_drag_zoom_filters_and_route_cleanup[size0]" time="50.743" /><testcase classname="tests.e2e.test_partner_space" name="test_space_globe_drag_zoom_filters_and_route_cleanup[size1]" time="32.371" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_mascot_stands_where_the_traveller_drawing_was_on_the_home_page" time="16.565" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_header_with_the_mascot_never_overflows_or_covers_the_words[320]" time="4.760" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_header_with_the_mascot_never_overflows_or_covers_the_words[390]" time="4.704" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_header_with_the_mascot_never_overflows_or_covers_the_words[768]" time="4.707" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_header_with_the_mascot_never_overflows_or_covers_the_words[1280]" time="4.769" /><testcase classname="tests.e2e.test_mascot_solid" name="test_it_has_sides_a_front_and_eyes_standing_in_front_of_it" time="4.541" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_eyes_stay_in_front_while_they_look_around" time="4.775" /><testcase classname="tests.e2e.test_mascot_solid" name="test_it_turns_towards_the_pointer_and_back_when_the_pointer_is_gone" time="4.800" /><testcase classname="tests.e2e.test_mascot_solid" name="test_a_light_slides_over_it_as_it_turns" time="4.948" /><testcase classname="tests.e2e.test_mascot_solid" name="test_with_no_motion_it_still_stands_turned_so_it_reads_as_a_solid" time="10.565" /><testcase classname="tests.e2e.test_mascot_solid" name="test_tapping_the_header_mascot_still_hops_turns_and_winks" time="8.141" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_loading_screen_mascot_is_the_same_solid" time="0.680" /><testcase classname="tests.e2e.test_glass_theme" name="test_home_displays_stored_posts_without_destination_sections[390]" time="15.601"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 0 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; locator(&quot;#glass-navigation #application-tools&quot;) with timeout 5000ms&#10;  - waiting for locator(&quot;#glass-navigation #application-tools&quot;)&#10;    14 × locator resolved to 0 elements&#10;       - unexpected value &quot;0&quot;">tests/e2e/test_glass_theme.py:42: in test_home_displays_stored_posts_without_destination_sections
+    expect(page.locator(f"#glass-navigation #{control}")).to_have_count(1)
+E   AssertionError: Locator expected to have count '1'
+E   Actual value: 0
+E   Call log:
+E     - Expect "to_have_count" locator("#glass-navigation #application-tools") with timeout 5000ms
+E     - waiting for locator("#glass-navigation #application-tools")
+E       14 × locator resolved to 0 elements
+E          - unexpected value "0"</failure></testcase><testcase classname="tests.e2e.test_glass_theme" name="test_home_displays_stored_posts_without_destination_sections[834]" time="9.125"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 0 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; locator(&quot;#glass-navigation #application-tools&quot;) with timeout 5000ms&#10;  - waiting for locator(&quot;#glass-navigation #application-tools&quot;)&#10;    14 × locator resolved to 0 elements&#10;       - unexpected value &quot;0&quot;">tests/e2e/test_glass_theme.py:42: in test_home_displays_stored_posts_without_destination_sections
+    expect(page.locator(f"#glass-navigation #{control}")).to_have_count(1)
+E   AssertionError: Locator expected to have count '1'
+E   Actual value: 0
+E   Call log:
+E     - Expect "to_have_count" locator("#glass-navigation #application-tools") with timeout 5000ms
+E     - waiting for locator("#glass-navigation #application-tools")
+E       14 × locator resolved to 0 elements
+E          - unexpected value "0"</failure></testcase><testcase classname="tests.e2e.test_glass_theme" name="test_home_displays_stored_posts_without_destination_sections[1754]" time="9.056"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 0 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; locator(&quot;#glass-navigation #application-tools&quot;) with timeout 5000ms&#10;  - waiting for locator(&quot;#glass-navigation #application-tools&quot;)&#10;    14 × locator resolved to 0 elements&#10;       - unexpected value &quot;0&quot;">tests/e2e/test_glass_theme.py:42: in test_home_displays_stored_posts_without_destination_sections
+    expect(page.locator(f"#glass-navigation #{control}")).to_have_count(1)
+E   AssertionError: Locator expected to have count '1'
+E   Actual value: 0
+E   Call log:
+E     - Expect "to_have_count" locator("#glass-navigation #application-tools") with timeout 5000ms
+E     - waiting for locator("#glass-navigation #application-tools")
+E       14 × locator resolved to 0 elements
+E          - unexpected value "0"</failure></testcase><testcase classname="tests.e2e.test_glass_theme" name="test_verified_catalog_search_map_and_saved_school[390]" time="36.887"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;.uniway-public-nav [data-public-route=\&quot;overview\&quot;]&quot;)">tests/e2e/test_glass_theme.py:61: in test_verified_catalog_search_map_and_saved_school
+    page.locator('.uniway-public-nav [data-public-route="overview"]').click()
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:11021: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:174: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:598: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:636: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator(".uniway-public-nav [data-public-route=\"overview\"]")</failure></testcase><testcase classname="tests.e2e.test_glass_theme" name="test_verified_catalog_search_map_and_saved_school[1440]" time="36.758"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;.uniway-public-nav [data-public-route=\&quot;overview\&quot;]&quot;)">tests/e2e/test_glass_theme.py:61: in test_verified_catalog_search_map_and_saved_school
+    page.locator('.uniway-public-nav [data-public-route="overview"]').click()
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:11021: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:174: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:598: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:636: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator(".uniway-public-nav [data-public-route=\"overview\"]")</failure></testcase><testcase classname="tests.e2e.test_glass_theme" name="test_glass_navigation_and_responsive_routes[390]" time="37.769" /><testcase classname="tests.e2e.test_glass_theme" name="test_glass_navigation_and_responsive_routes[834]" time="36.260" /><testcase classname="tests.e2e.test_glass_theme" name="test_glass_navigation_and_responsive_routes[1440]" time="31.236" /><testcase classname="tests.e2e.test_glass_theme" name="test_expanded_tools_do_not_overlap_account_controls[390-620]" time="38.992"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;#application-tools&quot;).locator(&quot;.application-nav-chevron&quot;)">tests/e2e/test_glass_theme.py:161: in test_expanded_tools_do_not_overlap_account_controls
+    tools.locator(".application-nav-chevron").click()
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:11021: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:174: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:598: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:636: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#application-tools").locator(".application-nav-chevron")</failure></testcase><testcase classname="tests.e2e.test_glass_theme" name="test_expanded_tools_do_not_overlap_account_controls[834-956]" time="42.717"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;#application-tools&quot;).locator(&quot;.application-nav-chevron&quot;)">tests/e2e/test_glass_theme.py:161: in test_expanded_tools_do_not_overlap_account_controls
+    tools.locator(".application-nav-chevron").click()
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:11021: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:174: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:598: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:636: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#application-tools").locator(".application-nav-chevron")</failure></testcase><testcase classname="tests.e2e.test_glass_theme" name="test_expanded_tools_do_not_overlap_account_controls[1280-720]" time="36.380"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;#application-tools&quot;).locator(&quot;.application-nav-chevron&quot;)">tests/e2e/test_glass_theme.py:161: in test_expanded_tools_do_not_overlap_account_controls
+    tools.locator(".application-nav-chevron").click()
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:11021: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:174: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:598: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:636: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#application-tools").locator(".application-nav-chevron")</failure></testcase><testcase classname="tests.e2e.test_glass_theme" name="test_expanded_tools_do_not_overlap_account_controls[1754-956]" time="37.148"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;#application-tools&quot;).locator(&quot;.application-nav-chevron&quot;)">tests/e2e/test_glass_theme.py:161: in test_expanded_tools_do_not_overlap_account_controls
+    tools.locator(".application-nav-chevron").click()
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:11021: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:174: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:598: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:636: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#application-tools").locator(".application-nav-chevron")</failure></testcase><testcase classname="tests.e2e.test_glass_theme" name="test_mobile_navigation_focus_escape_and_login" time="6.791" /></testsuite></testsuites>

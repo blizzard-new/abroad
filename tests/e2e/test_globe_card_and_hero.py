@@ -1,4 +1,4 @@
-"""The school card fits the globe without a scroll, the globe is the real Earth, and the home says its one sentence in the middle."""
+"""The school card fits the globe without a scroll, and the search globe is a pastel toy on the page's own white."""
 from pathlib import Path
 
 import pytest
@@ -8,7 +8,6 @@ from .conftest import enter_public_site
 from .test_partner_globe import INSTRUMENT, ready
 
 SHOTS = Path('/tmp/globe-card-hero')
-SLOGAN = '世界這麼大，別讓資訊限制你的選擇。'
 
 
 @pytest.mark.parametrize('size', [(1440, 900), (1024, 700), (393, 852)])
@@ -72,44 +71,3 @@ def test_the_search_globe_is_a_pastel_toy_with_coral_markers_on_the_pages_own_wh
     assert page.request.get(f'{live_server.base_url}/static/assets/partner-map/earth-mercator.jpg').status == 404
     response = page.request.get(f'{live_server.base_url}/static/assets/partner-map/earth-equirect.jpg')
     assert response.ok and response.headers['content-type'].startswith('image/jpeg')
-
-
-def test_the_home_says_its_one_sentence_in_the_middle_over_the_earth(page, live_server):
-    page.set_viewport_size({'width': 1440, 'height': 900})
-    enter_public_site(page, live_server, 'home')
-    title = page.locator('#home-landing-title')
-    expect(title).to_contain_text(SLOGAN)
-    sky = page.locator('.mt-sky')
-    t, s = title.bounding_box(), sky.bounding_box()
-    assert abs((t['x'] + t['width'] / 2) - (s['x'] + s['width'] / 2)) <= 2, (t, s)
-    assert title.evaluate('el => getComputedStyle(el).textAlign') == 'center'
-    assert float(title.evaluate('el => parseFloat(getComputedStyle(el).fontSize)')) >= 56
-    # The search board sits under the sentence, the Earth under the board, all in the first screen.
-    board, earth = page.locator('#mt-board').bounding_box(), page.locator('.mt-earth').bounding_box()
-    assert t['y'] + t['height'] <= board['y'] and board['y'] + board['height'] <= earth['y'] + 1, (t, board, earth)
-    assert earth['y'] < 900
-    assert 'earth-equirect' in page.locator('.mt-earth-strip').evaluate('el => getComputedStyle(el).backgroundImage')
-    # It opens over Asia and turns; with reduced motion it holds still.
-    assert page.locator('.mt-earth-strip').evaluate('el => getComputedStyle(el).animationName') == 'mt-earth-spin'
-    SHOTS.mkdir(exist_ok=True)
-    page.screenshot(path=str(SHOTS / 'home-1440.png'))
-    # The sentences that only restated a heading are gone.
-    home = page.locator('#home-landing')
-    for text in ('公開資料不登入就能看', '先讀懂，再開始規劃', '站的順序依合作校數量排列', '往下探索你的交換旅程', '追蹤即時情報'):
-        expect(home).not_to_contain_text(text)
-    # The official accounts are still on the home page.
-    expect(page.locator('.mt-sky .pr-hero-socials a')).to_have_count(2)
-
-
-@pytest.mark.parametrize('width', [320, 393, 768])
-def test_the_home_sentence_never_leaves_a_lone_character_on_a_phone(page, live_server, width):
-    page.set_viewport_size({'width': width, 'height': 852})
-    enter_public_site(page, live_server, 'home')
-    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
-    lines = page.locator('#home-landing-title span').evaluate(
-        """el => { const r = document.createRange(); r.selectNodeContents(el); return [...r.getClientRects()].map(x => Math.round(x.top)); }""")
-    # Two balanced lines at most for the second half of the sentence, and a line is never one stray character.
-    widths = page.locator('#home-landing-title span').evaluate(
-        """el => { const r = document.createRange(); r.selectNodeContents(el); return [...r.getClientRects()].map(x => Math.round(x.width)); }""")
-    assert len(set(lines)) <= 2, lines
-    assert min(widths) > 40, widths

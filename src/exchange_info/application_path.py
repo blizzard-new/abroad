@@ -12,7 +12,7 @@ import json
 import re
 from typing import Literal
 
-from fastapi import HTTPException, Query, Request
+from fastapi import File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import Response
 from pydantic import field_validator, BaseModel, ConfigDict, Field
 
@@ -22,6 +22,8 @@ from .models import (ApplicationFormDraftSave, PersonalApplicationPlanRequest,
                      ProductAccessTier, ProductFeature, ProductReleaseMode, utc_now)
 from .school_identity import school_identity_key
 from .plan_defaults import phase_rank
+from .exchange_workspace import (NoticePreview, WorkspaceSave, preview_notice,
+                                 suggestion_packs, validate_dependencies, workspace_view)
 
 REGISTRY_ID = "uniway-application-paths-v1"
 WRITING = [
@@ -299,7 +301,7 @@ def progress(item, record):
     return {"value":int(content) + int(content and record.get("confirmed", False)), "total":2}
 
 
-def register_application_path(app, *, authenticate, university_for, evaluate, catalog_for, release_mode, feature_enabled):
+def register_application_path(app, *, authenticate, university_for, evaluate, catalog_for, release_mode, feature_enabled, levels_builder=None):
     def service():
         if not getattr(app.state, "form_draft_service", None):
             raise HTTPException(503, "申請進度保存服務未啟用。")
@@ -348,7 +350,7 @@ def register_application_path(app, *, authenticate, university_for, evaluate, ca
             department=v["department"], degree_level=v["degree_level"], program_type="exchange",
             academic_year=c["academic_year"], application_round=v["application_round"],
             host_admission_status="unknown", housing_choice="unknown", semester=c["semester"])
-        return build_levels(c, result, docs, v)
+        return (levels_builder or build_levels)(c, result, docs, v)
 
     def summary(plan):
         return {k:plan[k] for k in ("id", "context", "archived", "updated_at")}
@@ -400,7 +402,21 @@ def register_application_path(app, *, authenticate, university_for, evaluate, ca
                 if item["counted"]:
                     done += item["progress"]["value"]
                     total += item["progress"]["total"]
+        workspace_files = [task for task in plan.get("workspace", {}).get("tasks", []) if task.get("file_version_id")]
+        if workspace_files:
+            vault = getattr(app.state, "document_vault_service", None)
+            if not vault:
+                raise HTTPException(503, "私人文件庫暫時無法確認，請稍後重試。")
+            try:
+                documents = vault.list_documents(account.id)
+            except VaultError as exc:
+                raise HTTPException(503, "私人文件庫暫時無法確認，請稍後重試。") from exc
+            valid = {v.id for d in documents.items for v in d.versions if v.expires_at > utc_now()}
+            for task in workspace_files:
+                if task["file_version_id"] not in valid:
+                    task["file_unavailable"] = True
         return {"revision":registry["revision"], "plan":plan, "stages":stages,
+                "workspace": workspace_view(plan),
                 "progress":{"value":done, "total":total}, "recorded_by":"student", "platform_submitted":False}
 
     def quota(account, home, registry, target):
@@ -482,6 +498,88 @@ def register_application_path(app, *, authenticate, university_for, evaluate, ca
         doc.save(stream)
         return Response(stream.getvalue(), media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                         headers={"Content-Disposition":'attachment; filename="UniWay-study-plan-draft.docx"'})
+
+    def owned_workspace(request, home_school, plan_id, revision=None):
+        account, _ = authenticate(request)
+        home = home_name(home_school)
+        registry = read(account, home)
+        plan = locate(registry, plan_id)
+        if revision is not None:
+            check_revision(registry, revision)
+        if plan["archived"]:
+            raise HTTPException(409, "請先恢復這份封存計畫。")
+        return account, home, registry, plan
+
+    @app.put("/account/application-paths/{plan_id}/workspace")
+    def save_workspace(plan_id: str, payload: WorkspaceSave, request: Request,
+                       home_school: str = Query(min_length=2, max_length=80)):
+        account, home, registry, plan = owned_workspace(request, home_school, plan_id, payload.revision)
+        try:
+            validate_dependencies(payload.tasks)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        linked = {task.file_version_id for task in payload.tasks if task.file_version_id}
+        if linked:
+            if not feature_enabled(account, ProductFeature.ENCRYPTED_DOCUMENT_VAULT):
+                raise HTTPException(403, "請先確認私人文件庫方案權限。")
+            vault = getattr(app.state, "document_vault_service", None)
+            if not vault:
+                raise HTTPException(503, "私人文件庫暫時無法確認。")
+            try:
+                documents = vault.list_documents(account.id)
+            except VaultError as exc:
+                raise HTTPException(503, "私人文件庫暫時無法確認。") from exc
+            valid = {v.id for d in documents.items for v in d.versions if v.expires_at > utc_now()}
+            if not linked <= valid:
+                raise HTTPException(404, "連結的文件已過期、移除，或不屬於你的帳號。請重新選擇。")
+        old = plan.get("workspace", {}).get("tasks", [])
+        old_done = {t["id"] for t in old if t["status"] == "done"}
+        plan["workspace"] = payload.model_dump(mode="json", exclude={"revision"})
+        effective = workspace_view(plan)["tasks"]
+        for task in effective:
+            if task["status"] == "done" and task["effective_status"] != "done" and task["id"] not in old_done:
+                raise HTTPException(422, "正式送件的前置任務尚未完成；仍可先保存準備內容。")
+        plan["updated_at"] = utc_now().isoformat()
+        commit(account, home, registry)
+        return envelope(registry, plan, account)
+
+    @app.post("/account/application-paths/{plan_id}/workspace/preview")
+    def notice_preview(plan_id: str, payload: NoticePreview, request: Request,
+                       home_school: str = Query(min_length=2, max_length=80)):
+        owned_workspace(request, home_school, plan_id)
+        return preview_notice(payload)
+
+    @app.post("/account/application-paths/{plan_id}/workspace/extract")
+    async def notice_extract(plan_id: str, request: Request, file: UploadFile = File(...),
+                             consent: bool = Form(False), home_school: str = Query(min_length=2, max_length=80)):
+        from pathlib import Path
+        from starlette.concurrency import run_in_threadpool
+        from .document_checker import _extract_text
+        owned_workspace(request, home_school, plan_id)
+        if not consent:
+            raise HTTPException(422, "請先同意解析這份通知；原檔不會保存。")
+        extension = Path(file.filename or "").suffix.lower()
+        if extension not in {".txt", ".pdf", ".docx"}:
+            raise HTTPException(422, "請使用 TXT、可選取文字的 PDF 或 DOCX。")
+        content = await file.read(5 * 1024 * 1024 + 1)
+        await file.close()
+        if len(content) > 5 * 1024 * 1024:
+            raise HTTPException(413, "通知檔案上限為 5 MB。")
+        try:
+            text, _ = await run_in_threadpool(_extract_text, extension, content)
+        except Exception as exc:
+            raise HTTPException(422, "無法讀取檔案文字，請改貼上通知內容。") from exc
+        if not text.strip():
+            raise HTTPException(422, "沒有可讀取的文字；掃描圖片請先轉成文字或手動貼上。")
+        if len(text) > 80000:
+            raise HTTPException(422, "通知文字過長，請分段貼上與這次申請相關的內容。")
+        return {"text": text, "file_stored": False}
+
+    @app.get("/account/application-paths/{plan_id}/workspace/suggestions")
+    def workspace_suggestions(plan_id: str, request: Request,
+                              home_school: str = Query(min_length=2, max_length=80), country: str = Query(default="", max_length=80)):
+        _, _, _, plan = owned_workspace(request, home_school, plan_id)
+        return suggestion_packs(plan["context"], country)
 
     @app.put("/account/application-paths/{plan_id}/steps/{step_id}")
     def update_step(plan_id: str, step_id: str, payload: PathUpdate, request: Request,

@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "sources": [
+    {"id":"selection","title":"長庚國際事務處｜校內申請選送須知","url":"https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656","checked_on":"2026-11-11","scope":"校內一般資格、文件；頁面舉例 116 年 8–9 月出國。春季年份與學期文字不一致，需向國際處確認。"},
+    {"id":"partners","title":"長庚國際事務處｜可申請學校","url":"https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554","checked_on":"2026-11-11","scope":"主頁說明清單陸續更新、可選兩所志願；本次未逐筆核對外嵌學校表及當期名額。"},
+    {"id":"lincoln","title":"Lincoln University｜Join us at Lincoln on Exchange","url":"https://www.lincoln.ac.nz/study/study-abroad-and-student-exchange/coming-to-lincoln-on-exchange/","checked_on":"2026-11-11","scope":"一般 incoming exchange：需母校提名、申請指示、保險與住宿；不保證長庚當期可提名。官網日期與既有長庚快照不同，待確認。"}
+  ],
+  "rules": [
+    {"title":"學業與語言，分兩層核對","body":"校內歷年學業平均以 70 分以上為原則；英文頁列等同多益 700 分以上。目的校若有其他標準，須提供符合該校規定的證明。這不是資格核准，其他語種及個人適用資格請查官方。","source":"selection"},
+    {"title":"先備齊校內文件","body":"一般應備：家長／監護人同意書、外國語文能力證明、中文歷年成績單（含平均；大學部含排名百分比）、讀書計畫。非合作校另附申請／許可紀錄；其他有利資料非必要。語文成績未取得者依頁面註明預計取得日期。","source":"selection"},
+    {"title":"官方校內申請期間","body":"官方頁舉例：116 年（2027）8–9 月出國，於 115 年（2026）11/02–12/21 完成校內申請。春季表格為 4/21–6/06，但頁內年份與學期有矛盾，適用梯次待確認。目的校期限另計；展示不自動推算或送出提醒。","source":"selection"},
+    {"title":"錄取與提名，仍以正式通知為準","body":"Lincoln 官網要求先由母校核准、提名，再依合作校指示申請。校內初審通過不等於合作校錄取。是否面試、體檢及文件清單，依學校、學程及當期通知確認。","source":"lincoln"}
+  ],
+  "stages": [
+    {"id":"explore","title":"探索與選校","description":"先了解自己想去哪裡，再核對長庚與目的校的條件。歷史合作資料只能作為起點。","source":"partners","tasks":[
+      {"id":"read-guide","title":"閱讀長庚校內申請須知","detail":"先確認官方頁的適用梯次及文件，不把心得當規則。","source":"selection"},
+      {"id":"shortlist","title":"整理兩所志願與想修的課程","detail":"官方主頁說明可選兩所志願；本展示計畫只記錄一個研究目標。","source":"partners"},
+      {"id":"check-language","title":"確認目標校語言門檻與當期名額","detail":"展示快照不能證明當期可申請；向國際處及目的校核對後，再自行勾選。","source":"partners"}]},
+    {"id":"internal","title":"校內申請","description":"對照校內文件與適用申請期間，為自己安排準備日期。","source":"selection","tasks":[
+      {"id":"transcript","title":"確認成績單、平均與排名資料","detail":"大學部成績單需含排名百分比；此處只記錄待辦，不收取文件。","source":"selection"},
+      {"id":"study-plan","title":"準備語文證明、同意書與讀書計畫","detail":"依官方一般清單及個人情況準備，未取得語文成績者依官方規定註明。","source":"selection"},
+      {"id":"internal-submit","title":"依官方管道完成申請後，自行記錄","detail":"勾選只代表你的展示紀錄，沒有送件、收件編號或校方受理。","source":"selection"}]},
+    {"id":"results","title":"面試與放榜","description":"是否面試待當期通知確認；將校內結果與目的校錄取分開追蹤。","source":"selection","tasks":[
+      {"id":"interview","title":"確認是否需要面試並整理準備重點","detail":"面試不是所有計畫的必經流程；依個人通知確認。不適用時可自行註記完成確認。","source":"selection"},
+      {"id":"internal-result","title":"查看校內初審結果與提名通知","detail":"依官方公告或個人通知查詢；本站沒有同步校方結果。","source":"selection"}]},
+    {"id":"partner","title":"姊妹校申請","description":"收到母校提名與對方指示後，再確認申請入口、學期及個人期限。","source":"lincoln","tasks":[
+      {"id":"partner-instructions","title":"核對目的校申請指示、文件與期限","detail":"Lincoln 的一般流程可供理解；其他目的校需另查。不要把同一清單套用所有學校。","source":"lincoln"},
+      {"id":"offer","title":"收到正式錄取後核對條件","detail":"本站不決定或驗證錄取。依合作校正式通知自行追蹤。","source":"lincoln"}]},
+    {"id":"departure","title":"出發準備","description":"依目的地及個人情況確認住宿、保險、簽證與課程；生活準備由自己安排。","source":"lincoln","tasks":[
+      {"id":"housing-insurance","title":"確認住宿、保險與簽證安排","detail":"Lincoln 一般頁要求研修期間醫療及旅遊保險。其他目的地、體檢與簽證細節待確認。","source":"lincoln"},
+      {"id":"courses","title":"與系所確認課程及抵免準備","detail":"建議先保存課綱並詢問系所；實際抵免由校方認定。這是準備建議。"},
+      {"id":"daily-life","title":"安排手機、支付與緊急聯絡方式","detail":"個人生活準備建議，不是所有目的校的正式要求。"}]},
+    {"id":"return","title":"抵達與返國","description":"依合作校通知報到，保存修課資料，返國後按母校規定辦理。","source":"partners","tasks":[
+      {"id":"arrival","title":"確認抵達報到與當地生活安排","detail":"報到方式、時間與安全資訊待目的校通知確認。"},
+      {"id":"return-credit","title":"整理成績單、課綱及返國所需資料","detail":"返國程序與抵免規則待母校確認；本清單不構成抵免核准。"}]}
+  ]
+}

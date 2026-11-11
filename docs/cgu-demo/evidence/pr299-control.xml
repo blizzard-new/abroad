@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="1.086" timestamp="2026-11-11T02:28:59.158747+00:00" hostname="dc136282dd4a"><testcase classname="" name="test_application_pages_keep_primary_actions_visible_and_move_explanations_into_disclosures" time="0.007"><failure message="assert None&#10; +  where None = &lt;function search at 0x7fd6b0cbf060&gt;('&lt;h2 id=&quot;application-center-title&quot;[^&gt;]*&gt;申請文件&lt;/h2&gt;', '&lt;!doctype html&gt;\n&lt;html lang=&quot;zh-Hant&quot; data-theme=&quot;light&quot;&gt;\n  &lt;head&gt;\n    &lt;meta charset=&quot;utf-8&quot; /&gt;\n    &lt;meta name=&quot;vi...&gt;&lt;/script&gt;\n    &lt;script src=&quot;/static/tku-campus-assets.js?v=20261011-reviewed-1&quot; defer&gt;&lt;/script&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n')&#10; +    where &lt;function search at 0x7fd6b0cbf060&gt; = re.search">def test_application_pages_keep_primary_actions_visible_and_move_explanations_into_disclosures() -&gt; None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+
+        # The page title is the page's only level-1 heading for assistive tech (role/aria-level are added on the element).
+&gt;       assert re.search(r'&lt;h2 id="application-center-title"[^&gt;]*&gt;申請文件&lt;/h2&gt;', html)
+E       assert None
+E        +  where None = &lt;function search at 0x7fd6b0cbf060&gt;('&lt;h2 id="application-center-title"[^&gt;]*&gt;申請文件&lt;/h2&gt;', '&lt;!doctype html&gt;\n&lt;html lang="zh-Hant" data-theme="light"&gt;\n  &lt;head&gt;\n    &lt;meta charset="utf-8" /&gt;\n    &lt;meta name="vi...&gt;&lt;/script&gt;\n    &lt;script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer&gt;&lt;/script&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n')
+E        +    where &lt;function search at 0x7fd6b0cbf060&gt; = re.search
+
+/tmp/uniway-cgu-pr299-control/tests/test_frontend_contract.py:1551: AssertionError</failure></testcase><testcase classname="" name="test_account_workspace_sync_has_conflict_merge_offline_retry_and_sensitive_boundary" time="0.025"><failure message="assert 'function clearAuthenticatedClientState()' in 'const state = {\n  dashboard: null,\n  query: &quot;&quot;,\n  partnerQuery: &quot;&quot;,\n  partnerView: &quot;map&quot;,\n  partnerDataLoading: ...t can never stay in front of the page for good.\nconst appReady = boot().finally(() =&gt; window.UniWaySplash?.done());\n'">def test_account_workspace_sync_has_conflict_merge_offline_retry_and_sensitive_boundary() -&gt; None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+
+        assert "accountWorkspaceRevisions" in script
+        assert "accountWorkspaceBases" in script
+        assert "accountWorkspacePending" in script
+        assert "accountWorkspaceSyncLanes" in script
+        assert "function sanitizeAccountWorkspacePayload" in script
+        assert "function mergeAccountWorkspaces" not in script
+        assert "function mergeAccountWorkspaceConflict" in script
+        assert "function mergeWorkspaceSet" in script
+        assert "function mergeWorkspaceRecord" in script
+        assert "error.status === 409" in script
+        assert "function drainAccountWorkspaceSync" in script
+        assert "function startAccountWorkspaceDrain" in script
+        assert "workspaceComparable(pending) === workspaceComparable(outgoing)" in script
+        assert "state.accountWorkspacePending[key] || outgoing" in script
+        assert "state.accountWorkspaceBases[key] = savedWorkspace" in script
+        conflict_base_update = script.index(
+            "state.accountWorkspaceBases[key] = sanitizeAccountWorkspacePayload("
+        )
+        assert script.index("const mergedPending = mergeAccountWorkspaceConflict(") &lt; conflict_base_update
+        assert conflict_base_update &lt; script.index(
+            "state.accountWorkspacePending[key] = mergedPending;"
+        )
+        assert script.index(
+            "state.accountWorkspacePending[key] = mergedPending;"
+        ) &lt; script.index("applyAccountWorkspace(mergedPending);")
+        assert "loadedAccountWorkspaceCanApply(savedWorkspace.home_school" in script
+        assert "Math.max(" in script
+        assert "function retryPendingWorkspaceSyncs" in script
+        assert 'window.addEventListener("online", handleAccountConnectivityRestored)' in script
+        assert 'window.addEventListener("offline", renderAccountWorkspaceSyncStatus)' in script
+        assert 'authRestoreState: "pending"' in script
+        assert "function readStoredAuthenticatedState(accountId)" in script
+        assert "function clearStoredAuthenticatedState(" in script
+        assert "async function handleAccountConnectivityRestored()" in script
+        assert "state.authRestoreState === \"unavailable\"" in script
+        assert "readStoredAuthenticatedState(state.account.id);" in script
+        assert "state.authToken" not in script
+        assert "function storeAuthToken" not in script
+        initial_read_block = script.split("function readStoredState()", 1)[1].split(
+            "async function loadSupportedUniversities", 1
+        )[0]
+        for private_state in (
+            "state.favorites =",
+            "state.applications =",
+            "state.applicationProgress =",
+            "state.documentReadiness =",
+            "state.anonymousIdentity = parseStoredJson",
+            "state.applicationProfile =",
+            "state.applicationAnswers =",
+        ):
+            assert private_state not in initial_read_block
+        restore_block = script.split("async function restoreAccount", 1)[1].split(
+            "async function handleAccountConnectivityRestored", 1
+        )[0]
+        unavailable_block = restore_block.split("if (!error?.status)", 1)[1].split(
+            "clearAuthenticatedClientState();", 1
+        )[0]
+        assert 'state.authRestoreState = "unavailable";' in unavailable_block
+        assert "clearAuthenticatedClientState();" not in unavailable_block
+        assert "accountWorkspaceSyncAccountId" in script
+        assert "accountWorkspaceSyncErrors" in script
+        assert "function resetAccountWorkspaceOwnerScopedState" in script
+        assert "function clearAccountWorkspaceClientState()" in script
+        assert "window.localStorage.removeItem(STORAGE_KEYS.workspaceSync)" in script
+&gt;       assert "function clearAuthenticatedClientState()" in script
+E       assert 'function clearAuthenticatedClientState()' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "map",\n  partnerDataLoading: ...t can never stay in front of the page for good.\nconst appReady = boot().finally(() =&gt; window.UniWaySplash?.done());\n'
+
+/tmp/uniway-cgu-pr299-control/tests/test_frontend_contract.py:1693: AssertionError</failure></testcase></testsuite></testsuites>

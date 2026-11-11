@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 from playwright.sync_api import expect
 from .test_partner_globe import INSTRUMENT, ready
+from .conftest import enter_public_site
 
 
 @pytest.mark.parametrize('size', [(1440, 1000), (393, 852)])
@@ -13,9 +14,7 @@ def test_space_globe_drag_zoom_filters_and_route_cleanup(page, live_server, size
     page.emulate_media(reduced_motion='reduce')
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.goto(f'{live_server.base_url}/#partners')
-    # The common splash has a 60-second fallback on a software renderer.
-    expect(page.locator('#boot-splash')).to_be_hidden(timeout=90000)
+    enter_public_site(page, live_server, 'partners', view='map')
     ready(page)
     expect(page.locator('[data-partner-view="map"]')).to_have_attribute('aria-pressed', 'true')
     assert page.evaluate('window.__testedMap.getProjection().type') == 'globe'
@@ -41,7 +40,7 @@ def test_space_globe_drag_zoom_filters_and_route_cleanup(page, live_server, size
     output.mkdir(exist_ok=True)
     page.evaluate('scrollTo(0, 0)')
     page.screenshot(path=str(output / f'globe-{size[0]}.png'), full_page=True)
-    # The whole route sits in the same world as every page (the theme's ground and the five-line band across the top)
+    # The whole route sits in the metro world (the theme's ground and the five-line band across the top)
     # and has no enclosing map surface.
     assert page.locator('#partner-map-panel').evaluate('el => getComputedStyle(el).borderTopWidth') == '0px'
     assert page.locator('#partner-map-panel').evaluate('el => getComputedStyle(el).backgroundColor') == 'rgba(0, 0, 0, 0)'
@@ -70,9 +69,11 @@ def test_space_globe_drag_zoom_filters_and_route_cleanup(page, live_server, size
     page.locator('[data-partner-view="map"]').click()
     ready(page)
     page.evaluate("document.documentElement.dataset.theme = 'dark'")
-    # Night follows the theme: the same dark ground as every other page, not a separate space canvas.
+    # Night follows the theme: the metro world's dark ground, not a separate space canvas.
     page.wait_for_function("() => getComputedStyle(document.documentElement).backgroundColor === 'rgb(17, 21, 28)'")
     page.evaluate("location.hash = '#home'")
     expect(page.locator('#partners')).to_be_hidden()
-    assert 'data:image/svg+xml' in page.locator('body').evaluate('el => getComputedStyle(el, "::before").backgroundImage')
+    # Leaving the search page leaves the metro world: the home draws its own backdrop there, not the five-line band.
+    assert page.evaluate("document.documentElement.dataset.skin") is None
+    assert 'data:image/svg+xml' not in page.locator('body').evaluate('el => getComputedStyle(el, "::before").backgroundImage')
     assert not errors

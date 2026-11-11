@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, AU, CMU, CSMU, CYCU, CYUT, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, require_university, resolve_university
+from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, ASIA, TTU, TCU, MCUT, CYUT, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -149,6 +149,10 @@ NPTU_SOURCE_CHECKED_AT = datetime(2026, 11, 5, tzinfo=timezone.utc)
 NPU_SOURCE_CHECKED_AT = datetime(2026, 11, 4, tzinfo=timezone.utc)
 NTUNHS_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
 NTTU_SOURCE_CHECKED_AT = datetime(2026, 11, 6, tzinfo=timezone.utc)
+ASIA_SOURCE_CHECKED_AT = datetime(2026, 11, 8, tzinfo=timezone.utc)
+TTU_SOURCE_CHECKED_AT = datetime(2026, 11, 8, tzinfo=timezone.utc)
+TCU_SOURCE_CHECKED_AT = datetime(2026, 11, 9, tzinfo=timezone.utc)
+MCUT_SOURCE_CHECKED_AT = datetime(2026, 11, 9, tzinfo=timezone.utc)
 CYUT_SOURCE_CHECKED_AT = datetime(2026, 11, 10, tzinfo=timezone.utc)
 
 
@@ -3797,6 +3801,210 @@ def _nttu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _asia_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理亞洲大學國際事務處（OIA，臺中市霧峰區柳豐路 500 號 行政大樓 L105，電話 04-2332-3456 分機 6271～6279）《亞洲大學學生出國交換生實施辦法》及當期《出國交換學生申請簡章》應繳資料：1. 亞洲大學出國交換學生申請表（須經導師、系所主任及院長簽核）、2. 家長或監護人同意書、3. 中／英文出國讀書計畫書（含申請動機、海外修課規劃、返國學分抵免與生涯規劃）、4. 中／英文自傳（含個人學經歷與國際交流準備）、5. 歷年中英文學業成績單正本（含 GPA 與全系名次百分比證明；學業總平均須達 75 分以上或名列全系前 50%，操行 80 分以上）、6. 有效外語能力檢定證明影本（TOEFL iBT / IELTS / TOEIC / Duolingo / JLPT / TOPIK）、7. 教師推薦信與其他有利審查資料（可同時申請《亞大 318 國際交流亮點計畫》、《雙聯學位獎助學金》或教育部《學海飛颺／惜珠》）。",
+        "study-plan": "撰寫亞洲大學出國交換、跨國雙聯學位（加拿大維多利亞大學 UVic 3+1+1、美國北伊利諾大學 NIU 雙聯、瑞士 BHMS 雙聯、法國蒙彼利埃商學院 MBS 雙聯、英國西蘇格蘭大學 UWS 雙聯、印尼 Airlangga 雙聯、馬來西亞拉曼大學 UTAR 等）及《亞大 318 國際交流亮點計畫》／教育部《學海飛颺／惜珠》必繳之《出國讀書計畫書與自傳》。請具體說明申請動機、擬於志願姊妹校修習之專業領域課程、語言能力準備，以及返國後學分抵免與職涯規劃。",
+        "course-preapproval": "辦理赴國外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《亞洲大學學生出國期間有關學業及學籍處理要點》與《與國外大學辦理雙聯學制實施辦法》規定，出國交換及雙聯期間仍須於亞洲大學辦理註冊並保留學籍；學士班交換生每學期至少修讀 2 門或 6 學分專業課程，雙聯學位生於兩校修業時間須達學士班累計 32 個月、碩士班 12 個月、博士班 24 個月以上）。",
+        "predeparture-notice": "經國際事務處書面審查與口試甄選錄取公告後，須依限繳交錄取確認書與家長同意書、配合國際事務處完成國外姊妹校線上提名與入學申請（Fact Sheet 指定文件、財力證明、健康檢查、護照影本）、辦妥亞洲大學出國選課與在學註冊、簽證、機票及海外醫療與意外保險。",
+        "return-report": "國外交換、雙聯研修或學海築夢海外實習期滿返國後，須依《亞洲大學學生出國交換生實施辦法》、《亞洲大學 318 國際交流亮點計畫補助要點》及教育部《學海計畫》規定，於返國後 2 週至 1 個月內向國際事務處繳交 1,500–2,000 字以上之《出國交換／研修心得報告書》（含研修與生活照片至少 4 張）、國外姊妹校正式成績單、護照出入境章影本及電子機票登機證正本，並配合參加國際事務處舉辦之成果發表或經驗分享會，始得完成結案與獎助學金核銷。",
+        "credit-transfer": "國外交換或雙聯研修期滿返國後，持國外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《亞洲大學學生抵免學分要點》及《學生出國期間有關學業及學籍處理要點》向所屬學系（所）及教務處註冊與課務組申請國外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "亞洲大學").replace("長庚", "亞大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "亞洲大學規定：申請出國交換生須在校學業成績總平均達 75 分（含）以上，或名列全系（所）前 50%，且操行成績達 80 分以上；若同時申請教育部《學海惜珠》，歷年成績須達全班前 40%。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語檢定 CEFR B2（多數歐美亞英語授課盟校與學海飛颺主流基準：TOEFL iBT 72–80 / IELTS 5.5–6.0 / TOEIC 785 / Duolingo 105）",
+                "英語檢定高階（加拿大維多利亞大學 UVic 3+1+1、法國 MBS 商學院、韓國成均館大學 SKKU 等：TOEFL iBT 80–90 / IELTS 6.0–6.5）",
+                "英語檢定 CEFR B1（東南亞姊妹校及亞大 318 計畫基本門檻：TOEIC 550 / TOEFL iBT 42–60 / IELTS 4.5–5.0）",
+                "日語檢定 JLPT（日本近畿大學、關西國際大學、京都先端科學大學 N2；亞細亞大學、長崎外國語大學、東亞大學、穴吹學園 N3；帝京大學 N4）",
+                "韓語檢定 TOPIK（韓國慶熙大學 TOPIK 3 級；成均館大學、韓國外國語大學、釜山外國語大學、大邱大學 TOPIK 2–3 級或英語檢定）",
+            ]
+            field["help_text"] = "依《亞洲大學學生出國交換生實施辦法》、當期《出國交換學校一覽表（Fact Sheet）》及《學海計畫助學金審查要點》填報有效外語檢定成績。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.asia.edu.tw/p/412-1008-258.php?Lang=zh-tw",
+        source_checked_at=ASIA_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="亞洲大學出國交換學生申請表件（含申請表、家長同意書、讀書計畫與 318／學海獎助申請表）" if template.id == "exchange-application-data" else ("亞洲大學出國交換／318 亮點計畫讀書計畫書" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.asia.edu.tw/var/file/8/1008/img/680/351475617.zip" if template.id != "study-plan" else "https://oia.asia.edu.tw/var/file/8/1008/img/693/585720604.docx",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師／指導教授、系（所）主任及院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經國際事務處甄選錄取後完成確認、配合辦理國外姊妹校提名與簽證，並完成亞洲大學在學註冊", "return-report": "返國後 2 週至 1 個月內繳交 1,500–2,000 字以上出國交換／研修心得報告（含照片至少 4 張）並配合經驗分享辦理獎助學金核銷", "credit-transfer": "返國後持國外姊妹校正式成績單正本與課程大綱向系所及教務處註冊與課務組申請學分抵免"}.get(template.id, "於校內收件截止前備齊交換生申請表、家長同意書、讀書計畫、自傳、歷年中英文成績單（含系排名）及外語檢定證明送交國際事務處（行政大樓 L105）"),
+        version="115-2準備工具-2026-11-08.1",
+        destinations=["亞洲大學國際事務處（41354 臺中市霧峰區柳豐路 500 號 行政大樓 L105）"],
+        conditional_note="此為個人準備工具；亞洲大學出國交換每學期定期開放申請（春季班於前一年 9–10 月、秋季班於當年度 2 月截止），申請人須修滿一學期且學業總平均達 75 分以上或全系前 50%。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _ttu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理大同大學（研究發展處國際暨兩岸事務組 OIA，104 臺北市中山區中山北路三段 40 號，電話 02-2182-2928 轉 7546／7548）《大同大學學生申請出國進修辦法》及當期《交換生申請及審查表》應繳資料（每梯次最多選填 2 所志願學校，先送系所初審後轉交國際暨兩岸事務組複審）：1. 大同大學交換生申請及審查表（含讀書計畫，須經導師／指導教授及系所主任簽核）、2. 大同大學交換生家長同意書、3. 中、英文歷年學業成績單正本（含歷年 GPA 及排名，歷年學業總平均須達 GPA 3.0／約 75 分以上，英國布魯內爾雙聯須 70 分以上）、4. 有效外語能力檢定證明影本（英語組 TOEIC 500–800／TOEFL iBT 68–80／IELTS 5.5–6.5、日語組 JLPT N1–N4、韓語組 TOPIK 2–3 級、德語組 B1–B2；大陸姊妹校免附外語檢定）、5. 其他有利審查文件（雙聯學位另檢附雙聯申請文件與作品集）。",
+        "study-plan": "撰寫大同大學出國進修交換、跨國雙聯學位（美國密西根大學迪爾伯恩分校 UM-Dearborn 3+2／4+1、德國康斯坦茨應用科技大學 HTWG Konstanz 雙聯碩士、英國布魯內爾大學 Brunel 4+1／1+1 雙聯碩士、日本宇都宮大學 1+1、日本千葉大學、京都工藝纖維大學、信州大學、山形大學、韓國仁川大學 2+2）及《林挺生校長世界公民獎學金》／教育部《學海飛颺／惜珠》必繳之《中、外文讀書計畫（含修課規劃及出國動機）》（占校內量化審查總分 20%，在校成績 40%＋語文能力 40%＋讀書計畫 20%，總分達 70 分以上始得推薦）。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《大同大學學生申請出國進修辦法》與《與境外大學辦理雙聯學位制實施辦法》規定，出國進修交換期間仍須於大同大學辦理註冊並繳交全額學雜費以保留學籍；雙聯學位生須符合兩校學分規定始得分別獲頒學位）。",
+        "predeparture-notice": "經系所初審及國際暨兩岸事務組量化審查（總分 70 分以上）錄取公告後，須依限完成錄取確認、配合國際暨兩岸事務組辦理姊妹校線上提名與入學申請（如日本在留資格認定證明書 COE、韓國入學許可、歐美 I-20／CAS／簽證文件、大陸入學通知書與台胞證）、辦妥大同大學註冊選課、役男出境核准及海外醫療與意外保險。",
+        "return-report": "境外交換、雙聯研修或學海築夢海外實習期滿返國後，須依《大同大學學生申請出國進修辦法》及《選送優秀學生出國研修獎助學金辦法》規定，於返國後 1 個月內（教育部學海計畫為返國後 2 週內）向研究發展處國際暨兩岸事務組繳交《出國交換／雙聯研修心得報告》電子檔（含境外學習與生活照片，供刊登於《人在他鄉大同人》部落格 https://tatunguni.pixnet.net/blog）、境外姊妹校正式成績單、護照出入境紀錄及登機證正本，並配合出席經驗分享會，始得辦理結案與獎助學金核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，持境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《大同大學學生申請出國進修辦法》及教務處學分抵免規定，向所屬學系（所）及教務處註冊組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "大同大學").replace("長庚", "大同")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "大同大學規定：報名出國交換或雙聯須於本校就讀滿一學年以上（大二以上或碩博在學），歷年學業總平均須達 GPA 3.0（約 75 分）以上（英國布魯內爾大學雙聯須達 70 分以上）；校內甄選採量化書面審查：在校成績 40%＋語文能力 40%＋讀書計畫 20%，總分達 70 分以上始得推薦。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語檢定（歐美英語授課交換與雙聯：TOEIC 500–800 / TOEFL iBT 68–80 / TOEFL ITP 520 / IELTS 5.5–6.5）",
+                "日語檢定 JLPT（日本千葉、信州、早稻田、岡山、同志社等 N1–N2；近畿、武藏野、京都精華等 N3；東京電機、芝浦工大、宇都宮等 N4 或英語授課）",
+                "韓語檢定 TOPIK（韓國高麗、建國、慶熙、弘益、世宗、梨花女子、仁川雙聯等 TOPIK 2–3 級或英語授課）",
+                "德語／歐語檢定（德國康斯坦茨 HTWG Konstanz、歐芬堡 Offenburg、科堡 Coburg 等德語 B1–B2 或英語 B2）",
+                "大陸地區姊妹校交換（北科大、西安交大、蘭州大學、廈門大學、南京理工等 12 校中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依《大同大學學生申請出國進修辦法》及當期《交換生申請及審查表》填報有效語言能力證明（語文能力占審查總分 40%）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ttu.edu.tw/p/406-1071-44122,r568.php?Lang=zh-tw",
+        source_checked_at=TTU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="大同大學交換生申請及審查表（含讀書計畫及家長同意書）" if template.id == "exchange-application-data" else ("大同大學交換生申請及審查表—讀書計畫欄" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ttu.edu.tw/var/file/71/1071/img/1271/862997280.zip",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師／指導教授及系（所）主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經量化審查（總分 70 分以上）錄取後完成確認、配合國際暨兩岸事務組辦理姊妹校提名與簽證，並完成大同大學註冊", "return-report": "返國後 1 個月內繳交出國交換／雙聯研修心得報告（供刊登於《人在他鄉大同人》部落格）並配合經驗分享辦理獎助學金核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處申請境外學分抵免"}.get(template.id, "於校內收件截止（第一波或第二波下午 4:00）前備齊交換生申請及審查表、家長同意書、歷年成績單及語檢證明先送系所審查，再轉交研究發展處國際暨兩岸事務組"),
+        version="115-2準備工具-2026-11-08.1",
+        destinations=["大同大學研究發展處國際暨兩岸事務組（104 臺北市中山區中山北路三段 40 號）"],
+        conditional_note="此為個人準備工具；大同大學出國交換每學期分第一波與第二波收件，每梯次最多選填 2 所志願，採量化審查（在校成績 40%＋語文能力 40%＋讀書計畫 20%，70 分及格）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _tcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "依慈濟大學全球事務處《出國交換學生甄選及補助辦法》與《與國外大學校院辦理跨國雙學位制實施辦法》整理校內出國交換與跨國雙／三聯學位（德墨三國聯授 TRIM 碩士、英國密德薩斯大學 3+1、美國安德魯大學 1+1 MBA、泰國瑪希敦／納黎萱博士雙聯）申請表、家長同意書、中英文歷年成績單、外語檢定證明及校內補助／教育部學海計畫基本資料欄位。",
+        "study-plan": "慈濟大學出國交換、跨國雙／三聯學位及教育部《學海飛颺／惜珠／築夢》甄選要求繳交之讀書計畫與自傳（Study Plan & Autobiography），應敘明申請動機、外語能力準備、志願姊妹校擬修讀課程與學分規劃、研究計畫及返國後學分抵免與職涯目標。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙／三聯學位（德墨臺 TRIM 三聯碩士、英國密德薩斯大學 3+1 雙學士、美國安德魯斯大學 1+1 MBA 雙碩士、泰國瑪希敦／納黎萱博士雙聯）之選課預審與教務核備（出國期間須維持慈濟大學在學註冊）。",
+        "predeparture-notice": "通過慈濟大學全球事務處書面審查與面試（並經國際學術交流審議委員會複審）錄取後，辦理姊妹校提名（Nomination）、簽署家長同意書與行政契約、出國役男兵役緩徵、海外醫療及意外保險與慈濟大學全額學雜費註冊檢核。",
+        "return-report": "交換或雙聯研修結束返國後 1 個月內（教育部學海計畫依計畫規定），向慈濟大學全球事務處國際交流組繳交出國研修／交換心得報告電子檔（含國外修課與生活照片），並配合出席海外交流成果分享會以完成獎助學金核銷結案。",
+        "credit-transfer": "境外交換或雙／三聯研修期滿返國後，持國外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《慈濟大學學生抵免學分辦法》及《與國外大學校院辦理跨國雙學位制實施辦法》向所屬學系（所）及教務處註冊組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "慈濟大學").replace("長庚", "慈大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "慈濟大學規定：申請出國交換或跨國雙／三聯學位須為本校在學學生（修滿至少一學期以上），檢附中英文歷年學業成績單正本及排名證明；若同時申請教育部《學海飛颺／學海惜珠》或校內《出國交換學生甄選及補助辦法》獎助學金，建議學業總平均達 GPA 3.0（或百分制 75–80 分、班排名前 50%）以上。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語檢定 CEFR B1（慈大校定外語基準：TOEIC 550 / TOEFL iBT 42 / TOEFL ITP 460 / IELTS 4.0 / GEPT 中級）",
+                "英語檢定 CEFR B2（歐美雙／三聯學位及學海飛颺基準：IELTS 6.0 / TOEFL iBT 72–79 / TOEIC 785）",
+                "日語檢定 JLPT N2–N3（日本佛教大學、天理大學、尚絅大學、愛知學院、淑德、聖隸基督教、新潟、神戶學院等交換）",
+                "韓語檢定 TOPIK 2–4 級或英語授課（韓國淑明女子大學、翰林大學、大邱韓醫大學、高神大學、信韓大學等交換）",
+                "大陸地區姊妹校交換（北京大學、復旦大學、上海交大、南京大學、浙江大學、蘭州大學等 24 校中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依《慈濟大學出國交換學生甄選及補助辦法》、《與國外大學校院辦理跨國雙學位制實施辦法》及教務處 CEFR B1 英外語能力檢定標準對照表填報有效語言能力證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oga.tcu.edu.tw/outbound-exchange-student-program/",
+        source_checked_at=TCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="慈濟大學出國交換學生／跨國雙聯學位甄選申請表（含家長同意書、教授推薦函及獎助學金申請表）" if template.id == "exchange-application-data" else ("慈濟大學出國交換／跨國雙聯讀書計畫與自傳（Study Plan & Autobiography）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oga.tcu.edu.tw/downloads/",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師／指導教授、系（所）主任及院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經全球事務處書審與面試錄取後完成確認、配合辦理姊妹校提名與簽證，並完成慈濟大學在學註冊", "return-report": "返國後 1 個月內繳交出國交換／雙聯／實習心得報告（含照片）並出席海外交流成果分享會辦理獎助學金核銷", "credit-transfer": "返國後持姊妹校正式成績單正本與課程大綱向系所及教務處註冊組申請境外學分抵免"}.get(template.id, "於校內收件截止前備齊申請表、家長同意書、中英文歷年成績單、讀書計畫與自傳、推薦信及語檢證明送交全球事務處國際交流組"),
+        version="115-2準備工具-2026-11-09.1",
+        destinations=["慈濟大學全球事務處國際交流組（970374 花蓮市中央路三段 701 號 大愛樓 L0102）"],
+        conditional_note="此為個人準備工具；慈濟大學出國交換、跨國雙／三聯學位及教育部學海系列計畫由全球事務處國際交流組辦理初審與面試，並送國際學術交流審議委員會複審。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _mcut_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理明志科技大學（國際事務處國際合作交流中心 CIAE，新北市泰山區工專路 84 號 創新大樓 1 樓，電話 02-2908-9899 分機 3008／3029）《選送學生出國進修與交流實施辦法》（表單編號 A2Q1040008）及海外姊妹校交換／雙聯學位甄選應繳資料：1. 明志科技大學學生出國進修交流申請表（表單編號 A2Q1040108，每人限申請 1 所志願學校，須經導師／指導教授、系主任及院長簽核）、2. 中英文歷年學業成績單正本（歷年學業成績總平均須達 75 分或 GPA 3.0 以上，NIU／ELISAVA／ESIEE／ALBA 雙聯專案 GPA 2.75 以上；操行成績達 80 分以上且無申誡以上處分）、3. 語言能力檢定證明（英語區 CEFR B1：TOEIC 550／TOEFL iBT 42／TOEFL ITP 460／IELTS 4.0／Duolingo 60；雙聯學位如辛辛那提大學 UC 3+2 須 TOEFL iBT 80／IELTS 6.5／Duolingo 110、北伊利諾大學 NIU 須 TOEFL iBT 79／IELTS 6.5、羅德島大學 URI 須 TOEFL iBT 79–80／IELTS 6.5；日語組 JLPT N1–N3；韓語組 TOPIK 3–4 級）、4. 中英文讀書計畫（Study Plan）、5. 中英文履歷自傳（CV／Autobiography）、6. 教授推薦信（雙聯學位必備）、7. 家長或監護人同意書及學生出國進修交流切結書（表單編號 A2Q1040208）。",
+        "study-plan": "撰寫明志科技大學選送學生出國進修與交流、跨國雙聯學位（美國辛辛那提大學 UC 3+2 本碩雙聯、北伊利諾大學 NIU 3+1+1／1+1、羅德島大學 URI 3+1+1／1+1、威斯康辛大學密爾瓦基分校 UWM 1+1、澳洲墨爾本皇家理工大學 RMIT 2+2、法國 ESIEE Paris 1+1.5、西班牙 ELISAVA 1+1、奧地利上奧地利應用科技大學 FH OÖ 1+1 等 12 校）及教育部《學海飛颺／惜珠》必繳之《中英文讀書計畫（Study Plan）與履歷自傳》。請具體說明申請動機、擬於姊妹校修習之專業課程（大二升大三以「一年期交換取代全學年工讀實務實習」者須詳列上下學期各至少 6 學分、歐洲 2 ECTS 折算 1 學分之修課規劃，並配合每季繳交 1 次共 4 次工讀實習季報告）及返國後學分抵免與職涯規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備：依《明志科技大學選送學生出國進修與交流實施辦法》（A2Q1040008）、《與國外大學辦理雙聯學制實施辦法》（A2Q1040001）及《學生抵免學分辦法》，出國期間須於明志科技大學辦理註冊並保留學籍；大二升大三學生申請「以一年期海外交換取代大三全學年工讀實務實習（上學期 16 學分＋下學期 18 學分）」者，須事先經系上及教務處核准修課計畫（每學期至少修讀 6 學分，歐洲學分依 2 ECTS = 1 學分換算）。",
+        "predeparture-notice": "經系所推薦與校級國際事務委員會書面暨面試審查錄取公告後，須於 1 週內向國際事務處繳交《明志科技大學學生出國進修交流切結書》（表單編號 A2Q1040208）及家長同意書，配合國際合作交流中心辦理姊妹校提名與入學／簽證申請（如美國 I-20、澳洲 CoE、歐洲申根學習簽證、日本 COE、韓國標準入學許可書、大陸入學通知書與台胞證），並於出國前辦妥明志註冊選課、役男出境核准及海外醫療與意外保險。",
+        "return-report": "境外交換或雙聯研修期滿返國後，須依《明志科技大學選送學生出國進修與交流實施辦法》（表單編號 A2Q1040008）第 10 條規定，於返國後 1 週內向國際事務處繳交《明志科技大學學生出國進修交流心得報告》（表單編號 A2Q1040508，A4 至少 2 頁，含研修照片與授權同意）、《學分抵免暨成績轉換申請表》（表單編號 A2Q1040308）、姊妹校正式成績單、護照出入境紀錄及電子機票與登機證正本，並配合國際事務處舉辦之成果發表與經驗分享會，始得辦理校內機票／生活費獎助學金（雙聯最高 24 萬元／年＋辛辛那提大學鹿江基金會獎學金；交換最高 8 萬元／學期、16 萬元／學年）核銷結案。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，填具《明志科技大學學生出國進修交流學分抵免暨成績轉換申請表》（表單編號 A2Q1040308），檢附境外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《選送學生出國進修與交流實施辦法》及《學生抵免學分辦法》（大二升大三一年期交換取代工讀實務實習者須同時檢附 4 次工讀實習季報告，歐洲學分依 2 ECTS = 1 學分折算）向所屬系（所、學位學程）、國際事務處及教務處申請學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "明志科技大學").replace("長庚", "明志")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "明志科技大學規定：申請人須為本校具正式學籍之在學學生（大二以上或碩博班在學生），歷年學業成績總平均達 75 分（GPA 3.0）以上（NIU／ELISAVA／ESIEE／ALBA 雙聯專案 GPA 2.75 以上），操行成績達 80 分以上且無申誡以上處分；每人限填 1 所志願學校。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英語檢定 CEFR B1（明志校內出國進修交流及學海飛颺基準：TOEIC 550 / TOEFL iBT 42 / TOEFL ITP 460 / IELTS 4.0 / Duolingo 60）",
+                "英語檢定 CEFR B2（歐美雙聯學位基準：辛辛那提大學 UC 3+2 須 TOEFL iBT 80 / IELTS 6.5 / Duolingo 110；北伊利諾大學 NIU 及羅德島大學 URI 須 TOEFL iBT 79–80 / IELTS 6.5；RMIT 須 IELTS 6.5）",
+                "日語檢定 JLPT（日本福岡工業大學、廣島大學、九州工業大學、岡山大學、近畿大學、東北大學等交換建議 JLPT N2–N3 或英語授課 B1+）",
+                "韓語檢定 TOPIK（韓國檀國大學、韓밭大學、金烏工科大學、靈山大學、東명大學等交換建議 TOPIK 3 級以上或英語授課 B1+）",
+                "大陸地區姊妹校交換（北京科技大學、中南大學、南京理工大學、北京化工大學、福州大學、深圳技術大學等 30 校中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依《明志科技大學選送學生出國進修與交流實施辦法》（A2Q1040008）第 4 條及各雙聯／交換姊妹校簡章規定填報有效語言能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://ciae.mcut.edu.tw/p/412-1010-6306.php?Lang=zh-tw",
+        source_checked_at=MCUT_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="明志科技大學學生出國進修交流申請表（表單編號 A2Q1040108）及出國進修交流切結書（表單編號 A2Q1040208）" if template.id == "exchange-application-data" else ("明志科技大學學生出國進修交流中英文讀書計畫與履歷自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://ciae.mcut.edu.tw/var/file/10/1010/img/456/781020224.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名蓋章", "導師／指導教授、系（所）主任及院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所、學位學程）及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "經錄取公告後 1 週內繳交《學生出國進修交流切結書》（A2Q1040208）與家長同意書，配合國際事務處辦理姊妹校提名與簽證，並完成明志註冊", "return-report": "返國後 1 週內繳交《學生出國進修交流心得報告》（A2Q1040508，A4 至少 2 頁）、《學分抵免暨成績轉換申請表》（A2Q1040308）、成績單與登機證正本辦理獎助金核銷", "credit-transfer": "返國後填具《學分抵免暨成績轉換申請表》（A2Q1040308）檢附姊妹校正式成績單正本與課程大綱（大三實習替代者加附 4 次工讀季報告）向系所與教務處申請抵免"}.get(template.id, "於校內收件截止前備齊《出國進修交流申請表》（A2Q1040108，限填 1 所志願）、中英文歷年成績單、語檢證明、中英文讀書計畫與履歷自傳送交國際事務處國際合作交流中心（創新大樓 1 樓）"),
+        version="115準備工具-2026-11-09.1",
+        destinations=["明志科技大學國際事務處國際合作交流中心（243303 新北市泰山區工專路 84 號 創新大樓 1 樓）"],
+        conditional_note="此為個人準備工具；明志科技大學出國交換與雙聯學位每人限申請 1 所志願學校，錄取後須於 1 週內繳交切結書（A2Q1040208），返國後 1 週內繳交心得報告（A2Q1040508）及學分抵免表（A2Q1040308）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _cyut_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
         "exchange-application-data": "整理朝陽科技大學（國際事務處 OIA，413310 臺中市霧峰區吉峰東路 168 號 行政大樓 3 樓，電話 04-2332-3000 分機 3124／3135／3137／3138／3129／3931）《與境外大學辦理交換學生實施要點》及當期交換生與雙聯學位甄選簡章應繳資料：1. 赴國外姐妹校交換學生／跨國雙聯學位申請表（須經導師、系主任及學院院長簽章）、2. 家長同意書及切結書、3. 中英文自傳與中英文讀書計畫（Study Plan）、4. 中文及英文歷年學業成績單正本（含學業總平均 70 分以上／班排前 50% 及操行 80 分以上證明）、5. 有效外語能力檢定證明影本（歐美墨組 IELTS 5.0–5.5 / TOEFL iBT 61–72、日韓組 CEFR B2 或 JLPT N2–N3 / TOPIK 3 級、英美澳雙聯 IELTS 6.0–6.5）、6. 專任教師推薦信及優良表現佐證資料。",
@@ -3984,6 +4192,14 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntunhs_template(template)) is not None]
     if university.id == NTTU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nttu_template(template)) is not None]
+    if university.id == ASIA.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _asia_template(template)) is not None]
+    if university.id == TTU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ttu_template(template)) is not None]
+    if university.id == TCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _tcu_template(template)) is not None]
+    if university.id == MCUT.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _mcut_template(template)) is not None]
     if university.id == CYUT.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _cyut_template(template)) is not None]
     if university.id == "tku":

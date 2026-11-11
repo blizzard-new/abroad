@@ -664,3 +664,32 @@ No actionable P0/P1/P2 remains in this background pass.
 - No backend, database, native app or production deployment changes belong to this revision.
 
 Final result: passed
+
+# Design QA: search reference and concise copy — 2026-11-11
+
+## Reference and implementation
+
+The user supplied a 1696 × 197 screenshot crop in the conversation: a cream rounded search frame, three white pill fields, red/blue/green labels and an amber button with a darker bottom shadow. It contains native controls, typography and icons; existing Lucide icons are sufficient and no generated imagery is needed.
+
+The implementation retains the application's 1280px content width. At a 1696px viewport the search component is 1280 × 106, so this is a responsive adaptation of the supplied crop, not a claim of whole-page pixel identity. It uses the existing field elements, labels, dropdowns and submit action. The reference did not prescribe mobile or dark mode; those follow the existing filter drawer and theme behavior.
+
+## Visual review and fixes
+
+- Reviewed the actual component capture against the reference: cream frame, pill shapes, field hierarchy, colored labels, amber fill, button shadow and whitespace are in place. No new stylesheet was stacked over the existing component.
+- Reviewed the complete desktop search screenshot and phone dark theme: subdued gray-blue oceans, low-chroma land, faint grid and a softer shadow. School markers remain distinguishable; geographic coordinates, clustering and hit targets are unchanged.
+- Reviewed home, profile, application preparation and forum captures after deleting copy. Removed redundant headings, blurbs and repeated help text at the source, along with obsolete dynamic text assignments and accessibility references. Kept actual labels, eligibility reasons, dates, source attribution, consent and useful empty/error states.
+- A final visual review found three unnecessary welcome blurbs still in the forum empty state. Removed them; the meaningful heading and publish button remain. A fresh browser capture and click check confirm the resulting state.
+- No actionable P0/P1/P2 finding remains within this change. Desktop light, phone light/dark, profile, forum and preparation screenshots are available under `docs/reviews/uniiway-2026-11-11/screenshots/`.
+
+## Runtime verification
+
+- Real local Chromium and MapLibre, with the project's synthetic catalogue and accounts; no production account or data mutation.
+- 20 static asset/cache/loading tests passed after the final copy edit.
+- 10 browser cases passed: desktop/phone drag and zoom, country filter, school selection, list/map switching, theme/route cleanup, readable controls, responsive cross-page headings, eligibility status and home scope.
+- The first browser run timed out while waiting for the startup overlay. Two older tests were switched to the project's existing readiness helper, which waits for the actual `appReady` promise; the final run passed without relaxing feature assertions. Both runs are kept separately.
+- Additional forum check: removed blurbs stay absent, the empty-state heading is visible, and the publish button opens sign-in for a guest. No page errors.
+- Recorded search viewports (1696px light; 390px light/dark) and public route visits have no horizontal overflow or JavaScript page errors. Authenticated application/profile visits also produced no page errors.
+- JavaScript syntax, static version lock and `git diff --check` passed. Evidence and exact scope: `docs/reviews/uniiway-2026-11-11/README.md`.
+- Not tested in this pass: physical phones, Safari/Firefox, screen readers or the entire backend suite. This change is not deployed by this task.
+
+Final result: passed
