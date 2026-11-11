@@ -1,0 +1,34 @@
+{
+  "detail": "平台引用的 10/29 出國交換說明會公告（p/406-1032-157886,r2255.php），我用有 Lang 和沒有 Lang 兩種網址打開都是 HTTP 404。活動公告列表第 1、2 頁也找不到這則。重要須知頁和申請流程頁都還是 115 學年度版本。Step1 校內甄選頁寫申請期間是每年 12/1–12/10 和 6/1–6/14，假日順延；系統關閉後一個月內公布校內媒合結果；申請平台 ntut115exchange.codecraft.services。到現在還沒看到 116 正式簡章、逐校名額或新的收件期限。",
+  "edits": [
+    {
+      "basis": "p/406-1032-157886,r2255.php?Lang=zh-tw 回應 HTTP 404 Not Found；Step1 頁仍連 ntut115exchange.codecraft.services",
+      "current": "…10/29 12:00–13:00為科技大樓B2說明會（p/406-1032-157886,r2255.php）。",
+      "proposed": "把最後一句改為：「原10/29 12:00–13:00科技大樓B2說明會公告（p/406-1032-157886,r2255.php）於2026-11-11查核時回HTTP 404，原公告頁已無法開啟，不推論取消或改期；該場日期已過。」其餘（Step1一般期程、116正式簡章與收件時刻未核得）不動；查核日改 2026-11-11。",
+      "target": "verified_window_deadlines.py → ntut → online_deadline.value_text"
+    },
+    {
+      "basis": "同上，原公告頁 HTTP 404；官網未見 116 學年度簡章",
+      "current": "116學年度校級交換日程待確認；10/29為說明會",
+      "proposed": "116學年度校級交換日程待確認（10/29說明會原公告頁已失效）",
+      "target": "verified_window_deadlines.py → ntut → cycle_label"
+    }
+  ],
+  "note": "AI 同事讀取學校官網後整理的提案，不是已核實的資料；修改清單只是建議，合併前請人工對照官方來源。合併這個檔案不會自動更新平台資料。",
+  "official_url": "https://oia.ntut.edu.tw/p/412-1032-9242.php?Lang=zh-tw",
+  "platform_record": "已收錄206筆合作方案及10/29出國交換說明會（p/406-1032-157886,r2255.php）；母校指定條文部分查核，116正式簡章、逐校現行名額、收件期限、資格、生活與來源仍待核對。（支援程度 full，合作校約 206 所）",
+  "proposed_by": "dora2",
+  "proposed_on": "2026-11-11",
+  "schema": "uniway-office-proposal/2",
+  "school_id": "ntut",
+  "school_name": "國立臺北科技大學",
+  "source_url": "https://oia.ntut.edu.tw/p/412-1032-9238.php?Lang=zh-tw",
+  "status": "mismatch",
+  "suggested_update": "說明會來源欄位：p/406-1032-157886,r2255.php 現在是 404，建議標成「原公告已下架，待確認」或換成有效來源。收件期限欄位可以先註記「官網 Step1 校內甄選頁（115學年度版）寫每年 12/1–12/10、6/1–6/14 申請，116 簡章待公告，以官方公告為準」，不要先填 116 的具體日期。",
+  "verification": {
+    "note": "",
+    "reason": "我打開平台引用的說明會公告 p/406-1032-157886,r2255.php，伺服器回 HTTP 404，確實無法再當來源。Step1 頁仍是 115 版本（申請平台 ntut115exchange），沒有 116 簡章、名額或新期限。只建議把失效來源標註出來，不推論說明會取消或改期。另外提醒：這次讀 Step1 頁時，「每年12/1–12/10、6/1–6/14」那段看起來排在千葉大學段落附近，適用範圍我無法確定，建議下次人工再看一次版面，這部分先不改。",
+    "verdict": "confirmed_update",
+    "verified_by": "小公主"
+  }
+}
