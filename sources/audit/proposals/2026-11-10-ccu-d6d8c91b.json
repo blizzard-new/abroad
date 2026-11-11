@@ -1,0 +1,34 @@
+{
+  "detail": "公告列表出現 2026-10-29「2027春季校級姊妹校薦外交換校內初審通過名單」，平台資料只提到三梯次校內收件已截止，未提初審通過名單。列表未顯示截止日，名單內容未打開。",
+  "edits": [
+    {
+      "basis": "2026-10-29「2027春季校級姊妹校薦外交換校內初審通過名單」（公告列表）",
+      "current": "2027 春季三梯次已於 09/21 截止 · 後續梯次待核實",
+      "proposed": "2027 春季三梯次已於 09/21 截止 · 10/29 已公告校內初審通過名單",
+      "target": "verified_window_deadlines.py → ccu → window_badge"
+    },
+    {
+      "basis": "https://oia.ccu.edu.tw/p/406-1008-96864,r1714.php?Lang=zh-tw 標題與日期",
+      "current": "…此紀錄只適用上述春季梯次，後續梯次尚待本輪核實",
+      "proposed": "…此紀錄只適用上述春季梯次；國際處於 2026-10-29 公告「2027春季校級姊妹校薦外交換校內初審通過名單」（名單內容與後續流程未核對，以國際處公告為準）",
+      "target": "verified_window_deadlines.py → ccu → online_deadline.value_text"
+    }
+  ],
+  "note": "AI 同事讀取學校官網後整理的提案，不是已核實的資料；修改清單只是建議，合併前請人工對照官方來源。合併這個檔案不會自動更新平台資料。",
+  "official_url": "https://oia.ccu.edu.tw/",
+  "platform_record": "已核對2027春季校級薦外交換；灰字參考與空白名額分開，三梯次校內收件已截止。（支援程度 basic，合作校約 52 所）",
+  "proposed_by": "Dora",
+  "proposed_on": "2026-11-10",
+  "schema": "uniway-office-proposal/2",
+  "school_id": "ccu",
+  "school_name": "國立中正大學",
+  "source_url": "https://oia.ccu.edu.tw/p/412-1008-3408.php",
+  "status": "new_notice",
+  "suggested_update": "在中正 2027 春季校級薦外交換補上：2026-10-29 已公告校內初審通過名單（名單內容與後續流程待核對）。",
+  "verification": {
+    "note": "",
+    "reason": "公告列表確實有 2026-10-29「2027春季校級姊妹校薦外交換校內初審通過名單」，頁面只有標題與日期，名單內容我沒有展開，也未見後續流程。平台目前沒有提到這則，補一筆事實性註記即可，不要推論後續梯次。",
+    "verdict": "confirmed_update",
+    "verified_by": "小公主"
+  }
+}
