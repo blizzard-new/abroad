@@ -1,0 +1,52 @@
+{
+  "detail": "官網有 2026-11-06 公告：116學年度第1學期出國交換及雙聯學位計畫，線上表單 11/2 起開放，12/21 17:00 截止，紙本資料也須在截止日前送到國際事務處；預計 2027/8–9 出國。另有 UCI 雙聯說明會（11/4 已過）。首頁橫幅寫「116年夏季」，與公告的「第1學期」不一致，需向學校確認。以各校官方公告為準。",
+  "edits": [
+    {
+      "basis": "線上申請表單自2026年11月2日（一）起開放，至2026年12月21日（一）下午5點截止。",
+      "current": "10 週窗口預告（11/01–12/20・待當期公告確切時刻）",
+      "proposed": "116-1 線上申請 11/02–12/21 17:00（以國際處公告為準）",
+      "target": "verified_window_deadlines.py → cgu → window_badge"
+    },
+    {
+      "basis": "預計於 2027 年 8–9 月間出國；線上申請表單自2026年11月2日起開放",
+      "current": "116-1（2027 秋季班）出國交換學生甄選（11/01–12/20 預告申請期間）",
+      "proposed": "116-1（預計 2027 年 8–9 月出國）出國交換學生甄選（2026/11/02–12/21 申請期間）",
+      "target": "verified_window_deadlines.py → cgu → cycle_label"
+    },
+    {
+      "basis": "發布日期：2026/11/06；至2026年12月21日（一）下午5點截止",
+      "current": "國際處甄選流程頁預告秋季班交換於 11/01–12/20 開放申請；當期專屬公告與確切截止時刻尚未發布（絕不自行推定為 23:59…）",
+      "proposed": "116學年度第1學期出國交換及雙聯學位計畫線上申請表單自 2026/11/02（一）起開放，至 2026/12/21（一）17:00 截止；以國際處公告為準。",
+      "target": "verified_window_deadlines.py → cgu → online_deadline.value_text"
+    },
+    {
+      "basis": "當期公告頁（2026/11/06 發布）",
+      "current": "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656",
+      "proposed": "https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817",
+      "target": "verified_window_deadlines.py → cgu → online_deadline.source_url"
+    },
+    {
+      "basis": "請於截止日前，將紙本申請資料一併繳交至國際事務處。",
+      "current": "依長庚國際處當期交換甄選公告辦理…確切紙本收件截止時刻待當期專屬公告確認",
+      "proposed": "紙本申請資料須於線上申請截止日（2026/12/21）前繳交至國際事務處；紙本確切收件時刻公告未載明，送件前請向國際處確認。",
+      "target": "verified_window_deadlines.py → cgu → paper_deadline.value_text"
+    }
+  ],
+  "note": "AI 同事讀取學校官網後整理的提案，不是已核實的資料；修改清單只是建議，合併前請人工對照官方來源。合併這個檔案不會自動更新平台資料。",
+  "official_url": "https://www.cgu.edu.tw/oia-ch",
+  "platform_record": "完整支援試點：已整理長庚大學交換、補助、文件與合作校申請流程。（支援程度 full，合作校約 75 所）",
+  "proposed_by": "Dora",
+  "proposed_on": "2026-11-10",
+  "schema": "uniway-office-proposal/2",
+  "school_id": "cgu",
+  "school_name": "長庚大學",
+  "source_url": "https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817",
+  "status": "new_notice",
+  "suggested_update": "在長庚交換流程補上：116學年度第1學期線上申請 2026-11-02 起至 2026-12-21 17:00 截止（需同時繳紙本）、預計 2027/8–9 出發；UCI 雙聯說明會 11/4 已結束。首頁橫幅「夏季」字樣待向學校確認。",
+  "verification": {
+    "note": "",
+    "reason": "官網公告（發布日期 2026/11/06）寫明線上申請表單 2026/11/2 起開放、12/21（一）下午5點截止，紙本須於截止日前繳至國際事務處，預計 2027 年 8–9 月出國。平台仍寫 11/01–12/20 預告、確切截止時刻未發布，與官網不一致。首頁橫幅「116年夏季」字樣我沒有核對到，不列入修改。",
+    "verdict": "confirmed_update",
+    "verified_by": "小公主"
+  }
+}
