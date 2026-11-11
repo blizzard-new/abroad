@@ -17,7 +17,7 @@ const _project = String.fromEnvironment('FIREBASE_PROJECT_ID');
 const _appId = String.fromEnvironment('FIREBASE_APP_ID');
 const _apiKey = String.fromEnvironment('FIREBASE_API_KEY');
 const _sender = String.fromEnvironment('FIREBASE_SENDER_ID');
-const _storage = FlutterSecureStorage();
+const _storage = hardenedSecureStorage;
 const _bindingKey = 'uniway_push_binding';
 bool get remotePushConfigured =>
     _project.isNotEmpty &&

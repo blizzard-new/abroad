@@ -49,6 +49,7 @@ jobs:
       # which is fine for installing it yourself. Pick one before installing: an app signed with a different key cannot
       # be updated over the old one (uninstall first).
       - name: Use the private signing key, if one is configured
+        if: github.event_name != 'pull_request'
         env:
           KEYSTORE_BASE64: ${{ secrets.OFFICE_KEYSTORE_BASE64 }}
           OFFICE_KEYSTORE_PASSWORD: ${{ secrets.OFFICE_KEYSTORE_PASSWORD }}
@@ -70,10 +71,13 @@ jobs:
 
       # Maven Central answers a burst of requests with 429 now and then; a second try goes through.
       - name: Test and build the release APK
+        env:
+          RUN_NUMBER: ${{ github.run_number }}
+          PREVIEW_BUILD: ${{ github.event_name == 'pull_request' && 'true' || 'false' }}
         run: |
           n=0
           until ./gradlew --no-daemon testDebugUnitTest assembleRelease \
-              -PversionCode="${{ github.run_number }}" -PversionName="1.0.${{ github.run_number }}"; do
+              -PversionCode="$RUN_NUMBER" -PversionName="1.0.$RUN_NUMBER" -PpreviewBuild="$PREVIEW_BUILD"; do
             n=$((n + 1))
             if [ "$n" -ge 3 ]; then exit 1; fi
             sleep 30

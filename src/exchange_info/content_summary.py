@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass
 from typing import Any
+from urllib.parse import urlsplit
 
 import requests
 from bs4 import BeautifulSoup
@@ -11,6 +13,10 @@ from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
 from .ai_gateway import structured_response
+from .http_client import SSRFError, get_safe_session
+
+
+MAX_SUMMARY_FETCH_BYTES = 2 * 1024 * 1024
 
 
 USER_AGENT = (
@@ -44,19 +50,33 @@ def fetch_page_content(
     final_url = url
     content_type = "text/html"
     try:
-        response = requests.get(
-            url,
-            timeout=timeout_seconds,
-            allow_redirects=True,
-            headers={
-                "User-Agent": USER_AGENT,
-                "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8",
-            },
-        )
-        response.raise_for_status()
-        response_text = response.text
-        final_url = response.url
-        content_type = response.headers.get("Content-Type", "").casefold()
+        with get_safe_session(require_https=True) as session:
+            with session.get(
+                url,
+                timeout=timeout_seconds,
+                allow_redirects=True,
+                stream=True,
+                headers={
+                    "User-Agent": USER_AGENT,
+                    "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8",
+                },
+            ) as response:
+                response.raise_for_status()
+                final_url = response.url
+                content_type = response.headers.get("Content-Type", "").casefold()
+                chunks: list[bytes] = []
+                total_bytes = 0
+                for chunk in response.iter_content(chunk_size=65536):
+                    if not chunk:
+                        continue
+                    total_bytes += len(chunk)
+                    if total_bytes > MAX_SUMMARY_FETCH_BYTES:
+                        break
+                    chunks.append(chunk)
+                encoding = response.encoding or "utf-8"
+                response_text = b"".join(chunks).decode(encoding, errors="replace")
+    except SSRFError:
+        return None
     except requests.RequestException:
         browser_page = _fetch_html_with_browser(url, timeout_seconds=timeout_seconds)
         if not browser_page:
@@ -115,16 +135,62 @@ def fetch_page_content(
     )
 
 
+def _is_safe_public_https_url(candidate: str) -> bool:
+    import ipaddress
+    import socket
+
+    parsed = urlsplit((candidate or "").strip())
+    if parsed.scheme.lower() != "https" or not parsed.hostname or parsed.username or parsed.password:
+        return False
+    host = parsed.hostname.strip().lower().rstrip(".")
+    if host in {"localhost", "localhost.localdomain"} or host.endswith((".local", ".internal", ".lan")):
+        return False
+    try:
+        infos = socket.getaddrinfo(host, parsed.port or 443, 0, socket.SOCK_STREAM)
+    except socket.gaierror:
+        return False
+    if not infos:
+        return False
+    for info in infos:
+        try:
+            ip = ipaddress.ip_address(info[4][0])
+        except ValueError:
+            return False
+        if not (
+            ip.is_global
+            and not ip.is_private
+            and not ip.is_loopback
+            and not ip.is_link_local
+            and not ip.is_multicast
+            and not ip.is_reserved
+            and not ip.is_unspecified
+        ):
+            return False
+    return True
+
+
 def _fetch_html_with_browser(
     url: str,
     *,
     timeout_seconds: float,
 ) -> tuple[str, str] | None:
+    if os.environ.get("EXCHANGE_ALLOW_BROWSER_FETCH", "").strip().lower() not in {"1", "true", "yes"}:
+        return None
+    if not _is_safe_public_https_url(url):
+        return None
     timeout_ms = int(timeout_seconds * 1000)
     try:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
             context = browser.new_context(ignore_https_errors=False, user_agent=USER_AGENT)
+
+            def _guard_route(route) -> None:
+                if _is_safe_public_https_url(route.request.url):
+                    route.continue_()
+                else:
+                    route.abort("blockedbyclient")
+
+            context.route("**/*", _guard_route)
             page = context.new_page()
             page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
             page.wait_for_timeout(900)

@@ -45,6 +45,7 @@ def main(argv: list[str] | None = None) -> int:
     serve.add_argument("--host", default="127.0.0.1")
     serve.add_argument("--port", type=int, default=8780)
     serve.add_argument("--no-clock", action="store_true", help="不自動排程，只開網頁")
+    serve.add_argument("--allow-unauthenticated", action="store_true", help="允許未設定 OFFICE_ACCESS_TOKEN 時對外開放（不建議）")
 
     run = sub.add_parser("run", help="立刻跑一天的企劃與製作")
     run.add_argument("--date", type=date.fromisoformat)
@@ -93,6 +94,13 @@ def main(argv: list[str] | None = None) -> int:
         print(f"UniWay 行銷辦公室：http://{here}:{args.port}　← 這台電腦的瀏覽器開這個" + ("（第一次要加 ?token=你的通行碼）" if settings.access_token else ""))
         if args.host not in {"127.0.0.1", "localhost", "::1"}:
             if not settings.access_token:
+                if not args.allow_unauthenticated:
+                    print(
+                        "× 安全性阻擋：--host 對其他電腦開放時必須先在 .env 設定 OFFICE_ACCESS_TOKEN（可用 `uv run office token` 產生）。"
+                        "若確定在受保護內網且要略過，請明確加上 --allow-unauthenticated。",
+                        file=sys.stderr,
+                    )
+                    return 2
                 print("⚠️ 辦公室對其他電腦開放了，但沒有設 OFFICE_ACCESS_TOKEN：連得到的人都能按核准。請在 .env 設一串密碼後重開（uv run office token 可以產生）。")
             else:
                 from .netinfo import phone_addresses

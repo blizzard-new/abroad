@@ -28546,58 +28546,22 @@
     },
     "/cross-school-partners/{country}/{institution}": {
       "get": {
-        "operationId": "cross_school_partner_page_cross_school_partners__country___institution__get",
+        "operationId": "_allowed_override_plan_count_cross_school_partners__country___institution__get",
         "parameters": [
           {
-            "in": "path",
-            "name": "country",
-            "required": true,
-            "schema": {
-              "title": "Country",
-              "type": "string"
-            }
-          },
-          {
-            "in": "path",
-            "name": "institution",
-            "required": true,
-            "schema": {
-              "title": "Institution",
-              "type": "string"
-            }
-          },
-          {
             "in": "query",
-            "name": "home",
-            "required": false,
+            "name": "value",
+            "required": true,
             "schema": {
               "anyOf": [
                 {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Home"
-            }
-          },
-          {
-            "in": "query",
-            "name": "override_plan_count",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "maximum": 5000,
-                  "minimum": 0,
                   "type": "integer"
                 },
                 {
                   "type": "null"
                 }
               ],
-              "title": "Override Plan Count"
+              "title": "Value"
             }
           }
         ],
@@ -28623,7 +28587,7 @@
             "description": "Validation Error"
           }
         },
-        "summary": "Cross School Partner Page"
+        "summary": " Allowed Override Plan Count"
       }
     },
     "/deadlines": {
@@ -29099,28 +29063,23 @@
     },
     "/experience-submissions": {
       "post": {
-        "description": "Submit student experience into pending moderation queue; blocks privilege escalation and isolates PII (Spec 11.3, 12, T19, T20).",
-        "operationId": "submit_experience_experience_submissions_post",
+        "operationId": "create_experience_submission_experience_submissions_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "additionalProperties": true,
-                "title": "Payload",
-                "type": "object"
+                "$ref": "#/components/schemas/ExperienceSubmissionCreate"
               }
             }
           },
           "required": true
         },
         "responses": {
-          "201": {
+          "202": {
             "content": {
               "application/json": {
                 "schema": {
-                  "additionalProperties": true,
-                  "title": "Response Submit Experience Experience Submissions Post",
-                  "type": "object"
+                  "$ref": "#/components/schemas/ExperienceSubmission"
                 }
               }
             },
@@ -29137,7 +29096,7 @@
             "description": "Validation Error"
           }
         },
-        "summary": "Submit Experience"
+        "summary": "Create Experience Submission"
       }
     },
     "/health": {

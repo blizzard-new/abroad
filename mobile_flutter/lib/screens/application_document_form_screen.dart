@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/external_links.dart';
 import '../core/student_ui.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
@@ -739,10 +740,7 @@ class _PrintGuide extends StatelessWidget {
           if (template.sourceUrl.isNotEmpty) ...[
             const SizedBox(height: 12),
             OutlinedButton.icon(
-              onPressed: () => launchUrl(
-                Uri.parse(template.sourceUrl),
-                mode: LaunchMode.externalApplication,
-              ),
+              onPressed: () => launchSafeExternalHttpsUrl(template.sourceUrl),
               icon: const Icon(Icons.open_in_new_rounded),
               label: const Text('官方來源'),
             ),

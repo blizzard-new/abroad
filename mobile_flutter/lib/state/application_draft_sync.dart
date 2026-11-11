@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../core/account_session_storage.dart';
 import '../data/exchange_api.dart';
 import '../data/models.dart';
 import 'workspace_sync.dart';
@@ -23,7 +24,7 @@ class ApplicationDraftSync extends ChangeNotifier {
   final String accessToken;
   final String homeSchool;
   final ApplicationDocumentTemplate template;
-  static const _storage = FlutterSecureStorage();
+  static const _storage = hardenedSecureStorage;
   JsonMap _base = {};
   JsonMap _local = {};
   JsonMap? _conflictingRemote;

@@ -4,11 +4,17 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../data/models.dart';
 
+const hardenedSecureStorage = FlutterSecureStorage(
+  iOptions: IOSOptions(
+    accessibility: KeychainAccessibility.first_unlock_this_device,
+  ),
+);
+
 class AccountSessionStorage {
   AccountSessionStorage(String server)
     : key = 'uniway_session:${Uri.encodeComponent(server)}';
   final String key;
-  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  final FlutterSecureStorage _storage = hardenedSecureStorage;
 
   Future<JsonMap?> read() async {
     final value = await _storage.read(key: key);

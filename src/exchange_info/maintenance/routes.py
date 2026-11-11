@@ -73,6 +73,7 @@ def create_maintenance_router(
     *,
     authenticate_admin: Callable[[Request], tuple[str, set[str] | None]],
     authenticate_submitter: Callable[[Request], str] | None = None,
+    include_legacy_experience_alias: bool = True,
 ) -> APIRouter:
     """Create the FastAPI router for Section 13 Admin & Public Maintenance endpoints."""
     router = APIRouter()
@@ -288,7 +289,6 @@ def create_maintenance_router(
             canonical_url, _ = validate_and_canonicalize_source_url(
                 target_url,
                 approved_domains=src.approved_domains,
-                resolver=lambda host, port: ["140.112.8.130"],
             )
         except FetchPolicyError as exc:
             raise HTTPException(status_code=400, detail=f"Rejected unapproved or unsafe URL: {exc}") from exc
@@ -369,6 +369,12 @@ def create_maintenance_router(
     @router.post("/reports", status_code=201)
     def submit_public_report(payload: PublicReportSubmitRequest) -> dict[str, Any]:
         """Public stale/error report bound to published revision/release; never directly mutates published data (Spec 12.4, 13.3)."""
+        if len(store.reports) >= 2000:
+            raise HTTPException(status_code=429, detail="Report queue is currently full; please retry later")
+        evidence_url = payload.evidence_url.strip() if payload.evidence_url else None
+        if evidence_url:
+            if len(evidence_url) > 1024 or not evidence_url.lower().startswith("https://"):
+                raise HTTPException(status_code=422, detail="evidence_url must use https://")
         report_id = f"rep_{uuid4().hex[:14]}"
         record = {
             "id": report_id,
@@ -378,25 +384,24 @@ def create_maintenance_router(
             "published_revision_id": payload.published_revision_id,
             "category": payload.category,
             "text": payload.text,
-            "evidence_url": payload.evidence_url,
+            "evidence_url": evidence_url,
             "status": "pending",
             "created_at": utc_now().isoformat(),
         }
         store.reports.append(record)
         return {"report_id": report_id, "status": "pending"}
 
-    @router.post("/experience-submissions", status_code=201)
-    @router.post("/maintenance/experience-submissions", status_code=201)
     def submit_experience(request: Request, payload: dict[str, Any]) -> dict[str, Any]:
         """Submit student experience into pending moderation queue; blocks privilege escalation and isolates PII (Spec 11.3, 12, T19, T20)."""
         submitter_id = authenticate_submitter(request) if authenticate_submitter else "anon_verified_student"
         if not submitter_id:
             raise HTTPException(status_code=401, detail="Authentication required")
         try:
-            contact_email = payload.pop("contact_email", None)
+            body = dict(payload)
+            contact_email = body.pop("contact_email", None)
             record = store.submit_student_experience(
                 submitter_account_id=submitter_id,
-                raw_payload=payload,
+                raw_payload=body,
                 contact_email=contact_email,
             )
         except AccessDeniedError as exc:
@@ -408,6 +413,10 @@ def create_maintenance_router(
             "review_status": record.review_status,
             "experience_year": record.experience_year,
         }
+
+    router.add_api_route("/maintenance/experience-submissions", submit_experience, methods=["POST"], status_code=201)
+    if include_legacy_experience_alias:
+        router.add_api_route("/experience-submissions", submit_experience, methods=["POST"], status_code=201)
 
     @router.get("/admin/releases")
     def list_releases(request: Request, response: Response) -> dict[str, Any]:
@@ -446,8 +455,9 @@ def create_maintenance_router(
         }
 
     @router.get("/maintenance-preview")
-    def maintenance_preview_ui() -> Response:
+    def maintenance_preview_ui(request: Request, response: Response) -> Response:
         """Interactive Staging Preview UI covering all 6 Spec Section 13.1 Admin Screens + Public Release-Pinned Explorer."""
+        _require_admin(request, response)
         html = """<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -889,13 +899,12 @@ def create_maintenance_router(
         return Response(content=html, media_type="text/html; charset=utf-8", headers=PRIVATE_NO_STORE)
 
     @router.get("/maintenance-preview.js", include_in_schema=False)
-    def maintenance_preview_js() -> Response:
+    def maintenance_preview_js(request: Request, response: Response) -> Response:
         """External JS bundle for /maintenance-preview complying strictly with CSP script-src 'self' and script-src-attr 'none'."""
+        _require_admin(request, response)
         js = """(function () {
   const ADMIN_HEADERS = {
-    "Content-Type": "application/json",
-    "X-Admin-Id": "admin_kevin",
-    "X-Admin-Role": "super_admin"
+    "Content-Type": "application/json"
   };
 
   const HOME_NAMES = {
@@ -1639,6 +1648,9 @@ def build_default_maintenance_router(
     *,
     official_data_root: Any = None,
     seed_demo_changes: bool = False,
+    authenticate_admin: Callable[[Request], tuple[str, set[str] | None]] | None = None,
+    authenticate_submitter: Callable[[Request], str] | None = None,
+    include_legacy_experience_alias: bool = True,
 ) -> tuple[APIRouter, MaintenanceStore]:
     """Create a MaintenanceStore + APIRouter for FastAPI mounting and optional Staging browser preview."""
     import os
@@ -1733,15 +1745,35 @@ def build_default_maintenance_router(
             store.change_sets[cs2.id] = cs2
 
     def _auth_admin(req: Request) -> tuple[str, set[str] | None]:
-        admin_id = req.headers.get("x-admin-id", "")
-        role = req.headers.get("x-admin-role", "")
-        if not admin_id or role not in {"super_admin", "school_reviewer", "publisher"}:
-            raise AccessDeniedError("Admin authentication headers required (X-Admin-Id / X-Admin-Role)")
-        scope = req.headers.get("x-admin-scope")
-        allowed = {s.strip() for s in scope.split(",") if s.strip()} if scope else None
-        return admin_id, allowed
+        import secrets
 
-    router = create_maintenance_router(store, authenticate_admin=_auth_admin)
+        automation_token = os.environ.get("EXCHANGE_MAINTENANCE_AUTOMATION_TOKEN", "").strip()
+        peer_host = req.client.host if req.client and req.client.host else ""
+        presented_token = req.headers.get("x-maintenance-token", "").strip()
+        if (
+            len(automation_token) >= 32
+            and presented_token
+            and peer_host in {"127.0.0.1", "::1"}
+            and secrets.compare_digest(presented_token, automation_token)
+        ):
+            return "loopback_automation", None
+
+        if authenticate_admin is not None:
+            return authenticate_admin(req)
+
+        raise PermissionError("Maintenance admin authentication is required")
+
+    def _auth_submitter(req: Request) -> str:
+        if authenticate_submitter is not None:
+            return authenticate_submitter(req)
+        raise HTTPException(status_code=401, detail="Authentication required")
+
+    router = create_maintenance_router(
+        store,
+        authenticate_admin=_auth_admin,
+        authenticate_submitter=_auth_submitter,
+        include_legacy_experience_alias=include_legacy_experience_alias,
+    )
     return router, store
 
 

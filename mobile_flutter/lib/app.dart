@@ -36,15 +36,26 @@ class _ExchangeGuideAppState extends State<ExchangeGuideApp>
     final initialized = _initialized = store.initialize();
     store.mobileNotifications.target.addListener(_openNotification);
     final appLinks = AppLinks();
-    _links = appLinks.uriLinkStream.listen((uri) async {
+    Future<void> handleIncomingUri(Uri uri) async {
       await initialized;
+      if (!mounted) return;
       if (uri.scheme == 'tw.uniway.app' && uri.host == 'journey') {
         store.selectMainTab(0);
         navigatorKey.currentState?.popUntil((route) => route.isFirst);
         return;
       }
       await store.completeMobileLogin(uri);
-    });
+    }
+
+    unawaited(() async {
+      try {
+        final initialUri = await appLinks.getInitialLink();
+        if (initialUri != null) {
+          await handleIncomingUri(initialUri);
+        }
+      } catch (_) {}
+    }());
+    _links = appLinks.uriLinkStream.listen(handleIncomingUri);
     _updateTimer = Timer(const Duration(seconds: 3), _checkUpdate);
   }
 

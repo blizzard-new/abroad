@@ -13,11 +13,13 @@ from datetime import timedelta
 from typing import Callable
 from urllib.parse import urlencode
 
-from fastapi import FastAPI, HTTPException, Response
+from fastapi import FastAPI, HTTPException, Request, Response
 from pydantic import BaseModel, Field
 
+from .analytics import RateLimiter
 from .legal_pages import TERMS_VERSION
 from .models import AccountSession, UserAccount, utc_now
+from .request_origin import client_address
 from .transient_auth import TransientAuthState, TransientAuthStateKind
 
 MOBILE_CALLBACK = "tw.uniway.app://auth"
@@ -47,6 +49,8 @@ def mobile_handoff_url(app: FastAPI, account_id: str, challenge: str, state: str
 
 
 def register_mobile_auth_routes(app: FastAPI, issue_session: Callable[[UserAccount], AccountSession]) -> None:
+    exchange_limiter = RateLimiter(max_batches=20, max_events=20, window_seconds=60.0)
+
     @app.get("/auth/mobile/config")
     def mobile_config(response: Response) -> dict:
         response.headers["Cache-Control"] = "no-store"
@@ -54,9 +58,15 @@ def register_mobile_auth_routes(app: FastAPI, issue_session: Callable[[UserAccou
                 "redirect_uri": MOBILE_CALLBACK, "pkce_method": "S256"}
 
     @app.post("/auth/mobile/exchange", response_model=AccountSession)
-    def exchange(payload: MobileSessionExchange, response: Response) -> AccountSession:
+    def exchange(payload: MobileSessionExchange, request: Request, response: Response) -> AccountSession:
         response.headers["Cache-Control"] = "no-store"
         response.headers["Pragma"] = "no-cache"
+        if not exchange_limiter.allow(client_address(request), 1):
+            raise HTTPException(
+                status_code=429,
+                detail="手機登入交換請求過於頻繁，請稍後再試。",
+                headers={"Retry-After": "60"},
+            )
         record = app.state.transient_auth_store.consume_state(
             hashlib.sha256(payload.code.encode()).hexdigest(),
             TransientAuthStateKind.OAUTH_LOGIN,

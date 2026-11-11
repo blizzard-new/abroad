@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../core/application_calendar.dart';
 import '../core/exchange_widgets.dart';
+import '../core/external_links.dart';
 import '../core/student_ui.dart';
 import '../core/student_plan.dart';
 import '../core/study_plan_widget_service.dart';
@@ -236,10 +236,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: OutlinedButton.icon(
-                        onPressed: () => launchUrl(
-                          Uri.parse(selected.sourceUrl),
-                          mode: LaunchMode.externalApplication,
-                        ),
+                        onPressed: () => launchSafeExternalHttpsUrl(selected.sourceUrl),
                         icon: const Icon(Icons.open_in_new_rounded),
                         label: const Text('查看官方來源'),
                       ),

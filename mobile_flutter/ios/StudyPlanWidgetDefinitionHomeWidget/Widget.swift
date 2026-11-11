@@ -81,7 +81,7 @@ struct PlanWidgetView: View {
     Group {
       switch family {
       case .accessoryInline:
-        Label(entry.title, systemImage: style.symbol)
+        Label(entry.title, systemImage: style.symbol).privacySensitive()
       case .accessoryCircular:
         Gauge(value: entry.progress) { Image(systemName: style.symbol) } currentValueLabel: {
           Text("\(Int(entry.progress * 100))").font(.caption2)
@@ -89,8 +89,8 @@ struct PlanWidgetView: View {
       case .accessoryRectangular:
         VStack(alignment: .leading) {
           Label(style.title, systemImage: style.symbol).font(.caption2)
-          Text(entry.title).font(.caption.bold()).lineLimit(1)
-          Text(entry.dateLabel).font(.caption2).lineLimit(1)
+          Text(entry.title).font(.caption.bold()).lineLimit(1).privacySensitive()
+          Text(entry.dateLabel).font(.caption2).lineLimit(1).privacySensitive()
         }
       default: home
       }
@@ -108,10 +108,10 @@ struct PlanWidgetView: View {
           Text(days < 0 ? "—" : "\(days)").font(.system(size: 40, weight: .semibold, design: .rounded)).monospacedDigit()
           Text(days < 0 ? "期限已過" : (days == 0 ? "今天" : "天後")).font(.caption)
         }.foregroundStyle(Color(red: 0.09, green: 0.18, blue: 0.22))
-        Text(entry.title).font(.caption).lineLimit(2)
+        Text(entry.title).font(.caption).lineLimit(2).privacySensitive()
       } else if style == .checklist, !entry.tasks.isEmpty {
         ForEach(Array(entry.tasks.prefix(family == .systemSmall ? 2 : 3).enumerated()), id: \.offset) { _, task in
-          Label(task, systemImage: "circle").font(.caption).lineLimit(1)
+          Label(task, systemImage: "circle").font(.caption).lineLimit(1).privacySensitive()
         }
       } else if style == .progress {
         HStack(spacing: 12) {
@@ -120,11 +120,11 @@ struct PlanWidgetView: View {
             Circle().trim(from: 0, to: entry.progress).stroke(style.accent, style: StrokeStyle(lineWidth: 7, lineCap: .round)).rotationEffect(.degrees(-90))
             Text("\(Int(entry.progress * 100))%").font(.headline).monospacedDigit()
           }.frame(width: 64, height: 64)
-          if family != .systemSmall { Text(entry.title).font(.caption).lineLimit(3) }
+          if family != .systemSmall { Text(entry.title).font(.caption).lineLimit(3).privacySensitive() }
         }
       } else {
-        Text(entry.title).font(.headline).lineLimit(2)
-        Text(entry.dateLabel).font(.caption).foregroundStyle(Color(red: 0.32, green: 0.40, blue: 0.43)).lineLimit(1)
+        Text(entry.title).font(.headline).lineLimit(2).privacySensitive()
+        Text(entry.dateLabel).font(.caption).foregroundStyle(Color(red: 0.32, green: 0.40, blue: 0.43)).lineLimit(1).privacySensitive()
       }
       Spacer(minLength: 0)
       Text(entry.updated.isEmpty ? entry.progressLabel : entry.updated).font(.caption2).foregroundStyle(style.accent).lineLimit(1)

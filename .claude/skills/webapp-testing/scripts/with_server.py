@@ -15,6 +15,7 @@ Usage:
 """
 
 import subprocess
+import shlex
 import socket
 import time
 import sys
@@ -65,10 +66,11 @@ def main():
         for i, server in enumerate(servers):
             print(f"Starting server {i+1}/{len(servers)}: {server['cmd']}")
 
-            # Use shell=True to support commands with cd and &&
+            # Prefer argv execution; fall back to shell only when explicit compound operators are used.
+            needs_shell = any(op in server['cmd'] for op in ('&&', '||', ';', '|'))
             process = subprocess.Popen(
-                server['cmd'],
-                shell=True,
+                server['cmd'] if needs_shell else shlex.split(server['cmd']),
+                shell=needs_shell,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE
             )

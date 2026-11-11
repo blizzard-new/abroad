@@ -56,7 +56,7 @@ jobs:
           printf '%s\n' 'Developer previews only. The unsigned app cannot be installed by the public. A signed TestFlight build requires Apple Developer enrollment, app identifiers, profiles and App Store Connect.' > build/preview/README.txt
           shasum -a 256 build/preview/*.zip > build/preview/SHA256SUMS.txt
       - name: Upload developer previews
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: uniway-ios-developer-preview
           path: mobile_flutter/build/preview/

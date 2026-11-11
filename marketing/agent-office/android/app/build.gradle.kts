@@ -41,6 +41,9 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("office")
+            if ((findProperty("previewBuild") as String?) == "true") {
+                applicationIdSuffix = ".preview"
+            }
             isMinifyEnabled = false
         }
     }

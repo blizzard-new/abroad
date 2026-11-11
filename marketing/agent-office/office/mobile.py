@@ -83,6 +83,8 @@ class FailureLimit:
             self.failures.pop(key, None)
         if len(self.failures) > 1000:  # a flood of addresses must not grow this without end
             self.failures = {k: v for k, v in self.failures.items() if now - v[-1] < self.window}
+        if len(self.locked) > 1000:
+            self.locked = {k: until for k, until in self.locked.items() if until > now}
 
     def succeeded(self, key: str) -> None:
         self.failures.pop(key, None)

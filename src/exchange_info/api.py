@@ -48,7 +48,7 @@ from urllib.parse import quote, urlencode
 
 import requests
 from fastapi import FastAPI, File, Form, Header, HTTPException, Query, Request, Response, UploadFile
-from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse, RedirectResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
 
@@ -62,7 +62,7 @@ from .community_repositories import (
     PrivateConversationStatusMutationRequest,
     PrivateMessageMutationRequest,
 )
-from .analytics import AnalyticsService, ApiMetricsMiddleware
+from .analytics import AnalyticsService, ApiMetricsMiddleware, RateLimiter
 from .analytics_repository import create_analytics_repository
 from .analytics_routes import register_analytics_routes
 from .feedback import FeedbackService, create_feedback_repository
@@ -147,6 +147,7 @@ from .workflow_issue_reports import (
     canonical_issue_report_fingerprint,
 )
 from .document_vault import (
+    MAX_VAULT_FILE_BYTES,
     VaultAuthorizationError,
     VaultConsentError,
     VaultError,
@@ -858,7 +859,7 @@ from .tku_student_view import (
 from .rag import rag_index_status, search_document_chunks, supabase_configured
 from .legal_pages import TERMS_VERSION, register_legal_pages
 from .mobile_auth import mobile_handoff_url, register_mobile_auth_routes
-from .request_origin import client_fingerprint, public_base_url
+from .request_origin import client_address, client_fingerprint, is_production_environment, public_base_url
 from .seo import EDITORIAL_PATHS, SeoSettings, create_seo_router, homepage_html
 from .seo_changes import ContentChanges
 from .seo_analytics import measurement_id
@@ -1168,7 +1169,7 @@ def _auth_cookie_secure_enabled(
     environment: Mapping[str, str] | None = None,
 ) -> bool:
     env = os.environ if environment is None else environment
-    if env.get("EXCHANGE_ENVIRONMENT") == "production":
+    if is_production_environment(env):
         return True
     val = env.get("EXCHANGE_AUTH_SECURE_COOKIE", "").strip().lower()
     return val in ("1", "true", "yes", "on")
@@ -1181,6 +1182,7 @@ def _browser_security_headers(
     headers = {
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "DENY",
+        "Cross-Origin-Opener-Policy": "same-origin",
         "Referrer-Policy": "no-referrer",
         "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
         "Content-Security-Policy": (
@@ -1199,7 +1201,7 @@ def _browser_security_headers(
     if measurement_id(env):
         headers["Content-Security-Policy"] = headers["Content-Security-Policy"].replace(
             "script-src 'self';", "script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com;")
-    if env.get("EXCHANGE_ENVIRONMENT") == "production":
+    if is_production_environment(env):
         headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return headers
 
@@ -1289,7 +1291,7 @@ def create_app(
     from .community_repositories import create_community_repository
     from .workflow_issue_reports import create_workflow_issue_report_repository
 
-    is_production = os.environ.get("EXCHANGE_ENVIRONMENT") == "production"
+    is_production = is_production_environment()
     seo_settings = SeoSettings.from_environment()
 
     if is_production:
@@ -1438,20 +1440,41 @@ def create_app(
 
     @app.middleware("http")
     async def add_security_headers(request: Request, call_next):
-        context_token = catalog_request.set(request)
-        try:
-            if catalogue_slots is not None and (
-                request.url.path in catalogue_response_paths
-                or request.url.path.startswith(
-                    ("/schools/", "/sitemaps/", "/destinations/", "/partners/", "/cross-school-partners/")
-                )
-            ):
-                async with catalogue_slots:
+        csrf_blocked_detail: str | None = None
+        if (
+            request.method in {"POST", "PUT", "PATCH", "DELETE"}
+            and AUTH_COOKIE_NAME in request.cookies
+            and not request.headers.get("Authorization", "").lower().startswith("bearer ")
+        ):
+            sec_fetch_site = (request.headers.get("Sec-Fetch-Site") or "").strip().lower()
+            origin = (request.headers.get("Origin") or "").strip().rstrip("/")
+            if sec_fetch_site == "cross-site":
+                csrf_blocked_detail = "跨站請求已被拒絕。"
+            elif origin:
+                allowed_origins = {
+                    public_base_url(request),
+                    f"{request.base_url.scheme}://{request.base_url.netloc}".rstrip("/"),
+                }
+                if origin == "null" or origin not in allowed_origins:
+                    csrf_blocked_detail = "跨站請求來源驗證失敗。"
+
+        if csrf_blocked_detail is not None:
+            response = JSONResponse({"detail": csrf_blocked_detail}, status_code=403)
+        else:
+            context_token = catalog_request.set(request)
+            try:
+                if catalogue_slots is not None and (
+                    request.url.path in catalogue_response_paths
+                    or request.url.path.startswith(
+                        ("/schools/", "/sitemaps/", "/destinations/", "/partners/", "/cross-school-partners/")
+                    )
+                ):
+                    async with catalogue_slots:
+                        response = await call_next(request)
+                else:
                     response = await call_next(request)
-            else:
-                response = await call_next(request)
-        finally:
-            catalog_request.reset(context_token)
+            finally:
+                catalog_request.reset(context_token)
         for key, value in _browser_security_headers().items():
             response.headers.setdefault(key, value)
         path = request.url.path
@@ -1507,7 +1530,10 @@ def create_app(
         return cgu_catalogue.view()
 
     experience_collection_lock = threading.Lock()
-    workflow_collection_lock = app.state.content_review_lock = threading.RLock()
+    workflow_collection_lock = threading.RLock()
+    app.state.content_review_lock = threading.RLock()
+    refresh_rate_limiter = RateLimiter(max_batches=6, max_events=6, window_seconds=600.0)
+    calendar_feed_limiter = RateLimiter(max_batches=30, max_events=30, window_seconds=60.0)
     community_lock = threading.Lock()
     auth_lock = threading.RLock()
     oauth_states: dict[str, tuple[AuthProvider, datetime, str]] = {}
@@ -3667,7 +3693,8 @@ def create_app(
         if not consent_bool:
             raise HTTPException(status_code=422, detail="必須明確同意保存私人文件。")
 
-        content = await file.read()
+        content = await file.read(MAX_VAULT_FILE_BYTES + 1)
+        await file.close()
         try:
             return app.state.document_vault_service.store_version(
                 account.id,
@@ -3707,7 +3734,8 @@ def create_app(
         if not consent_bool:
             raise HTTPException(status_code=422, detail="必須明確同意保存私人文件版本。")
 
-        content = await file.read()
+        content = await file.read(MAX_VAULT_FILE_BYTES + 1)
+        await file.close()
         try:
             doc = app.state.document_vault_service.get_document(account.id, document_id)
             return app.state.document_vault_service.store_version(
@@ -3804,11 +3832,16 @@ def create_app(
             content, file_name, media_type = app.state.document_vault_service.download(
                 account.id, download_token
             )
+            safe_download_name = quote(Path(file_name or "vault-document").name)
             response = Response(
                 content=content,
                 media_type=media_type,
             )
             response.headers["Cache-Control"] = "private, no-store, max-age=0"
+            response.headers["X-Content-Type-Options"] = "nosniff"
+            response.headers["Content-Disposition"] = (
+                f"attachment; filename=\"vault-document\"; filename*=UTF-8''{safe_download_name}"
+            )
             return response
         except (VaultAuthorizationError, VaultIntegrityError):
             raise HTTPException(status_code=403, detail="私人文件下載授權無效。")
@@ -3858,7 +3891,13 @@ def create_app(
         return build_calendar_task_schedule(payload.events, as_of=payload.as_of, availability=payload.availability)
 
     @app.get("/calendar/feed/{feed_token}.ics", response_class=PlainTextResponse)
-    def calendar_subscription_feed(feed_token: str) -> PlainTextResponse:
+    def calendar_subscription_feed(feed_token: str, request: Request) -> PlainTextResponse:
+        if not calendar_feed_limiter.allow(client_address(request), 1):
+            raise HTTPException(
+                status_code=429,
+                detail="日曆同步請求過於頻繁，請稍後再試。",
+                headers={"Retry-After": "60"},
+            )
         if len(feed_token) < 24 or len(feed_token) > 128:
             raise HTTPException(status_code=404, detail="找不到這個日曆。")
         account = None
@@ -4217,7 +4256,9 @@ def create_app(
             if hasattr(target_state, "session_id")
             else (target_state[2] if len(target_state) > 2 else None)
         )
-        if not flow_secret or (expected_secret and flow_secret != expected_secret):
+        if not flow_secret or (
+            expected_secret and not secrets.compare_digest(flow_secret, expected_secret)
+        ):
             raise HTTPException(status_code=403, detail="瀏覽器驗證階段不相符。")
 
         if hasattr(app.state, "transient_auth_store"):
@@ -4802,9 +4843,16 @@ def create_app(
         "/cross-school-partners/{country}/{institution}",
         response_model=CrossSchoolPartnerPageData,
     )
+    def _allowed_override_plan_count(request: Request, value: int | None) -> int | None:
+        if value is None or not is_production_environment():
+            return value
+        account = optional_account(request)
+        return value if account and is_content_admin(account) else None
+
     def cross_school_partner_page(
         country: str,
         institution: str,
+        request: Request,
         home: str | None = Query(default=None),
         override_plan_count: int | None = Query(default=None, ge=0, le=5000),
     ) -> CrossSchoolPartnerPageData:
@@ -4814,7 +4862,7 @@ def create_app(
             selected_home=home,
             catalogue_loader=seo_catalogue,
             data_dir=resolved_data_dir,
-            override_plan_count=override_plan_count,
+            override_plan_count=_allowed_override_plan_count(request, override_plan_count),
         )
         if page_data is None:
             raise HTTPException(
@@ -4828,6 +4876,7 @@ def create_app(
         response_model=SchoolStagedNetworkStatus,
     )
     def network_effects_status(
+        request: Request,
         school: str | None = Query(default=None),
         override_plan_count: int | None = Query(default=None, ge=0, le=5000),
     ) -> SchoolStagedNetworkStatus:
@@ -4835,7 +4884,7 @@ def create_app(
         return build_school_staged_network_status(
             university,
             data_dir=resolved_data_dir,
-            override_plan_count=override_plan_count,
+            override_plan_count=_allowed_override_plan_count(request, override_plan_count),
         )
 
     @app.get(
@@ -4966,19 +5015,13 @@ def create_app(
         ai_consent_granted: bool = Form(default=False),
         consent: bool = Form(...),
     ) -> DocumentCheckResult:
-        import os
-        
-        mode = os.environ.get("EXCHANGE_PRODUCT_RELEASE_MODE", "")
-        if mode == "public":
-            auth = request.headers.get("Authorization")
-            if not auth:
-                raise HTTPException(status_code=401, detail="Unauthorized")
-            if "free" in auth:
-                raise HTTPException(status_code=403, detail="需要進階功能")
-                
+        account, _ = authenticated_account(request)
+        if not product_feature_enabled(account, ProductFeature.DOCUMENT_COMPLETENESS_REVIEW):
+            raise HTTPException(status_code=403, detail="此為進階功能，請升級訂閱後使用。")
+
         if request.url.path == "/ai/review-document" or use_ai:
             raise HTTPException(status_code=503, detail="AI 深度檢查目前暫緩")
-        
+
         if consent is None or consent is False:
             raise HTTPException(status_code=422, detail="需要同意")
             
@@ -5225,10 +5268,19 @@ def create_app(
 
     @app.post("/student-experiences/refresh", response_model=StudentExperienceDigest)
     def refresh_student_experiences(
+        request: Request,
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
         max_sources: int = Query(default=12, ge=3, le=20),
     ) -> StudentExperienceDigest:
+        if is_production_environment():
+            authenticated_account(request)
+        if not refresh_rate_limiter.allow(f"exp:{client_address(request)}", 1):
+            raise HTTPException(
+                status_code=429,
+                detail="心得補查請求過於頻繁，請稍後再試。",
+                headers={"Retry-After": "60"},
+            )
         university, partner = partner_context_for_school(school, home_school)
         with experience_collection_lock:
             discovered = collect_student_experiences(
@@ -5801,9 +5853,18 @@ def create_app(
 
     @app.post("/school-life-context/refresh", response_model=SchoolLifeContext)
     def refresh_school_life_context(
+        request: Request,
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> SchoolLifeContext:
+        if is_production_environment():
+            authenticated_account(request)
+        if not refresh_rate_limiter.allow(f"life:{client_address(request)}", 1):
+            raise HTTPException(
+                status_code=429,
+                detail="生活情報補查請求過於頻繁，請稍後再試。",
+                headers={"Retry-After": "60"},
+            )
         university, partner = partner_context_for_school(school, home_school)
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
         if university.id == NCU.id:
@@ -6049,9 +6110,11 @@ def create_app(
 
     @app.post("/destination-profile/refresh", response_model=DestinationProfile)
     def refresh_destination_profile(
+        request: Request,
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> DestinationProfile:
+        authenticated_content_admin(request)
         university, partner = partner_context_for_school(school, home_school)
         with workflow_collection_lock:
             if not partner.website:
@@ -6105,9 +6168,11 @@ def create_app(
         response_model=UniversityApplicationWorkflow,
     )
     def refresh_application_workflow(
+        request: Request,
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> UniversityApplicationWorkflow:
+        authenticated_content_admin(request)
         university, partner = partner_context_for_school(school, home_school)
         with workflow_collection_lock:
             if not partner.website:
@@ -6774,7 +6839,27 @@ def create_app(
         authenticated_content_admin, app.state.account_repository, anonymous_identity)
 
     from .maintenance.routes import build_default_maintenance_router
-    maint_router, maint_store = build_default_maintenance_router(resolved_data_dir)
+    from .maintenance.store import AccessDeniedError as MaintAccessDeniedError
+
+    def _maintenance_admin_auth(req: Request) -> tuple[str, set[str] | None]:
+        try:
+            admin_account, _ = authenticated_content_admin(req)
+        except HTTPException as exc:
+            if exc.status_code == 403:
+                raise MaintAccessDeniedError(str(exc.detail)) from exc
+            raise PermissionError(str(exc.detail)) from exc
+        return admin_account.id, None
+
+    def _maintenance_submitter_auth(req: Request) -> str:
+        submitter_account, _ = authenticated_account(req)
+        return submitter_account.id
+
+    maint_router, maint_store = build_default_maintenance_router(
+        resolved_data_dir,
+        authenticate_admin=_maintenance_admin_auth,
+        authenticate_submitter=_maintenance_submitter_auth,
+        include_legacy_experience_alias=False,
+    )
     app.state.maintenance_store = maint_store
     app.include_router(maint_router)
     from .application_path import register_application_path

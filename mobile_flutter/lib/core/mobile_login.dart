@@ -7,11 +7,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../data/exchange_api.dart';
 import '../data/models.dart';
+import 'account_session_storage.dart';
 
 class MobileLogin {
   MobileLogin(this.api);
   final ExchangeApi api;
-  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  final FlutterSecureStorage _storage = hardenedSecureStorage;
   bool _exchanging = false;
   String get _key => 'mobile_login:${Uri.encodeComponent(api.baseUrl)}';
 

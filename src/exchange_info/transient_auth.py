@@ -91,6 +91,13 @@ class TransientAuthStore(Protocol):
     def delete_account_states(self, account_id: str) -> int: ...
 
 
+def _constant_time_equal(actual: str | None, expected: str) -> bool:
+    import secrets
+    if actual is None:
+        return False
+    return secrets.compare_digest(actual.encode("utf-8"), expected.encode("utf-8"))
+
+
 def _matches_expected(
     record: TransientAuthState,
     *,
@@ -98,11 +105,10 @@ def _matches_expected(
     expected_session_id: str | None,
     expected_provider_id: str | None,
 ) -> bool:
-    return (
-        (expected_account_id is None or record.account_id == expected_account_id)
-        and (expected_session_id is None or record.session_id == expected_session_id)
-        and (expected_provider_id is None or record.provider_id == expected_provider_id)
-    )
+    account_ok = expected_account_id is None or _constant_time_equal(record.account_id, expected_account_id)
+    session_ok = expected_session_id is None or _constant_time_equal(record.session_id, expected_session_id)
+    provider_ok = expected_provider_id is None or _constant_time_equal(record.provider_id, expected_provider_id)
+    return account_ok and session_ok and provider_ok
 
 
 class LocalTransientAuthStore:

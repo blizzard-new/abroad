@@ -63,8 +63,11 @@ data/private_auth/*
 
 # Local secrets and scratch output must never be committed
 private_auth/
+**/private_auth/
+**/.local-email-secret
 tmp/
 private_vault/
+**/private_vault/
 supabase/.temp/
 
 # Local usage statistics (anonymous, but still local data)

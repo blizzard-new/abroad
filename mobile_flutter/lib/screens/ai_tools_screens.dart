@@ -1,11 +1,11 @@
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../core/application_calendar.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/external_links.dart';
 import '../core/student_ui.dart';
 import '../data/exchange_api.dart';
 import '../data/models.dart';
@@ -1516,7 +1516,5 @@ String _actionLabel(String action) => switch (action) {
 };
 
 Future<void> _openUrl(String value) async {
-  final uri = Uri.tryParse(value);
-  if (uri == null) return;
-  await launchUrl(uri, mode: LaunchMode.externalApplication);
+  await launchSafeExternalHttpsUrl(value);
 }

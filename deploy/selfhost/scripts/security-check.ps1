@@ -132,16 +132,16 @@ Safe 'docker' {
 
 Safe 'the settings file' {
     if (-not (Test-Path $script:EnvFile)) { Result 'WARN' '.env was not found'; return }
-    $bad = @((Get-Acl $script:EnvFile).Access | Where-Object { $_.IdentityReference.Value -match '(^|\\)(Everyone|Users|Authenticated Users)$' -and $_.AccessControlType -eq 'Allow' })
+    $bad = @((Get-Acl $script:EnvFile).Access | Where-Object { $_.IdentityReference.Value -match '(^|\\)(Everyone|Users|Authenticated Users|CodexSandboxUsers)$' -and $_.AccessControlType -eq 'Allow' })
     if ($bad.Count -gt 0) { Result 'FAIL' '.env (it holds every key and password) can be read by ordinary users: run 02-generate-secrets.ps1 again or fix the file permissions' }
     else { Result 'OK' '.env can only be read by administrators and the system' }
 }
 
 Safe 'folder permissions' {
-    foreach ($sub in 'backups', 'caddy') {
-        $p = Join-Path $script:UniwayHome $sub
+    $folders = @($script:UniwayHome) + @('app', 'logs', 'backups', 'caddy' | ForEach-Object { Join-Path $script:UniwayHome $_ })
+    foreach ($p in $folders) {
         if (-not (Test-Path $p)) { continue }
-        $bad = @((Get-Acl $p).Access | Where-Object { $_.IdentityReference.Value -match '(^|\\)(Everyone|Users|Authenticated Users)$' -and $_.AccessControlType -eq 'Allow' })
+        $bad = @((Get-Acl $p).Access | Where-Object { $_.IdentityReference.Value -match '(^|\\)(Everyone|Users|Authenticated Users|CodexSandboxUsers)$' -and $_.AccessControlType -eq 'Allow' })
         if ($bad.Count -gt 0) { Result 'WARN' ("{0} can be accessed by ordinary users: run 01-prepare-windows.ps1 again to lock down its permissions" -f $p) }
         else { Result 'OK' ("{0} is restricted to administrators and the system" -f $p) }
     }
