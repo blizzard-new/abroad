@@ -8,7 +8,7 @@ from urllib.parse import urlencode
 import pytest
 from playwright.sync_api import Page, expect
 
-from .conftest import LiveServer
+from .conftest import LiveServer, open_partner_filters
 
 LINCOLN = "林肯大學 Lincoln University"
 MEIJI = "明治大學 Meiji University"
@@ -25,7 +25,9 @@ INSTRUMENT = """(() => {
     }});
     library=value;
   }});
-  localStorage.setItem('exchange-guide-home-school','長庚大學');
+  if (!localStorage.getItem('exchange-guide-home-school')) {
+    localStorage.setItem('exchange-guide-home-school','長庚大學');
+  }
   sessionStorage.setItem('exchange-guide-browse-first','1');
 })();"""
 
@@ -33,6 +35,10 @@ INSTRUMENT = """(() => {
 def open_partners(page: Page, live_server: LiveServer, query=None):
     page.add_init_script(INSTRUMENT)
     page.goto(f"{live_server.base_url}/?{urlencode(query or {'view':'map'})}#partners")
+    page.evaluate("() => { appReady.then(() => { window.__globeAppReady = true; }); }")
+    page.wait_for_function("() => window.__globeAppReady", timeout=60000)
+    expect(page.locator("#boot-splash")).to_be_hidden(timeout=30000)
+    expect(page.locator("#partners")).to_be_visible(timeout=30000)
     expect(page.locator("#partner-table")).to_have_attribute("aria-busy", "false", timeout=30000)
 
 
@@ -134,6 +140,7 @@ def test_refresh_direct_url_and_missing_empty_states(page, live_server):
     expect(page.locator("#country-filter")).to_have_value("紐西蘭")
     page.locator("#partner-search").fill("no-such-university-9837")
     expect(page.locator("#partner-map-status")).to_contain_text("沒有符合條件")
+    page.locator(".pr-facets > summary").click()
     page.locator("#clear-partner-filters").click()
     expect(page.locator("#partner-map-status")).to_be_hidden()
     expect(page.locator("#partner-map-missing")).to_contain_text("座標待確認")
@@ -194,9 +201,11 @@ def test_thousand_points_cluster_expand_and_keyboard(page, live_server):
     page.wait_for_function("old => !window.__testedMap.isMoving() && window.__testedMap.getZoom()>old", arg=before)
     expect(page.locator("#map-connections")).to_have_count(0)
     assert page.evaluate("window.__testedMap.getStyle().layers.every(layer => !layer.id.startsWith('connection-'))")
-    page.locator("#map-school-select").focus()
-    page.locator("#map-school-select").press("ArrowDown")
-    page.locator("#map-school-select").press("Enter")
+    picker = page.locator(".glide-select:has(#map-school-select) .glide-select__trigger")
+    picker.focus()
+    picker.press("Enter")
+    picker.press("ArrowDown")
+    picker.press("Enter")
     expect(page.locator("#partner-map-preview")).to_be_visible()
     page.locator("[data-close-map-preview]").press("Escape")
     expect(page.locator("#partner-map-preview")).to_be_hidden()
@@ -210,12 +219,15 @@ def test_dynamic_home_school_real_japan_filter_and_shared_url(page, live_server)
     page.locator('[data-home-school="國立臺北大學"]').click()
     expect(page.locator("#partner-map-context")).to_contain_text("國立臺北大學", timeout=30000)
     expect(page.locator("#partner-map-status")).to_be_hidden()
+    open_partner_filters(page)
     page.locator("#country-filter").select_option("日本")
     ready(page)
     features = map_data(page)["features"]
     assert features and all(f["properties"]["country"] == "日本" for f in features)
     expect(page.get_by_role("button", name="我的大學：國立臺北大學", exact=True)).to_be_attached()
     page.reload()
+    page.evaluate("() => { appReady.then(() => { window.__globeAppReady = true; }); }")
+    page.wait_for_function("() => window.__globeAppReady", timeout=60000)
     ready(page)
     expect(page.locator("#partner-map-context")).to_contain_text("國立臺北大學")
     expect(page.locator("#country-filter")).to_have_value("日本")
@@ -226,6 +238,7 @@ def test_direct_query_without_hash_and_all_shared_filters(page, live_server):
     page.goto(f"{live_server.base_url}/?view=map")
     ready(page)
     assert "#partners" in page.url
+    open_partner_filters(page)
     page.locator("#college-filter").select_option("管理學院")
     page.locator("#degree-filter").select_option("大學部")
     page.locator("#availability-filter").select_option("open")

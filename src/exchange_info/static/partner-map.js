@@ -98,15 +98,15 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     type: "Feature", properties: { name: zhNames[f.properties.name] || f.properties.name.normalize("NFD").replace(/[^\x20-\x7E]/g, "") },
     geometry: { type: "Point", coordinates: [f.properties.label_lon, f.properties.label_lat] },
   })) };
-  // Muted geography keeps school markers and selection readable in both themes.
+  // Cheerful atlas colours; navy labels and white marker halos keep the map legible.
   const PALETTES = {
     light: {
-      sea: "#738b9b", lands: ["#b5b0a4", "#bdb6a0", "#a2b2a1", "#aaaeb8", "#b8ac9e", "#9eafb0", "#b3a8b0"], border: "#e1e5df", borderOpacity: .65,
-      label: "#25333b", halo: "#e5e9e5", grid: "#c8d4db", gridOpacity: .18, hover: "#ffffff", hoverOpacity: .18,
+      sea: "#55b9dc", lands: ["#a9dda5", "#f3d690", "#8ed5b0", "#bacbf2", "#f0bea4", "#9bddd3", "#d5bee9"], border: "#f5faf4", borderOpacity: .8,
+      label: "#233e51", halo: "#f5faf4", grid: "#e0f5ff", gridOpacity: .18, hover: "#ffffff", hoverOpacity: .18,
     },
     dark: {
-      sea: "#253743", lands: ["#77766e", "#817c69", "#657b70", "#6b7281", "#807366", "#60777b", "#7a6d79"], border: "#bbc9cc", borderOpacity: .35,
-      label: "#edf1ee", halo: "#253743", grid: "#bbc9cc", gridOpacity: .08, hover: "#ffffff", hoverOpacity: .12,
+      sea: "#174d73", lands: ["#497e70", "#8c8052", "#387e75", "#586e9b", "#9b6c5c", "#377f91", "#806a9b"], border: "#b3ddd9", borderOpacity: .5,
+      label: "#f2f8ff", halo: "#183c58", grid: "#a9dff5", gridOpacity: .12, hover: "#ffffff", hoverOpacity: .12,
     },
   };
   const landColor = (lands) => ["match", ["get", "tone"], 1, lands[0], 2, lands[1], 3, lands[2], 4, lands[3], 5, lands[4], 6, lands[5], 7, lands[6], lands[2]];
@@ -114,7 +114,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   let colors = PALETTES[themeName()];
   const globalCamera = () => {
     const width = canvasHost.clientWidth || 960, height = canvasHost.clientHeight || 600;
-    return { center: [120, 22], zoom: Math.max(.25, Math.min(2.5, Math.log2(Math.min(width * 1.08, height * 1.08) * Math.PI / 512))), bearing: 0, pitch: 0 };
+    return { center: [120, 22], zoom: Math.max(.25, Math.min(2.5, Math.log2(Math.min(width * 1.04, height * 1.04) * Math.PI / 512))), bearing: 0, pitch: 0 };
   };
   let map;
   try {
@@ -220,7 +220,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   }
 
   function closePreview({ restoreFocus = false } = {}) {
-    selectedName = ""; preview.hidden = true; select.value = ""; markListSelection();
+    selectedName = ""; preview.hidden = true; select.value = "";
     if (loaded && !disposed) ["selected-school", "selected-halo"].forEach((id) => map.setFilter(id, ["==", ["get", "name"], ""]));
     syncMotion();
     if (restoreFocus) (lastFocus?.isConnected ? lastFocus : map.getCanvas()).focus({ preventScroll: true });
@@ -239,7 +239,6 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     if (!item || !loaded || failed) return;
     lastFocus = document.activeElement;
     selectedName = name; select.value = name; popup.remove();
-    markListSelection();
     drawPreview(item, focus);
     onSchoolSelect(item);
     ["selected-school", "selected-halo"].forEach((id) => map.setFilter(id, ["==", ["get", "name"], name]));
@@ -354,41 +353,8 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
       return li;
     });
     gaps.querySelector("ul").replaceChildren(...rows);
-    renderList(located);
     applyData();
   }
-
-  // The same schools as the quick-locate menu, as a visible list beside the map on a wide screen (CSS hides it elsewhere).
-  const list = $("#partner-map-list");
-  function renderList(located) {
-    const sorted = [...located].sort((a, b) => (a.country || "").localeCompare(b.country || "", "zh-Hant") || a.school_name.localeCompare(b.school_name, "zh-Hant"));
-    const key = sorted.map((p) => p.school_name).join("|");
-    if (list.dataset.key !== key) {
-      list.dataset.key = key;
-      list.querySelector("ul").replaceChildren(...sorted.map((item) => {
-        const li = document.createElement("li"), button = document.createElement("button");
-        button.type = "button"; button.dataset.mapSchool = item.school_name;
-        const name = document.createElement("strong"); name.textContent = item.school_name;
-        const place = document.createElement("small"); place.textContent = [item.location.city, item.country].filter(Boolean).join(" · ");
-        button.append(name, place); li.append(button);
-        return li;
-      }));
-    }
-    markListSelection();
-  }
-  function markListSelection() {
-    let selected = null;
-    list.querySelectorAll("[data-map-school]").forEach((button) => {
-      const on = button.dataset.mapSchool === selectedName;
-      if (on) { button.setAttribute("aria-current", "true"); selected = button; } else button.removeAttribute("aria-current");
-    });
-    // Scroll the list itself, never the page.
-    if (selected && (selected.offsetTop < list.scrollTop || selected.offsetTop + selected.offsetHeight > list.scrollTop + list.clientHeight)) {
-      list.scrollTop = Math.max(0, selected.offsetTop - list.clientHeight / 2 + selected.offsetHeight / 2);
-    }
-  }
-  const onListClick = (event) => { const button = event.target.closest("[data-map-school]"); if (button) selectSchool(button.dataset.mapSchool, false); };
-  list.addEventListener("click", onListClick);
 
   const timer = setTimeout(() => failMap("地圖載入逾時"), 20000);
   function failMap(message) {
@@ -486,7 +452,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
       stopMotion(); disposed = true; clearTimeout(timer); resize.disconnect(); intersection.disconnect(); themeWatch.disconnect(); homeMarker?.remove(); popup.remove();
       motionButton.removeEventListener("click", toggleMotion); reducedMotion.removeEventListener("change", syncMotion); document.removeEventListener("visibilitychange", syncMotion);
       canvasHost.removeEventListener("mouseleave", leave); $("#partner-map-panel").removeEventListener("keydown", escape);
-      select.removeEventListener("change", onSelect); $("#map-global").removeEventListener("click", globalView); $("#map-home").removeEventListener("click", homeView); $("#map-gaps-open").removeEventListener("click", openGaps); list.removeEventListener("click", onListClick);
+      select.removeEventListener("change", onSelect); $("#map-global").removeEventListener("click", globalView); $("#map-home").removeEventListener("click", homeView); $("#map-gaps-open").removeEventListener("click", openGaps);
       map.remove(); delete canvasHost.dataset.ready; preview.hidden = true;
     },
   };
