@@ -1,37 +1,41 @@
 {
   "version": 1,
   "sources": [
-    {"id":"selection","title":"長庚國際事務處｜校內申請選送須知與 116-1 公告","url":"https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817","checked_on":"2026-11-11","scope":"116 學年度第 1 學期（2027 秋季出國）校內線上申請自 2026/11/02 開放至 2026/12/21 17:00 截止，紙本資料亦須於截止日前繳交國際事務處。"},
-    {"id":"partners","title":"長庚國際事務處｜可申請交換及雙聯學校總表","url":"https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554","checked_on":"2026-11-11","scope":"已同步長庚最新 78 所合作校（含交換／自費研修、雙學位與院級參考）之名額、合作校參考截止日與語言門檻。"},
+    {"id":"selection","title":"長庚國際事務處｜116 學年度第 1 學期交換及雙聯申請公告","url":"https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817","checked_on":"2026-11-11","scope":"116 學年度第 1 學期（2027 秋季出國）校內線上申請自 2026/11/02 開放至 2026/12/21 17:00 截止，紙本資料亦須於截止日前繳交國際事務處。"},
+    {"id":"selection_guide","title":"長庚國際事務處｜校內申請選送須知","url":"https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656","checked_on":"2026-11-12","scope":"校內基本門檻（學業平均 70 分、多益 700 分或同等檢定）、應備 5 份文件、最多 2 個志願與「校內甄選 → 學校提名 → 合作校申請」流程，並載明符合資格者不需另外單獨申請出國補助。"},
+    {"id":"partners","title":"長庚國際事務處｜可申請交換學校總表","url":"https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554","checked_on":"2026-11-11","scope":"已同步長庚最新 78 所合作校（含交換／自費研修、雙學位與管理學院院級參考）之名額、合作校參考截止日與語言門檻。"},
+    {"id":"dual_degree","title":"長庚國際事務處｜雙聯學位合作校一覽","url":"https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17533","checked_on":"2026-11-12","scope":"長庚 14 個雙聯學位計畫之適用學院、學制（學士／碩士／博士）、修業年限與外校門檻。"},
+    {"id":"navigator","title":"長庚大學法規彙編｜長庚大學領航者補助作業要點（規章編號 2B00004）","url":"https://www.cgu.edu.tw/regulation/RegulationManagement/RegulationDetail/b85add3b-7d9e-43ff-b22f-f0657e11765c","checked_on":"2026-11-12","scope":"114/10/28 行政會議修正；載明申請資格、第一類地區每學期上限 75,000 元（一學年 150,000 元）、第二類地區每學期上限 60,000 元（一學年 120,000 元）、班排前 30% 每學期加碼 10,000 元及返國採認至少 3 學分義務。"},
     {"id":"lincoln","title":"Lincoln University｜Join us at Lincoln on Exchange","url":"https://www.lincoln.ac.nz/study/study-abroad-and-student-exchange/coming-to-lincoln-on-exchange/","checked_on":"2026-11-11","scope":"一般 incoming exchange：需先經母校核准與提名，再依合作校通知完成申請、保險與住宿安排。"}
   ],
   "rules": [
-    {"title":"學業與語言，分兩層核對","body":"校內歷年學業平均以 70 分以上為原則；英文基本門檻為多益 700 分以上（或同等檢定）。目的校若有更高或特定語種標準，須同時符合該校官方規定。","source":"selection"},
-    {"title":"先備齊校內文件","body":"應備文件含線上申請表（Google 表單）、家長／監護人同意書、外國語文能力證明、中文歷年成績單正本（含平均；大學部含班級排名百分比）及 1 頁讀書計畫。非合作校另附申請／許可紀錄。","source":"selection"},
-    {"title":"116-1 官方校內申請期間","body":"116 學年度第 1 學期（2027 年秋季出國）校內申請自 2026/11/02 開放，線上表單於 2026/12/21 17:00 截止，紙本資料須於截止日前送交國際事務處；合作校截止日屬提名後參考時程。","source":"selection"},
+    {"title":"學業與語言，分兩層核對","body":"校內歷年學業平均以 70 分以上為原則；英文基本門檻為多益 700 分以上（或 IELTS 5.5、TOEFL iBT 72、Duolingo 105 等同級檢定）。合作校若有更高或未列多益之特定檢定標準（各檢定間無官方換算表），須同時符合該校官方規定。","source":"selection_guide"},
+    {"title":"先備齊校內 5 份文件","body":"應備文件含線上申請表（Google 表單）、家長／監護人同意書、外國語文能力證明、含班級排名百分比的中文歷年成績單正本及 1 頁讀書計畫。非合作校另附申請／許可紀錄。","source":"selection_guide"},
+    {"title":"116-1 官方校內申請期間與最多 2 個志願","body":"116 學年度第 1 學期（2027 年秋季出國）校內申請自 2026/11/02 開放，線上表單於 2026/12/21 17:00 截止，紙本資料須於截止日前送交國際事務處；每位學生最多填列 2 個志願，合作校截止日屬提名後參考時程。","source":"selection"},
+    {"title":"領航者補助要點（規章 2B00004）","body":"完成校內申請並獲外校錄取且符合資格者，由國際處直接送補助金審查，不需額外單獨申請。第一類地區每學期上限 75,000 元（一學年 150,000 元）、第二類地區每學期上限 60,000 元（一學年 120,000 元），班排前 30% 每學期得加碼 10,000 元；實際核定依當年度預算與複審結果而定。","source":"navigator"},
     {"title":"錄取與提名，仍以正式通知為準","body":"Lincoln 等合作校官網均要求先由母校核准、提名，再依合作校指示送件。校內初審通過不等於合作校錄取；是否面試、體檢及補充文件依當期正式通知確認。","source":"lincoln"}
   ],
   "stages": [
     {"id":"explore","title":"探索與選校","description":"先了解自己想去哪裡，再核對長庚與目的校的名額、語言及合作校參考時程。","source":"partners","tasks":[
-      {"id":"read-guide","title":"閱讀長庚校內申請須知","detail":"確認 116-1 校內申請截止日（2026/12/21 17:00）與應備文件清單。","source":"selection"},
+      {"id":"read-guide","title":"閱讀長庚校內申請須知","detail":"確認 116-1 校內申請截止日（2026/12/21 17:00）與應備 5 份文件清單。","source":"selection"},
       {"id":"shortlist","title":"整理兩所志願與想修的課程","detail":"長庚校級申請表最多可填兩所志願；本展示計畫記錄你的首選目標。","source":"partners"},
-      {"id":"check-language","title":"確認目標校語言門檻與當期名額","detail":"核對卡片上的表列名額、學制／學院範圍與目的校語文規定後自行勾選。","source":"partners"}]},
+      {"id":"check-language","title":"確認目標校語言門檻與當期名額","detail":"核對卡片上的表列名額、是否標示「此校未列多益」、學制／系所範圍與目的校語文規定後自行勾選。","source":"partners"}]},
     {"id":"internal","title":"校內申請","description":"對照校內文件與 116-1 申請期間，為自己安排準備與送件日期。","source":"selection","tasks":[
-      {"id":"transcript","title":"確認成績單、平均與排名資料","detail":"大學部成績單需含排名百分比；此處只記錄待辦，不收取文件。","source":"selection"},
-      {"id":"study-plan","title":"準備語文證明、同意書與讀書計畫","detail":"依官方清單準備；尚未取得語文成績者請於線上申請表註明預計取得日期。","source":"selection"},
+      {"id":"transcript","title":"確認成績單、平均與排名資料","detail":"大學部成績單需含班級排名百分比；此處只記錄待辦，不收取文件。","source":"selection_guide"},
+      {"id":"study-plan","title":"準備語文證明、同意書與 1 頁讀書計畫","detail":"依官方清單準備；尚未取得語文成績者請於線上申請表註明預計取得日期。","source":"selection_guide"},
       {"id":"internal-submit","title":"依官方管道完成申請後，自行記錄","detail":"勾選只代表你的展示紀錄，沒有送件、收件編號或校方受理。","source":"selection"}]},
     {"id":"results","title":"面試與放榜","description":"是否面試待當期通知確認；將校內結果與目的校錄取分開追蹤。","source":"selection","tasks":[
-      {"id":"interview","title":"確認是否需要面試並整理準備重點","detail":"面試不是所有計畫的必經流程；依個人通知確認。不適用時可自行註記完成確認。","source":"selection"},
+      {"id":"interview","title":"確認是否需要面試並整理準備重點","detail":"面試不是所有計畫的必經流程；依個人通知確認。不適用時可自行註記完成確認。","source":"selection_guide"},
       {"id":"internal-result","title":"查看校內初審結果與提名通知","detail":"依官方公告或個人通知查詢；本站沒有同步校方結果。","source":"selection"}]},
     {"id":"partner","title":"姊妹校申請","description":"收到母校提名與對方指示後，再確認申請入口、學期及個人期限。","source":"lincoln","tasks":[
       {"id":"partner-instructions","title":"核對目的校申請指示、文件與期限","detail":"Lincoln 的一般流程可供理解；其他目的校需另查。不要把同一清單套用所有學校。","source":"lincoln"},
       {"id":"offer","title":"收到正式錄取後核對條件","detail":"本站不決定或驗證錄取。依合作校正式通知自行追蹤。","source":"lincoln"}]},
     {"id":"departure","title":"出發準備","description":"依目的地及個人情況確認住宿、保險、簽證與課程；生活準備由自己安排。","source":"lincoln","tasks":[
       {"id":"housing-insurance","title":"確認住宿、保險與簽證安排","detail":"Lincoln 一般頁要求研修期間醫療及旅遊保險。其他目的地、體檢與簽證細節待確認。","source":"lincoln"},
-      {"id":"courses","title":"與系所確認課程及抵免準備","detail":"建議先保存課綱並詢問系所；實際抵免由校方認定。這是準備建議。"},
+      {"id":"courses","title":"與系所確認課程及抵免準備","detail":"建議先保存課綱並詢問系所；領航者補助要求每學期至少採認 3 學分，實際抵免由校方認定。","source":"navigator"},
       {"id":"daily-life","title":"安排手機、支付與緊急聯絡方式","detail":"個人生活準備建議，不是所有目的校的正式要求。"}]},
     {"id":"return","title":"抵達與返國","description":"依合作校通知報到，保存修課資料，返國後按母校規定辦理。","source":"partners","tasks":[
       {"id":"arrival","title":"確認抵達報到與當地生活安排","detail":"報到方式、時間與安全資訊待目的校通知確認。"},
-      {"id":"return-credit","title":"整理成績單、課綱及返國所需資料","detail":"返國程序與抵免規則待母校確認；本清單不構成抵免核准。"}]}
+      {"id":"return-credit","title":"整理成績單、課綱及返國所需資料","detail":"領航者補助受領者須於返國後 2 週內繳交返校手續單並上傳心得報告與短片；本清單不構成抵免核准。","source":"navigator"}]}
   ]
 }

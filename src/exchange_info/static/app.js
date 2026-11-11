@@ -10,6 +10,8 @@ const state = {
   country: "",
   college: "",
   degree: "",
+  cguProgramTab: "",
+  cguDepartment: "",
   partnerSort: "match",
   partnerQuota: "",
   partnerFit: "",
@@ -4460,10 +4462,13 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
   const degreeMatch = partnerDegreeScopeMatches(item, college, degree);
   const degreeKnown = Boolean(cycleConfirmed && degree && degreeMatch !== null && !academicScopeNeedsConfirmation(item, "degree_levels"));
   const collegePass = collegeKnown && collegeMatches(item.colleges, college);
+  const cguDeptRule = window.cguDemoStorageIsolated && profile.department ? cguDepartmentRestriction(item) : null;
+  const cguDeptBlocked = Boolean(cguDeptRule && !cguDeptRule.allowedDepts.includes(profile.department));
   const coupledMatch = coupledAcademicScopeMatches(item, college, degree);
   const degreePass = degreeKnown && degreeMatch;
   if (!collegeKnown) risks.push(college ? "合作校學院範圍待確認" : "尚未填寫學院");
-  else if (collegePass) { score += 30; reasons.push("符合學院範圍"); }
+  else if (cguDeptBlocked) { mismatches.push("系所條件不符"); risks.push(`此校${cguDeptRule.badge}；你的系所：${profile.department}`); }
+  else if (collegePass) { score += 30; reasons.push(cguDeptRule ? `符合學院與系所條件（${cguDeptRule.badge}）` : "符合學院範圍"); }
   else { mismatches.push("學院條件不符"); risks.push(`你的學院：${college}；學校範圍：${item.colleges}`); }
   if (!degreeKnown) risks.push(profile.degree ? degreeMatch === null && degree === "研究所" ? "研究所尚未區分碩博士；合作校學制範圍待確認" : "合作校學制範圍待確認" : "尚未填寫學制");
   else if (degreePass) { score += 20; reasons.push("符合目前學制"); }
@@ -4475,7 +4480,8 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
     risks.push("尚未填寫語言測驗或分數");
   } else if (threshold === null) {
     score += 8;
-    risks.push(item.language_review_note || "合作校語言門檻需另查");
+    const cguNoToeic = window.cguDemoStorageIsolated && profile.languageTest === "toeic" && cguPartnerToeicStatus(item, "") === "no_toeic";
+    risks.push(cguNoToeic ? "此校未列多益（各檢定間無官方換算表，僅考多益者請另備該校指定檢定）" : (item.language_review_note || "合作校語言門檻需另查"));
   } else if (Number(profile.languageScore) >= threshold) {
     score += 20;
     reasons.push(`目前語言分數達公開門檻 ${threshold}`);
@@ -8872,9 +8878,81 @@ function partnerSearchHaystack(item) {
   return text;
 }
 
+function cguProgramKindMatches(item, tab) {
+  if (!tab) return true;
+  const opts = item.program_options || [];
+  if (tab === "dual_degree") {
+    return opts.length
+      ? opts.some((opt) => String(opt.program_type || "").includes("雙學位"))
+      : String(item.program_type || "").includes("雙學位");
+  }
+  if (tab === "exchange") {
+    return opts.length
+      ? opts.some((opt) => String(opt.program_type || "").includes("交換"))
+      : String(item.program_type || "").includes("交換");
+  }
+  return true;
+}
+
+function cguDepartmentRestriction(item) {
+  const raw = `${item?.colleges || ""} ${item?.eligibility || ""}`.normalize("NFKC");
+  if (/限醫工系/.test(raw)) {
+    return { allowedDepts: ["生物醫學工程學系"], badge: "限醫工系" };
+  }
+  if (/限(?:本校)?生醫系及醫工系/.test(raw)) {
+    return { allowedDepts: ["生物醫學系", "生物醫學工程學系"], badge: "限生醫系／醫工系" };
+  }
+  return null;
+}
+
+function cguOptionScopeMatches(item, college, department, programTab) {
+  if (department) {
+    const rule = cguDepartmentRestriction(item);
+    if (rule && !rule.allowedDepts.includes(department)) return false;
+  }
+  if (!college) return true;
+  const opts = item.program_options || [];
+  if (programTab && opts.length) {
+    const relevant = opts.filter((opt) => {
+      const pt = String(opt.program_type || "");
+      return programTab === "dual_degree" ? pt.includes("雙學位") : pt.includes("交換");
+    });
+    if (relevant.length) {
+      return relevant.some((opt) => academicScopeNeedsConfirmation(opt, "colleges") || collegeMatches(opt.colleges, college));
+    }
+  }
+  return academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, college);
+}
+
+function cguPartnerToeicStatus(item, programTab = state.cguProgramTab) {
+  const opts = item?.program_options || [];
+  const relevant = programTab && opts.length
+    ? opts.filter((opt) => {
+        const pt = String(opt.program_type || "");
+        return programTab === "dual_degree" ? pt.includes("雙學位") : pt.includes("交換");
+      })
+    : opts;
+  const chunks = [item?.language_requirement || ""];
+  if (relevant.length) {
+    relevant.forEach((opt) => {
+      chunks.push(opt.eligibility || "");
+      (opt.student_summary_zh?.eligibility_points || []).forEach((pt) => chunks.push(pt));
+    });
+  } else {
+    chunks.push(item?.eligibility || "");
+    partnerSummaryPoints(item, "eligibility_points").forEach((pt) => chunks.push(pt));
+  }
+  const text = chunks.join(" ").normalize("NFKC");
+  const hasToeic = /TOEIC|多益/i.test(text);
+  if (hasToeic) return "has_toeic";
+  const hasOtherExam = /IELTS|雅思|TOEFL|托福|CEFR|(?<![A-Za-z])[ABC][12]\+?(?![A-Za-z0-9])|Duolingo|(?<![A-Za-z])DET(?![A-Za-z])|PTE|Cambridge|JLPT|日文檢定|日語檢定|日檢|FLPT|(?<![A-Za-z])N[1-5](?![A-Za-z0-9])|TOPIK|韓檢|DELF|DALF|TCF|TEF|DELE|ZDaF|TestDaF/i.test(text);
+  return hasOtherExam ? "no_toeic" : "unspecified";
+}
+
 function filteredPartners({ ignore = "", sort = true } = {}) {
   if (!state.dashboard) return [];
   const query = normalize(state.partnerQuery);
+  const isCguDemo = Boolean(window.cguDemoStorageIsolated);
   const partners = state.dashboard.partner_universities.filter((item) => {
     const quota = partnerQuotaNumber(item);
     return (
@@ -8882,7 +8960,10 @@ function filteredPartners({ ignore = "", sort = true } = {}) {
       (!state.availability || (item.availability_status || "open") === state.availability) &&
       window.UniWayRegions.inRegion(item.country, state.region) &&
       (ignore === "country" || !state.country || item.country === state.country) &&
-      (ignore === "college" || !state.college || academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, state.college)) &&
+      (!isCguDemo || ignore === "program" || cguProgramKindMatches(item, state.cguProgramTab)) &&
+      (ignore === "college" || (isCguDemo
+        ? cguOptionScopeMatches(item, state.college, state.cguDepartment, ignore === "program" ? "" : state.cguProgramTab)
+        : (!state.college || academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, state.college)))) &&
       (!state.degree || academicScopeNeedsConfirmation(item, "degree_levels") || degreeMatches(item.degree_levels, state.degree) !== false) &&
       (ignore === "quota" || !state.partnerQuota || (state.partnerQuota === "2plus" ? (quota ?? 0) >= 2 : quota === 1)) &&
       (ignore === "fit" || !state.partnerFit || partnerFitBucket(item) === state.partnerFit) &&
@@ -9067,6 +9148,10 @@ function partnerCardBadge(availability, match) {
 // Short chips taken from the catalogue itself; nothing is invented when a field is missing.
 function partnerCardTags(item) {
   const tags = [];
+  if (window.cguDemoStorageIsolated) {
+    const deptRule = cguDepartmentRestriction(item);
+    if (deptRule) tags.push(deptRule.badge);
+  }
   const language = (item.language_conditions || []).map((condition) => condition.teaching_language).find(Boolean);
   if (language) tags.push(`${language}授課`);
   if (item.program_type) tags.push(item.program_type);
@@ -9074,7 +9159,7 @@ function partnerCardTags(item) {
   if (quota !== null) tags.push(`名額 ${quota}`);
   const period = localizedPartnerValue(item, "study_period", "study_period", "");
   if (period && period.length <= 12) tags.push(period);
-  return [...new Set(tags)].slice(0, 3);
+  return [...new Set(tags)].slice(0, 4);
 }
 
 function partnerCardFoot(item) {
@@ -9094,7 +9179,16 @@ function partnerCardLanguage(item) {
   const known = Boolean(text) && !/未明確標示/.test(text);
   // Some sources open with the label the card already prints ("語文要求："); the full wording stays in the tooltip.
   const shown = known ? text.replace(/^(?:語文|語言)(?:要求|門檻)\s*[：:]\s*/, "") : "";
-  return `<span class="pr-card-lang"><b>語言</b><span${known ? ` title="${escapeHtml(text)}"` : ""}>${known ? escapeHtml(shown) : "依官方公告"}</span></span>`;
+  let cguFlag = "";
+  if (window.cguDemoStorageIsolated) {
+    const toeicStatus = cguPartnerToeicStatus(item);
+    if (toeicStatus === "no_toeic") {
+      cguFlag = ` <em class="cgu-lang-flag is-no-toeic" title="長庚校內門檻為多益 700，但此合作校簡章未列多益；各檢定間無官方換算表，僅考多益者請另備該校指定檢定">此校未列多益</em>`;
+    } else if (toeicStatus === "has_toeic") {
+      cguFlag = ` <em class="cgu-lang-flag is-has-toeic" title="此合作校簡章列有多益（TOEIC）門檻；仍請核對該校要求分數">有列多益</em>`;
+    }
+  }
+  return `<span class="pr-card-lang"><b>語言</b><span${known ? ` title="${escapeHtml(text)}"` : ""}>${known ? escapeHtml(shown) : "依官方公告"}</span>${cguFlag}</span>`;
 }
 
 function renderPartnerCard(item) {
@@ -9142,7 +9236,7 @@ function renderPartnerCard(item) {
         ${availability.hint ? `<small class="availability-hint">${escapeHtml(availability.hint)}</small>` : ""}
         ${renderPartnerMatchExplanation(match)}
         ${discoveryMatchBadge(item)}
-        <div class="pr-tags">${partnerCardTags(item).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
+        <div class="pr-tags">${partnerCardTags(item).map((tag) => `<span${window.cguDemoStorageIsolated && tag.includes("雙學位") ? ' class="is-dual-degree"' : window.cguDemoStorageIsolated && tag.startsWith("限") ? ' class="is-dept-limit"' : ""}>${escapeHtml(tag)}</span>`).join("")}</div>
         ${partnerCardLanguage(item)}
         <span class="pr-card-foot">${partnerCardFoot(item)}</span>
       </div>
@@ -9598,10 +9692,14 @@ function toggleApplication(schoolName) {
 function renderPrimaryFacts(item, destinationProfile = state.destinationCache.get(item.school_name)) {
   const eligibility = partnerEligibilityStatus(item);
   const deadline = partnerDeadlineReference(item);
+  const baseLang = partnerLanguageRequirement(item);
+  const langValue = window.cguDemoStorageIsolated && cguPartnerToeicStatus(item, "") === "no_toeic"
+    ? `${baseLang}（此校未列多益；各檢定無官方換算表，僅考多益者請另備該校指定檢定）`
+    : baseLang;
   return [
     ["我的資格", eligibility.label, eligibility.icon, eligibility.tone],
     [deadline.label, deadline.value, "calendar-clock", "deadline"],
-    ["語言門檻", partnerLanguageRequirement(item), "languages", "language"],
+    ["語言門檻", langValue, "languages", "language"],
     ["生活費參考", truncate(destinationProfile?.cost_summary || "官方費用待查核", 130), "wallet-cards", "cost"],
     ["交換名額", item.quota || (item.quota_status === "reference_only" ? (activeHomeSchool() === "淡江大學" ? "本期名額未核實" : "本季未開放") : item.quota_status === "not_published" ? "名額空白，待確認" : "依公告"), "users", "quota"],
     ["研修期間", localizedPartnerValue(item, "study_period", "study_period"), "calendar-range", "period"],
@@ -14729,6 +14827,8 @@ function bindEvents() {
     state.country = "";
     state.college = "";
     state.degree = "";
+    state.cguProgramTab = "";
+    state.cguDepartment = "";
     state.partnerQuota = "";
     state.partnerFit = "";
     state.partnerLimit = partnerPageSize();

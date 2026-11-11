@@ -1,14 +1,14 @@
 /* Edition controls only. Layout, colours, navigation and components come from UniWay. */
-#cgu-demo-strip { position:fixed; bottom:0; left:0; right:0; z-index:1500; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:8px; padding:7px 14px; background:var(--uw-surface,#fff); color:var(--uw-text,#23324a); border-top:1px solid var(--uw-line,#d8dde5); font:12px/1.5 system-ui; }
+#cgu-demo-strip { position:fixed; bottom:0; left:0; right:0; z-index:1500; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:8px; padding:7px 14px; background:var(--uw-surface,#fff); color:var(--uw-text,#23324a); border-top:1px solid var(--uw-line,#d8dde5); font:12px/1.5 system-ui; box-sizing:border-box; }
 #cgu-demo-strip button { font:inherit; padding:5px 10px; border:1px solid var(--uw-line,#d8dde5); border-radius:8px; background:transparent; color:inherit; cursor:pointer; }
-#cgu-demo-dialog { max-width:760px; width:calc(100% - 32px); max-height:85vh; overflow:auto; border:1px solid var(--uw-line,#d8dde5); border-radius:20px; padding:26px; background:var(--uw-surface,#fff); color:var(--uw-text,#23324a); }
+#cgu-demo-dialog { max-width:760px; width:calc(100% - 32px); max-height:85vh; overflow:auto; border:1px solid var(--uw-line,#d8dde5); border-radius:20px; padding:26px; background:var(--uw-surface,#fff); color:var(--uw-text,#23324a); box-sizing:border-box; }
 #cgu-demo-dialog::backdrop { background:#15253a77; }
 #cgu-demo-dialog p { line-height:1.7; }
 #cgu-demo-dialog a { text-decoration:underline; }
 #cgu-demo-dialog .button-row { display:flex; gap:12px; margin-top:18px; }
 body { padding-bottom:70px; }
 #school-switcher { cursor:default; }
-@media(max-width:600px) { #cgu-demo-strip span { width:100%; text-align:center; } body { padding-bottom:100px; } }
+@media(max-width:600px) { #cgu-demo-strip span { width:100%; text-align:center; } body { padding-bottom:108px; } }
 
 /* One school needs no multi-school supported strip or school-change affordance. */
 .pr-supported { display:none !important; }
@@ -17,10 +17,19 @@ body { padding-bottom:70px; }
 .mt-board-edit { display:none; }
 .verified-hook-btn.is-line, [data-copy-line-summary] { display:none !important; }
 label[for="college-filter"] { display:none !important; }
+#mt-board-school:disabled { opacity:1; cursor:default; }
+body.unified-shell .page-back-bar #school-switcher::after { content:"長庚專屬" !important; }
 
-/* Primary CGU 12/21 countdown banner on homepage hero & calendar tile */
-.cgu-home-deadline-banner { margin:14px 0 6px; }
-.cgu-home-deadline-pill { display:inline-flex; flex-wrap:wrap; align-items:center; gap:8px 10px; padding:10px 16px; border-radius:14px; background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%); border:1px solid #fdba74; color:#7c2d12; text-decoration:none; font-size:14px; line-height:1.45; box-shadow:0 4px 14px rgba(124,45,18,.08); transition:transform .15s ease, box-shadow .15s ease; }
+/* ─── Item 1: Homepage Hero「長庚 116-1 申請一頁看完」─── */
+#home-landing .pr-hero { padding-top:clamp(22px, 4svh, 48px); padding-bottom:clamp(32px, 4cqi, 56px); min-height:0; }
+#home-landing .pr-hero-copy { width:min(100%, 1040px); }
+#home-landing .pr-hero h1 { font-size:clamp(30px, 4.4cqi, 60px); line-height:1.18; }
+#home-landing .pr-hero h1 span { display:inline-block; margin-top:6px; font-size:clamp(16px, 2cqi, 24px); font-weight:600; letter-spacing:-.01em; }
+#home-landing .pr-collage { pointer-events:none; opacity:.2; right:12px; bottom:20px; }
+@media(max-width:1280px) { #home-landing .pr-collage { display:none; } }
+
+.cgu-home-deadline-banner { margin:14px 0 10px; }
+.cgu-home-deadline-pill { display:inline-flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px 10px; max-width:100%; box-sizing:border-box; padding:10px 16px; border-radius:14px; background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%); border:1px solid #fdba74; color:#7c2d12; text-decoration:none; font-size:14px; line-height:1.45; box-shadow:0 4px 14px rgba(124,45,18,.08); transition:transform .15s ease, box-shadow .15s ease; }
 .cgu-home-deadline-pill:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(124,45,18,.13); }
 .cgu-home-deadline-pill .cgu-dl-badge { display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:999px; background:#ea580c; color:#fff; font-weight:700; font-size:12px; letter-spacing:.02em; }
 .cgu-home-deadline-pill strong { font-weight:700; color:#431407; }
@@ -29,10 +38,120 @@ label[for="college-filter"] { display:none !important; }
 .pr-mini-dates li.is-primary-home .pr-mini-date { background:#ea580c; color:#fff; }
 .pr-mini-dates li.is-primary-home .pr-mini-date small { color:#ffedd5; }
 
-/* Top-of-search CGU 4-college quick filter bar */
-.cgu-college-bar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; margin:0 0 14px; padding:12px 16px; border-radius:16px; background:var(--uw-surface,#fff); border:1px solid var(--uw-line,#d8dde5); box-shadow:0 2px 10px rgba(15,23,42,.04); }
-.cgu-college-bar-main { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
-.cgu-college-bar-label { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:var(--uw-text,#23324a); margin-right:4px; white-space:nowrap; }
+.cgu-hero-onepager { margin:16px auto 0; padding:18px; border-radius:22px; background:var(--glass-strong, rgba(255,255,255,.92)); border:1px solid var(--uw-line,#d8dde5); box-shadow:0 12px 32px rgba(15,23,42,.08); text-align:left; box-sizing:border-box; max-width:100%; backdrop-filter:blur(12px); }
+.cgu-onepager-grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:12px; }
+.cgu-onepager-card { display:flex; flex-direction:column; gap:6px; min-width:0; padding:14px 16px; border-radius:16px; background:var(--uw-surface,#fff); border:1px solid var(--uw-line,#e2e8f0); box-sizing:border-box; }
+.cgu-onepager-card.is-highlight { background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%); border-color:#93c5fd; }
+.cgu-onepager-card.is-wide { grid-column:1 / -1; }
+.cgu-onepager-kicker { font-size:12px; font-weight:700; color:#1d4ed8; letter-spacing:.03em; }
+.cgu-onepager-card strong { font-size:clamp(17px, 1.8cqi, 21px); font-weight:800; color:var(--uw-navy,#0f172a); line-height:1.3; }
+.cgu-onepager-card p { margin:0; font-size:13px; line-height:1.55; color:var(--uw-muted,#475569); }
+.cgu-flow-steps { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:2px; font-size:13px; font-weight:700; color:var(--uw-text,#1e293b); }
+.cgu-flow-steps span { padding:4px 10px; border-radius:999px; background:#f1f5f9; border:1px solid #cbd5e1; }
+.cgu-flow-steps i { font-style:normal; color:#64748b; }
+.cgu-doc-pills { display:flex; flex-wrap:wrap; gap:8px; margin:2px 0 0; padding:0; list-style:none; }
+.cgu-doc-pills li { display:inline-flex; align-items:center; gap:7px; padding:6px 12px; border-radius:999px; background:#f8fafc; border:1px solid #cbd5e1; font-size:13px; font-weight:600; color:var(--uw-text,#1e293b); }
+.cgu-doc-pills li b { display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%; background:#1e3a8a; color:#fff; font-size:11px; font-weight:700; flex:0 0 auto; }
+.cgu-onepager-foot { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; margin-top:14px; padding-top:12px; border-top:1px solid var(--uw-line,#e2e8f0); }
+.cgu-onepager-sources { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; font-size:12.5px; color:var(--uw-muted,#475569); }
+.cgu-onepager-sources a { color:#1d4ed8; font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+.cgu-onepager-sources small { padding:2px 8px; border-radius:999px; background:rgba(15,23,42,.06); font-size:12px; font-weight:600; }
+.cgu-onepager-actions { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.cgu-hero-cta { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:999px; border:1px solid #cbd5e1; background:var(--uw-surface,#fff); color:var(--uw-navy,#0f172a); font:600 13px/1.2 inherit; text-decoration:none; cursor:pointer; transition:all .15s ease; }
+.cgu-hero-cta:hover { border-color:#2563eb; color:#1d4ed8; background:#eff6ff; }
+.cgu-hero-cta.is-primary { background:#1e3a8a; border-color:#1e3a8a; color:#fff; box-shadow:0 3px 10px rgba(30,58,138,.2); }
+.cgu-hero-cta.is-primary:hover { background:#1d4ed8; border-color:#1d4ed8; color:#fff; }
+
+@media(max-width:860px) {
+  .cgu-onepager-grid { grid-template-columns:minmax(0, 1fr); }
+  .cgu-hero-onepager { padding:14px; }
+}
+
+/* ─── Item 2:「我是哪個系？」4 院 36 系所選校入口 ─── */
+.cgu-dept-section, .cgu-navigator-section { margin-top:clamp(32px, 5cqi, 64px) !important; }
+.cgu-section-kicker { display:inline-block; padding:4px 10px; border-radius:999px; background:#dbeafe; color:#1e40af; font-size:12px; font-weight:700; letter-spacing:.03em; }
+.cgu-dept-box, .cgu-navigator-box { padding:clamp(18px, 2.6cqi, 30px); border-radius:24px; background:var(--glass-strong, #fff); border:1px solid var(--uw-line,#d8dde5); box-shadow:0 8px 28px rgba(15,23,42,.06); box-sizing:border-box; max-width:100%; }
+.cgu-dept-head h2, .cgu-navigator-heading { margin:10px 0 8px !important; font-size:clamp(22px, 2.8cqi, 32px) !important; line-height:1.25 !important; color:var(--uw-navy,#0f172a); }
+.cgu-dept-head p, .cgu-navigator-lead { margin:0; font-size:14.5px; line-height:1.65; color:var(--uw-muted,#475569); max-width:74ch; }
+.cgu-finder-step { margin-top:18px; }
+.cgu-step-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
+.cgu-step-label { display:block; margin-bottom:8px; font-size:13px; font-weight:700; color:var(--uw-navy,#0f172a); }
+.cgu-step-row .cgu-step-label { margin-bottom:0; }
+.cgu-sr-select select { padding:5px 10px; border-radius:10px; border:1px solid var(--uw-line,#cbd5e1); background:var(--uw-surface,#fff); color:var(--uw-text,#1e293b); font-size:13px; max-width:100%; }
+.cgu-finder-colleges { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:10px; }
+.cgu-finder-college-btn { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:11px 14px; border-radius:14px; border:1px solid var(--uw-line,#cbd5e1); background:var(--uw-surface,#fff); color:var(--uw-text,#1e293b); font:600 14px/1.3 inherit; cursor:pointer; transition:all .15s ease; text-align:left; }
+.cgu-finder-college-btn:hover { border-color:#2563eb; background:#eff6ff; }
+.cgu-finder-college-btn span { padding:2px 8px; border-radius:999px; background:rgba(15,23,42,.06); font-size:12px; color:var(--uw-muted,#475569); white-space:nowrap; }
+.cgu-finder-college-btn.on { background:#1e3a8a; border-color:#1e3a8a; color:#fff; box-shadow:0 4px 12px rgba(30,58,138,.22); }
+.cgu-finder-college-btn.on span { background:rgba(255,255,255,.2); color:#fff; }
+.cgu-finder-depts { display:flex; flex-wrap:wrap; gap:8px; }
+.cgu-finder-dept-chip { padding:7px 13px; border-radius:999px; border:1px solid var(--uw-line,#cbd5e1); background:var(--uw-surface-soft,#f8fafc); color:var(--uw-text,#1e293b); font:600 13px/1.25 inherit; cursor:pointer; transition:all .15s ease; }
+.cgu-finder-dept-chip:hover { border-color:#2563eb; color:#1d4ed8; background:#eff6ff; }
+.cgu-finder-dept-chip.on { background:#2563eb; border-color:#2563eb; color:#fff; box-shadow:0 2px 8px rgba(37,99,235,.25); }
+
+.cgu-dept-summary { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px 20px; margin-top:20px; padding:16px 20px; border-radius:18px; background:linear-gradient(135deg,#eff6ff 0%,#f8fafc 100%); border:1px solid #bfdbfe; }
+.cgu-dept-picked { display:inline-block; font-size:12.5px; font-weight:700; color:#1d4ed8; }
+.cgu-dept-summary-copy h3 { margin:4px 0; font-size:clamp(20px, 2.2cqi, 26px); color:var(--uw-navy,#0f172a); }
+.cgu-dept-summary-copy h3 strong { color:#1d4ed8; font-weight:800; }
+.cgu-dept-summary-copy p { margin:0; font-size:13.5px; color:var(--uw-muted,#475569); }
+.cgu-dept-summary-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.cgu-pill-action { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:999px; border:1px solid #93c5fd; background:var(--uw-surface,#fff); color:#1e3a8a; font:600 13px/1.2 inherit; text-decoration:none; cursor:pointer; transition:all .15s ease; }
+.cgu-pill-action:hover { background:#dbeafe; }
+.cgu-pill-action.is-solid { background:#1e3a8a; border-color:#1e3a8a; color:#fff; }
+.cgu-pill-action.is-solid:hover { background:#1d4ed8; border-color:#1d4ed8; }
+
+.cgu-dept-columns { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:16px; margin-top:16px; }
+.cgu-dept-col { display:flex; flex-direction:column; gap:10px; min-width:0; padding:16px; border-radius:18px; background:var(--uw-surface,#fff); border:1px solid var(--uw-line,#e2e8f0); box-sizing:border-box; }
+.cgu-dept-col.is-dual-col { background:linear-gradient(180deg,#faf5ff 0%,#ffffff 100%); border-color:#d8b4fe; }
+.cgu-dept-col-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; padding-bottom:8px; border-bottom:1px solid var(--uw-line,#e2e8f0); }
+.cgu-dept-col-head h4 { margin:4px 0 0; font-size:17px; color:var(--uw-navy,#0f172a); }
+.cgu-col-tag { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11.5px; font-weight:700; }
+.cgu-col-tag.is-exchange { background:#e0f2fe; color:#0369a1; }
+.cgu-col-tag.is-dual { background:#f3e8ff; color:#6b21a8; }
+.cgu-text-btn { padding:4px 8px; border:0; background:transparent; color:#1d4ed8; font:600 13px/1.2 inherit; cursor:pointer; }
+.cgu-text-btn:hover { text-decoration:underline; }
+.cgu-dept-list { display:grid; gap:6px; margin:0; padding:0; list-style:none; }
+.cgu-dept-school-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:6px 10px; padding:9px 12px; border-radius:12px; border:1px solid var(--uw-line,#e2e8f0); background:var(--uw-surface-soft,#f8fafc); color:inherit; text-decoration:none; transition:border-color .15s ease, background .15s ease; }
+.cgu-dept-school-row:hover { border-color:#3b82f6; background:#eff6ff; }
+.cgu-dept-school-row.is-dual:hover { border-color:#9333ea; background:#faf5ff; }
+.cgu-dept-school-main { min-width:0; display:grid; gap:2px; }
+.cgu-dept-school-main strong { font-size:14px; color:var(--uw-navy,#0f172a); overflow-wrap:anywhere; }
+.cgu-dept-school-main small { font-size:12px; color:var(--uw-muted,#64748b); }
+.cgu-dept-school-badges { display:flex; flex-wrap:wrap; align-items:center; gap:5px; }
+.cgu-mini-pill { display:inline-block; padding:2px 8px; border-radius:999px; font-style:normal; font-size:11.5px; font-weight:700; line-height:1.35; white-space:nowrap; }
+.cgu-mini-pill.is-exclusive { background:#ffedd5; color:#9a3412; border:1px solid #fdba74; }
+.cgu-mini-pill.is-college { background:#dbeafe; color:#1e40af; }
+.cgu-mini-pill.is-general { background:#f1f5f9; color:#475569; }
+.cgu-mini-pill.is-mgmt { background:#fef3c7; color:#92400e; border:1px solid #fcd34d; }
+.cgu-mini-pill.is-degree { background:#7e22ce; color:#fff; }
+.cgu-mini-pill.is-no-toeic { background:#fef2f2; color:#b91c1c; border:1px solid #fecaca; }
+.cgu-mini-pill.is-has-toeic { background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; }
+.cgu-expand-btn { width:100%; padding:8px 12px; border-radius:10px; border:1px dashed #94a3b8; background:transparent; color:var(--uw-text,#334155); font:600 13px/1.3 inherit; cursor:pointer; }
+.cgu-expand-btn:hover { border-color:#2563eb; color:#1d4ed8; background:#eff6ff; }
+.cgu-dual-footnote { margin:auto 0 0; padding-top:6px; font-size:12px; line-height:1.5; color:var(--uw-muted,#64748b); }
+
+@media(max-width:900px) {
+  .cgu-finder-colleges { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .cgu-dept-columns { grid-template-columns:minmax(0, 1fr); }
+}
+@media(max-width:480px) {
+  .cgu-finder-colleges { grid-template-columns:minmax(0, 1fr); }
+}
+
+/* ─── Item 4 & 2: Search Page Program Tabs & College/Dept Bar ─── */
+.cgu-program-tabs { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; margin:0 0 10px; padding:10px 14px; border-radius:16px; background:var(--uw-surface,#fff); border:1px solid var(--uw-line,#d8dde5); box-sizing:border-box; }
+.cgu-program-tabs-row { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.cgu-program-tab { display:inline-flex; align-items:center; gap:7px; padding:8px 15px; border-radius:999px; border:1px solid var(--uw-line,#cbd5e1); background:var(--uw-surface-soft,#f8fafc); color:var(--uw-text,#1e293b); font:600 14px/1.2 inherit; cursor:pointer; transition:all .15s ease; }
+.cgu-program-tab span { padding:2px 8px; border-radius:999px; background:rgba(15,23,42,.07); font-size:12px; color:var(--uw-muted,#475569); }
+.cgu-program-tab:hover { border-color:#2563eb; color:#1d4ed8; }
+.cgu-program-tab.on { background:#0f172a; border-color:#0f172a; color:#fff; }
+.cgu-program-tab.on.is-dual { background:#6b21a8; border-color:#6b21a8; }
+.cgu-program-tab.on span { background:rgba(255,255,255,.2); color:#fff; }
+.cgu-program-tabs-note { font-size:12.5px; color:var(--uw-muted,#475569); }
+
+.cgu-college-bar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; margin:0 0 12px; padding:12px 16px; border-radius:16px; background:var(--uw-surface,#fff); border:1px solid var(--uw-line,#d8dde5); box-shadow:0 2px 10px rgba(15,23,42,.04); box-sizing:border-box; }
+.cgu-college-bar-main { display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px; min-width:0; max-width:100%; }
+.cgu-college-bar-label { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:var(--uw-text,#23324a); margin-right:2px; white-space:nowrap; }
 .cgu-college-buttons { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
 .cgu-college-btn { display:inline-flex; align-items:center; gap:7px; padding:8px 14px; border-radius:999px; border:1px solid var(--uw-line,#cbd5e1); background:var(--uw-surface-soft,#f8fafc); color:var(--uw-text,#1e293b); font-size:14px; font-weight:600; line-height:1.2; cursor:pointer; transition:all .15s ease; }
 .cgu-college-btn:hover { border-color:#2563eb; background:#eff6ff; color:#1d4ed8; }
@@ -40,16 +159,69 @@ label[for="college-filter"] { display:none !important; }
 .cgu-college-btn span { display:inline-block; padding:2px 8px; border-radius:999px; background:rgba(15,23,42,.07); color:var(--uw-muted,#475569); font-size:12px; font-weight:600; }
 .cgu-college-btn.on { background:#1e3a8a; border-color:#1e3a8a; color:#fff; box-shadow:0 3px 10px rgba(30,58,138,.22); }
 .cgu-college-btn.on span { background:rgba(255,255,255,.2); color:#fff; }
+.cgu-dept-inline-select { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:var(--uw-text,#334155); max-width:100%; }
+.cgu-dept-inline-select select { padding:6px 10px; border-radius:999px; border:1px solid var(--uw-line,#cbd5e1); background:var(--uw-surface-soft,#f8fafc); color:var(--uw-text,#1e293b); font-size:13px; font-weight:600; max-width:min(240px, 68vw); }
 .cgu-college-live { font-size:13px; font-weight:600; color:var(--uw-muted,#475569); margin:0; }
 .cgu-college-live b { color:#1e3a8a; font-weight:700; }
+
+/* ─── Item 5: Management College Departmental Channel Notice ─── */
+.cgu-mgmt-notice { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; margin:0 0 14px; padding:12px 16px; border-radius:14px; background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%); border:1px solid #f59e0b; color:#78350f; box-sizing:border-box; }
+.cgu-mgmt-notice[hidden] { display:none !important; }
+.cgu-mgmt-notice.is-inline { margin:14px 0 0; }
+.cgu-mgmt-badge { padding:3px 9px; border-radius:999px; background:#d97706; color:#fff; font-size:12px; font-weight:700; white-space:nowrap; }
+.cgu-mgmt-copy { flex:1 1 280px; min-width:0; display:grid; gap:2px; font-size:13.5px; line-height:1.5; }
+.cgu-mgmt-copy strong { font-weight:700; color:#451a03; }
+.cgu-mgmt-links { display:flex; flex-wrap:wrap; gap:8px; }
+.cgu-mgmt-links a { padding:5px 11px; border-radius:999px; background:#fff; border:1px solid #f59e0b; color:#92400e; font-size:12.5px; font-weight:700; text-decoration:none; }
+.cgu-mgmt-links a:hover { background:#fef3c7; }
+.cgu-advisor-mgmt-note { margin:8px 0 0; padding:10px 12px; border-radius:12px; background:#fffbeb; border:1px solid #f59e0b; color:#78350f; font-size:13px; line-height:1.5; font-weight:600; }
+
+/* ─── Item 6 & 4: Card Badges（「此校未列多益」、雙學位、系所限定）─── */
+.pr-card-lang { display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+.cgu-lang-flag { display:inline-block; padding:2px 8px; border-radius:999px; font-style:normal; font-size:11.5px; font-weight:700; line-height:1.35; white-space:nowrap; }
+.cgu-lang-flag.is-no-toeic { background:#fef2f2; color:#b91c1c; border:1px solid #fca5a5; }
+.cgu-lang-flag.is-has-toeic { background:#ecfdf5; color:#047857; border:1px solid #6ee7b7; }
+.pr-tags span.is-dual-degree { background:#f3e8ff !important; color:#6b21a8 !important; border:1px solid #d8b4fe; font-weight:700; }
+.pr-tags span.is-dept-limit { background:#ffedd5 !important; color:#9a3412 !important; border:1px solid #fdba74; font-weight:700; }
+
+/* ─── Item 7: Navigator Subsidy Card（「領航者補助作業要點」）─── */
+.cgu-navigator-inline { margin-bottom:18px; }
+.cgu-navigator-head { display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:12px 20px; }
+.cgu-navigator-grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:12px; margin-top:18px; }
+.cgu-nav-tier { display:flex; flex-direction:column; gap:6px; min-width:0; padding:16px; border-radius:16px; border:1px solid var(--uw-line,#e2e8f0); background:var(--uw-surface,#fff); box-sizing:border-box; }
+.cgu-nav-tier.is-tier1 { background:linear-gradient(180deg,#eff6ff 0%,#ffffff 100%); border-color:#93c5fd; }
+.cgu-nav-tier.is-tier2 { background:linear-gradient(180deg,#f0fdf4 0%,#ffffff 100%); border-color:#86efac; }
+.cgu-nav-tier.is-bonus { background:linear-gradient(180deg,#fff7ed 0%,#ffffff 100%); border-color:#fdba74; }
+.cgu-nav-tier-tag { font-size:12px; font-weight:700; color:var(--uw-muted,#475569); }
+.cgu-nav-tier strong { font-size:clamp(22px, 2.4cqi, 28px); font-weight:800; color:var(--uw-navy,#0f172a); line-height:1.2; }
+.cgu-nav-tier strong small { font-size:13px; font-weight:600; color:var(--uw-muted,#64748b); }
+.cgu-nav-year { font-size:13px; color:var(--uw-text,#334155); }
+.cgu-nav-tier p { margin:4px 0 0; font-size:12.5px; line-height:1.55; color:var(--uw-muted,#475569); }
+.cgu-navigator-rules { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:16px; margin-top:16px; padding:16px; border-radius:16px; background:var(--uw-surface-soft,#f8fafc); border:1px solid var(--uw-line,#e2e8f0); }
+.cgu-navigator-rules strong { display:block; margin-bottom:8px; font-size:14px; color:var(--uw-navy,#0f172a); }
+.cgu-navigator-rules ul { margin:0; padding-left:18px; display:grid; gap:6px; font-size:13px; line-height:1.6; color:var(--uw-text,#334155); }
+.cgu-navigator-foot { display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-top:14px; padding-top:12px; border-top:1px solid var(--uw-line,#e2e8f0); font-size:13px; color:var(--uw-muted,#475569); }
+.cgu-navigator-foot a { color:#1d4ed8; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+
+@media(max-width:860px) {
+  .cgu-navigator-grid, .cgu-navigator-rules { grid-template-columns:minmax(0, 1fr); }
+}
+
+/* ─── Dark Mode Overrides ─── */
 [data-theme="dark"] .cgu-home-deadline-pill, [data-theme="dark"] .pr-mini-dates li.is-primary-home { background:rgba(234,88,12,.16); border-color:rgba(251,146,60,.45); color:#ffedd5; }
 [data-theme="dark"] .cgu-home-deadline-pill strong { color:#fff7ed; }
 [data-theme="dark"] .cgu-home-deadline-pill em { color:#fdba74; }
-[data-theme="dark"] .cgu-college-btn { background:rgba(30,41,59,.7); border-color:rgba(148,163,184,.3); color:#e2e8f0; }
-[data-theme="dark"] .cgu-college-btn span { background:rgba(255,255,255,.1); color:#cbd5e1; }
-[data-theme="dark"] .cgu-college-btn.on { background:#2563eb; border-color:#3b82f6; color:#fff; }
+[data-theme="dark"] .cgu-hero-onepager, [data-theme="dark"] .cgu-dept-box, [data-theme="dark"] .cgu-navigator-box { background:rgba(15,23,42,.86); border-color:rgba(148,163,184,.25); }
+[data-theme="dark"] .cgu-onepager-card, [data-theme="dark"] .cgu-dept-col, [data-theme="dark"] .cgu-nav-tier { background:rgba(30,41,59,.8); border-color:rgba(148,163,184,.25); }
+[data-theme="dark"] .cgu-onepager-card.is-highlight, [data-theme="dark"] .cgu-dept-summary { background:rgba(30,58,138,.32); border-color:rgba(96,165,250,.4); }
+[data-theme="dark"] .cgu-onepager-kicker, [data-theme="dark"] .cgu-dept-picked, [data-theme="dark"] .cgu-dept-summary-copy h3 strong, [data-theme="dark"] .cgu-onepager-sources a, [data-theme="dark"] .cgu-navigator-foot a, [data-theme="dark"] .cgu-text-btn { color:#93c5fd; }
+[data-theme="dark"] .cgu-doc-pills li, [data-theme="dark"] .cgu-flow-steps span, [data-theme="dark"] .cgu-finder-college-btn, [data-theme="dark"] .cgu-finder-dept-chip, [data-theme="dark"] .cgu-college-btn, [data-theme="dark"] .cgu-program-tab, [data-theme="dark"] .cgu-dept-school-row, [data-theme="dark"] .cgu-navigator-rules { background:rgba(30,41,59,.75); border-color:rgba(148,163,184,.3); color:#e2e8f0; }
+[data-theme="dark"] .cgu-college-btn span, [data-theme="dark"] .cgu-program-tab span, [data-theme="dark"] .cgu-finder-college-btn span { background:rgba(255,255,255,.1); color:#cbd5e1; }
+[data-theme="dark"] .cgu-college-btn.on, [data-theme="dark"] .cgu-finder-college-btn.on, [data-theme="dark"] .cgu-finder-dept-chip.on, [data-theme="dark"] .cgu-program-tab.on { background:#2563eb; border-color:#3b82f6; color:#fff; }
+[data-theme="dark"] .cgu-program-tab.on.is-dual { background:#7e22ce; border-color:#a855f7; }
 [data-theme="dark"] .cgu-college-live b { color:#93c5fd; }
-
-#mt-board-school:disabled { opacity:1; cursor:default; }
-
-body.unified-shell .page-back-bar #school-switcher::after { content:"長庚專屬" !important; }
+[data-theme="dark"] .cgu-mgmt-notice, [data-theme="dark"] .cgu-advisor-mgmt-note { background:rgba(217,119,6,.18); border-color:rgba(245,158,11,.5); color:#fef3c7; }
+[data-theme="dark"] .cgu-mgmt-copy strong { color:#fffbeb; }
+[data-theme="dark"] .cgu-mgmt-links a { background:rgba(15,23,42,.7); color:#fcd34d; }
+[data-theme="dark"] .cgu-lang-flag.is-no-toeic, [data-theme="dark"] .cgu-mini-pill.is-no-toeic { background:rgba(220,38,38,.22); color:#fca5a5; border-color:rgba(248,113,113,.45); }
+[data-theme="dark"] .cgu-lang-flag.is-has-toeic, [data-theme="dark"] .cgu-mini-pill.is-has-toeic { background:rgba(5,150,105,.22); color:#6ee7b7; border-color:rgba(52,211,153,.45); }
