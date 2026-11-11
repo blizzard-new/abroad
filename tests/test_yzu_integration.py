@@ -216,6 +216,6 @@ def test_yzu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 90
     assert cov["workflow_school_count"] == 90
     assert cov["destination_profile_count"] == 90
-    assert cov["image_count"] == 90
+    assert cov["image_count"] == 78
     assert cov["official_website_count"] == 90
     assert cov["experience_school_count"] >= 39

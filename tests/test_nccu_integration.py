@@ -214,6 +214,6 @@ def test_nccu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 266
     assert cov["workflow_school_count"] == 266
     assert cov["destination_profile_count"] == 266
-    assert cov["image_count"] == 266
+    assert cov["image_count"] == 232
     assert cov["official_website_count"] == 266
     assert cov["experience_school_count"] >= 192

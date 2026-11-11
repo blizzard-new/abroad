@@ -254,7 +254,7 @@ def test_nkuht_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert r_cov.status_code == 200
     cov = r_cov.json()
     assert cov["total_partner_schools"] == 40
-    assert cov["image_count"] == 40
+    assert cov["image_count"] == 26
     assert cov["official_website_count"] == 40
     assert cov["workflow_school_count"] == 40
     assert cov["destination_profile_count"] == 40

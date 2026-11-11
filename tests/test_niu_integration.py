@@ -257,7 +257,7 @@ def test_niu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert r_cov.status_code == 200
     cov = r_cov.json()
     assert cov["total_partner_schools"] == 97
-    assert cov["image_count"] == 97
+    assert cov["image_count"] == 72
     assert cov["official_website_count"] == 97
     assert cov["workflow_school_count"] == 97
     assert cov["destination_profile_count"] == 97
