@@ -1,6 +1,6 @@
 # UniWay CGU｜長庚大學專屬 UniWay
 
-這個版本以已合入 main 的 [PR #299](https://github.com/blizzard-new/abroad/pull/299)（`87277daf`）為 UI/UX 基準，直接共用 UniWay 的 `static/index.html`、首頁、導覽、學校搜尋、收藏比較、日曆、文件工作台及「我的申請」元件。首頁保留原有風格，學校搜尋及「我的申請」沿用 PR #299 的局部升級；長庚是唯一母校。另附展示控制列、來源說明與每位訪客的虛構學生工作區。未新增依賴、資料庫或付費服務。
+這個版本以已合入 main 的 [PR #299](https://github.com/blizzard-new/abroad/pull/299)（`87277daf`）為 UI/UX 基準，直接共用 UniWay 的 `static/index.html`、首頁、導覽、學校搜尋、收藏比較、日曆、文件工作台及「我的申請」元件。首頁保留原有風格，學校搜尋及「我的申請」沿用 PR #299 的局部升級；長庚是唯一母校。另附展示控制列、來源說明與每位訪客的虛構學生工作區。未修改 `pyproject.toml` 或 `uv.lock`，沒有新增資料庫或付費服務。
 
 ## 實際範圍
 
@@ -45,18 +45,18 @@ uvicorn exchange_info.cgu_demo:create_demo_app --factory --host 127.0.0.1 --port
 
 主程式增加可選的 catalogue、dashboard、旅程內容與母校 scope 注入點；一般 `create_app()` 預設維持原流程。共用程式修正「名額待確認」應計入待確認，而非不開放／資格不符，並同步收藏後的比較按鈕狀態。原版 HTML 與所有樣式不另複製維護。
 
-## 審查後部署至 demo.uniway-tw.com
+## Windows 獨立部署至 demo.uniway-tw.com
 
-本次未部署、未修改 DNS、未合併、未改正式資料、未開自動合併。
+使用者確認主站在自己的 Windows 電腦，選擇不用 Render。部署流程見 [Windows 操作指南](windows-deployment.md)：另一份 clone、獨立 Docker Compose project、專用 image 與 loopback port 8765，再由既有 Windows Caddy 導向展示網域。沒有自動 Git 更新，不需合併 PR 才能建立展示容器。
 
-1. 審查 PR、來源與測試，決定公開展示或加上既有代理／平台的服務端存取控制。不可用前端硬編碼密碼。
-2. 在既有平台建立**新的服務／容器**，使用獨立環境，不掛正式資料卷、不複製正式 secrets。沿用專案 Python 工具鏈，啟動 demo factory，`CGU_DEMO_HOST=0.0.0.0`，單一 worker。每次重啟都是新展示資料。
-3. 參考 `deploy/cgu-demo/demo.env.example`。HTTPS 設 `CGU_DEMO_SECURE_COOKIE=1`。反向代理需保留 Host，因寫入 Origin 必須與服務看到的 base URL 一致；若 TLS 在代理終止，須設定 uvicorn 只信任該代理 IP 的 forwarded headers，不能信任所有 IP。先在暫時網域驗證 Cookie Secure、Origin、reset 與來源。
-4. 健康檢查 `/health` 應為 `mode=cgu-demo`、`ui=shared-uniway-platform`、`persistence=isolated-temporary-runtime`。驗證正式 Cookie 不會恢復帳號、其他訪客不能讀到自己的進度、私人上傳回 403。
-5. 經使用者授權後才設定 demo.uniway-tw.com、自訂網域與 DNS／HTTPS。實際 CNAME 由服務平台提供，不能預先猜測。只導向展示服務，不代理正式 API。
-6. 預演後載入固定示範計畫。若要回復，只停止展示服務或回復其 commit。主站頁尾未啟用展示連結。
+- `start-windows.ps1` 建置固定 commit 的 image，只啟動展示容器，並驗證隔離、保存與重設。
+- `publish-windows.ps1` 預設只產生與驗證 Caddy 候選設定。明確加 `-Apply` 才備份、套用並短暫重啟共用 HTTPS 入口；健康檢查失敗會還原。主站 app 與資料庫不重啟。
+- HTTPS 設定 `CGU_DEMO_PUBLIC_ORIGIN=https://demo.uniway-tw.com`；代理保留 Host，uvicorn 維持 `--no-proxy-headers`。寫入驗證固定 HTTPS Origin 與 Host，Cookie 強制 Secure，不信任客戶端 forwarded headers。
+- 專用 Dockerfile 安裝 SHA-256 核對的 Node 24.22.1，執行既有 system CA／TLS gate，不更動正式 Dockerfile。沒有正式 secrets、資料卷或登入狀態。
+- `/health` 提供 `mode=cgu-demo`、`ui=shared-uniway-platform` 及 image revision。公開流程驗證器遇到非展示服務會拒絕任何測試寫入。
+- DNS、Windows 實機與公開 HTTPS 尚未套用；Codex Cloud 不能直接控制使用者電腦。公開或既有服務端存取控制需依現場需求決定；noindex 不是存取控制。
 
-既有完整 wheel 約 2.3 GiB；需確認平台 artifact／磁碟與 build 限制。既有 TLS gate 的預設 Playwright Node 在此環境未通過；使用 SHA-256 核對過的 Node 24.22.1 後通過，部署時需使用符合 gate 的持久化 runtime，不可照抄本機 `/tmp` 路徑或放寬稽核。完整 Docker、真實代理 HTTPS 與遠端部署尚未驗證。
+既有資產規模較大（完整 wheel 約 2.3 GiB），首次建置與啟動要預留時間及磁碟。進度在重新整理後保留，容器重啟會清除。主站頁尾未啟用展示連結。此次容器及測試結果、尚未驗證項目見 [驗證紀錄](validation.md)。
 
 - [實作盤點](implementation-plan.md)
 - [資料來源與限制](sources.md)

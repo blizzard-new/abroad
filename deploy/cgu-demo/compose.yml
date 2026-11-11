@@ -1,0 +1,22 @@
+# Use this file alone, never as an override of deploy/selfhost/docker-compose.yml.
+name: uniway-cgu-demo
+services:
+  demo:
+    image: ${CGU_DEMO_IMAGE:-uniway-cgu-demo:local}
+    build:
+      context: ../..
+      dockerfile: deploy/cgu-demo/Dockerfile
+      args:
+        APP_REVISION: ${CGU_DEMO_REVISION:-working-tree}
+    restart: unless-stopped
+    mem_limit: ${CGU_DEMO_MEMORY_LIMIT:-2g}
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    ports:
+      - "127.0.0.1:${CGU_DEMO_PORT:-8765}:8000"
+    environment:
+      CGU_DEMO_PUBLIC_ORIGIN: https://demo.uniway-tw.com
+      CGU_DEMO_SECURE_COOKIE: "1"
+    # No production env_file, volumes, database, SMTP, OAuth or shared network.

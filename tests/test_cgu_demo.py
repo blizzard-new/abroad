@@ -10,7 +10,7 @@ import pytest
 import requests
 
 from cgu_demo_fixture import demo_url
-from exchange_info.cgu_demo import CONTENT, STATIC, platform_html
+from exchange_info.cgu_demo import CONTENT, STATIC, platform_html, public_origin
 from exchange_info.cgu_demo_content import FrozenCatalogue
 
 
@@ -77,6 +77,43 @@ def test_sources_are_explicit_and_tasks_do_not_invent_deadlines():
         for task in stage['tasks']:
             assert task.get('source') is None or task['source'] in sources
             assert 'official_deadline_at' not in task
+
+
+@pytest.mark.parametrize('value', ['http://demo.example.test', 'https://demo.example.test/path',
+    'https://user:secret@demo.example.test', 'https://demo.example.test?query=1',
+    'https://demo.example.test#fragment', 'https://demo.example.test:444', 'https://'])
+def test_public_origin_rejects_unsafe_or_ambiguous_configuration(value):
+    with pytest.raises(ValueError):
+        public_origin(value)
+
+
+def test_public_origin_normalizes_https_default_port():
+    assert public_origin(' https://DEMO.example.test:443/ ') == 'https://demo.example.test'
+    assert public_origin('') == ''
+
+
+@pytest.mark.parametrize('demo_url', [{'CGU_DEMO_PUBLIC_ORIGIN':'https://demo.example.test'}], indirect=True)
+def test_https_proxy_origin_saves_without_trusting_forwarded_headers(demo_url):
+    # The browser sends HTTPS to the edge, which forwards plain HTTP and the
+    # original Host to the process. Secure cookies are forwarded by the edge.
+    client = requests.Session()
+    client.headers.update({'Host':'demo.example.test', 'Origin':'https://demo.example.test'})
+    home = client.get(demo_url + '/')
+    assert home.ok and 'Secure' in home.headers['set-cookie']
+    assert 'Domain=' not in home.headers['set-cookie']
+    client.headers['Cookie'] = 'uniway_cgu_demo_session=' + client.cookies.get('uniway_cgu_demo_session')
+    plan = create(client, demo_url)
+    assert len(plan['stages']) == 6
+    for headers in [
+        {'Origin':'https://elsewhere.test'},
+        {'Host':'elsewhere.test'},
+        {'Host':'demo.example.test:444'},
+        {'Origin':'http://demo.example.test', 'X-Forwarded-Proto':'https'},
+        {'Origin':'https://elsewhere.test', 'X-Forwarded-Host':'demo.example.test'},
+    ]:
+        assert client.post(demo_url + '/demo/reset', headers=headers).status_code == 403
+    assert len(client.get(demo_url + '/account/application-paths').json()['items']) == 1
+    assert client.post(demo_url + '/demo/reset').ok
 
 
 def test_isolated_auth_guards_and_shared_assets(demo_url):

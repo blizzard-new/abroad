@@ -12,7 +12,7 @@ import threading
 from contextlib import asynccontextmanager
 from datetime import timedelta
 from pathlib import Path
-from urllib.parse import parse_qsl, urlencode
+from urllib.parse import parse_qsl, urlencode, urlsplit
 
 from bs4 import BeautifulSoup
 from fastapi import FastAPI, HTTPException, Request
@@ -23,6 +23,19 @@ STATIC = Path(__file__).parent / "static"
 CONTENT = Path(__file__).parent / "demo_data/content.json"
 COOKIE = "uniway_cgu_demo_session"
 HOME = "長庚大學"
+
+
+def public_origin(value: str) -> str:
+    """A configured HTTPS origin, never inferred from forwarded request headers."""
+    value = value.strip().rstrip('/')
+    if not value:
+        return ''
+    parsed = urlsplit(value)
+    if (parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password
+            or parsed.path or parsed.query or parsed.fragment or parsed.port not in (None, 443)):
+        raise ValueError('CGU_DEMO_PUBLIC_ORIGIN must be an HTTPS origin without a path or credentials')
+    host = parsed.hostname.lower()
+    return 'https://' + ('[' + host + ']' if ':' in host else host)
 
 
 def platform_html() -> str:
@@ -68,6 +81,7 @@ def create_demo_app() -> FastAPI:
     # BEFORE importing it, and refuse use in an already-running normal API process.
     if 'exchange_info.api' in sys.modules:
         raise RuntimeError('CGU demo must run in a separate process; do not mount it in the production app')
+    hosted_origin = public_origin(os.environ.get('CGU_DEMO_PUBLIC_ORIGIN', ''))
     if os.environ.get('EXCHANGE_ENVIRONMENT') == 'production' or any(
         value for name, value in os.environ.items()
         if name.startswith(('SUPABASE', 'GOOGLE_OAUTH', 'SMTP_', 'OPENAI_API_KEY'))
@@ -79,6 +93,8 @@ def create_demo_app() -> FastAPI:
     runtime = tempfile.TemporaryDirectory(prefix='uniway-cgu-demo-')
     os.environ.update(EXCHANGE_INFO_DATA_DIR=runtime.name, EXCHANGE_ENVIRONMENT='development',
                       EXCHANGE_ANALYTICS='off', EXCHANGE_WARM_CACHES='off', EXCHANGE_AUTH_METHODS='email')
+    if hosted_origin:
+        os.environ['EXCHANGE_PUBLIC_BASE_URL'] = hosted_origin
     from . import api
     from .cgu_demo_content import FrozenCatalogue, journey_levels, source_dashboard
     from .models import UserAccount, AccountSessionRecord, ProductAccessTier, utc_now
@@ -116,7 +132,7 @@ def create_demo_app() -> FastAPI:
         return token
 
     def cookie(response, token, request):
-        response.set_cookie(COOKIE, token, httponly=True, samesite='strict', secure=os.environ.get('CGU_DEMO_SECURE_COOKIE') == '1' or request.url.scheme == 'https',
+        response.set_cookie(COOKIE, token, httponly=True, samesite='strict', secure=bool(hosted_origin) or os.environ.get('CGU_DEMO_SECURE_COOKIE') == '1' or request.url.scheme == 'https',
                             max_age=86400, path='/')
 
     @app.middleware('http')
@@ -154,7 +170,11 @@ def create_demo_app() -> FastAPI:
                      '/application-center/pdf', '/application-center/docx', '/public-translations', '/auth/community-identity') and request.method == 'POST')
         if forbidden or (request.method not in ('GET','HEAD') and not allowed_write and path != '/demo/reset'):
             response = JSONResponse({'detail':'此展示尚未開放正式登入、私人文件、外部同步或送件。'}, status_code=403)
-        elif request.method not in ('GET','HEAD') and request.headers.get('origin') != str(request.base_url).rstrip('/'):
+        elif request.method not in ('GET','HEAD') and (
+            request.headers.get('origin') != (hosted_origin or str(request.base_url).rstrip('/'))
+            or (hosted_origin and (request.url.hostname != urlsplit(hosted_origin).hostname
+                                   or request.url.port not in (None, 443)))
+        ):
             response = JSONResponse({'detail':'請由此展示網站操作。'}, status_code=403)
         else:
             if allowed_write:
@@ -229,7 +249,8 @@ def create_demo_app() -> FastAPI:
 
     @app.get('/health')
     def health():
-        return {'status':'ok', 'mode':'cgu-demo', 'ui':'shared-uniway-platform', 'persistence':'isolated-temporary-runtime'}
+        return {'status':'ok', 'mode':'cgu-demo', 'ui':'shared-uniway-platform', 'persistence':'isolated-temporary-runtime',
+                'revision':os.environ.get('CGU_DEMO_REVISION', 'local')}
 
     @app.get('/robots.txt')
     def robots():
