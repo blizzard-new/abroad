@@ -1,5 +1,19 @@
 # Editorial intentions and next topics
 
+## 2026-11-11 每日批次：AI 英文澄清／多益照片兩篇（驗收完成，待開 PR）
+
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261111`，基於 main `bff878eaf829230e2da1de027652300aa6cad5de`。讀取 workflow、backlog、41 篇庫存及相關正文；核對全部 29 個 open PR 的完整清單與相關說明。#272 的 `ai-english-listening-dictation`、`toefl-academic-reading`，以及 #285 的 `japan-residence-registration`、`toeic-part-four-talks` 仍待審，四題已選並排除，保持原批次。#78／#92 已合併，無基礎相依。開始前無同日分支或任何狀態同日 PR。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 17：英文沒聽懂怎麼問？用 AI 練澄清、確認意思與接回對話的 Prompt | `ai-english-clarification` | 完整文章與驗收完成；待建立本日唯一 PR，後續排除 |
+| 20：多益 Part 1 照片描述怎麼練？可見證據、動作與狀態的原創題解析 | `toeic-part-one-photographs` | 同批完整文章與驗收完成，待同一個 PR，後續排除 |
+
+依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。澄清篇有三種缺口、三輪可填 Prompt、原創來回與錯誤回饋查核，與四技能總覽、面試經歷追問、讀寫及待審聽寫分工；Part 1 有真實授權圖、兩組八選項、逐項解析及主被動／動作狀態比較，與應答、對話、獨白及閱讀任務分工，不以品牌或年份重發。所有教材與預期輸出明示編輯設計，不冒稱模型實測、官方試題或成效。
+
+原有 41 篇 JSON、URL、published 與 lastmod 不變，本分支共 43 篇。10/30 `exchange-study-plan` 更新 `97de3fda` 未重做；候選 15 沒有三工具實測，不捏造比較。來源、攝影、畫面、各跑次與套件見[本批驗收](seo-editorial-validation-2026-11-11.md)。下方歷史待審描述以本日查核及 #272／#285 保留狀態優先。最終 165 項 SEO、53 項完整 E2E 加兩篇手機案例補跑、六組無 JavaScript、15 張目視與 wheel 608 檔核對通過。SEO 初跑 164／1 因校對時檔案與快取不同而失敗，固定內容後完整重跑通過，保留各跑次。本批未合併或部署。
+
+
 ## 2026-11-08 每日批次：托福訪談／多益句子填入兩篇（PR #266 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261108`，基於 main `b5caecf856c184e349ffaecc2ffc384c6615d9a3`。盤點 main 37 篇及待審兩篇，重讀相關正文與 workflow；核對全部 11 個 open PR #255–#265 的說明與完整變更清單。#256–#265 只有資料稽核提案，#255 的 `ai-english-writing-feedback`、`toefl-complete-the-words` 仍待審，已選並排除，不納入本批。開始前無同日分支／任何狀態同日 PR。#78、#92 已合併，無未合併基礎相依。
