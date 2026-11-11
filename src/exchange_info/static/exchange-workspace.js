@@ -50,7 +50,7 @@ window.UniWayExchangeWorkspace = (() => {
   }
   function summary(value, schedule=false){
     const rows=(value?.workspace?.tasks||[]).filter(t=>t.effective_status!=='done');
-    if(!rows.length)return '<section class="ex-summary"><h3>從申請到交換生活</h3><p>把通知、分批文件、面試與行前安排留在這份計畫。</p><a href="#my-application?'+new URLSearchParams({plan:value?.plan.id||'',view:'workspace'})+'">開啟準備工作台 →</a></section>';
+    if(!rows.length)return '<section class="ex-summary"><h3>從申請到交換生活</h3><a href="#my-application?'+new URLSearchParams({plan:value?.plan.id||'',view:'workspace'})+'">開啟準備工作台 →</a></section>';
     const ready=rows.filter(t=>t.status!=='waiting'&&!t.waiting_for&&!(t.action==='submit'&&t.blocked_by?.length));
     const waiting=rows.filter(t=>!ready.includes(t));
     const listed=(schedule?rows.filter(t=>t.due_date):ready).sort((a,b)=>(a.due_date||'9999').localeCompare(b.due_date||'9999')).slice(0,schedule?12:4);
@@ -60,7 +60,7 @@ window.UniWayExchangeWorkspace = (() => {
   function render(){
     const locked=view().plan.archived;
     if(locked)tab='tasks';
-    host.innerHTML='<div class="exchange-workspace"><div class="ex-head"><div><h2>準備工作台</h2><p>從選校到返國，這份計畫的文件、通知與個人安排都在這裡。</p></div><button class="primary-button" data-ex-new '+(locked?'disabled':'')+'>新增待辦</button></div><p id="exchange-message" role="status" tabindex="-1"></p>'+
+    host.innerHTML='<div class="exchange-workspace"><div class="ex-head"><div><h2>準備工作台</h2></div><button class="primary-button" data-ex-new '+(locked?'disabled':'')+'>新增待辦</button></div><p id="exchange-message" role="status" tabindex="-1"></p>'+
       '<nav class="ex-tabs" aria-label="準備工作台工具">'+Object.entries({tasks:'我的任務',notice:'通知轉待辦',library:'加入準備清單',peers:'同梯交流'}).map(([key,name])=>'<button data-ex-tab="'+key+'" aria-pressed="'+(tab===key)+'" '+(locked&&key!=='tasks'?'disabled':'')+'>'+name+'</button>').join('')+'</nav>'+
       (locked?'<p>這份計畫已封存，恢復後可繼續編輯。</p>':'')+'<div id="exchange-content"></div><dialog id="exchange-task-dialog" aria-labelledby="exchange-task-title"></dialog></div>';
     if(tab==='tasks')renderTasks();
@@ -129,7 +129,7 @@ window.UniWayExchangeWorkspace = (() => {
   function renderNotice(){
     const draft=noticeDrafts.get(scope),v=draft?.values||{};
     if(draft?.type==='notice'&&!previews.length)previews=draft.previews||[];
-    $('#exchange-content').innerHTML='<section class="ex-notice"><h3>把校方通知整理成可執行的任務</h3><p>先產生草稿，核對後才加入。來源、批次與日期都可以修改。</p><form id="exchange-notice-form">'+input('source_label','通知名稱',v.source_label,'required maxlength="200" placeholder="例如：合作校第二批補件通知"')+input('source_url','原始公告網址（選填）',v.source_url,'type="url" maxlength="2000"')+'<label>貼上通知內容<textarea name="text" maxlength="80000" rows="7" required>'+esc(v.text||'')+'</textarea></label><details><summary>或從 PDF／DOCX／TXT 讀取文字</summary><input type="file" id="exchange-notice-file" accept=".pdf,.docx,.txt"><label class="ex-check"><input type="checkbox" id="exchange-extract-consent">同意解析文字，原檔不保存</label><button type="button" data-ex-extract>讀取附件文字</button><p>最多 5 MB；掃描圖片需先轉為文字。擷取後可先移除不需要保存的個人資料。</p></details><button class="primary-button" type="submit">整理待辦草稿</button><button type="button" data-ex-clear-notice>清除這份通知草稿</button></form><div id="exchange-preview"></div></section>';
+    $('#exchange-content').innerHTML='<section class="ex-notice"><h3>把校方通知整理成可執行的任務</h3><form id="exchange-notice-form">'+input('source_label','通知名稱',v.source_label,'required maxlength="200" placeholder="例如：合作校第二批補件通知"')+input('source_url','原始公告網址（選填）',v.source_url,'type="url" maxlength="2000"')+'<label>貼上通知內容<textarea name="text" maxlength="80000" rows="7" required>'+esc(v.text||'')+'</textarea></label><details><summary>或從 PDF／DOCX／TXT 讀取文字</summary><input type="file" id="exchange-notice-file" accept=".pdf,.docx,.txt"><label class="ex-check"><input type="checkbox" id="exchange-extract-consent">同意解析文字，原檔不保存</label><button type="button" data-ex-extract>讀取附件文字</button><p>最多 5 MB；掃描圖片需先轉為文字。擷取後可先移除不需要保存的個人資料。</p></details><button class="primary-button" type="submit">整理待辦草稿</button><button type="button" data-ex-clear-notice>清除這份通知草稿</button></form><div id="exchange-preview"></div></section>';
     if(previews.length)renderPreview();
   }
   function renderPreview(){

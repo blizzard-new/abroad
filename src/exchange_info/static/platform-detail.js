@@ -81,7 +81,7 @@ window.UniWayDetail = (() => {
     } else {
       fit.className = "pr-booking-fit neutral";
       fit.dataset.status = "unassessed";
-      fit.innerHTML = `<i data-lucide="circle-help" aria-hidden="true"></i><span>尚未比對你的條件 · <a href="#advisor">填寫條件</a><small>先瀏覽學校也可以；填寫後再查看初步結果。</small></span>`;
+      fit.innerHTML = `<i data-lucide="circle-help" aria-hidden="true"></i><span>尚未比對你的條件 · <a href="#advisor">填寫條件</a></span>`;
     }
     const home = homeDeadline();
     const homeDate = home ? parseLocalDate(home.date) : null;

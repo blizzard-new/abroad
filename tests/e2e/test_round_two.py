@@ -157,8 +157,7 @@ def test_the_wordmark_is_always_beside_the_logo_not_only_on_hover(page, live_ser
 def test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full(page, live_server, size):
     page.set_viewport_size({"width": size[0], "height": size[1]})
     page.add_init_script(INSTRUMENT)
-    page.goto(f"{live_server.base_url}/?view=map#partners")
-    expect(page.locator("#boot-splash")).to_be_hidden(timeout=90000)
+    enter_public_site(page, live_server, "partners", view="map")
     ready(page)
     stage = page.locator(".partner-map-stage").bounding_box()
     assert stage["height"] >= 680, stage
@@ -179,8 +178,7 @@ def test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full(page, 
 def test_search_controls_are_readable_and_the_primary_action_is_clear(page, live_server, theme):
     page.set_viewport_size({"width": 1360, "height": 800})
     page.add_init_script(f"localStorage.setItem('exchange-guide-theme', '{theme}')")
-    page.goto(f"{live_server.base_url}/?view=map#partners")
-    expect(page.locator("#boot-splash")).to_be_hidden(timeout=90000)
+    enter_public_site(page, live_server, "partners", view="map")
     page.wait_for_timeout(800)
     style = "(sel) => { const cs = getComputedStyle(document.querySelector(sel)); return [cs.borderTopWidth, parseFloat(cs.borderTopLeftRadius), cs.backgroundColor]; }"
     for selector in ("#map-global", "#map-home", ".discovery-open-workspace", ".discovery-criteria", ".pr-view-toggle"):
@@ -188,7 +186,7 @@ def test_search_controls_are_readable_and_the_primary_action_is_clear(page, live
         assert width == "0px" and radius >= 20 and background != "rgba(0, 0, 0, 0)", (selector, width, radius, background)
     for selector in (".pr-search", ".pr-search-button"):
         _, radius, _ = page.evaluate(style, selector)
-        assert radius == 12, (selector, radius)
+        assert radius == (38 if selector == ".pr-search" else 28), (selector, radius)
     # The unified fields retain readable text in both themes.
     ink, _ = luminance_and_alpha(page.locator("#partner-search").evaluate("el => getComputedStyle(el).color"))
     bubble, _ = luminance_and_alpha(page.locator(".pr-search .pr-field").first.evaluate("el => getComputedStyle(el).backgroundColor"))

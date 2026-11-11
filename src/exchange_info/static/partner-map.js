@@ -98,18 +98,15 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     type: "Feature", properties: { name: zhNames[f.properties.name] || f.properties.name.normalize("NFD").replace(/[^\x20-\x7E]/g, "") },
     geometry: { type: "Point", coordinates: [f.properties.label_lon, f.properties.label_lat] },
   })) };
-  // The globe is a toy, not a photograph: flat pastel countries (each country's own tone from countries.geojson, so neighbours differ)
-  // on a light-blue sea, white borders and white graticule, no atmosphere glow. Night keeps the same toy, only deeper.
-  // The school markers are coral with a white ring on either. Globe projection keeps real school coordinates, clustering and
-  // keyboard/touch navigation on one engine.
+  // Muted geography keeps school markers and selection readable in both themes.
   const PALETTES = {
     light: {
-      sea: "#bfe4ff", lands: ["#ffc9d9", "#ffe8a3", "#c4f0c5", "#dccbff", "#ffd5b5", "#b9ecf0", "#f6d0f0"], border: "#ffffff", borderOpacity: 1,
-      label: "#4b3f72", halo: "#ffffff", grid: "#ffffff", gridOpacity: .55, hover: "#ffffff", hoverOpacity: .5,
+      sea: "#738b9b", lands: ["#b5b0a4", "#bdb6a0", "#a2b2a1", "#aaaeb8", "#b8ac9e", "#9eafb0", "#b3a8b0"], border: "#e1e5df", borderOpacity: .65,
+      label: "#25333b", halo: "#e5e9e5", grid: "#c8d4db", gridOpacity: .18, hover: "#ffffff", hoverOpacity: .18,
     },
     dark: {
-      sea: "#2b3f73", lands: ["#c4708c", "#c9a64e", "#5fae85", "#8c79c9", "#c98a5e", "#4fa5b0", "#b574b0"], border: "#ffffff", borderOpacity: .55,
-      label: "#ffffff", halo: "#1c2744", grid: "#ffffff", gridOpacity: .12, hover: "#ffffff", hoverOpacity: .2,
+      sea: "#253743", lands: ["#77766e", "#817c69", "#657b70", "#6b7281", "#807366", "#60777b", "#7a6d79"], border: "#bbc9cc", borderOpacity: .35,
+      label: "#edf1ee", halo: "#253743", grid: "#bbc9cc", gridOpacity: .08, hover: "#ffffff", hoverOpacity: .12,
     },
   };
   const landColor = (lands) => ["match", ["get", "tone"], 1, lands[0], 2, lands[1], 3, lands[2], 4, lands[3], 5, lands[4], 6, lands[5], 7, lands[6], lands[2]];

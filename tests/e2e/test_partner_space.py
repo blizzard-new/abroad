@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 from playwright.sync_api import expect
 from .test_partner_globe import INSTRUMENT, ready
+from .conftest import enter_public_site
 
 
 @pytest.mark.parametrize('size', [(1440, 1000), (393, 852)])
@@ -13,9 +14,7 @@ def test_space_globe_drag_zoom_filters_and_route_cleanup(page, live_server, size
     page.emulate_media(reduced_motion='reduce')
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.goto(f'{live_server.base_url}/#partners')
-    # The common splash has a 60-second fallback on a software renderer.
-    expect(page.locator('#boot-splash')).to_be_hidden(timeout=90000)
+    enter_public_site(page, live_server, 'partners', view='map')
     ready(page)
     expect(page.locator('[data-partner-view="map"]')).to_have_attribute('aria-pressed', 'true')
     assert page.evaluate('window.__testedMap.getProjection().type') == 'globe'
