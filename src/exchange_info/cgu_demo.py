@@ -43,13 +43,15 @@ def platform_html() -> str:
     soup = BeautifulSoup((STATIC / "index.html").read_text(encoding="utf-8"), "html.parser")
     soup.title.string = "UniWay CGU｜長庚大學交換申請平台"
     soup.head.append(soup.new_tag("meta", attrs={"name": "robots", "content": "noindex,nofollow,noarchive"}))
-    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css"))
+    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261111-cgu-home-1"))
     script = soup.new_tag("script", src="/demo/bootstrap.js")
     soup.head.insert(0, script)
     # Initial static choices must also be CGU-only, before the registry request resolves.
     for item in soup.select('[data-home-school]'):
         if item.get('data-home-school') != HOME:
             item.decompose()
+    for item in soup.select('.pr-supported'):
+        item.decompose()
     for item in soup.select('.uniway-header-brand strong'):
         item.string = 'UniWay CGU'
     for item in soup.select('#school-switcher'):

@@ -56,6 +56,8 @@ def screenshot(page, name):
 def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     ready(page, demo_url, '?home=國立臺灣大學')
     expect(page.locator('#home-landing-title')).to_contain_text('你能去哪些交換學校')
+    expect(page.locator('.pr-supported')).to_have_count(0)
+    expect(page.locator('[data-home-discover]')).to_be_visible()
     screenshot(page, 'desktop-home.png')
     page.locator('#home-search-input').fill('Lincoln')
     page.locator('#home-search-form button[type=submit]').click()

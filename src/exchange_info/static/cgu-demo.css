@@ -10,9 +10,8 @@ body { padding-bottom:70px; }
 #school-switcher { cursor:default; }
 @media(max-width:600px) { #cgu-demo-strip span { width:100%; text-align:center; } body { padding-bottom:100px; } }
 
-/* One school needs no repeated multi-school ticker or school-change affordance. */
-#home-supported-list [data-marquee-copy], #home-supported-toggle { display:none !important; }
-#home-supported-list { animation:none !important; transform:none !important; }
+/* One school needs no multi-school supported strip or school-change affordance. */
+.pr-supported { display:none !important; }
 #school-switcher .school-switcher-action { display:none !important; }
 [data-home-pick-school] { pointer-events:none; }
 .mt-board-edit { display:none; }
