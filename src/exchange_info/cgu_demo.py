@@ -241,7 +241,7 @@ def create_demo_app() -> FastAPI:
             english_name=CGU.english_name, official_url=CGU.official_url,
             colleges=list(CGU.colleges), hero_image=CGU.hero_image,
             partner_count=len(catalogue.view().partners),
-            coverage_note='77 筆歷史瀏覽項目，含交換、自費、雙學位及院級參考；不等於當期名額。')]
+            coverage_note='78 所合作校已與主站同步（含中央當期名單與院級官方參考）；116-1 校內申請至 2026/12/21 17:00。')]
 
     @app.get('/auth/providers')
     def providers():

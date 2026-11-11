@@ -39,7 +39,7 @@ def test_bundled_snapshot_is_replayable_from_both_recorded_bodies(seed, monkeypa
     replayed = cgu.fetch_complete_snapshot()
     assert replayed['records'] == seed['records']
     assert replayed['records_sha256'] == seed['records_sha256']
-    assert replayed['record_count'] == 77
+    assert replayed['record_count'] == 78
 
 
 @pytest.mark.parametrize('failure', ['timeout', 'http_error', 'transport_error', 'empty_response', 'invalid_response'])
@@ -49,7 +49,7 @@ def test_failed_refresh_retains_exact_rows_times_and_persisted_snapshot(tmp_path
     def fail(): raise cgu.CatalogueFetchError(failure)
     store = cgu.CguCatalogue(path, fetcher=fail)
     view = store.refresh()
-    assert len(view.partners) == 77 and view.source.status == 'saved_reference'
+    assert len(view.partners) == 78 and view.source.status == 'saved_reference'
     assert view.source.last_attempt_result == 'failed' and view.source.failure_reason == failure
     assert view.source.last_success_at.isoformat() == seed['fetched_at']
     assert view.source.current_cycle_verified is False
@@ -67,7 +67,7 @@ def test_invalid_replacements_are_not_published(tmp_path, seed, damage):
     if damage == 'older': candidate['fetched_at'] = '2020-01-01T00:00:00Z'
     if damage == 'missing_field': del candidate['source_receipts'][0]['schema_valid']
     store = cgu.CguCatalogue(tmp_path/'snapshot.json', fetcher=lambda:candidate)
-    assert len(store.refresh().partners) == 77
+    assert len(store.refresh().partners) == 78
     assert store.view(refresh=False).source.last_attempt_result == 'failed'
     assert not store.path.exists()
 
@@ -77,7 +77,7 @@ def test_cold_start_uses_bundle_when_runtime_missing_or_corrupt(tmp_path):
     for body in ('{broken', '{}'):
         path.write_text(body)
         view = cgu.CguCatalogue(path).view(refresh=False)
-        assert len(view.partners) == 77
+        assert len(view.partners) == 78
         assert view.source.status == 'saved_reference' and view.source.last_attempt_at is None
 
 
@@ -91,10 +91,10 @@ def test_empty_cold_start_is_unavailable_then_recovers_without_restart(tmp_path,
     fail[0] = False
     assert store.refresh().source.status == 'unavailable', 'failure retry is rate-limited'
     tick[0] = 61
-    assert len(store.refresh().partners) == 77
+    assert len(store.refresh().partners) == 78
     assert store.view(refresh=False).source.status == 'retrieved'
     restarted = cgu.CguCatalogue(store.path, bundled=None).view(refresh=False)
-    assert len(restarted.partners) == 77 and restarted.source.status == 'saved_reference'
+    assert len(restarted.partners) == 78 and restarted.source.status == 'saved_reference'
 
 
 def test_atomic_write_failure_does_not_publish_new_rows_or_leave_partial_file(tmp_path, seed, monkeypatch):
@@ -103,7 +103,7 @@ def test_atomic_write_failure_does_not_publish_new_rows_or_leave_partial_file(tm
     def no_space(*_): raise OSError(28, 'No space left')
     monkeypatch.setattr(cgu.os, 'replace', no_space)
     result = store.refresh()
-    assert result.source.failure_reason == 'storage_failure' and len(result.partners) == 77
+    assert result.source.failure_reason == 'storage_failure' and len(result.partners) == 78
     assert path.read_bytes() == original and not list(tmp_path.glob('.cgu-*.tmp'))
 
 
@@ -113,12 +113,12 @@ def test_readers_share_one_refresh_and_receive_independent_copies(tmp_path, seed
     store = cgu.CguCatalogue(tmp_path/'snapshot.json', fetcher=fetch)
     first = store.view(); assert entered.wait(5)
     first.partners[0].quota = 'MUTATED'
-    for _ in range(8): assert len(store.view().partners) == 77
+    for _ in range(8): assert len(store.view().partners) == 78
     assert store.view(refresh=False).partners[0].quota == seed['records'][0]['quota']
     release.set()
     for thread in threading.enumerate():
         if thread.name == 'cgu-source-refresh': thread.join(10)
-    assert calls == [1] and len(store.view(refresh=False).partners) == 76
+    assert calls == [1] and len(store.view(refresh=False).partners) == 77
 
 
 @pytest.mark.parametrize('fault', ['second_timeout', 'http503', 'login_html', 'empty', 'bad_schema'])
@@ -152,15 +152,15 @@ def test_dashboard_and_workflow_share_success_failure_and_recovery(tmp_path, see
     client=TestClient(api.create_app(tmp_path))
     params={'school':'林肯大學 Lincoln University','home_school':'長庚大學'}
     first=client.get('/student-dashboard').json()
-    assert len(first['partner_universities'])==77 and first['catalogue_source']['failure_reason']=='timeout'
+    assert len(first['partner_universities'])==78 and first['catalogue_source']['failure_reason']=='timeout'
     assert client.get('/application-workflow',params=params).status_code==200
     state[0]=changed(seed); tick[0]=61; store.refresh()
     second=client.get('/student-dashboard').json()
-    assert len(second['partner_universities'])==76 and second['catalogue_source']['status']=='retrieved'
+    assert len(second['partner_universities'])==77 and second['catalogue_source']['status']=='retrieved'
     assert client.get('/application-workflow',params=params).status_code==404
     state[0]=None; tick[0]=662; store.refresh()
     third=client.get('/student-dashboard').json()
-    assert len(third['partner_universities'])==76 and third['catalogue_source']['status']=='saved_reference'
+    assert len(third['partner_universities'])==77 and third['catalogue_source']['status']=='saved_reference'
     assert second['partner_universities']==third['partner_universities']
 
 
@@ -174,7 +174,7 @@ def test_no_snapshot_returns_explicit_unavailable_and_retryable_lookup_only_for_
     assert dash['partner_universities']==[] and dash['catalogue_source']['status']=='unavailable'
     lookup=client.get('/application-workflow',params={'school':'林肯大學 Lincoln University','home_school':'長庚大學'})
     assert lookup.status_code==503 and lookup.headers['retry-after']=='60'
-    assert len(client.get('/universities').json())==18
+    assert len(client.get('/universities').json())==71
     for home in ('國立臺北大學','國立臺灣大學','國立中正大學','國立中央大學','淡江大學'):
         reply=client.get('/student-dashboard',params={'school':home})
         assert reply.status_code==200 and reply.json()['partner_universities']

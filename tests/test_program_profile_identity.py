@@ -48,16 +48,16 @@ def test_program_annotations_remain_distinct_without_changing_institutions():
 def test_all_supported_bundles_keep_every_profile_and_raw_content():
     from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
     profiles=storage.load_destination_profiles(include_bundled_baseline=True)
-    assert len(profiles)==10956
+    assert len(profiles)==10957
     added_homes = {u.school_name for u in SUPPORTED_UNIVERSITIES if u.id in {"ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub", "ncnu", "ndhu", "thu", "shu", "pu", "usc", "nuk", "ncyu", "nutc", "nfu", "utaipei", "ntcu", "tnua", "ntua", "ntue", "ncut", "npust", "cjcu", "nqu", "isu", "fgu", "nkuht", "nuu", "tnnua", "tpcu", "au", "knu", "nutn", "niu", "nptu", "npu", "ntunhs", "nttu", "asia", "ttu", "tcu", "mcut", "cyut"}}
-    assert sum(p.home_university not in added_homes for p in profiles)==4588
+    assert sum(p.home_university not in added_homes for p in profiles)==4589
     for home in SUPPORTED_UNIVERSITIES:
         path=ROOT/f'src/exchange_info/official_data/{home.id}/destination_profiles.jsonl'
         expected={json.loads(line)['school_name'] for line in path.read_text('utf8').splitlines()}
         actual={p.school_name for p in profiles if p.home_university==home.school_name}
         assert actual==expected,home.id
     assert len([p for p in profiles if p.home_university==HOME])==237
-    assert len(apply_destination_profile_promotions(profiles,[],[]))==10956
+    assert len(apply_destination_profile_promotions(profiles,[],[]))==10957
 
 
 def test_upsert_and_collection_audit_preserve_sibling_routes_and_other_homes(tmp_path):

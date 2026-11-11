@@ -50,15 +50,16 @@ def test_refuses_service_credentials(env):
     assert 'refuses production/service credentials' in result.stderr
 
 
-def test_frozen_catalogue_never_claims_current_openings(tmp_path):
+def test_frozen_catalogue_stays_offline_and_syncs_platform_partners(tmp_path):
+    from exchange_info.cgu_catalogue import CguCatalogue
     catalogue = FrozenCatalogue(tmp_path)
+    platform = CguCatalogue(tmp_path / 'unused-platform-cache.json').view(refresh=False)
     view = catalogue.view()
-    assert len(view.partners) == 77
+    assert len(view.partners) == 78
     assert view.source.current_cycle_verified is False
     assert not (tmp_path / 'unused-demo-cache.json').exists()
-    assert all(row.availability_status == 'quota_unconfirmed' and row.application_deadline is None
-               and row.quota_status == 'reference_only' and row.checked_at is None for row in view.partners)
-    assert any(row.reference_data.get('quota') for row in view.partners)
+    assert [row.model_dump(mode='json') for row in view.partners] == [row.model_dump(mode='json') for row in platform.partners]
+    assert any(row.availability_status == 'open' and row.quota and row.application_deadline for row in view.partners)
 
 
 def test_missing_snapshot_fails_closed(tmp_path):
@@ -141,7 +142,8 @@ def test_school_scope_dates_and_native_plan_persistence(demo_url):
     alice, bob = visitor(demo_url), visitor(demo_url)
     dashboard = alice.get(demo_url + '/student-dashboard?school=國立臺灣大學').json()
     assert dashboard['school_name'] == '長庚大學'
-    assert len(dashboard['partner_universities']) == 77
+    assert len(dashboard['partner_universities']) == 78
+    assert any(p['academic_year'] == '116' for p in dashboard['application_periods'])
     assert {s['school_name'] for s in alice.get(demo_url + '/universities').json()} == {'長庚大學'}
     a = create(alice, demo_url)
     b = create(bob, demo_url)

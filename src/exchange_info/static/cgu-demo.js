@@ -32,7 +32,7 @@
       const response = await fetch('/demo/content');
       if (!response.ok) throw new Error('來源暫時無法載入');
       const data = await response.json();
-      body.innerHTML = '<p>此站共用 UniWay 原平台介面與功能，固定為長庚大學。林小程為虛構學生，未經校方身分驗證。展示不代表校方採用、認證或合作。</p><p>每個瀏覽器有獨立展示工作區。進度暫存在此展示服務，重新整理可保留；24 小時後或服務重啟可能消失。不要輸入真實個資或上傳私人文件。</p><p>合作校是 2026-10-11 歷史資料，包含不同方案，不等於當期開放名額。官方截止日與個人目標日期應分別確認。</p>' + data.rules.map(rule => `<h3>${esc(rule.title)}</h3><p>${esc(rule.body)}</p>`).join('') + data.sources.map(source => `<p><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)} ↗</a><br>查核：${esc(source.checked_on)}；${esc(source.scope)}</p>`).join('') + '<h3>未來校方合作構想・規劃中</h3><p>尚未與校方串接，AI 問答亦規劃中。第一階段研究授權的公告、表格及附來源 FAQ；第二階段在學生同意與校方提供介面時研究登入和狀態；第三階段有正式接收 API 時研究文件送達及收件編號。需校方授權、最小權限、加密、保存及刪除政策；錄取與抵免由校方決定。</p>';
+      body.innerHTML = '<p>此站共用 UniWay 原平台介面與功能，固定為長庚大學。林小程為虛構學生，未經校方身分驗證。展示不代表校方採用、認證或合作。</p><p>每個瀏覽器有獨立展示工作區。進度暫存在此展示服務，重新整理可保留；24 小時後或服務重啟可能消失。不要輸入真實個資或上傳私人文件。</p><p>合作校名冊（78 所）、表列名額、合作校參考截止日、語言門檻與 116-1 校內申請時程已與 UniWay 主站同步；送件前仍請核對長庚國際事務處最新公告與目的校提名信。</p>' + data.rules.map(rule => `<h3>${esc(rule.title)}</h3><p>${esc(rule.body)}</p>`).join('') + data.sources.map(source => `<p><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)} ↗</a><br>查核：${esc(source.checked_on)}；${esc(source.scope)}</p>`).join('') + '<h3>未來校方合作構想・規劃中</h3><p>尚未與校方串接，AI 問答亦規劃中。第一階段研究授權的公告、表格及附來源 FAQ；第二階段在學生同意與校方提供介面時研究登入和狀態；第三階段有正式接收 API 時研究文件送達及收件編號。需校方授權、最小權限、加密、保存及刪除政策；錄取與抵免由校方決定。</p>';
     } catch (error) { body.textContent = error.message + '，請稍後再試。'; }
   };
   $('#cgu-demo-reset').onclick = () => {

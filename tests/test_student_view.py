@@ -41,7 +41,7 @@ def test_cgu_dashboard_uses_verified_home_cycle_without_yearless_fallbacks() -> 
     assert "不能把這個日期當成申請截止日" in conditional_follow_up.status_note
 
 
-def test_cgu_fall_round_is_announced_but_its_deadline_is_never_guessed() -> None:
+def test_cgu_fall_round_uses_verified_1161_announcement_without_guessing_paper_time() -> None:
     def fall(reference_time: datetime):
         return build_student_dashboard(
             [],
@@ -53,18 +53,21 @@ def test_cgu_fall_round_is_announced_but_its_deadline_is_never_guessed() -> None
     before = fall(datetime(2026, 10, 3, tzinfo=timezone.utc))
     assert before.title == "116學年度第1學期交換／雙聯校內申請（秋季班）"
     assert (before.academic_year, before.application_round) == ("116", "第1學期")
-    assert before.opens_at.isoformat() == "2026-11-01T00:00:00+08:00"
+    assert before.opens_at.isoformat() == "2026-11-02T00:00:00+08:00"
+    assert before.deadline_at.isoformat() == "2026-12-21T17:00:00+08:00"
     assert before.status == ApplicationPeriodStatus.UPCOMING
-    assert before.date_status == ApplicationPeriodDateStatus.NEEDS_CONFIRMATION
-    assert before.deadline_at is None and before.reminder_eligible is False
-    assert "11/01–12/20" in " ".join(before.details) and "沒有標示年度與截止時刻" in " ".join(before.details)
-    assert "不建立提醒" in (before.deadline_note or "")
-    assert before.source.source_url.endswith("nodeId=15656")
+    assert before.date_status == ApplicationPeriodDateStatus.VERIFIED_EXACT
+    assert before.reminder_eligible is False
+    assert "forms.gle/JbdGkA9i7wkNdtvX8" in " ".join(before.details)
+    assert "紙本" in (before.deadline_note or "")
+    assert before.source.source_url.endswith("Detail/85785?nodeId=15817")
 
-    # After the announced opening day the system still does not declare it open.
-    after = fall(datetime(2026, 11, 2, tzinfo=timezone.utc))
-    assert after.status == ApplicationPeriodStatus.NEEDS_CONFIRMATION
-    assert after.deadline_at is None
+    during = fall(datetime(2026, 11, 11, tzinfo=timezone.utc))
+    assert during.status == ApplicationPeriodStatus.OPEN
+    assert during.deadline_at.isoformat() == "2026-12-21T17:00:00+08:00"
+
+    after = fall(datetime(2026, 12, 22, tzinfo=timezone.utc))
+    assert after.status == ApplicationPeriodStatus.CLOSED
 
 
 def test_cgu_home_cycle_status_changes_without_changing_verified_dates() -> None:
@@ -102,6 +105,7 @@ def test_partner_rows_for_same_school_are_merged_into_program_options() -> None:
             program_type="雙學位",
             country="新加坡",
             school_name="測試大學 Test University",
+            website="https://tu-dresden.de/?utm_source=chatgpt.com&utm_medium=referral",
             colleges="工學院",
             degree_levels="碩士班",
             quota="不限",
@@ -113,6 +117,7 @@ def test_partner_rows_for_same_school_are_merged_into_program_options() -> None:
 
     assert len(partners) == 1
     assert partners[0].program_type == "交換學生；雙學位"
+    assert partners[0].website == "https://tu-dresden.de/"
     assert len(partners[0].program_options) == 2
     assert partners[0].program_options[1].degree_levels == "碩士班"
 

@@ -1,4 +1,4 @@
-"""Dated CGU data and suggested journeys, rendered by the shared platform UI."""
+"""Synced CGU catalogue and suggested journeys, rendered by the shared platform UI."""
 from __future__ import annotations
 
 import json
@@ -8,37 +8,16 @@ from .cgu_catalogue import CguCatalogue, CatalogueView
 from .application_path import build_levels, level
 
 CONTENT = Path(__file__).parent / 'demo_data/content.json'
-REFERENCE_NOTE = '2026-10-11 歷史資料；當期名額、語言、學期與截止日待確認，不代表開放申請。'
 
 
 class FrozenCatalogue:
+    """Offline-isolated reader over the bundled CGU snapshot synced with app.uniway."""
+
     def __init__(self, path):
         self.store = CguCatalogue(path / 'unused-demo-cache.json')
 
-    def view(self):
-        view = self.store.view(refresh=False)
-        rows = []
-        for original in view.partners:
-            row = original.model_copy(deep=True)
-            row.reference_data.update({key: str(getattr(row, key)) for key in
-                ('quota', 'application_deadline', 'eligibility', 'language_requirement') if getattr(row, key)})
-            row.availability_status = 'quota_unconfirmed'
-            row.availability_note = REFERENCE_NOTE
-            row.quota_status = 'reference_only'
-            row.application_window_status = 'needs_confirmation'
-            row.quota = '當期待確認'
-            row.student_summary_zh.application_deadline = None
-            row.application_deadline = None
-            row.partner_application_deadline = None
-            row.nomination_deadline = None
-            row.partner_exchange_details.pop('application_deadline', None)
-            row.program_options = []  # unverified historical options must not bypass the row's status
-            row.eligibility = '歷史條件參考（當期待確認）：' + (row.eligibility or '資料不足，請查官方來源')
-            row.language_requirement = '當期待確認；請核對目的校官方要求。'
-            row.language_conditions = []
-            row.checked_at = None  # retrieval is not a current-cycle verification
-            rows.append(row)
-        return CatalogueView(rows, view.source)
+    def view(self) -> CatalogueView:
+        return self.store.view(refresh=False)
 
 
 def journey_levels(context, evaluated, catalog, values=None):
@@ -73,20 +52,18 @@ def journey_levels(context, evaluated, catalog, values=None):
 
 
 def source_dashboard(dashboard):
-    """Only the actually checked home-school excerpt supplies demonstration rules."""
-    from .models import SourceReference, StudentInfoItem
+    """Keep CGU's verified platform dashboard synced while appending demo source notes."""
+    from .models import SourceReference
     data = json.loads(CONTENT.read_text(encoding='utf-8'))
-    refs = {row['id']: SourceReference(title=row['title'], source_url=row['url'],
-        summary=row['scope'] + ' 查核日期：' + row['checked_on']) for row in data['sources']}
-    items = [StudentInfoItem(title=row['title'], details=[row['body']], source=refs[row['source']])
-             for row in data['rules']]
-    dashboard.maximum_preferences = 2
-    dashboard.language_score_minimums = {'toeic': 700}
-    dashboard.eligibility = [items[0]]
-    dashboard.language_requirements = [items[0]]
-    dashboard.required_documents = [items[1]]
-    dashboard.program_overview = [items[2], items[3]]
-    dashboard.sources = list(refs.values())
-    # Exact dates stay in the cited excerpt until a verified structured cycle is available.
-    dashboard.application_periods = []
+    existing_urls = {src.source_url for src in dashboard.sources if src.source_url}
+    for row in data['sources']:
+        if row['url'] not in existing_urls:
+            dashboard.sources.append(
+                SourceReference(
+                    title=row['title'],
+                    source_url=row['url'],
+                    summary=row['scope'] + ' 查核日期：' + row['checked_on'],
+                )
+            )
+            existing_urls.add(row['url'])
     return dashboard

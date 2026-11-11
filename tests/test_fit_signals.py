@@ -120,7 +120,7 @@ def test_bundled_destination_profiles_yield_honest_budget_results():
     profiles = storage.load_destination_profiles()
     from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
     original_six = {
-        "長庚大學": 77, "國立臺北大學": 206, "國立臺灣大學": 289,
+        "長庚大學": 78, "國立臺北大學": 206, "國立臺灣大學": 289,
         "國立中央大學": 214, "國立中正大學": 104, "淡江大學": 287,
     }
     # Preserve the original six fixture counts while exercising all current
