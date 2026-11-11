@@ -1,5 +1,18 @@
 # Editorial intentions and next topics
 
+## 2026-11-09 每日批次：AI 聽寫／托福學術閱讀兩篇（PR #272 待審）
+
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261109`，基於 main `aeb46b7089b3c4a180a7c4fad1fae02bfee08b5a`。盤點 main 41 篇並重讀相關正文、workflow 與 backlog；核對全部四個 open PR #267、#269、#270、#271 的說明及完整檔案清單，沒有新增 editorial JSON。#255、#266 均已於 11/8 合併，四篇已在 main，排除重做。開始前無同日分支／任何狀態同日 PR；#78、#92 已合併，無未合併基礎相依。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 17：用 AI 練英文聽力怎麼做？聽寫 Prompt、漏聽分類與重聽訂正 | `ai-english-listening-dictation` | [PR #272](https://github.com/blizzard-new/abroad/pull/272) 待審，完整文章與驗收完成；後續排除 |
+| 19：托福學術閱讀怎麼練？主旨、細節與推論的原創題目解析 | `toefl-academic-reading` | 同一個 PR #272 待審，完整文章與驗收完成；後續排除 |
+
+選題依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。聽寫篇新增三輪填寫 Prompt、原稿／錯稿及未看稿的新材料流程，將文字差異與聲音原因分開，與可見文字精讀、作文文法與四技能安排不同。學術閱讀篇以有 EPA 科學來源的兩段原創材料及六題解析，處理主旨、支持與有限推論，與部分字母補全及一般總覽分工，不以品牌／年份改標題重發。
+
+原有 41 篇內容、URL、published 與 lastmod 不變，本分支共 43 篇。10/30 `exchange-study-plan` 擴充保留 `97de3fda`；候選 15 無三工具實測，不製造比較。來源、已重查授權的真實照片、HTML 圖解、FAQ 與驗收證據見[本批紀錄](seo-editorial-validation-2026-11-09.md)。下方歷史待審描述以本段當日核對優先。165 項 SEO 測試、53 項 E2E、六組無 JavaScript 閱讀與 wheel 73 檔核對通過，無重跑。兩篇同屬本日唯一待審 PR；未合併或部署。
+
 ## 2026-11-08 每日批次：托福訪談／多益句子填入兩篇（PR #266 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261108`，基於 main `b5caecf856c184e349ffaecc2ffc384c6615d9a3`。盤點 main 37 篇及待審兩篇，重讀相關正文與 workflow；核對全部 11 個 open PR #255–#265 的說明與完整變更清單。#256–#265 只有資料稽核提案，#255 的 `ai-english-writing-feedback`、`toefl-complete-the-words` 仍待審，已選並排除，不納入本批。開始前無同日分支／任何狀態同日 PR。#78、#92 已合併，無未合併基礎相依。
