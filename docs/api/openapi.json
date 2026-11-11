@@ -8612,6 +8612,25 @@
         "title": "Body_document_check_document_check_post",
         "type": "object"
       },
+      "Body_notice_extract_account_application_paths__plan_id__workspace_extract_post": {
+        "properties": {
+          "consent": {
+            "default": false,
+            "title": "Consent",
+            "type": "boolean"
+          },
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "title": "Body_notice_extract_account_application_paths__plan_id__workspace_extract_post",
+        "type": "object"
+      },
       "BudgetFit": {
         "description": "Sourced monthly living cost against the student's monthly budget (TWD).",
         "properties": {
@@ -10370,6 +10389,74 @@
         ],
         "title": "ConversationStatus",
         "type": "string"
+      },
+      "Course": {
+        "additionalProperties": false,
+        "properties": {
+          "credits": {
+            "anyOf": [
+              {
+                "maximum": 60.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Credits"
+          },
+          "end": {
+            "anyOf": [
+              {
+                "format": "time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End"
+          },
+          "recognition": {
+            "default": "unknown",
+            "enum": [
+              "unknown",
+              "asking",
+              "confirmed",
+              "not_recognized"
+            ],
+            "title": "Recognition",
+            "type": "string"
+          },
+          "start": {
+            "anyOf": [
+              {
+                "format": "time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start"
+          },
+          "weekday": {
+            "anyOf": [
+              {
+                "maximum": 7.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weekday"
+          }
+        },
+        "title": "Course",
+        "type": "object"
       },
       "CourseInterestFit": {
         "properties": {
@@ -14170,6 +14257,35 @@
         ],
         "title": "ModerationStatus",
         "type": "string"
+      },
+      "NoticePreview": {
+        "additionalProperties": false,
+        "properties": {
+          "source_label": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Source Label",
+            "type": "string"
+          },
+          "source_url": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Source Url",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 80000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "source_label"
+        ],
+        "title": "NoticePreview",
+        "type": "object"
       },
       "NotificationCenterEnvelope": {
         "properties": {
@@ -20586,6 +20702,244 @@
         ],
         "title": "WebReleaseReadinessReport",
         "type": "object"
+      },
+      "WorkspaceSave": {
+        "additionalProperties": false,
+        "properties": {
+          "credit_goal": {
+            "anyOf": [
+              {
+                "maximum": 120.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Credit Goal"
+          },
+          "revision": {
+            "minimum": 1.0,
+            "title": "Revision",
+            "type": "integer"
+          },
+          "tasks": {
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceTask"
+            },
+            "maxItems": 250,
+            "title": "Tasks",
+            "type": "array"
+          }
+        },
+        "required": [
+          "revision",
+          "tasks"
+        ],
+        "title": "WorkspaceSave",
+        "type": "object"
+      },
+      "WorkspaceTask": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "default": "prepare",
+            "enum": [
+              "prepare",
+              "submit"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "batch": {
+            "default": "",
+            "maxLength": 80,
+            "title": "Batch",
+            "type": "string"
+          },
+          "course": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Course"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "date_kind": {
+            "default": "unknown",
+            "enum": [
+              "unknown",
+              "personal",
+              "notice"
+            ],
+            "title": "Date Kind",
+            "type": "string"
+          },
+          "date_reviewed": {
+            "default": false,
+            "title": "Date Reviewed",
+            "type": "boolean"
+          },
+          "depends_on": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 30,
+            "title": "Depends On",
+            "type": "array"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          },
+          "file_location": {
+            "default": "",
+            "maxLength": 500,
+            "title": "File Location",
+            "type": "string"
+          },
+          "file_version_id": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "minLength": 8,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Version Id"
+          },
+          "id": {
+            "pattern": "^[a-zA-Z0-9_-]{8,64}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "default": "task",
+            "enum": [
+              "task",
+              "document",
+              "interview",
+              "course",
+              "life",
+              "travel",
+              "internship",
+              "community"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "maxLength": 12000,
+            "title": "Notes",
+            "type": "string"
+          },
+          "optional": {
+            "default": false,
+            "title": "Optional",
+            "type": "boolean"
+          },
+          "origin": {
+            "default": "manual",
+            "enum": [
+              "manual",
+              "notice",
+              "guide",
+              "template"
+            ],
+            "title": "Origin",
+            "type": "string"
+          },
+          "recipient": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Recipient",
+            "type": "string"
+          },
+          "signers": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Signers",
+            "type": "string"
+          },
+          "source_excerpt": {
+            "default": "",
+            "maxLength": 6000,
+            "title": "Source Excerpt",
+            "type": "string"
+          },
+          "source_label": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Source Label",
+            "type": "string"
+          },
+          "source_url": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Source Url",
+            "type": "string"
+          },
+          "stage": {
+            "default": "departure",
+            "enum": [
+              "selection",
+              "home",
+              "interview",
+              "nomination",
+              "host",
+              "departure",
+              "arrival",
+              "abroad",
+              "return"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "status": {
+            "default": "todo",
+            "enum": [
+              "todo",
+              "doing",
+              "waiting",
+              "done"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          },
+          "waiting_for": {
+            "default": "",
+            "maxLength": 300,
+            "title": "Waiting For",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title"
+        ],
+        "title": "WorkspaceTask",
+        "type": "object"
       }
     }
   },
@@ -21056,6 +21410,239 @@
           }
         },
         "summary": "Update Step"
+      }
+    },
+    "/account/application-paths/{plan_id}/workspace": {
+      "put": {
+        "operationId": "save_workspace_account_application_paths__plan_id__workspace_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "title": "Home School",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspaceSave"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Save Workspace"
+      }
+    },
+    "/account/application-paths/{plan_id}/workspace/extract": {
+      "post": {
+        "operationId": "notice_extract_account_application_paths__plan_id__workspace_extract_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "title": "Home School",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_notice_extract_account_application_paths__plan_id__workspace_extract_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Notice Extract"
+      }
+    },
+    "/account/application-paths/{plan_id}/workspace/preview": {
+      "post": {
+        "operationId": "notice_preview_account_application_paths__plan_id__workspace_preview_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "title": "Home School",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoticePreview"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Notice Preview"
+      }
+    },
+    "/account/application-paths/{plan_id}/workspace/suggestions": {
+      "get": {
+        "operationId": "workspace_suggestions_account_application_paths__plan_id__workspace_suggestions_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "title": "Home School",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "required": false,
+            "schema": {
+              "default": "",
+              "maxLength": 80,
+              "title": "Country",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Workspace Suggestions"
       }
     },
     "/account/application-paths/{plan_id}/writing.docx": {

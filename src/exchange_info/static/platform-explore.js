@@ -28,7 +28,7 @@ window.UniWayExplore = (() => {
     const picked = UniWayDiscovery.hasCriteria(discoveryCriteria);
     const fits = picked ? list.filter((item) => UniWayDiscovery.assess(item, discoveryCriteria).matched).length : 0;
     return {
-      match: picked ? `${fits} 間符合所選條件` : profile ? `${fit} 間符合資格` : "尚未填寫條件",
+      match: picked ? `${fits} 間符合所選條件` : profile ? `${fit} 間已知條件相符` : "填寫條件後可比對",
       deadline,
       quota: quotas.length ? `最多 ${Math.max(...quotas)} 名` : "依官方公告",
     };

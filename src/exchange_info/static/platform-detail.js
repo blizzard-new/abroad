@@ -19,9 +19,14 @@ window.UniWayDetail = (() => {
   function requirementRows(item) {
     const profile = state.eligibilityProfile;
     const rows = [];
+    const availability = partnerAvailabilityMeta(item);
+    if (availability.blocked) return [{ tone: "blocked", text: availability.reason, state: availability.cardLabel }];
+    if (availability.pending) rows.push({ tone: "wait", text: availability.reason, state: availability.cardLabel });
     if (profile) {
       const match = partnerMatch(item, profile);
-      match.reasons.forEach((text) => rows.push({ tone: "ok", text, state: "符合" }));
+      if (match.tone === "blocked") rows.push({ tone: "blocked", text: match.label, state: "不符合" });
+      // Reasons also include country preferences and research coverage, not just eligibility rules.
+      match.reasons.forEach((text) => rows.push({ tone: "ok", text, state: "已知資訊" }));
       match.risks.filter(Boolean).forEach((text) => rows.push({ tone: "wait", text, state: "待確認" }));
     }
     return rows;
@@ -32,13 +37,13 @@ window.UniWayDetail = (() => {
     const rows = requirementRows(item);
     const points = partnerSummaryPoints(item, "eligibility_points").slice(0, 6);
     const own = rows.length
-      ? rows.map((row) => `<li class="${row.tone}"><span class="pr-req-icon"><i data-lucide="${row.tone === "ok" ? "check" : "clock"}" aria-hidden="true"></i></span><span class="pr-req-text">${escapeHtml(row.text)}</span><span class="pr-req-state">${row.state}</span></li>`).join("")
+      ? rows.map((row) => `<li class="${row.tone}"><span class="pr-req-icon"><i data-lucide="${row.tone === "ok" ? "check" : row.tone === "blocked" ? "circle-minus" : "clock"}" aria-hidden="true"></i></span><span class="pr-req-text">${escapeHtml(row.text)}</span><span class="pr-req-state">${escapeHtml(row.state)}</span></li>`).join("")
       : `<li class="empty"><span class="pr-req-icon"><i data-lucide="circle-help" aria-hidden="true"></i></span><span class="pr-req-text">${profile ? "這所學校目前沒有可逐項對照的條件" : "填寫學院、學制與語言成績後，這裡會逐項對照你的條件"}</span><a class="pr-req-state" href="#advisor">${profile ? "更新條件" : "填寫條件"}</a></li>`;
     const rules = points.length
       ? `<h3>合作校公開條件</h3><ul class="pr-req-list pr-req-rules">${points.map((text) => `<li><span class="pr-req-icon"><i data-lucide="list" aria-hidden="true"></i></span><span class="pr-req-text">${highlightHtml(text)}</span></li>`).join("")}</ul>` : "";
     return `<section class="pr-requirements" aria-labelledby="pr-requirements-title">
       <h2 id="pr-requirements-title">申請條件</h2>
-      <p>依你在個人中心填的條件對照。資格初判供參考，正式結果以校方認定為準。</p>
+      <p>依你填寫的條件初步對照。資格初判供參考，正式結果以校方認定為準。</p>
       <ul class="pr-req-list">${own}</ul>${rules}</section>`;
   }
 
@@ -56,16 +61,27 @@ window.UniWayDetail = (() => {
     const term = profile?.targetTerm ? targetTermLabel(profile.targetTerm) : "";
     document.querySelector("#booking-term").textContent = `${term ? `${term}交換` : "交換申請"} · ${activeHomeSchool()}`;
     const fit = document.querySelector("#booking-fit");
-    if (profile) {
-      const match = partnerMatch(item, profile);
-      const ok = match.reasons.length, total = ok + match.risks.filter(Boolean).length;
-      fit.className = `pr-booking-fit ${total && ok === total ? "ok" : "wait"}`;
-      fit.innerHTML = total
-        ? `<i data-lucide="${ok === total ? "circle-check" : "clock"}" aria-hidden="true"></i><span>你目前符合 ${ok} / ${total} 項條件</span>`
-        : `<i data-lucide="circle-help" aria-hidden="true"></i><span>${escapeHtml(match.label)}</span>`;
-    } else {
+    const availability = partnerAvailabilityMeta(item);
+    if (availability.blocked) {
+      fit.className = "pr-booking-fit blocked";
+      fit.dataset.status = "not_open";
+      fit.innerHTML = `<i data-lucide="circle-minus" aria-hidden="true"></i><span><strong>${escapeHtml(availability.cardLabel)}</strong><small>${escapeHtml(availability.reason)}</small></span>`;
+    } else if (availability.pending) {
       fit.className = "pr-booking-fit wait";
-      fit.innerHTML = `<i data-lucide="circle-help" aria-hidden="true"></i><span>填寫條件後顯示你符合幾項 · <a href="#advisor">填寫條件</a></span>`;
+      fit.dataset.status = "needs_confirmation";
+      fit.innerHTML = `<i data-lucide="clock" aria-hidden="true"></i><span><strong>${escapeHtml(availability.cardLabel)}</strong><small>${escapeHtml(availability.reason)}</small></span>`;
+    } else if (profile) {
+      const match = partnerMatch(item, profile);
+      const blocked = match.tone === "blocked", matched = match.tone === "strong";
+      fit.className = `pr-booking-fit ${blocked ? "blocked" : matched ? "ok" : "wait"}`;
+      fit.dataset.status = blocked ? "does_not_match" : matched ? "matches_known" : "needs_confirmation";
+      const label = blocked ? "目前條件不符" : matched ? "已知條件初步相符" : "資格待確認";
+      const reason = blocked ? match.label : matched ? "仍須核對當期公告，正式資格以校方認定為準。" : match.risks.filter(Boolean)[0] || match.label;
+      fit.innerHTML = `<i data-lucide="${blocked ? "circle-minus" : matched ? "circle-check" : "clock"}" aria-hidden="true"></i><span><strong>${label}</strong><small>${escapeHtml(reason)}</small></span>`;
+    } else {
+      fit.className = "pr-booking-fit neutral";
+      fit.dataset.status = "unassessed";
+      fit.innerHTML = `<i data-lucide="circle-help" aria-hidden="true"></i><span>尚未比對你的條件 · <a href="#advisor">填寫條件</a><small>先瀏覽學校也可以；填寫後再查看初步結果。</small></span>`;
     }
     const home = homeDeadline();
     const homeDate = home ? parseLocalDate(home.date) : null;

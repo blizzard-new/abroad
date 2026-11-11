@@ -1447,12 +1447,13 @@ const SCHOOL_BADGES = {
 const SCHOOL_EMBLEM_FILES = {};
 
 // Schools without a preset tint take the next hue of a wheel that never puts two neighbours in the same colour, so every
-// school's mark is told apart at a glance (they used to share one blue).
+// school's mark is told apart at a glance. That belongs to the metro pages; the classic pages keep the one blue they had.
 const SCHOOL_TINTS = [4, 28, 48, 78, 140, 168, 188, 210, 232, 258, 286, 314, 340];
 function schoolBadge(item, index = -1) {
   const preset = SCHOOL_BADGES[item.school_name];
   const hash = [...String(item.school_name || "")].reduce((sum, ch) => (sum * 31 + ch.charCodeAt(0)) >>> 0, 7);
-  const tint = preset?.tint ?? SCHOOL_TINTS[(index >= 0 ? index : hash) % SCHOOL_TINTS.length];
+  const wheel = document.documentElement.dataset.skin === "metro";
+  const tint = preset?.tint ?? (wheel ? SCHOOL_TINTS[(index >= 0 ? index : hash) % SCHOOL_TINTS.length] : 200);
   const text = preset?.text || String(item.short_name || item.school_name || "").replace(/^國立/, "").slice(0, 2);
   const emblem = SCHOOL_EMBLEM_FILES[item.school_name];
   const inner = emblem ? `<img src="${escapeHtml(emblem)}" alt="" decoding="async" />` : escapeHtml(text);
@@ -4957,7 +4958,7 @@ function workflowDeadlineEvents(workflows = state.workflowCache.values()) {
 }
 
 function allApplicationCalendarEvents() {
-  const combined = [...officialCalendarEvents(), ...state.calendarEvents]
+  const combined = [...officialCalendarEvents(), ...state.calendarEvents, ...(window.UniWayApplicationPath?.workspaceCalendarEvents?.() || [])]
     .filter((event) => parseLocalDate(event.date) && event.title)
     .sort((left, right) => left.date.localeCompare(right.date) || left.title.localeCompare(right.title, "zh-Hant"));
   const seen = new Set();
@@ -5089,6 +5090,7 @@ function downloadCalendarEvents(events, filename = "exchange-application-calenda
 function renderCalendarEvent(event) {
   const category = calendarCategory(event.category);
   const official = event.origin === "official";
+  const workspace = Boolean(event.workspaceTaskHref);
   const generated = Boolean(event.generatedFromEventId || event.generated_from_event_id);
   const completed = event.status === "ready";
   const conflicting = calendarConflictingEventIds().has(String(event.id));
@@ -5104,8 +5106,8 @@ function renderCalendarEvent(event) {
           <a href="${escapeHtml(googleCalendarUrl(event))}" target="_blank" rel="noreferrer" class="calendar-action-link"><i data-lucide="calendar-plus" aria-hidden="true"></i><span>Google 日曆</span></a>
           <button type="button" class="calendar-action-link" data-download-calendar-event="${escapeHtml(event.id)}"><i data-lucide="download" aria-hidden="true"></i><span>Apple／其他</span></button>
           ${official && event.sourceUrl ? `<a href="${escapeHtml(event.sourceUrl)}" target="_blank" rel="noreferrer" class="calendar-action-link"><i data-lucide="external-link" aria-hidden="true"></i><span>來源</span></a>` : ""}
-          ${!official && !generated ? `<label class="calendar-task-status"><span class="visually-hidden">${escapeHtml(event.title)}狀態</span><select data-calendar-task-status="${escapeHtml(event.id)}" aria-label="${escapeHtml(event.title)}狀態"><option value="todo" ${event.status !== "preparing" && event.status !== "ready" ? "selected" : ""}>未開始</option><option value="preparing" ${event.status === "preparing" ? "selected" : ""}>準備中</option><option value="ready" ${event.status === "ready" ? "selected" : ""}>已完成</option></select></label>` : ""}
-          ${official ? '<span class="official-event-label"><i data-lucide="badge-check" aria-hidden="true"></i>官方日期</span>' : generated ? '<span class="official-event-label calendar-generated-label"><i data-lucide="sparkles" aria-hidden="true"></i>系統安排</span>' : `<button type="button" class="calendar-action-link danger" data-delete-calendar-event="${escapeHtml(event.id)}"><i data-lucide="trash-2" aria-hidden="true"></i><span>刪除</span></button>`}
+          ${!official && !generated && !workspace ? `<label class="calendar-task-status"><span class="visually-hidden">${escapeHtml(event.title)}狀態</span><select data-calendar-task-status="${escapeHtml(event.id)}" aria-label="${escapeHtml(event.title)}狀態"><option value="todo" ${event.status !== "preparing" && event.status !== "ready" ? "selected" : ""}>未開始</option><option value="preparing" ${event.status === "preparing" ? "selected" : ""}>準備中</option><option value="ready" ${event.status === "ready" ? "selected" : ""}>已完成</option></select></label>` : ""}
+          ${workspace ? `<span>${escapeHtml(event.workspaceDateLabel)}</span><a class="calendar-action-link" href="${escapeHtml(event.workspaceTaskHref)}">開啟準備任務 →</a>` : official ? '<span class="official-event-label"><i data-lucide="badge-check" aria-hidden="true"></i>官方日期</span>' : generated ? '<span class="official-event-label calendar-generated-label"><i data-lucide="sparkles" aria-hidden="true"></i>系統安排</span>' : `<button type="button" class="calendar-action-link danger" data-delete-calendar-event="${escapeHtml(event.id)}"><i data-lucide="trash-2" aria-hidden="true"></i><span>刪除</span></button>`}
         </div>
       </div>
     </article>`;
@@ -8988,7 +8990,7 @@ function renderPartnerTable() {
 
 function partnerCardBadge(availability, match) {
   if (availability.blocked || availability.pending) return { tone: "warn", label: availability.cardLabel };
-  if (state.eligibilityProfile) return match.tone === "strong" ? { tone: "ok", label: "符合資格" } : { tone: "warn", label: match.label };
+  if (state.eligibilityProfile) return match.tone === "strong" ? { tone: "ok", label: "已知條件相符" } : { tone: "warn", label: match.label };
   return { tone: "ok", label: availability.cardLabel };
 }
 
@@ -9316,6 +9318,7 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {
   detailView.hidden = false;
   setSchoolHeroProgress(detailView, 0);
   document.body.classList.add("school-detail-open");
+  syncSkin();
   setActiveNavigation("partners");
   document.title = `${item.school_name} | UniWay`;
   $("#school-detail-country").textContent = [item.country, item.program_type].filter(Boolean).join(" · ");
@@ -9386,6 +9389,7 @@ function closeUniversityDetail({ updateHistory = true } = {}) {
   setSchoolHeroProgress($("#school-detail-view"), 0);
   $("#dashboard-view").hidden = false;
   document.body.classList.remove("school-detail-open");
+  syncSkin();
   if (updateHistory) {
     window.UniWayNavigation.pushState({}, "", state.dashboardHash || "#partners");
     applyAppRoute({ loadFeed: false, resetScroll: false });
@@ -11626,7 +11630,9 @@ function initDiscussionReader() {
       return `<div class="discussion-welcome" role="status">
         <div class="discussion-welcome-art" aria-hidden="true"><span class="discussion-art-orbit"></span><span class="discussion-art-globe"><i data-lucide="globe-2"></i></span><span class="discussion-art-bubble"><i data-lucide="messages-square"></i></span><span class="discussion-art-spark"><i data-lucide="sparkles"></i></span></div>
         <span class="discussion-welcome-kicker">下一站，從一場對話開始</span><h3>來分享第一篇交換經驗</h3>
+        <p>正在準備申請，還是已經走過一趟旅程？<br />你的問題與經驗，都值得被聽見。</p>
         <button type="button" class="primary-button" data-open-global-community-composer><i data-lucide="square-pen" aria-hidden="true"></i>發表文章</button>
+        <small>寫下國家、年份與目前階段，讓交流更有方向。</small>
       </div>`;
     },
     composer(post) {
@@ -14178,6 +14184,24 @@ function focusRouteHeading(selector) {
   });
 }
 
+// Two sections are drawn in the metro world (metro.css): school search with the school page it opens, and everything the
+// top bar lights 我的申請 for (its own pages and the in-app guide that explains them). Every other page (home, forum, profile,
+// 用戶評價) keeps the look it had before; only the top bar is shared. metro.css reads html[data-skin], which follows the page
+// that is actually on screen, not the address, so a redirect or an unknown address cannot leave the two out of step.
+const METRO_PAGES = new Set(["partners", "search", "my-application", "overview", "advisor", "favorites", "calendar", "deadlines", "scholarships", "budget", "eligibility", "application-center", "application-form", "document-check", "writing-assistant", "documents", "guide"]);
+function syncSkin() {
+  const metro = document.body.classList.contains("school-detail-open") || METRO_PAGES.has(document.body.dataset.activeUniversityPage);
+  if (metro) document.documentElement.dataset.skin = "metro";
+  else delete document.documentElement.dataset.skin;
+  const mobileAction = document.querySelector(".glass-mobile-header .mobile-guide-link");
+  if (mobileAction) {
+    mobileAction.setAttribute("href", metro ? "#partners" : "/guides");
+    mobileAction.innerHTML = metro
+      ? '找學校 <span aria-hidden="true">→</span>'
+      : '交換指南 <span aria-hidden="true">↗</span>';
+  }
+}
+
 function showUniversityPage(pageId, { resetScroll = true, focusHeading = true } = {}) {
   const activePage = UNIVERSITY_PAGE_ROUTES.has(pageId) ? pageId : null;
   const pageNodes = [...document.querySelectorAll("[data-university-page]")];
@@ -14191,10 +14215,12 @@ function showUniversityPage(pageId, { resetScroll = true, focusHeading = true } 
 
   if (!activePage) {
     delete document.body.dataset.activeUniversityPage;
+    syncSkin();
     return null;
   }
 
   document.body.dataset.activeUniversityPage = activePage;
+  syncSkin();
   setActiveNavigation(activePage === "search" ? "" : activePage === "application-form" ? "application-center" : activePage);
   document.title = activePage === "home"
     ? "UniWay｜交換學生申請、合作學校與選校資訊"
@@ -15476,4 +15502,4 @@ async function boot() {
 }
 
 // The loading screen goes when starting is over, however it ended; it can never stay in front of the page for good.
-boot().finally(() => window.UniWaySplash?.done());
+const appReady = boot().finally(() => window.UniWaySplash?.done());

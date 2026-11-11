@@ -1,11 +1,10 @@
-/* Home landing (#home): product story, supported schools, plan collage, partner map and the five tool tiles.
+/* Home landing (#home): product story, supported schools, partner map and the five tool tiles.
    Nothing on the page is a fixed sample: every school, count, date, document and amount comes from the loaded
    catalogue and, when someone is signed in, from their own saved data. app.js calls UniWayHome.render() whenever
    the school, dashboard, account or saved schools change. */
 window.UniWayHome = (() => {
   "use strict";
   const LAND_URL = "/static/assets/home/world-land.json?v=20261015-redesign-1";
-  // The student's own "目前階段" decides how many steps are behind them.
   const TAIWAN = [121.56, 25.04];
   const MAX_ARCS = 22;
   let land = null, landPromise = null, scheduled = 0, lastKey = "";
@@ -125,12 +124,13 @@ window.UniWayHome = (() => {
     set("#home-stat-schools", count);
     set("#home-stat-partners", total ? formatNumber(total) : "—");
     set("#home-band-total-line", total ? `看見 ${formatNumber(total)} 個選擇。` : "看見更多選擇。");
+    set("#home-supported-count", `${count} 所大學`);
     const list = host.querySelector("#home-supported-list");
     // Rewriting the row restarts the drift, so it is only rewritten when a school or its count actually changed.
     const signature = JSON.stringify(schools.map((item) => [item.school_name, item.partner_count || 0]));
     if (list.dataset.signature !== signature) {
       list.dataset.signature = signature;
-      list.innerHTML = schools.map((item) => `<li><strong>${escapeHtml(item.school_name)}</strong></li>`).join("");
+      list.innerHTML = schools.map((item) => `<li><strong>${escapeHtml(item.school_name)}</strong><span>${item.partner_count ? `${formatNumber(item.partner_count)} 間合作校` : "資料建置中"}</span></li>`).join("");
       layoutMarquee(host);
     }
   }
@@ -165,6 +165,7 @@ window.UniWayHome = (() => {
 
   function renderSearch(host, list) {
     const rows = host.querySelector("#home-search-rows"), foot = host.querySelector("#home-search-foot");
+    const lede = host.querySelector("#home-search-lede");
     if (!list.length) {
       rows.innerHTML = emptyTile(state.homeSchool ? "合作校資料載入中…" : "選擇就讀學校後，這裡會列出你能申請的合作校。", !state.homeSchool);
       foot.innerHTML = "";
@@ -173,6 +174,7 @@ window.UniWayHome = (() => {
     const profile = state.eligibilityProfile;
     const groups = { open: 0, pending: 0, blocked: 0 };
     list.forEach((item) => { groups[availabilityGroup(item)] += 1; });
+    lede.textContent = `${state.homeSchool || "目前"}的 ${formatNumber(list.length)} 間合作校，${groups.open ? `${formatNumber(groups.open)} 間本期可申請` : "可依國家與學期篩選"}。`;
     rows.innerHTML = featured(list, 3).map((item) => {
       const meta = partnerAvailabilityMeta(item);
       const match = profile ? partnerMatch(item) : null;
@@ -200,7 +202,7 @@ window.UniWayHome = (() => {
     if (picks.length || profile) {
       // Someone's own picks (or, with conditions filled in, the schools that suit them best) instead of school-wide counts.
       const pool = (picks.length ? picks : featured(list, 4)).slice(0, 4);
-      body.innerHTML = `<div class="pr-mini-checks">${pool.map((item) => {
+      body.innerHTML = `<small class="pr-tile-note">${picks.length ? `我的志願 · ${picks.length} 間` : "依你的條件優先看這些"}</small><div class="pr-mini-checks">${pool.map((item) => {
         const meta = partnerAvailabilityMeta(item);
         const match = profile ? partnerMatch(item) : null;
         const ok = match ? match.tone !== "blocked" : !meta.blocked;
@@ -211,7 +213,7 @@ window.UniWayHome = (() => {
     const groups = { open: 0, pending: 0, blocked: 0 };
     list.forEach((item) => { groups[availabilityGroup(item)] += 1; });
     const row = (cls, glyph, label, count) => `<div class="${cls}">${icon(glyph)}<span>${label}</span><small>${formatNumber(count)} 間</small></div>`;
-    body.innerHTML = `<div class="pr-mini-checks">${row("ok", "circle-check", "本期可申請", groups.open)}${row("warn", "clock-alert", "名額或期間待確認", groups.pending)}${row("muted", "circle-slash", "目前不開放", groups.blocked)}</div><a class="pr-link" href="#advisor" data-requires-home-school>填寫條件，看你符合哪些${icon("arrow-right")}</a>`;
+    body.innerHTML = `<small class="pr-tile-note">${html(state.homeSchool || "目前")}的合作校狀態</small><div class="pr-mini-checks">${row("ok", "circle-check", "本期可申請", groups.open)}${row("warn", "clock-alert", "名額或期間待確認", groups.pending)}${row("muted", "circle-slash", "目前不開放", groups.blocked)}</div><a class="pr-link" href="#advisor" data-requires-home-school>填寫條件，看你符合哪些${icon("arrow-right")}</a>`;
   }
 
   function upcomingEvents() {
@@ -276,7 +278,7 @@ window.UniWayHome = (() => {
     if (!items.length) {
       const notes = (list.length && (state.dashboard.document_explanations || state.dashboard.rule_explanations)) || [];
       if (notes.length) {
-        body.innerHTML = `
+        body.innerHTML = `<small class="pr-tile-note">${html(state.homeSchool || "")}的官方文件重點 · 共 ${notes.length} 份</small>
           <ul class="pr-mini-docs">${notes.slice(0, 4).map((note) => `<li><a href="#documents" data-requires-home-school>${icon("file-text")}<span>${html(truncate(note.title, 26))}<em>${html(note.document_type || "官方文件")}</em></span></a></li>`).join("")}</ul>
           <a class="pr-link" href="#document-check" data-requires-home-school>檢查我的文件${icon("arrow-right")}</a>`;
         return;
@@ -287,7 +289,7 @@ window.UniWayHome = (() => {
     const ready = items.filter((item) => readinessStatus(item.id) === "ready").length;
     const glyph = { ready: "circle-check", preparing: "clock", todo: "circle" };
     const label = { ready: "已備妥", preparing: "準備中", todo: "待準備" };
-    body.innerHTML = `
+    body.innerHTML = `<small class="pr-tile-note">${state.account ? `${ready} / ${items.length} 已備妥` : `共 ${items.length} 份文件 · 登入後可記錄進度`}</small>
       <ul class="pr-mini-docs">${items.slice(0, 4).map((item) => {
         const status = readinessStatus(item.id);
         return `<li class="${status}">${icon(glyph[status])}<span>${html(truncate(item.title, 22))}${item.conditional ? "<em>符合身分才需要</em>" : ""}</span><small>${state.account ? label[status] : "待準備"}</small></li>`;
@@ -303,7 +305,7 @@ window.UniWayHome = (() => {
       const parts = [["住宿", (plan.housing || 0) * months, "c1"], ["餐飲", (plan.food || 0) * months, "c2"], ["交通", (plan.transport || 0) * months, "c3"], ["其他", (plan.other || 0) * months, "c4"], ["一次性費用", plan.oneTime || 0, "c5"]].filter(([, amount]) => amount > 0);
       const total = parts.reduce((sum, [, amount]) => sum + amount, 0);
       const net = Math.max(0, total - (plan.scholarship || 0));
-      body.innerHTML = `<div class="pr-budget-total"><strong>${html(formatBudgetAmount(net, plan.currency))}</strong><span>扣除補助後的預估總支出</span></div>
+      body.innerHTML = `<small class="pr-tile-note">${html(shortName(school))} · ${months} 個月</small><div class="pr-budget-total"><strong>${html(formatBudgetAmount(net, plan.currency))}</strong><span>扣除補助後的預估總支出</span></div>
         ${total ? `<div class="pr-budget-bar">${parts.map(([, amount, cls]) => `<span class="${cls}" style="flex:${amount}"></span>`).join("")}</div>
         <ul class="pr-budget-legend">${parts.map(([name, amount, cls]) => `<li><i class="${cls}"></i>${name}<b>${html(formatBudgetAmount(amount, plan.currency))}</b></li>`).join("")}</ul>` : ""}
         <a class="pr-link" href="#budget" data-requires-home-school>調整我的預算${icon("arrow-right")}</a>`;
@@ -312,8 +314,9 @@ window.UniWayHome = (() => {
     const sample = list.map((item) => ({ item, profile: destinationProfileForSchool(item.school_name) })).find((entry) => entry.profile?.cost_summary);
     if (!sample) { body.innerHTML = emptyTile(state.homeSchool ? "官方生活費資料整理中；你也可以直接輸入自己的估算。" : "選擇就讀學校後，這裡會顯示合作校的官方生活費資料。", !state.homeSchool); return; }
     const { item, profile } = sample;
-    body.innerHTML = `
+    body.innerHTML = `<small class="pr-tile-note">官方生活費參考 · ${html(shortName(item.school_name))}</small>
       <p class="pr-budget-source"><span><i data-lucide="map-pin" aria-hidden="true"></i>${html(profile.city || profile.country || item.country || "")}</span>${html(truncate(profile.cost_summary, 96))}</p>
+      <small class="pr-tile-fine">${profile.last_checked ? `最後查核 ${html(formatDate(profile.last_checked).slice(0, 10))}；` : ""}幣別依學校公告，估算前請統一換算。</small>
       <a class="pr-link" href="#budget" data-requires-home-school>開始估算我的預算${icon("arrow-right")}</a>`;
   }
 
@@ -328,7 +331,6 @@ window.UniWayHome = (() => {
 
   function render() {
     scheduled = 0;
-    syncBoard();
     const host = root();
     if (!host || !state.supportedUniversities) return;
     const key = JSON.stringify([
@@ -343,17 +345,9 @@ window.UniWayHome = (() => {
     renderSchools(host);
     renderTiles(host);
     renderMaps(host);
+    const schoolCard = host.querySelector("#home-board-school-description");
+    if (schoolCard) schoolCard.textContent = `${activeUniversityProfile().short_name || "校內"}學生的交換申請資訊與討論。`;
     initIcons();
-  }
-
-  // The conditions board under the sentence: it names the student's school, offers the same language tests as the search page,
-  // and its button fills that page's own criteria fields before opening it, so the two pages always agree.
-  function syncBoard() {
-    const label = document.querySelector("#mt-board-school-name");
-    const name = state.homeSchool || "選擇就讀學校";
-    if (label && label.textContent !== name) label.textContent = name;
-    const source = document.querySelector("#partner-test-tile"), target = document.querySelector("#mt-board-test");
-    if (source && target && target.options.length <= 1 && source.options.length > 1) target.innerHTML = source.innerHTML;
   }
 
   function schedule() {
@@ -399,31 +393,11 @@ window.UniWayHome = (() => {
       initIcons();
       return;
     }
-    const earthToggle = event.target.closest("#mt-earth-toggle");
-    if (earthToggle) {
-      const paused = earthToggle.getAttribute("aria-pressed") !== "true";
-      earthToggle.setAttribute("aria-pressed", String(paused));
-      earthToggle.setAttribute("aria-label", paused ? "繼續地球轉動" : "暫停地球轉動");
-      earthToggle.closest(".mt-earth").dataset.paused = String(paused);
-      earthToggle.innerHTML = `<i data-lucide="${paused ? "play" : "pause"}" aria-hidden="true"></i>`;
-      initIcons();
-      return;
-    }
     const map = event.target.closest("[data-home-open-map]");
     if (map) { openMap(event); return; }
     if (event.target.closest("[data-home-pick-school]")) { openSchoolOnboarding(); return; }
     const country = event.target.closest("[data-home-country]");
     if (country) goPartners({ country: country.dataset.homeCountry });
-  });
-  document.addEventListener("submit", (event) => {
-    if (event.target.id !== "mt-board") return;
-    event.preventDefault();
-    const form = event.target.elements;
-    for (const [tile, value] of [["#partner-term-tile", form.term.value], ["#partner-test-tile", form.test.value]]) {
-      const field = document.querySelector(tile);
-      if (field && field.value !== value) { field.value = value; field.dispatchEvent(new Event("change", { bubbles: true })); }
-    }
-    goPartners({ q: form.q.value.trim() });
   });
   document.addEventListener("submit", (event) => {
     if (event.target.id !== "home-search-form") return;
@@ -445,5 +419,5 @@ window.UniWayHome = (() => {
   loadLand();
   // Schools, destination notes and a signed-in student's saved data arrive at different times; the render key makes this cheap.
   window.setInterval(() => { const host = root(); if (host && !host.hidden && !document.hidden) schedule(); }, 1500);
-  return { render: schedule, goPartners };
+  return { render: schedule };
 })();

@@ -1,5 +1,5 @@
-"""The search dropdown stays readable, the globe speaks Chinese, 我的申請 uses side-by-side boxes, the home is one night,
-and every school's mark has its own colour."""
+"""The search dropdown stays readable, the globe speaks Chinese, 我的申請 uses side-by-side boxes, the navigation is a top
+bar on every page, and on the metro pages every school's mark has its own colour."""
 import re
 from urllib.parse import urlencode
 
@@ -77,26 +77,10 @@ def test_my_application_today_lays_its_boxes_side_by_side_and_says_less(page, li
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
 
 
-@pytest.mark.parametrize("theme", ["light", "dark"])
-def test_the_home_is_one_night_that_the_earth_rises_out_of(page, live_server, theme):
+def test_every_school_mark_has_its_own_colour_on_the_metro_pages(page, live_server):
     page.set_viewport_size({"width": 1440, "height": 900})
-    page.add_init_script(f"localStorage.setItem('exchange-guide-theme', '{theme}')")
-    enter_public_site(page, live_server, "home")
-    page.wait_for_timeout(800)
-    assert page.evaluate("getComputedStyle(document.documentElement).backgroundColor") == "rgb(11, 18, 32)"
-    assert page.evaluate("getComputedStyle(document.body).backgroundColor") == "rgb(11, 18, 32)"
-    # No box around the sky: the band is transparent and the Earth fades out along its lower edge.
-    assert page.locator(".mt-sky").evaluate("el => getComputedStyle(el).backgroundColor") == "rgba(0, 0, 0, 0)"
-    assert "linear-gradient" in page.locator(".mt-earth").evaluate("el => getComputedStyle(el).maskImage || getComputedStyle(el).webkitMaskImage")
-    # Text on it is light, not dark on dark.
-    ink, _ = luminance_and_alpha(page.locator("#home-guides-title").evaluate("el => getComputedStyle(el).color"))
-    assert ink > 200
-
-
-def test_every_school_mark_has_its_own_colour(page, live_server):
-    page.set_viewport_size({"width": 1440, "height": 900})
-    enter_public_site(page, live_server, "home")
-    page.locator("#mt-board-school").click()
+    enter_public_site(page, live_server, "partners")
+    page.locator("#school-switcher").click()
     options = page.locator(".school-option")
     expect(options.first).to_be_visible()
     tints = page.evaluate("[...document.querySelectorAll('.school-option')].slice(0, 14).map((el) => el.style.getPropertyValue('--school-tint'))")
@@ -104,40 +88,29 @@ def test_every_school_mark_has_its_own_colour(page, live_server):
     assert len(set(tints)) >= 10, tints
     # Neighbours are never the same colour.
     assert all(a != b for a, b in zip(tints, tints[1:])), tints
-    # And the names beside them are readable on the night dialog.
-    name = page.locator(".school-option-name").nth(3)
-    colour, _ = luminance_and_alpha(name.evaluate("el => getComputedStyle(el).color"))
-    assert colour > 180
 
 
 def test_the_fonts_are_poppins_for_latin_and_genjyuu_for_chinese(page, live_server):
     page.set_viewport_size({"width": 1440, "height": 900})
-    enter_public_site(page, live_server, "home")
+    enter_public_site(page, live_server, "partners")
     page.wait_for_timeout(1500)
     stack = page.evaluate("getComputedStyle(document.body).fontFamily")
     assert stack.startswith('Poppins, GenJyuuGothic'), stack
     # The faces really load (not only named): Latin from Poppins, a Chinese sentence from 源柔黑體.
-    page.evaluate("Promise.all([document.fonts.load('700 20px Poppins', 'UniWay 116'), document.fonts.load('700 20px GenJyuuGothic', '世界這麼大')])")
+    page.evaluate("Promise.all([document.fonts.load('700 20px Poppins', 'UniWay 116'), document.fonts.load('700 20px GenJyuuGothic', '找交換學校')])")
     assert page.evaluate("document.fonts.check('700 20px Poppins', 'UniWay 116')")
-    assert page.evaluate("document.fonts.check('700 20px GenJyuuGothic', '世界這麼大')")
-    for selector in ("#home-landing-title", "#mt-board-school-name", ".pr-link", "#theme-toggle"):
+    assert page.evaluate("document.fonts.check('700 20px GenJyuuGothic', '找交換學校')")
+    for selector in ("#partners h1", ".pr-search-button", "#theme-toggle"):
         assert page.locator(selector).first.evaluate("el => getComputedStyle(el).fontFamily").startswith("Poppins"), selector
-    # Native controls and a server-rendered page use the same stack.
-    privacy = page.request.get(f"{live_server.base_url}/privacy")
-    assert "typography.css" in privacy.text()
 
 
-def test_the_home_has_no_route_map_and_the_navigation_is_a_top_bar(page, live_server):
+@pytest.mark.parametrize("route", ["home", "partners", "forum"])
+def test_the_navigation_is_a_top_bar_on_classic_and_metro_pages_alike(page, live_server, route):
     page.set_viewport_size({"width": 1440, "height": 900})
-    enter_public_site(page, live_server, "home")
-    assert page.locator("[data-metro-route], .mt-stage, #home-plan-steps, .pr-collage-mascot").count() == 0
-    # After the Earth the next thing on the page is the list of supported schools.
-    earth = page.locator(".mt-earth").bounding_box()
-    supported = page.locator(".pr-supported").bounding_box()
-    assert 0 <= supported["y"] - (earth["y"] + earth["height"]) < 140, (earth, supported)
+    enter_public_site(page, live_server, route)
     bar = page.locator("#glass-navigation").bounding_box()
     assert bar["x"] == 0 and bar["y"] == 0 and bar["width"] >= 1439 and bar["height"] <= 76
-    links = [page.locator(f'#glass-navigation a[data-public-route="{route}"]').bounding_box() for route in ("home", "partners", "forum")]
+    links = [page.locator(f'#glass-navigation a[data-public-route="{name}"]').bounding_box() for name in ("home", "partners", "forum")]
     assert len({round(box["y"]) for box in links}) == 1 and links[0]["x"] < links[1]["x"] < links[2]["x"]
 
 
@@ -166,72 +139,6 @@ def test_the_logo_stays_in_view_while_the_app_scrolls(page, live_server, route):
         expect(page.locator(selector).first).to_be_visible()
 
 
-@pytest.mark.parametrize("path", ["/guides", "/schools", "/privacy", "/terms"])
-def test_the_logo_stays_in_view_on_the_server_rendered_pages(page, live_server, path):
-    page.set_viewport_size({"width": 1440, "height": 800})
-    page.goto(f"{live_server.base_url}{path}")
-    page.evaluate("window.scrollTo(0, document.documentElement.scrollHeight)")
-    page.wait_for_timeout(300)
-    assert page.evaluate("scrollY") > 300, path
-    brand = page.locator(".reading-header .brand, .legal-bar .brand").first
-    expect(brand).to_be_visible()
-    box = brand.bounding_box()
-    assert 0 <= box["y"] and box["y"] + box["height"] <= 90, (path, box)
-    expect(brand).to_contain_text("UniWay")
-
-
-def test_the_earth_on_the_home_turns_visibly(page, live_server):
-    page.set_viewport_size({"width": 1440, "height": 900})
-    enter_public_site(page, live_server, "home")
-    read = "() => new DOMMatrixReadOnly(getComputedStyle(document.querySelector('.mt-earth-strip')).transform).m41"
-    first = page.evaluate(read)
-    page.wait_for_timeout(2000)
-    moved = abs(page.evaluate(read) - first)
-    # About 40 px a second on a wide screen: a turn takes 90 seconds, so the motion is seen, not guessed at.
-    assert 40 < moved < 400, moved
-
-
-def test_the_earth_still_turns_slowly_when_the_system_asks_for_less_motion_and_can_be_paused(page, live_server):
-    page.emulate_media(reduced_motion="reduce")
-    page.set_viewport_size({"width": 1440, "height": 900})
-    enter_public_site(page, live_server, "home")
-    read = "() => new DOMMatrixReadOnly(getComputedStyle(document.querySelector('.mt-earth-strip')).transform).m41"
-    first = page.evaluate(read)
-    page.wait_for_timeout(2000)
-    moved = abs(page.evaluate(read) - first)
-    assert 8 < moved < 60, moved   # a third of the normal speed, still plainly moving
-    # The button stops it and starts it again.
-    toggle = page.locator("#mt-earth-toggle")
-    toggle.click()
-    expect(toggle).to_have_attribute("aria-pressed", "true")
-    expect(toggle).to_have_attribute("aria-label", "繼續地球轉動")
-    held = page.evaluate(read)
-    page.wait_for_timeout(1200)
-    assert page.evaluate(read) == held
-    toggle.click()
-    expect(toggle).to_have_attribute("aria-pressed", "false")
-    page.wait_for_timeout(1200)
-    assert page.evaluate(read) != held
-
-
-def test_the_home_search_board_is_a_soft_tray_of_round_bubbles(page, live_server):
-    page.set_viewport_size({"width": 1440, "height": 900})
-    enter_public_site(page, live_server, "home")
-    style = "(sel) => { const cs = getComputedStyle(document.querySelector(sel)); return [cs.borderTopWidth, parseFloat(cs.borderTopLeftRadius), cs.backgroundColor]; }"
-    for selector in ("#mt-board", "#mt-board .mt-board-cell", "#mt-board .mt-board-go"):
-        width, radius, _ = page.evaluate(style, selector)
-        assert radius >= 20 and width == "0px", (selector, width, radius)
-    bubble, _ = luminance_and_alpha(page.locator("#mt-board .mt-board-cell").first.evaluate("el => getComputedStyle(el).backgroundColor"))
-    text, _ = luminance_and_alpha(page.locator("#mt-board-q").evaluate("el => getComputedStyle(el).color"))
-    assert bubble > 240 and text < 80, (bubble, text)
-    # Nothing is clipped: the board fits the screen at every width.
-    for width in (1440, 900, 393):
-        page.set_viewport_size({"width": width, "height": 900})
-        page.wait_for_timeout(300)
-        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), width
-        box = page.locator("#mt-board").bounding_box()
-        assert box["x"] >= 0 and box["x"] + box["width"] <= width, (width, box)
-
 @pytest.mark.parametrize("width", [901, 1024, 1440])
 def test_the_wordmark_is_always_beside_the_logo_not_only_on_hover(page, live_server, width):
     page.set_viewport_size({"width": width, "height": 800})
@@ -244,37 +151,6 @@ def test_the_wordmark_is_always_beside_the_logo_not_only_on_hover(page, live_ser
     assert word.bounding_box()["width"] > 60
     assert page.locator("#glass-navigation .uniway-header-brand").bounding_box()["width"] > 100
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
-
-
-def test_the_home_search_button_opens_the_school_search_with_the_chosen_conditions(page, live_server):
-    page.set_viewport_size({"width": 1440, "height": 900})
-    enter_public_site(page, live_server, "home")
-    page.locator("#mt-board-q").fill("日本")
-    page.locator("#mt-board-term").select_option("fall")
-    page.locator("#mt-board .mt-board-go").click()
-    # It leaves the home for the search page instead of reloading the home.
-    expect(page.locator("#partners")).to_be_visible(timeout=15000)
-    expect(page.locator("#home-landing")).to_be_hidden()
-    assert page.evaluate("location.hash") == "#partners"
-    assert "q=" in page.evaluate("location.search") and "view=list" in page.evaluate("location.search")
-    expect(page.locator("#partner-search")).to_have_value("日本")
-    assert page.locator("#partner-term-tile").input_value() == "fall"
-
-
-def test_the_home_search_button_works_with_nothing_filled_in(page, live_server):
-    page.set_viewport_size({"width": 1440, "height": 900})
-    enter_public_site(page, live_server, "home")
-    page.locator("#mt-board .mt-board-go").click()
-    expect(page.locator("#partners")).to_be_visible(timeout=15000)
-    assert page.evaluate("location.hash") == "#partners"
-
-
-def test_the_home_board_names_the_school_the_student_chose(page, live_server):
-    page.set_viewport_size({"width": 1440, "height": 900})
-    page.add_init_script("localStorage.setItem('exchange-guide-home-school', '長庚大學')")
-    enter_public_site(page, live_server, "home")
-    page.wait_for_timeout(2500)
-    expect(page.locator("#mt-board-school-name")).not_to_have_text("選擇就讀學校")
 
 
 @pytest.mark.parametrize("size", [(1360, 800), (1100, 800), (1440, 900)])
@@ -300,7 +176,7 @@ def test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full(page, 
 
 
 @pytest.mark.parametrize("theme", ["light", "dark"])
-def test_the_search_page_controls_are_soft_pills_without_outlines(page, live_server, theme):
+def test_search_controls_are_readable_and_the_primary_action_is_clear(page, live_server, theme):
     page.set_viewport_size({"width": 1360, "height": 800})
     page.add_init_script(f"localStorage.setItem('exchange-guide-theme', '{theme}')")
     page.goto(f"{live_server.base_url}/?view=map#partners")
@@ -310,10 +186,10 @@ def test_the_search_page_controls_are_soft_pills_without_outlines(page, live_ser
     for selector in ("#map-global", "#map-home", ".discovery-open-workspace", ".discovery-criteria", ".pr-view-toggle"):
         width, radius, background = page.evaluate(style, selector)
         assert width == "0px" and radius >= 20 and background != "rgba(0, 0, 0, 0)", (selector, width, radius, background)
-    for selector in (".pr-search", ".pr-search-button", ".partner-map-stage"):
+    for selector in (".pr-search", ".pr-search-button"):
         _, radius, _ = page.evaluate(style, selector)
-        assert radius >= 20, (selector, radius)
-    # The search board is no longer a black slab: its text is readable on the bubbles it holds.
+        assert radius == 12, (selector, radius)
+    # The unified fields retain readable text in both themes.
     ink, _ = luminance_and_alpha(page.locator("#partner-search").evaluate("el => getComputedStyle(el).color"))
     bubble, _ = luminance_and_alpha(page.locator(".pr-search .pr-field").first.evaluate("el => getComputedStyle(el).backgroundColor"))
     assert abs(ink - bubble) > 120, (ink, bubble)

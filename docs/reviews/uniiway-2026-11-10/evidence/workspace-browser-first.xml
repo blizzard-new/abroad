@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="7" time="104.394" timestamp="2026-11-10T16:00:12.877965+00:00" hostname="009910d1d950"><testcase classname="tests.e2e.test_exchange_workspace" name="test_notice_review_batches_today_schedule_and_reload" time="39.640"><failure message="AssertionError: Locator expected to contain text '2027-02-10'&#10;Actual value: None&#10;Error: strict mode violation: locator(&quot;.ex-summary&quot;) resolved to 2 elements:&#10;    1) &lt;section class=&quot;ex-summary&quot;&gt;…&lt;/section&gt; aka get_by_text(&quot;我的準備與生活待辦全部 2 項 →回傳本人與家長簽名同意書通知期限・本人核對 2027-01-10第二批:2027/2/10&quot;)&#10;    2) &lt;section class=&quot;ex-summary&quot;&gt;…&lt;/section&gt; aka get_by_text(&quot;通知期限與個人目標全部 2 項 →回傳本人與家長簽名同意書通知期限・本人核對 2027-01-10第二批:2027/2/10&quot;)&#10; &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; locator(&quot;.ex-summary&quot;) with timeout 5000ms&#10;  - waiting for locator(&quot;.ex-summary&quot;)">page = &lt;Page url='http://127.0.0.1:32913/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#my-application?plan=1c411bb4ed6178fcc04f9d57e8ad7f9b&amp;view=schedule'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:32913', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-23/web-e2e-data0'))
+
+    def test_notice_review_batches_today_schedule_and_reload(page, live_server):
+        plan=start(page,live_server)
+        page.locator('[data-ex-tab=notice]').click()
+        form=page.locator('#exchange-notice-form')
+        form.locator('[name=source_label]').fill('合作校入學通知')
+        form.locator('[name=text]').fill('第一批：2027/1/10 前請回傳家長簽名同意書。\n第二批：2027/2/10 前請上傳體檢報告。')
+        form.get_by_role('button',name='整理待辦草稿').click()
+        rows=page.locator('[data-ex-preview]')
+        expect(rows).to_have_count(2)
+        rows.nth(0).locator('[name=title]').fill('回傳本人與家長簽名同意書')
+        rows.nth(0).locator('[name=recipient]').fill('母校國際處')
+        rows.nth(0).locator('[name=signers]').fill('本人、家長')
+        expect(rows.nth(0).locator('[name=due_date]')).to_have_value('2027-01-10')
+        expect(rows.nth(1).locator('[name=due_date]')).to_have_value('2027-02-10')
+        page.locator('#exchange-review-form [name=reviewed]').check()
+        page.get_by_role('button',name='加入選取的待辦').click()
+        expect(page.locator('.ex-task')).to_have_count(2)
+        expect(page.locator('.ex-task').first).to_contain_text('母校國際處')
+        expect(page.locator('.ex-task').first).to_contain_text('通知期限・本人核對 2027-01-10')
+        page.locator('.hub-tabs [data-tab=today]').click()
+        expect(page.locator('.ex-summary')).to_contain_text('回傳本人與家長簽名同意書')
+        page.locator('.hub-tabs [data-tab=schedule]').click()
+&gt;       expect(page.locator('.ex-summary')).to_contain_text('2027-02-10')
+E       AssertionError: Locator expected to contain text '2027-02-10'
+E       Actual value: None
+E       Error: strict mode violation: locator(".ex-summary") resolved to 2 elements:
+E           1) &lt;section class="ex-summary"&gt;…&lt;/section&gt; aka get_by_text("我的準備與生活待辦全部 2 項 →回傳本人與家長簽名同意書通知期限・本人核對 2027-01-10第二批:2027/2/10")
+E           2) &lt;section class="ex-summary"&gt;…&lt;/section&gt; aka get_by_text("通知期限與個人目標全部 2 項 →回傳本人與家長簽名同意書通知期限・本人核對 2027-01-10第二批:2027/2/10")
+E
+E       Call log:
+E         - Expect "to_contain_text" locator(".ex-summary") with timeout 5000ms
+E         - waiting for locator(".ex-summary")
+
+tests/e2e/test_exchange_workspace.py:56: AssertionError</failure></testcase><testcase classname="tests.e2e.test_exchange_workspace" name="test_phone_personal_goal_waiting_notes_and_no_overflow[light]" time="11.593" /><testcase classname="tests.e2e.test_exchange_workspace" name="test_phone_personal_goal_waiting_notes_and_no_overflow[dark]" time="10.244" /><testcase classname="tests.e2e.test_exchange_workspace" name="test_courses_conflicts_and_downloaded_dates" time="9.406" /><testcase classname="tests.e2e.test_exchange_workspace" name="test_destination_pack_interview_answers_and_idempotent_import" time="8.887"><failure message="playwright._impl._errors.Error: Locator.click: Error: strict mode violation: locator(&quot;[data-ex-tab=library]&quot;) resolved to 2 elements:&#10;    1) &lt;button aria-pressed=&quot;false&quot; data-ex-tab=&quot;library&quot;&gt;加入準備清單&lt;/button&gt; aka get_by_role(&quot;button&quot;, name=&quot;加入準備清單&quot;)&#10;    2) &lt;button data-ex-tab=&quot;library&quot; class=&quot;outline-button&quot;&gt;查看準備清單&lt;/button&gt; aka get_by_role(&quot;button&quot;, name=&quot;查看準備清單&quot;)&#10;&#10;Call log:&#10;  - waiting for locator(&quot;[data-ex-tab=library]&quot;)">page = &lt;Page url='http://127.0.0.1:32913/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#my-application?plan=94998713ae3f52dcf2992f62c74f4963&amp;view=workspace'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:32913', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-23/web-e2e-data0'))
+
+    def test_destination_pack_interview_answers_and_idempotent_import(page,live_server):
+        start(page,live_server,target_school='明治大學 Meiji University')
+&gt;       page.locator('[data-ex-tab=library]').click()
+
+tests/e2e/test_exchange_workspace.py:111:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:11021: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:174: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:598: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x7fb6c8482990&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7fb6b7e82e80&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Locator.click: Error: strict mode violation: locator("[data-ex-tab=library]") resolved to 2 elements:
+E               1) &lt;button aria-pressed="false" data-ex-tab="library"&gt;加入準備清單&lt;/button&gt; aka get_by_role("button", name="加入準備清單")
+E               2) &lt;button data-ex-tab="library" class="outline-button"&gt;查看準備清單&lt;/button&gt; aka get_by_role("button", name="查看準備清單")
+E
+E           Call log:
+E             - waiting for locator("[data-ex-tab=library]")
+
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:636: Error</failure></testcase><testcase classname="tests.e2e.test_exchange_workspace" name="test_failed_save_keeps_the_draft_and_retry_persists_it" time="11.478" /><testcase classname="tests.e2e.test_exchange_workspace" name="test_peer_invitation_uses_existing_forum_and_is_filtered_by_semester" time="12.098" /></testsuite></testsuites>

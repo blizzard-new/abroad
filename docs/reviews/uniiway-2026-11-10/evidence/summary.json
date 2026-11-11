@@ -1,0 +1,716 @@
+{
+  "baseline_commit": "7ba502353419d8defa26453a7eac08475a167d57",
+  "main_control_commit": "bff878eaf829230e2da1de027652300aa6cad5de",
+  "baseline_browser": {
+    "total": 113,
+    "passed": 98,
+    "failed": 15
+  },
+  "candidate_browser_runs": [
+    {
+      "junit": "final-focused.xml",
+      "counts": {
+        "passed": 120,
+        "failed": 5
+      }
+    },
+    {
+      "junit": "post-fix.xml",
+      "counts": {
+        "passed": 13
+      }
+    },
+    {
+      "junit": "alignment-attempt.xml",
+      "counts": {
+        "passed": 3,
+        "failed": 2
+      }
+    },
+    {
+      "junit": "alignment-verified.xml",
+      "counts": {
+        "passed": 25
+      }
+    },
+    {
+      "junit": "mobile-final.xml",
+      "counts": {
+        "passed": 21
+      }
+    }
+  ],
+  "latest_browser_outcomes": {
+    "passed": 125
+  },
+  "static_counts": {
+    "passed": 20
+  },
+  "backend_survey": {
+    "commit": "7ba502353419d8defa26453a7eac08475a167d57",
+    "complete_suite": false,
+    "collected": 4644,
+    "executed": 671,
+    "counts": {
+      "skipped": 7,
+      "passed": 660,
+      "failed": 4
+    },
+    "failures": [
+      {
+        "classname": "tests.test_application_description_accuracy",
+        "name": "test_yzu_return_report_follows_the_official_deposit_page",
+        "result": "failed",
+        "seconds": 0.002
+      },
+      {
+        "classname": "tests.test_application_description_accuracy",
+        "name": "test_yzu_study_plan_is_not_the_cf02r3_application_form",
+        "result": "failed",
+        "seconds": 0.002
+      },
+      {
+        "classname": "tests.test_application_description_accuracy",
+        "name": "test_ntut_templates_follow_archived_step1_and_step3_pages",
+        "result": "failed",
+        "seconds": 0.003
+      },
+      {
+        "classname": "tests.test_application_writing_guidance",
+        "name": "test_numeric_writing_limits_name_evidence_and_match_stored_school_text",
+        "result": "failed",
+        "seconds": 0.442
+      }
+    ]
+  },
+  "whole_repository_pass": false,
+  "browser_cases": [
+    {
+      "case": "tests.e2e.test_uniiway_clarity::test_application_and_search_share_readable_headings_without_overflow[light-390]",
+      "outcome": "passed",
+      "seconds": 33.116
+    },
+    {
+      "case": "tests.e2e.test_uniiway_clarity::test_application_and_search_share_readable_headings_without_overflow[light-1440]",
+      "outcome": "passed",
+      "seconds": 9.233
+    },
+    {
+      "case": "tests.e2e.test_uniiway_clarity::test_application_and_search_share_readable_headings_without_overflow[dark-390]",
+      "outcome": "passed",
+      "seconds": 7.475
+    },
+    {
+      "case": "tests.e2e.test_uniiway_clarity::test_application_and_search_share_readable_headings_without_overflow[dark-1440]",
+      "outcome": "passed",
+      "seconds": 9.155
+    },
+    {
+      "case": "tests.e2e.test_uniiway_clarity::test_detail_separates_missing_information_mismatches_and_closed_places",
+      "outcome": "passed",
+      "seconds": 29.333
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[partners]",
+      "outcome": "passed",
+      "seconds": 14.113
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[search]",
+      "outcome": "passed",
+      "seconds": 4.29
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[my-application]",
+      "outcome": "passed",
+      "seconds": 3.533
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[eligibility]",
+      "outcome": "passed",
+      "seconds": 2.877
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[application-center]",
+      "outcome": "passed",
+      "seconds": 3.217
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[calendar]",
+      "outcome": "passed",
+      "seconds": 3.077
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[deadlines]",
+      "outcome": "passed",
+      "seconds": 6.039
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[budget]",
+      "outcome": "passed",
+      "seconds": 3.089
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[scholarships]",
+      "outcome": "passed",
+      "seconds": 3.01
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[favorites]",
+      "outcome": "passed",
+      "seconds": 2.675
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[document-check]",
+      "outcome": "passed",
+      "seconds": 4.707
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_search_and_my_application_are_in_the_metro_world[guide]",
+      "outcome": "passed",
+      "seconds": 4.069
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_every_other_page_keeps_its_own_look[home]",
+      "outcome": "passed",
+      "seconds": 4.714
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_every_other_page_keeps_its_own_look[forum]",
+      "outcome": "passed",
+      "seconds": 3.053
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_every_other_page_keeps_its_own_look[public-board]",
+      "outcome": "passed",
+      "seconds": 5.267
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_every_other_page_keeps_its_own_look[feedback]",
+      "outcome": "passed",
+      "seconds": 2.524
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_the_home_is_the_one_visitors_already_know",
+      "outcome": "passed",
+      "seconds": 4.233
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_the_top_bar_is_the_same_on_a_classic_page_and_a_metro_page",
+      "outcome": "passed",
+      "seconds": 15.773
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_on_a_phone_a_classic_page_keeps_its_own_header_and_drawer",
+      "outcome": "passed",
+      "seconds": 5.589
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_moving_between_pages_switches_the_world_and_back",
+      "outcome": "passed",
+      "seconds": 7.266
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_the_world_follows_the_page_on_screen_not_the_address",
+      "outcome": "passed",
+      "seconds": 9.295
+    },
+    {
+      "case": "tests.e2e.test_skin_scope::test_school_marks_keep_their_one_blue_on_the_classic_pages",
+      "outcome": "passed",
+      "seconds": 6.384
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_highlighted_dropdown_row_never_hides_its_own_text[light]",
+      "outcome": "passed",
+      "seconds": 14.013
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_highlighted_dropdown_row_never_hides_its_own_text[dark]",
+      "outcome": "passed",
+      "seconds": 6.145
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_globe_names_countries_in_chinese",
+      "outcome": "passed",
+      "seconds": 10.208
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_my_application_today_lays_its_boxes_side_by_side_and_says_less",
+      "outcome": "passed",
+      "seconds": 9.878
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_every_school_mark_has_its_own_colour_on_the_metro_pages",
+      "outcome": "passed",
+      "seconds": 12.741
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_fonts_are_poppins_for_latin_and_genjyuu_for_chinese",
+      "outcome": "passed",
+      "seconds": 11.02
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_navigation_is_a_top_bar_on_classic_and_metro_pages_alike[home]",
+      "outcome": "passed",
+      "seconds": 3.508
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_navigation_is_a_top_bar_on_classic_and_metro_pages_alike[partners]",
+      "outcome": "passed",
+      "seconds": 11.033
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_navigation_is_a_top_bar_on_classic_and_metro_pages_alike[forum]",
+      "outcome": "passed",
+      "seconds": 2.461
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_top_bar_fits_the_narrowest_desktop_widths[901]",
+      "outcome": "passed",
+      "seconds": 7.321
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_top_bar_fits_the_narrowest_desktop_widths[1024]",
+      "outcome": "passed",
+      "seconds": 4.029
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_logo_stays_in_view_while_the_app_scrolls[home]",
+      "outcome": "passed",
+      "seconds": 8.333
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_logo_stays_in_view_while_the_app_scrolls[partners]",
+      "outcome": "passed",
+      "seconds": 18.079
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_logo_stays_in_view_while_the_app_scrolls[forum]",
+      "outcome": "passed",
+      "seconds": 7.517
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_logo_stays_in_view_while_the_app_scrolls[guide]",
+      "outcome": "passed",
+      "seconds": 5.894
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_logo_stays_in_view_while_the_app_scrolls[feedback]",
+      "outcome": "passed",
+      "seconds": 5.134
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_wordmark_is_always_beside_the_logo_not_only_on_hover[901]",
+      "outcome": "passed",
+      "seconds": 3.906
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_wordmark_is_always_beside_the_logo_not_only_on_hover[1024]",
+      "outcome": "passed",
+      "seconds": 3.924
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_wordmark_is_always_beside_the_logo_not_only_on_hover[1440]",
+      "outcome": "passed",
+      "seconds": 6.416
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full[size0]",
+      "outcome": "passed",
+      "seconds": 13.473
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full[size1]",
+      "outcome": "passed",
+      "seconds": 12.656
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_the_globe_window_is_tall_and_every_button_in_it_is_shown_in_full[size2]",
+      "outcome": "passed",
+      "seconds": 14.755
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_search_controls_are_readable_and_the_primary_action_is_clear[light]",
+      "outcome": "passed",
+      "seconds": 18.294
+    },
+    {
+      "case": "tests.e2e.test_round_two::test_search_controls_are_readable_and_the_primary_action_is_clear[dark]",
+      "outcome": "passed",
+      "seconds": 11.717
+    },
+    {
+      "case": "tests.e2e.test_globe_card_and_hero::test_the_school_card_shows_its_figures_and_never_needs_a_scroll[size0]",
+      "outcome": "passed",
+      "seconds": 23.054
+    },
+    {
+      "case": "tests.e2e.test_globe_card_and_hero::test_the_school_card_shows_its_figures_and_never_needs_a_scroll[size1]",
+      "outcome": "passed",
+      "seconds": 14.725
+    },
+    {
+      "case": "tests.e2e.test_globe_card_and_hero::test_the_school_card_shows_its_figures_and_never_needs_a_scroll[size2]",
+      "outcome": "passed",
+      "seconds": 9.764
+    },
+    {
+      "case": "tests.e2e.test_globe_card_and_hero::test_the_search_globe_is_a_pastel_toy_with_coral_markers_on_the_pages_own_white",
+      "outcome": "passed",
+      "seconds": 11.171
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_redesigned_pages_fit_every_width_and_theme[light-1440]",
+      "outcome": "passed",
+      "seconds": 26.489
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_redesigned_pages_fit_every_width_and_theme[light-834]",
+      "outcome": "passed",
+      "seconds": 6.49
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_redesigned_pages_fit_every_width_and_theme[light-393]",
+      "outcome": "passed",
+      "seconds": 6.301
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_redesigned_pages_fit_every_width_and_theme[dark-1440]",
+      "outcome": "passed",
+      "seconds": 11.328
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_redesigned_pages_fit_every_width_and_theme[dark-834]",
+      "outcome": "passed",
+      "seconds": 6.3
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_redesigned_pages_fit_every_width_and_theme[dark-393]",
+      "outcome": "passed",
+      "seconds": 6.473
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_home_landing_shows_the_product_story_without_login",
+      "outcome": "passed",
+      "seconds": 3.19
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_every_page_sits_in_the_middle_of_the_window_under_the_top_bar[1440]",
+      "outcome": "passed",
+      "seconds": 6.478
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_every_page_sits_in_the_middle_of_the_window_under_the_top_bar[1920]",
+      "outcome": "passed",
+      "seconds": 11.985
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_every_page_sits_in_the_middle_of_the_window_under_the_top_bar[2560]",
+      "outcome": "passed",
+      "seconds": 6.082
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_home_has_no_decorative_guide_lines_or_sample_cards",
+      "outcome": "passed",
+      "seconds": 3.43
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_home_cards_show_the_visitors_real_schools_not_samples",
+      "outcome": "passed",
+      "seconds": 8.502
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_home_hero_is_a_half_globe_that_fades_away_while_scrolling[as-is]",
+      "outcome": "passed",
+      "seconds": 3.489
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_home_hero_is_a_half_globe_that_fades_away_while_scrolling[with-a-gpu]",
+      "outcome": "passed",
+      "seconds": 17.553
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_explore_sorts_and_compares_schools",
+      "outcome": "passed",
+      "seconds": 13.815
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_the_globe_survives_stalls_while_the_page_boots",
+      "outcome": "passed",
+      "seconds": 10.983
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_the_globe_gives_way_to_the_flat_map_when_every_draw_is_slow",
+      "outcome": "passed",
+      "seconds": 11.925
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_the_globe_is_left_to_the_flat_map_on_a_software_renderer",
+      "outcome": "passed",
+      "seconds": 3.426
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_home_supported_schools_drift_left_and_can_be_paused",
+      "outcome": "passed",
+      "seconds": 5.862
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_home_supported_schools_stand_still_for_reduced_motion",
+      "outcome": "passed",
+      "seconds": 2.669
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_home_school_switcher_is_bigger_than_on_other_pages",
+      "outcome": "passed",
+      "seconds": 6.816
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_the_navigation_is_one_bar_across_the_top",
+      "outcome": "passed",
+      "seconds": 3.857
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_application_workspace_tools_are_available_on_demand",
+      "outcome": "passed",
+      "seconds": 10.779
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_explore_language_and_term_dropdowns_change_the_school_list",
+      "outcome": "passed",
+      "seconds": 11.335
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_guide_has_a_table_of_contents_and_deep_links",
+      "outcome": "passed",
+      "seconds": 3.293
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_forum_modes_filter_stories_and_questions",
+      "outcome": "passed",
+      "seconds": 2.684
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_tracker_lists_tasks_and_switches_views",
+      "outcome": "passed",
+      "seconds": 8.085
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_profile_page_replaces_the_dialog_and_saves_the_same_fields",
+      "outcome": "passed",
+      "seconds": 15.746
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_profile_appearance_choice_includes_following_the_system",
+      "outcome": "passed",
+      "seconds": 7.195
+    },
+    {
+      "case": "tests.e2e.test_platform_redesign::test_profile_deep_link_asks_visitors_to_sign_in_and_stays_off_the_page",
+      "outcome": "passed",
+      "seconds": 3.501
+    },
+    {
+      "case": "tests.e2e.test_home_motion::test_scroll_story_is_reversible_and_keeps_real_navigation",
+      "outcome": "passed",
+      "seconds": 15.999
+    },
+    {
+      "case": "tests.e2e.test_home_motion::test_home_motion_fits_and_remains_readable[1440-light]",
+      "outcome": "passed",
+      "seconds": 4.274
+    },
+    {
+      "case": "tests.e2e.test_home_motion::test_home_motion_fits_and_remains_readable[834-dark]",
+      "outcome": "passed",
+      "seconds": 4.216
+    },
+    {
+      "case": "tests.e2e.test_home_motion::test_home_motion_fits_and_remains_readable[393-light]",
+      "outcome": "passed",
+      "seconds": 4.174
+    },
+    {
+      "case": "tests.e2e.test_home_motion::test_home_motion_fits_and_remains_readable[360-dark]",
+      "outcome": "passed",
+      "seconds": 4.342
+    },
+    {
+      "case": "tests.e2e.test_home_motion::test_live_reduced_motion_and_unavailable_motion_script_are_readable",
+      "outcome": "passed",
+      "seconds": 7.653
+    },
+    {
+      "case": "tests.e2e.test_partner_space::test_space_globe_drag_zoom_filters_and_route_cleanup[size0]",
+      "outcome": "passed",
+      "seconds": 49.378
+    },
+    {
+      "case": "tests.e2e.test_partner_space::test_space_globe_drag_zoom_filters_and_route_cleanup[size1]",
+      "outcome": "passed",
+      "seconds": 30.184
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_the_mascot_stands_where_the_traveller_drawing_was_on_the_home_page",
+      "outcome": "passed",
+      "seconds": 9.082
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[320]",
+      "outcome": "passed",
+      "seconds": 3.393
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[390]",
+      "outcome": "passed",
+      "seconds": 8.124
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[768]",
+      "outcome": "passed",
+      "seconds": 3.99
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[1280]",
+      "outcome": "passed",
+      "seconds": 3.308
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_it_has_sides_a_front_and_eyes_standing_in_front_of_it",
+      "outcome": "passed",
+      "seconds": 3.582
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_the_eyes_stay_in_front_while_they_look_around",
+      "outcome": "passed",
+      "seconds": 3.365
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_it_turns_towards_the_pointer_and_back_when_the_pointer_is_gone",
+      "outcome": "passed",
+      "seconds": 3.722
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_a_light_slides_over_it_as_it_turns",
+      "outcome": "passed",
+      "seconds": 3.367
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_with_no_motion_it_still_stands_turned_so_it_reads_as_a_solid",
+      "outcome": "passed",
+      "seconds": 3.022
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_tapping_the_header_mascot_still_hops_turns_and_winks",
+      "outcome": "passed",
+      "seconds": 11.472
+    },
+    {
+      "case": "tests.e2e.test_mascot_solid::test_the_loading_screen_mascot_is_the_same_solid",
+      "outcome": "passed",
+      "seconds": 0.545
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_home_displays_stored_posts_without_destination_sections[390]",
+      "outcome": "passed",
+      "seconds": 21.355
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_home_displays_stored_posts_without_destination_sections[834]",
+      "outcome": "passed",
+      "seconds": 3.889
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_home_displays_stored_posts_without_destination_sections[1754]",
+      "outcome": "passed",
+      "seconds": 3.945
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_verified_catalog_search_map_and_saved_school[390]",
+      "outcome": "passed",
+      "seconds": 12.509
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_verified_catalog_search_map_and_saved_school[1440]",
+      "outcome": "passed",
+      "seconds": 9.912
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_glass_navigation_and_responsive_routes[390]",
+      "outcome": "passed",
+      "seconds": 27.263
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_glass_navigation_and_responsive_routes[834]",
+      "outcome": "passed",
+      "seconds": 30.003
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_glass_navigation_and_responsive_routes[1440]",
+      "outcome": "passed",
+      "seconds": 16.166
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_application_menu_is_reachable_without_overlapping_the_header[390-620]",
+      "outcome": "passed",
+      "seconds": 6.179
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_application_menu_is_reachable_without_overlapping_the_header[834-956]",
+      "outcome": "passed",
+      "seconds": 5.568
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_application_menu_is_reachable_without_overlapping_the_header[1280-720]",
+      "outcome": "passed",
+      "seconds": 5.391
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_application_menu_is_reachable_without_overlapping_the_header[1754-956]",
+      "outcome": "passed",
+      "seconds": 5.589
+    },
+    {
+      "case": "tests.e2e.test_glass_theme::test_mobile_navigation_focus_escape_and_login",
+      "outcome": "passed",
+      "seconds": 5.597
+    },
+    {
+      "case": "tests.e2e.test_application_today::test_today_is_the_default_view_and_leads_with_one_task[390]",
+      "outcome": "passed",
+      "seconds": 21.86
+    },
+    {
+      "case": "tests.e2e.test_application_today::test_today_is_the_default_view_and_leads_with_one_task[1440]",
+      "outcome": "passed",
+      "seconds": 8.492
+    },
+    {
+      "case": "tests.e2e.test_application_today::test_start_opens_the_task_and_back_returns_to_today",
+      "outcome": "passed",
+      "seconds": 9.619
+    },
+    {
+      "case": "tests.e2e.test_application_today::test_rule_check_status_is_shown_before_the_confirm_button",
+      "outcome": "passed",
+      "seconds": 18.992
+    },
+    {
+      "case": "tests.e2e.test_my_application_entry::test_new_student_selects_a_school_then_reaches_the_map_login",
+      "outcome": "passed",
+      "seconds": 11.279
+    },
+    {
+      "case": "tests.e2e.test_my_application_entry::test_returning_student_can_open_scheduling_independently",
+      "outcome": "passed",
+      "seconds": 8.695
+    },
+    {
+      "case": "tests.e2e.test_my_application_entry::test_the_application_entry_has_no_dropdown_and_tools_keep_their_pages",
+      "outcome": "passed",
+      "seconds": 5.083
+    }
+  ],
+  "static_evidence": "mobile-final.xml",
+  "evidence_format": "Archived XML has trailing line whitespace stripped; outcomes and failure text are otherwise preserved."
+}
