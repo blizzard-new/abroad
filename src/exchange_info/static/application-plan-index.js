@@ -14,7 +14,17 @@ window.UniWayPlanIndex = (() => {
     const items=current()?.items||[], live=items.filter(p=>!p.archived);
     const unplanned=[...state.applications].filter(name=>!live.some(p=>p.context.target_school===name));
     if(!items.length&&!unplanned.length){host.hidden=true;return;}
-    const label=p=>`${p.context.target_school} · ${p.context.departure_year} ${({fall:'上學期',spring:'下學期',full_year:'全學年',undecided:'學期待確認'})[p.context.semester]||''}`;
+    const formatPlanIndexTerm = (c) => {
+      if (window.cguDemoStorageIsolated || c.home_school === '長庚大學') {
+        const y = c.departure_year || '';
+        const ay = c.academic_year || (y ? String(c.semester === 'spring' ? Number(y) - 1912 : Number(y) - 1911) : '');
+        if (c.semester === 'fall') return `${y} 秋季${ay ? `（${ay}-1）` : ''}`;
+        if (c.semester === 'spring') return `${y} 春季${ay ? `（${ay}-2）` : ''}`;
+        if (c.semester === 'full_year') return `${y} 秋季・全學年${ay ? `（${ay}-1）` : ''}`;
+      }
+      return `${c.departure_year} ${({fall:'上學期',spring:'下學期',full_year:'全學年',undecided:'學期待確認'})[c.semester]||''}`;
+    };
+    const label=p=>`${p.context.target_school} · ${formatPlanIndexTerm(p.context)}`;
     host.innerHTML='<h2>我的申請計畫</h2><div class="saved-plan-list">'+live.map(p=>`<a href="${escapeHtml(link(p))}"><strong>${escapeHtml(label(p))}</strong><span>繼續準備 →</span></a>`).join('')+unplanned.map(name=>`<button type="button" data-start-application="${escapeHtml(name)}"><strong>${escapeHtml(name)}</strong><span>開始準備 →</span></button>`).join('')+'</div>'+(items.some(p=>p.archived)?'<details><summary>已封存計畫</summary>'+items.filter(p=>p.archived).map(p=>`<a href="${escapeHtml(link(p))}">${escapeHtml(label(p))}</a>`).join('')+'</details>':'');
   }
   function clear(){request++;owner='';data=null;status='idle';error='';render();}

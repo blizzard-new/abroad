@@ -152,7 +152,10 @@ window.UniWayExchangeWorkspace = (() => {
   }
   function renderPeers(){
     const captured=scope;
-    $('#exchange-content').innerHTML='<section class="ex-peers"><h3>同校、同學期的交流</h3><p>'+esc(view().plan.context.target_school)+' · '+esc(view().plan.context.departure_year)+' · '+esc({fall:'上學期',spring:'下學期',full_year:'全學年',undecided:'學期未定'}[view().plan.context.semester])+'</p><p>自願發布邀請後，同梯可以在站內回覆；不會公開你的文件或私人任務。</p><div id="exchange-peers-list" role="status">正在讀取交流…</div><form id="exchange-peer-form"><label>想和同梯聊什麼？<textarea name="body" rows="3" minlength="10" maxlength="1200" required placeholder="例如：想一起確認宿舍報到與抵達交通，歡迎在這裡交流。"></textarea></label><label class="ex-check"><input type="checkbox" name="consent" required>我同意將這段文字與計畫的目的校、學期發布到站內公共討論</label><button class="primary-button" type="submit">發布同梯邀請</button></form></section>';
+    const pc=view().plan.context;
+    const isCgu=Boolean(window.cguDemoStorageIsolated)||pc.home_school==='長庚大學';
+    const peerTerm=isCgu?(pc.semester==='fall'?`${pc.departure_year} 秋季（${pc.academic_year||'116'}-1）`:pc.semester==='spring'?`${pc.departure_year} 春季（${pc.academic_year||'115'}-2）`:`${pc.departure_year} · ${({full_year:'全學年',undecided:'學期未定'})[pc.semester]||''}`):`${pc.departure_year} · ${({fall:'上學期',spring:'下學期',full_year:'全學年',undecided:'學期未定'})[pc.semester]}`;
+    $('#exchange-content').innerHTML='<section class="ex-peers"><h3>同校、同學期的交流</h3><p>'+esc(pc.target_school)+' · '+esc(peerTerm)+'</p><p>自願發布邀請後，同梯可以在站內回覆；不會公開你的文件或私人任務。</p><div id="exchange-peers-list" role="status">正在讀取交流…</div><form id="exchange-peer-form"><label>想和同梯聊什麼？<textarea name="body" rows="3" minlength="10" maxlength="1200" required placeholder="例如：想一起確認宿舍報到與抵達交通，歡迎在這裡交流。"></textarea></label><label class="ex-check"><input type="checkbox" name="consent" required>我同意將這段文字與計畫的目的校、學期發布到站內公共討論</label><button class="primary-button" type="submit">發布同梯邀請</button></form></section>';
     bridge.peers?.().then(rows=>{if(scope!==captured||tab!=='peers'||!$('#exchange-peers-list'))return;$('#exchange-peers-list').innerHTML=rows.length?rows.map(p=>'<article class="ex-task"><div><h4>'+esc(p.title)+'</h4><p>'+esc(p.body)+'</p><a href="'+esc(p.url)+'">查看討論與回覆 →</a></div></article>').join(''):'<p>目前沒有這個學期的邀請。你可以留下第一則。</p>';}).catch(e=>{if(scope===captured)message(e.message,true);});
   }
   async function click(e){

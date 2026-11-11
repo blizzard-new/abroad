@@ -325,12 +325,14 @@ function initDiscovery() {
       const item = partnerByName(d.recentSchool); if (item) openUniversityDetail(item); else announce("此校目前未列於這所母校的合作名單。", "info");
     }
     if (target.id === "discovery-use-preferences") {
-      const order = discoveryData().preference_order.filter(n => partnerByName(n)?.availability_status === "open" || partnerByName(n) && !partnerByName(n).availability_status).slice(0,5);
+      const maxPrefs = state.dashboard?.maximum_preferences || 5;
+      const order = discoveryData().preference_order.filter(n => partnerByName(n)?.availability_status === "open" || partnerByName(n) && !partnerByName(n).availability_status).slice(0, maxPrefs);
       if (!order.length) { announce("目前志願的本期名額都待確認。", "info"); return; }
       window.location.hash = "#eligibility"; renderEligibilityOptions();
       order.forEach((name,i) => { $(`#eligibility-preference-${i+1}`).value = name; });
       for(let i=order.length;i<5;i++) $(`#eligibility-preference-${i+1}`).value = "";
-      announce("已帶入前五個本期開放志願，補齊資料後即可建立申請清單。", "success");
+      const countWord = { 1: "一", 2: "兩", 3: "三", 4: "四", 5: "五" }[maxPrefs] || String(maxPrefs);
+      announce(`已帶入前${countWord}個本期開放志願，補齊資料後即可建立申請清單。`, "success");
     }
   });
   document.addEventListener("change", event => {

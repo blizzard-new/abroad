@@ -70,6 +70,22 @@ const $=(s,r=root)=>r?.querySelector(s), $$=(s,r=root)=>[...(r?.querySelectorAll
 const esc=(v='')=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const icon=n=>'<i data-lucide="'+esc(n)+'" aria-hidden="true"></i>';
 const termName=t=>({fall:'上學期',spring:'下學期',full_year:'全學年',undecided:'尚未決定'}[t]||t);
+function defaultRoundFor(home,year,departureYear,semester){
+  if(home==='長庚大學'&&String(year)==='116'&&['fall','full_year','undecided'].includes(semester))return '116-1（'+(departureYear||'2027')+' 秋季出國）';
+  if(home==='長庚大學'&&String(year)==='115'&&semester==='spring')return '115-2（'+(departureYear||'2027')+' 春季出國）';
+  return '';
+}
+const planRoundLabel=c=>c.application_round||defaultRoundFor(c.home_school,c.academic_year,c.departure_year,c.semester)||'梯次待確認';
+function formatContextTerm(c){
+  const y=c?.departure_year||'',s=c?.semester||'',ay=c?.academic_year||(y?String(s==='spring'?Number(y)-1912:Number(y)-1911):'');
+  if(window.cguDemoStorageIsolated||c?.home_school==='長庚大學'){
+    if(s==='fall')return (y?y+' ':'')+'秋季'+(ay?'（'+ay+'-1）':'');
+    if(s==='spring')return (y?y+' ':'')+'春季'+(ay?'（'+ay+'-2）':'');
+    if(s==='full_year')return (y?y+' ':'')+'秋季・全學年'+(ay?'（'+ay+'-1）':'');
+    return (y?y+' ':'')+'尚未決定';
+  }
+  return y+' '+termName(s);
+}
 const route=()=>new URLSearchParams(location.hash.split('?')[1]||'');
 const href=(tab='progress',id='')=>'#my-application?'+new URLSearchParams({plan:view?.plan.id||'',view:tab,...(id?{level:id}:{})});
 const plan=()=>view.plan, stages=()=>view?.stages||[];
@@ -217,8 +233,8 @@ function render(){
   setSync(plan().archived?'已封存 · 紀錄保留':'已同步至帳號');
   $('#archive-plan').hidden=false;$('#archive-plan').textContent=plan().archived?'恢復計畫':'封存計畫';
   const c=plan().context;
-  $('#plan-select').innerHTML=listing.items.map(p=>'<option value="'+p.id+'" '+(p.id===plan().id?'selected':'')+'>'+esc(shortSchool(p.context.target_school)+' · '+p.context.departure_year+' '+termName(p.context.semester)+(p.archived?'（已封存）':''))+'</option>').join('');
-  $('#plan-meta').textContent=c.home_school+' · '+c.academic_year+' 學年度 · '+(c.application_round||'梯次待確認');
+  $('#plan-select').innerHTML=listing.items.map(p=>'<option value="'+p.id+'" '+(p.id===plan().id?'selected':'')+'>'+esc(shortSchool(p.context.target_school)+' · '+formatContextTerm(p.context)+(p.archived?'（已封存）':''))+'</option>').join('');
+  $('#plan-meta').textContent=c.home_school+' · '+c.academic_year+' 學年度 · '+planRoundLabel(c);
   const t=totals();$('#overall-caption').textContent=t.done+' / '+t.count+' 項';$('#overall-meter').innerHTML=meter(t,'整體個人準備');
   const activeTab=tab==='progress'||tab==='map'?'plans':tab;
   $$('[data-tab]').forEach(a=>{a.href=href(a.dataset.tab);a.classList.toggle('active',a.dataset.tab===activeTab);if(a.dataset.tab===activeTab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
@@ -415,9 +431,9 @@ function renderLevel(id,success=false){
   activeId=id;const cached=draftOwner===state.account?.id?drafts.get(draftKey(id)):null;dirty=!!cached;const r=cached?.step||record(id),c=plan().context;
   mapPosition=$('#map-scroll').scrollTop;mapPositionPlan=plan().id;
   const dependencies=missing(l);
-  $('#level-view').innerHTML='<div class="level-topline"><a class="back-link" href="'+href()+'">'+icon('arrow-left')+'回到準備清單</a><span class="level-plan-name">'+esc(shortSchool(c.target_school)+' · '+c.departure_year+' '+termName(c.semester))+'</span></div><div class="level-layout"><div class="level-card"><div class="level-heading"><span class="square-icon">'+icon(l.icon)+'</span><div><p class="eyebrow">'+esc(l.stageTitle)+'</p><h2 id="level-title" tabindex="-1">'+esc(l.title)+'</h2></div></div><div class="level-progress"><div><span>準備狀態</span><strong>'+(isDone(l)?'已完成':hasContent(l)?'進行中':'尚未開始')+'</strong></div>'+meter(l.progress,l.title+'進度',{big:true,gold:isDone(l)})+'</div>'+
+  $('#level-view').innerHTML='<div class="level-topline"><a class="back-link" href="'+href()+'">'+icon('arrow-left')+'回到準備清單</a><span class="level-plan-name">'+esc(shortSchool(c.target_school)+' · '+formatContextTerm(c))+'</span></div><div class="level-layout"><div class="level-card"><div class="level-heading"><span class="square-icon">'+icon(l.icon)+'</span><div><p class="eyebrow">'+esc(l.stageTitle)+'</p><h2 id="level-title" tabindex="-1">'+esc(l.title)+'</h2></div></div><div class="level-progress"><div><span>準備狀態</span><strong>'+(isDone(l)?'已完成':hasContent(l)?'進行中':'尚未開始')+'</strong></div>'+meter(l.progress,l.title+'進度',{big:true,gold:isDone(l)})+'</div>'+
     (success?'<div class="success-state" tabindex="-1" role="status"><div class="success-emblem">'+icon('check')+'</div><h3>'+esc(successLabel(l))+'</h3><p>已同步至這份申請計畫 · 準備進度 '+totals().done+' / '+totals().count+'</p><a class="primary-button" href="'+(next()?href('level',next().id):href('progress'))+'">'+(next()?'下一項準備':'查看總覽')+icon('arrow-right')+'</a><button id="edit-level" class="quiet-button">回頭查看／修改</button></div>':
-    '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning&&!(l.check_status&&CHECK_STANDARD.has(l.warning))?'<details class="ap-warning"><summary>需要確認的事項</summary><p>'+esc(l.warning)+'</p></details>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+(l.kind==='submission'?'<label class="check-row confirmation"><input type="checkbox" id="self-confirm" '+(r.confirmed?'checked':'')+'><span>'+(l.kind==='submission'?'我已自行送件，這是個人紀錄':'我已確認這一小步準備好了')+'</span></label>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+(gateBlocked(l)?'補齊上方資料後，才能確認這一關':dirty?'已恢復未儲存內容':isDone(l)?'已完成 · 已儲存':'輸入後自動儲存')+'</span><button type="button" id="save-draft" class="outline-button">儲存草稿</button><button type="submit" class="primary-button" '+(plan().archived||gateBlocked(l)?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button></footer></form>')+'</div><aside class="level-support"><section class="support-card"><details class="source-details"><summary>完整規則與官方來源'+icon('chevron-down')+'</summary><p>'+esc(l.prompt)+'</p>'+urls(l).map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(i?'相關官方文件':'官方來源')+icon('arrow-up-right')+'</a>').join('')+'</details>'+(l.official_deadline_at?'<p class="ap-deadline">'+(confirmedDeadline(l)?'官方期限：':'參考日期（待核對）：')+esc(new Date(l.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))+'（臺灣時間）'+(new Date(l.official_deadline_at)<new Date()?'（已過期）':'')+'</p>':'')+(l.action_url&&/^https?:\/\//i.test(l.action_url)?'<a class="outline-button" href="'+esc(l.action_url)+'" target="_blank" rel="noopener noreferrer">開啟官方表格'+icon('external-link')+'</a>':'')+(l.kind==='submission'&&urls(l).length?'<a class="outline-button" href="'+esc(urls(l)[0])+'" target="_blank" rel="noopener noreferrer">校方公告與入口'+icon('external-link')+'</a>':'')+'</section><div class="context-card"><strong>'+esc(c.home_school)+'</strong>'+esc(c.academic_year)+' 學年度 · '+esc(c.application_round||'梯次待確認')+'<br>個人準備 ≠ 校方受理或錄取</div></aside></div>';
+    '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning&&!(l.check_status&&CHECK_STANDARD.has(l.warning))?'<details class="ap-warning"><summary>需要確認的事項</summary><p>'+esc(l.warning)+'</p></details>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+(l.kind==='submission'?'<label class="check-row confirmation"><input type="checkbox" id="self-confirm" '+(r.confirmed?'checked':'')+'><span>'+(l.kind==='submission'?'我已自行送件，這是個人紀錄':'我已確認這一小步準備好了')+'</span></label>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+(gateBlocked(l)?'補齊上方資料後，才能確認這一關':dirty?'已恢復未儲存內容':isDone(l)?'已完成 · 已儲存':'輸入後自動儲存')+'</span><button type="button" id="save-draft" class="outline-button">儲存草稿</button><button type="submit" class="primary-button" '+(plan().archived||gateBlocked(l)?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button></footer></form>')+'</div><aside class="level-support"><section class="support-card"><details class="source-details"><summary>完整規則與官方來源'+icon('chevron-down')+'</summary><p>'+esc(l.prompt)+'</p>'+urls(l).map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(i?'相關官方文件':'官方來源')+icon('arrow-up-right')+'</a>').join('')+'</details>'+(l.official_deadline_at?'<p class="ap-deadline">'+(confirmedDeadline(l)?'官方期限：':'參考日期（待核對）：')+esc(new Date(l.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))+'（臺灣時間）'+(new Date(l.official_deadline_at)<new Date()?'（已過期）':'')+'</p>':'')+(l.action_url&&/^https?:\/\//i.test(l.action_url)?'<a class="outline-button" href="'+esc(l.action_url)+'" target="_blank" rel="noopener noreferrer">開啟官方表格'+icon('external-link')+'</a>':'')+(l.kind==='submission'&&urls(l).length?'<a class="outline-button" href="'+esc(urls(l)[0])+'" target="_blank" rel="noopener noreferrer">校方公告與入口'+icon('external-link')+'</a>':'')+'</section><div class="context-card"><strong>'+esc(c.home_school)+'</strong>'+esc(c.academic_year)+' 學年度 · '+esc(planRoundLabel(c))+'<br>個人準備 ≠ 校方受理或錄取</div></aside></div>';
   if(success)$('#edit-level').onclick=()=>renderLevel(id);
   else{
     $('#level-form').oninput=edit;
@@ -487,7 +503,7 @@ function renderTools(l){
   const toolContext={...c,semester:({fall:'第一學期',spring:'第二學期',full_year:'一學年',undecided:''})[c.semester]};
   const matching=['target_school','academic_year','application_round','semester','college','department','degree_level'].every(k=>(state.applicationContext[k]||'')===(toolContext[k]||''));
   if(!sharedSelection&&!matching){
-    $('#path-tool-host').innerHTML='<div class="path-context-gate"><p>使用 '+esc(c.target_school)+' · '+esc(c.academic_year)+' · '+esc(termName(c.semester))+' 的文件規則</p><button id="path-use-context" class="primary-button">載入本計畫的文件工具</button><p id="path-tool-error" role="alert"></p></div>';
+    $('#path-tool-host').innerHTML='<div class="path-context-gate"><p>使用 '+esc(c.target_school)+' · '+esc(c.academic_year)+' · '+esc(formatContextTerm(c))+' 的文件規則</p><button id="path-use-context" class="primary-button">載入本計畫的文件工具</button><p id="path-tool-error" role="alert"></p></div>';
     $('#path-use-context').onclick=async()=>{
       const captured=key(),run=epoch,url=location.hash,b=$('#path-use-context');b.disabled=true;
       try{
@@ -632,17 +648,27 @@ function semesterChoices(){
 }
 const rocYear=(year,term)=>term==='spring'?year-1912:year-1911;
 function buildSemesterChoices(old){
-  const options=semesterChoices().map(o=>({...o,label:o.year+' 年'+(o.term==='fall'?'秋季出發（上學期）':'春季出發（下學期）')}));
+  const isCgu=Boolean(window.cguDemoStorageIsolated)||activeHomeSchool()==='長庚大學';
+  const options=semesterChoices().map(o=>{
+    const roc=rocYear(o.year,o.term);
+    return {...o,label:isCgu?o.year+' '+(o.term==='fall'?'秋季（'+roc+'-1）':'春季（'+roc+'-2）'):o.year+' 年'+(o.term==='fall'?'秋季出發（上學期）':'春季出發（下學期）')};
+  });
   const fall=options.find(o=>o.term==='fall');
-  options.push({year:fall.year,term:'full_year',label:fall.year+' 年秋季出發・全學年'},{year:fall.year,term:'undecided',label:'還沒決定'});
+  const fallRoc=rocYear(fall.year,'fall');
+  options.push({year:fall.year,term:'full_year',label:isCgu?fall.year+' 秋季・全學年（'+fallRoc+'-1）':fall.year+' 年秋季出發・全學年'},{year:fall.year,term:'undecided',label:'還沒決定'});
   const keyOf=o=>o.term+':'+o.year;
   const match=options.find(o=>String(o.year)===String(old.departure_year||'')&&o.term===(old.semester||''))||options[0];
   $('#create-semesters').innerHTML=options.map(o=>'<label class="ap-semester-option"><input type="radio" name="create-semester" value="'+keyOf(o)+'" required '+(o===match?'checked':'')+'><span>'+esc(o.label)+'</span></label>').join('');
+  let lastAutoRound=$('#create-round')?.value||'';
   const apply=()=>{
     const picked=options.find(o=>keyOf(o)===($('#create-semesters input:checked')?.value||''));
     if(!picked){$('#create-year').value='';$('#create-departure').value='';$('#create-term').value='undecided';$('#create-derived').textContent='';return;}
     const roc=rocYear(picked.year,picked.term);
     $('#create-year').value=String(roc);$('#create-departure').value=String(picked.year);$('#create-term').value=picked.term;
+    if(isCgu&&$('#create-round')&&(!$('#create-round').value||$('#create-round').value===lastAutoRound)){
+      const autoRound=defaultRoundFor('長庚大學',roc,picked.year,picked.term);
+      if(autoRound){$('#create-round').value=autoRound;lastAutoRound=autoRound;}
+    }
     $('#create-derived').textContent=picked.term==='undecided'?'先以 '+roc+' 學年度規劃，決定後可新增正式的計畫。':'對應 '+roc+' 學年度的申請，實際日期以學校公告為準。';
   };
   $('#create-semesters').onchange=apply;apply();
@@ -662,11 +688,15 @@ function statsFor(data){
 }
 const shortSchool=name=>String(name||'').split(/[（(]/)[0].replace(/\s+[A-Za-z].*$/,'').trim()||String(name||'');
 const planName=p=>shortSchool(p.context.target_school);
-const planTerm=p=>p.context.departure_year+' '+termName(p.context.semester);
+const planTerm=p=>formatContextTerm(p.context);
+function deadlineTimePart(when){
+  const hm=when.toLocaleTimeString('zh-TW',{timeZone:'Asia/Taipei',hour:'2-digit',minute:'2-digit',hour12:false});
+  return hm&&hm!=='00:00'?' '+hm:'';
+}
 function deadlineText(d){
   if(!d)return '尚未公布';
   const when=new Date(d.official_deadline_at),left=Math.ceil((when-Date.now())/86400000);
-  return when.toLocaleDateString('zh-TW',{timeZone:'Asia/Taipei',month:'numeric',day:'numeric'})+(when<new Date()?'（已過期）':left<=0?'（今天）':'（還有 '+left+' 天）');
+  return when.toLocaleDateString('zh-TW',{timeZone:'Asia/Taipei',month:'numeric',day:'numeric'})+deadlineTimePart(when)+(when<new Date()?'（已過期）':left<=0?'（今天）':'（還有 '+left+' 天）');
 }
 const planLink=(tab,planId,id='')=>'#my-application?'+new URLSearchParams({plan:planId,view:tab,...(id?{level:id}:{})});
 let plansRun=0;
@@ -743,14 +773,14 @@ function renderSchedule(){
   const mismatch=!planContextMatches();
   if(mismatch&&!state.applicationContext.target_school)applyPlanContext().then(()=>{if(active&&route().get('view')==='schedule')renderSchedule();}).catch(()=>{});
   $('#schedule-dynamic').innerHTML=(mismatch&&state.applicationContext.target_school?'<div class="sched-context"><p>排時程的目標目前是「'+esc(state.applicationContext.target_school.split(/[（(]/)[0].trim())+'」。要改用這份計畫嗎？</p><button type="button" class="today-add" data-use-plan-context>改用「'+esc(planName(plan()))+'」排時程</button></div>':'')+'<section class="sched-deadlines" aria-labelledby="sched-deadlines-title"><div class="today-head"><h2 id="sched-deadlines-title">已確認的官方期限</h2><p>'+esc(planName(plan()))+' · '+esc(planTerm(plan()))+'</p></div>'+
-    (list.length?'<ol>'+list.map(l=>{const d=new Date(l.official_deadline_at),left=Math.ceil((d-Date.now())/86400000);return '<li><a href="'+href('level',l.id)+'"><span class="sched-date"><b>'+fmt(d,{month:'numeric',day:'numeric'})+'</b><small>'+fmt(d,{weekday:'short'})+'</small></span><span class="today-row"><b>'+esc(l.title)+'</b><small>'+esc(l.stageTitle)+'</small></span><span class="today-pill '+(d<new Date()?'late':left<=14?'soon':'')+'">'+(d<new Date()?'已過期':left<=0?'今天':'還有 '+left+' 天')+'</span></a></li>';}).join('')+'</ol>':
+    (list.length?'<ol>'+list.map(l=>{const d=new Date(l.official_deadline_at),left=Math.ceil((d-Date.now())/86400000);return '<li><a href="'+href('level',l.id)+'"><span class="sched-date"><b>'+fmt(d,{month:'numeric',day:'numeric'})+'</b><small>'+fmt(d,{weekday:'short'})+deadlineTimePart(d)+'</small></span><span class="today-row"><b>'+esc(l.title)+'</b><small>'+esc(l.stageTitle)+'</small></span><span class="today-pill '+(d<new Date()?'late':left<=14?'soon':'')+'">'+(d<new Date()?'已過期':left<=0?'今天':'還有 '+left+' 天')+'</span></a></li>';}).join('')+'</ol>':
       '<p class="today-empty">目前沒有已確認的期限。</p>'+(source?'<a class="today-link" href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">查看官方公告'+icon('arrow-up-right')+'</a>':''))+'</section>';
   $('#schedule-dynamic').insertAdjacentHTML('beforeend',window.UniWayExchangeWorkspace?.summary(view,true)||'');
   icons();
 }
 
 function cohortContext(){
-  const c=plan().context,label=c.departure_year+' '+termName(c.semester);
+  const c=plan().context,label=formatContextTerm(c);
   return {title:('【'+label+'同梯】'+c.target_school).slice(0,120),prefix:'交換目的校：'+c.target_school+'\n出發學期：'+label+'\n\n'};
 }
 function renderExchangeWorkspace(){

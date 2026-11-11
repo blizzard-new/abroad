@@ -4077,6 +4077,14 @@ function renderDashboard() {
 }
 
 function targetTermLabel(value) {
+  if (window.cguDemoStorageIsolated || activeHomeSchool() === "長庚大學") {
+    return {
+      "2027-spring": "2027 春季（115-2）",
+      "2027-fall": "2027 秋季（116-1）",
+      "2028-spring": "2028 春季（116-2）",
+      "2028-fall": "2028 秋季（117-1）",
+    }[value] || "尚未設定";
+  }
   return {
     "2027-spring": "2027 春季",
     "2027-fall": "2027 秋季",
@@ -8874,7 +8882,7 @@ function filteredPartners({ ignore = "", sort = true } = {}) {
       (!state.availability || (item.availability_status || "open") === state.availability) &&
       window.UniWayRegions.inRegion(item.country, state.region) &&
       (ignore === "country" || !state.country || item.country === state.country) &&
-      (!state.college || academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, state.college)) &&
+      (ignore === "college" || !state.college || academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, state.college)) &&
       (!state.degree || academicScopeNeedsConfirmation(item, "degree_levels") || degreeMatches(item.degree_levels, state.degree) !== false) &&
       (ignore === "quota" || !state.partnerQuota || (state.partnerQuota === "2plus" ? (quota ?? 0) >= 2 : quota === 1)) &&
       (ignore === "fit" || !state.partnerFit || partnerFitBucket(item) === state.partnerFit) &&
@@ -9071,9 +9079,12 @@ function partnerCardTags(item) {
 
 function partnerCardFoot(item) {
   const next = partnerNextDeadline(item);
-  return next
-    ? `<strong>截止 ${next.getMonth() + 1}/${String(next.getDate()).padStart(2, "0")}</strong> · ${escapeHtml(partnerDeadlineReference(item).label)}`
-    : `<span>截止日請依官方公告</span>`;
+  if (!next) return `<span>截止日請依官方公告</span>`;
+  const mmdd = `${next.getMonth() + 1}/${String(next.getDate()).padStart(2, "0")}`;
+  if (window.cguDemoStorageIsolated || activeHomeSchool() === "長庚大學") {
+    return `<strong>合作校截止 ${mmdd}</strong> · 適用已獲提名者`;
+  }
+  return `<strong>截止 ${mmdd}</strong> · ${escapeHtml(partnerDeadlineReference(item).label)}`;
 }
 
 // The language requirement the detail page shows, on the card, so comparing schools does not mean opening each one.
@@ -12228,17 +12239,18 @@ function renderVerifiedWindowRetentionHook(card, { compact = false } = {}) {
     return `<p class="verified-rule-detail">目前沒有可核實的截止日期，尚不提供日期提醒；請查看下方來源與待確認事項。</p>`;
   }
   const importedCount = importedVerifiedSubtaskCount(card);
+  const hideLineOa = Boolean(window.cguDemoStorageIsolated);
   const countdownText = card.primary_deadline_date
     ? calendarCountdownLabel(card.primary_deadline_date)
     : card.window_badge || "待母校公布精確日";
   return `
-    <div class="verified-window-retention-hook${compact ? " is-compact" : ""}" role="region" aria-label="${escapeHtml(card.school_name)}防漏提醒匯入工具">
+    <div class="verified-window-retention-hook${compact ? " is-compact" : ""}" role="region" aria-label="${escapeHtml(card.school_name)}期限提醒匯入工具">
       <div class="verified-hook-copy-block">
         <div class="verified-hook-kicker">
-          <span class="verified-hook-pill"><i data-lucide="bell-ring" aria-hidden="true"></i>零失誤期限提醒</span>
+          <span class="verified-hook-pill"><i data-lucide="bell-ring" aria-hidden="true"></i>期限提醒</span>
           <span class="verified-hook-countdown">${escapeHtml(countdownText)}</span>
         </div>
-        <h3>進站第一步：一鍵把「${escapeHtml(card.short_name)}截止日＋${card.subtasks.length} 項支線任務」匯入行事曆或 LINE</h3>
+        <h3>進站第一步：一鍵把「${escapeHtml(card.short_name)}截止日＋${card.subtasks.length} 項支線任務」${hideLineOa ? "匯入行事曆" : "匯入行事曆或 LINE"}</h3>
         <p>不必先註冊登入。匯入後自動建立 T-14、T-7、T-3、T-1 與截止當日提醒，每一筆日曆事件均附官方 HTTPS 來源連結與最後查核日期（${escapeHtml(card.online_deadline.last_checked_at)}）。</p>
       </div>
       <div class="verified-hook-actions">
@@ -12255,7 +12267,7 @@ function renderVerifiedWindowRetentionHook(card, { compact = false } = {}) {
           <i data-lucide="${importedCount ? "check-check" : "calendar-range"}" aria-hidden="true"></i>
           <span>${importedCount ? `已同步至站內日曆（${importedCount} 項）` : `一鍵同步 ${datedSubtasks.length} 項支線任務至站內日曆`}</span>
         </button>` : ""}
-        <a class="secondary-button verified-hook-btn is-line" href="${escapeHtml(card.line_oa_url)}" target="_blank" rel="noopener noreferrer">
+        ${hideLineOa ? "" : `<a class="secondary-button verified-hook-btn is-line" href="${escapeHtml(card.line_oa_url)}" target="_blank" rel="noopener noreferrer">
           <i data-lucide="message-circle-heart" aria-hidden="true"></i>
           <span>加入 LINE OA 接收倒數推播</span>
           <i data-lucide="external-link" aria-hidden="true"></i>
@@ -12263,7 +12275,7 @@ function renderVerifiedWindowRetentionHook(card, { compact = false } = {}) {
         <button type="button" class="text-action verified-hook-copy-btn" data-copy-line-summary="${escapeHtml(card.school_name)}">
           <i data-lucide="copy" aria-hidden="true"></i>
           <span>複製 LINE 倒數提醒摘要</span>
-        </button>
+        </button>`}
       </div>
     </div>`;
 }
@@ -12448,7 +12460,7 @@ function renderDeadlines() {
           <div class="deadline-card-content">
             <div class="deadline-status-note" role="note"><i data-lucide="badge-alert" aria-hidden="true"></i><p>${escapeHtml(item.status_note || "請開啟官方來源確認最新狀態。")}</p></div>
             <dl class="deadline-period-meta">
-              <div><dt>適用學年度／梯次</dt><dd>${escapeHtml([item.academic_year ? `${item.academic_year} 學年度` : "年度待確認", item.application_round || "梯次待確認"].join("／"))}</dd></div>
+              <div><dt>適用學年度／梯次</dt><dd>${escapeHtml([item.academic_year ? `${item.academic_year} 學年度` : "年度待確認", item.application_round || (activeHomeSchool() === "長庚大學" && item.academic_year === "116" ? "116-1（2027 秋季出國）" : "梯次待確認")].join("／"))}</dd></div>
               <div><dt>適用對象</dt><dd>${escapeHtml(meta.audienceLabel)}</dd></div>
               <div><dt>日期性質</dt><dd>${escapeHtml(meta.dateStatusLabel)}</dd></div>
               <div><dt>最後查核</dt><dd>${escapeHtml(item.checked_at ? formatDateOnly(item.checked_at) : "待查核")}</dd></div>
@@ -12982,6 +12994,13 @@ function renderEligibilityOptions({ preserveDraft = false } = {}) {
   const form = $("#advisor-form");
   const owner = JSON.stringify([state.account?.id || "", activeHomeSchool()]);
   const maximum = state.dashboard.maximum_preferences || 5;
+  const prefLegend = form?.querySelector(".application-preference-fields legend");
+  if (prefLegend) {
+    const countWord = { 1: "一", 2: "兩", 3: "三", 4: "四", 5: "五" }[maximum] || String(maximum);
+    prefLegend.textContent = activeHomeSchool() === "長庚大學"
+      ? `準備志願序（最多${countWord}所；依長庚官方規定）`
+      : `準備志願序（最多${countWord}所；正式規定依本校公告）`;
+  }
   const gpaField = $("#advisor-academic-gpa");
   renderAcademicFields();
   const selects = [1,2,3,4,5].map(rank=>$(`#eligibility-preference-${rank}`));
