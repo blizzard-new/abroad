@@ -1,4 +1,4 @@
-"""The forum prioritizes real discussion posts and one left navigation."""
+"""The forum, school search and application tools share accessible responsive navigation."""
 import os
 from pathlib import Path
 from uuid import uuid4
@@ -6,7 +6,7 @@ from uuid import uuid4
 import pytest
 from playwright.sync_api import expect
 
-from .conftest import enter_public_site, login_through_web, open_navigation, open_partner_filters, expand_details
+from .conftest import enter_public_site, login_through_web, open_navigation, open_partner_filters
 from .test_discussion_reader import seed, search
 from .test_partner_globe import INSTRUMENT, LINCOLN
 
@@ -38,8 +38,9 @@ def test_home_displays_stored_posts_without_destination_sections(page, live_serv
     expect(page.locator(".featured-board-card")).to_have_count(3)
     assert page.locator(".discussion-summary").first.bounding_box()["y"] < 956
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
-    for control in ["theme-toggle", "refresh-button", "account-button", "application-tools"]:
+    for control in ["theme-toggle", "refresh-button", "account-button"]:
         expect(page.locator(f"#glass-navigation #{control}")).to_have_count(1)
+    expect(page.locator('#glass-navigation a[data-public-route="my-application"]')).to_have_count(1)
     expect(page.locator("#glass-navigation #school-switcher")).to_have_count(0)
     expect(page.locator("#main-content .uniway-public-nav, #main-content .topbar-actions")).to_have_count(0)
     expect(page.locator(".page-back-bar #school-switcher")).to_be_visible()
@@ -58,36 +59,21 @@ def test_verified_catalog_search_map_and_saved_school(page, live_server, width):
     page.add_init_script(INSTRUMENT)
     verified_login(page, live_server)
     open_navigation(page)
-    page.locator('.uniway-public-nav [data-public-route="overview"]').click()
-    expect(page.locator("#advisor")).to_be_visible()
-    expect(page.locator('#application-journey-steps [aria-current="step"]')).to_contain_text("選校與確認")
-    page.locator('#application-journey-steps [data-workspace-stage="preparation"]').click()
-    expect(page.locator("#overview")).to_be_visible()
-    expect(page.locator("#overview .destination-spotlight")).to_have_count(0)
-    expect(page.locator("#personal-plan-snapshot")).to_contain_text("我的目標")
-    expect(page.locator("#application-journey-steps [data-workspace-stage]")).to_have_count(3)
-    expect(page.locator("#planning-deadline-settings > summary")).to_be_visible()
-    expect(page.locator(".planning-workspace")).to_be_hidden()
+    page.locator('.uniway-public-nav [data-public-route="my-application"]').click()
+    expect(page.locator("#application-path")).to_be_visible()
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     open_navigation(page)
     expect(page.locator(".workspace-sync-control")).to_be_visible()
-    if width <= 900:
-        expect(page.locator("#account-workspace-sync-label")).to_be_visible()
-        assert page.locator("#account-workspace-sync-label").bounding_box()["width"] > 20
-    else:
-        rail = page.locator("#glass-navigation")
-        page.locator(".workspace-sync-status").hover()
-        expect(rail).to_have_css("width", "240px")
-        expect(page.locator("#account-workspace-sync-label")).to_be_visible()
-        expect(page.locator("#account-workspace-sync-label")).to_have_text("已同步")
+    if width > 900:
+        bar = page.locator("#glass-navigation").bounding_box()
+        assert bar["x"] == 0 and bar["width"] == width and bar["height"] <= 76
+    expect(page.locator("#account-workspace-sync-label")).to_have_text("已同步")
     page.locator('.uniway-public-nav [data-public-route="partners"]').click()
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("Lincoln")
     open_partner_filters(page)
     page.locator("#country-filter").select_option("紐西蘭")
     expect(page.locator("#partner-table .pr-school-card")).to_have_count(1)
-    if width < 700:
-        page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .favorite-toggle:visible").first.click()
     expect(page.locator("#partner-table .favorite-toggle:visible").first).to_have_attribute("aria-pressed", "true")
     page.locator('[data-partner-view="map"]').click()
@@ -109,13 +95,9 @@ def test_verified_catalog_search_map_and_saved_school(page, live_server, width):
         page.locator("#glass-menu-close").click()
     page.locator("#back-to-schools").click()
     expect(page.locator("#partner-search")).to_have_value("Lincoln")
-    open_navigation(page)
-    page.locator("#application-tools .application-nav-chevron").click()
-    page.locator('.application-tools-panel a[href="#advisor"]').click()
-    expand_details(page, "#application-workspace-tool-menu")
-    page.locator('#application-workspace-tools a[href="#favorites"]').click()
+    page.locator(".discovery-open-workspace").click()
     expect(page.locator("#favorites")).to_contain_text(LINCOLN)
-    expect(page.locator('#application-workspace-tools a[href="#favorites"]')).to_have_attribute("aria-current", "page")
+    expect(page.locator('.application-tools-heading a[href="#my-application"]')).to_be_visible()
 
 
 @pytest.mark.parametrize("width", [390, 834, 1440])
@@ -152,46 +134,28 @@ def test_glass_navigation_and_responsive_routes(page, live_server, width):
 
 
 @pytest.mark.parametrize("width,height", [(390, 620), (834, 956), (1280, 720), (1754, 956)])
-def test_expanded_tools_do_not_overlap_account_controls(page, live_server, width, height):
+def test_application_menu_is_reachable_without_overlapping_the_header(page, live_server, width, height):
     page.set_viewport_size({"width": width, "height": height})
     page.emulate_media(reduced_motion="reduce")
     verified_login(page, live_server)
     open_navigation(page)
-    tools = page.locator("#application-tools")
-    tools.locator(".application-nav-chevron").click()
-    expect(tools).to_have_attribute("open", "")
-    expect(tools.locator(".application-tools-panel a")).to_have_count(13)
-    assert tools.locator(".application-tools-panel a").evaluate_all("links => links.map(link => link.hash)") == [
-        "#advisor", "#overview", "#application-center", "#favorites", "#calendar", "#eligibility",
-        "#document-check", "#writing-assistant", "#documents", "#university-posts", "#deadlines", "#budget", "#scholarships",
-    ]
-    tools.locator(".application-extra-tools > summary").click()
-    bounds = page.locator("#glass-navigation").evaluate("""rail => {
-        const panel = rail.querySelector('.application-tools-panel').getBoundingClientRect();
-        const actions = rail.querySelector('.topbar-actions').getBoundingClientRect();
-        return {panelBottom: panel.bottom, actionsTop: actions.top,
-                scrollHeight: rail.scrollHeight, clientHeight: rail.clientHeight};
-    }""")
-    if width <= 900:
-        assert bounds["actionsTop"] >= bounds["panelBottom"]
-        assert bounds["scrollHeight"] >= bounds["clientHeight"]
-    else:
-        panel = tools.locator(".application-tools-panel").bounding_box()
-        rail = page.locator("#glass-navigation").bounding_box()
-        assert panel["x"] >= rail["x"] + rail["width"]
-        assert panel["y"] >= 16 and panel["y"] + panel["height"] <= height - 15
-    for selector in [".application-tools-panel a:last-child", "#account-button"]:
-        control = page.locator("#glass-navigation").locator(selector).last
+    page.locator('.uniway-public-nav [data-public-route="my-application"]').click()
+    menu = page.locator("#application-path .ap-menu")
+    menu.locator("summary").click()
+    expect(menu).to_have_attribute("open", "")
+    for selector in ("#new-plan", "#refresh-path"):
+        control = menu.locator(selector)
         control.focus()
-        rect = control.bounding_box()
-        rail = page.locator("#glass-navigation").bounding_box()
-        assert rect["y"] >= rail["y"]
-        assert rect["y"] + rect["height"] <= rail["y"] + rail["height"]
-    capture(page, f"expanded-tools-{width}-{height}.png")
-    tools.locator(":scope > summary").focus()
+        expect(control).to_be_focused()
+        box = control.bounding_box()
+        assert 0 <= box["x"] and box["x"] + box["width"] <= width
+        assert 68 <= box["y"] and box["y"] + box["height"] <= height
+    menu.locator("#new-plan").click()
+    expect(page.locator("#plan-dialog")).to_be_visible()
+    expect(menu).not_to_have_attribute("open", "")
     page.keyboard.press("Escape")
-    expect(tools).not_to_have_attribute("open", "")
-    expect(tools.locator(":scope > summary")).to_be_focused()
+    expect(page.locator("#plan-dialog")).to_be_hidden()
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
 
 
 def test_mobile_navigation_focus_escape_and_login(page, live_server):

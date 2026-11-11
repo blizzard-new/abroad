@@ -36,12 +36,9 @@ def test_redesigned_pages_fit_every_width_and_theme(browser, live_server, width,
 def test_home_landing_shows_the_product_story_without_login(page, live_server) -> None:
     enter_public_site(page, live_server, "home")
     expect(page.locator("#home-landing")).to_be_visible()
-    expect(page.locator("#home-landing-title")).to_contain_text("世界這麼大，別讓資訊限制你的選擇。")
-    # The route map of countries is gone from the home: the sentence, the board and the Earth are the first screen.
-    assert page.locator("[data-metro-route], .mt-stage, #home-plan-steps").count() == 0
-    # The Earth under the search board is a still photograph on the page itself, so it needs no WebGL.
-    expect(page.locator(".mt-earth")).to_be_visible()
-    assert page.locator("[data-home-globe]").count() == 0
+    expect(page.locator("#home-landing-title")).to_contain_text("你能去哪些交換學校")
+    # The flat map outline (partner dots on a static SVG) is always built; it is what shows when WebGL is unavailable.
+    expect(page.locator('[data-home-map="hero"] svg')).to_have_count(1)
     # Public pages never show the forum underneath another page.
     expect(page.locator("#community-hub")).to_be_hidden()
 
@@ -94,7 +91,7 @@ def test_home_has_no_decorative_guide_lines_or_sample_cards(page, live_server) -
 
 
 def test_home_cards_show_the_visitors_real_schools_not_samples(browser, live_server) -> None:
-    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    context = browser.new_context(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
     page = context.new_page()
     errors: list[str] = []
     page.on("pageerror", lambda error: errors.append(str(error)))
@@ -112,6 +109,7 @@ def test_home_cards_show_the_visitors_real_schools_not_samples(browser, live_ser
         # Searching from the card carries the words to the explore page.
         page.locator("#home-search-input").fill("日本")
         page.locator("#home-search-form button[type=submit]").click()
+        assert not errors
         expect(page.locator("#partners")).to_be_visible()
         assert page.evaluate("new URLSearchParams(location.search).get('q')") == "日本"
         assert not errors
@@ -120,8 +118,60 @@ def test_home_cards_show_the_visitors_real_schools_not_samples(browser, live_ser
 
 
 # Headless browsers draw WebGL in software, which the globe deliberately declines; this makes one pretend to have a GPU.
+PRETEND_GPU = """
+for (const proto of [WebGLRenderingContext.prototype, WebGL2RenderingContext.prototype]) {
+  const original = proto.getParameter;
+  proto.getParameter = function (name) { return name === 0x9246 ? 'ANGLE (Test GPU)' : original.call(this, name); };
+}
+"""
+
+
+@pytest.mark.parametrize("gpu", [False, True], ids=["as-is", "with-a-gpu"])
+def test_home_hero_is_a_half_globe_that_fades_away_while_scrolling(browser, live_server, gpu) -> None:
+    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    page = context.new_page()
+    if gpu:
+        page.add_init_script(PRETEND_GPU)
+    try:
+        enter_public_site(page, live_server, "home")
+        globe = page.locator("[data-home-globe]")
+        # Without WebGL, on a software renderer, or if frames come out slowly the hero keeps its flat map instead.
+        page.wait_for_function(
+            "() => ['ready', 'fallback'].includes(document.querySelector('[data-home-globe]').dataset.state)",
+            timeout=15_000,
+        )
+        if not gpu:
+            assert globe.get_attribute("data-state") in {"ready", "fallback"}
+        if globe.get_attribute("data-state") == "ready":
+            expect(globe.locator("canvas")).to_be_visible()
+            # Only the top half of the sphere is drawn: the canvas is about twice as wide as it is tall.
+            box = globe.bounding_box()
+            assert 1.7 < box["width"] / box["height"] < 2.2
+        else:
+            expect(globe.locator('[data-home-map="hero"] svg')).to_be_visible()
+        # The backdrop never takes clicks and is not read out; the map section below has the accessible link.
+        assert globe.evaluate("el => getComputedStyle(el).pointerEvents") == "none"
+        assert globe.get_attribute("aria-hidden") == "true"
+        expect(page.locator(".pr-band-button[data-home-open-map]")).to_contain_text("合作校地圖")
+        assert float(globe.evaluate("el => el.style.getPropertyValue('--globe-progress') || '0'")) == 0
+
+        page.evaluate("window.scrollTo({ top: 700, behavior: 'instant' })")
+        page.wait_for_function(
+            "() => parseFloat(document.querySelector('[data-home-globe]').style.getPropertyValue('--globe-progress')) > 0.9",
+            timeout=5_000,
+        )
+        page.evaluate("window.scrollTo({ top: 0, behavior: 'instant' })")
+        page.wait_for_function(
+            "() => parseFloat(document.querySelector('[data-home-globe]').style.getPropertyValue('--globe-progress')) < 0.05",
+            timeout=5_000,
+        )
+    finally:
+        context.close()
+
+
 def test_explore_sorts_and_compares_schools(page, live_server) -> None:
     enter_public_site(page, live_server, "partners")
+    page.locator('[data-partner-view="list"]').click()
     cards = page.locator("#partner-table .pr-school-card")
     expect(cards.first).to_be_visible(timeout=30_000)
     tab = page.locator('[data-partner-sort="quota"]')
@@ -135,6 +185,73 @@ def test_explore_sorts_and_compares_schools(page, live_server) -> None:
 
 
 # A stand-in for COBE, so the globe's own pacing and its "can this machine keep up" verdict run without a real GPU.
+FAKE_COBE = """
+window.UniWayCobe = function (canvas, options) {
+  window.__globeDraws = 0;
+  return {
+    toggle() {},
+    destroy() {},
+    render() {
+      window.__globeDraws += 1;
+      options.onRender({});
+      const started = performance.now();
+      while (performance.now() - started < (window.__globeCost || 0)) { /* a draw that takes this long */ }
+    },
+  };
+};
+"""
+
+
+def _pretend_renderer(name: str) -> str:
+    return (
+        "for (const proto of [WebGLRenderingContext.prototype, WebGL2RenderingContext.prototype]) {"
+        " const original = proto.getParameter;"
+        f" proto.getParameter = function (name) {{ return name === 0x9246 ? {json.dumps(name)} : original.call(this, name); }}; }}"
+    )
+
+
+def _globe_page(browser, live_server, renderer: str, init: str = ""):
+    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    page = context.new_page()
+    page.add_init_script(_pretend_renderer(renderer))
+    if init:
+        page.add_init_script(init)
+    page.route("**/static/vendor/cobe/**", lambda route: route.fulfill(body=FAKE_COBE, content_type="application/javascript"))
+    enter_public_site(page, live_server, "home")
+    return context, page
+
+
+def test_the_globe_survives_stalls_while_the_page_boots(browser, live_server) -> None:
+    # Long main-thread stalls at start-up (a page doing its first renders) must not be mistaken for a slow machine.
+    stalls = "setTimeout(() => { const t = performance.now(); while (performance.now() - t < 1400); }, 300); setTimeout(() => { const t = performance.now(); while (performance.now() - t < 900); }, 2200);"
+    context, page = _globe_page(browser, live_server, "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Direct3D11)", stalls)
+    try:
+        page.wait_for_function("() => window.__globeDraws > 90", timeout=30_000)
+        assert page.locator("[data-home-globe]").get_attribute("data-state") == "ready"
+        assert page.locator("[data-home-globe]").get_attribute("data-reason") is None
+    finally:
+        context.close()
+
+
+def test_the_globe_gives_way_to_the_flat_map_when_every_draw_is_slow(browser, live_server) -> None:
+    context, page = _globe_page(browser, live_server, "ANGLE (Intel, Intel(R) UHD Graphics Direct3D11)", "window.__globeCost = 140;")
+    try:
+        page.wait_for_function("() => document.querySelector('[data-home-globe]').dataset.state === 'fallback'", timeout=60_000)
+        assert page.locator("[data-home-globe]").get_attribute("data-reason").startswith("slow:")
+        expect(page.locator('[data-home-globe] [data-home-map="hero"] svg')).to_be_visible()
+    finally:
+        context.close()
+
+
+def test_the_globe_is_left_to_the_flat_map_on_a_software_renderer(browser, live_server) -> None:
+    context, page = _globe_page(browser, live_server, "Google SwiftShader")
+    try:
+        page.wait_for_function("() => document.querySelector('[data-home-globe]').dataset.state === 'fallback'", timeout=30_000)
+        assert page.locator("[data-home-globe]").get_attribute("data-reason").startswith("software:")
+    finally:
+        context.close()
+
+
 def test_home_supported_schools_drift_left_and_can_be_paused(browser, live_server) -> None:
     context = browser.new_context(viewport={"width": 1440, "height": 900})
     page = context.new_page()
@@ -232,16 +349,18 @@ def test_application_workspace_tools_are_available_on_demand(page, live_server) 
     live_server.register(email)
     login_through_web(page, live_server, email)
     page.evaluate("location.hash = '#advisor'")
-    tools = page.locator("#application-workspace-tools")
+    tools = page.locator('.application-tools-heading nav[aria-label="我的申請工具"]')
     expect(tools).to_be_hidden()
-    page.locator("#application-workspace-tool-menu > summary").click()
-    expect(tools.locator("a")).to_have_count(3)
-    expect(tools.locator("a").nth(0)).to_have_attribute("aria-current", "page")
-    expect(page.get_by_role("link", name="候選與比較", exact=True)).to_be_visible()
+    expect(page.locator('.application-tools-heading a[href="#my-application"]')).to_be_visible()
     page.evaluate("location.hash = '#overview'")
+    expect(page.locator("#schedule-view")).to_be_visible()
     expect(tools).to_be_hidden()
-    page.locator("#application-workspace-tool-menu > summary").click()
+    page.evaluate("location.hash = '#calendar'")
+    expect(tools).to_be_visible()
     expect(tools.locator("a")).to_have_count(5)
+    expect(tools.locator('a[href="#calendar"]')).to_have_attribute("aria-current", "page")
+    tools.get_by_role("link", name="預算", exact=True).click()
+    expect(page.locator("#budget")).to_be_visible()
 
 
 def _card_names(page) -> list[str]:
@@ -250,6 +369,7 @@ def _card_names(page) -> list[str]:
 
 def test_explore_language_and_term_dropdowns_change_the_school_list(page, live_server) -> None:
     enter_public_site(page, live_server, "partners")
+    page.locator('[data-partner-view="list"]').click()
     expect(page.locator("#partner-table .pr-school-card").first).to_be_visible(timeout=30_000)
     # Three schools that say something about tests and intakes, the rest say nothing.
     names = page.evaluate(
@@ -325,10 +445,11 @@ def test_tracker_lists_tasks_and_switches_views(page, live_server) -> None:
     login_through_web(page, live_server, email)
     page.evaluate("location.hash = '#overview'")
     expect(page.locator("#my-applications")).to_be_visible()
-    expect(page.locator("#tracker-title")).to_have_text("我的準備任務")
+    expect(page.locator("#tracker-title")).to_have_text("待辦與期限")
     expect(page.locator(".pr-views")).to_be_hidden()
     page.locator("#tracker-add").click()
-    form = page.locator("#calendar-event-form")
+    form = page.locator("#my-applications [data-tracker-quick]")
+    expect(form).to_be_visible()
     form.locator('[name="title"]').fill("準備交換申請資料")
     form.locator('[name="date"]').fill("2027-02-01")
     form.locator('button[type="submit"]').click()

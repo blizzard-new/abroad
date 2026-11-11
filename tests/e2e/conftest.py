@@ -490,19 +490,24 @@ def expand_details(page: Page, selector: str) -> None:
         panel.locator(":scope > summary").click()
 
 
-def enter_public_site(page: Page, live_server: LiveServer, route: str = "home") -> None:
+def enter_public_site(page: Page, live_server: LiveServer, route: str = "home", *, view: str | None = None) -> None:
     page.add_init_script(
         "window.sessionStorage.setItem('exchange-guide-browse-first', '1')"
     )
-    page.goto(f"{live_server.base_url}/#{route}")
+    query = f"?view={view}" if view else ""
+    page.goto(f"{live_server.base_url}/{query}#{route}", wait_until="domcontentloaded")
     page.locator("#school-onboarding").wait_for(state="hidden")
-    # The onboarding state settles before the asynchronous Web boot finishes.
-    # Let boot-time API calls drain before closing the page or starting login;
-    # otherwise rapid destination cases can leave requests queued on the shared
-    # E2E server and make a later, unrelated login response time out.
-    page.wait_for_load_state("networkidle", timeout=60_000)
-    # Rendering the larger offline catalog can continue after network idle.
-    # Wait for the real boot overlay to finish before attempting navigation.
+    # Campus images, map tiles and polling are not application readiness. Await
+    # the real bootstrap (including its catalogue/coverage requests) instead of
+    # waiting for every network request on the page to stop. The promise also
+    # works when goto only changes the hash of an already initialized document.
+    page.wait_for_function("() => typeof appReady !== 'undefined'", timeout=60_000)
+    page.evaluate("""() => {
+      appReady.then(() => { window.__testAppReady = true; },
+                    error => { window.__testBootError = String(error); });
+    }""")
+    page.wait_for_function("() => window.__testAppReady || window.__testBootError", timeout=60_000)
+    assert page.evaluate("window.__testBootError || null") is None, "Application bootstrap failed"
     page.locator("#boot-splash").wait_for(state="hidden", timeout=60_000)
 
 

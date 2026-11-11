@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="23" time="324.694" timestamp="2026-11-10T16:11:24.436080+00:00" hostname="009910d1d950"><testcase classname="tests.e2e.test_exchange_workspace" name="test_notice_review_batches_today_schedule_and_reload" time="39.504" /><testcase classname="tests.e2e.test_exchange_workspace" name="test_phone_personal_goal_waiting_notes_and_no_overflow[light]" time="10.731"><failure message="assert 1 &gt;= 120">page = &lt;Page url='http://127.0.0.1:54775/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#my-application?plan=1c411bb4ed6178fcc04f9d57e8ad7f9b&amp;view=workspace'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:54775', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-24/web-e2e-data0'))
+theme = 'light'
+
+    @pytest.mark.parametrize('theme',['light','dark'])
+    def test_phone_personal_goal_waiting_notes_and_no_overflow(page,live_server,theme):
+        page.set_viewport_size({'width':390,'height':844})
+        page.add_init_script(f"localStorage.setItem('exchange-guide-theme','{theme}')")
+        start(page,live_server)
+        form=editor(page,'確認宿舍收件與用品')
+        form.locator('[name=kind]').select_option('life')
+        form.locator('[name=date_kind]').select_option('personal')
+        form.locator('[name=due_date]').fill('2027-01-15')
+        form.locator('[name=status]').select_option('waiting')
+        form.locator('[name=waiting_for]').fill('宿舍管理員確認代收規則')
+        form.locator('[name=notes]').fill('先整理用品清單，收到回覆後再決定寄送方式。')
+        assert page.evaluate('document.documentElement.scrollWidth &lt;= innerWidth')
+        saved(page,form)
+        expect(page.locator('.ex-task')).to_contain_text('個人目標 2027-01-15')
+        expect(page.locator('.ex-task')).to_contain_text('等待：宿舍管理員')
+        page.locator('.hub-tabs [data-tab=today]').click()
+        expect(page.locator('.ex-summary:visible')).to_contain_text('正在等待 1 項')
+        page.locator('.hub-tabs [data-tab=workspace]').click()
+        assert page.evaluate('document.documentElement.scrollWidth &lt;= innerWidth')
+        for field in ['#exchange-stage','#exchange-kind','#exchange-status']:
+&gt;           assert page.locator(field).bounding_box()['width'] &gt;= 120
+E           assert 1 &gt;= 120
+
+tests/e2e/test_exchange_workspace.py:89: AssertionError</failure></testcase><testcase classname="tests.e2e.test_exchange_workspace" name="test_phone_personal_goal_waiting_notes_and_no_overflow[dark]" time="10.239"><failure message="assert 1 &gt;= 120">page = &lt;Page url='http://127.0.0.1:54775/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#my-application?plan=1c411bb4ed6178fcc04f9d57e8ad7f9b&amp;view=workspace'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:54775', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-24/web-e2e-data0'))
+theme = 'dark'
+
+    @pytest.mark.parametrize('theme',['light','dark'])
+    def test_phone_personal_goal_waiting_notes_and_no_overflow(page,live_server,theme):
+        page.set_viewport_size({'width':390,'height':844})
+        page.add_init_script(f"localStorage.setItem('exchange-guide-theme','{theme}')")
+        start(page,live_server)
+        form=editor(page,'確認宿舍收件與用品')
+        form.locator('[name=kind]').select_option('life')
+        form.locator('[name=date_kind]').select_option('personal')
+        form.locator('[name=due_date]').fill('2027-01-15')
+        form.locator('[name=status]').select_option('waiting')
+        form.locator('[name=waiting_for]').fill('宿舍管理員確認代收規則')
+        form.locator('[name=notes]').fill('先整理用品清單，收到回覆後再決定寄送方式。')
+        assert page.evaluate('document.documentElement.scrollWidth &lt;= innerWidth')
+        saved(page,form)
+        expect(page.locator('.ex-task')).to_contain_text('個人目標 2027-01-15')
+        expect(page.locator('.ex-task')).to_contain_text('等待：宿舍管理員')
+        page.locator('.hub-tabs [data-tab=today]').click()
+        expect(page.locator('.ex-summary:visible')).to_contain_text('正在等待 1 項')
+        page.locator('.hub-tabs [data-tab=workspace]').click()
+        assert page.evaluate('document.documentElement.scrollWidth &lt;= innerWidth')
+        for field in ['#exchange-stage','#exchange-kind','#exchange-status']:
+&gt;           assert page.locator(field).bounding_box()['width'] &gt;= 120
+E           assert 1 &gt;= 120
+
+tests/e2e/test_exchange_workspace.py:89: AssertionError</failure></testcase><testcase classname="tests.e2e.test_exchange_workspace" name="test_courses_conflicts_and_downloaded_dates" time="10.928" /><testcase classname="tests.e2e.test_exchange_workspace" name="test_destination_pack_interview_answers_and_idempotent_import" time="10.960" /><testcase classname="tests.e2e.test_exchange_workspace" name="test_failed_save_keeps_the_draft_and_retry_persists_it" time="9.162" /><testcase classname="tests.e2e.test_exchange_workspace" name="test_notice_attachment_and_edited_preview_survive_tab_navigation" time="10.623" /><testcase classname="tests.e2e.test_exchange_workspace" name="test_task_draft_is_scoped_to_its_plan" time="39.509"><failure message="playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;#plan-select&quot;)&#10;    - locator resolved to &lt;select tabindex=&quot;-1&quot; id=&quot;plan-select&quot; aria-hidden=&quot;true&quot; class=&quot;glide-select__native&quot;&gt;…&lt;/select&gt;&#10;  - attempting select option action&#10;    2 × waiting for element to be visible and enabled&#10;      - did not find some options&#10;    - retrying select option action&#10;    - waiting 20ms&#10;    2 × waiting for element to be visible and enabled&#10;      - did not find some options&#10;    - retrying select option action&#10;      - waiting 100ms&#10;    60 × waiting for element to be visible and enabled&#10;       - did not find some options&#10;     - retrying select option action&#10;       - waiting 500ms">page = &lt;Page url='http://127.0.0.1:54775/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#my-application?plan=1c411bb4ed6178fcc04f9d57e8ad7f9b&amp;view=workspace'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:54775', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-24/web-e2e-data0'))
+
+    def test_task_draft_is_scoped_to_its_plan(page,live_server):
+        original=start(page,live_server)
+        other=make_plan(page,live_server,semester='spring',revision=original['revision'])
+        form=editor(page,'只屬於上學期的草稿')
+        form.locator('[name=notes]').fill('不應出現在另一個計畫。')
+        form.get_by_role('button',name='關閉任務').click()
+&gt;       page.locator('#plan-select').select_option(other['plan']['id'])
+
+tests/e2e/test_exchange_workspace.py:183:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:13173: in select_option
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:652: in select_option
+    return await self._frame.select_option(
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:819: in select_option
+    return await self._channel.send("selectOption", self._timeout, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;playwright._impl._connection.Connection object at 0x7f3a812c3890&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7f3a739bfa60&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator("#plan-select")
+E               - locator resolved to &lt;select tabindex="-1" id="plan-select" aria-hidden="true" class="glide-select__native"&gt;…&lt;/select&gt;
+E             - attempting select option action
+E               2 × waiting for element to be visible and enabled
+E                 - did not find some options
+E               - retrying select option action
+E               - waiting 20ms
+E               2 × waiting for element to be visible and enabled
+E                 - did not find some options
+E               - retrying select option action
+E                 - waiting 100ms
+E               60 × waiting for element to be visible and enabled
+E                  - did not find some options
+E                - retrying select option action
+E                  - waiting 500ms
+
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:636: TimeoutError</failure></testcase><testcase classname="tests.e2e.test_exchange_workspace" name="test_peer_invitation_uses_existing_forum_and_is_filtered_by_semester" time="12.935" /><testcase classname="tests.e2e.test_application_workbench" name="test_header_actions_live_in_one_menu" time="18.766" /><testcase classname="tests.e2e.test_application_workbench" name="test_new_plan_asks_for_a_semester_and_works_out_the_academic_year" time="9.969" /><testcase classname="tests.e2e.test_application_workbench" name="test_a_swapped_year_is_refused_by_the_server" time="7.693" /><testcase classname="tests.e2e.test_application_workbench" name="test_archive_has_no_browser_dialog_and_can_be_undone" time="11.419" /><testcase classname="tests.e2e.test_application_workbench" name="test_finishing_a_task_shows_progress_and_can_be_undone" time="15.616" /><testcase classname="tests.e2e.test_application_workbench" name="test_plans_view_compares_two_plans_side_by_side" time="11.599" /><testcase classname="tests.e2e.test_application_workbench" name="test_old_schedule_address_opens_the_schedule_tab_with_this_plans_tasks" time="9.101" /><testcase classname="tests.e2e.test_application_workbench" name="test_a_personal_task_can_be_added_without_leaving_the_page" time="11.786" /><testcase classname="tests.e2e.test_application_workbench" name="test_offline_save_says_so_in_plain_language_and_keeps_the_text" time="13.895" /><testcase classname="tests.e2e.test_application_workbench" name="test_students_do_not_trigger_the_admin_endpoint_403" time="9.341" /><testcase classname="tests.e2e.test_application_workbench" name="test_phone_shows_short_school_names" time="13.087" /><testcase classname="tests.e2e.test_application_workbench" name="test_phone_layout_has_no_horizontal_scroll[today]" time="12.138" /><testcase classname="tests.e2e.test_application_workbench" name="test_phone_layout_has_no_horizontal_scroll[plans]" time="12.211" /><testcase classname="tests.e2e.test_application_workbench" name="test_phone_layout_has_no_horizontal_scroll[schedule]" time="12.909" /></testsuite></testsuites>

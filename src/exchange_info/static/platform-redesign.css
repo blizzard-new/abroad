@@ -66,14 +66,14 @@ body.unified-shell:has(.school-detail-view.pr-detail:not([hidden])) { --pr-page-
 body.unified-shell #dashboard-view > .pr-home { container-type: inline-size; padding-top: 0; }
 .pr-home-inner { position: relative; }
 
-.pr-hero { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(32px, 4cqi, 64px); align-items: start; min-height: clamp(560px, calc(100svh - 150px), 820px); padding: clamp(32px, 6svh, 88px) 0 clamp(48px, 5cqi, 80px); }
-.pr-hero-copy { min-width: 0; }
+.pr-hero { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; min-height: clamp(560px, calc(100svh - 150px), 820px); padding: clamp(32px, 6svh, 88px) 0 clamp(48px, 5cqi, 80px); }
+.pr-hero-copy { min-width: 0; width: min(100%, 960px); justify-self: center; text-align: center; }
 .pr-hero h1 { margin: 0; color: var(--uw-navy); font-size: clamp(38px, 5.2cqi, 82px); line-height: 1.14; letter-spacing: -.035em; font-weight: 700; text-wrap: balance; }
 .pr-hero h1 span { color: var(--uw-blue-strong); }
 
 /* The half globe is the hero's backdrop: only its upper half is drawn, anchored on the hero's bottom edge, and it dissolves
    from the bottom up as the page scrolls (--globe-progress runs 0 to 1, set by platform-globe.js). */
-.pr-globe { position: absolute; z-index: -1; left: 55%; bottom: 0; width: 92cqi; margin-left: -46cqi; aspect-ratio: 1.944 / 1; pointer-events: none; --globe-progress: 0;
+.pr-globe { position: absolute; z-index: -1; left: 50%; bottom: 0; width: min(92cqi, 1100px); transform: translateX(-50%); aspect-ratio: 1.944 / 1; pointer-events: none; --globe-progress: 0;
   -webkit-mask-image: linear-gradient(to top, transparent calc(var(--globe-progress) * 120%), #000 calc(var(--globe-progress) * 120% + 18%));
   mask-image: linear-gradient(to top, transparent calc(var(--globe-progress) * 120%), #000 calc(var(--globe-progress) * 120% + 18%)); }
 .pr-globe-canvas { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity .7s ease; }
@@ -81,7 +81,7 @@ body.unified-shell #dashboard-view > .pr-home { container-type: inline-size; pad
 .pr-globe[data-state="fallback"] .pr-globe-canvas { display: none; }
 .pr-globe[data-state="fallback"] .pr-globe-fallback { position: absolute; inset: 0; display: block; padding-bottom: 6%; box-sizing: border-box; }
 
-.pr-collage { position: relative; align-self: stretch; display: flex; flex-direction: column-reverse; align-items: flex-end; justify-content: flex-start; min-width: 0; }
+.pr-collage { position: absolute; right: 24px; bottom: 64px; z-index: 2; }
 .pr-map-host { position: relative; --map-land: #d5e6ee; --map-edge: #c3d9e4; --map-tw: #a83c39; --map-dot: #167ba1; --map-halo: #167ba12e; --map-arc: #a83c3973; }
 html[data-theme="dark"] .pr-map-host, .pr-map-band .pr-map-host { --map-land: #203852; --map-edge: #2c4762; --map-tw: #ffb5a6; --map-dot: #80d2ed; --map-halo: #80d2ed33; --map-arc: #80d2ed59; }
 .pr-map-host svg:not(.pr-sprite) { display: block; width: 100%; height: 100%; }
@@ -93,21 +93,7 @@ html[data-theme="dark"] .pr-map-host, .pr-map-band .pr-map-host { --map-land: #2
 .pr-map-host .tw-ring { fill: none; stroke: var(--map-tw); stroke-width: 2; }
 .pr-map-host .tw-dot { fill: var(--map-tw); }
 
-.pr-plan-card { box-sizing: border-box; width: min(100%, 460px); padding: 18px; border: 1px solid var(--glass-edge); border-radius: 20px; background: var(--glass-strong); box-shadow: 0 24px 60px #42627d2e; }
-.pr-plan-card header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
-.pr-plan-card header strong { color: var(--uw-navy); font-size: 14px; }
-.pr-badge-peach { padding: 3px 9px; border-radius: var(--pr-radius-chip); background: var(--glass-peach); color: var(--glass-coral-strong); font-size: 11px; font-weight: 700; white-space: nowrap; }
-.pr-plan-steps { margin: 0; padding: 0; list-style: none; }
-.pr-plan-steps li { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-top: 1px solid var(--uw-hairline); }
-.pr-step-ring { display: grid; place-items: center; flex: 0 0 24px; width: 24px; height: 24px; box-sizing: border-box; border-radius: 50%; }
-.pr-step-ring .lucide { width: 13px; height: 13px; stroke-width: 2.6; }
-.pr-step-title { flex: 1; min-width: 0; overflow: hidden; color: var(--uw-muted); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
-.pr-plan-steps small { color: var(--uw-muted); font-size: 11px; white-space: nowrap; }
-.pr-plan-steps .done .pr-step-ring { background: var(--uw-cyan-soft); color: var(--uw-blue-strong); }
-.pr-plan-steps .now .pr-step-ring { border: 2px solid var(--glass-coral); background: var(--uw-surface); color: var(--glass-coral); }
-.pr-plan-steps .now .pr-step-title { color: var(--uw-navy); font-weight: 700; }
-.pr-plan-steps .todo .pr-step-ring { border: 1.5px dashed var(--uw-line-strong); color: var(--uw-line-strong); }
-.pr-collage-mascot { position: relative; z-index: 2; margin: 0 14px -26px 0; --uw-mascot-size: clamp(96px, 10cqi, 150px); }
+.pr-collage-mascot { position: relative; z-index: 2; --uw-mascot-size: clamp(96px, 10cqi, 150px); }
 
 .pr-supported { position: relative; display: flex; align-items: center; gap: 18px; padding: 26px 0; }
 .pr-supported-label { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 10px; padding: 8px 18px 8px 10px; border: 1px solid var(--glass-edge); border-radius: 999px; background: var(--glass-surface); box-shadow: 0 6px 18px #39546d10; }
@@ -316,18 +302,17 @@ html[data-theme="dark"] .pr-map-band { border-color: #ffffff1a; }
 .pr-footer-links a { color: var(--uw-muted); text-decoration: none; }
 .pr-footer-links a:hover { color: var(--uw-navy); }
 
-/* Below 1180px the two-column hero no longer has room for the overlapping collage. */
+/* On narrower screens the globe follows the heading in the flow, leaving room for wrapped text. */
 @media (max-width: 1180px) {
-  .pr-hero { grid-template-columns: minmax(0, 1fr); gap: 20px; min-height: 0; padding-top: 24px; padding-bottom: 40px; overflow-x: clip; }
+  .pr-hero { gap: 20px; min-height: 0; padding-top: 24px; padding-bottom: 40px; overflow-x: clip; }
   .pr-hero-copy { order: 1; }
   /* Wider than the column so the half globe stays big on a phone; the hero clips what spills over. */
-  .pr-globe { order: 2; position: relative; left: auto; bottom: auto; width: 124%; margin: 0 -12%; }
-  .pr-collage { order: 3; align-items: stretch; max-width: 760px; }
-  .pr-plan-card { width: auto; }
-  .pr-collage-mascot { align-self: flex-end; }
+  .pr-globe { order: 2; position: relative; left: auto; bottom: auto; width: 124%; margin: 0 -12%; transform: none; }
+  .pr-collage { right: 16px; bottom: 48px; }
+  .pr-collage-mascot { --uw-mascot-size: clamp(72px, 10cqi, 120px); }
 }
 @media (max-width: 900px) {
-  .pr-hero h1 { font-size: clamp(34px, 9.4vw, 52px); }
+  .pr-hero h1 { font-size: clamp(28px, 8vw, 52px); }
   .pr-bento { grid-template-columns: minmax(0, 1fr); }
   .pr-tile, .pr-tile-wide { grid-column: auto; }
   .pr-map-band { grid-template-columns: minmax(0, 1fr); }
@@ -1276,7 +1261,7 @@ body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:has(> .
 
 /* Home: the heading leads the hero and the social links follow it as quiet text links. */
 .pr-hero-copy { position: relative; z-index: 3; }
-.pr-hero-socials { gap: 0 16px; margin-top: clamp(16px, 2.6svh, 28px); }
+.pr-hero-socials { justify-content: center; gap: 0 16px; margin-top: clamp(16px, 2.6svh, 28px); }
 .pr-hero .pr-social-pill { padding: 8px 2px; border-color: transparent; background: transparent; box-shadow: none; font-weight: 600; }
 .pr-hero .pr-social-pill:hover { background: transparent; transform: none; text-decoration: underline; text-underline-offset: 4px; }
 
