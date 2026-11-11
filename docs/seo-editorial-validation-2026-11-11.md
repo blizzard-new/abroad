@@ -1,6 +1,6 @@
 # 2026-11-11 每日雙篇驗收
 
-日期採 Asia/Taipei；開始即時時鐘為 2026-11-11 00:00:07 UTC，即臺灣 11/11 08:00。隔離分支 `codex/seo-daily-20261111`，兩篇完整繁體中文圖文文章同屬本日批次，驗收後建立一個待審 PR。選題依候選方向 17、20 的編輯判斷，沒有使用者 Search Console、搜尋量、流量或排名資料。
+日期採 Asia/Taipei；開始即時時鐘為 2026-11-11 00:00:07 UTC，即臺灣 11/11 08:00。隔離分支 `codex/seo-daily-20261111`，兩篇完整繁體中文圖文文章同屬本日唯一 [PR #302](https://github.com/blizzard-new/abroad/pull/302)，待審、尚未合併。選題依候選方向 17、20 的編輯判斷，沒有使用者 Search Console、搜尋量、流量或排名資料。
 
 | 完整文章 | slug | 獨立實作價值 |
 | --- | --- | --- |
@@ -59,4 +59,6 @@ SEO 初跑為 164 passed／1 failed：照片選項校對時，已載入的 ARTIC
 
 ## 待審與發布邊界
 
-待建立本日唯一 PR，兩篇一起審閱。未合併、未部署 Windows 正式環境、未寄信或要求 Google 批次索引；文章與 PR 完成不代表已上線、收錄或排名。
+[PR #302](https://github.com/blizzard-new/abroad/pull/302) 已建立並核對 open／merged=false，兩篇一起審閱。未合併、未部署 Windows 正式環境、未寄信或要求 Google 批次索引；文章與 PR 完成不代表已上線、收錄或排名。
+
+遠端 TLS trust regression 最後核對仍在執行，未宣稱通過。任務附件工具已呼叫，40 秒未回覆；附件清單也於 10 秒內未回覆，掛載未能確認。GitHub PR 本身已另行核對存在，27 個變更檔中只有兩個文章 JSON 屬 src 內容。

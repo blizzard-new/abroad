@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-11 每日批次：AI 英文澄清／多益照片兩篇（驗收完成，待開 PR）
+## 2026-11-11 每日批次：AI 英文澄清／多益照片兩篇（PR #302 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261111`，基於 main `bff878eaf829230e2da1de027652300aa6cad5de`。讀取 workflow、backlog、41 篇庫存及相關正文；核對全部 29 個 open PR 的完整清單與相關說明。#272 的 `ai-english-listening-dictation`、`toefl-academic-reading`，以及 #285 的 `japan-residence-registration`、`toeic-part-four-talks` 仍待審，四題已選並排除，保持原批次。#78／#92 已合併，無基礎相依。開始前無同日分支或任何狀態同日 PR。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 17：英文沒聽懂怎麼問？用 AI 練澄清、確認意思與接回對話的 Prompt | `ai-english-clarification` | 完整文章與驗收完成；待建立本日唯一 PR，後續排除 |
-| 20：多益 Part 1 照片描述怎麼練？可見證據、動作與狀態的原創題解析 | `toeic-part-one-photographs` | 同批完整文章與驗收完成，待同一個 PR，後續排除 |
+| 17：英文沒聽懂怎麼問？用 AI 練澄清、確認意思與接回對話的 Prompt | `ai-english-clarification` | [PR #302](https://github.com/blizzard-new/abroad/pull/302) 待審，完整文章與驗收完成；後續排除 |
+| 20：多益 Part 1 照片描述怎麼練？可見證據、動作與狀態的原創題解析 | `toeic-part-one-photographs` | 同一個 PR #302 待審，完整文章與驗收完成；後續排除 |
 
 依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。澄清篇有三種缺口、三輪可填 Prompt、原創來回與錯誤回饋查核，與四技能總覽、面試經歷追問、讀寫及待審聽寫分工；Part 1 有真實授權圖、兩組八選項、逐項解析及主被動／動作狀態比較，與應答、對話、獨白及閱讀任務分工，不以品牌或年份重發。所有教材與預期輸出明示編輯設計，不冒稱模型實測、官方試題或成效。
 
