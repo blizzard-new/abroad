@@ -31,6 +31,7 @@ def test_article_inventory_retains_existing_urls_and_has_distinct_search_intents
     assert len({a.title for a in ARTICLES.values()}) == len(ARTICLES)
     assert len({a.description for a in ARTICLES.values()}) == len(ARTICLES)
     assert len({a.sections[0].paragraphs[0] for a in ARTICLES.values()}) == len(ARTICLES)
+    assert len({a.image for a in ARTICLES.values()}) == len(ARTICLES)
 
 
 @pytest.mark.parametrize("slug", ARTICLES)
@@ -68,15 +69,21 @@ def test_article_is_complete_crawlable_and_has_consistent_metadata(client, slug)
         assert img["loading"] == "lazy"
     assert figure.img["alt"] == a.image_alt
     assert a.image_caption and a.image_caption in figure.figcaption.get_text()
-    assert a.image_credit and a.image_credit.photographer in figure.figcaption.get_text()
-    assert figure.figcaption.a["href"] == a.image_credit.source_url
+    if a.image_credit is not None:
+        assert a.image_credit.photographer in figure.figcaption.get_text()
+        assert figure.figcaption.a["href"] == a.image_credit.source_url
+    else:
+        assert not figure.figcaption.select("a")
     assert "AI 輔助製作" not in figure.figcaption.get_text()
     assert len(soup.select("#related .editorial-card")) >= 2
 
 
 def test_local_images_are_valid_small_and_packagable():
     root = Path(__file__).parents[1] / "src/exchange_info"
-    for path in {a.image_path for a in ARTICLES.values()}:
+    expected_paths = {a.image_path for a in ARTICLES.values()}
+    actual_files = {"/static/assets/editorial/" + p.name for p in (root / "static/assets/editorial").glob("*.webp")}
+    assert actual_files == expected_paths
+    for path in expected_paths:
         file = root / path.lstrip("/")
         assert file.is_file() and file.stat().st_size < 450_000
         with Image.open(file) as image:
