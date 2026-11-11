@@ -108,17 +108,3 @@ html[data-theme="dark"] .partner-map-stage { background:radial-gradient(ellipse 
   .partner-map-access label span { display:inline; margin-left:8px; }
 }
 @media (prefers-reduced-motion:reduce) { .partner-map-panel, .partner-map-preview, .map-loading-orbit, #partner-globe[data-ready="true"] .maplibregl-canvas, .map-home-marker::after { animation:none; } .map-home-marker::after { opacity:0; } .partner-view-switch button { transition:none; } }
-
-/* Beside the map on a wide screen: the schools that are on it, by country. A tap or click flies there and opens the preview. */
-.partner-map-list { display:none; }
-@media (min-width:1101px) {
-  .partner-map-list { display:block; position:absolute; z-index:2; top:0; bottom:0; left:0; width:300px; overflow-y:auto; overscroll-behavior:contain; background:var(--uw-surface); border-right:1px solid var(--uw-line); }
-  .partner-map-list ul { display:grid; gap:2px; margin:0; padding:8px; list-style:none; }
-  .partner-map-list button { display:grid; gap:2px; width:100%; min-height:44px; padding:9px 12px; border:0; border-radius:10px; background:transparent; color:var(--uw-text); font:inherit; text-align:left; cursor:pointer; box-shadow:none; }
-  .partner-map-list button:hover { background:color-mix(in srgb, var(--uw-blue) 8%, transparent); }
-  .partner-map-list button[aria-current] { background:color-mix(in srgb, var(--uw-blue) 14%, transparent); }
-  .partner-map-list strong { color:var(--uw-navy); font-size:14px; line-height:1.4; }
-  .partner-map-list small { color:var(--uw-muted); font-size:12px; }
-  #partner-map-panel #partner-globe { left:300px; }
-  .partner-map-stage .partner-map-legend { left:320px; }
-}
