@@ -1230,6 +1230,11 @@ def create_app(
     analytics_repository: Any = None,
     feedback_repository: Any = None,
     seo_state_dir: Path | None = None,
+    cgu_catalogue_factory: Any = None,
+    application_path_levels: Any = None,
+    fetch_dashboard_documents: bool = True,
+    university_scope: str | None = None,
+    cgu_dashboard_transform: Any = None,
 ) -> FastAPI:
     resolved_data_dir = Path(
         data_dir or os.environ.get("EXCHANGE_INFO_DATA_DIR") or DEFAULT_DATA_DIR
@@ -1457,7 +1462,7 @@ def create_app(
         if cgu_catalogue is None:
             with cgu_catalogue_lock:
                 if cgu_catalogue is None:
-                    cgu_catalogue = create_cgu_catalogue(resolved_data_dir)
+                    cgu_catalogue = (cgu_catalogue_factory or create_cgu_catalogue)(resolved_data_dir)
                     app.state.cgu_catalogue = cgu_catalogue
         return cgu_catalogue.view()
 
@@ -1719,6 +1724,8 @@ def create_app(
 
     def university_for(school: str | None) -> UniversityProfile:
         """Any visitor may read any supported school's catalogue; an account only sets the default."""
+        if university_scope is not None:
+            return require_university(university_scope)
         request = catalog_request.get()
         account = None
         if request is not None:
@@ -2228,7 +2235,10 @@ def create_app(
                 load_exchange_info(resolved_data_dir),
                 raw_files_dir=resolved_data_dir / "raw_files",
                 fetch_partner_sheets=False,
+                fetch_regulation_rules=fetch_dashboard_documents,
             )
+            if cgu_dashboard_transform is not None:
+                dashboard = cgu_dashboard_transform(dashboard)
             with dashboard_cache_lock:
                 dashboard_cache[university.id] = (time.monotonic(), signature, dashboard)
             return dashboard
@@ -2773,6 +2783,8 @@ def create_app(
         return conversation
 
     def seo_catalogue(university: UniversityProfile) -> tuple[list, object]:
+        if university_scope is not None and university.school_name != university_scope:
+            return [], None
         # Public pages are identical for signed-in and anonymous visitors. In
         # particular, never load private sessions through university_for().
         token = catalog_request.set(None)
@@ -6643,7 +6655,8 @@ def create_app(
     from .application_path import register_application_path
     register_application_path(app, authenticate=authenticated_account, university_for=university_for,
         evaluate=evaluate_application_plan, catalog_for=application_center_catalog,
-        release_mode=configured_product_release_mode, feature_enabled=product_feature_enabled)
+        release_mode=configured_product_release_mode, feature_enabled=product_feature_enabled,
+        levels_builder=application_path_levels)
     return app
 
 

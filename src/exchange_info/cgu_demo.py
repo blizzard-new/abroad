@@ -1,101 +1,236 @@
-"""Read-only hackathon app. Deliberately does not import api or its repositories."""
+"""CGU edition of the existing UniWay platform, in a dedicated demo process."""
 from __future__ import annotations
 
+import hashlib
 import json
-import logging
+import os
+import secrets
+import sys
+import tempfile
+import threading
+from contextlib import asynccontextmanager
+from datetime import timedelta
 from pathlib import Path
+from urllib.parse import parse_qsl, urlencode
 
+from bs4 import BeautifulSoup
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import FileResponse, PlainTextResponse
-
-from .cgu_catalogue import BUNDLED_SNAPSHOT, validate_snapshot
+from fastapi.responses import HTMLResponse, JSONResponse, Response
+from fastapi.staticfiles import StaticFiles
 
 STATIC = Path(__file__).parent / "static"
 CONTENT = Path(__file__).parent / "demo_data/content.json"
-CURATED_SCHOOLS = (
-    "林肯大學 Lincoln University",
-    "德國拉芬斯堡-魏恩加騰應用科技大學 Ravensburg-Weingarten University of Applied Sciences",
-    "德國巴登-符騰堡州立合作大學 Duale Hochschule Baden-Württemberg Karlsruhe, Germany Baden-Wuerttemberg Cooperative State University",
-)
-ASSETS = {
-    "brand-tokens.css": ("brand-tokens.css", "text/css"),
-    "cgu-demo.css": ("cgu-demo.css", "text/css"),
-    "cgu-demo.js": ("cgu-demo.js", "text/javascript"),
-    "uniway-mark.webp": ("assets/brand/uniway-mark.webp", "image/webp"),
-    "favicon.svg": ("favicon.svg", "image/svg+xml"),
-}
+COOKIE = "uniway_cgu_demo_session"
+HOME = "長庚大學"
 
 
-def demo_catalogue(snapshot_path: Path = BUNDLED_SNAPSHOT) -> dict:
-    """Reuse validation, never the refresh thread or writable catalogue cache."""
-    try:
-        snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
-        rows = {row.school_name: row for row in validate_snapshot(snapshot)}
-        schools = []
-        for index, name in enumerate(CURATED_SCHOOLS):
-            row = rows.get(name)
-            if row is None or "交換" not in row.program_type:
-                continue
-            schools.append({
-                "id": f"school-{index}", "name": row.school_name,
-                "country": row.country, "website": row.website,
-                "colleges": row.colleges, "degree_levels": row.degree_levels,
-                "study_period": row.study_period, "eligibility": row.eligibility,
-                "reference_quota": row.quota, "reference_deadline": row.application_deadline,
-                "source_url": row.source_url,
-                "status": "歷史快照參考・當期適用待確認",
-            })
-        return {"schools": schools, "snapshot_at": snapshot["fetched_at"], "status": "reference"}
-    except (OSError, ValueError, KeyError, TypeError, AttributeError):
-        logging.getLogger(__name__).warning("CGU demo catalogue unavailable; showing official sources only")
-        return {"schools": [], "snapshot_at": None, "status": "unavailable"}
+def platform_html() -> str:
+    """Keep the platform DOM and asset order; only constrain school/identity copy."""
+    soup = BeautifulSoup((STATIC / "index.html").read_text(encoding="utf-8"), "html.parser")
+    soup.title.string = "UniWay CGU｜長庚大學交換申請平台"
+    soup.head.append(soup.new_tag("meta", attrs={"name": "robots", "content": "noindex,nofollow,noarchive"}))
+    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css"))
+    script = soup.new_tag("script", src="/demo/bootstrap.js")
+    soup.head.insert(0, script)
+    # Initial static choices must also be CGU-only, before the registry request resolves.
+    for item in soup.select('[data-home-school]'):
+        if item.get('data-home-school') != HOME:
+            item.decompose()
+    for item in soup.select('.uniway-header-brand strong'):
+        item.string = 'UniWay CGU'
+    for item in soup.select('#school-switcher'):
+        item['disabled'] = ''
+        item['aria-label'] = '長庚大學專屬平台'
+    for item in soup.select('#logout-button, #delete-account-button, #calendar-sync-button, #document-tab-vault, input[type=file]'):
+        item['disabled'] = ''
+        item['title'] = '展示未開放正式登入、私人文件或外部同步'
+    for item in soup.select('[data-home-pick-school]'):
+        item['disabled'] = ''
+        item['title'] = '長庚大學專屬平台'
+    snippet = BeautifulSoup('''<aside id="cgu-demo-strip" aria-label="長庚展示控制">
+      <span>長庚專屬展示・虛構學生林小程・重啟後清除・尚未與校方串接</span>
+      <button type="button" id="cgu-demo-info">來源與展示說明</button>
+      <button type="button" id="cgu-demo-seed">載入示範申請</button>
+      <button type="button" id="cgu-demo-reset">重設我的展示資料</button>
+      </aside><dialog id="cgu-demo-dialog" aria-labelledby="cgu-demo-dialog-title">
+      <h2 id="cgu-demo-dialog-title">長庚專屬展示</h2><div id="cgu-demo-dialog-body"></div>
+      <p id="cgu-demo-status" role="status"></p><div class="button-row">
+      <button type="button" class="primary-button" id="cgu-demo-confirm" hidden>確認重設</button>
+      <button type="button" class="secondary-button" id="cgu-demo-close">關閉</button></div></dialog>''', 'html.parser')
+    soup.body.append(snippet)
+    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js'))
+    return str(soup)
 
 
 def create_demo_app() -> FastAPI:
-    """Separate entry point, no account/session/database/email/upload endpoints."""
-    app = FastAPI(title="UniWay CGU 展示版", docs_url=None, redoc_url=None, openapi_url=None)
+    # The shared module constructs its app on import. Prepare a disposable runtime
+    # BEFORE importing it, and refuse use in an already-running normal API process.
+    if 'exchange_info.api' in sys.modules:
+        raise RuntimeError('CGU demo must run in a separate process; do not mount it in the production app')
+    if os.environ.get('EXCHANGE_ENVIRONMENT') == 'production' or any(
+        value for name, value in os.environ.items()
+        if name.startswith(('SUPABASE', 'GOOGLE_OAUTH', 'SMTP_', 'OPENAI_API_KEY'))
+    ):
+        raise RuntimeError('CGU demo refuses production/service credentials; use an isolated service environment')
+    for name in list(os.environ):
+        if name.startswith('EXCHANGE_'):
+            del os.environ[name]
+    runtime = tempfile.TemporaryDirectory(prefix='uniway-cgu-demo-')
+    os.environ.update(EXCHANGE_INFO_DATA_DIR=runtime.name, EXCHANGE_ENVIRONMENT='development',
+                      EXCHANGE_ANALYTICS='off', EXCHANGE_WARM_CACHES='off', EXCHANGE_AUTH_METHODS='email')
+    from . import api
+    from .cgu_demo_content import FrozenCatalogue, journey_levels, source_dashboard
+    from .models import UserAccount, AccountSessionRecord, ProductAccessTier, utc_now
 
-    @app.middleware("http")
-    async def demo_headers(request: Request, call_next):
-        response = await call_next(request)
-        response.headers.update({
-            "X-Robots-Tag": "noindex, nofollow, noarchive",
-            "Cache-Control": "no-store",
-            "X-Content-Type-Options": "nosniff",
-            "Referrer-Policy": "no-referrer",
-            "X-Frame-Options": "DENY",
-            "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
-            "Content-Security-Policy": "default-src 'none'; script-src 'self'; style-src 'self'; "
-                "img-src 'self'; connect-src 'self'; font-src 'self'; base-uri 'none'; "
-                "form-action 'none'; frame-ancestors 'none'; object-src 'none'",
-        })
+    catalogue = FrozenCatalogue(Path(runtime.name))
+    platform = api.create_app(Path(runtime.name), cgu_catalogue_factory=lambda _: catalogue,
+                              application_path_levels=journey_levels, fetch_dashboard_documents=False, university_scope=HOME,
+                              cgu_dashboard_transform=source_dashboard)
+    repository = platform.state.account_repository
+    @asynccontextmanager
+    async def lifespan(app):
+        try:
+            async with platform.router.lifespan_context(platform):
+                yield
+        finally:
+            runtime.cleanup()
+
+    app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
+    app.state.runtime = runtime  # only this process owns and removes this directory
+    app.state.platform = platform
+    lock = threading.Lock()
+
+    def session(token):
+        return repository.authenticate_by_token_hash(hashlib.sha256(token.encode()).hexdigest()) if token else None
+
+    def new_session():
+        if len(repository.list_accounts()) >= 500:
+            raise HTTPException(503, '展示工作區已滿，請管理者於預演後重啟展示服務。')
+        account = UserAccount(display_name='林小程（展示資料）', home_university=HOME,
+                              product_tier=ProductAccessTier.SUBSCRIPTION)
+        repository.save_account(account)
+        token = secrets.token_urlsafe(40)
+        repository.save_session(AccountSessionRecord(account_id=account.id,
+            token_hash=hashlib.sha256(token.encode()).hexdigest(), expires_at=utc_now() + timedelta(hours=24)))
+        return token
+
+    def cookie(response, token, request):
+        response.set_cookie(COOKIE, token, httponly=True, samesite='strict', secure=os.environ.get('CGU_DEMO_SECURE_COOKIE') == '1' or request.url.scheme == 'https',
+                            max_age=86400, path='/')
+
+    @app.middleware('http')
+    async def isolation(request: Request, call_next):
+        path = request.url.path
+        token = request.cookies.get(COOKIE, '')
+        # Never forward production session, Authorization or anonymous credentials.
+        request.scope['headers'] = [(k,v) for k,v in request.scope['headers']
+            if k.lower() not in (b'cookie', b'authorization', b'x-anonymous-token')]
+        if token:
+            request.scope['headers'].append((b'cookie', f'{api.AUTH_COOKIE_NAME}={token}'.encode()))
+        request.state.demo_token = token
+        query = dict(parse_qsl(request.scope.get('query_string', b'').decode()))
+        for key in ('home_school', 'home_university', 'home'):
+            if key in query:
+                query[key] = HOME
+        if path in ('/student-dashboard', '/coverage', '/sources', '/documents', '/exchange-info',
+                    '/deadlines', '/verified-window-deadlines', '/calendar/school-window.ics',
+                    '/application-center/templates', '/application-center/catalog', '/network-effects/status'):
+            query['school'] = HOME
+        if path.startswith('/account/application-'):
+            query['home_school'] = HOME
+        if path.startswith('/cross-school-partners'):
+            query['home'] = HOME
+        request.scope['query_string'] = urlencode(query).encode()
+        forbidden = path.startswith(('/admin', '/auth/oauth', '/auth/email', '/auth/register', '/auth/login',
+            '/auth/student', '/auth/me', '/account/vault', '/calendar/feed', '/analytics', '/feedback',
+            '/maintenance', '/docs', '/redoc', '/openapi.json'))
+        allowed_write = (path == '/account/workspace' and request.method == 'PUT') or (
+            path.startswith(('/account/application-paths', '/account/application-drafts/')) and request.method in ('POST','PUT')) or (
+            path in ('/application-plan', '/application-plan/evaluate', '/application-plan/schedule', '/advisor/plan',
+                     '/application-center/pdf', '/application-center/docx', '/public-translations', '/auth/community-identity') and request.method == 'POST')
+        if forbidden or (request.method not in ('GET','HEAD') and not allowed_write and path != '/demo/reset'):
+            response = JSONResponse({'detail':'此展示尚未開放正式登入、私人文件、外部同步或送件。'}, status_code=403)
+        elif request.method not in ('GET','HEAD') and request.headers.get('origin') != str(request.base_url).rstrip('/'):
+            response = JSONResponse({'detail':'請由此展示網站操作。'}, status_code=403)
+        else:
+            if allowed_write:
+                body = await request.body()
+                if len(body) > 256_000:
+                    return JSONResponse({'detail':'展示內容過大。'}, status_code=413)
+                try:
+                    payload = json.loads(body)
+                except (ValueError, TypeError):
+                    payload = {}
+                if isinstance(payload, dict) and payload.get('home_school', HOME) != HOME:
+                    return JSONResponse({'detail':'此站僅提供長庚大學情境。'}, status_code=422)
+            response = await call_next(request)
+        response.headers['X-Robots-Tag'] = 'noindex, nofollow, noarchive'
+        response.headers['Cache-Control'] = ('public, max-age=3600' if path.startswith('/static/')
+                                             and not path.endswith('.html') else 'no-store')
+        for key, value in api._browser_security_headers().items():
+            response.headers.setdefault(key, value)
+        # The production cookie name never leaves this service.
+        response.raw_headers = [(k,v) for k,v in response.raw_headers if not (
+            k.lower() == b'set-cookie' and v.startswith(api.AUTH_COOKIE_NAME.encode() + b'='))]
         return response
 
-    @app.get("/", include_in_schema=False)
-    @app.get("/cgu", include_in_schema=False)
-    def home():
-        return FileResponse(STATIC / "cgu-demo.html", media_type="text/html")
+    @app.get('/')
+    @app.get('/cgu')
+    def home(request: Request):
+        token = request.state.demo_token
+        with lock:
+            if session(token) is None:
+                token = new_session()
+        response = HTMLResponse(platform_html())
+        cookie(response, token, request)
+        return response
 
-    @app.get("/static/{name}", include_in_schema=False)
-    def asset(name: str):
-        if name not in ASSETS:
-            raise HTTPException(status_code=404)
-        relative, media_type = ASSETS[name]
-        return FileResponse(STATIC / relative, media_type=media_type)
+    @app.get('/static/index.html')
+    def static_home(request: Request):
+        return home(request)
 
-    @app.get("/demo/content")
+    @app.get('/demo/bootstrap.js')
+    def bootstrap():
+        return Response((STATIC / 'cgu-demo-bootstrap.js').read_text(), media_type='text/javascript')
+
+    @app.get('/demo/content')
     def content():
-        try:
-            return {**json.loads(CONTENT.read_text(encoding="utf-8")), **demo_catalogue()}
-        except (OSError, ValueError):
-            raise HTTPException(status_code=503, detail="展示內容暫時無法載入，請重試。") from None
+        return json.loads(CONTENT.read_text())
 
-    @app.get("/health")
+    @app.post('/demo/reset')
+    def reset(request: Request):
+        with lock:
+            found = session(request.state.demo_token)
+            if found:
+                platform.state.form_draft_service.purge_account(found[0].id)
+                repository.delete_account(found[0].id)
+            token = new_session()
+        response = JSONResponse({'reset': True})
+        cookie(response, token, request)
+        return response
+
+    @app.get('/universities')
+    def universities():
+        from .models import SupportedUniversity
+        from .university_registry import CGU
+        return [SupportedUniversity(id='cgu', school_name=HOME, short_name='長庚',
+            english_name=CGU.english_name, official_url=CGU.official_url,
+            colleges=list(CGU.colleges), hero_image=CGU.hero_image,
+            partner_count=len(catalogue.view().partners),
+            coverage_note='77 筆歷史瀏覽項目，含交換、自費、雙學位及院級參考；不等於當期名額。')]
+
+    @app.get('/auth/providers')
+    def providers():
+        return []
+
+    @app.get('/health')
     def health():
-        return {"status": "ok", "mode": "cgu-demo", "persistence": "browser-only"}
+        return {'status':'ok', 'mode':'cgu-demo', 'ui':'shared-uniway-platform', 'persistence':'isolated-temporary-runtime'}
 
-    @app.get("/robots.txt", response_class=PlainTextResponse)
+    @app.get('/robots.txt')
     def robots():
-        return "User-agent: *\nDisallow: /\n"
+        return Response('User-agent: *\nDisallow: /\n', media_type='text/plain')
 
+    app.mount('/static', StaticFiles(directory=STATIC), name='shared-static')
+    app.mount('/', platform)
     return app

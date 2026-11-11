@@ -26,7 +26,7 @@ https://new.ntpu.edu.tw/oia
 
 ## 長庚黑客松獨立展示版
 
-`UniWay CGU｜長庚交換申請導航` 提供交換參考資訊、來源與六階段可保存待辦。以 `uvicorn exchange_info.cgu_demo:create_demo_app --factory --host 127.0.0.1 --port 8765` 獨立啟動，不接正式帳號或資料庫。操作腳本、隔離設計、來源限制、測試與未來部署準備見 [展示版文件](docs/cgu-demo/README.md)。目標網域 `demo.uniway-tw.com` 尚未部署或設定 DNS。
+`UniWay CGU｜長庚大學專屬 UniWay` 直接共用原平台的首頁、搜尋、收藏比較、文件與「我的申請」UI/UX，固定母校為長庚，另有六階段示範旅程與獨立暫存工作區。以 `uvicorn exchange_info.cgu_demo:create_demo_app --factory --host 127.0.0.1 --port 8765` 在獨立進程啟動；不接正式登入或資料庫。操作腳本、資料隔離、來源與部署準備見 [專屬展示文件](docs/cgu-demo/README.md)。`demo.uniway-tw.com` 尚未部署或設定 DNS。
 
 ## 專案結構
 

@@ -25,7 +25,7 @@
 
 舊 `official_data/cgu/catalog-completeness.json` 也為 77 筆，描述 75 中央加 2 院級並使用 open；其 77 個流程 published=0、applicability_verified=0。快照本身明示「dated fallback reference / not current cycle verification」。本展示統一使用更保守的口徑：歷史參考、當期待確認；沒有修改正式資料或升級原來的發布狀態。
 
-只選擇原快照中 `program_type` 含交換的 Lincoln、Ravensburg-Weingarten、DHBW Karlsruhe 三筆。所有頁面的展示參考校數皆由同一份讀取結果計算；若快照失敗，回傳空清單，不補假學校。既有名額欄位改以「歷史名額」呈現，沒有用全部 UniWay 國外校當作長庚合作校。快照中的條件文字若被截斷，畫面明示不能當成完整要求。
+共用原平台目錄，展示上述 77 筆歷史項目；不從其他母校目錄湊數。展示 adapter 將名額與開放狀態標為當期待確認，移除可被日曆自動解析的歷史截止日（含摘要及嵌套欄位），原始名額／日期保留於 reference_data。來源缺漏或快照驗證失敗不補假資料。只有已讀取的校內摘要提供一般 70 分／TOEIC 700 規則，其他語言門檻不自行換算。
 
 一般任務的來源與適用性分開：生活、手機、支付、課程整理及返國資料等是個人準備建議或待確認事項；面試與體檢不假定人人必須。非 Lincoln 研究目標的目的校任務不引用 Lincoln 要求作為其規則。
 

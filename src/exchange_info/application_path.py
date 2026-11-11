@@ -299,7 +299,7 @@ def progress(item, record):
     return {"value":int(content) + int(content and record.get("confirmed", False)), "total":2}
 
 
-def register_application_path(app, *, authenticate, university_for, evaluate, catalog_for, release_mode, feature_enabled):
+def register_application_path(app, *, authenticate, university_for, evaluate, catalog_for, release_mode, feature_enabled, levels_builder=None):
     def service():
         if not getattr(app.state, "form_draft_service", None):
             raise HTTPException(503, "申請進度保存服務未啟用。")
@@ -348,7 +348,7 @@ def register_application_path(app, *, authenticate, university_for, evaluate, ca
             department=v["department"], degree_level=v["degree_level"], program_type="exchange",
             academic_year=c["academic_year"], application_round=v["application_round"],
             host_admission_status="unknown", housing_choice="unknown", semester=c["semester"])
-        return build_levels(c, result, docs, v)
+        return (levels_builder or build_levels)(c, result, docs, v)
 
     def summary(plan):
         return {k:plan[k] for k in ("id", "context", "archived", "updated_at")}

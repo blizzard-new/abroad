@@ -479,7 +479,7 @@ def _eligibility_checks(
         checks.append(
             _check(
                 "availability",
-                "needs_confirmation" if partner.availability_status == "needs_confirmation" or is_fju(request.home_school) or ((is_ntu(request.home_school) or is_ncu(request.home_school)) and partner.quota is None) or (is_ntu(request.home_school) and ntu_published_quota(partner)) else "fail",
+                "needs_confirmation" if partner.availability_status in {"needs_confirmation", "quota_unconfirmed"} or is_fju(request.home_school) or ((is_ntu(request.home_school) or is_ncu(request.home_school)) and partner.quota is None) or (is_ntu(request.home_school) and ntu_published_quota(partner)) else "fail",
                 "當期名額",
                 partner.availability_note
                 or ("輔大 116-1 名額表預計於 2026 年 11 月底公告；目前顯示姊妹校專頁與 115-2／115-1 甄選名額供規劃參考。" if is_fju(request.home_school) else "這筆資料目前未列入當期公開開放名單。"),

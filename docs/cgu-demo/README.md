@@ -1,68 +1,63 @@
-# UniWay CGU｜長庚交換申請導航
+# UniWay CGU｜長庚大學專屬 UniWay
 
-這是長庚「教育 × 行政創新黑客松」獨立展示入口。它沿用 UniWay 的 FastAPI、原生 JavaScript、品牌 token、Logo 及有雜湊驗證的長庚歷史快照。沒有新增套件、資料庫或付費服務。正式入口 `exchange_info.api:app` 與正式 UI 沒有更動；不在主站啟用展示連結。
+這個版本直接共用 UniWay 的 `static/index.html`、首頁、導覽、學校搜尋、收藏比較、日曆、文件工作台及「我的申請」元件。沒有另外設計一套展示首頁；長庚是唯一母校。另附展示控制列、來源說明與每位訪客的虛構學生工作區。未新增依賴、資料庫或付費服務。
 
-## 可操作的範圍
+## 實際範圍
 
-- 3 所歷史交換／自費研修參考校，可搜尋、展開條件及來源、選為研究目標；不宣稱是當期開放名單。
-- 長庚校內資格、文件、一般時間與官方來源摘要；說明不同來源日期與學期矛盾。
-- 六階段、共 15 個可勾選待辦。固定情境為虛構學生「林小程」、預設 Lincoln 研究目標、2027 下半年個人目標，目的校學期待確認；預先完成前兩個探索待辦，起始 2/15。
-- 可改選研究目標後建立固定或空白計畫；計畫建立後要換校須先重設，避免把已完成進度套用另一校。非 Lincoln 目的校不繼承 Lincoln 的官方要求，相關任務改為目的校待確認。
-- 第一個未完成項目為下一步；可瀏覽所有階段，不把下一步推算成錄取或審查狀態。
-- 每項可設定／清除「個人目標日期（非官方期限）」，完成狀態與日期可跨頁面及重新整理保存。
-- 只刪除 `uniway-cgu-demo:v1` 的展示重設；有確認、取消與 Escape 返回。
-- 儲存封鎖／容量失敗會明示僅暫存；損壞／版本不符資料不自動覆蓋。另一分頁變更後鎖住舊頁編輯，要求重整，避免默默覆寫。
-- 官方來源隨版保存、來源缺漏顯示待確認；內容失敗有重試；沒有學校資料時仍可閱讀官方摘要，但不建立虛假選校計畫。
+| 功能 | 展示行為 |
+| --- | --- |
+| 原平台首頁、地球、搜尋、學校詳細頁 | 同一份 HTML、CSS、JS，母校固定長庚；保留主題與響應式設計 |
+| 長庚資料 | 77 筆歷史瀏覽項目，混合交換、自費、雙學位及院級參考；不是 77 所當期可申請校。當期名額、目的校日期與語言待確認 |
+| 收藏與比較 | 使用原有 UI、workspace 與隔離的瀏覽器偏好 |
+| 我的申請 | 原有計畫建立、今日下一步、準備清單、路徑地圖、進度及版本衝突處理；新增六階段的準備建議 |
+| 示範申請 | 林小程（虛構），Lincoln University，116 學年度／2027 秋季研究目標；不保證當期開放。重複載入保留進度 |
+| 日曆 | 原介面及個人行程；不將歷史目的校日期轉成當期官方截止日。外部日曆同步停用 |
+| 文件 | 原工作台與官方文件入口保留；未發布內容維持原有閘門。私人文件上傳、正式送件停用 |
+| 論壇／評價 | 保留原入口與空白狀態，不匯入正式用戶資料，不開放對外發文 |
+| AI／校方串接 | 規劃中，未呼叫模型或校方 API；來源說明內有三階段合作構想 |
 
-## 規劃中及未做
+六階段為探索與選校、校內申請、面試與放榜、姊妹校申請、出發準備、抵達與返國。由原 `application_path.py` 的 renderer、帳號草稿儲存及版本控制處理；勾選代表自己的準備紀錄。非 Lincoln 目標不繼承 Lincoln 的要求，來源缺漏顯示待確認。
 
-AI 問答、校方公告同步、登入及申請狀態同步、文件送達／收件編號／受理 API 均為未來構想。產品 AI 現有 runtime 為 paused，本展示沒有模型呼叫，也不把規則待辦稱為 AI。
-
-此展示不提供正式登入、文件上傳、PDF 工作台、收藏比較、日曆同步、跨裝置同步、實際送件或通知；既有主站有相應程式與 API，但本次不把它們接入展示帳號或宣稱全部已驗證。後續要擴充時需維持正式發布閘門及帳號隔離。流程以參考情境設計，面試、體檢、簽證與返國要求並非一律適用。
-
-## 本機預演
-
-在 repository 根目錄：
+## 本機預演與重設
 
 ```sh
-# 已安裝專案的環境（既有 .venv 或依 README 安裝 .[dev]）
 PATH="$PWD/.venv/bin:$PATH" PORT=8765 sh scripts/run_cgu_demo.sh
 ```
 
-開啟 `http://127.0.0.1:8765/` 或 `/cgu`。正式 app 不需要啟動。不需 `.env`、API key 或資料庫。環境變數範例見 `deploy/cgu-demo/demo.env.example`。
+開啟 `http://127.0.0.1:8765/`。底部「載入示範申請」會建立或載入原平台計畫；「重設我的展示資料」需確認，只重設目前瀏覽器的展示帳號。展示 Cookie 有效 24 小時；**重新整理可保留，服務重啟或 Cookie 過期會失去展示工作區**。這不是長期學生帳號，請勿輸入真實個資。
 
-直接指令：
+初次啟動與載入沿用完整平台，需預留暖機時間；現場先開啟網站確認完成載入，再進入 190 秒操作。獨立啟動指令：
 
 ```sh
 uvicorn exchange_info.cgu_demo:create_demo_app --factory --host 127.0.0.1 --port 8765 --workers 1 --no-proxy-headers
 ```
 
-## 隔離設計
+## 隔離方式
 
-`cgu_demo.py` 建立獨立 FastAPI app，不 import 正式 `api.py`，不初始化帳號 repository、文件庫、通知、分析或表單草稿。僅有 GET 讀取路由及 5 個列入允許清單的靜態資產，不掛載整個正式靜態目錄。沒有登入、送件、上傳、重設 API，也不發信、不寫檔或背景刷新學校資料。`demo_catalogue()` 重用 `validate_snapshot()`，不呼叫會寫入 cache 的 `CguCatalogue.view(refresh=True)`。
+- demo factory 必須在**獨立 process** 啟動；若已匯入正常 API 或帶 production／Supabase／OAuth／SMTP／OpenAI credentials，拒絕啟動。先清除 `EXCHANGE_*`，建立自有暫存目錄，再初始化共用 API；不讀取或掛載正式 data directory。
+- 每個瀏覽器一個沒有 email、密碼或校方驗證狀態的虛構帳號。重用原有 JSONL 帳號與加密草稿；非新增資料庫。展示進程最多 500 個帳號，滿時回 503，需維護時重啟。
+- 使用 `uniway_cgu_demo_session` 的 HTTPOnly、SameSite Strict、host-only Cookie。剝除外來 Cookie、Authorization、匿名 token，只將展示 token 交給內層 API；不接收或設定正式 session cookie。
+- `localStorage` 及 `sessionStorage` 都使用 `uniway-cgu-platform:` namespace。重設只刪除此 namespace 與該展示帳號／草稿；不對全站原始 storage 呼叫清空。儲存被封鎖時顯示暫存限制。
+- 寫入採允許清單、同 Origin 驗證、內容大小上限；私人上傳、OAuth、驗證信、正式送件、社群發布、AI 呼叫及外部日曆同步回 403。原 UI 有對應停用及說明。
+- 長庚 catalogue 只讀取已驗證雜湊的 bundled snapshot，停用背景更新。所有當期名額／截止日欄位收斂為待確認；保留歷史參考來源。
+- 回應有 noindex 與原有 CSP；動態資料 no-store，公開靜態資產可快取一小時。noindex 不是存取控制，預設是可公開操作的虛構展示。
 
-前端的 `/demo/content` 請求使用 `credentials: omit`；沒有 session、token 或校務密碼儲存。本機資料名稱獨立且沒有 `localStorage.clear()`。不同子網域的 localStorage 天然分開；同一 host 開發時也不讀取正式 `exchange-guide-*` key。即使誤帶 Cookie，服務也不解析或恢復登入。正式站若設了父網域 Cookie，部署前仍應查核 cookie scope，避免不必要傳送。
+主程式增加可選的 catalogue、dashboard、旅程內容與母校 scope 注入點；一般 `create_app()` 預設維持原流程。共用程式修正「名額待確認」應計入待確認，而非不開放／資格不符，並同步收藏後的比較按鈕狀態。原版 HTML 與所有樣式不另複製維護。
 
-所有回應提供 CSP、no-store、noindex/noarchive、frame 拒絕及 referrer 限制。noindex **不是存取控制**；預設此服務是可公開瀏覽的虛構資料展示。若要私人預覽，必須另用現有服務端／入口代理驗證，不能加入前端密碼。
+## 審查後部署至 demo.uniway-tw.com
 
-## 經審查後部署至 demo.uniway-tw.com
+本次未部署、未修改 DNS、未合併、未改正式資料、未開自動合併。
 
-以下是準備步驟，**本次未執行部署、改 DNS、開自動合併或修改正式服務**。
+1. 審查 PR、來源與測試，決定公開展示或加上既有代理／平台的服務端存取控制。不可用前端硬編碼密碼。
+2. 在既有平台建立**新的服務／容器**，使用獨立環境，不掛正式資料卷、不複製正式 secrets。沿用專案 Python 工具鏈，啟動 demo factory，`CGU_DEMO_HOST=0.0.0.0`，單一 worker。每次重啟都是新展示資料。
+3. 參考 `deploy/cgu-demo/demo.env.example`。HTTPS 設 `CGU_DEMO_SECURE_COOKIE=1`。反向代理需保留 Host，因寫入 Origin 必須與服務看到的 base URL 一致；若 TLS 在代理終止，須設定 uvicorn 只信任該代理 IP 的 forwarded headers，不能信任所有 IP。先在暫時網域驗證 Cookie Secure、Origin、reset 與來源。
+4. 健康檢查 `/health` 應為 `mode=cgu-demo`、`ui=shared-uniway-platform`、`persistence=isolated-temporary-runtime`。驗證正式 Cookie 不會恢復帳號、其他訪客不能讀到自己的進度、私人上傳回 403。
+5. 經使用者授權後才設定 demo.uniway-tw.com、自訂網域與 DNS／HTTPS。實際 CNAME 由服務平台提供，不能預先猜測。只導向展示服務，不代理正式 API。
+6. 預演後載入固定示範計畫。若要回復，只停止展示服務或回復其 commit。主站頁尾未啟用展示連結。
 
-1. 審查 PR、來源限制、測試紀錄與下面的已知限制；決定是否允許公開虛構情境，或要在既有反向代理加入真正的服務端保護。
-2. 在既有平台建立獨立 Web service／process，使用審查後的 commit。不要修改正式服務的啟動命令、登入環境、資料庫或掛載資料卷。不要照搬正式環境變數群組；展示無任何金鑰需求。
-3. 使用既有 Python 3.12 工具鏈安裝專案，啟動命令指定上述 **demo factory**，host 設為 `0.0.0.0`、port 使用平台指定值。Docker 若沿用既有 image，僅在新的展示容器覆寫 CMD 為 demo factory；不掛正式資料卷。既有 image build／TLS 稽核規則維持不變。
-   既有 TLS installed-artifact gate 在本環境的預設 Playwright Node 失敗；官方 SHA-256 核對的 Node 24.22.1 以 `PLAYWRIGHT_NODEJS_PATH` 指定後通過。部署前須提供符合 gate 的持久化 Node，不能用前端設定或放寬驗證避開；不要照抄本機 `/tmp` 路徑。
-4. 健康檢查 `/health` 應回 `mode=cgu-demo`、`persistence=browser-only`。驗證 `/auth/session`、`/account/workspace`、`/static/app.js` 不可用；確認沒有 Set-Cookie、資料庫連線、出信或私人文件端點。
-5. 先在獨立平台暫時網址走完主線，再由使用者授權設定 `demo.uniway-tw.com` 的自訂網域、DNS 與 HTTPS。這次不推測 CNAME 目標，需平台建立服務後才能取得。只路由至展示服務，不代理正式 API。
-6. HTTPS 下再重跑桌面／手機、重新整理、來源跳轉、reset、noindex／CSP 與 cookie scope 檢查。正式網域和子網域的 localStorage 不共用；現場請在實際展示網域載入固定情境。
-7. 需要回復時只停止展示服務或還原其 commit；不得使用展示 reset 操作正式資料。暫不在主站頁尾啟用連結，避免尚未部署時連到不存在的網址。
+既有完整 wheel 約 2.3 GiB；需確認平台 artifact／磁碟與 build 限制。既有 TLS gate 的預設 Playwright Node 在此環境未通過；使用 SHA-256 核對過的 Node 24.22.1 後通過，部署時需使用符合 gate 的持久化 runtime，不可照抄本機 `/tmp` 路徑或放寬稽核。完整 Docker、真實代理 HTTPS 與遠端部署尚未驗證。
 
-既有完整專案 wheel 會收錄大量其他學校資料，這次打包約 2.3 GiB；建置暫存可超過 6 GiB。展示本身僅讀取長庚快照與少量資產。部署前需確認既有平台的 artifact／磁碟／build 限制；本次未另建精簡映像或新雲端服務。wheel 打包與抽取必要檔案的啟動驗證見 `validation.md`，不代表 Docker image 或遠端 host 已驗證。
-
-## 交付文件
-
-- [原始盤點與計畫](implementation-plan.md)
-- [來源查核與適用限制](sources.md)
-- [7 分鐘操作腳本及答詢](demo-script.md)
-- [測試、截圖與已知問題](validation.md)
+- [實作盤點](implementation-plan.md)
+- [資料來源與限制](sources.md)
+- [7 分鐘操作腳本／答詢](demo-script.md)
+- [測試與截圖](validation.md)
