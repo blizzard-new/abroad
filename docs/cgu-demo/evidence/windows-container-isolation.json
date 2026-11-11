@@ -1,0 +1,32 @@
+{
+  "uid": 10001,
+  "build_ca_exists": false,
+  "can_edit_source": false,
+  "source_hashes": {
+    "cgu_demo.py": "d7c4e08a7143e596152e30d275b8d6cb6dfe95886f15c629af7f0e24ee46f70b",
+    "cgu_demo_content.py": "3e5c771922d237db6bfd997687d7fa8a40fbb83296bb45dfce4d65867c03fb97",
+    "static/index.html": "cdad2cae504cfdb99ca4458cf5e697a0cdf97e1fd83bbc21e12cbe9f0fffdb08",
+    "static/app.js": "11882f81edf4c9a5ca01d0492bd51c7d70119f42849970f4c921e238d8391281",
+    "static/metro.css": "cabc79628c9a7f3f9cd2ffc853ad5cd32ce1a11912612d80a2e2481b7c7d8c25",
+    "static/platform-home.js": "bf2b3ee21bc398fae822d644ef8fa40f446ac87815a3c99f559fe28bdf45c5c4",
+    "static/application-path.js": "b3ba8f9e8fdfae873a5c0a5b6f2d745fbb5c1f6e8b4069329f91766b538633af"
+  },
+  "health": "healthy",
+  "mounts": [],
+  "port_bindings": {
+    "8000/tcp": [
+      {
+        "HostIp": "127.0.0.1",
+        "HostPort": "8765"
+      }
+    ]
+  },
+  "memory_limit_bytes": 2147483648,
+  "cap_drop": [
+    "ALL"
+  ],
+  "security_opt": [
+    "no-new-privileges:true"
+  ],
+  "restarts": 0
+}

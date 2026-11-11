@@ -1,0 +1,169 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.40kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 0.5s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 393B done
+#3 DONE 0.0s
+
+#4 [stage-0  1/14] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 1.09MB 0.7s done
+#5 DONE 0.8s
+
+#6 [stage-0  4/14] COPY pyproject.toml uv.lock README.md ./
+#6 CACHED
+
+#7 [stage-0  5/14] COPY src/exchange_info/tls_trust.py ./src/exchange_info/tls_trust.py
+#7 CACHED
+
+#8 [stage-0  6/14] COPY scripts/harden_image_ca.py /tmp/harden_image_ca.py
+#8 CACHED
+
+#9 [stage-0  7/14] COPY deploy/cgu-demo/install_node.py /tmp/install_node.py
+#9 CACHED
+
+#10 [stage-0  2/14] RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates     && rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [stage-0  3/14] WORKDIR /opt/uniway
+#11 CACHED
+
+#12 [stage-0  8/14] RUN --mount=type=secret,id=build_ca,required=false     if [ -f /run/secrets/build_ca ]; then export SSL_CERT_FILE=/run/secrets/build_ca; fi;     PYTHONPATH=src python /tmp/harden_image_ca.py /usr/share/ca-certificates     && update-ca-certificates --fresh     && python /tmp/install_node.py "amd64"
+#12 CACHED
+
+#13 [stage-0  9/14] RUN --mount=type=secret,id=build_ca,required=false     if [ -f /run/secrets/build_ca ]; then export SSL_CERT_FILE=/run/secrets/build_ca PIP_CERT=/run/secrets/build_ca; fi;     python -m pip install "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70"     && python -m pip install uv==0.13.5
+#13 14.96 Collecting pip@ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70
+#13 35.21   Downloading pip-26.2.2-py3-none-any.whl (1.8 MB)
+#13 35.32      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 18.5 MB/s eta 0:00:00
+#13 35.35 Installing collected packages: pip
+#13 35.35   Attempting uninstall: pip
+#13 35.35     Found existing installation: pip 25.0.1
+#13 35.38     Uninstalling pip-25.0.1:
+#13 35.38       Successfully uninstalled pip-25.0.1
+#13 42.78 Successfully installed pip-26.2.2
+#13 42.78 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#13 69.20 Collecting uv==0.13.5
+#13 84.56   Downloading uv-0.13.5-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+#13 84.66 Downloading uv-0.13.5-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.2 MB)
+#13 85.36    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.2/17.2 MB 25.4 MB/s  0:00:00
+#13 85.45 Installing collected packages: uv
+#13 85.94 Successfully installed uv-0.13.5
+#13 85.94 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#13 DONE 86.1s
+
+#14 [stage-0 10/14] RUN --mount=type=secret,id=build_ca,required=false     if [ -f /run/secrets/build_ca ]; then export SSL_CERT_FILE=/run/secrets/build_ca; fi;     uv export --frozen --no-dev --no-emit-project --output-file /tmp/runtime-requirements.txt > /dev/null     && uv --no-config pip install --system --no-cache --require-hashes -r /tmp/runtime-requirements.txt
+#14 3.220 Using Python 3.12.16 environment at: /usr/local
+#14 14.45 Resolved 47 packages in 11.22s
+#14 14.88 Downloading lxml (5.0MiB)
+#14 15.27 Downloading uvloop (4.2MiB)
+#14 15.27 Downloading primp (5.1MiB)
+#14 15.45 Downloading pillow (6.8MiB)
+#14 15.52 Downloading playwright (46.2MiB)
+#14 15.52 Downloading reportlab (1.9MiB)
+#14 15.52 Downloading cryptography (4.5MiB)
+#14 15.61 Downloading pydantic-core (2.0MiB)
+#14 16.44  Downloaded lxml
+#14 16.49  Downloaded uvloop
+#14 16.51  Downloaded primp
+#14 16.93  Downloaded reportlab
+#14 16.93  Downloaded cryptography
+#14 17.22  Downloaded pillow
+#14 17.22  Downloaded pydantic-core
+#14 19.32  Downloaded playwright
+#14 19.32 Prepared 47 packages in 4.87s
+#14 19.38 Installed 47 packages in 65ms
+#14 19.39  + annotated-doc==0.0.5
+#14 19.39  + annotated-types==0.8.0
+#14 19.39  + anyio==4.14.2
+#14 19.39  + attrs==26.1.0
+#14 19.39  + beautifulsoup4==4.15.0
+#14 19.39  + certifi==2026.10.23
+#14 19.39  + cffi==2.1.1
+#14 19.39  + charset-normalizer==3.5.1
+#14 19.39  + click==8.4.2
+#14 19.39  + cryptography==50.0.1
+#14 19.39  + ddgs==9.16.1
+#14 19.39  + fastapi==0.141.1
+#14 19.39  + google-auth==2.62.0
+#14 19.39  + greenlet==3.5.5
+#14 19.39  + h11==0.16.0
+#14 19.39  + httptools==0.8.0
+#14 19.39  + idna==3.19
+#14 19.39  + jsonschema==4.26.0
+#14 19.39  + jsonschema-specifications==2025.9.1
+#14 19.39  + lxml==6.1.2
+#14 19.39  + pillow==13.0.0
+#14 19.39  + playwright==1.64.1
+#14 19.39  + primp==1.3.1
+#14 19.39  + pyasn1==0.6.5
+#14 19.39  + pyasn1-modules==0.4.2
+#14 19.39  + pycparser==3.0
+#14 19.39  + pydantic==2.13.4
+#14 19.39  + pydantic-core==2.46.4
+#14 19.39  + pyee==13.0.1
+#14 19.39  + pypdf==6.21.4
+#14 19.39  + python-docx==1.2.0
+#14 19.39  + python-dotenv==1.2.3
+#14 19.39  + python-multipart==0.0.32
+#14 19.39  + pyyaml==6.0.3
+#14 19.39  + referencing==0.37.0
+#14 19.39  + reportlab==5.0.1
+#14 19.39  + requests==2.34.2
+#14 19.39  + rpds-py==2026.6.3
+#14 19.39  + soupsieve==2.9.2
+#14 19.39  + starlette==1.6.0
+#14 19.39  + typing-extensions==4.16.0
+#14 19.39  + typing-inspection==0.4.4
+#14 19.39  + urllib3==2.8.0
+#14 19.39  + uvicorn==0.52.4
+#14 19.39  + uvloop==0.22.1
+#14 19.39  + watchfiles==1.2.0
+#14 19.39  + websockets==17.0.1
+#14 DONE 19.5s
+
+#15 [stage-0 11/14] COPY deploy/cgu-demo/verify_deployment.py /opt/demo-verify.py
+#15 DONE 4.8s
+
+#16 [stage-0 12/14] COPY --chmod=0755 src ./src
+#16 DONE 56.4s
+
+#17 [stage-0 13/14] RUN --mount=type=secret,id=build_ca,required=false     if [ -f /run/secrets/build_ca ]; then export SSL_CERT_FILE=/run/secrets/build_ca PIP_CERT=/run/secrets/build_ca; fi;     python -m pip install --no-deps -e .     && unset SSL_CERT_FILE PIP_CERT     && python -m exchange_info.tls_audit --system     && chmod a+r /opt/demo-verify.py     && useradd --system --uid 10001 --create-home uniway
+#17 19.97 Obtaining file:///opt/uniway
+#17 19.98   Installing build dependencies: started
+#17 57.75   Installing build dependencies: finished with status 'done'
+#17 57.75   Checking if build backend supports build_editable: started
+#17 58.96   Checking if build backend supports build_editable: finished with status 'done'
+#17 58.98   Getting requirements to build editable: started
+#17 60.86   Getting requirements to build editable: finished with status 'done'
+#17 60.86   Preparing editable metadata (pyproject.toml): started
+#17 62.60   Preparing editable metadata (pyproject.toml): finished with status 'done'
+#17 62.62 Building wheels for collected packages: taiwan-exchange-info
+#17 62.62   Building editable for taiwan-exchange-info (pyproject.toml): started
+#17 67.18   Building editable for taiwan-exchange-info (pyproject.toml): finished with status 'done'
+#17 67.18   Created wheel for taiwan-exchange-info: filename=taiwan_exchange_info-0.1.0-0.editable-py3-none-any.whl size=33468 sha256=52c00fd20d866b31c2a9061e6a3873abd08c39dae38d174e232b4e70d6d4656b
+#17 67.18   Stored in directory: /tmp/pip-ephem-wheel-cache-98vhqxke/wheels/87/6a/38/79b53ada44344cd76d21b8e68f647c4f0bd0a1836a0445f91f
+#17 67.21 Successfully built taiwan-exchange-info
+#17 67.28 Installing collected packages: taiwan-exchange-info
+#17 67.30 Successfully installed taiwan-exchange-info-0.1.0
+#17 67.30 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#17 68.77 {"certifi": "2026.10.23", "certifi_ca_count": 118, "ddgs": "9.16.1", "node": "24.22.1", "node_ca_count": 118, "pip": "26.2.2", "playwright": "1.64.1", "requests": "2.34.2", "search_transport": "Requests (primp transport bypassed; not claimed patched)", "system_ca": "bundle and hashed directory checked"}
+#17 68.84 useradd warning: uniway's uid 10001 is greater than SYS_UID_MAX 999
+#17 DONE 68.9s
+
+#18 [stage-0 14/14] WORKDIR /home/uniway
+#18 DONE 20.6s
+
+#19 exporting to image
+#19 exporting layers
+#19 exporting layers 23.8s done
+#19 writing image sha256:7db3cabe27ffb2f25d4a58ce10b4d0d9721b1cb0270ed586f872b83a23d16c6c done
+#19 naming to docker.io/library/uniway-cgu-demo:local done
+#19 DONE 23.8s

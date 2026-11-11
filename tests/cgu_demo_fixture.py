@@ -10,7 +10,7 @@ import requests
 
 
 @pytest.fixture(scope='module')
-def demo_url(tmp_path_factory):
+def demo_url(tmp_path_factory, request):
     root = tmp_path_factory.mktemp('cgu-demo-process')
     sentinel = root / 'formal-data'
     sentinel.mkdir()
@@ -22,6 +22,8 @@ def demo_url(tmp_path_factory):
            if not key.startswith(('EXCHANGE_', 'SUPABASE', 'GOOGLE_OAUTH', 'SMTP_', 'OPENAI_API_KEY'))}
     env['EXCHANGE_INFO_DATA_DIR'] = str(sentinel)
     env['CGU_DEMO_SECURE_COOKIE'] = '0'
+    env.pop('CGU_DEMO_PUBLIC_ORIGIN', None)
+    env.update(getattr(request, 'param', {}))
     url = f'http://127.0.0.1:{port}'
     with (root / 'server.log').open('w+') as log:
         process = subprocess.Popen([sys.executable, '-m', 'uvicorn', 'exchange_info.cgu_demo:create_demo_app',
