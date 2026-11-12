@@ -576,5 +576,63 @@
     "all_five_open_heads_unchanged": true,
     "same_day_all_state_prs": [],
     "scope": "No new relevant PR or main changes; existing five full filename lists remain current."
+  },
+  "created_pull_request": {
+    "baseRefName": "main",
+    "headRefOid": "fb87086b8bede22062b69ac97c3e347e2f42e1fc",
+    "isDraft": false,
+    "mergeable": "MERGEABLE",
+    "mergedAt": null,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/43126332654/job/130879229426",
+        "name": "image",
+        "startedAt": "2026-11-12T00:18:36Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/43126276439/job/130879034950",
+        "name": "image",
+        "startedAt": "2026-11-12T00:18:07Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-12T00:18:33Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://supabase.com/dashboard/project/wozrsrnkvbokzbbitkxf/settings/integrations",
+        "name": "Supabase Preview",
+        "startedAt": "2026-11-12T00:18:33Z",
+        "status": "COMPLETED",
+        "workflowName": ""
+      }
+    ],
+    "url": "https://github.com/blizzard-new/abroad/pull/329",
+    "changed_file_count": 30
+  },
+  "same_day_after_creation": [
+    {
+      "number": 329,
+      "state": "open",
+      "merged_at": null,
+      "head": "codex/seo-daily-20261112"
+    }
+  ],
+  "task_attachment": {
+    "url": "https://github.com/blizzard-new/abroad/pull/329",
+    "attempted": true,
+    "confirmed": false,
+    "call_limit_seconds": 40,
+    "list_limit_seconds": 10,
+    "outcome": "Neither attachment service call nor artifact listing returned within their limits. No success claimed; GitHub PR independently verified."
   }
 }

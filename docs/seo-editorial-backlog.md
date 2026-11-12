@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-12 每日批次：截止時間／托福日常閱讀兩篇（驗收完成，待開 PR）
+## 2026-11-12 每日批次：截止時間／托福日常閱讀兩篇（PR #329 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261112`，基於 main `0bb1d5c2f043d78451f66ade6c72d7d28c630768`。讀取 workflow、backlog、47 篇庫存與相關全文，核對全部五個 open PR #324–#328 的說明及完整分頁檔案清單；沒有同意圖 editorial 變更。#325 為學校攝影清理，未搬入。#272、#285、#302 已合併，六篇在 main，均排除重做；#78／#92 已合併，無基礎相依。開始與提交前同日全狀態 PR 均為空，沿用本日唯一隔離分支。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 9：交換申請截止時間怎麼換算？時區、夏令時間與跨日檢查表 | `exchange-deadline-timezones` | 完整文章與驗收完成；待建立本日唯一 PR，後續排除 |
-| 19：托福 Read in Daily Life 怎麼練？校園公告、郵件與原創題目解析 | `toefl-read-in-daily-life` | 同批完整文章與驗收完成，待同一個 PR，後續排除 |
+| 9：交換申請截止時間怎麼換算？時區、夏令時間與跨日檢查表 | `exchange-deadline-timezones` | [PR #329](https://github.com/blizzard-new/abroad/pull/329) 待審，完整文章與驗收完成；後續排除 |
+| 19：托福 Read in Daily Life 怎麼練？校園公告、郵件與原創題目解析 | `toefl-read-in-daily-life` | 同一個 PR #329 待審，完整文章與驗收完成；後續排除 |
 
 依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。時間篇以 IANA 2026f 實算四個假設時間點、冬夏跨日及回撥的兩個 01:30，附正式詢問與雙時區表；與 Fact Sheet 的整體版本／階段分工。日常閱讀有兩段原創公告／郵件、六題 24 選項解析、條件換題與訂正表，與學術科普閱讀、缺字補全及總覽分工，不以品牌或年份重發。
 
