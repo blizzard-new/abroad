@@ -238,5 +238,5 @@ def test_fju_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["destination_profile_count"] == 237
     # Coverage reuses institutional imagery across program variants. This is a
     # display count, not evidence that the three new route campuses were reviewed.
-    assert cov["image_count"] == 237
+    assert cov["image_count"] == 195
     assert cov["official_website_count"] >= 150

@@ -1,0 +1,59 @@
+{
+  "version": "2026f",
+  "method": "Official IANA2026f asia/europe compiled with system zic; ZoneInfo.from_file and UTC roundtrip.",
+  "cases": [
+    {
+      "source": "2027-02-15T17:00:00+00:00",
+      "source_zone": "GMT",
+      "fold": 0,
+      "utc": "2027-02-15T17:00:00+00:00",
+      "taipei": "2027-02-16T01:00:00+08:00",
+      "source_offset_seconds": 0,
+      "taipei_offset_seconds": 28800,
+      "roundtrip": true
+    },
+    {
+      "source": "2027-06-15T17:00:00+01:00",
+      "source_zone": "BST",
+      "fold": 0,
+      "utc": "2027-06-15T16:00:00+00:00",
+      "taipei": "2027-06-16T00:00:00+08:00",
+      "source_offset_seconds": 3600,
+      "taipei_offset_seconds": 28800,
+      "roundtrip": true
+    },
+    {
+      "source": "2027-10-31T01:30:00+01:00",
+      "source_zone": "BST",
+      "fold": 0,
+      "utc": "2027-10-31T00:30:00+00:00",
+      "taipei": "2027-10-31T08:30:00+08:00",
+      "source_offset_seconds": 3600,
+      "taipei_offset_seconds": 28800,
+      "roundtrip": true
+    },
+    {
+      "source": "2027-10-31T01:30:00+00:00",
+      "source_zone": "GMT",
+      "fold": 1,
+      "utc": "2027-10-31T01:30:00+00:00",
+      "taipei": "2027-10-31T09:30:00+08:00",
+      "source_offset_seconds": 0,
+      "taipei_offset_seconds": 28800,
+      "roundtrip": true
+    }
+  ],
+  "checked": "2026-11-12",
+  "scope": "All source times hypothetical, no school deadlines.2027London/Taipei current2026f rules only; consult originator on ambiguous deadline.",
+  "source_retrieval": {
+    "key": "iana-data",
+    "requested_url": "https://data.iana.org/time-zones/releases/tzdata2026f.tar.gz",
+    "resolved_url": "https://data.iana.org/time-zones/releases/tzdata2026f.tar.gz",
+    "status": 200,
+    "checked": "2026-11-12",
+    "sha256": "01b4a91cec5167ed48c11e8ab78f2048cead78ce94b0cafcad0ae8c5a3044d3d",
+    "bytes": 483310,
+    "content_type": "application/x-gzip"
+  },
+  "expected_values_verified": true
+}

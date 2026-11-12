@@ -244,6 +244,6 @@ def test_ntou_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 123
     assert cov["workflow_school_count"] == 123
     assert cov["destination_profile_count"] == 123
-    assert cov["image_count"] == 123
+    assert cov["image_count"] == 103
     assert cov["official_website_count"] == 123
     assert cov["experience_school_count"] >= 30

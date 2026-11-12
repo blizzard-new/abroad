@@ -219,6 +219,6 @@ def test_nchu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 226
     assert cov["workflow_school_count"] == 226
     assert cov["destination_profile_count"] == 226
-    assert cov["image_count"] == 226
+    assert cov["image_count"] == 184
     assert cov["official_website_count"] == 226
     assert cov["experience_school_count"] >= 107

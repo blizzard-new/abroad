@@ -165,7 +165,7 @@ def test_ntu_public_api_serves_photos_locations_and_life_without_network(tmp_pat
         assert response.status_code == 200
         partners = response.json()["partner_universities"]
         assert len(partners) == 289
-        assert sum(p["image_status"] == "verified" for p in partners) == 285
+        assert sum(p["image_status"] == "verified" for p in partners) == 286
         completion = json.loads(Path("sources/ntu/completion-2026-10-11.json").read_text())
         reviewed = {(r["school_name"], r["country"]): r["photo"] for r in completion["schools"] if r.get("photo")}
         pending = json.loads(Path("sources/ntu/photo-license-review-2026-10-09.json").read_text())["rows"]
@@ -176,7 +176,7 @@ def test_ntu_public_api_serves_photos_locations_and_life_without_network(tmp_pat
                 assert partner["image_status"] == "verified" and partner["image_url"].endswith(addition["local_path"])
             else:
                 assert partner["image_status"] == "needs_review" and not partner["image_url"]
-        assert sum(p["location"]["geocode_status"] == "verified" for p in partners) == 285
+        assert sum(p["location"]["geocode_status"] == "verified" for p in partners) == 286
         # The systems have no single destination point; no HQ marker is inserted.
         for p in partners:
             if p["school_name"] in {"加州大學", "加州州立大學"}:

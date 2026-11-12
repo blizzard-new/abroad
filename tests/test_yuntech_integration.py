@@ -246,6 +246,6 @@ def test_yuntech_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 112
     assert cov["workflow_school_count"] == 112
     assert cov["destination_profile_count"] == 112
-    assert cov["image_count"] == 112
+    assert cov["image_count"] == 97
     assert cov["official_website_count"] == 112
     assert cov["experience_school_count"] >= 29

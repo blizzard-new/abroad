@@ -1227,7 +1227,7 @@ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {})
 
 async function loadSchoolImages() {
   try {
-    const payload = await fetchJson("/static/assets/school-images.json?v=20261016-photos-1");
+    const payload = await fetchJson("/static/assets/school-images.json?v=20261112-photos-1");
     state.schoolImages = Array.isArray(payload?.schools)
       ? payload.schools.filter((item) => item && item.school_name)
       : [];
@@ -1235,7 +1235,7 @@ async function loadSchoolImages() {
     state.schoolImages = [];
   }
   try {
-    const payload = await fetchJson("/static/assets/ncu-school-images.json?v=20261011-ncu-campus-2");
+    const payload = await fetchJson("/static/assets/ncu-school-images.json?v=20261112-ncu-campus-1");
     state.ncuSchoolImages = Array.isArray(payload?.schools)
       ? payload.schools.filter((item) => item.status === "verified" && item.local_path)
       : [];
