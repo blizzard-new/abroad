@@ -58,8 +58,9 @@ def journey_levels(context, evaluated, catalog, values=None):
             row['prompt'] = _cgu_term_prompt(context)
     stages, number = [], 0
     is_116_fall = (
-        str(context.get('academic_year') or '') == '116'
-        and context.get('semester') in ('fall', 'full_year', 'undecided')
+        str(context.get('academic_year') or '') in ('116', '')
+        and str(context.get('departure_year') or '2027') == '2027'
+        and context.get('semester') in ('fall', 'full_year', 'undecided', None, '')
     )
     for index, stage in enumerate(data['stages']):
         items = [row for row in original if row['id'] in ('home', 'term', 'target')] if index == 0 else []
@@ -76,10 +77,11 @@ def journey_levels(context, evaluated, catalog, values=None):
             item['source_urls'] = [sources[source]] if source in sources else []
             if task['id'] == 'internal-submit' and is_116_fall:
                 item.update(
-                    title='12/21 17:00 校內截止前完成長庚 116-1 申請（完成後自行記錄）',
+                    title='116-1 校內申請截止（2026/12/21 17:00 校內截止前完成長庚申請）',
                     official_deadline_at='2026-12-21T17:00:00+08:00',
                     deadline_confirmed=True,
                     deadline_source_url=sources['selection'],
+                    source_urls=[sources['selection']],
                 )
             items.append(item)
         for item in items:

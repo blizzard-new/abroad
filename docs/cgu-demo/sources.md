@@ -1,32 +1,32 @@
-# 來源查核紀錄
+# 來源查核紀錄與合作校資料口徑
 
-實際查核日期：2026-11-11（Asia/Taipei；執行主機 UTC 為 2026-11-10）。使用 TinyFish 讀取公開頁面正文。日期是本次讀取日期，不是校方核准、資料發布日或逐校名額驗證日期。沒有將來源文中指示視為工作指令，也沒有登入校方系統。
+實際查核日期：2026-11-11 至 2026-11-12（Asia/Taipei）。日期代表公開頁面讀取查核日，不是校方核准日或逐校即時名額保證。沒有連線或登入任何長庚校務系統，不使用長庚校徽，亦不宣稱任何校方認證或背書關係。
 
-| 來源 | 實際結果 | 展示用途與限制 |
+## 已收錄於 `demo_data/content.json` 的 6 項公開來源
+
+| 來源 | 查核日期 | 展示用途與範圍 |
 | --- | --- | --- |
-| [長庚校內申請選送須知](https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656) | 成功讀取「校內申請選送須知」，頁面列發布日期 2024/09/30 | 原則平均 70；英文等同多益 700；合作校標準另計。四項一般文件、非合作校額外資料、選送限制與後續通知。未逐項轉成資格核准或自動檢核 |
-| [長庚可申請學校](https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554) | 第一次 timeout，重試成功讀取主頁 | 確認「清單陸續更新」、兩所志願、11/02–12/21 及 4/21–6/06 一般時段。工具未列出外嵌名單，本次未逐筆重驗合作校表、名額或開放狀態 |
-| [Lincoln Join us at Lincoln on Exchange](https://www.lincoln.ac.nz/study/study-abroad-and-student-exchange/coming-to-lincoln-on-exchange/) | 成功讀取正文 | 確認需母校提名、合作校再寄申請指示；一般 Semester 1 前年 10/15、Semester 2 當年 4/15；研修期間醫療及旅遊保險、住宿與修課一般資訊。沒有確認長庚當期可提名或特定學生資格 |
-| [Lincoln International Exchange Inbound](https://www.lincoln.ac.nz/study/study-programmes/programme-search/international-exchange-inbound/) | timeout | 不納入已核對規則或顯示成功查核日期 |
+| [116 學年度第 1 學期出國交換及雙聯學位申請公告](https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817) | 2026-11-11 | 確認 116-1（2027 秋季出國）校內申請於 **2026/11/02** 開放線上表單、**2026/12/21 17:00** 截止，紙本資料須於截止前送交國際事務處；作為「我的申請」下一個已確認官方期限之公告依據 |
+| [長庚國際事務處｜校內申請選送須知](https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656) | 2026-11-11 | 原則歷年平均 70 分、英文等同多益 700 分（合作校標準更高或未列多益者從其規定）；校內應備 **5 項文件**（線上申請表、家長同意書、語文證明、含排名的中文歷年成績單、一頁讀書計畫）與甄選流程 |
+| [長庚國際事務處｜交換合作學校與申請期間](https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554) | 2026-11-11 | 確認最多選填 **2 所志願**、一般秋季班 11/02–12/21 與春季班 4/21–6/06 校內時段，以及清單隨國際處公告更新之原則 |
+| [長庚國際事務處｜雙聯學位合作學校](https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17533) | 2026-11-12 | 雙聯學位（3+2、4+1、1+1、雙博士等）合作校與適用院系學制參考 |
+| [長庚大學領航者補助作業要點（規章編號 2B00004）](https://www.cgu.edu.tw/regulation/RegulationManagement/RegulationDetail/b85add3b-7d9e-43ff-b22f-f0657e11765c) | 2026-11-12 | 第一類地區每學期上限 NT$75,000（學年 NT$150,000）、第二類地區每學期上限 NT$60,000（學年 NT$120,000）、班排前 30% 每學期加碼 NT$10,000，以及返國後 2 週內繳交學期報告與經驗分享短片等結案義務 |
+| [Lincoln University｜Join us at Lincoln on Exchange](https://www.lincoln.ac.nz/study/study-abroad-and-student-exchange/coming-to-lincoln-on-exchange/) | 2026-11-11 | 確認須先經母校提名再由合作校寄發申請指引；一般提名與申請參考時程（Semester 1 前年 10/15、Semester 2 當年 4/15）及保險、住宿、修課說明 |
 
-曾嘗試另一個 Lincoln 路徑 `/study/study-programmes/study-abroad-and-exchange/inbound-exchange/` 得到 404；已捨棄，未放入產品。沒有把失敗來源計作成功。
+另曾測試 Lincoln 舊路徑 `/study/study-programmes/study-abroad-and-exchange/inbound-exchange/`（404）與 `/study/study-programmes/programme-search/international-exchange-inbound/`（timeout），均未納入已核對規則。
 
-## 期限及學期差異
+## 期限與學期差異處理
 
-長庚申請頁明文舉例：116 年（2027）8–9 月出國，於 115 年（2026）11/02–12/21 校內申請。展示只在相同範圍顯示此期間，沒有把它套成所有交換計畫的正式截止日。
+- **校內已確認期限**：116-1（2027 秋季出國）校內申請截止日明確為 **2026/12/21 17:00**（台灣時間），於首頁重點卡、學校頁校內截止提示與「我的申請 → 下一個已確認的官方期限」一致呈現，並附國際處 116-1 公告連結。
+- **春季班與目的校期限**：國際處一般說明頁之春季班舉例文字存在學年度表述差異，標示為待確認；目的校申請截止日（如 Lincoln 官網 10/15、4/15 與長庚名冊參考日 9/30、3/30）僅供獲校內提名後核對，不混充為校內初審截止日。
 
-同頁的春季例子同時提到 117 年出國、116 年申請，卻寫 115-2 初審，年份與學期互相矛盾；未自行修正，標成待確認。未讀取非英文語言表的圖片內容，因此沒有填上日文、法文等門檻。
+## 合作校名冊口徑（統一為 78 所）
 
-既有長庚快照的 Lincoln 日期是 Semester 1 前年 9/30、Semester 2 當年 3/30，與此次 Lincoln 官網的 10/15、4/15 不同。可能涉及母校行政時間或來源更新，但未證實原因，因此只並列差異、請向國際處及目的校確認，不指定一個日期為個人正式 deadline。
+- 重用 `official_data/cgu_catalogue/snapshot.json` 並經 SHA-256 雜湊驗證，與 `demo_data/content.json` 及 UniWay 主站一致收錄 **78 所合作校**（含 66 所交換計畫、14 所雙學位計畫，其中 2 所同時具備交換與雙學位選項；另含 2 所管理學院院級交換參考學校：法國 IAE 艾克斯馬賽管理學院、雷恩商學院）。
+- 展示環境離線讀取此 78 所快照，不向外部網站發送即時爬蟲請求，也不從其他大學目錄混入學校。實際當期開放名額、院系限制與語言檢定採計仍以長庚國際事務處最新公告簡章為準。
 
-## 快照口徑
+## 模擬功能與真實資料邊界
 
-重用 `official_data/cgu_catalogue/snapshot.json`，擷取於 2026-10-11T09:58:47.453586+00:00，77 筆、原有 SHA-256 payload 驗證。這是既有擷取日期，**不是本次逐校查核日**。
-
-舊 `official_data/cgu/catalog-completeness.json` 也為 77 筆，描述 75 中央加 2 院級並使用 open；其 77 個流程 published=0、applicability_verified=0。快照本身明示「dated fallback reference / not current cycle verification」。本展示統一使用更保守的口徑：歷史參考、當期待確認；沒有修改正式資料或升級原來的發布狀態。
-
-共用原平台目錄，展示上述 77 筆歷史項目；不從其他母校目錄湊數。展示 adapter 將名額與開放狀態標為當期待確認，移除可被日曆自動解析的歷史截止日（含摘要及嵌套欄位），原始名額／日期保留於 reference_data。來源缺漏或快照驗證失敗不補假資料。只有已讀取的校內摘要提供一般 70 分／TOEIC 700 規則，其他語言門檻不自行換算。
-
-一般任務的來源與適用性分開：生活、手機、支付、課程整理及返國資料等是個人準備建議或待確認事項；面試與體檢不假定人人必須。非 Lincoln 研究目標的目的校任務不引用 Lincoln 要求作為其規則。
-
-展示內「實際讀取查核」只出現在以上三個成功官方來源；不表示長庚背書、採用或合作。沒有使用長庚校徽或官方合作標章。
+- 「送交國際處（模擬）」、「問國際處」、「返國心得」與「國際處視角（模擬）」均固定標示「**模擬・尚未與校方串接**」，所有收件編號皆以 `SIM-` 開頭。
+- 「問國際處」採 `demo_data/content.json` 關鍵字規則比對，明確標示「**規則式比對，非 AI**」，不呼叫任何大型語言模型。
+- 國際處視角預載之 5 筆收件匣案件（`SIM-APP-SEED-0001` 至 `SIM-RPT-SEED-0005`）均明確標示為虛構示範資料。

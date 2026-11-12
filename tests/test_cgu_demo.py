@@ -240,3 +240,381 @@ def test_demo_student_profile_and_navigator_subsidy_sources(demo_url):
     for doc_name in ('線上申請表', '家長同意書', '外國語文能力證明', '中文歷年成績單', '讀書計畫'):
         assert doc_name in req_docs
 
+
+def _valid_report_sections(char_len: int = 310) -> dict[str, str]:
+    base = '虛構示範返國研修心得段落內容，說明選課準備與海外學習收穫。'
+    repeats = (char_len // len(base)) + 2
+    text = (base * repeats)[:char_len]
+    return {
+        'preparation': text,
+        'academics': text,
+        'daily_life': text,
+        'extracurricular': text,
+    }
+
+
+def test_school_connector_interface_and_swappability(tmp_path):
+    from exchange_info.cgu_demo import MockCguConnector, SchoolConnector
+
+    assert issubclass(MockCguConnector, SchoolConnector)
+    for required_method in ('submit_application', 'send_inquiry', 'submit_return_report', 'get_status'):
+        assert callable(getattr(SchoolConnector, required_method))
+
+    class IncompleteConnector(SchoolConnector):
+        pass
+
+    with pytest.raises(TypeError):
+        IncompleteConnector()
+
+    # Verify swapping SchoolConnector implementation requires only replacing the connector class
+    script = """
+import os, sys
+from fastapi.testclient import TestClient
+from exchange_info.cgu_demo import SchoolConnector, create_demo_app
+
+class StubSchoolConnector(SchoolConnector):
+    def __init__(self, root):
+        self.calls = []
+    def submit_application(self, workspace_id, payload):
+        self.calls.append(('submit_application', payload.get('preference_1')))
+        return {'receipt_id': 'SIM-APP-STUB0001', 'status': 'submitted', 'status_label': '已送出', 'timeline': []}
+    def send_inquiry(self, workspace_id, payload):
+        self.calls.append(('send_inquiry', payload.get('question')))
+        return {'receipt_id': 'SIM-INQ-STUB0001', 'status': 'pending', 'status_label': '待承辦回覆'}
+    def submit_return_report(self, workspace_id, payload):
+        self.calls.append(('submit_return_report', payload.get('partner_school')))
+        return {'receipt_id': 'SIM-RPT-STUB0001', 'status': 'pending_review', 'status_label': '待承辦審核'}
+    def get_status(self, workspace_id, receipt_id=None):
+        return {'badge': '模擬・尚未與校方串接', 'stub': True, 'calls': len(self.calls)}
+
+app = create_demo_app(connector_factory=StubSchoolConnector)
+with TestClient(app, base_url='http://testserver') as client:
+    headers = {'Origin': 'http://testserver'}
+    assert client.get('/').status_code == 200
+    r1 = client.post('/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'}, headers=headers)
+    assert r1.status_code == 201 and r1.json()['application']['receipt_id'] == 'SIM-APP-STUB0001'
+    r2 = client.post('/demo/connector/inquiries', json={'question': '測試問題？'}, headers=headers)
+    assert r2.status_code == 201 and r2.json()['inquiry']['receipt_id'] == 'SIM-INQ-STUB0001'
+    r3 = client.post('/demo/connector/return-reports', json={'partner_school': '林肯大學 Lincoln University'}, headers=headers)
+    assert r3.status_code == 201 and r3.json()['report']['receipt_id'] == 'SIM-RPT-STUB0001'
+    st = client.get('/demo/connector/status').json()
+    assert st['stub'] is True and st['calls'] == 3
+"""
+    clean_env = {k: v for k, v in os.environ.items() if not k.startswith(('EXCHANGE_', 'SUPABASE', 'GOOGLE_OAUTH', 'SMTP_', 'OPENAI_API_KEY'))}
+    res = subprocess.run([sys.executable, '-c', script], env=clean_env, capture_output=True, text=True)
+    assert res.returncode == 0, res.stderr
+
+
+def test_html_fixes_hidden_community_fixed_school_and_forbidden_terms():
+    demo_raw = platform_html()
+    assert '官方合作' not in demo_raw
+    assert '模擬・尚未與校方串接' in demo_raw
+
+    demo = BeautifulSoup(demo_raw, 'html.parser')
+    for hidden_sel in ('[data-public-route="forum"]', '[data-public-route="feedback"]', 'a[href="#forum"]', 'a[href="#feedback"]', '#detail-tab-community'):
+        nodes = demo.select(hidden_sel)
+        assert nodes, f'expected {hidden_sel} in DOM'
+        assert all(n.has_attr('hidden') for n in nodes)
+
+    switcher = demo.select_one('#school-switcher')
+    assert switcher is not None
+    assert switcher.has_attr('disabled')
+    assert '切換就讀學校' not in switcher.get_text()
+    assert '選擇就讀學校' not in switcher.get_text()
+    assert demo.select_one('#school-switcher-label').get_text(strip=True) == '長庚大學'
+
+    for nav_route in ('ask-oia', 'return-report', 'school-connector'):
+        assert demo.select_one(f'.uniway-public-nav a[data-public-route="{nav_route}"]') is not None
+    assert demo.select_one('#cgu-demo-oia-toggle') is not None
+
+
+def test_upload_hashes_in_memory_never_writes_raw_bytes_to_disk_and_forbids_outbound_network(tmp_path):
+    script = """
+import hashlib, json, os, pathlib, socket
+from fastapi.testclient import TestClient
+
+# Block any non-loopback network or DNS activity
+orig_connect = socket.socket.connect
+orig_connect_ex = socket.socket.connect_ex
+orig_getaddrinfo = socket.getaddrinfo
+
+def _check_addr(address):
+    host = address[0] if isinstance(address, tuple) else str(address)
+    if host not in ('127.0.0.1', 'localhost', '::1', ''):
+        raise AssertionError(f'Forbidden outbound socket connect to {address}')
+
+def guarded_connect(self, address):
+    _check_addr(address)
+    return orig_connect(self, address)
+
+def guarded_connect_ex(self, address):
+    _check_addr(address)
+    return orig_connect_ex(self, address)
+
+def guarded_getaddrinfo(host, *args, **kwargs):
+    if str(host) not in ('127.0.0.1', 'localhost', '::1', 'testserver'):
+        raise AssertionError(f'Forbidden DNS lookup for {host}')
+    return orig_getaddrinfo(host, *args, **kwargs)
+
+socket.socket.connect = guarded_connect
+socket.socket.connect_ex = guarded_connect_ex
+socket.getaddrinfo = guarded_getaddrinfo
+
+from exchange_info.cgu_demo import create_demo_app
+
+sentinel = b'TOP_SECRET_PASSPORT_CONTENT_NEVER_TOUCH_DISK_9f8e7d6c5b4a'
+expected_sha = hashlib.sha256(sentinel).hexdigest()
+temp_root = pathlib.Path(os.environ['TMP'])
+
+app = create_demo_app()
+with TestClient(app, base_url='http://testserver') as client:
+    headers = {'Origin': 'http://testserver'}
+    home = client.get('/')
+    assert home.status_code == 200
+    assert '官方合作' not in home.text
+
+    up = client.post(
+        '/demo/connector/files',
+        data={'doc_key': 'online_form'},
+        files={'file': ('secret_passport.pdf', sentinel, 'application/pdf')},
+        headers=headers,
+    )
+    assert up.status_code == 200, up.text
+    meta = up.json()['file']
+    assert meta['filename'] == 'secret_passport.pdf'
+    assert meta['size'] == len(sentinel)
+    assert meta['content_type'] == 'application/pdf'
+    assert meta['sha256'] == expected_sha
+    assert set(meta.keys()) == {'doc_key', 'doc_title', 'filename', 'size', 'content_type', 'sha256', 'uploaded_at'}
+
+    # Exercise remaining connector endpoints under the network guard
+    assert client.get('/demo/connector/spec').status_code == 200
+    assert client.post('/demo/connector/ask', json={'question': '多益 700 分門檻'}, headers=headers).status_code == 200
+    assert client.post('/demo/connector/ask', json={'question': '完全未收錄的北極熊接機問題'}, headers=headers).status_code == 200
+    assert client.get('/demo/connector/oia/dashboard').status_code == 200
+
+    # Inspect every single file inside TMP while runtime is still live on disk
+    scanned_files = 0
+    for file_path in temp_root.rglob('*'):
+        if file_path.is_file():
+            scanned_files += 1
+            raw = file_path.read_bytes()
+            assert sentinel not in raw, f'Raw upload bytes leaked onto disk at {file_path}'
+    assert scanned_files > 0
+"""
+    isolated_tmp = tmp_path / 'isolated_tmp'
+    isolated_tmp.mkdir()
+    clean_env = {k: v for k, v in os.environ.items() if not k.startswith(('EXCHANGE_', 'SUPABASE', 'GOOGLE_OAUTH', 'SMTP_', 'OPENAI_API_KEY'))}
+    clean_env.update(TMP=str(isolated_tmp), TEMP=str(isolated_tmp), TMPDIR=str(isolated_tmp))
+    res = subprocess.run([sys.executable, '-c', script], env=clean_env, capture_output=True, text=True)
+    assert res.returncode == 0, res.stderr
+
+
+def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
+    alice, bob = visitor(demo_url), visitor(demo_url)
+
+    # 1. Integration Spec endpoint
+    spec = alice.get(demo_url + '/demo/connector/spec').json()
+    assert spec['badge'] == '模擬・尚未與校方串接'
+    assert [m['method'] for m in spec['interfaces']] == [
+        'submit_application', 'send_inquiry', 'submit_return_report', 'get_status',
+    ]
+    assert all(m['current_status'] == '模擬' for m in spec['interfaces'])
+    assert [p['phase'] for p in spec['collaboration_phases']] == [
+        '不需校方配合', '小型試辦', '需校方資訊單位',
+    ]
+
+    # 2. Cross-Origin CSRF check on new connector endpoints
+    for endpoint in ('/demo/connector/applications', '/demo/connector/ask', '/demo/connector/inquiries',
+                     '/demo/connector/return-reports', '/demo/connector/oia/actions'):
+        bad = alice.post(demo_url + endpoint, json={}, headers={'Origin': 'https://evil.example'})
+        assert bad.status_code == 403
+
+    # 3. Precheck blocks missing documents (0 of 5, then 3 of 5)
+    initial_status = alice.get(demo_url + '/demo/connector/status').json()
+    assert initial_status['precheck']['complete'] is False
+    assert len(initial_status['precheck']['missing_documents']) == 5
+
+    blocked = alice.post(demo_url + '/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'})
+    assert blocked.status_code == 422
+    assert len(blocked.json()['missing_documents']) == 5
+
+    # Empty upload & unknown doc_key rejected
+    assert alice.post(demo_url + '/demo/connector/files', data={'doc_key': 'online_form'},
+                      files={'file': ('empty.pdf', b'', 'application/pdf')}).status_code == 422
+    assert alice.post(demo_url + '/demo/connector/files', data={'doc_key': 'unknown_doc'},
+                      files={'file': ('x.pdf', b'abc', 'application/pdf')}).status_code == 422
+
+    doc_keys = ['online_form', 'parent_consent', 'language_proof', 'transcript', 'study_plan']
+    for key in doc_keys[:3]:
+        r = alice.post(demo_url + '/demo/connector/files', data={'doc_key': key},
+                       files={'file': (f'{key}.pdf', f'sample-{key}'.encode(), 'application/pdf')})
+        assert r.status_code == 200
+    still_blocked = alice.post(demo_url + '/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'})
+    assert still_blocked.status_code == 422
+    assert {d['key'] for d in still_blocked.json()['missing_documents']} == {'transcript', 'study_plan'}
+
+    # Upload remaining 2 documents and submit
+    for key in doc_keys[3:]:
+        r = alice.post(demo_url + '/demo/connector/files', data={'doc_key': key},
+                       files={'file': (f'{key}.pdf', f'sample-{key}'.encode(), 'application/pdf')})
+        assert r.status_code == 200
+
+    submitted = alice.post(demo_url + '/demo/connector/applications', json={
+        'preference_1': '林肯大學 Lincoln University',
+        'preference_2': '嘉泉大學 Gachon University',
+    })
+    assert submitted.status_code == 201, submitted.text
+    app_rec = submitted.json()['application']
+    app_id = app_rec['receipt_id']
+    assert app_id.startswith('SIM-APP-')
+    assert app_rec['status'] == 'submitted'
+    assert [step['label'] for step in app_rec['timeline']] == ['已送出', '已收件', '要求補件／初審通過']
+
+    # 4. OIA Dashboard preloads 5 fictional records & reflects actions to student + notifications
+    oia = alice.get(demo_url + '/demo/connector/oia/dashboard').json()
+    assert oia['seed_count'] == 5
+    assert any(a['receipt_id'] == app_id for a in oia['inboxes']['applications'])
+    assert oia['stats']['school_preferences']
+
+    # Missing reason for request_supplement rejected
+    assert alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'request_supplement', 'receipt_id': app_id, 'reason': '   ',
+    }).status_code == 422
+
+    supp = alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'request_supplement',
+        'receipt_id': app_id,
+        'reason': '歷年成績單缺少班級排名百分比，請補交教務處核章版。',
+    })
+    assert supp.status_code == 200
+    after_supp = alice.get(demo_url + f'/demo/connector/status?receipt_id={app_id}').json()['record']
+    assert after_supp['status'] == 'supplement_requested'
+    assert after_supp['status_label'] == '要求補件'
+    assert '班級排名' in after_supp['supplement_reason']
+
+    notifs = alice.get(demo_url + '/account/notifications').json()
+    assert notifs['unread_count'] >= 1
+    assert any(app_id in item['title'] and '補件' in item['title'] for item in notifs['items'])
+
+    # Confirm receipt & initial approval also work
+    assert alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'confirm_receipt', 'receipt_id': app_id,
+    }).status_code == 200
+    assert alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'approve_initial', 'receipt_id': app_id,
+    }).status_code == 200
+    assert alice.get(demo_url + f'/demo/connector/status?receipt_id={app_id}').json()['record']['status_label'] == '初審通過'
+
+    # 5. Ask OIA: rule hit vs miss -> OIA reply & add_to_faq
+    hit = alice.post(demo_url + '/demo/connector/ask', json={'question': '請問 116-1 校內申請截止日與領航者補助金額？'}).json()
+    assert hit['matched'] is True
+    assert hit['mode_label'] == '規則式比對，非 AI'
+    assert hit['inquiry'] is None
+    assert any('cgu.edu.tw' in m['source_url'] for m in hit['matches'])
+
+    escalated = alice.post(demo_url + '/demo/connector/inquiries', json={
+        'question': '請問 116-1 校內申請截止日與特殊雙重學籍切結？',
+        'escalated_from_faq': True,
+    })
+    assert escalated.status_code == 201
+    assert escalated.json()['inquiry']['receipt_id'].startswith('SIM-INQ-')
+
+    miss = alice.post(demo_url + '/demo/connector/ask', json={
+        'question': '請問紐西蘭基督城冬季無麩質宿舍廚房預約編號怎麼填？',
+    }).json()
+    assert miss['matched'] is False
+    inq_id = miss['inquiry']['receipt_id']
+    assert inq_id.startswith('SIM-INQ-')
+
+    reply_res = alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'reply_inquiry',
+        'receipt_id': inq_id,
+        'reply': '無麩質飲食需求可於獲得長庚提名後，在林肯大學住宿申請系統勾選特殊飲食欄位。',
+    })
+    assert reply_res.status_code == 200
+    assert alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'add_to_faq',
+        'receipt_id': inq_id,
+        'keywords': ['無麩質宿舍廚房'],
+    }).status_code == 200
+
+    # Asking again now hits the newly added custom FAQ!
+    hit_custom = alice.post(demo_url + '/demo/connector/ask', json={'question': '想問無麩質宿舍廚房怎麼申請？'}).json()
+    assert hit_custom['matched'] is True
+    assert '特殊飲食欄位' in hit_custom['matches'][0]['answer']
+
+    # 6. Return Report: >= 300 chars validation, print view, consent gating on public school detail
+    short_sections = _valid_report_sections(310)
+    short_sections['daily_life'] = '字數不足測試' * 20  # 120 chars < 300
+    bad_rpt = alice.post(demo_url + '/demo/connector/return-reports', json={
+        'partner_school': '林肯大學 Lincoln University',
+        'sections': short_sections,
+        'public_consent': True,
+    })
+    assert bad_rpt.status_code == 422
+    assert {s['key'] for s in bad_rpt.json()['short_sections']} == {'daily_life'}
+
+    # Reject unsafe non-http(s) video_url
+    bad_video = alice.post(demo_url + '/demo/connector/return-reports', json={
+        'partner_school': '林肯大學 Lincoln University',
+        'sections': _valid_report_sections(305),
+        'video_url': 'javascript:alert(1)',
+        'public_consent': True,
+    })
+    assert bad_video.status_code == 422
+
+    # Private report (public_consent=False) must NOT appear publicly even after OIA approval
+    priv_rpt = alice.post(demo_url + '/demo/connector/return-reports', json={
+        'partner_school': '嘉泉大學 Gachon University',
+        'sections': _valid_report_sections(305),
+        'public_consent': False,
+    }).json()['report']
+    assert alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'approve_report', 'receipt_id': priv_rpt['receipt_id'],
+    }).status_code == 200
+    gachon_public = alice.get(demo_url + '/demo/connector/public-reports?school=嘉泉大學 Gachon University').json()['items']
+    assert not any(r['receipt_id'] == priv_rpt['receipt_id'] for r in gachon_public)
+
+    # Consented report (public_consent=True) appears after OIA approval + printable HTML works
+    pub_rpt = alice.post(demo_url + '/demo/connector/return-reports', json={
+        'partner_school': '林肯大學 Lincoln University',
+        'sections': _valid_report_sections(312),
+        'video_url': 'https://example.com/cgu-demo-share-video',
+        'public_consent': True,
+    }).json()['report']
+    pub_id = pub_rpt['receipt_id']
+    assert pub_id.startswith('SIM-RPT-')
+
+    print_res = alice.get(demo_url + f'/demo/connector/return-reports/{pub_id}/print')
+    assert print_res.status_code == 200
+    assert '模擬・尚未與校方串接' in print_res.text
+    assert pub_id in print_res.text
+
+    # Not public before OIA approval
+    before_pub = alice.get(demo_url + '/demo/connector/public-reports?school=林肯大學 Lincoln University').json()['items']
+    assert not any(r['receipt_id'] == pub_id for r in before_pub)
+
+    # Public after OIA approval
+    assert alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'approve_report', 'receipt_id': pub_id,
+    }).status_code == 200
+    after_pub = alice.get(demo_url + '/demo/connector/public-reports?school=林肯大學 Lincoln University').json()['items']
+    assert any(r['receipt_id'] == pub_id for r in after_pub)
+
+    # 7. Visitor isolation: Bob sees none of Alice's records or notifications
+    bob_status = bob.get(demo_url + '/demo/connector/status').json()
+    assert bob_status['applications'] == []
+    assert bob_status['inquiries'] == []
+    assert bob_status['return_reports'] == []
+    assert bob.get(demo_url + '/account/notifications').json()['unread_count'] == 0
+
+    # 8. Reset wipes ALL newly added data for Alice
+    assert alice.post(demo_url + '/demo/reset').ok
+    reset_status = alice.get(demo_url + '/demo/connector/status').json()
+    assert reset_status['draft_files'] == {}
+    assert reset_status['applications'] == []
+    assert reset_status['inquiries'] == []
+    assert reset_status['return_reports'] == []
+    assert alice.get(demo_url + '/account/notifications').json()['items'] == []
+    assert alice.post(demo_url + '/demo/connector/ask', json={'question': '想問無麩質宿舍廚房怎麼申請？'}).json()['matched'] is False

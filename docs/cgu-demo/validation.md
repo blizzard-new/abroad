@@ -1,8 +1,21 @@
 # 原平台長庚專屬版驗證
 
-本紀錄適用使用者指定的 PR #299／main `87277daf` UI/UX。所有帳號與測試寫入使用隔離暫存目錄；沒有連正式資料庫。PR #301 合併前紀錄使用 `current-main-*` 檔名；Windows 部署續作以 main `ce86f376` 為基準，結果使用 `windows-*` 檔名。各批次分開記錄，不把過去結果當成本次重跑。
+本紀錄按時間分批呈現實際執行的自動化測試與限制，不將歷史批次混充為當次重跑結果。
 
-## Windows 部署續作：main `ce86f376`
+## 校方介接模擬層（`SchoolConnector`／`MockCguConnector`）與國際處視角擴充批次（2026-11-12）
+
+本批次只修改長庚展示版檔案（`src/exchange_info/cgu_demo.py`、`src/exchange_info/cgu_demo_content.py`、`src/exchange_info/demo_data/content.json`、`src/exchange_info/static/cgu-demo.js`、`src/exchange_info/static/cgu-demo.css`、`docs/cgu-demo/*`）及對應測試（`tests/test_cgu_demo.py`、`tests/test_cgu_demo_browser.py`）；未修改 `create_app()`、共用 `static/index.html`／`app.js`、`pyproject.toml`、`uv.lock` 或 `official_data/`。
+
+| 實際執行 | 結果 |
+| --- | --- |
+| 展示 API、連接器契約、磁碟與零外部網路隔離（`tests/test_cgu_demo.py`） | **23 passed，64.16 秒**；涵蓋 `SchoolConnector` 抽象契約與連接器抽換、5 項文件缺件攔截（422）、純記憶體雜湊且磁碟零原始位元組留存、零非本機網路／DNS 連線、規則式問答命中／未命中轉承辦、返國心得四段滿 300 字驗證與公開授權閘門、國際處收件匣 5 筆虛構資料與雙向通知連動、跨訪客隔離及 `/demo/reset` 完整清除 |
+| Chromium 端對端瀏覽器測試（`tests/test_cgu_demo_browser.py`） | **9 passed，109.49 秒**；涵蓋既有搜尋／收藏／比較／六階段／工作台／storage 例外，以及新增完整展示腳本路線（預檢缺件 → 補齊送出取 `SIM-` 編號 → 國際處視角要求補件 → 切回學生端通知鈴鐺與狀態同步 → 重整保留 → 問國際處命中與未命中轉承辦 → 承辦回覆加入 FAQ → 返國心得列印版與核可公開至學校詳細頁 → 390×844 響應式零溢位 → 重設完整清除），全程零 `pageerror` |
+| 長庚資料快照與部署封裝（`test_cgu_bundled_data.py`、`test_cgu_catalogue_recovery.py`、`test_cgu_deployment_package.py`） | **全部通過**；78 所合作校快照雜湊與部署安全設定未變動 |
+| 主站回歸、靜態資產鎖與 OpenAPI／TLS 檢查 | `scripts/export_openapi.py --check` 通過；`validate_supabase_migrations.py`（42 migrations）通過；`test_static_asset_versions.py`、`test_static_caching.py`、`test_text_files_are_utf8.py`、`test_uniway_ui_contract.py`、`test_api.py`、`test_application_path.py`（29 passed）、`tls-security.yml` 離線回歸套件（134 passed）均全數通過 |
+
+---
+
+## Windows 部署續作：main `ce86f376`（歷史紀錄）
 
 本批次沒有改動共用 UI、正式 Dockerfile、正式 Compose 或 Python dependency lock。新增的是展示專用容器、固定版本的 Windows 啟動／Caddy 候選設定流程，以及 HTTPS Origin 的驗證修正。
 
