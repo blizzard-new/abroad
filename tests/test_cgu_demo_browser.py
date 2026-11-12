@@ -79,27 +79,10 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     expect(page.locator('#home-tile-calendar .pr-mini-dates li').first).to_contain_text('21')
     expect(page.locator('#home-tile-calendar')).to_contain_text('適用已獲提名者')
 
-    # Item 2:「我是哪個系？」4 colleges & 36 departments finder
-    finder = page.locator('#cgu-dept-finder')
-    expect(finder).to_be_visible()
-    expect(finder.locator('[data-cgu-finder-college]')).to_have_count(4)
-    expect(finder.locator('#cgu-dept-result-summary')).to_contain_text('工學院 · 生物醫學工程學系')
-    expect(finder.locator('#cgu-dept-exchange-list')).to_contain_text('香港中文大學')
-    expect(finder.locator('#cgu-dept-exchange-list')).to_contain_text('限醫工系')
-    expect(finder.locator('#cgu-dept-exchange-list')).to_contain_text('加泰隆尼亞國際大學')
-    finder.locator('[data-cgu-finder-dept="電機工程學系"]').click()
-    expect(finder.locator('#cgu-dept-result-summary')).to_contain_text('工學院 · 電機工程學系')
-    expect(finder.locator('#cgu-dept-exchange-list')).not_to_contain_text('香港中文大學')
-    finder.locator('[data-cgu-finder-college="醫學院"]').click()
-    expect(finder.locator('[data-cgu-finder-dept]')).to_have_count(18)
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('明尼蘇達大學')
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('碩士')
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('內布拉斯加大學醫學中心分校')
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('博士')
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('馬里蘭大學巴爾的摩分校')
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('學士')
-    finder.locator('[data-cgu-finder-college="管理學院"]').click()
-    expect(finder).to_contain_text('管理學院另有院級交換，請洽院國際辦公室')
+    # Clean homepage: #cgu-dept-finder is completely removed from homepage
+    expect(page.locator('#cgu-dept-finder')).to_have_count(0)
+    expect(onepager.locator('[data-cgu-scroll="#cgu-dept-finder"]')).to_have_count(0)
+    expect(onepager.locator('a.cgu-hero-cta.is-primary[href="#partners"]')).to_be_visible()
 
     # Item 7:「領航者補助」說明卡 on homepage
     nav_card = page.locator('#cgu-navigator-card')
@@ -115,35 +98,99 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     page.locator('#partner-search').fill('')
     expect(page.locator('#partner-result-count')).to_contain_text('78')
 
-    # Item 4: 雙學位跟交換分開呈現 (#cgu-program-tabs)
+    # Prominent relocated「我的條件」(#discovery-criteria) near the top of #partners
+    criteria = page.locator('#partners #discovery-criteria')
+    expect(criteria).to_be_visible()
+    expect(page.locator('#partners .pr-explore-head .discovery-open-workspace')).to_be_visible()
+    head_box = page.locator('#partners .pr-explore-head').bounding_box()
+    criteria_box = criteria.bounding_box()
+    strip_box = page.locator('#cgu-partner-filter-strip').bounding_box()
+    search_box = page.locator('#partners .pr-search').bounding_box()
+    results_box = page.locator('#partners .journey-search-layout').bounding_box()
+    assert head_box and criteria_box and strip_box and search_box and results_box
+    assert criteria_box['height'] >= 52
+    assert head_box['y'] < criteria_box['y'] < strip_box['y'] < search_box['y'] < results_box['y']
+
+    # Single-row Program + College + Department strip with zero grey boxes or small grey text
     prog_tabs = page.locator('#cgu-program-tabs')
+    college_bar = page.locator('#cgu-college-quick-bar')
     expect(prog_tabs).to_be_visible()
+    expect(college_bar).to_be_visible()
+    prog_box = prog_tabs.bounding_box()
+    college_box = college_bar.bounding_box()
+    assert prog_box and college_box
+    assert abs(prog_box['y'] - college_box['y']) < 8
+    assert prog_box['x'] + prog_box['width'] <= college_box['x'] + 4
+
+    expect(page.locator('#cgu-program-tabs .cgu-program-tabs-note')).not_to_be_visible()
+    expect(page.locator('#cgu-college-live-count')).not_to_be_visible()
+    expect(page.locator('#cgu-college-quick-bar .cgu-college-bar-label')).not_to_be_visible()
+    expect(prog_tabs.locator('.cgu-program-tab > span').first).not_to_be_visible()
+    expect(college_bar.locator('.cgu-college-btn > span').first).not_to_be_visible()
+    inactive_tab_bg = prog_tabs.locator('[data-cgu-program="exchange"]').evaluate('el => getComputedStyle(el).backgroundColor')
+    assert inactive_tab_bg in ('rgba(0, 0, 0, 0)', 'transparent')
+
+    screenshot(page, 'desktop-partners.png')
+
+    # Test「我的條件」filtering & reset
+    criteria.locator('summary').click()
+    expect(page.locator('#discovery-criteria-form')).to_be_visible()
+    screenshot(page, 'desktop-partners-criteria-open.png')
+    page.locator('#discovery-test').evaluate("el => { el.value = 'toeic'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
+    page.locator('#discovery-score').fill('750')
+    page.locator('#discovery-criteria-form [name="grade"]').fill('78')
+    page.locator('#discovery-criteria-form [name="degree"]').evaluate("el => { el.value = 'undergraduate'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
+    page.locator('#discovery-criteria-form button[type="submit"]').click()
+    expect(page.locator('#cgu-criteria-summary')).to_contain_text('TOEIC 750')
+    expect(page.locator('#cgu-criteria-summary')).to_contain_text('平均 78')
+    expect(page.locator('#cgu-criteria-summary')).to_contain_text('大學部')
+    expect(page.locator('#discovery-criteria-count')).to_have_text('已套用')
+    expect(page.locator('#cgu-criteria-cta-label')).to_have_text('修改條件')
+    criteria.locator('summary').click()
+    page.locator('#discovery-clear-criteria').click()
+    criteria.locator('summary').click()
+    expect(page.locator('#discovery-criteria-count')).to_have_text('')
+    expect(page.locator('#cgu-criteria-cta-label')).to_have_text('設定條件')
+    expect(page.locator('#partner-result-count')).to_contain_text('78')
+
+    # Item 4: 雙學位跟交換分開呈現 (#cgu-program-tabs) on the same row
     dual_tab = prog_tabs.locator('[data-cgu-program="dual_degree"]')
     exch_tab = prog_tabs.locator('[data-cgu-program="exchange"]')
     all_tab = prog_tabs.locator('[data-cgu-program=""]')
-    expect(dual_tab).to_contain_text('14 所')
-    expect(exch_tab).to_contain_text('66 所')
     dual_tab.click()
     expect(dual_tab).to_have_attribute('aria-selected', 'true')
     expect(page.locator('#partner-result-count')).to_contain_text('共 14 所')
     expect(page.locator('#partner-table')).to_contain_text('瑞典皇家理工學院')
+    exch_tab.click()
+    expect(exch_tab).to_have_attribute('aria-selected', 'true')
+    expect(page.locator('#partner-result-count')).to_contain_text('共 66 所')
     all_tab.click()
     expect(page.locator('#partner-result-count')).to_contain_text('78')
 
-    college_bar = page.locator('#cgu-college-quick-bar')
-    expect(college_bar).to_be_visible()
-    for label in ['醫', '工', '管', '智慧運算']:
+    for label in ['全部學院', '醫學院', '工學院', '管理學院', '智慧運算學院']:
         expect(college_bar.locator('[data-cgu-college]', has_text=label)).to_be_visible()
     med_btn = college_bar.locator('[data-cgu-college="醫學院"]')
     med_btn.click()
     expect(med_btn).to_have_attribute('aria-pressed', 'true')
-    expect(page.locator('#cgu-college-live-count')).to_contain_text('醫學院可申請：共 45 所')
     expect(page.locator('#partner-result-count')).to_contain_text('共 45 所')
     ai_btn = college_bar.locator('[data-cgu-college="智慧運算學院"]')
     ai_btn.click()
     expect(ai_btn).to_have_attribute('aria-pressed', 'true')
-    expect(page.locator('#cgu-college-live-count')).to_contain_text('智慧運算學院可申請：共 43 所')
     expect(page.locator('#partner-result-count')).to_contain_text('共 43 所')
+
+    # Department filter inline on the same row (select 工學院 -> 生物醫學工程學系 vs 電機工程學系)
+    college_bar.locator('[data-cgu-college="工學院"]').click()
+    page.locator('#cgu-partner-dept-select').evaluate(
+        "el => { el.value = '生物醫學工程學系'; el.dispatchEvent(new Event('change', { bubbles: true })); }"
+    )
+    page.locator('#partner-search').fill('香港中文')
+    expect(page.locator('#partner-table')).to_contain_text('香港中文大學')
+    page.locator('#cgu-partner-dept-select').evaluate(
+        "el => { el.value = '電機工程學系'; el.dispatchEvent(new Event('change', { bubbles: true })); }"
+    )
+    expect(page.locator('#partner-table')).not_to_contain_text('香港中文大學')
+    page.locator('#partner-search').fill('')
+    assert abs(prog_tabs.bounding_box()['y'] - college_bar.bounding_box()['y']) < 8
 
     # Item 5: 管理學院的「院級管道」提示
     mgmt_btn = college_bar.locator('[data-cgu-college="管理學院"]')
@@ -156,6 +203,19 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     college_bar.locator('[data-cgu-college=""]').click()
     expect(page.locator('#cgu-mgmt-channel-notice')).not_to_be_visible()
     expect(page.locator('#partner-result-count')).to_contain_text('78')
+
+    # Verify Map View & Dark Mode keep「我的條件」and single-row strip clean with zero overflow
+    page.locator('[data-partner-view="map"]').click()
+    expect(page.locator('#partner-map-panel')).to_be_visible()
+    expect(criteria).to_be_visible()
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    screenshot(page, 'desktop-partners-map.png')
+    page.locator('[data-partner-view="list"]').click()
+    expect(page.locator('#partner-table')).to_be_visible()
+
+    page.evaluate("document.documentElement.dataset.theme = 'dark'")
+    screenshot(page, 'desktop-partners-dark.png')
+    page.evaluate("delete document.documentElement.dataset.theme")
     expect(page.get_by_role('group', name='交換名額')).to_contain_text('2 名以上')
     deadline_tab = page.locator('[data-partner-sort="deadline"]')
     quota_tab = page.locator('[data-partner-sort="quota"]')
@@ -293,9 +353,18 @@ def test_responsive_native_journey(page, demo_url, size):
     page.set_viewport_size({'width':size[0], 'height':size[1]})
     ready(page, demo_url)
     expect(page.locator('#cgu-hero-onepager')).to_be_visible()
-    expect(page.locator('#cgu-dept-finder')).to_be_visible()
+    expect(page.locator('#cgu-dept-finder')).to_have_count(0)
     expect(page.locator('#cgu-navigator-card')).to_be_visible()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    page.evaluate("window.location.hash = '#partners'")
+    expect(page.locator('#partners #discovery-criteria')).to_be_visible()
+    expect(page.locator('#cgu-partner-filter-strip')).to_be_visible()
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    page.locator('#partners #discovery-criteria summary').click()
+    expect(page.locator('#discovery-criteria-form')).to_be_visible()
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    if size[0] == 390:
+        screenshot(page, 'mobile-partners.png')
     seed(page)
     expect(page.locator('.today-primary')).to_be_visible()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')

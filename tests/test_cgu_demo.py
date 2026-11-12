@@ -61,12 +61,19 @@ def test_exact_shared_assets_and_main_dom():
         '合作校申請',
     ):
         assert phrase in onepager_text
-    assert demo.select_one('#cgu-dept-finder') is not None
+    assert demo.select_one('#cgu-dept-finder') is None
+    assert onepager.select_one('[data-cgu-scroll="#cgu-dept-finder"]') is None
+    assert onepager.select_one('a.cgu-hero-cta.is-primary[href="#partners"]') is not None
     assert demo.select_one('#cgu-navigator-card') is not None
     assert demo.select_one('#cgu-scholarships-navigator-card') is not None
-    assert demo.select_one('#cgu-program-tabs') is not None
+    filter_strip = demo.select_one('#partners #cgu-partner-filter-strip')
+    assert filter_strip is not None
+    assert filter_strip.select_one('#cgu-program-tabs') is not None
+    assert filter_strip.select_one('#cgu-college-quick-bar') is not None
+    assert demo.select_one('#partners .pr-explore-head .cgu-explore-head-actions .discovery-open-workspace') is not None
+    assert demo.select_one('#partners > .discovery-search-tools > #discovery-criteria') is not None
+    assert demo.select_one('#partners .journey-search-layout #discovery-criteria') is None
     assert demo.select_one('#cgu-mgmt-channel-notice') is not None
-    assert demo.select_one('#cgu-college-quick-bar') is not None
     assert '生物醫學工程學系' in demo.select_one('#cgu-demo-strip').get_text()
     assert '多益 750' in demo.select_one('#cgu-demo-strip').get_text()
     pref_legend = demo.select_one('.application-preference-fields legend')

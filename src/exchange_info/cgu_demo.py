@@ -960,8 +960,7 @@ HERO_ONEPAGER_HTML = """
       <small>查核日期：2026-11-11</small>
     </div>
     <div class="cgu-onepager-actions">
-      <button type="button" class="cgu-hero-cta is-primary" data-cgu-scroll="#cgu-dept-finder">我是哪個系？（36 系所）</button>
-      <a class="cgu-hero-cta" href="#partners">搜尋 78 所合作校</a>
+      <a class="cgu-hero-cta is-primary" href="#partners">搜尋 78 所合作校</a>
       <button type="button" class="cgu-hero-cta" data-cgu-scroll="#cgu-navigator-card">領航者補助說明</button>
     </div>
   </div>
@@ -996,7 +995,7 @@ def _render_report_print_html(report: dict[str, Any]) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
   <title>返國學期報告列印版｜{e(report.get('receipt_id', ''))}</title>
-  <link rel="stylesheet" href="/static/cgu-demo.css?v=20261112-cgu-sim-1" />
+  <link rel="stylesheet" href="/static/cgu-demo.css?v=20261112-cgu-clean-1" />
 </head>
 <body class="cgu-print-body">
   <main class="cgu-print-sheet">
@@ -1045,7 +1044,7 @@ def platform_html() -> str:
     soup = BeautifulSoup((STATIC / "index.html").read_text(encoding="utf-8"), "html.parser")
     soup.title.string = "UniWay CGU｜長庚大學交換申請平台"
     soup.head.append(soup.new_tag("meta", attrs={"name": "robots", "content": "noindex,nofollow,noarchive"}))
-    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261112-cgu-sim-1"))
+    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261112-cgu-clean-1"))
     script = soup.new_tag("script", src="/demo/bootstrap.js")
     soup.head.insert(0, script)
     # Initial static choices must also be CGU-only, before the registry request resolves.
@@ -1123,33 +1122,76 @@ def platform_html() -> str:
             id='cgu-navigator-card',
             attrs={'class': 'pr-section cgu-navigator-section', 'aria-labelledby': 'cgu-navigator-title'},
         )
-        dept_sec = soup.new_tag(
-            'section',
-            id='cgu-dept-finder',
-            attrs={'class': 'pr-section cgu-dept-section', 'aria-labelledby': 'cgu-dept-title'},
-        )
         hero_section.insert_after(navigator_sec)
-        hero_section.insert_after(dept_sec)
     partners_head = soup.select_one('#partners .pr-explore-head')
     if partners_head is not None:
-        mgmt_notice = soup.new_tag(
+        view_toggle = partners_head.select_one('.pr-view-toggle')
+        recents_details = soup.select_one('#partners [data-discovery-recents]')
+        open_workspace = soup.select_one('#partners .discovery-open-workspace')
+        if view_toggle is not None:
+            head_actions = soup.new_tag('div', attrs={'class': 'cgu-explore-head-actions'})
+            view_toggle.insert_before(head_actions)
+            if recents_details is not None:
+                head_actions.append(recents_details.extract())
+            if open_workspace is not None:
+                head_actions.append(open_workspace.extract())
+            head_actions.append(view_toggle.extract())
+
+        search_tools = soup.select_one('#partners .discovery-search-tools')
+        criteria_details = soup.select_one('#partners #discovery-criteria')
+        criteria_result = soup.select_one('#partners #discovery-criteria-result')
+        if criteria_details is not None:
+            summary_node = criteria_details.select_one('summary')
+            if summary_node is not None:
+                summary_node.clear()
+                summary_inner = BeautifulSoup(
+                    '<span class="cgu-criteria-main">'
+                    '<span class="cgu-criteria-icon" aria-hidden="true"><i data-lucide="sliders-horizontal"></i></span>'
+                    '<strong class="cgu-criteria-heading">我的條件</strong>'
+                    '<span id="cgu-criteria-summary" class="cgu-criteria-summary">檢定成績 · 學業成績 · 學制</span>'
+                    '<span id="discovery-criteria-count"></span>'
+                    '</span>'
+                    '<span class="cgu-criteria-action">'
+                    '<span id="cgu-criteria-cta-label">設定條件</span>'
+                    '<i data-lucide="chevron-down" aria-hidden="true"></i>'
+                    '</span>',
+                    'html.parser',
+                )
+                summary_node.append(summary_inner)
+
+        filter_strip = soup.new_tag(
             'div',
-            id='cgu-mgmt-channel-notice',
-            attrs={'class': 'cgu-mgmt-notice', 'role': 'status', 'hidden': ''},
-        )
-        college_bar = soup.new_tag(
-            'div',
-            id='cgu-college-quick-bar',
-            attrs={'class': 'cgu-college-bar', 'role': 'region', 'aria-label': '長庚學院快速篩選'},
+            id='cgu-partner-filter-strip',
+            attrs={'class': 'cgu-partner-filter-strip', 'role': 'region', 'aria-label': '計畫類型與學院篩選'},
         )
         program_tabs = soup.new_tag(
             'div',
             id='cgu-program-tabs',
             attrs={'class': 'cgu-program-tabs', 'role': 'tablist', 'aria-label': '交換與雙學位計畫分頁'},
         )
-        partners_head.insert_after(mgmt_notice)
-        partners_head.insert_after(college_bar)
-        partners_head.insert_after(program_tabs)
+        college_bar = soup.new_tag(
+            'div',
+            id='cgu-college-quick-bar',
+            attrs={'class': 'cgu-college-bar', 'role': 'region', 'aria-label': '長庚學院快速篩選'},
+        )
+        filter_strip.append(program_tabs)
+        filter_strip.append(college_bar)
+
+        mgmt_notice = soup.new_tag(
+            'div',
+            id='cgu-mgmt-channel-notice',
+            attrs={'class': 'cgu-mgmt-notice', 'role': 'status', 'hidden': ''},
+        )
+
+        anchor = partners_head
+        if search_tools is not None:
+            anchor.insert_after(search_tools.extract())
+            anchor = search_tools
+        if criteria_result is not None:
+            anchor.insert_after(criteria_result.extract())
+            anchor = criteria_result
+        anchor.insert_after(filter_strip)
+        filter_strip.insert_after(mgmt_notice)
     scholarship_summary = soup.select_one('#scholarship-match-summary')
     if scholarship_summary is not None:
         inline_nav = soup.new_tag('div', id='cgu-scholarships-navigator-card', attrs={'class': 'cgu-navigator-inline'})
@@ -1215,6 +1257,8 @@ def platform_html() -> str:
         opt.string = '2027 秋季（116-1）'
     for opt in soup.select('#partner-term-tile option[value="spring"], #discovery-criteria-form select[name="term"] option[value="spring"]'):
         opt.string = '2027 春季（115-2）'
+    for grade_inp in soup.select('#discovery-criteria-form input[name="grade"]'):
+        grade_inp['placeholder'] = '例如 78'
     for item in soup.select('.uniway-header-brand strong'):
         item.string = 'UniWay CGU'
     # Replace「切換就讀學校 / 選擇就讀學校」with fixed「長庚大學」display
@@ -1252,7 +1296,7 @@ def platform_html() -> str:
       <button type="button" class="primary-button" id="cgu-demo-confirm" hidden>確認重設</button>
       <button type="button" class="secondary-button" id="cgu-demo-close">關閉</button></div></dialog>''', 'html.parser')
     soup.body.append(snippet)
-    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js?v=20261112-cgu-sim-1', defer=''))
+    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js?v=20261112-cgu-clean-1', defer=''))
     return str(soup)
 
 
