@@ -1,14 +1,280 @@
 /* Edition controls only. Layout, colours, navigation and components come from UniWay. */
-#cgu-demo-strip { position:fixed; bottom:0; left:0; right:0; z-index:1500; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:8px; padding:7px 14px; background:var(--uw-surface,#fff); color:var(--uw-text,#23324a); border-top:1px solid var(--uw-line,#d8dde5); font:12px/1.5 system-ui; box-sizing:border-box; }
-#cgu-demo-strip button { font:inherit; padding:5px 10px; border:1px solid var(--uw-line,#d8dde5); border-radius:8px; background:transparent; color:inherit; cursor:pointer; }
+:root { --cgu-strip-height:50px; --cgu-strip-clearance:70px; }
+#cgu-demo-strip {
+  position:fixed; bottom:0; left:0; right:0; z-index:1500;
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+  gap:6px 8px; padding:6px 14px calc(6px + env(safe-area-inset-bottom, 0px));
+  background:var(--uw-surface,#fff); color:var(--uw-text,#23324a);
+  border-top:1px solid var(--uw-line,#d8dde5); font:12px/1.4 system-ui; box-sizing:border-box;
+}
+#cgu-demo-strip button {
+  font:600 12px/1.25 system-ui; min-height:32px; padding:5px 10px;
+  border:1px solid var(--uw-line,#d8dde5); border-radius:8px;
+  background:transparent; color:inherit; cursor:pointer; white-space:nowrap; box-sizing:border-box;
+}
 #cgu-demo-dialog { max-width:760px; width:calc(100% - 32px); max-height:85vh; overflow:auto; border:1px solid var(--uw-line,#d8dde5); border-radius:20px; padding:26px; background:var(--uw-surface,#fff); color:var(--uw-text,#23324a); box-sizing:border-box; }
 #cgu-demo-dialog::backdrop { background:#15253a77; }
 #cgu-demo-dialog p { line-height:1.7; }
 #cgu-demo-dialog a { text-decoration:underline; }
 #cgu-demo-dialog .button-row { display:flex; gap:12px; margin-top:18px; }
-body { padding-bottom:70px; }
+html:has(body:not(.cgu-print-body)) { scroll-padding-bottom:var(--cgu-strip-clearance, 70px); }
+body:not(.cgu-print-body) { padding-bottom:var(--cgu-strip-clearance, 70px) !important; }
+.pr-compare-tray { bottom:calc(var(--cgu-strip-height, 50px) + 12px); }
+body.unified-shell #application-path .level-actions { bottom:var(--cgu-strip-height, 50px) !important; }
+#application-path #toast { bottom:calc(var(--cgu-strip-height, 50px) + 14px); }
 #school-switcher { cursor:default; }
-@media(max-width:600px) { #cgu-demo-strip span { width:100%; text-align:center; } body { padding-bottom:176px; } }
+@media(min-width:641px) and (max-width:1180px) {
+  #cgu-demo-strip { gap:4px 6px; padding:5px 10px; font-size:11.5px; }
+  #cgu-demo-strip .cgu-strip-sim-tag { padding:1px 6px; font-size:11px; }
+  #cgu-demo-strip button { min-height:28px; padding:4px 8px; font-size:11.5px; }
+}
+@media(max-width:960px) {
+  :root { --cgu-strip-height:86px; --cgu-strip-clearance:108px; }
+}
+@media(max-width:900px) {
+  .pr-booking { bottom:var(--cgu-strip-height, 116px); padding-bottom:12px; }
+  body.unified-shell .school-detail-view.pr-detail:not([hidden]) { padding-bottom:24px; }
+  body.unified-shell:not(.cgu-print-body):has(.school-detail-view.pr-detail:not([hidden])) {
+    padding-bottom:calc(var(--cgu-strip-clearance, 140px) + 140px) !important;
+  }
+}
+@media(max-width:640px) {
+  :root { --cgu-strip-height:116px; --cgu-strip-clearance:140px; }
+  #cgu-demo-strip {
+    display:grid; grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:4px 6px; padding:5px 10px calc(5px + env(safe-area-inset-bottom, 0px));
+    font-size:11px; line-height:1.32;
+  }
+  #cgu-demo-strip > span {
+    grid-column:1 / -1; width:100%; text-align:center;
+  }
+  #cgu-demo-strip .cgu-strip-sim-tag {
+    padding:1px 6px; font-size:10.5px;
+  }
+  #cgu-demo-strip button {
+    width:100%; min-width:0; min-height:30px; padding:4px 6px;
+    font-size:11.5px; line-height:1.2; text-align:center;
+  }
+}
+
+/* Desktop/Laptop Top Bar: fit 7 CGU routes + synthetic user label cleanly across 901px–1920px+ */
+@media(min-width:901px) {
+  html body.unified-shell #glass-navigation.glass-navigation-rail {
+    box-sizing:border-box !important; max-width:100vw !important;
+    padding:0 20px !important; gap:10px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand {
+    flex:0 0 auto !important; gap:8px !important; padding:0 !important; min-height:0 !important; white-space:nowrap !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark {
+    width:32px !important; height:32px !important; flex:0 0 32px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand strong,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong {
+    font-size:19.5px !important; white-space:nowrap !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav {
+    flex:1 1 auto !important; min-width:0 !important; gap:3px !important; align-items:center !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .application-tools.application-nav-group,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .application-tools.application-nav-group {
+    flex:0 0 auto !important; width:auto !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .application-nav-group > summary,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .application-nav-group > summary {
+    display:inline-flex !important; align-items:center !important; width:auto !important;
+    height:auto !important; min-height:0 !important; padding:0 !important; gap:0 !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .application-nav-group > summary > a,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .application-nav-group > summary > a {
+    flex:0 0 auto !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .application-nav-chevron,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .application-nav-chevron {
+    position:static !important; flex:0 0 20px !important; width:20px !important; min-height:36px !important;
+    height:36px !important; margin-left:-4px !important; padding:0 !important; background:transparent !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
+  html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
+    flex:0 0 auto !important; justify-content:center !important; width:auto !important; height:38px !important;
+    padding:0 9px !important; gap:5px !important; white-space:nowrap !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route] > :is(svg, .lucide) {
+    width:17px !important; height:17px !important; flex:0 0 auto !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a > span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] > span {
+    position:static !important; display:inline !important; width:auto !important; inline-size:auto !important;
+    max-inline-size:none !important; height:auto !important; opacity:1 !important; visibility:visible !important;
+    transform:none !important; clip:auto !important; overflow:visible !important; margin:0 !important;
+    font-size:13.5px !important; font-weight:700 !important; line-height:1 !important; white-space:nowrap !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions {
+    flex:0 0 auto !important; min-width:0 !important; width:auto !important;
+    align-items:center !important; gap:6px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions .icon-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions .icon-button {
+    width:38px !important; height:38px !important; min-height:38px !important;
+    padding:0 !important; gap:0 !important; justify-content:center !important; flex:0 0 38px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-control:not([hidden]),
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-control:not([hidden]) {
+    flex:0 0 auto !important; flex-direction:row !important; align-items:center !important; width:auto !important; gap:4px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-status,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status {
+    width:38px !important; height:38px !important; min-height:38px !important;
+    padding:0 !important; gap:0 !important; justify-content:center !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-status-label,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status-label {
+    position:absolute !important; width:1px !important; inline-size:1px !important; height:1px !important;
+    padding:0 !important; margin:-1px !important; overflow:hidden !important; clip:rect(0,0,0,0) !important; white-space:nowrap !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-retry[hidden] { display:none !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button {
+    display:inline-flex !important; align-items:center !important; justify-content:flex-start !important;
+    flex:0 1 auto !important; min-width:0 !important; width:auto !important; max-width:210px !important;
+    height:38px !important; min-height:38px !important; padding:0 10px !important; gap:6px !important;
+    box-sizing:border-box !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button .account-button-avatar {
+    flex:0 0 auto !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button-label,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button-label {
+    position:static !important; display:block !important; inline-size:auto !important; max-width:162px !important;
+    opacity:1 !important; visibility:visible !important; transform:none !important;
+    overflow:hidden !important; text-overflow:ellipsis !important; white-space:nowrap !important;
+    font-size:13px !important; font-weight:700 !important; line-height:1.2 !important;
+  }
+}
+@media(min-width:1200px) and (max-width:1399px) {
+  html body.unified-shell #glass-navigation.glass-navigation-rail {
+    padding:0 14px !important; gap:8px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand { gap:7px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand strong,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:18px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:28px !important; height:28px !important; flex-basis:28px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav { gap:2px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
+  html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
+    height:36px !important; padding:0 7px !important; gap:4px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route] > :is(svg, .lucide) {
+    width:15px !important; height:15px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a > span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] > span {
+    font-size:13px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions { gap:5px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions .icon-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions .icon-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-status,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status {
+    width:36px !important; height:36px !important; min-height:36px !important; flex-basis:36px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button {
+    height:36px !important; min-height:36px !important; padding:0 9px !important; gap:6px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button-label,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button-label {
+    font-size:12.5px !important;
+  }
+}
+@media(min-width:1040px) and (max-width:1199px) {
+  html body.unified-shell #glass-navigation.glass-navigation-rail {
+    padding:0 12px !important; gap:6px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand { gap:6px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand strong,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:17px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:26px !important; height:26px !important; flex-basis:26px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav { gap:1px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
+  html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
+    height:34px !important; padding:0 6px !important; gap:0 !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route] > :is(svg, .lucide) {
+    display:none !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a > span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] > span {
+    font-size:13px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .application-nav-chevron,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .application-nav-chevron {
+    flex:0 0 16px !important; width:16px !important; min-height:34px !important; height:34px !important; margin-left:-3px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions { gap:4px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions .icon-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions .icon-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-status,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status {
+    width:34px !important; height:34px !important; min-height:34px !important; flex-basis:34px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button {
+    height:34px !important; min-height:34px !important; padding:0 8px !important; gap:5px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button-label,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button-label {
+    font-size:12px !important;
+  }
+}
+@media(min-width:901px) and (max-width:1039px) {
+  html body.unified-shell #glass-navigation.glass-navigation-rail {
+    padding:0 12px !important; gap:8px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand strong,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:17.5px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:28px !important; height:28px !important; flex-basis:28px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav { gap:2px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
+  html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
+    width:38px !important; height:36px !important; padding:0 !important; gap:0 !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a > span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] > span {
+    position:absolute !important; width:1px !important; inline-size:1px !important; height:1px !important;
+    overflow:hidden !important; clip:rect(0,0,0,0) !important; white-space:nowrap !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions { gap:4px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions .icon-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions .icon-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-status,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status {
+    width:34px !important; height:34px !important; min-height:34px !important; flex-basis:34px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button {
+    height:34px !important; min-height:34px !important; padding:0 8px !important; gap:5px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button-label,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button-label {
+    font-size:12px !important;
+  }
+}
 
 /* One school needs no multi-school supported strip or school-change affordance. */
 .pr-supported { display:none !important; }
@@ -347,6 +613,26 @@ body.unified-shell #dashboard-view #partners.pr-explore .pr-search {
 }
 body.unified-shell #partners.pr-explore .journey-search-results > .pr-results-head {
   grid-column:1 / -1;
+}
+
+@media(min-width:1041px) and (max-width:1219px) {
+  body.unified-shell #partners #cgu-partner-filter-strip {
+    gap:10px;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar {
+    padding-left:10px; gap:6px;
+  }
+  body.unified-shell #partners #cgu-program-tabs .cgu-program-tab,
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn {
+    height:36px; padding:0 11px; font-size:13.5px;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-dept-inline-select {
+    flex:0 1 196px; min-width:136px; max-width:196px;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar .glide-select__trigger,
+  body.unified-shell #partners #cgu-college-quick-bar select {
+    min-height:36px; height:36px; padding:0 12px; font-size:13px;
+  }
 }
 
 @media(max-width:1040px) {

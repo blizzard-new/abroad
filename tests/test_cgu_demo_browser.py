@@ -84,6 +84,11 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     expect(onepager.locator('[data-cgu-scroll="#cgu-dept-finder"]')).to_have_count(0)
     expect(onepager.locator('a.cgu-hero-cta.is-primary[href="#partners"]')).to_be_visible()
 
+    # Desktop 1440px top bar check on #home before taking desktop-home.png: #account-button fully inside viewport
+    acct_home_box = page.locator('#account-button').bounding_box()
+    assert acct_home_box and acct_home_box['x'] >= 0 and (acct_home_box['x'] + acct_home_box['width']) <= 1440 - 8
+    assert page.locator('#account-button-label').evaluate('el => el.scrollWidth <= el.clientWidth + 1')
+
     # Item 7:「領航者補助」說明卡 on homepage
     nav_card = page.locator('#cgu-navigator-card')
     expect(nav_card).to_be_visible()
@@ -408,15 +413,235 @@ def test_responsive_native_journey(page, demo_url, size):
     expect(page.locator('#discovery-criteria-form')).to_be_visible()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
     if size[0] == 390:
+        strip_metrics = page.evaluate(
+            """() => {
+                const strip = document.querySelector('#cgu-demo-strip');
+                const r = strip.getBoundingClientRect();
+                const btns = [...strip.querySelectorAll('button')].map(b => {
+                    const br = b.getBoundingClientRect();
+                    return { x: br.x, y: br.y, w: br.width, h: br.height, right: br.right };
+                });
+                return {
+                    stripHeight: r.height,
+                    stripTop: r.top,
+                    bodyPadBottom: parseFloat(getComputedStyle(document.body).paddingBottom),
+                    btns,
+                };
+            }"""
+        )
+        assert strip_metrics['stripHeight'] <= 136, f"mobile strip too tall: {strip_metrics['stripHeight']}"
+        assert strip_metrics['bodyPadBottom'] >= strip_metrics['stripHeight'] + 16
+        assert len(strip_metrics['btns']) == 4
+        for b in strip_metrics['btns']:
+            assert 0 <= b['x'] and b['right'] <= size[0]
+        # 2x2 button grid: 2 distinct row y positions
+        row_ys = sorted({round(b['y'] / 6) for b in strip_metrics['btns']})
+        assert len(row_ys) == 2
         screenshot(page, 'mobile-partners.png')
+        # Scroll to the very bottom of #partners and ensure the last visible card clears #cgu-demo-strip
+        bottom_partner_clear = page.evaluate(
+            """() => {
+                window.scrollTo(0, document.documentElement.scrollHeight);
+                const cards = [...document.querySelectorAll('#partner-table .pr-school-card')];
+                const last = cards[cards.length - 1];
+                const strip = document.querySelector('#cgu-demo-strip');
+                return last.getBoundingClientRect().bottom <= strip.getBoundingClientRect().top;
+            }"""
+        )
+        assert bottom_partner_clear
+        page.evaluate('window.scrollTo(0, 0)')
     seed(page)
     expect(page.locator('.today-primary')).to_be_visible()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
     if size[0] == 390:
         screenshot(page, 'mobile-journey.png')
+        # Scroll to bottom of #my-application (with simulated submission hub) and verify bottom controls clear strip
+        bottom_my_app_clear = page.evaluate(
+            """() => {
+                window.scrollTo(0, document.documentElement.scrollHeight);
+                const hub = document.querySelector('#cgu-my-application-sim');
+                const strip = document.querySelector('#cgu-demo-strip');
+                return hub.getBoundingClientRect().bottom <= strip.getBoundingClientRect().top;
+            }"""
+        )
+        assert bottom_my_app_clear
+        page.evaluate('window.scrollTo(0, 0)')
     page.locator('.today-primary').click()
+    if size[0] == 390:
+        # Verify stage submit button clears #cgu-demo-strip when scrolled to block:'end', and page bottom clears strip
+        stage_submit_clear = page.evaluate(
+            """() => {
+                const submitBtn = document.querySelector('#level-form button[type=submit]');
+                const strip = document.querySelector('#cgu-demo-strip');
+                submitBtn.scrollIntoView({ behavior: 'instant', block: 'end' });
+                const sr = submitBtn.getBoundingClientRect();
+                const tr = strip.getBoundingClientRect();
+                const btnClear = sr.bottom <= tr.top + 1 && sr.top >= 0;
+                window.scrollTo(0, document.documentElement.scrollHeight);
+                const hub = document.querySelector('#cgu-my-application-sim');
+                const hubClear = hub.getBoundingClientRect().bottom <= strip.getBoundingClientRect().top + 1;
+                submitBtn.scrollIntoView({ behavior: 'instant', block: 'center' });
+                return { btnClear, hubClear, srBottom: sr.bottom, trTop: tr.top, srTop: sr.top };
+            }"""
+        )
+        assert stage_submit_clear['btnClear'] and stage_submit_clear['hubClear'], f'stage clearance failed: {stage_submit_clear}'
     page.locator('#level-form button[type=submit]').click()
     expect(page.locator('.success-state')).to_contain_text('已同步')
+
+
+def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page, demo_url):
+    """Verifies:
+    1) Desktop/laptop #glass-navigation fits cleanly at 960, 1060, 1100, 1150, 1280, 1366, 1440, 1920
+       on both #home and #partners (at rest AND when hovering/focusing nav items) without clipping #account-button.
+    2) #cgu-partner-filter-strip stays on a single clean row across 1042, 1060, 1100, 1150, 1280, 1366, 1440, 1920
+       inside #partners without squeezing, overlapping, or overflowing (including long department names).
+    3) Narrow mobile (360x740) keeps #cgu-demo-strip compact and bottom controls unobscured when scrolled to bottom.
+    """
+    ready(page, demo_url)
+
+    def assert_topbar_clean(vw: int, route_label: str):
+        metrics = page.evaluate(
+            """() => {
+                const nav = document.querySelector('#glass-navigation');
+                const acct = document.querySelector('#account-button');
+                const label = document.querySelector('#account-button-label');
+                const actions = document.querySelector('#glass-navigation .topbar-actions');
+                const links = [...document.querySelectorAll('#glass-navigation .uniway-public-nav a[data-public-route]')]
+                    .filter(a => !a.hidden && getComputedStyle(a).display !== 'none');
+                const ar = acct.getBoundingClientRect();
+                const actR = actions.getBoundingClientRect();
+                return {
+                    docScrollW: document.documentElement.scrollWidth,
+                    innerW: window.innerWidth,
+                    navScrollW: nav.scrollWidth,
+                    navClientW: nav.clientWidth,
+                    linkCount: links.length,
+                    linksRight: Math.max(...links.map(a => a.getBoundingClientRect().right)),
+                    linksLeft: Math.min(...links.map(a => a.getBoundingClientRect().left)),
+                    actionsLeft: actR.left,
+                    acctLeft: ar.left,
+                    acctRight: ar.right,
+                    acctWidth: ar.width,
+                    labelText: label ? label.textContent.trim() : '',
+                    labelClipped: label ? (label.scrollWidth > label.clientWidth + 1) : true,
+                };
+            }"""
+        )
+        ctx = f'{route_label}@{vw}px'
+        assert metrics['docScrollW'] <= metrics['innerW'] + 1, f'doc overflow at {ctx}: {metrics}'
+        assert metrics['navScrollW'] <= metrics['navClientW'] + 1, f'topbar overflow at {ctx}: {metrics}'
+        assert metrics['linkCount'] == 7, f'expected 7 visible CGU nav links at {ctx}: {metrics}'
+        assert metrics['linksLeft'] >= 0 and metrics['linksRight'] <= metrics['actionsLeft'] + 1, f'nav/actions overlap at {ctx}: {metrics}'
+        assert metrics['acctLeft'] >= 0 and metrics['acctRight'] <= vw - 8, f'#account-button clipped at {ctx}: {metrics}'
+        assert metrics['labelText'] == '林小程（展示資料）', f'unexpected label at {ctx}: {metrics}'
+        assert not metrics['labelClipped'], f'#account-button-label truncated at {ctx}: {metrics}'
+
+    for vw in (960, 1060, 1100, 1150, 1280, 1366, 1440, 1920):
+        page.set_viewport_size({'width': vw, 'height': 900})
+        page.evaluate("window.location.hash = '#home'")
+        expect(page.locator('#home-landing-title')).to_be_visible()
+        assert_topbar_clean(vw, '#home-rest')
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="partners"]').hover()
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="school-connector"]').focus()
+        assert_topbar_clean(vw, '#home-hover-focus')
+
+        page.evaluate("window.location.hash = '#partners'")
+        expect(page.locator('#cgu-partner-filter-strip')).to_be_visible()
+        assert_topbar_clean(vw, '#partners-rest')
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="ask-oia"]').hover()
+        assert_topbar_clean(vw, '#partners-hover')
+
+    # Verify single-row #cgu-partner-filter-strip right above 1040px wrap threshold through 1920px
+    for vw in (1042, 1060, 1100, 1150, 1280, 1366, 1440, 1920):
+        page.set_viewport_size({'width': vw, 'height': 900})
+        # Reset college/dept & also test with longest CGU department name selected
+        for college_val, dept_val in (('', ''), ('工學院', '奈米工程及設計碩士學位學程')):
+            page.locator(f'#cgu-college-quick-bar [data-cgu-college="{college_val}"]').click()
+            page.locator('#cgu-partner-dept-select').evaluate(
+                f"el => {{ el.value = {dept_val!r}; el.dispatchEvent(new Event('change', {{ bubbles: true }})); }}"
+            )
+            strip_check = page.evaluate(
+                """() => {
+                    const partners = document.querySelector('#partners').getBoundingClientRect();
+                    const strip = document.querySelector('#cgu-partner-filter-strip').getBoundingClientRect();
+                    const progTabs = [...document.querySelectorAll('#cgu-program-tabs .cgu-program-tab')];
+                    const colBtns = [...document.querySelectorAll('#cgu-college-quick-bar .cgu-college-btn')];
+                    const deptWrap = document.querySelector('#cgu-college-quick-bar .cgu-dept-inline-select');
+                    const dr = deptWrap.getBoundingClientRect();
+                    const progRects = progTabs.map(el => {
+                        const r = el.getBoundingClientRect();
+                        return { left: r.left, right: r.right, midY: r.top + r.height / 2, w: r.width, h: r.height, clipped: el.scrollWidth > el.clientWidth + 1 };
+                    });
+                    const colRects = colBtns.map(el => {
+                        const r = el.getBoundingClientRect();
+                        return { left: r.left, right: r.right, midY: r.top + r.height / 2, w: r.width, h: r.height, clipped: el.scrollWidth > el.clientWidth + 1 };
+                    });
+                    const allMids = [...progRects.map(r => r.midY), ...colRects.map(r => r.midY), dr.top + dr.height / 2];
+                    return {
+                        partnersLeft: partners.left,
+                        partnersRight: partners.right,
+                        stripLeft: strip.left,
+                        stripRight: strip.right,
+                        progCount: progRects.length,
+                        colCount: colRects.length,
+                        progRight: Math.max(...progRects.map(r => r.right)),
+                        colLeft: Math.min(...colRects.map(r => r.left)),
+                        colRight: Math.max(...colRects.map(r => r.right)),
+                        deptLeft: dr.left,
+                        deptRight: dr.right,
+                        deptWidth: dr.width,
+                        ySpread: Math.max(...allMids) - Math.min(...allMids),
+                        anyClipped: [...progRects, ...colRects].some(r => r.clipped),
+                        minBtnWidth: Math.min(...[...progRects, ...colRects].map(r => r.w)),
+                    };
+                }"""
+            )
+            ctx = f'filter-strip@{vw}px({college_val or "all"}/{dept_val or "all"})'
+            assert strip_check['progCount'] == 3 and strip_check['colCount'] == 5, ctx
+            assert strip_check['ySpread'] < 8, f'wrapped to multiple rows at {ctx}: {strip_check}'
+            assert not strip_check['anyClipped'], f'pill text clipped at {ctx}: {strip_check}'
+            assert strip_check['minBtnWidth'] >= 52, f'pill squeezed at {ctx}: {strip_check}'
+            assert strip_check['progRight'] <= strip_check['colLeft'] + 2, f'program/college overlap at {ctx}: {strip_check}'
+            assert strip_check['colRight'] <= strip_check['deptLeft'] + 2, f'college/dept overlap at {ctx}: {strip_check}'
+            assert strip_check['deptWidth'] >= 130, f'dept selector squeezed at {ctx}: {strip_check}'
+            assert strip_check['stripLeft'] >= strip_check['partnersLeft'] - 1, ctx
+            assert strip_check['deptRight'] <= strip_check['partnersRight'] + 1, f'dept overflowed #partners at {ctx}: {strip_check}'
+            assert strip_check['deptRight'] <= vw - 12, f'dept too close to viewport edge at {ctx}: {strip_check}'
+            if vw in (1060, 1280) and college_val == '':
+                screenshot(page, f'laptop-{vw}-partners.png')
+
+    # Narrow mobile 360x740 edge case: compact strip + school detail .pr-booking bar clears strip
+    page.set_viewport_size({'width': 360, 'height': 740})
+    page.goto(demo_url + '/#school=' + '林肯大學%20Lincoln%20University', wait_until='domcontentloaded')
+    page.locator('#detail-favorite-button').wait_for(state='visible')
+    narrow_check = page.evaluate(
+        """() => {
+            window.scrollTo(0, document.documentElement.scrollHeight);
+            const strip = document.querySelector('#cgu-demo-strip').getBoundingClientRect();
+            const booking = document.querySelector('.pr-booking').getBoundingClientRect();
+            const detail = document.querySelector('.school-detail-view.pr-detail').getBoundingClientRect();
+            const sources = document.querySelector('#sources');
+            const bottomContent = (sources && !sources.hidden && getComputedStyle(sources).display !== 'none')
+                ? sources.getBoundingClientRect().bottom
+                : detail.bottom;
+            return {
+                docScrollW: document.documentElement.scrollWidth,
+                innerW: window.innerWidth,
+                stripH: strip.height,
+                stripTop: strip.top,
+                bookingTop: booking.top,
+                bookingBottom: booking.bottom,
+                bottomContent,
+                bodyPadBottom: parseFloat(getComputedStyle(document.body).paddingBottom),
+            };
+        }"""
+    )
+    screenshot(page, 'mobile-360-school-bottom.png')
+    assert narrow_check['docScrollW'] <= narrow_check['innerW'] + 1
+    assert narrow_check['stripH'] <= 148
+    assert narrow_check['bodyPadBottom'] >= narrow_check['stripH'] + 16
+    assert narrow_check['bookingBottom'] <= narrow_check['stripTop'] + 1
+    assert narrow_check['bottomContent'] <= narrow_check['bookingTop'] + 2, f'school detail content obscured by .pr-booking: {narrow_check}'
 
 
 def test_source_service_failure_and_storage_namespace(page, demo_url):
@@ -445,8 +670,17 @@ def test_source_service_failure_and_storage_namespace(page, demo_url):
 
 def test_storage_denial_keeps_original_ui_usable(page, demo_url):
     page.add_init_script("Object.defineProperty(window,'localStorage',{configurable:true,get(){throw new DOMException('blocked','SecurityError')}})")
+    page.set_viewport_size({'width': 390, 'height': 844})
     ready(page, demo_url)
     expect(page.locator('#cgu-demo-strip')).to_contain_text('瀏覽器儲存受限')
+    denial_clearance = page.evaluate(
+        """() => {
+            const h = document.querySelector('#cgu-demo-strip').getBoundingClientRect().height;
+            const pad = parseFloat(getComputedStyle(document.body).paddingBottom);
+            return { h, pad };
+        }"""
+    )
+    assert denial_clearance['pad'] >= denial_clearance['h'] + 16
     seed(page)
     expect(page.locator('.today-primary')).to_be_visible()
 

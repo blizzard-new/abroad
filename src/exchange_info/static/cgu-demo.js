@@ -2,11 +2,26 @@
   'use strict';
   const $ = selector => document.querySelector(selector);
   const $$ = selector => [...document.querySelectorAll(selector)];
+  function syncStripClearance() {
+    const strip = $('#cgu-demo-strip');
+    if (!strip) return;
+    const h = Math.ceil(strip.getBoundingClientRect().height);
+    if (h > 0) {
+      document.documentElement.style.setProperty('--cgu-strip-height', `${h}px`);
+      document.documentElement.style.setProperty('--cgu-strip-clearance', `${h + 24}px`);
+    }
+  }
   if (!window.cguDemoStorageIsolated) {
     $('#cgu-demo-strip').textContent = '展示隔離載入失敗，請重新整理；展示重設已停用。';
+    syncStripClearance();
     return;
   }
   if (window.cguDemoStorageLimited) $('#cgu-demo-strip span').textContent += '・瀏覽器儲存受限，本機偏好不會保留';
+  syncStripClearance();
+  if (typeof ResizeObserver === 'function' && $('#cgu-demo-strip')) {
+    new ResizeObserver(syncStripClearance).observe($('#cgu-demo-strip'));
+  }
+  window.addEventListener('resize', syncStripClearance);
 
   const SIM_BADGE = '模擬・尚未與校方串接';
   const UPLOAD_NOTICE = '展示版不保存檔案內容，請勿上傳真實個資';
@@ -272,6 +287,7 @@
     btn.setAttribute('aria-pressed', String(isOia));
     btn.textContent = isOia ? '切換回學生視角' : '切換為國際處視角';
     btn.classList.toggle('is-active-oia', isOia);
+    syncStripClearance();
   }
 
   $('#cgu-demo-oia-toggle')?.addEventListener('click', () => {
@@ -1806,6 +1822,7 @@
   if (typeof appReady !== 'undefined' && appReady?.then) {
     appReady.then(() => {
       lockSchoolSwitcher();
+      syncStripClearance();
       renderNavigatorCards();
       syncPartnersCleanRow();
       syncCriteriaGradeScale(false);
