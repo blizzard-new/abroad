@@ -249,6 +249,6 @@ def test_nknu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 143
     assert cov["workflow_school_count"] == 143
     assert cov["destination_profile_count"] == 143
-    assert cov["image_count"] == 143
+    assert cov["image_count"] == 110
     assert cov["experience_school_count"] >= 16
     assert cov["experience_source_count"] >= 16

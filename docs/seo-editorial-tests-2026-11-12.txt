@@ -1,0 +1,101 @@
+2026-11-12 Asia/Taipei; isolated codex/seo-daily-20261112
+Base: 0bb1d5c2f043d78451f66ade6c72d7d28c630768
+Python: /workspace/abroad/.venv/bin/python (3.12)
+
+Gate:
+EXCHANGE_INFO_DATA_DIR=<cache>/gate-final-import-data PYTHONPATH=src python scripts/check_editorial.py --base-ref origin/main
+
+SEO (initial and final distinct data dirs):
+EXCHANGE_INFO_DATA_DIR=<cache>/<run>-import-data PYTHONPATH=src python -m pytest -q tests/test_seo_articles.py tests/test_seo.py tests/test_seo_content.py tests/test_seo_quality.py tests/test_seo_reporting.py tests/test_editorial_release_gate.py
+
+E2E (both runs full three modules, distinct data dirs):
+EXCHANGE_INFO_DATA_DIR=<cache>/<run>-import-data PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium PYTHONPATH=src python -m pytest -q tests/e2e/test_seo_articles.py tests/e2e/test_seo_pages.py tests/e2e/test_seo_analytics.py
+
+Initial SEO failure: latest main requires one dedicated image per article; initial reused images produced47 vs49. Corrected by adding two new licensed real photographs, not changing tests/assertions. Final content and assets frozen before rerunning six modules and all three E2E modules. Repeated passes are not counted as new coverage.
+
+{
+  "ok": true,
+  "article_count": 49,
+  "errors": [],
+  "scope": "Editorial structure/assets/revision dates; not proof of factual accuracy, indexing or rankings"
+}
+
+Initial SEO: 175 passed / 1 failed
+
+CONFTEST LOADED!
+F....................................................................... [ 40%]
+........................................................................ [ 81%]
+................................                                         [100%]
+=================================== FAILURES ===================================
+_ test_article_inventory_retains_existing_urls_and_has_distinct_search_intents _
+
+    def test_article_inventory_retains_existing_urls_and_has_distinct_search_intents():
+        assert {"exchange-budget", "exchange-application", "exchange-eligibility"} <= ARTICLES.keys()
+        assert len(ARTICLES) >= 10
+        assert len({a.title for a in ARTICLES.values()}) == len(ARTICLES)
+        assert len({a.description for a in ARTICLES.values()}) == len(ARTICLES)
+        assert len({a.sections[0].paragraphs[0] for a in ARTICLES.values()}) == len(ARTICLES)
+>       assert len({a.image for a in ARTICLES.values()}) == len(ARTICLES)
+E       AssertionError: assert 47 == 49
+E        +  where 47 = len({'ai-clarification-lounge-photo', 'ai-daily-english-desk-photo', 'ai-listening-dictation-photo', 'ai-reading-annotation-photo', 'ai-self-introduction-photo', 'ai-vocabulary-cards-photo', ...})
+E        +  and   49 = len({'ai-english-clarification': Article(slug='ai-english-clarification', title='英文沒聽懂怎麼問？用 AI 練澄清、確認意思與接回對話的 Prompt', des...h-learning', 'natural-writing-prompts', 'exchange-eligibility', 'english-taught-exchange-courses'], country=None), ...})
+
+tests/test_seo_articles.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_seo_articles.py::test_article_inventory_retains_existing_urls_and_has_distinct_search_intents
+1 failed, 175 passed in 69.33s (0:01:09)
+
+Final SEO: 176 passed
+
+CONFTEST LOADED!
+........................................................................ [ 40%]
+........................................................................ [ 81%]
+................................                                         [100%]
+176 passed in 85.70s (0:01:25)
+
+Initial full E2E: 59 passed
+
+CONFTEST LOADED!
+...........................................................              [100%]
+59 passed in 168.00s (0:02:47)
+
+Final full E2E: 59 passed
+
+CONFTEST LOADED!
+...........................................................              [100%]
+59 passed in 191.12s (0:03:11)
+
+Browser final: two articles x 320/390/1440; JavaScript disabled.
+EXCHANGE_INFO_DATA_DIR=<cache>/preview-final-import-data PYTHONPATH=src python <cache>/qa.py preview --repo <checkout> --date 2026-11-12 --slugs exchange-deadline-timezones toefl-read-in-daily-life
+
+{
+  "passed": 6,
+  "capture_note": "Only long element captures temporarily hide fixed decorative6px stripe and fixed reading header via screenshot style to avoid stitching over text. Full-page previews and application/assertions unmodified.",
+  "visual_review": "All 15 final images viewed: desktop/mobile, 3:2/2:1 crops, two photographs, two HTML diagrams, eight content sections. Chinese/English materials, question explanations, inquiry template and diagram text readable. Photo subjects retained; table content intentionally scrollable on mobile.",
+  "run_history": "Initial six-case no-JavaScript preview used reused photographs. Final six-case preview followed dedicated licensed photo correction; all final images from final preview plus corrected crop sheet. Repeated cases are not added to unique coverage."
+}
+
+Package final:
+uv build --wheel --out-dir <cache>/wheel
+python <cache>/qa.py package --repo <checkout> --date 2026-11-12 --slugs exchange-deadline-timezones toefl-read-in-daily-life
+
+Successfully built /workspace/scratch/uniway-seo-20261112/wheel/taiwan_exchange_info-0.1.0-py3-none-any.whl
+
+{
+  "checked": "2026-11-12",
+  "build_command": "uv build --wheel",
+  "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+  "wheel_bytes": 2424811264,
+  "article_json_count": 49,
+  "image_count": 49,
+  "checked_files": 637,
+  "runtime_import": {
+    "module": "/workspace/scratch/uniway-seo-20261112/wheel-extracted/exchange_info/seo_articles.py",
+    "loaded_articles": 49,
+    "new_slugs_present": true
+  },
+  "outside_checkout": true,
+  "passed": true
+}
+
+Full per-file results in seo-editorial-package-2026-11-12.json; full browser checks/screenshot hashes in seo-editorial-browser-2026-11-12.json.

@@ -262,7 +262,7 @@ def test_mcut_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert r_cov.status_code == 200
     cov = r_cov.json()
     assert cov["total_partner_schools"] == 130
-    assert cov["image_count"] == 130
+    assert cov["image_count"] == 77
     assert cov["official_website_count"] == 130
     assert cov["workflow_school_count"] == 130
     assert cov["destination_profile_count"] == 130

@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>UniWay CGU 開場影片（30 秒）</title>
+<!-- 1920x1080 storyboard rendered frame by frame by render.js. Call render(t) with t in seconds (0–30). -->
+<link rel="stylesheet" href="../../../src/exchange_info/static/assets/fonts/genjyuu/GenJyuuGothic-Bold.css">
+<link rel="stylesheet" href="../../../src/exchange_info/static/assets/fonts/genjyuu/GenJyuuGothic-Medium.css">
+<link rel="stylesheet" href="../../../src/exchange_info/static/assets/fonts/genjyuu/GenJyuuGothic-Regular.css">
+<style>
+  @font-face { font-family: 'Poppins'; font-weight: 400; src: url(../../../src/exchange_info/static/assets/fonts/poppins/Poppins-Regular.ttf); }
+  @font-face { font-family: 'Poppins'; font-weight: 500; src: url(../../../src/exchange_info/static/assets/fonts/poppins/Poppins-Medium.ttf); }
+  @font-face { font-family: 'Poppins'; font-weight: 700; src: url(../../../src/exchange_info/static/assets/fonts/poppins/Poppins-Bold.ttf); }
+  :root {
+    --blue: #165cb4; --blue-soft: #e8f0fb; --ink: #1a1d23; --ink2: #2b303a; --muted: #5b6472;
+    --line: #d6dae1; --pain: #b4441b; --pain-soft: #fbece5; --warm: #f5a524;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+  body { font-family: 'Poppins', 'GenJyuuGothic', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden;
+    background: radial-gradient(900px 600px at 8% 0%, #e3eefc 0%, rgba(227,238,252,0) 70%),
+                radial-gradient(900px 700px at 100% 100%, #fbefe6 0%, rgba(251,239,230,0) 70%), #f7f9fc; }
+  .band { position: absolute; top: 0; left: 0; right: 0; height: 6px; display: flex; z-index: 50; }
+  .band i { flex: 1; } .band i:nth-child(1){background:#d9480f} .band i:nth-child(2){background:#f59f00}
+  .band i:nth-child(3){background:#1c7ed6} .band i:nth-child(4){background:#2f9e44} .band i:nth-child(5){background:#8d5a2b}
+  .scene { position: absolute; inset: 0; opacity: 0; }
+  .brand-mini { position: absolute; left: 64px; top: 40px; display: flex; align-items: center; gap: 14px; z-index: 40;
+    font: 700 30px/1 'Poppins', sans-serif; letter-spacing: .2px; }
+  .brand-mini img { width: 46px; height: 46px; }
+  .tag { position: absolute; right: 64px; top: 42px; z-index: 40; padding: 10px 22px; border-radius: 999px;
+    font: 500 24px/1.2 'GenJyuuGothic', sans-serif; opacity: 0; white-space: nowrap; }
+  .tag.sim { background: #eceff3; color: #3d4450; border: 1.5px dashed #9aa2ae; }
+  .tag.real { background: var(--blue); color: #fff; }
+  .kicker { display: inline-flex; align-items: center; gap: 12px; padding: 10px 22px; border-radius: 999px;
+    font: 700 28px/1.2 'GenJyuuGothic', sans-serif; }
+  .kicker.pain { background: var(--pain-soft); color: var(--pain); }
+  .kicker.sol { background: var(--blue-soft); color: var(--blue); }
+  .kicker i { width: 12px; height: 12px; border-radius: 50%; background: currentColor; display: inline-block; }
+  .headline { font: 700 68px/1.28 'GenJyuuGothic', sans-serif; margin: 26px 0 0; letter-spacing: 1px; }
+  .headline em { font-style: normal; color: var(--blue); }
+  .headline em.pain { color: var(--pain); }
+  .appear { opacity: 0; will-change: transform, opacity; }
+
+  /* Scene 1: scattered sources */
+  #s1 .head { position: absolute; left: 150px; top: 150px; }
+  .win { position: absolute; width: 520px; background: #fff; border-radius: 18px; border: 1px solid var(--line);
+    box-shadow: 0 18px 50px rgba(26,29,35,.12); overflow: hidden; }
+  .win .bar { height: 50px; display: flex; align-items: center; gap: 10px; padding: 0 20px; background: #f1f3f6; border-bottom: 1px solid var(--line); }
+  .win .bar b { width: 13px; height: 13px; border-radius: 50%; background: #c9ced6; display: inline-block; }
+  .win .bar span { margin-left: 10px; font: 700 24px/1 'GenJyuuGothic', sans-serif; color: var(--ink2); }
+  .win .body { padding: 22px 26px 26px; }
+  .win .big { font: 700 32px/1.35 'GenJyuuGothic', 'Poppins', sans-serif; color: var(--ink); }
+  .win .small { margin-top: 8px; font: 500 24px/1.4 'GenJyuuGothic', 'Poppins', sans-serif; color: var(--muted); }
+  .win .en { font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 27px; }
+
+  /* Scene 2: three questions */
+  #s2 .head { position: absolute; left: 150px; top: 150px; }
+  .qrow { position: absolute; left: 150px; right: 150px; top: 430px; display: flex; gap: 40px; }
+  .q { flex: 1; background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 40px 40px 44px;
+    box-shadow: 0 16px 44px rgba(26,29,35,.08); }
+  .q .num { font: 700 26px/1 'Poppins', sans-serif; color: var(--pain); letter-spacing: 2px; }
+  .q .ic { width: 84px; height: 84px; border-radius: 22px; background: var(--pain-soft); color: var(--pain); display: grid; place-items: center; margin: 22px 0 26px; }
+  .q .ic svg { width: 46px; height: 46px; stroke-width: 2.2; }
+  .q .qt { font: 700 46px/1.3 'GenJyuuGothic', sans-serif; }
+  .q .qs { margin-top: 14px; font: 500 27px/1.5 'GenJyuuGothic', sans-serif; color: var(--muted); }
+  .footline { position: absolute; left: 150px; right: 150px; top: 900px; text-align: center; font: 500 34px/1.4 'GenJyuuGothic', sans-serif; color: var(--ink2); }
+
+  /* Scenes 3/4: real product screens */
+  .left { position: absolute; left: 110px; top: 190px; width: 600px; }
+  .left .headline { font-size: 60px; }
+  .bul { margin-top: 44px; display: flex; flex-direction: column; gap: 24px; }
+  .bul div { display: flex; align-items: center; gap: 16px; font: 500 32px/1.35 'GenJyuuGothic', sans-serif; color: var(--ink2); }
+  .bul svg { flex: none; width: 38px; height: 38px; color: var(--blue); stroke-width: 2.6; }
+  .bul div.hot { color: var(--ink); font-weight: 700; }
+  .src { position: absolute; left: 110px; top: 940px; width: 640px; font: 400 22px/1.5 'GenJyuuGothic', sans-serif; color: var(--muted); }
+  .frame { position: absolute; left: 740px; top: 150px; width: 1110px; border-radius: 20px; background: #fff;
+    border: 1px solid #cfd5de; box-shadow: 0 28px 70px rgba(26,29,35,.18); overflow: hidden; }
+  .frame .chrome { height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 20px; background: #eef1f5; border-bottom: 1px solid #d6dae1; }
+  .frame .chrome b { width: 13px; height: 13px; border-radius: 50%; background: #c9ced6; display: inline-block; }
+  .frame .chrome .url { margin-left: 18px; flex: 1; max-width: 520px; height: 32px; border-radius: 9px; background: #fff; border: 1px solid #d6dae1;
+    display: flex; align-items: center; padding: 0 14px; font: 500 19px/1 'Poppins', sans-serif; color: #3d4450; }
+  .viewport { position: relative; width: 1110px; height: 694px; overflow: hidden; background: #fff; }
+  .viewport img { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; transform-origin: 0 0; }
+  .hl { position: absolute; border: 5px solid var(--warm); border-radius: 18px; opacity: 0;
+    box-shadow: 0 0 0 9999px rgba(15,20,30,.28), 0 0 26px rgba(245,165,36,.75); }
+
+  /* Scene 5: closing */
+  #s5 .center { position: absolute; left: 0; right: 0; top: 150px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  #s5 .logo { width: 190px; height: 190px; }
+  #s5 .name { margin-top: 18px; font: 700 112px/1.05 'Poppins', sans-serif; letter-spacing: 1px; }
+  #s5 .sub { margin-top: 18px; font: 700 54px/1.3 'GenJyuuGothic', sans-serif; color: var(--blue); letter-spacing: 4px; }
+  #s5 .slogan { margin-top: 30px; font: 500 44px/1.4 'GenJyuuGothic', sans-serif; color: var(--ink2); }
+  #s5 .next { margin-top: 46px; display: inline-flex; align-items: center; gap: 14px; padding: 18px 40px; border-radius: 999px;
+    background: var(--blue); color: #fff; font: 700 36px/1 'GenJyuuGothic', sans-serif; }
+  #s5 .next svg { width: 36px; height: 36px; stroke-width: 2.6; }
+  #s5 .url { margin-top: 22px; font: 500 28px/1 'Poppins', sans-serif; color: var(--muted); }
+  #s5 .foot { position: absolute; left: 0; right: 0; bottom: 46px; text-align: center; font: 400 22px/1.4 'GenJyuuGothic', sans-serif; color: var(--muted); }
+
+  #black { position: absolute; inset: 0; background: #000; z-index: 100; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="band"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="brand-mini" id="brand"><img src="../../../src/exchange_info/static/assets/brand/uniway-logo.webp" alt=""><span>UniWay CGU</span></div>
+  <div class="tag sim" id="tag-sim">情境示意</div>
+  <div class="tag real" id="tag-real">實機畫面｜UniWay CGU 展示站・虛構學生</div>
+
+  <!-- S1: pain 1 — information is scattered -->
+  <section class="scene" id="s1">
+    <div class="head">
+      <div class="kicker pain appear" id="s1k"><i></i>痛點 1／2</div>
+      <h1 class="headline appear" id="s1h">想去交換，資訊卻<em class="pain">散在各處</em></h1>
+    </div>
+    <div class="win appear" id="w1" data-x="150" data-y="430" data-rot="-2.5"><div class="bar"><b></b><b></b><b></b><span>國際處公告</span></div>
+      <div class="body"><div class="big">116-1 校內申請</div><div class="small">11/02 – 12/21 17:00 截止</div></div></div>
+    <div class="win appear" id="w2" data-x="700" data-y="380" data-rot="1.8"><div class="bar"><b></b><b></b><b></b><span>合作校總表</span></div>
+      <div class="body"><div class="big">78 所合作校</div><div class="small">名額・學院限制・學制，逐列不同</div></div></div>
+    <div class="win appear" id="w3" data-x="1250" data-y="440" data-rot="-1.6"><div class="bar"><b></b><b></b><b></b><span>合作校官網（英文）</span></div>
+      <div class="body"><div class="big en">Semester 2 (July – November):</div><div class="small en" style="font-size:25px">30 March of current year</div></div></div>
+    <div class="win appear" id="w4" data-x="420" data-y="700" data-rot="1.5"><div class="bar"><b></b><b></b><b></b><span>語言門檻</span></div>
+      <div class="body"><div class="big">IELTS 6.0・TOEFL・CEFR B2</div><div class="small">長庚校內：多益 700</div></div></div>
+    <div class="win appear" id="w5" data-x="1000" data-y="710" data-rot="-1.2"><div class="bar"><b></b><b></b><b></b><span>補助要點</span></div>
+      <div class="body"><div class="big">領航者補助作業要點</div><div class="small">資格、額度另有規定</div></div></div>
+  </section>
+
+  <!-- S2: pain 2 — still unsure what to do -->
+  <section class="scene" id="s2">
+    <div class="head">
+      <div class="kicker pain appear" id="s2k"><i></i>痛點 2／2</div>
+      <h1 class="headline appear" id="s2h">找到資訊之後，還是<em class="pain">不確定</em>：</h1>
+    </div>
+    <div class="qrow">
+      <div class="q appear" id="q1"><div class="num">01</div><div class="ic"><i data-lucide="school"></i></div>
+        <div class="qt">我能申請哪幾所？</div><div class="qs">學院、學制、名額各有限制</div></div>
+      <div class="q appear" id="q2"><div class="num">02</div><div class="ic"><i data-lucide="clipboard-list"></i></div>
+        <div class="qt">要準備哪些文件？</div><div class="qs">成績、語言門檻、文件、期限</div></div>
+      <div class="q appear" id="q3"><div class="num">03</div><div class="ic"><i data-lucide="signpost"></i></div>
+        <div class="qt">現在該做哪一步？</div><div class="qs">校內甄選、提名、合作校申請</div></div>
+    </div>
+    <div class="footline appear" id="s2f">於是只好一再翻公告，或去問學長姐。</div>
+  </section>
+
+  <!-- S3: solution 1 — choose schools (real screen) -->
+  <section class="scene" id="s3">
+    <div class="left">
+      <div class="kicker sol appear" id="s3k"><i></i>解法 1／2・選校</div>
+      <h1 class="headline appear" id="s3h">長庚 <em>78 所</em>合作校<br>一頁看清楚</h1>
+      <div class="bul">
+        <div class="appear" id="s3b1"><i data-lucide="circle-check"></i>名額與研修期間</div>
+        <div class="appear" id="s3b2"><i data-lucide="circle-check"></i>語言門檻</div>
+        <div class="appear" id="s3b3"><i data-lucide="circle-check"></i>合作校參考時程</div>
+      </div>
+    </div>
+    <div class="src appear" id="s3s">資料來源：長庚國際處合作校總表（2026/11/11 同步）</div>
+    <div class="frame appear" id="f3"><div class="chrome"><b></b><b></b><b></b><div class="url">demo.uniway-tw.com</div></div>
+      <div class="viewport" id="v3"><img id="i3" src="shots/p1-partners.png" alt=""><div class="hl" id="h3"></div></div></div>
+  </section>
+
+  <!-- S4: solution 2 — the next step (real screens) -->
+  <section class="scene" id="s4">
+    <div class="left">
+      <div class="kicker sol appear" id="s4k"><i></i>解法 2／2・準備</div>
+      <div style="position:relative">
+        <h1 class="headline appear" id="s4h1">六階段路徑<br>告訴你<em>現在做哪一步</em></h1>
+        <h1 class="headline appear" id="s4h2" style="position:absolute;left:0;top:-26px">完成一項<br><em>進度自動記下來</em></h1>
+      </div>
+      <div class="bul">
+        <div class="appear" id="s4b1"><i data-lucide="circle-check"></i>從選校到返國，分成六階段</div>
+        <div class="appear" id="s4b2"><i data-lucide="circle-check"></i>每一步附官方來源</div>
+        <div class="appear" id="s4b3"><i data-lucide="circle-check"></i>完成後，進度會保存</div>
+      </div>
+    </div>
+    <div class="frame appear" id="f4"><div class="chrome"><b></b><b></b><b></b><div class="url">demo.uniway-tw.com</div></div>
+      <div class="viewport" id="v4"><img id="i4a" src="shots/p3-today.png" alt=""><img id="i4b" src="shots/p4-done.png" alt="" style="opacity:0"><div class="hl" id="h4"></div></div></div>
+  </section>
+
+  <!-- S5: closing -->
+  <section class="scene" id="s5">
+    <div class="center">
+      <img class="logo appear" id="s5l" src="../../../src/exchange_info/static/assets/brand/uniway-logo.webp" alt="">
+      <div class="name appear" id="s5n">UniWay CGU</div>
+      <div class="sub appear" id="s5s">交換申請導航</div>
+      <div class="slogan appear" id="s5g">從找到資訊，到知道下一步。</div>
+      <div class="next appear" id="s5x">接下來：實機操作 <i data-lucide="arrow-right"></i></div>
+      <div class="url appear" id="s5u">demo.uniway-tw.com</div>
+    </div>
+    <div class="foot appear" id="s5f">獨立學生專案，非長庚大學官方網站；實機畫面為展示站與虛構學生資料，資格與期限以校方公告為準。</div>
+  </section>
+
+  <div id="black"></div>
+</div>
+<script src="../../../src/exchange_info/static/vendor/lucide/0.468.0/lucide.min.js"></script>
+<script>
+lucide.createIcons();
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const prog = (t, s, d) => easeOut(clamp((t - s) / d));
+
+// Fade an element in at time s (seconds), rising dy px. Optional rest position/rotation from data-*.
+function appear(id, t, s, { d = 0.7, dy = 26, out = null } = {}) {
+  const el = $(id); let p = prog(t, s, d);
+  if (out !== null) p = Math.min(p, 1 - prog(t, out, 0.45));
+  const rot = el.dataset.rot ? ` rotate(${el.dataset.rot}deg)` : '';
+  if (el.dataset.x) { el.style.left = el.dataset.x + 'px'; el.style.top = el.dataset.y + 'px'; }
+  el.style.opacity = p;
+  el.style.transform = `translateY(${(dy * (1 - p)).toFixed(2)}px)${rot}`;
+}
+// Scene opacity with crossfades at both ends.
+function scene(id, t, s, e, fi = 0.5, fo = 0.5) {
+  let a = 0;
+  if (t >= s && t <= e) { a = 1; if (fi) a = Math.min(a, clamp((t - s) / fi)); if (fo) a = Math.min(a, clamp((e - t) / fo)); }
+  $(id).style.opacity = a; return a;
+}
+// Pan/zoom a 1440x900 screenshot inside a viewport. keys: [{t, z, cx, cy}] in screenshot CSS px.
+const VW = 1110, VH = 694, K = VW / 1440;
+function view(t, keys) {
+  let a = keys[0], b = keys[keys.length - 1];
+  for (let i = 0; i < keys.length - 1; i++) if (t >= keys[i].t && t <= keys[i + 1].t) { a = keys[i]; b = keys[i + 1]; break; }
+  if (t < keys[0].t) b = a; if (t > keys[keys.length - 1].t) a = b;
+  const p = a === b ? 0 : easeInOut(clamp((t - a.t) / (b.t - a.t)));
+  const z = a.z + (b.z - a.z) * p, cx = a.cx + (b.cx - a.cx) * p, cy = a.cy + (b.cy - a.cy) * p;
+  const s = K * z;
+  const tx = clamp(VW / 2 - cx * s, VW - 1440 * s, 0), ty = clamp(VH / 2 - cy * s, VH - 900 * s, 0);
+  return { s, tx, ty };
+}
+function place(imgId, v) { $(imgId).style.transform = `translate(${v.tx.toFixed(2)}px, ${v.ty.toFixed(2)}px) scale(${v.s.toFixed(5)})`; }
+function highlight(id, v, r, a) {
+  const el = $(id);
+  el.style.left = (v.tx + r.x * v.s) + 'px'; el.style.top = (v.ty + r.y * v.s) + 'px';
+  el.style.width = (r.w * v.s) + 'px'; el.style.height = (r.h * v.s) + 'px'; el.style.opacity = a;
+}
+
+// Focus regions inside the 1440x900 screenshots (CSS px). capture.js measures the real
+// elements and render.js injects them as window.CAPTURED_REGIONS; the values below are fallbacks.
+const pad = (r, p = 10) => ({ x: r.x - p, y: r.y - p, w: r.w + 2 * p, h: r.h + 2 * p });
+const center = (r) => ({ cx: r.x + r.w / 2, cy: r.y + r.h / 2 });
+const C = Object.assign({
+  p1Card: { x: 356, y: 410, w: 320, h: 420 },
+  p3Card: { x: 80, y: 394, w: 797, h: 246 },
+  p4Done: { x: 80, y: 460, w: 985, h: 370 },
+}, window.CAPTURED_REGIONS || {});
+// Zoom so the region fills most of the viewport, capped to keep the screen recognisable.
+const fit = (r, max) => Math.max(1, Math.min(max, (0.86 * 1110) / (r.w * (1110 / 1440)), (0.8 * 694) / (r.h * (1110 / 1440))));
+const R = {
+  p1Card: pad(C.p1Card), p1Focus: center(C.p1Card), p1Z: fit(pad(C.p1Card), 1.75),
+  p3Card: pad(C.p3Card), p3Focus: center(C.p3Card), p3Z: fit(pad(C.p3Card), 1.6),
+  p4Done: pad(C.p4Done), p4Focus: center(C.p4Done), p4Z: fit(pad(C.p4Done), 1.6),
+};
+
+function render(t) {
+  // Global fade from/to black.
+  $('black').style.opacity = Math.max(1 - clamp(t / 0.4), clamp((t - 29.45) / 0.5));
+  // Persistent chrome for scenes 1–4.
+  const chrome = t < 24.0 ? 1 : 1 - clamp((t - 24.0) / 0.5);
+  $('brand').style.opacity = chrome;
+  $('tag-sim').style.opacity = t < 11.0 ? Math.min(prog(t, 0.3, 0.6), 1) : 1 - clamp((t - 11.0) / 0.4);
+  $('tag-real').style.opacity = t < 11.3 ? 0 : Math.min(prog(t, 11.3, 0.5), chrome);
+
+  // S1 0.0–6.0
+  scene('s1', t, 0, 6.0, 0, 0.5);
+  appear('s1k', t, 0.25); appear('s1h', t, 0.4);
+  ['w1', 'w2', 'w3', 'w4', 'w5'].forEach((id, i) => appear(id, t, 1.0 + i * 0.6, { d: 0.8, dy: 40 }));
+
+  // S2 5.5–11.5
+  scene('s2', t, 5.5, 11.5);
+  appear('s2k', t, 5.8); appear('s2h', t, 5.95);
+  appear('q1', t, 6.9, { d: 0.8, dy: 40 }); appear('q2', t, 7.9, { d: 0.8, dy: 40 }); appear('q3', t, 8.9, { d: 0.8, dy: 40 });
+  appear('s2f', t, 9.9);
+
+  // S3 11.0–17.5  (real screen: school search)
+  scene('s3', t, 11.0, 17.5);
+  appear('s3k', t, 11.3); appear('s3h', t, 11.45); appear('f3', t, 11.6, { d: 0.9, dy: 50 });
+  appear('s3b1', t, 12.5); appear('s3b2', t, 13.1); appear('s3b3', t, 13.7); appear('s3s', t, 14.2);
+  const v3 = view(t, [{ t: 11.6, z: 1, cx: 720, cy: 450 }, { t: 14.0, z: 1, cx: 720, cy: 450 }, { t: 15.3, z: R.p1Z, ...R.p1Focus }, { t: 17.5, z: R.p1Z * 1.03, ...R.p1Focus }]);
+  place('i3', v3); highlight('h3', v3, R.p1Card, prog(t, 15.0, 0.6));
+
+  // S4 17.0–24.5  (real screens: Today -> task completed)
+  scene('s4', t, 17.0, 24.5);
+  appear('s4k', t, 17.3); appear('s4h1', t, 17.45, { out: 21.1 }); appear('s4h2', t, 21.35, { dy: 18 });
+  appear('f4', t, 17.6, { d: 0.9, dy: 50 });
+  appear('s4b1', t, 18.4); appear('s4b2', t, 19.0); appear('s4b3', t, 19.6);
+  ['s4b1', 's4b2', 's4b3'].forEach((id) => $(id).classList.toggle('hot', id === 's4b3' && t >= 21.35));
+  const swap = prog(t, 21.1, 0.6);
+  $('i4b').style.opacity = swap; $('i4a').style.opacity = 1 - swap;
+  const va = view(t, [{ t: 17.6, z: 1, cx: 720, cy: 450 }, { t: 18.9, z: 1, cx: 720, cy: 450 }, { t: 20.1, z: R.p3Z, ...R.p3Focus }, { t: 21.6, z: R.p3Z * 1.02, ...R.p3Focus }]);
+  const vb = view(t, [{ t: 21.1, z: 1.0, cx: 720, cy: 450 }, { t: 21.9, z: 1.0, cx: 720, cy: 450 }, { t: 23.0, z: R.p4Z, ...R.p4Focus }, { t: 24.5, z: R.p4Z * 1.03, ...R.p4Focus }]);
+  place('i4a', va); place('i4b', vb);
+  if (t < 21.1) highlight('h4', va, R.p3Card, prog(t, 19.8, 0.6) * (1 - prog(t, 20.9, 0.3)));
+  else highlight('h4', vb, R.p4Done, prog(t, 22.7, 0.6));
+
+  // S5 24.0–30.0
+  scene('s5', t, 24.0, 30.0, 0.5, 0);
+  appear('s5l', t, 24.3); appear('s5n', t, 24.6); appear('s5s', t, 25.0); appear('s5g', t, 25.6);
+  appear('s5x', t, 26.4); appear('s5u', t, 26.8); appear('s5f', t, 27.1, { dy: 10 });
+}
+render(0);
+</script>
+</body>
+</html>
