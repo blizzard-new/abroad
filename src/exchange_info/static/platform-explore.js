@@ -13,6 +13,11 @@ window.UniWayExplore = (() => {
     { short: "管", value: "管理學院" },
     { short: "智慧運算", value: "智慧運算學院" },
   ];
+  const CGU_PROGRAM_TABS = [
+    { id: "", label: "全部計畫" },
+    { id: "exchange", label: "交換學生" },
+    { id: "dual_degree", label: "雙學位" },
+  ];
   const COUNTRY_FACETS = 8;
   const narrow = window.matchMedia("(max-width: 900px)");
   let scheduled = 0, drawerSynced = false;
@@ -43,6 +48,67 @@ window.UniWayExplore = (() => {
     };
   }
 
+  function cguDeptCollegeMap() {
+    const units = window.UniWayAcademicUnits?.["長庚大學"]?.colleges || {};
+    const map = new Map();
+    Object.entries(units).forEach(([college, depts]) => {
+      (depts || []).forEach((dept) => map.set(dept, college));
+    });
+    return { units, map };
+  }
+
+  function renderCguProgramTabs(host) {
+    const bar = host.querySelector("#cgu-program-tabs");
+    if (!bar) return;
+    if (!window.cguDemoStorageIsolated || activeHomeSchool() !== "長庚大學") {
+      bar.hidden = true;
+      return;
+    }
+    bar.hidden = false;
+    const pool = filteredPartners({ ignore: "program", sort: false });
+    const countFor = (tabId) => tabId ? pool.filter((item) => cguProgramKindMatches(item, tabId)).length : pool.length;
+    const buttonsHtml = CGU_PROGRAM_TABS.map(({ id, label }) => {
+      const active = (state.cguProgramTab || "") === id;
+      const count = countFor(id);
+      return `<button type="button" role="tab" aria-selected="${active}" class="cgu-program-tab${active ? " on" : ""}${id === "dual_degree" ? " is-dual" : ""}" data-cgu-program="${escapeHtml(id)}"><strong>${escapeHtml(label)}</strong><span>${count} 所</span></button>`;
+    }).join("");
+    const note = state.cguProgramTab === "dual_degree"
+      ? "長庚雙學位計畫：修業年限、學費與學位授予規定與交換不同（多為醫／工／管院限定）"
+      : state.cguProgramTab === "exchange"
+        ? "交換學生計畫（含國際處中央名單與管理學院院級參考）"
+        : "雙學位與交換分開檢視：點選「雙學位」單獨查看 14 個雙聯計畫";
+    bar.innerHTML = `<div class="cgu-program-tabs-row">${buttonsHtml}</div><small class="cgu-program-tabs-note">${escapeHtml(note)}</small>`;
+  }
+
+  function renderCguMgmtNotice(host) {
+    const notice = host.querySelector("#cgu-mgmt-channel-notice");
+    if (!notice) return;
+    if (!window.cguDemoStorageIsolated || activeHomeSchool() !== "長庚大學") {
+      notice.hidden = true;
+      return;
+    }
+    const query = String(state.partnerQuery || "");
+    const show = state.college === "管理學院"
+      || (Boolean(state.partnerFit) && state.eligibilityProfile?.college === "管理學院")
+      || state.availability === "departmental_reference"
+      || /管理學院|商學|iae|aix|marseille|艾克斯|馬賽|rennes|雷恩/i.test(query);
+    notice.hidden = !show;
+    if (!show) {
+      notice.innerHTML = "";
+      return;
+    }
+    notice.innerHTML = `
+      <span class="cgu-mgmt-badge">院級管道提示</span>
+      <div class="cgu-mgmt-copy">
+        <strong>管理學院另有院級交換，請洽院國際辦公室</strong>
+        <span>法國 IAE 艾克斯馬賽大學管理研究所、雷恩商學院共 2 所屬於管理學院自有管道，不在國際事務處中央當期名單上。</span>
+      </div>
+      <div class="cgu-mgmt-links">
+        <a href="#school=${encodeURIComponent("法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management")}">IAE 艾克斯馬賽</a>
+        <a href="#school=${encodeURIComponent("雷恩商學院 Rennes School of Business")}">雷恩商學院</a>
+      </div>`;
+  }
+
   function renderCguCollegeBar(host, list) {
     const bar = host.querySelector("#cgu-college-quick-bar");
     if (!bar) return;
@@ -52,18 +118,33 @@ window.UniWayExplore = (() => {
     }
     bar.hidden = false;
     const pool = filteredPartners({ ignore: "college", sort: false });
-    const countFor = (collegeName) => pool.filter((item) => academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, collegeName)).length;
+    const isDemo = Boolean(window.cguDemoStorageIsolated);
+    const countFor = (collegeName) => pool.filter((item) => isDemo
+      ? cguOptionScopeMatches(item, collegeName, "", state.cguProgramTab)
+      : (academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, collegeName))).length;
     const buttonsHtml = CGU_COLLEGE_BUTTONS.map(({ short, value }) => {
       const active = state.college === value;
       const count = countFor(value);
       return `<button type="button" class="cgu-college-btn${active ? " on" : ""}" data-cgu-college="${escapeHtml(value)}" aria-pressed="${active}"><strong>${escapeHtml(short)}</strong><span>${count} 所</span></button>`;
     }).join("");
-    const allActive = !state.college;
+    const allActive = !state.college && !state.cguDepartment;
     const resetHtml = `<button type="button" class="cgu-college-btn is-all${allActive ? " on" : ""}" data-cgu-college="" aria-pressed="${allActive}"><strong>全部</strong><span>${pool.length} 所</span></button>`;
-    const liveHtml = state.college
-      ? `<b>${escapeHtml(state.college)}</b>可申請：共 <b>${list.length} 所</b>`
-      : `點選學院直接顯示可申請校數（共 <b>${pool.length} 所</b>）`;
-    bar.innerHTML = `<div class="cgu-college-bar-main"><span class="cgu-college-bar-label"><i data-lucide="graduation-cap" aria-hidden="true"></i>長庚學院</span><div class="cgu-college-buttons" role="group" aria-label="依長庚學院篩選">${buttonsHtml}${resetHtml}</div></div><p id="cgu-college-live-count" class="cgu-college-live" role="status">${liveHtml}</p>`;
+    let deptSelectHtml = "";
+    if (isDemo) {
+      const { units } = cguDeptCollegeMap();
+      const collegeKeys = state.college && units[state.college] ? [state.college] : Object.keys(units);
+      const optgroups = collegeKeys.map((col) => {
+        const opts = (units[col] || []).map((dept) => `<option value="${escapeHtml(dept)}"${state.cguDepartment === dept ? " selected" : ""}>${escapeHtml(dept)}</option>`).join("");
+        return `<optgroup label="${escapeHtml(col)}">${opts}</optgroup>`;
+      }).join("");
+      deptSelectHtml = `<label class="cgu-dept-inline-select" for="cgu-partner-dept-select"><span>系所</span><select id="cgu-partner-dept-select" aria-label="依長庚 36 系所篩選"><option value="">${state.college ? `全部${escapeHtml(state.college)}系所` : "全部 36 系所"}</option>${optgroups}</select></label>`;
+    }
+    const liveHtml = state.college && state.cguDepartment
+      ? `<b>${escapeHtml(state.college)}・${escapeHtml(state.cguDepartment)}</b>可申請：共 <b>${list.length} 所</b>`
+      : state.college
+        ? `<b>${escapeHtml(state.college)}</b>可申請：共 <b>${list.length} 所</b>`
+        : `點選學院直接顯示可申請校數（共 <b>${pool.length} 所</b>）`;
+    bar.innerHTML = `<div class="cgu-college-bar-main"><span class="cgu-college-bar-label"><i data-lucide="graduation-cap" aria-hidden="true"></i>長庚學院</span><div class="cgu-college-buttons" role="group" aria-label="依長庚學院篩選">${buttonsHtml}${resetHtml}</div>${deptSelectHtml}</div><p id="cgu-college-live-count" class="cgu-college-live" role="status">${liveHtml}</p>`;
   }
 
   function renderSortTabs(host, list) {
@@ -104,9 +185,13 @@ window.UniWayExplore = (() => {
 
   function appliedFilters() {
     const labels = [];
+    if (window.cguDemoStorageIsolated && state.cguProgramTab) {
+      labels.push(state.cguProgramTab === "dual_degree" ? "雙學位" : "交換學生");
+    }
     if (state.region) labels.push(state.region);
     if (state.country) labels.push(state.country);
     if (state.college) labels.push(state.college);
+    if (window.cguDemoStorageIsolated && state.cguDepartment) labels.push(state.cguDepartment);
     if (state.degree) labels.push(state.degree);
     if (state.availability) labels.push(host_text("#availability-filter", state.availability));
     if (state.partnerQuota) labels.push(state.partnerQuota === "2plus" ? "名額 2 名以上" : "名額 1 名");
@@ -194,7 +279,9 @@ window.UniWayExplore = (() => {
     const host = root();
     if (!host || !state.dashboard) return;
     const list = filteredPartners({ sort: false });
+    renderCguProgramTabs(host);
     renderCguCollegeBar(host, list);
+    renderCguMgmtNotice(host);
     renderSortTabs(host, list);
     renderFacets(host);
     renderSummary(host);
@@ -219,10 +306,17 @@ window.UniWayExplore = (() => {
     const host = root();
     if (!host || !host.contains(event.target)) return;
     if (event.target.closest("[data-partner-clear-all]")) { document.querySelector("#clear-partner-filters")?.click(); return; }
+    const cguProg = event.target.closest("[data-cgu-program]");
+    if (cguProg) {
+      state.cguProgramTab = cguProg.dataset.cguProgram || "";
+      refilter();
+      return;
+    }
     const cguCollege = event.target.closest("[data-cgu-college]");
     if (cguCollege) {
       const picked = cguCollege.dataset.cguCollege || "";
-      state.college = picked && state.college === picked ? "" : picked;
+      state.college = picked && state.college === picked && !state.cguDepartment ? "" : picked;
+      state.cguDepartment = "";
       const select = document.querySelector("#college-filter");
       if (select) select.value = state.college;
       refilter();
@@ -246,6 +340,22 @@ window.UniWayExplore = (() => {
   document.addEventListener("change", (event) => {
     const host = root();
     if (!host || !host.contains(event.target)) return;
+    const deptSelect = event.target.closest("#cgu-partner-dept-select");
+    if (deptSelect) {
+      const dept = deptSelect.value || "";
+      state.cguDepartment = dept;
+      if (dept) {
+        const { map } = cguDeptCollegeMap();
+        const col = map.get(dept);
+        if (col) {
+          state.college = col;
+          const select = document.querySelector("#college-filter");
+          if (select) select.value = state.college;
+        }
+      }
+      refilter();
+      return;
+    }
     const facet = event.target.closest("[data-pr-facet]");
     if (facet) {
       const next = facet.checked ? facet.value : "";
@@ -275,5 +385,5 @@ window.UniWayExplore = (() => {
   });
 
   narrow.addEventListener("change", () => { drawerSynced = false; schedule(); });
-  return { render: schedule };
+  return { render: schedule, refilter };
 })();

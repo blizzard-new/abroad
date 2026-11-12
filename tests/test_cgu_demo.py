@@ -43,7 +43,32 @@ def test_exact_shared_assets_and_main_dom():
     assert demo.select_one('.pr-supported') is None
     assert demo.select_one('[data-home-discover]') is not None
     assert demo.select_one('#cgu-home-deadline-banner') is not None
+    assert '長庚 116-1 申請一頁看完' in demo.select_one('#home-landing-title').get_text()
+    onepager = demo.select_one('#cgu-hero-onepager')
+    assert onepager is not None
+    onepager_text = onepager.get_text()
+    for phrase in (
+        '11/02–12/21 17:00',
+        '學業平均 70 分、多益 700',
+        '線上申請表',
+        '家長同意書',
+        '語文證明',
+        '含班級排名的中文成績單',
+        '1 頁讀書計畫',
+        '最多 2 個志願',
+        '校內甄選',
+        '學校提名',
+        '合作校申請',
+    ):
+        assert phrase in onepager_text
+    assert demo.select_one('#cgu-dept-finder') is not None
+    assert demo.select_one('#cgu-navigator-card') is not None
+    assert demo.select_one('#cgu-scholarships-navigator-card') is not None
+    assert demo.select_one('#cgu-program-tabs') is not None
+    assert demo.select_one('#cgu-mgmt-channel-notice') is not None
     assert demo.select_one('#cgu-college-quick-bar') is not None
+    assert '生物醫學工程學系' in demo.select_one('#cgu-demo-strip').get_text()
+    assert '多益 750' in demo.select_one('#cgu-demo-strip').get_text()
     pref_legend = demo.select_one('.application-preference-fields legend')
     assert pref_legend is not None and '最多兩所' in pref_legend.text
     assert '最多五所' not in demo.get_text()
@@ -183,3 +208,35 @@ def test_school_scope_dates_and_native_plan_persistence(demo_url):
     assert alice.post(demo_url + '/demo/reset').ok
     assert alice.get(demo_url + '/account/application-paths').json()['items'] == []
     assert len(bob.get(demo_url + '/account/application-paths').json()['items']) == 1
+
+
+def test_demo_student_profile_and_navigator_subsidy_sources(demo_url):
+    client = visitor(demo_url)
+    envelope = client.get(demo_url + '/account/workspace').json()
+    assert envelope['exists'] is True
+    profile = envelope['workspace']['selection_conditions']['profile']
+    assert profile['college'] == '工學院'
+    assert profile['department'] == '生物醫學工程學系'
+    assert profile['current_year'] == '大三'
+    assert profile['degree_level'] == '大學部'
+    assert profile['language_test'] == 'toeic'
+    assert profile['language_score'] == 750.0
+    assert profile['target_term'] == '2027-fall'
+    assert profile['academic_year'] == '116'
+
+    dashboard = client.get(demo_url + '/student-dashboard').json()
+    navigator = next(
+        (item for item in dashboard['document_explanations'] if '2B00004' in item['title']),
+        None,
+    )
+    assert navigator is not None
+    joined_points = ' '.join(navigator['key_points'])
+    for expected in ('75,000', '150,000', '60,000', '120,000', '10,000', '30%'):
+        assert expected in joined_points
+    assert 'b85add3b-7d9e-43ff-b22f-f0657e11765c' in navigator['source']['source_url']
+    assert 'e3b68a9a-e820-4614-a799-e88023a40161' in navigator['document_url']
+    assert len(dashboard['scholarship_info']) >= 1
+    req_docs = ' '.join(detail for group in dashboard['required_documents'] for detail in group['details'])
+    for doc_name in ('線上申請表', '家長同意書', '外國語文能力證明', '中文歷年成績單', '讀書計畫'):
+        assert doc_name in req_docs
+

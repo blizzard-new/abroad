@@ -55,19 +55,81 @@ def screenshot(page, name):
 
 def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     ready(page, demo_url, '?home=國立臺灣大學')
-    expect(page.locator('#home-landing-title')).to_contain_text('你能去哪些交換學校')
+    expect(page.locator('#home-landing-title')).to_contain_text('長庚 116-1 申請一頁看完')
     expect(page.locator('.pr-supported')).to_have_count(0)
     expect(page.locator('[data-home-discover]')).to_be_visible()
+    onepager = page.locator('#cgu-hero-onepager')
+    expect(onepager).to_be_visible()
+    for phrase in (
+        '11/02–12/21 17:00',
+        '學業平均 70 分、多益 700',
+        '線上申請表',
+        '家長同意書',
+        '語文證明',
+        '含班級排名的中文成績單',
+        '1 頁讀書計畫',
+        '最多 2 個志願',
+        '校內甄選',
+        '學校提名',
+        '合作校申請',
+    ):
+        expect(onepager).to_contain_text(phrase)
     expect(page.locator('#cgu-home-deadline-banner')).to_contain_text('12/21 17:00')
     expect(page.locator('#home-tile-calendar .pr-mini-dates li').first).to_contain_text('12 月')
     expect(page.locator('#home-tile-calendar .pr-mini-dates li').first).to_contain_text('21')
     expect(page.locator('#home-tile-calendar')).to_contain_text('適用已獲提名者')
+
+    # Item 2:「我是哪個系？」4 colleges & 36 departments finder
+    finder = page.locator('#cgu-dept-finder')
+    expect(finder).to_be_visible()
+    expect(finder.locator('[data-cgu-finder-college]')).to_have_count(4)
+    expect(finder.locator('#cgu-dept-result-summary')).to_contain_text('工學院 · 生物醫學工程學系')
+    expect(finder.locator('#cgu-dept-exchange-list')).to_contain_text('香港中文大學')
+    expect(finder.locator('#cgu-dept-exchange-list')).to_contain_text('限醫工系')
+    expect(finder.locator('#cgu-dept-exchange-list')).to_contain_text('加泰隆尼亞國際大學')
+    finder.locator('[data-cgu-finder-dept="電機工程學系"]').click()
+    expect(finder.locator('#cgu-dept-result-summary')).to_contain_text('工學院 · 電機工程學系')
+    expect(finder.locator('#cgu-dept-exchange-list')).not_to_contain_text('香港中文大學')
+    finder.locator('[data-cgu-finder-college="醫學院"]').click()
+    expect(finder.locator('[data-cgu-finder-dept]')).to_have_count(18)
+    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('明尼蘇達大學')
+    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('碩士')
+    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('內布拉斯加大學醫學中心分校')
+    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('博士')
+    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('馬里蘭大學巴爾的摩分校')
+    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('學士')
+    finder.locator('[data-cgu-finder-college="管理學院"]').click()
+    expect(finder).to_contain_text('管理學院另有院級交換，請洽院國際辦公室')
+
+    # Item 7:「領航者補助」說明卡 on homepage
+    nav_card = page.locator('#cgu-navigator-card')
+    expect(nav_card).to_be_visible()
+    for nav_text in ('NT$75,000', 'NT$150,000', 'NT$60,000', 'NT$120,000', '+NT$10,000', '班排名前 30%'):
+        expect(nav_card).to_contain_text(nav_text)
+    expect(nav_card.locator('a[href*="b85add3b-7d9e-43ff-b22f-f0657e11765c"]')).to_be_visible()
+
     screenshot(page, 'desktop-home.png')
     page.locator('#home-search-input').fill('Lincoln')
     page.locator('#home-search-form button[type=submit]').click()
     expect(page.locator('#partner-table')).to_contain_text('林肯')
     page.locator('#partner-search').fill('')
     expect(page.locator('#partner-result-count')).to_contain_text('78')
+
+    # Item 4: 雙學位跟交換分開呈現 (#cgu-program-tabs)
+    prog_tabs = page.locator('#cgu-program-tabs')
+    expect(prog_tabs).to_be_visible()
+    dual_tab = prog_tabs.locator('[data-cgu-program="dual_degree"]')
+    exch_tab = prog_tabs.locator('[data-cgu-program="exchange"]')
+    all_tab = prog_tabs.locator('[data-cgu-program=""]')
+    expect(dual_tab).to_contain_text('14 所')
+    expect(exch_tab).to_contain_text('66 所')
+    dual_tab.click()
+    expect(dual_tab).to_have_attribute('aria-selected', 'true')
+    expect(page.locator('#partner-result-count')).to_contain_text('共 14 所')
+    expect(page.locator('#partner-table')).to_contain_text('瑞典皇家理工學院')
+    all_tab.click()
+    expect(page.locator('#partner-result-count')).to_contain_text('78')
+
     college_bar = page.locator('#cgu-college-quick-bar')
     expect(college_bar).to_be_visible()
     for label in ['醫', '工', '管', '智慧運算']:
@@ -82,7 +144,17 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     expect(ai_btn).to_have_attribute('aria-pressed', 'true')
     expect(page.locator('#cgu-college-live-count')).to_contain_text('智慧運算學院可申請：共 43 所')
     expect(page.locator('#partner-result-count')).to_contain_text('共 43 所')
+
+    # Item 5: 管理學院的「院級管道」提示
+    mgmt_btn = college_bar.locator('[data-cgu-college="管理學院"]')
+    mgmt_btn.click()
+    expect(page.locator('#cgu-mgmt-channel-notice')).to_be_visible()
+    expect(page.locator('#cgu-mgmt-channel-notice')).to_contain_text('管理學院另有院級交換，請洽院國際辦公室')
+    expect(page.locator('#cgu-mgmt-channel-notice')).to_contain_text('IAE 艾克斯馬賽')
+    expect(page.locator('#cgu-mgmt-channel-notice')).to_contain_text('雷恩商學院')
+
     college_bar.locator('[data-cgu-college=""]').click()
+    expect(page.locator('#cgu-mgmt-channel-notice')).not_to_be_visible()
     expect(page.locator('#partner-result-count')).to_contain_text('78')
     expect(page.get_by_role('group', name='交換名額')).to_contain_text('2 名以上')
     deadline_tab = page.locator('[data-partner-sort="deadline"]')
@@ -96,12 +168,20 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     expect(quota_tab).to_have_attribute('aria-selected', 'true')
     first_by_quota = page.locator('#partner-table .pr-school-card').first.inner_text()
     assert first_by_deadline != first_by_quota
+
+    # Item 6: 從「多益 700」出發看語言門檻（有列多益 vs 此校未列多益）
+    page.locator('#partner-search').fill('嘉泉')
+    expect(page.locator('#partner-table .pr-school-card').first).to_contain_text('有列多益')
+    expect(page.locator('#partner-table .pr-school-card').first).not_to_contain_text('此校未列多益')
+
     page.locator('#partner-search').fill('Lincoln')
     expect(page.locator('#partner-table')).to_contain_text('林肯')
+    expect(page.locator('#partner-table .pr-school-card').first).to_contain_text('此校未列多益')
     page.locator('#partner-table .school-detail-trigger').first.click()
     page.locator('#detail-favorite-button').wait_for(state='visible')
     expect(page.locator('#booking-home-deadline')).to_contain_text('2026/12/21')
     expect(page.locator('#booking-home-deadline')).to_contain_text('17:00')
+    expect(page.get_by_role('complementary', name='申請摘要')).to_contain_text('此校未列多益')
     page.locator('#detail-favorite-button').click()
     expect(page.locator('#detail-favorite-button')).to_contain_text('已收藏')
     expect(page.locator('#detail-compare-button')).to_have_attribute('aria-pressed', 'true')
@@ -115,7 +195,7 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     expect(page.locator('#detail-favorite-button')).to_contain_text('已收藏')
     page.locator('#cgu-demo-info').click()
     expect(page.locator('#cgu-demo-dialog')).to_contain_text('第一階段')
-    expect(page.locator('#cgu-demo-dialog a')).to_have_count(3)
+    expect(page.locator('#cgu-demo-dialog a')).to_have_count(6)
     page.keyboard.press('Escape')
     expect(page.locator('#cgu-demo-dialog')).not_to_be_visible()
 
@@ -173,6 +253,15 @@ def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):
     page.goto(demo_url + '/#eligibility', wait_until='domcontentloaded')
     expect(page.locator('.application-preference-fields legend')).to_contain_text('最多兩所')
     expect(page.locator('.application-preference-fields legend')).not_to_contain_text('最多五所')
+    # Item 3: 示範學生林小程預設帶入工學院・生物醫學工程學系・大三・多益 750
+    expect(page.locator('#advisor-college')).to_have_value('工學院')
+    expect(page.locator('#advisor-department')).to_have_value('生物醫學工程學系')
+    expect(page.locator('#advisor-current-year')).to_have_value('大三')
+    expect(page.locator('#advisor-language-test')).to_have_value('toeic')
+    expect(page.locator('#advisor-language-score')).to_have_value('750')
+    page.goto(demo_url + '/#scholarships', wait_until='domcontentloaded')
+    expect(page.locator('#cgu-scholarships-navigator-card')).to_contain_text('領航者補助作業要點')
+    expect(page.locator('#cgu-scholarships-navigator-card')).to_contain_text('NT$75,000')
     page.goto(demo_url + '/#my-application?view=today', wait_until='domcontentloaded')
     page.locator('#today-focus-title').wait_for(state='visible')
     expect(page.locator('.today-track li')).to_have_count(6)
@@ -203,6 +292,10 @@ def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):
 def test_responsive_native_journey(page, demo_url, size):
     page.set_viewport_size({'width':size[0], 'height':size[1]})
     ready(page, demo_url)
+    expect(page.locator('#cgu-hero-onepager')).to_be_visible()
+    expect(page.locator('#cgu-dept-finder')).to_be_visible()
+    expect(page.locator('#cgu-navigator-card')).to_be_visible()
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
     seed(page)
     expect(page.locator('.today-primary')).to_be_visible()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
