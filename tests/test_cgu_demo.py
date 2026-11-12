@@ -151,6 +151,19 @@ def test_https_proxy_origin_saves_without_trusting_forwarded_headers(demo_url):
     ]:
         assert client.post(demo_url + '/demo/reset', headers=headers).status_code == 403
     assert len(client.get(demo_url + '/account/application-paths').json()['items']) == 1
+    up_ok = client.post(
+        demo_url + '/demo/connector/files',
+        data={'doc_key': 'online_form'},
+        files={'file': ('proxy_check.pdf', b'proxy-https-check', 'application/pdf')},
+    )
+    assert up_ok.status_code == 200 and up_ok.json()['file']['filename'] == 'proxy_check.pdf'
+    up_bad = client.post(
+        demo_url + '/demo/connector/files',
+        data={'doc_key': 'online_form'},
+        files={'file': ('proxy_check.pdf', b'proxy-https-check', 'application/pdf')},
+        headers={'Origin': 'http://demo.example.test', 'X-Forwarded-Proto': 'https'},
+    )
+    assert up_bad.status_code == 403
     assert client.post(demo_url + '/demo/reset').ok
 
 
@@ -266,7 +279,8 @@ def test_school_connector_interface_and_swappability(tmp_path):
     with pytest.raises(TypeError):
         IncompleteConnector()
 
-    # Verify swapping SchoolConnector implementation requires only replacing the connector class
+    # Verify swapping SchoolConnector implementation requires only replacing the connector class,
+    # including UI 5-document precheck uploads, rule-based FAQ lookup, report print, and reset.
     script = """
 import os, sys
 from fastapi.testclient import TestClient
@@ -275,30 +289,72 @@ from exchange_info.cgu_demo import SchoolConnector, create_demo_app
 class StubSchoolConnector(SchoolConnector):
     def __init__(self, root):
         self.calls = []
+        self.last_docs = []
+        self.reports = {}
     def submit_application(self, workspace_id, payload):
         self.calls.append(('submit_application', payload.get('preference_1')))
+        self.last_docs = payload.get('documents') or []
         return {'receipt_id': 'SIM-APP-STUB0001', 'status': 'submitted', 'status_label': '已送出', 'timeline': []}
     def send_inquiry(self, workspace_id, payload):
         self.calls.append(('send_inquiry', payload.get('question')))
         return {'receipt_id': 'SIM-INQ-STUB0001', 'status': 'pending', 'status_label': '待承辦回覆'}
     def submit_return_report(self, workspace_id, payload):
         self.calls.append(('submit_return_report', payload.get('partner_school')))
-        return {'receipt_id': 'SIM-RPT-STUB0001', 'status': 'pending_review', 'status_label': '待承辦審核'}
+        rec = {
+            'receipt_id': 'SIM-RPT-STUB0001',
+            'status': 'pending_review',
+            'status_label': '待承辦審核',
+            'student_name': '林小程（展示資料）',
+            'student_department': '工學院 生物醫學工程學系（大三）',
+            'partner_school': payload.get('partner_school') or '林肯大學 Lincoln University',
+            'term': '116-1（2027 秋季）',
+            'sections': payload.get('sections') or {},
+            'public_consent': True,
+            'submitted_at': '2026-11-12T12:00:00+08:00',
+        }
+        self.reports[rec['receipt_id']] = rec
+        return rec
     def get_status(self, workspace_id, receipt_id=None):
-        return {'badge': '模擬・尚未與校方串接', 'stub': True, 'calls': len(self.calls)}
+        if receipt_id in self.reports:
+            return {'badge': '模擬・尚未與校方串接', 'found': True, 'kind': 'return_report', 'record': self.reports[receipt_id]}
+        return {'badge': '模擬・尚未與校方串接', 'stub': True, 'calls': len(self.calls), 'doc_count': len(self.last_docs)}
 
 app = create_demo_app(connector_factory=StubSchoolConnector)
 with TestClient(app, base_url='http://testserver') as client:
     headers = {'Origin': 'http://testserver'}
     assert client.get('/').status_code == 200
+    for key in ('online_form', 'parent_consent', 'language_proof', 'transcript', 'study_plan'):
+        up = client.post('/demo/connector/files', data={'doc_key': key},
+                         files={'file': (f'{key}.pdf', f'stub-{key}'.encode(), 'application/pdf')}, headers=headers)
+        assert up.status_code == 200, up.text
+    assert client.get('/demo/connector/status').json()['precheck']['complete'] is True
+    assert client.delete('/demo/connector/files/study_plan', headers=headers).status_code == 200
+    assert client.get('/demo/connector/status').json()['precheck']['complete'] is False
+    assert client.post('/demo/connector/files', data={'doc_key': 'study_plan'},
+                       files={'file': ('study_plan.pdf', b'stub-plan', 'application/pdf')}, headers=headers).status_code == 200
+
     r1 = client.post('/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'}, headers=headers)
     assert r1.status_code == 201 and r1.json()['application']['receipt_id'] == 'SIM-APP-STUB0001'
-    r2 = client.post('/demo/connector/inquiries', json={'question': '測試問題？'}, headers=headers)
-    assert r2.status_code == 201 and r2.json()['inquiry']['receipt_id'] == 'SIM-INQ-STUB0001'
-    r3 = client.post('/demo/connector/return-reports', json={'partner_school': '林肯大學 Lincoln University'}, headers=headers)
+
+    ask_hit = client.post('/demo/connector/ask', json={'question': '請問 116-1 校內申請什麼時候截止？'}, headers=headers)
+    assert ask_hit.status_code == 200 and ask_hit.json()['matched'] is True
+    ask_miss = client.post('/demo/connector/ask', json={'question': '未收錄的極光觀測選課規定？'}, headers=headers)
+    assert ask_miss.status_code == 200 and ask_miss.json()['matched'] is False
+    assert ask_miss.json()['inquiry']['receipt_id'] == 'SIM-INQ-STUB0001'
+
+    sec_text = '虛構示範返國研修心得段落內容，說明選課準備與海外學習收穫。' * 12
+    r3 = client.post('/demo/connector/return-reports', json={
+        'partner_school': '林肯大學 Lincoln University',
+        'sections': {'preparation': sec_text, 'academics': sec_text, 'daily_life': sec_text, 'extracurricular': sec_text},
+    }, headers=headers)
     assert r3.status_code == 201 and r3.json()['report']['receipt_id'] == 'SIM-RPT-STUB0001'
+    pr = client.get('/demo/connector/return-reports/SIM-RPT-STUB0001/print')
+    assert pr.status_code == 200 and 'SIM-RPT-STUB0001' in pr.text
+
     st = client.get('/demo/connector/status').json()
-    assert st['stub'] is True and st['calls'] == 3
+    assert st['stub'] is True and st['calls'] == 3 and st['doc_count'] == 5
+    assert client.post('/demo/reset', headers=headers).status_code == 200
+    assert client.get('/demo/connector/status').json()['precheck']['complete'] is False
 """
     clean_env = {k: v for k, v in os.environ.items() if not k.startswith(('EXCHANGE_', 'SUPABASE', 'GOOGLE_OAUTH', 'SMTP_', 'OPENAI_API_KEY'))}
     res = subprocess.run([sys.executable, '-c', script], env=clean_env, capture_output=True, text=True)
@@ -309,9 +365,22 @@ def test_html_fixes_hidden_community_fixed_school_and_forbidden_terms():
     demo_raw = platform_html()
     assert '官方合作' not in demo_raw
     assert '模擬・尚未與校方串接' in demo_raw
+    for stale_count in ('75 間', '76 間', '77 間', '75 所', '76 所', '77 所'):
+        assert stale_count not in demo_raw
+    assert '78 間合作校' in demo_raw
 
     demo = BeautifulSoup(demo_raw, 'html.parser')
-    for hidden_sel in ('[data-public-route="forum"]', '[data-public-route="feedback"]', 'a[href="#forum"]', 'a[href="#feedback"]', '#detail-tab-community'):
+    for hidden_sel in (
+        '[data-public-route="forum"]',
+        '[data-public-route="feedback"]',
+        'a[href="#forum"]',
+        'a[href="#feedback"]',
+        '#detail-tab-community',
+        '#community-hub',
+        '#feedback',
+        '#feedback-thanks',
+        'a[href="#university-feed"]',
+    ):
         nodes = demo.select(hidden_sel)
         assert nodes, f'expected {hidden_sel} in DOM'
         assert all(n.has_attr('hidden') for n in nodes)
@@ -322,6 +391,8 @@ def test_html_fixes_hidden_community_fixed_school_and_forbidden_terms():
     assert '切換就讀學校' not in switcher.get_text()
     assert '選擇就讀學校' not in switcher.get_text()
     assert demo.select_one('#school-switcher-label').get_text(strip=True) == '長庚大學'
+    home_uni_input = demo.select_one('input[name="home_university"]')
+    assert home_uni_input is not None and home_uni_input.has_attr('readonly')
 
     for nav_route in ('ask-oia', 'return-report', 'school-connector'):
         assert demo.select_one(f'.uniway-public-nav a[data-public-route="{nav_route}"]') is not None
@@ -544,6 +615,27 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     assert hit_custom['matched'] is True
     assert '特殊飲食欄位' in hit_custom['matches'][0]['answer']
 
+    # Also test UI default add_to_faq WITHOUT manual keywords: CJK n-grams match natural follow-ups without generic false positives
+    auto_miss = alice.post(demo_url + '/demo/connector/ask', json={
+        'question': '請問基督城機場接機預約跟特殊飲食宿舍怎麼登記？',
+    }).json()
+    assert auto_miss['matched'] is False
+    auto_inq_id = auto_miss['inquiry']['receipt_id']
+    assert alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'reply_inquiry',
+        'receipt_id': auto_inq_id,
+        'reply': '基督城接機預約連結將於獲得提名後由林肯大學寄發，特殊飲食可於宿舍系統登記。',
+    }).status_code == 200
+    assert alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'add_to_faq',
+        'receipt_id': auto_inq_id,
+    }).status_code == 200
+    auto_hit = alice.post(demo_url + '/demo/connector/ask', json={'question': '請問基督城接機怎麼預約？'}).json()
+    assert auto_hit['matched'] is True
+    assert '基督城接機預約連結' in auto_hit['matches'][0]['answer']
+    unrelated_miss = alice.post(demo_url + '/demo/connector/ask', json={'question': '請問校內體檢諮詢怎麼預約？'}).json()
+    assert unrelated_miss['matched'] is False
+
     # 6. Return Report: >= 300 chars validation, print view, consent gating on public school detail
     short_sections = _valid_report_sections(310)
     short_sections['daily_life'] = '字數不足測試' * 20  # 120 chars < 300
@@ -602,6 +694,32 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     after_pub = alice.get(demo_url + '/demo/connector/public-reports?school=林肯大學 Lincoln University').json()['items']
     assert any(r['receipt_id'] == pub_id for r in after_pub)
 
+    # Distinct partner programs sharing a base name must NOT cross-bleed (Minnesota dual degree vs GO Minnesota)
+    umn_rpt = alice.post(demo_url + '/demo/connector/return-reports', json={
+        'partner_school': '明尼蘇達大學 University of Minnesota',
+        'sections': _valid_report_sections(306),
+        'public_consent': True,
+    }).json()['report']
+    assert alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'approve_report', 'receipt_id': umn_rpt['receipt_id'],
+    }).status_code == 200
+    umn_exact = alice.get(demo_url + '/demo/connector/public-reports', params={'school': '明尼蘇達大學 University of Minnesota'}).json()['items']
+    umn_short = alice.get(demo_url + '/demo/connector/public-reports', params={'school': '明尼蘇達大學'}).json()['items']
+    go_umn = alice.get(demo_url + '/demo/connector/public-reports', params={'school': '美國明尼蘇達大學 University of Minnesota (GO Minnesota方案)'}).json()['items']
+    assert any(r['receipt_id'] == umn_rpt['receipt_id'] for r in umn_exact)
+    assert any(r['receipt_id'] == umn_rpt['receipt_id'] for r in umn_short)
+    assert not any(r['receipt_id'] == umn_rpt['receipt_id'] for r in go_umn)
+
+    # Mutating preloaded seed records works and is restored cleanly on reset
+    mut_seed_1 = alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'approve_initial', 'receipt_id': 'SIM-APP-SEED-0001',
+    })
+    assert mut_seed_1.status_code == 200 and mut_seed_1.json()['record']['status'] == 'passed_initial'
+    mut_seed_3 = alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'reply_inquiry', 'receipt_id': 'SIM-INQ-SEED-0003', 'reply': '示範回覆種子詢問單。',
+    })
+    assert mut_seed_3.status_code == 200 and mut_seed_3.json()['record']['status'] == 'replied'
+
     # 7. Visitor isolation: Bob sees none of Alice's records or notifications
     bob_status = bob.get(demo_url + '/demo/connector/status').json()
     assert bob_status['applications'] == []
@@ -609,7 +727,7 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     assert bob_status['return_reports'] == []
     assert bob.get(demo_url + '/account/notifications').json()['unread_count'] == 0
 
-    # 8. Reset wipes ALL newly added data for Alice
+    # 8. Reset wipes ALL newly added data AND restores mutated seed records for Alice
     assert alice.post(demo_url + '/demo/reset').ok
     reset_status = alice.get(demo_url + '/demo/connector/status').json()
     assert reset_status['draft_files'] == {}
@@ -618,3 +736,8 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     assert reset_status['return_reports'] == []
     assert alice.get(demo_url + '/account/notifications').json()['items'] == []
     assert alice.post(demo_url + '/demo/connector/ask', json={'question': '想問無麩質宿舍廚房怎麼申請？'}).json()['matched'] is False
+    reset_oia = alice.get(demo_url + '/demo/connector/oia/dashboard').json()
+    seed_app_1 = next(a for a in reset_oia['inboxes']['applications'] if a['receipt_id'] == 'SIM-APP-SEED-0001')
+    seed_inq_3 = next(i for i in reset_oia['inboxes']['inquiries'] if i['receipt_id'] == 'SIM-INQ-SEED-0003')
+    assert seed_app_1['status'] == 'submitted'
+    assert seed_inq_3['status'] == 'pending'

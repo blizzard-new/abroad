@@ -8,10 +8,10 @@
 
 | 實際執行 | 結果 |
 | --- | --- |
-| 展示 API、連接器契約、磁碟與零外部網路隔離（`tests/test_cgu_demo.py`） | **23 passed，64.16 秒**；涵蓋 `SchoolConnector` 抽象契約與連接器抽換、5 項文件缺件攔截（422）、純記憶體雜湊且磁碟零原始位元組留存、零非本機網路／DNS 連線、規則式問答命中／未命中轉承辦、返國心得四段滿 300 字驗證與公開授權閘門、國際處收件匣 5 筆虛構資料與雙向通知連動、跨訪客隔離及 `/demo/reset` 完整清除 |
-| Chromium 端對端瀏覽器測試（`tests/test_cgu_demo_browser.py`） | **9 passed，109.49 秒**；涵蓋既有搜尋／收藏／比較／六階段／工作台／storage 例外，以及新增完整展示腳本路線（預檢缺件 → 補齊送出取 `SIM-` 編號 → 國際處視角要求補件 → 切回學生端通知鈴鐺與狀態同步 → 重整保留 → 問國際處命中與未命中轉承辦 → 承辦回覆加入 FAQ → 返國心得列印版與核可公開至學校詳細頁 → 390×844 響應式零溢位 → 重設完整清除），全程零 `pageerror` |
+| 展示 API、連接器契約、磁碟與零外部網路隔離（`tests/test_cgu_demo.py`） | **23 passed，56.66 秒**；涵蓋 `SchoolConnector` 抽象契約與純 4 方法子類別端對端抽換（含 5 項文件預檢、規則式 FAQ 查詢與列印檢視）、5 項文件缺件攔截（422）、純記憶體雜湊且磁碟零原始位元組留存、零非本機網路／DNS 連線、反向代理 HTTPS Origin `multipart/form-data` 驗證、規則式問答命中／未命中轉承辦與中文 CJK n-gram 自動關鍵字收錄、返國心得四段滿 300 字驗證與同校雙方案不串流、國際處收件匣 5 筆虛構資料與雙向通知連動、跨訪客隔離及 `/demo/reset` 完整清除與種子還原 |
+| Chromium 端對端瀏覽器測試（`tests/test_cgu_demo_browser.py`） | **9 passed，114.98 秒**；涵蓋既有搜尋／收藏／比較／六階段／工作台／storage 例外、直接導覽隱藏論壇與看板 hash 攔截、母校切換器鎖定，以及新增完整展示腳本路線（預檢缺件 → 補齊送出取 `SIM-` 編號 → 國際處視角要求補件 → 切回學生端通知鈴鐺與狀態同步 → 重整保留 → 問國際處命中與未命中轉承辦 → 承辦回覆加入 FAQ 後學生端追問即時命中 → 返國心得列印版與核可公開至學校詳細頁雙分頁且跨校切換零殘留 → 390×844 響應式零溢位 → 重設完整清除），全程零 `pageerror` |
 | 長庚資料快照與部署封裝（`test_cgu_bundled_data.py`、`test_cgu_catalogue_recovery.py`、`test_cgu_deployment_package.py`） | **全部通過**；78 所合作校快照雜湊與部署安全設定未變動 |
-| 主站回歸、靜態資產鎖與 OpenAPI／TLS 檢查 | `scripts/export_openapi.py --check` 通過；`validate_supabase_migrations.py`（42 migrations）通過；`test_static_asset_versions.py`、`test_static_caching.py`、`test_text_files_are_utf8.py`、`test_uniway_ui_contract.py`、`test_api.py`、`test_application_path.py`（29 passed）、`tls-security.yml` 離線回歸套件（134 passed）均全數通過 |
+| 主站回歸、靜態資產鎖與 OpenAPI／TLS 檢查 | `scripts/export_openapi.py --check` 通過；`validate_supabase_migrations.py`（42 migrations）通過；`test_static_asset_versions.py`、`test_static_caching.py`、`test_text_files_are_utf8.py`、`test_uniway_ui_contract.py`、`test_api.py`、`test_application_path.py`（29 passed；合共 **416 passed, 4 skipped**）均全數通過 |
 
 ---
 

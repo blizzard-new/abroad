@@ -13,7 +13,7 @@ body { padding-bottom:70px; }
 /* One school needs no multi-school supported strip or school-change affordance. */
 .pr-supported { display:none !important; }
 #school-switcher .school-switcher-action, #school-switcher small, #school-switcher > .lucide { display:none !important; }
-#school-switcher:disabled { opacity:1 !important; cursor:default !important; pointer-events:none; }
+#school-switcher, #school-switcher:disabled { opacity:1 !important; cursor:default !important; pointer-events:none !important; }
 body.unified-shell .page-back-bar #school-switcher::after { content:none !important; display:none !important; }
 [data-home-pick-school] { pointer-events:none; }
 .mt-board-edit { display:none; }
@@ -27,6 +27,12 @@ label[for="college-filter"] { display:none !important; }
 a[href="#forum"],
 a[href="#feedback"],
 a[href="#university-posts"],
+a[href="#university-feed"],
+a[href="#cgu-feed"],
+a[href^="#board="],
+#community-hub,
+#feedback,
+#feedback-thanks,
 .global-sidebar-nav,
 .sidebar-board-list,
 .pr-forum-preview,

@@ -49,11 +49,18 @@
   }
 
   const HIDDEN_COMMUNITY_HASHES = new Set([
-    '#forum', '#feedback', '#public-board', '#language-school-board', '#following', '#university-posts', '#cgu-posts',
+    '#forum', '#feedback', '#public-board', '#language-school-board', '#following',
+    '#university-posts', '#cgu-posts', '#cgu-feed', '#university-feed', '#community-hub',
   ]);
 
+  function isHiddenCommunityHash(hash = window.location.hash) {
+    return HIDDEN_COMMUNITY_HASHES.has(hash)
+      || hash.startsWith('#board=')
+      || hash.startsWith('#post=');
+  }
+
   function guardHiddenRoutes() {
-    if (HIDDEN_COMMUNITY_HASHES.has(window.location.hash)) {
+    if (isHiddenCommunityHash(window.location.hash)) {
       history.replaceState(history.state, '', '#home');
       if (typeof applyAppRoute === 'function') applyAppRoute({ loadFeed: false, resetScroll: true });
       return true;
@@ -76,7 +83,39 @@
     if (switcherLabel && switcherLabel.textContent !== '長庚大學') switcherLabel.textContent = '長庚大學';
     const mobileLabel = $('#mobile-school-label');
     if (mobileLabel && mobileLabel.textContent !== '長庚大學') mobileLabel.textContent = '長庚大學';
+    document.querySelectorAll('input[name="home_university"]').forEach(inp => {
+      if (inp.value !== '長庚大學') inp.value = '長庚大學';
+      inp.readOnly = true;
+      inp.setAttribute('aria-readonly', 'true');
+    });
   };
+
+  if (typeof setHomeSchool === 'function') {
+    const origSetHomeSchool = setHomeSchool;
+    setHomeSchool = function (schoolName, ...rest) {
+      return origSetHomeSchool.call(this, '長庚大學', ...rest);
+    };
+  }
+
+  if (typeof updateSchoolContext === 'function') {
+    const origUpdateSchoolContext = updateSchoolContext;
+    updateSchoolContext = function (...args) {
+      const res = origUpdateSchoolContext.apply(this, args);
+      lockSchoolSwitcher();
+      return res;
+    };
+  }
+
+  if (typeof applyAppRoute === 'function') {
+    const origApplyAppRoute = applyAppRoute;
+    applyAppRoute = function (opts) {
+      if (isHiddenCommunityHash(window.location.hash)) {
+        history.replaceState(history.state, '', '#home');
+        return origApplyAppRoute.call(this, { ...(opts || {}), loadFeed: false });
+      }
+      return origApplyAppRoute.call(this, opts);
+    };
+  }
 
   const restrictControls = () => {
     document.querySelectorAll(
@@ -207,8 +246,14 @@
         const error = await made.json();
         throw new Error(typeof error.detail === 'string' ? error.detail : '建立失敗，請稍後再試');
       }
-      location.href = '/?home=' + encodeURIComponent('長庚大學') + '#my-application';
-      location.reload();
+      const expectedSearch = '?home=' + encodeURIComponent('長庚大學');
+      const targetUrl = '/' + expectedSearch + '#my-application';
+      if (location.pathname === '/' && location.search === expectedSearch) {
+        location.hash = '#my-application';
+        location.reload();
+      } else {
+        location.assign(targetUrl);
+      }
     } catch (error) {
       status.textContent = error.message;
     }
@@ -348,7 +393,7 @@
         '林肯大學 Lincoln University',
         '明尼蘇達大學 University of Minnesota',
         '瑞典皇家理工學院 KTH Royal Institute of Technology',
-        '嘉泉大學 Gachon University',
+        '韓國嘉泉大學 Gachon University',
       ];
     }
     return names;
@@ -856,6 +901,9 @@
   }
 
   // Inject approved & consented return reports into Partner School Detail Page
+  let publicReportSeq = 0;
+  let renderedPublicReportSchool = '';
+
   async function syncSchoolDetailPublicReports(schoolItemOrName) {
     const schoolName = typeof schoolItemOrName === 'string'
       ? schoolItemOrName
@@ -863,10 +911,16 @@
     if (!schoolName) return;
     const detailContent = $('#school-detail-content');
     if (!detailContent) return;
+    if (renderedPublicReportSchool && renderedPublicReportSchool !== schoolName) {
+      document.querySelectorAll('.cgu-public-reports-block').forEach(el => el.remove());
+    }
+    const seq = ++publicReportSeq;
     try {
       const data = await apiJson('/demo/connector/public-reports?school=' + encodeURIComponent(schoolName));
+      if (seq !== publicReportSeq) return;
       if (typeof state === 'object' && state.activeSchool && state.activeSchool !== schoolName) return;
       document.querySelectorAll('.cgu-public-reports-block').forEach(el => el.remove());
+      renderedPublicReportSchool = schoolName;
       const items = data.items || [];
       if (!items.length) return;
 
@@ -911,7 +965,7 @@
       }
       const expPanel = detailContent.querySelector('#detail-experiences');
       if (expPanel) {
-        expPanel.prepend(buildBlock(''));
+        expPanel.prepend(buildBlock('cgu-approved-return-reports-experiences'));
       }
     } catch (_) { /* ignore transient error */ }
   }
@@ -920,7 +974,7 @@
     const origDetailRender = window.UniWayDetail.render.bind(window.UniWayDetail);
     window.UniWayDetail.render = function (item) {
       const result = origDetailRender(item);
-      syncSchoolDetailPublicReports(item);
+      if (item) syncSchoolDetailPublicReports(item);
       return result;
     };
   }
@@ -982,7 +1036,11 @@
         </div>
       </article>`).join('');
 
-    const inqsHtml = inqs.map(inq => `
+    const customFaqMap = new Map((dash.custom_faqs || []).map(f => [f.id, f]));
+    const inqsHtml = inqs.map(inq => {
+      const existingFaq = customFaqMap.get(`faq-custom-${String(inq.receipt_id || '').toLowerCase()}`);
+      const kwValue = existingFaq ? (existingFaq.keywords || []).slice(0, 6).join('、') : '';
+      return `
       <article class="cgu-oia-item" data-oia-card="${esc(inq.receipt_id)}">
         <header class="cgu-submitted-head">
           <div class="cgu-sim-badges-row">
@@ -997,10 +1055,14 @@
           <textarea data-oia-reply-for="${esc(inq.receipt_id)}" rows="2" maxlength="1200" placeholder="輸入承辦回覆內容（送出後即時同步至學生端狀態與通知鈴鐺）…" aria-label="回覆詢問（${esc(inq.receipt_id)}）">${esc(inq.reply || '')}</textarea>
           <div class="cgu-oia-action-row">
             <button type="button" class="cgu-pill-action is-solid" data-oia-act="reply_inquiry" data-receipt="${esc(inq.receipt_id)}">回覆詢問</button>
-            <button type="button" class="cgu-pill-action" data-oia-act="add_to_faq" data-receipt="${esc(inq.receipt_id)}">將回覆加入 FAQ</button>
+            <div class="cgu-oia-inline-input">
+              <input type="text" data-oia-keywords-for="${esc(inq.receipt_id)}" maxlength="200" placeholder="選填 FAQ 關鍵字（留空將自動擷取問題詞彙）" value="${esc(kwValue)}" aria-label="FAQ 關鍵字（${esc(inq.receipt_id)}）" />
+              <button type="button" class="cgu-pill-action" data-oia-act="add_to_faq" data-receipt="${esc(inq.receipt_id)}">將回覆加入 FAQ</button>
+            </div>
           </div>
         </div>
-      </article>`).join('');
+      </article>`;
+    }).join('');
 
     const rptsHtml = rpts.map(rpt => `
       <article class="cgu-oia-item" data-oia-card="${esc(rpt.receipt_id)}">
@@ -1635,11 +1697,13 @@
       const receipt = oiaActBtn.dataset.receipt;
       const reasonInput = document.querySelector(`[data-oia-reason-for="${CSS.escape(receipt)}"]`);
       const replyInput = document.querySelector(`[data-oia-reply-for="${CSS.escape(receipt)}"]`);
+      const kwInput = document.querySelector(`[data-oia-keywords-for="${CSS.escape(receipt)}"]`);
       const payload = {
         action,
         receipt_id: receipt,
         reason: reasonInput ? reasonInput.value : '',
         reply: replyInput ? replyInput.value : '',
+        ...(kwInput && kwInput.value.trim() ? { keywords: kwInput.value.trim() } : {}),
       };
       oiaActBtn.disabled = true;
       try {

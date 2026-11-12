@@ -52,8 +52,21 @@ RETURN_REPORT_SECTIONS: list[dict[str, str]] = [
 MIN_REPORT_SECTION_CHARS = 300
 
 STOPWORDS = (
-    "請問", "想問", "我想問", "可以", "請問一下", "什麼", "怎麼", "如何", "是否", "需要", "嗎", "呢", "的", "了", "在", "有", "跟", "與", "或",
+    "虛構示範提問", "請問一下", "我想請問", "想請問", "我想問", "請問", "想問", "想了解", "請問一下喔",
+    "要向哪個窗口", "找哪個窗口", "哪個窗口", "要找誰", "找誰",
+    "怎麼預約", "怎麼登記", "怎麼申請", "怎麼租借", "怎麼辦理", "怎麼填", "怎麼辦",
+    "如何預約", "如何申請", "如何辦理", "如何登記",
+    "什麼時候", "多少錢", "是多少", "在哪裡", "在哪搭", "在哪",
+    "還有", "以及", "可以", "需要", "是否", "什麼", "怎麼", "如何", "哪裡", "哪些", "哪個", "多少",
+    "跟", "與", "及", "和", "或", "的", "了", "嗎", "呢", "吧", "喔", "啊", "在", "有", "要",
 )
+
+GENERIC_AUTO_TERMS = frozenset({
+    "請問", "想問", "問題", "方式", "流程", "規定", "預約", "申請", "辦理", "登記", "查詢", "詢問",
+    "窗口", "時間", "編號", "長庚", "長庚大學", "大學", "學校", "國際", "國際處", "國際事務處",
+    "交換", "學生", "學期", "校內", "合作", "合作校", "姐妹校", "姊妹校", "特殊", "一般", "相關",
+    "可以", "需要", "如果", "之後", "怎麼", "如何", "什麼",
+})
 
 
 class ConnectorValidationError(ValueError):
@@ -80,17 +93,158 @@ def _normalize_text(text: str) -> str:
 
 def _extract_auto_keywords(question: str) -> list[str]:
     cleaned = unicodedata.normalize("NFKC", str(question or "")).strip()
+    cleaned = re.sub(r"[（(]虛構示範[^）)]*[）)]", " ", cleaned)
     for stop in STOPWORDS:
         cleaned = cleaned.replace(stop, " ")
-    tokens = re.findall(r"[\u4e00-\u9fff]{2,6}|[a-zA-Z0-9]{2,20}", cleaned)
+    raw_tokens = re.findall(r"[\u4e00-\u9fff]{2,24}|[a-zA-Z0-9]{2,24}", cleaned)
     seen: list[str] = []
-    for tok in tokens:
-        low = tok.lower()
-        if len(low) >= 2 and low not in seen:
+
+    def _add(term: str) -> None:
+        low = term.strip().lower()
+        if len(low) >= 2 and low not in GENERIC_AUTO_TERMS and low not in seen:
             seen.append(low)
+
+    for tok in raw_tokens:
+        if re.fullmatch(r"[\u4e00-\u9fff]+", tok):
+            if len(tok) <= 6:
+                _add(tok)
+            for n in (3, 2):
+                if len(tok) >= n:
+                    for idx in range(len(tok) - n + 1):
+                        _add(tok[idx : idx + n])
+        else:
+            _add(tok)
+
     if not seen and question.strip():
-        seen.append(_normalize_text(question)[:12])
-    return seen[:8]
+        norm_fallback = _normalize_text(question)[:12]
+        if norm_fallback:
+            seen.append(norm_fallback)
+    return seen[:28]
+
+
+def _partner_school_aliases(name: str) -> set[str]:
+    raw = str(name or "").strip()
+    full_norm = _normalize_text(raw)
+    if not full_norm:
+        return set()
+    aliases = {full_norm}
+    m = re.match(r"^([^\x00-\x7f]+?)\s+([A-Za-z].*)$", raw)
+    if m:
+        zh_norm = _normalize_text(m.group(1))
+        en_norm = _normalize_text(m.group(2))
+        if zh_norm:
+            aliases.add(zh_norm)
+        if en_norm:
+            aliases.add(en_norm)
+    return aliases
+
+
+def _partner_school_matches(report_school: str, query_school: str) -> bool:
+    r_aliases = _partner_school_aliases(report_school)
+    q_aliases = _partner_school_aliases(query_school)
+    if not r_aliases or not q_aliases:
+        return False
+    r_full = _normalize_text(report_school)
+    q_full = _normalize_text(query_school)
+    # If both carry bilingual full names, require exact full normalized equality so distinct schemes
+    # (e.g. "明尼蘇達大學 University of Minnesota" vs "... (GO Minnesota方案)") never cross-bleed.
+    if len(r_aliases) > 1 and len(q_aliases) > 1:
+        return r_full == q_full
+    return q_full in r_aliases or r_full in q_aliases
+
+
+def _sanitize_doc_meta(doc_key: str, meta: dict[str, Any]) -> dict[str, Any]:
+    if doc_key not in REQUIRED_DOC_MAP:
+        raise ConnectorValidationError(f"未知的應備文件項目：{doc_key}")
+    sha = str(meta.get("sha256") or "").strip().lower()
+    if not re.fullmatch(r"[0-9a-f]{64}", sha):
+        raise ConnectorValidationError("檔案 SHA-256 格式不正確。")
+    size = int(meta.get("size") or 0)
+    if size <= 0:
+        raise ConnectorValidationError("檔案大小必須大於 0 位元組。")
+    # Explicitly whitelist ONLY metadata keys; never persist raw content/bytes.
+    return {
+        "doc_key": doc_key,
+        "doc_title": REQUIRED_DOC_MAP[doc_key]["title"],
+        "filename": Path(str(meta.get("filename") or f"{doc_key}.pdf")).name[:120],
+        "size": size,
+        "content_type": str(meta.get("content_type") or "application/octet-stream")[:100],
+        "sha256": sha,
+        "uploaded_at": str(meta.get("uploaded_at") or _now_taipei_iso()),
+    }
+
+
+def _build_precheck_summary(files_map: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    provided = [files_map[d["key"]] for d in OFFICIAL_REQUIRED_DOCS if d["key"] in files_map]
+    missing = [d for d in OFFICIAL_REQUIRED_DOCS if d["key"] not in files_map]
+    return {
+        "complete": len(missing) == 0,
+        "required_count": len(OFFICIAL_REQUIRED_DOCS),
+        "provided_count": len(provided),
+        "required_documents": OFFICIAL_REQUIRED_DOCS,
+        "provided_documents": provided,
+        "missing_documents": missing,
+    }
+
+
+def _search_content_faqs(
+    question: str,
+    content: dict[str, Any],
+    custom_faqs: list[dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
+    q_raw = str(question or "").strip()
+    q_norm = _normalize_text(q_raw)
+    if len(q_norm) < 2:
+        raise ConnectorValidationError("請輸入至少 2 個字的問題內容。")
+
+    sources = {row["id"]: row for row in content.get("sources", [])}
+    candidates: list[dict[str, Any]] = list(custom_faqs or [])
+    for faq in content.get("faqs", []):
+        src = sources.get(faq.get("source", ""), {})
+        candidates.append({
+            "id": faq["id"],
+            "topic": faq.get("topic") or faq["question"],
+            "question": faq["question"],
+            "keywords": faq.get("keywords", []),
+            "answer": faq["answer"],
+            "source_title": src.get("title", "長庚國際事務處公開公告"),
+            "source_url": src.get("url", "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656"),
+        })
+    for idx, rule in enumerate(content.get("rules", []), 1):
+        src = sources.get(rule.get("source", ""), {})
+        candidates.append({
+            "id": f"rule-{idx}",
+            "topic": rule["title"],
+            "question": rule["title"],
+            "keywords": _extract_auto_keywords(rule["title"]),
+            "answer": rule["body"],
+            "source_title": src.get("title", "長庚國際事務處公開公告"),
+            "source_url": src.get("url", "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656"),
+        })
+
+    matches: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+    for cand in candidates:
+        matched_kw = []
+        for kw in cand.get("keywords", []):
+            kw_norm = _normalize_text(kw)
+            if kw_norm and (kw_norm in q_norm or (len(q_norm) >= 2 and q_norm in kw_norm)):
+                matched_kw.append(kw)
+        if matched_kw and cand["id"] not in seen_ids:
+            seen_ids.add(cand["id"])
+            matches.append({
+                "id": cand["id"],
+                "topic": cand["topic"],
+                "question": cand["question"],
+                "answer": cand["answer"],
+                "source_title": cand["source_title"],
+                "source_url": cand["source_url"],
+                "matched_keywords": matched_kw,
+                "match_mode": "規則式比對，非 AI",
+                "score": sum(len(_normalize_text(k)) for k in matched_kw),
+            })
+    matches.sort(key=lambda r: r["score"], reverse=True)
+    return matches[:3]
 
 
 def _safe_external_url(raw: str) -> str:
@@ -247,24 +401,7 @@ class MockCguConnector(SchoolConnector):
 
     @staticmethod
     def _sanitize_doc_meta(doc_key: str, meta: dict[str, Any]) -> dict[str, Any]:
-        if doc_key not in REQUIRED_DOC_MAP:
-            raise ConnectorValidationError(f"未知的應備文件項目：{doc_key}")
-        sha = str(meta.get("sha256") or "").strip().lower()
-        if not re.fullmatch(r"[0-9a-f]{64}", sha):
-            raise ConnectorValidationError("檔案 SHA-256 格式不正確。")
-        size = int(meta.get("size") or 0)
-        if size <= 0:
-            raise ConnectorValidationError("檔案大小必須大於 0 位元組。")
-        # Explicitly whitelist ONLY metadata keys; never persist raw content/bytes.
-        return {
-            "doc_key": doc_key,
-            "doc_title": REQUIRED_DOC_MAP[doc_key]["title"],
-            "filename": Path(str(meta.get("filename") or f"{doc_key}.pdf")).name[:120],
-            "size": size,
-            "content_type": str(meta.get("content_type") or "application/octet-stream")[:100],
-            "sha256": sha,
-            "uploaded_at": str(meta.get("uploaded_at") or _now_taipei_iso()),
-        }
+        return _sanitize_doc_meta(doc_key, meta)
 
     def record_file_metadata(
         self,
@@ -278,7 +415,7 @@ class MockCguConnector(SchoolConnector):
     ) -> dict[str, Any]:
         with self._lock:
             state = self._load(workspace_id)
-            record = self._sanitize_doc_meta(
+            record = _sanitize_doc_meta(
                 doc_key,
                 {
                     "filename": filename,
@@ -290,7 +427,7 @@ class MockCguConnector(SchoolConnector):
             )
             state.setdefault("draft_files", {})[doc_key] = record
             self._save(workspace_id, state)
-            return {"badge": SIM_BADGE, "notice": UPLOAD_NOTICE, "file": record, "precheck": self._build_precheck(state["draft_files"])}
+            return {"badge": SIM_BADGE, "notice": UPLOAD_NOTICE, "file": record, "precheck": _build_precheck_summary(state["draft_files"])}
 
     def remove_file_metadata(self, workspace_id: str, doc_key: str) -> dict[str, Any]:
         if doc_key not in REQUIRED_DOC_MAP:
@@ -299,19 +436,10 @@ class MockCguConnector(SchoolConnector):
             state = self._load(workspace_id)
             state.setdefault("draft_files", {}).pop(doc_key, None)
             self._save(workspace_id, state)
-            return {"badge": SIM_BADGE, "removed": doc_key, "precheck": self._build_precheck(state["draft_files"])}
+            return {"badge": SIM_BADGE, "removed": doc_key, "precheck": _build_precheck_summary(state["draft_files"])}
 
     def _build_precheck(self, files_map: dict[str, dict[str, Any]]) -> dict[str, Any]:
-        provided = [files_map[d["key"]] for d in OFFICIAL_REQUIRED_DOCS if d["key"] in files_map]
-        missing = [d for d in OFFICIAL_REQUIRED_DOCS if d["key"] not in files_map]
-        return {
-            "complete": len(missing) == 0,
-            "required_count": len(OFFICIAL_REQUIRED_DOCS),
-            "provided_count": len(provided),
-            "required_documents": OFFICIAL_REQUIRED_DOCS,
-            "provided_documents": provided,
-            "missing_documents": missing,
-        }
+        return _build_precheck_summary(files_map)
 
     def submit_application(self, workspace_id: str, payload: dict[str, Any]) -> dict[str, Any]:
         with self._lock:
@@ -373,67 +501,14 @@ class MockCguConnector(SchoolConnector):
             return record
 
     def search_faq(self, workspace_id: str, question: str) -> list[dict[str, Any]]:
-        q_raw = str(question or "").strip()
-        q_norm = _normalize_text(q_raw)
-        if len(q_norm) < 2:
-            raise ConnectorValidationError("請輸入至少 2 個字的問題內容。")
-
-        sources = self._sources_by_id()
         content = self._content()
         with self._lock:
             state = self._load(workspace_id)
-            candidates: list[dict[str, Any]] = []
-            for item in state.get("custom_faqs", []):
-                candidates.append(item)
-            for faq in content.get("faqs", []):
-                src = sources.get(faq.get("source", ""), {})
-                candidates.append({
-                    "id": faq["id"],
-                    "topic": faq.get("topic") or faq["question"],
-                    "question": faq["question"],
-                    "keywords": faq.get("keywords", []),
-                    "answer": faq["answer"],
-                    "source_title": src.get("title", "長庚國際事務處公開公告"),
-                    "source_url": src.get("url", "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656"),
-                })
-            for idx, rule in enumerate(content.get("rules", []), 1):
-                src = sources.get(rule.get("source", ""), {})
-                candidates.append({
-                    "id": f"rule-{idx}",
-                    "topic": rule["title"],
-                    "question": rule["title"],
-                    "keywords": _extract_auto_keywords(rule["title"]),
-                    "answer": rule["body"],
-                    "source_title": src.get("title", "長庚國際事務處公開公告"),
-                    "source_url": src.get("url", "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656"),
-                })
-
-            matches: list[dict[str, Any]] = []
-            seen_ids: set[str] = set()
-            for cand in candidates:
-                matched_kw = []
-                for kw in cand.get("keywords", []):
-                    kw_norm = _normalize_text(kw)
-                    if kw_norm and (kw_norm in q_norm or (len(q_norm) >= 2 and q_norm in kw_norm)):
-                        matched_kw.append(kw)
-                if matched_kw and cand["id"] not in seen_ids:
-                    seen_ids.add(cand["id"])
-                    matches.append({
-                        "id": cand["id"],
-                        "topic": cand["topic"],
-                        "question": cand["question"],
-                        "answer": cand["answer"],
-                        "source_title": cand["source_title"],
-                        "source_url": cand["source_url"],
-                        "matched_keywords": matched_kw,
-                        "match_mode": "規則式比對，非 AI",
-                        "score": len(matched_kw),
-                    })
-            matches.sort(key=lambda r: r["score"], reverse=True)
+            matches = _search_content_faqs(question, content, state.get("custom_faqs", []))
             if matches:
                 self._bump_question_topic(state, matches[0]["topic"])
                 self._save(workspace_id, state)
-            return matches[:3]
+            return matches
 
     def send_inquiry(self, workspace_id: str, payload: dict[str, Any]) -> dict[str, Any]:
         question = str(payload.get("question") or "").strip()
@@ -799,13 +874,7 @@ class MockCguConnector(SchoolConnector):
             ]
             if not school_name:
                 return approved
-            q_norm = _normalize_text(school_name)
-            matched = []
-            for r in approved:
-                p_norm = _normalize_text(r.get("partner_school", ""))
-                if p_norm and (p_norm == q_norm or q_norm in p_norm or p_norm in q_norm):
-                    matched.append(r)
-            return matched
+            return [r for r in approved if _partner_school_matches(str(r.get("partner_school", "")), school_name)]
 
     def mark_notification_read(self, workspace_id: str, notification_id: str) -> dict[str, Any] | None:
         with self._lock:
@@ -983,6 +1052,9 @@ def platform_html() -> str:
     for item in soup.select('[data-home-school]'):
         if item.get('data-home-school') != HOME:
             item.decompose()
+        else:
+            for status_badge in item.select('.school-option-status'):
+                status_badge.string = '78 間合作校'
     for item in soup.select('.pr-supported'):
         item.decompose()
 
@@ -993,6 +1065,12 @@ def platform_html() -> str:
         'a[href="#forum"]',
         'a[href="#feedback"]',
         'a[href="#university-posts"]',
+        'a[href="#university-feed"]',
+        'a[href="#cgu-feed"]',
+        'a[href^="#board="]',
+        '#community-hub',
+        '#feedback',
+        '#feedback-thanks',
         '.global-sidebar-nav',
         '.sidebar-board-list',
         '.pr-forum-preview',
@@ -1151,6 +1229,11 @@ def platform_html() -> str:
             chev.decompose()
     for label in soup.select('#school-switcher-label, #mobile-school-label'):
         label.string = HOME
+    for school_input in soup.select('input[name="home_university"]'):
+        school_input['value'] = HOME
+        school_input['readonly'] = ''
+        school_input['aria-readonly'] = 'true'
+        school_input['title'] = '長庚大學專屬平台固定母校'
     for item in soup.select('#logout-button, #delete-account-button, #calendar-sync-button, #document-tab-vault, input[type=file]'):
         item['disabled'] = ''
         item['title'] = '展示未開放正式登入、私人文件或外部同步'
@@ -1394,6 +1477,8 @@ def create_demo_app(connector_factory=None) -> FastAPI:
     def content():
         return json.loads(CONTENT.read_text(encoding='utf-8'))
 
+    fallback_draft_files: dict[str, dict[str, dict[str, Any]]] = {}
+
     @app.get('/demo/connector/spec')
     def connector_spec():
         data = json.loads(CONTENT.read_text(encoding='utf-8'))
@@ -1407,13 +1492,23 @@ def create_demo_app(connector_factory=None) -> FastAPI:
     @app.get('/demo/connector/status')
     def connector_status(request: Request, receipt_id: str | None = None):
         account = require_account(request)
-        return connector.get_status(account.id, receipt_id=receipt_id)
+        res = connector.get_status(account.id, receipt_id=receipt_id)
+        if receipt_id is None and isinstance(res, dict) and not hasattr(connector, 'record_file_metadata'):
+            with lock:
+                staged = dict(fallback_draft_files.get(account.id, {}))
+            if 'draft_files' not in res or not res.get('draft_files'):
+                res = {
+                    'badge': SIM_BADGE,
+                    'upload_notice': UPLOAD_NOTICE,
+                    **res,
+                    'draft_files': staged,
+                    'precheck': _build_precheck_summary(staged),
+                }
+        return res
 
     @app.post('/demo/connector/files')
     async def connector_upload_file(request: Request):
         account = require_account(request)
-        if not isinstance(connector, MockCguConnector):
-            raise HTTPException(501, '目前連接器不支援展示雜湊登錄')
         try:
             body = await request.body()
             doc_key, filename, content_type, file_bytes = _parse_multipart_upload(
@@ -1425,24 +1520,46 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             # Discard file content immediately after hashing in memory; never touch disk.
             del file_bytes
             del body
-            return connector.record_file_metadata(
-                account.id,
-                doc_key=doc_key,
-                filename=filename,
-                size=size,
-                content_type=content_type,
-                sha256=sha256,
+            if hasattr(connector, 'record_file_metadata'):
+                return connector.record_file_metadata(
+                    account.id,
+                    doc_key=doc_key,
+                    filename=filename,
+                    size=size,
+                    content_type=content_type,
+                    sha256=sha256,
+                )
+            record = _sanitize_doc_meta(
+                doc_key,
+                {
+                    'filename': filename,
+                    'size': size,
+                    'content_type': content_type,
+                    'sha256': sha256,
+                    'uploaded_at': _now_taipei_iso(),
+                },
             )
+            with lock:
+                files_map = fallback_draft_files.setdefault(account.id, {})
+                files_map[doc_key] = record
+                summary = _build_precheck_summary(files_map)
+            return {'badge': SIM_BADGE, 'notice': UPLOAD_NOTICE, 'file': record, 'precheck': summary}
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
 
     @app.delete('/demo/connector/files/{doc_key}')
     def connector_delete_file(request: Request, doc_key: str):
         account = require_account(request)
-        if not isinstance(connector, MockCguConnector):
-            raise HTTPException(501, '目前連接器不支援展示雜湊移除')
         try:
-            return connector.remove_file_metadata(account.id, doc_key)
+            if hasattr(connector, 'remove_file_metadata'):
+                return connector.remove_file_metadata(account.id, doc_key)
+            if doc_key not in REQUIRED_DOC_MAP:
+                raise ConnectorValidationError(f'未知的應備文件項目：{doc_key}')
+            with lock:
+                files_map = fallback_draft_files.setdefault(account.id, {})
+                files_map.pop(doc_key, None)
+                summary = _build_precheck_summary(files_map)
+            return {'badge': SIM_BADGE, 'removed': doc_key, 'precheck': summary}
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
 
@@ -1453,8 +1570,16 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             payload = await request.json()
         except ValueError:
             payload = {}
+        clean_payload = dict(payload) if isinstance(payload, dict) else {}
+        if not hasattr(connector, 'record_file_metadata') and 'documents' not in clean_payload:
+            with lock:
+                staged = dict(fallback_draft_files.get(account.id, {}))
+            if staged:
+                clean_payload['documents'] = [
+                    staged[d['key']] for d in OFFICIAL_REQUIRED_DOCS if d['key'] in staged
+                ]
         try:
-            record = connector.submit_application(account.id, payload if isinstance(payload, dict) else {})
+            record = connector.submit_application(account.id, clean_payload)
             return JSONResponse({'badge': SIM_BADGE, 'application': record}, status_code=201)
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
@@ -1469,14 +1594,26 @@ def create_demo_app(connector_factory=None) -> FastAPI:
         if not isinstance(payload, dict):
             payload = {}
         try:
-            if isinstance(connector, MockCguConnector):
-                result = connector.ask_or_inquire(
+            question = str(payload.get('question') or '')
+            force_inquiry = bool(payload.get('force_inquiry', False))
+            if hasattr(connector, 'ask_or_inquire'):
+                return connector.ask_or_inquire(
                     account.id,
-                    str(payload.get('question') or ''),
-                    force_inquiry=bool(payload.get('force_inquiry', False)),
+                    question,
+                    force_inquiry=force_inquiry,
                 )
-                return result
-            inquiry = connector.send_inquiry(account.id, payload)
+            if not force_inquiry:
+                content_data = json.loads(CONTENT.read_text(encoding='utf-8'))
+                matches = _search_content_faqs(question, content_data)
+                if matches:
+                    return {
+                        'badge': SIM_BADGE,
+                        'mode_label': '規則式比對，非 AI',
+                        'matched': True,
+                        'matches': matches,
+                        'inquiry': None,
+                    }
+            inquiry = connector.send_inquiry(account.id, {**payload, 'question': question, 'escalated_from_faq': force_inquiry})
             return {'badge': SIM_BADGE, 'mode_label': '規則式比對，非 AI', 'matched': False, 'matches': [], 'inquiry': inquiry}
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
@@ -1510,9 +1647,20 @@ def create_demo_app(connector_factory=None) -> FastAPI:
     @app.get('/demo/connector/return-reports/{receipt_id}/print')
     def connector_print_report(request: Request, receipt_id: str):
         account = require_account(request)
-        if not isinstance(connector, MockCguConnector):
-            raise HTTPException(404, '找不到列印版')
-        report = connector.get_return_report(account.id, receipt_id)
+        report: dict[str, Any] | None = None
+        if hasattr(connector, 'get_return_report'):
+            report = connector.get_return_report(account.id, receipt_id)
+        else:
+            status_data = connector.get_status(account.id, receipt_id=receipt_id)
+            if isinstance(status_data, dict):
+                cand = status_data.get('record')
+                if isinstance(cand, dict) and status_data.get('collection') in (None, 'return_reports'):
+                    report = cand
+                else:
+                    report = next(
+                        (r for r in status_data.get('return_reports', []) if isinstance(r, dict) and r.get('receipt_id') == receipt_id),
+                        None,
+                    )
         if report is None:
             raise HTTPException(404, f'找不到返國心得 {receipt_id}')
         return HTMLResponse(_render_report_print_html(report))
@@ -1520,21 +1668,30 @@ def create_demo_app(connector_factory=None) -> FastAPI:
     @app.get('/demo/connector/public-reports')
     def connector_public_reports(request: Request, school: str | None = None):
         found = session(request.state.demo_token)
-        if not found or not isinstance(connector, MockCguConnector):
+        if not found:
             return {'badge': SIM_BADGE, 'items': []}
-        return {'badge': SIM_BADGE, 'items': connector.list_public_reports(found[0].id, school_name=school)}
+        if hasattr(connector, 'list_public_reports'):
+            return {'badge': SIM_BADGE, 'items': connector.list_public_reports(found[0].id, school_name=school)}
+        status_data = connector.get_status(found[0].id)
+        reports = [
+            r for r in (status_data.get('return_reports', []) if isinstance(status_data, dict) else [])
+            if isinstance(r, dict) and r.get('status') == 'approved' and r.get('public_consent') is True and r.get('published') is True
+        ]
+        if school:
+            reports = [r for r in reports if _partner_school_matches(str(r.get('partner_school', '')), school)]
+        return {'badge': SIM_BADGE, 'items': reports}
 
     @app.get('/demo/connector/oia/dashboard')
     def connector_oia_dashboard(request: Request):
         account = require_account(request)
-        if not isinstance(connector, MockCguConnector):
+        if not hasattr(connector, 'get_oia_dashboard'):
             raise HTTPException(501, '目前連接器未啟用模擬承辦後台')
         return connector.get_oia_dashboard(account.id)
 
     @app.post('/demo/connector/oia/actions')
     async def connector_oia_actions(request: Request):
         account = require_account(request)
-        if not isinstance(connector, MockCguConnector):
+        if not hasattr(connector, 'oia_action'):
             raise HTTPException(501, '目前連接器未啟用模擬承辦後台')
         try:
             payload = await request.json()
@@ -1559,14 +1716,19 @@ def create_demo_app(connector_factory=None) -> FastAPI:
         if not found:
             return {'items': [], 'unread_count': 0}
         status_data = connector.get_status(found[0].id)
-        items = status_data.get('notifications', [])[: max(1, min(limit, 100))]
-        unread = sum(1 for item in items if not item.get('read_at'))
+        all_items = status_data.get('notifications', []) if isinstance(status_data, dict) else []
+        items = all_items[: max(1, min(limit, 100))]
+        unread = (
+            int(status_data['unread_count'])
+            if isinstance(status_data, dict) and isinstance(status_data.get('unread_count'), int)
+            else sum(1 for item in all_items if not item.get('read_at'))
+        )
         return {'items': items, 'unread_count': unread}
 
     @app.patch('/account/notifications/read-all')
     def demo_notifications_read_all(request: Request):
         account = require_account(request)
-        if isinstance(connector, MockCguConnector):
+        if hasattr(connector, 'mark_all_notifications_read'):
             items = connector.mark_all_notifications_read(account.id)
         else:
             items = []
@@ -1575,7 +1737,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
     @app.patch('/account/notifications/{notification_id}/read')
     def demo_notification_mark_read(request: Request, notification_id: str):
         account = require_account(request)
-        if isinstance(connector, MockCguConnector):
+        if hasattr(connector, 'mark_notification_read'):
             updated = connector.mark_notification_read(account.id, notification_id)
             if updated is not None:
                 return updated
@@ -1584,14 +1746,14 @@ def create_demo_app(connector_factory=None) -> FastAPI:
     @app.delete('/account/notifications/{notification_id}')
     def demo_notification_delete(request: Request, notification_id: str):
         account = require_account(request)
-        if isinstance(connector, MockCguConnector):
+        if hasattr(connector, 'delete_notification'):
             connector.delete_notification(account.id, notification_id)
         return {'deleted': True}
 
     @app.delete('/account/notifications')
     def demo_notifications_clear(request: Request):
         account = require_account(request)
-        if isinstance(connector, MockCguConnector):
+        if hasattr(connector, 'clear_notifications'):
             connector.clear_notifications(account.id)
         return {'items': [], 'unread_count': 0}
 
@@ -1600,7 +1762,8 @@ def create_demo_app(connector_factory=None) -> FastAPI:
         with lock:
             found = session(request.state.demo_token)
             if found:
-                if isinstance(connector, MockCguConnector):
+                fallback_draft_files.pop(found[0].id, None)
+                if hasattr(connector, 'reset_workspace'):
                     connector.reset_workspace(found[0].id)
                 platform.state.form_draft_service.purge_account(found[0].id)
                 repository.delete_account(found[0].id)

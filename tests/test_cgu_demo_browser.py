@@ -345,12 +345,17 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     """
     ready(page, demo_url)
 
-    # Item 7 fixes: Forum & Reviews hidden; school switcher fixedly displays 長庚大學
+    # Item 7 fixes: Forum & Reviews hidden (including direct hashes); school switcher fixedly displays 長庚大學
     expect(page.locator('.uniway-public-nav a[data-public-route="forum"]')).not_to_be_visible()
     expect(page.locator('.uniway-public-nav a[data-public-route="feedback"]')).not_to_be_visible()
-    expect(page.locator('#school-switcher')).to_be_disabled()
+    for blocked_hash in ('#university-feed', '#cgu-feed', '#board=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8'):
+        page.goto(f'{demo_url}/{blocked_hash}', wait_until='domcontentloaded')
+        expect(page.locator('#community-hub')).not_to_be_visible()
+        expect(page.locator('#school-switcher')).to_be_disabled()
+        expect(page.locator('#school-switcher-label')).to_have_text('長庚大學')
     expect(page.locator('#school-switcher')).to_contain_text('長庚大學')
     expect(page.locator('#school-switcher')).not_to_contain_text('切換就讀學校')
+    expect(page.locator('input[name="home_university"]')).to_have_attribute('readonly', '')
 
     # Feature 2: 校方介接規格頁
     page.locator('.uniway-public-nav a[data-public-route="school-connector"]').click()
@@ -471,8 +476,10 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     # Next test unmatched question -> escalates to simulated OIA inbox
     page.locator('#cgu-ask-input').fill('請問基督城冬季無障礙接駁專車要向哪個窗口預約？')
     page.locator('#cgu-ask-submit-btn').click()
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('未命中現有規則與 FAQ')
     expect(page.locator('#cgu-ask-result-box')).to_contain_text('SIM-INQ-')
     inq_card = page.locator('#cgu-ask-inquiries-list .cgu-inquiry-card').first
+    expect(inq_card).to_contain_text('無障礙接駁專車')
     inq_id = inq_card.get_attribute('data-receipt-id')
     assert inq_id and inq_id.startswith('SIM-INQ-')
     expect(inq_card).to_contain_text('待承辦回覆')
@@ -492,6 +499,12 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     expect(page.locator(f'#cgu-ask-inquiries-list [data-receipt-id="{inq_id}"]')).to_contain_text('已回覆')
     expect(page.locator(f'#cgu-ask-inquiries-list [data-receipt-id="{inq_id}"]')).to_contain_text('無障礙接機申請連結')
     expect(page.locator('#notification-badge')).to_have_text('3')
+
+    # Verify add_to_faq immediately makes natural Chinese follow-up questions hit the rule-based FAQ!
+    page.locator('#cgu-ask-input').fill('請問無障礙接駁專車要找誰？')
+    page.locator('#cgu-ask-submit-btn').click()
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('規則式比對，非 AI')
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('無障礙接機申請連結')
 
 
 def test_return_report_validation_print_approval_mobile_overflow_and_reset(page, demo_url):
@@ -544,6 +557,13 @@ def test_return_report_validation_print_approval_mobile_overflow_and_reset(page,
     expect(public_block).to_contain_text('模擬・尚未與校方串接')
     expect(public_block).to_contain_text(rpt_id)
     expect(public_block.locator('a[href="https://example.com/lincoln-demo-video"]')).to_be_visible()
+    page.locator('#detail-tab-experiences').click()
+    expect(page.locator('#cgu-approved-return-reports-experiences')).to_be_visible()
+
+    # Navigating to another school in-SPA cleanly removes Lincoln's approved report blocks (zero DOM bleed)
+    page.evaluate("location.hash = '#school=' + encodeURIComponent('韓國嘉泉大學 Gachon University')")
+    expect(page.locator('#school-detail-view')).to_contain_text('韓國嘉泉大學')
+    expect(page.locator('.cgu-public-reports-block')).to_have_count(0)
 
     # Verify mobile (390x844) has no horizontal overflow across all new routes
     page.set_viewport_size({'width': 390, 'height': 844})
