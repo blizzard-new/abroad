@@ -412,6 +412,17 @@ def test_responsive_native_journey(page, demo_url, size):
     page.locator('#partners #discovery-criteria summary').click()
     expect(page.locator('#discovery-criteria-form')).to_be_visible()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    # Ensure zero field value truncation inside #discovery-criteria-form (including 7th field「可考慮，含待確認」)
+    criteria_clipped = page.evaluate(
+        """() => [...document.querySelectorAll('#discovery-criteria-form > label')].some(l => {
+            const lbl = l.querySelector('.glide-select__label, input');
+            return lbl ? lbl.scrollWidth > lbl.clientWidth + 1 : false;
+        })"""
+    )
+    assert not criteria_clipped
+    page.locator('#partners #discovery-criteria summary').click()
+    page.locator('[data-partner-view="list"]').click()
+    expect(page.locator('#partner-table .pr-school-card').first).to_be_visible()
     if size[0] == 390:
         strip_metrics = page.evaluate(
             """() => {
@@ -438,14 +449,55 @@ def test_responsive_native_journey(page, demo_url, size):
         row_ys = sorted({round(b['y'] / 6) for b in strip_metrics['btns']})
         assert len(row_ys) == 2
         screenshot(page, 'mobile-partners.png')
-        # Scroll to the very bottom of #partners and ensure the last visible card clears #cgu-demo-strip
+        # Verify mobile compare tray with 3 schools + floating #page-status both clear #cgu-demo-strip and remain clickable
+        mobile_tray_check = page.evaluate(
+            """async () => {
+                const picks = [...document.querySelectorAll('#partner-table input[data-compare-pick]')].slice(0, 3);
+                for (const cb of picks) {
+                    cb.checked = true;
+                    cb.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+                document.querySelector('#page-status').innerHTML = '<div class="status-message">已加入選校清單</div>';
+                window.scrollTo(0, 500);
+                const tray = document.querySelector('#partner-compare-tray');
+                const tr = tray.getBoundingClientRect();
+                const btn = tray.querySelector('[data-open-compare]').getBoundingClientRect();
+                const strip = document.querySelector('#cgu-demo-strip').getBoundingClientRect();
+                const st = document.querySelector('#page-status').getBoundingClientRect();
+                const hitEl = document.elementFromPoint(btn.left + btn.width / 2, btn.top + btn.height / 2);
+                const res = {
+                    hidden: tray.hidden,
+                    trayTop: tr.top,
+                    trayBottom: tr.bottom,
+                    trayH: tr.height,
+                    stripTop: strip.top,
+                    stBottom: st.bottom,
+                    hitTray: Boolean(hitEl && hitEl.closest('#partner-compare-tray')),
+                    inViewport: tr.left >= 4 && tr.right <= window.innerWidth - 4,
+                };
+                for (const cb of picks) {
+                    cb.checked = false;
+                    cb.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+                document.querySelector('#page-status').innerHTML = '';
+                return res;
+            }"""
+        )
+        assert not mobile_tray_check['hidden']
+        assert mobile_tray_check['hitTray'], f'mobile compare tray obscured by strip: {mobile_tray_check}'
+        assert mobile_tray_check['inViewport'] and mobile_tray_check['trayH'] <= 64
+        assert mobile_tray_check['trayBottom'] <= mobile_tray_check['stripTop'] - 8
+        assert mobile_tray_check['stBottom'] <= mobile_tray_check['trayTop'] + 2
+        # Scroll to the very bottom of #partners List View and ensure the last visible card clears #cgu-demo-strip
         bottom_partner_clear = page.evaluate(
             """() => {
                 window.scrollTo(0, document.documentElement.scrollHeight);
                 const cards = [...document.querySelectorAll('#partner-table .pr-school-card')];
-                const last = cards[cards.length - 1];
-                const strip = document.querySelector('#cgu-demo-strip');
-                return last.getBoundingClientRect().bottom <= strip.getBoundingClientRect().top;
+                const last = cards[cards.length - 1].getBoundingClientRect();
+                const strip = document.querySelector('#cgu-demo-strip').getBoundingClientRect();
+                return last.height > 40 && last.bottom <= strip.top;
             }"""
         )
         assert bottom_partner_clear
@@ -506,10 +558,12 @@ def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page
                 const acct = document.querySelector('#account-button');
                 const label = document.querySelector('#account-button-label');
                 const actions = document.querySelector('#glass-navigation .topbar-actions');
+                const retry = document.querySelector('#account-workspace-sync-retry');
                 const links = [...document.querySelectorAll('#glass-navigation .uniway-public-nav a[data-public-route]')]
                     .filter(a => !a.hidden && getComputedStyle(a).display !== 'none');
                 const ar = acct.getBoundingClientRect();
                 const actR = actions.getBoundingClientRect();
+                const spanWidths = links.map(a => a.querySelector('span').getBoundingClientRect().width);
                 return {
                     docScrollW: document.documentElement.scrollWidth,
                     innerW: window.innerWidth,
@@ -524,6 +578,9 @@ def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page
                     acctWidth: ar.width,
                     labelText: label ? label.textContent.trim() : '',
                     labelClipped: label ? (label.scrollWidth > label.clientWidth + 1) : true,
+                    minSpanWidth: Math.min(...spanWidths),
+                    allTitled: links.every(a => Boolean(a.getAttribute('title'))),
+                    retryWidth: retry && !retry.hidden ? retry.getBoundingClientRect().width : 0,
                 };
             }"""
         )
@@ -532,11 +589,14 @@ def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page
         assert metrics['navScrollW'] <= metrics['navClientW'] + 1, f'topbar overflow at {ctx}: {metrics}'
         assert metrics['linkCount'] == 7, f'expected 7 visible CGU nav links at {ctx}: {metrics}'
         assert metrics['linksLeft'] >= 0 and metrics['linksRight'] <= metrics['actionsLeft'] + 1, f'nav/actions overlap at {ctx}: {metrics}'
-        assert metrics['acctLeft'] >= 0 and metrics['acctRight'] <= vw - 8, f'#account-button clipped at {ctx}: {metrics}'
+        assert metrics['acctLeft'] >= 0 and metrics['acctRight'] <= vw - 6, f'#account-button clipped at {ctx}: {metrics}'
         assert metrics['labelText'] == '林小程（展示資料）', f'unexpected label at {ctx}: {metrics}'
         assert not metrics['labelClipped'], f'#account-button-label truncated at {ctx}: {metrics}'
+        assert metrics['allTitled'], f'missing title tooltip on topbar links at {ctx}: {metrics}'
+        if vw >= 960:
+            assert metrics['minSpanWidth'] >= 20, f'expected visible nav text labels at {ctx}: {metrics}'
 
-    for vw in (960, 1060, 1100, 1150, 1280, 1366, 1440, 1920):
+    for vw in (930, 960, 1024, 1040, 1060, 1100, 1150, 1200, 1280, 1366, 1440, 1920):
         page.set_viewport_size({'width': vw, 'height': 900})
         page.evaluate("window.location.hash = '#home'")
         expect(page.locator('#home-landing-title')).to_be_visible()
@@ -550,6 +610,38 @@ def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page
         assert_topbar_clean(vw, '#partners-rest')
         page.locator('#glass-navigation .uniway-public-nav a[data-public-route="ask-oia"]').hover()
         assert_topbar_clean(vw, '#partners-hover')
+
+    # Adversarial check: simulated sync failure (#account-workspace-sync-retry un-hidden + unread badge) at band lower edges
+    page.evaluate(
+        """() => {
+            const ctrl = document.querySelector('#account-workspace-sync-control');
+            const retry = document.querySelector('#account-workspace-sync-retry');
+            const badge = document.querySelector('#notification-badge');
+            if (ctrl) ctrl.hidden = false;
+            if (retry) retry.hidden = false;
+            if (badge) { badge.hidden = false; badge.textContent = '9'; }
+        }"""
+    )
+    for vw in (930, 960, 1040, 1041, 1200, 1400):
+        page.set_viewport_size({'width': vw, 'height': 900})
+        page.mouse.move(10, 500)
+        page.evaluate("document.activeElement?.blur?.()")
+        assert_topbar_clean(vw, '#partners-retry-rest')
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="school-connector"]').hover()
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="ask-oia"]').focus()
+        assert_topbar_clean(vw, '#partners-retry-hover')
+        assert page.locator('#account-workspace-sync-retry').bounding_box()['width'] <= 40
+    page.evaluate(
+        """() => {
+            const retry = document.querySelector('#account-workspace-sync-retry');
+            const badge = document.querySelector('#notification-badge');
+            if (retry) retry.hidden = true;
+            if (badge) badge.hidden = true;
+        }"""
+    )
+
+    page.locator('[data-partner-view="list"]').click()
+    expect(page.locator('#partner-table .pr-school-card').first).to_be_visible()
 
     # Verify single-row #cgu-partner-filter-strip right above 1040px wrap threshold through 1920px
     for vw in (1042, 1060, 1100, 1150, 1280, 1366, 1440, 1920):
@@ -610,8 +702,46 @@ def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page
             if vw in (1060, 1280) and college_val == '':
                 screenshot(page, f'laptop-{vw}-partners.png')
 
-    # Narrow mobile 360x740 edge case: compact strip + school detail .pr-booking bar clears strip
+    # Narrow mobile 360x740 edge case: #partners compare tray + criteria non-truncation + school detail .pr-booking bar clears strip
     page.set_viewport_size({'width': 360, 'height': 740})
+    page.locator('#cgu-college-quick-bar [data-cgu-college=""]').click()
+    narrow_partners = page.evaluate(
+        """async () => {
+            document.querySelector('#discovery-criteria').open = true;
+            const criteriaClipped = [...document.querySelectorAll('#discovery-criteria-form > label')].some(l => {
+                const lbl = l.querySelector('.glide-select__label, input');
+                return lbl ? lbl.scrollWidth > lbl.clientWidth + 1 : false;
+            });
+            document.querySelector('#discovery-criteria').open = false;
+            const picks = [...document.querySelectorAll('#partner-table input[data-compare-pick]')].slice(0, 3);
+            for (const cb of picks) {
+                cb.checked = true;
+                cb.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+            window.scrollTo(0, 500);
+            const tray = document.querySelector('#partner-compare-tray');
+            const tr = tray.getBoundingClientRect();
+            const btn = tray.querySelector('[data-open-compare]').getBoundingClientRect();
+            const strip = document.querySelector('#cgu-demo-strip').getBoundingClientRect();
+            const hitEl = document.elementFromPoint(btn.left + btn.width / 2, btn.top + btn.height / 2);
+            const res = {
+                criteriaClipped,
+                trayH: tr.height,
+                trayBottom: tr.bottom,
+                stripTop: strip.top,
+                hitTray: Boolean(hitEl && hitEl.closest('#partner-compare-tray')),
+            };
+            for (const cb of picks) {
+                cb.checked = false;
+                cb.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+            return res;
+        }"""
+    )
+    assert not narrow_partners['criteriaClipped'], f'criteria truncated at 360px: {narrow_partners}'
+    assert narrow_partners['hitTray'] and narrow_partners['trayH'] <= 64 and narrow_partners['trayBottom'] <= narrow_partners['stripTop'] - 8
     page.goto(demo_url + '/#school=' + '林肯大學%20Lincoln%20University', wait_until='domcontentloaded')
     page.locator('#detail-favorite-button').wait_for(state='visible')
     narrow_check = page.evaluate(

@@ -9,7 +9,7 @@
 | 實際執行 | 結果 |
 | --- | --- |
 | 展示 API 與 DOM 隔離測試（`tests/test_cgu_demo.py`） | **23 passed**；確認首頁已完全移除 `#cgu-dept-finder`、保留「長庚 116-1 申請一頁看完」與「領航者補助作業要點」，且 `#partners` 將 `#discovery-criteria`（「我的條件」）移至頁首獨立醒目列、`#cgu-partner-filter-strip` 包覆計畫分頁與學院／系所列 |
-| Chromium 端對端瀏覽器測試（`tests/test_cgu_demo_browser.py`） | **10 passed**；實測驗證桌面與筆電多視窗寬度（960、1060、1100、1150、1280、1366、1440、1920px）頂部導覽列 `#glass-navigation` 於靜止與懸停／聚焦狀態皆完整容納 7 個導覽項目與 `#account-button`（「林小程（展示資料）」）不裁切不重疊、單排篩選列 `#cgu-partner-filter-strip` 於 1042–1920px（含選取最長系所名稱「奈米工程及設計碩士學位學程」）維持同一排不擠壓不溢位，並驗證平板（820×1180）與手機（390×844、360×740）底部展示列 `#cgu-demo-strip` 精簡為雙欄網格、透過 `ResizeObserver` 動態同步 `body` 底部留白與 `scroll-padding-bottom`（含 storage 受限長文案、六階段表單送出鈕與學校詳細頁底部行動列及頁尾連結捲至最底皆不遮擋），全程零水平溢位、零 `pageerror` |
+| Chromium 端對端瀏覽器測試（`tests/test_cgu_demo_browser.py`） | **10 passed**；實測驗證桌面、筆電與平板橫向多視窗寬度（930、960、1024、1040、1060、1100、1150、1200、1280、1366、1440、1920px）頂部導覽列 `#glass-navigation` 於靜止、懸停／聚焦及模擬同步失敗（`#account-workspace-sync-retry` 顯示＋未讀通知徽章）狀態皆完整容納 7 個導覽項目與 `#account-button`（「林小程（展示資料）」）不裁切不重疊（960px 以上顯示完整文字標籤，901–959px 提供原生 `title` 提示）、單排篩選列 `#cgu-partner-filter-strip` 於 1042–1920px（含選取最長系所名稱「奈米工程及設計碩士學位學程」）維持同一排不擠壓不溢位，並驗證平板（820×1180）與手機（390×844、360×740）底部展示列 `#cgu-demo-strip` 精簡為雙欄網格、「我的條件」展開第 7 欄（`可考慮，含待確認`）滿版不截斷、選校比較列 `#partner-compare-tray` 與浮動狀態提示 `#page-status` 於手機及桌面皆浮於展示列上方可正常點擊、卡片列表最底端及六階段表單送出鈕與學校詳細頁底部行動列捲至最底皆不遮擋，全程零水平溢位、零 `pageerror` |
 | 主站契約、資料快照與 OpenAPI 檢查 | `scripts/export_openapi.py --check` 通過；`test_cgu_bundled_data.py`、`test_cgu_catalogue_recovery.py`、`test_cgu_deployment_package.py`、`test_static_asset_versions.py`、`test_static_caching.py`、`test_text_files_are_utf8.py`、`test_uniway_ui_contract.py`（**384 passed, 4 skipped**）全數通過 |
 
 ---

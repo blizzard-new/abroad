@@ -1798,15 +1798,35 @@
     }
   });
 
+  function ensureTopbarTooltips() {
+    $$('#glass-navigation .uniway-public-nav a[data-public-route]').forEach(link => {
+      const label = (link.getAttribute('aria-label') || link.querySelector('span')?.textContent || '').trim();
+      if (label && link.getAttribute('title') !== label) link.setAttribute('title', label);
+    });
+    const syncStatus = $('#account-workspace-sync-control .workspace-sync-status');
+    const syncLabel = $('#account-workspace-sync-control .workspace-sync-status-label')?.textContent?.trim();
+    if (syncStatus && syncLabel && syncStatus.getAttribute('title') !== syncLabel) {
+      syncStatus.setAttribute('title', syncLabel);
+    }
+    const syncRetry = $('#account-workspace-sync-retry');
+    if (syncRetry) {
+      const retryLabel = (syncRetry.getAttribute('aria-label') || syncRetry.querySelector('span')?.textContent || '重試同步').trim();
+      if (syncRetry.getAttribute('title') !== retryLabel) syncRetry.setAttribute('title', retryLabel);
+      if (!syncRetry.getAttribute('aria-label')) syncRetry.setAttribute('aria-label', retryLabel);
+    }
+  }
+
   // Observe DOM mutations for dynamic shared renders (application-path deadline panel, notifications, file inputs, partner bars)
   new MutationObserver(() => {
     restrictControls();
+    ensureTopbarTooltips();
     enhanceMyApplicationDeadline();
     enhanceNotificationItems();
     syncPartnersCleanRow();
     syncCriteriaBanner();
   }).observe(document.body, { childList: true, subtree: true });
 
+  ensureTopbarTooltips();
   renderNavigatorCards();
   syncPartnersCleanRow();
   syncCriteriaGradeScale(false);

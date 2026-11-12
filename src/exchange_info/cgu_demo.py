@@ -995,7 +995,7 @@ def _render_report_print_html(report: dict[str, Any]) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
   <title>返國學期報告列印版｜{e(report.get('receipt_id', ''))}</title>
-  <link rel="stylesheet" href="/static/cgu-demo.css?v=20261112-cgu-clean-4" />
+  <link rel="stylesheet" href="/static/cgu-demo.css?v=20261112-cgu-clean-6" />
 </head>
 <body class="cgu-print-body">
   <main class="cgu-print-sheet">
@@ -1044,7 +1044,7 @@ def platform_html() -> str:
     soup = BeautifulSoup((STATIC / "index.html").read_text(encoding="utf-8"), "html.parser")
     soup.title.string = "UniWay CGU｜長庚大學交換申請平台"
     soup.head.append(soup.new_tag("meta", attrs={"name": "robots", "content": "noindex,nofollow,noarchive"}))
-    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261112-cgu-clean-4"))
+    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261112-cgu-clean-6"))
     script = soup.new_tag("script", src="/demo/bootstrap.js")
     soup.head.insert(0, script)
     # Initial static choices must also be CGU-only, before the registry request resolves.
@@ -1296,7 +1296,7 @@ def platform_html() -> str:
       <button type="button" class="primary-button" id="cgu-demo-confirm" hidden>確認重設</button>
       <button type="button" class="secondary-button" id="cgu-demo-close">關閉</button></div></dialog>''', 'html.parser')
     soup.body.append(snippet)
-    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js?v=20261112-cgu-clean-4', defer=''))
+    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js?v=20261112-cgu-clean-6', defer=''))
     return str(soup)
 
 

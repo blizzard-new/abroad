@@ -19,9 +19,20 @@
 #cgu-demo-dialog .button-row { display:flex; gap:12px; margin-top:18px; }
 html:has(body:not(.cgu-print-body)) { scroll-padding-bottom:var(--cgu-strip-clearance, 70px); }
 body:not(.cgu-print-body) { padding-bottom:var(--cgu-strip-clearance, 70px) !important; }
+html body.unified-shell #partners.pr-explore .pr-compare-tray,
 .pr-compare-tray { bottom:calc(var(--cgu-strip-height, 50px) + 12px); }
 body.unified-shell #application-path .level-actions { bottom:var(--cgu-strip-height, 50px) !important; }
-#application-path #toast { bottom:calc(var(--cgu-strip-height, 50px) + 14px); }
+body.unified-shell #application-path #toast,
+#application-path #toast { bottom:calc(var(--cgu-strip-height, 50px) + 14px); z-index:1510; }
+html body.unified-shell.global-home-mode #page-status:has(> .status-message:not(.error)),
+html body.unified-shell.public-exploration-mode #page-status:has(> .status-message:not(.error)) {
+  bottom:calc(var(--cgu-strip-height, 50px) + 16px);
+  z-index:1510;
+}
+html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:has(> .status-message:not(.error)) {
+  bottom:calc(var(--cgu-strip-height, 50px) + 84px);
+  z-index:1510;
+}
 #school-switcher { cursor:default; }
 @media(min-width:641px) and (max-width:1180px) {
   #cgu-demo-strip { gap:4px 6px; padding:5px 10px; font-size:11.5px; }
@@ -32,10 +43,26 @@ body.unified-shell #application-path .level-actions { bottom:var(--cgu-strip-hei
   :root { --cgu-strip-height:86px; --cgu-strip-clearance:108px; }
 }
 @media(max-width:900px) {
+  body.unified-shell .pr-booking,
   .pr-booking { bottom:var(--cgu-strip-height, 116px); padding-bottom:12px; }
   body.unified-shell .school-detail-view.pr-detail:not([hidden]) { padding-bottom:24px; }
   body.unified-shell:not(.cgu-print-body):has(.school-detail-view.pr-detail:not([hidden])) {
     padding-bottom:calc(var(--cgu-strip-clearance, 140px) + 140px) !important;
+  }
+  html body.unified-shell:has(.school-detail-view.pr-detail:not([hidden])) #page-status:has(> .status-message:not(.error)) {
+    bottom:calc(var(--cgu-strip-height, 116px) + 96px);
+    z-index:1510;
+  }
+}
+@media(max-width:700px) {
+  html body.unified-shell #partners.pr-explore .pr-compare-tray {
+    max-width:calc(100% - 12px);
+    box-sizing:border-box;
+  }
+  html body.unified-shell #partners.pr-explore .pr-compare-tray button {
+    flex:0 0 auto;
+    white-space:nowrap;
+    padding:8px 12px;
   }
 }
 @media(max-width:640px) {
@@ -137,6 +164,17 @@ body.unified-shell #application-path .level-actions { bottom:var(--cgu-strip-hei
     padding:0 !important; margin:-1px !important; overflow:hidden !important; clip:rect(0,0,0,0) !important; white-space:nowrap !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-retry[hidden] { display:none !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-retry:not([hidden]),
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-retry:not([hidden]) {
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+    width:38px !important; height:38px !important; min-height:38px !important; flex:0 0 38px !important;
+    padding:0 !important; gap:0 !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-retry span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-retry span {
+    position:absolute !important; width:1px !important; inline-size:1px !important; height:1px !important;
+    padding:0 !important; margin:-1px !important; overflow:hidden !important; clip:rect(0,0,0,0) !important; white-space:nowrap !important;
+  }
   html body.unified-shell #glass-navigation.glass-navigation-rail #account-button,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button {
     display:inline-flex !important; align-items:center !important; justify-content:flex-start !important;
@@ -157,7 +195,7 @@ body.unified-shell #application-path .level-actions { bottom:var(--cgu-strip-hei
 }
 @media(min-width:1200px) and (max-width:1399px) {
   html body.unified-shell #glass-navigation.glass-navigation-rail {
-    padding:0 14px !important; gap:8px !important;
+    padding:0 12px !important; gap:6px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand { gap:7px !important; }
@@ -168,7 +206,7 @@ body.unified-shell #application-path .level-actions { bottom:var(--cgu-strip-hei
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
-    height:36px !important; padding:0 7px !important; gap:4px !important;
+    height:36px !important; padding:0 6px !important; gap:4px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route] > :is(svg, .lucide) {
     width:15px !important; height:15px !important;
@@ -179,12 +217,14 @@ body.unified-shell #application-path .level-actions { bottom:var(--cgu-strip-hei
     font-size:13px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions { gap:5px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions { gap:4px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions .icon-button,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions .icon-button,
   html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-status,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status {
-    width:36px !important; height:36px !important; min-height:36px !important; flex-basis:36px !important;
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status,
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-retry:not([hidden]),
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-retry:not([hidden]) {
+    width:34px !important; height:34px !important; min-height:34px !important; flex-basis:34px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail #account-button,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button {
@@ -227,8 +267,10 @@ body.unified-shell #application-path .level-actions { bottom:var(--cgu-strip-hei
   html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions .icon-button,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions .icon-button,
   html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-status,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status {
-    width:34px !important; height:34px !important; min-height:34px !important; flex-basis:34px !important;
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status,
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-retry:not([hidden]),
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-retry:not([hidden]) {
+    width:32px !important; height:32px !important; min-height:32px !important; flex-basis:32px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail #account-button,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button {
@@ -239,18 +281,64 @@ body.unified-shell #application-path .level-actions { bottom:var(--cgu-strip-hei
     font-size:12px !important;
   }
 }
-@media(min-width:901px) and (max-width:1039px) {
+@media(min-width:960px) and (max-width:1039px) {
   html body.unified-shell #glass-navigation.glass-navigation-rail {
-    padding:0 12px !important; gap:8px !important;
+    padding:0 10px !important; gap:5px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand { gap:5px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand strong,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:16.5px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:24px !important; height:24px !important; flex-basis:24px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav { gap:1px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
+  html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
+    height:34px !important; padding:0 5px !important; gap:0 !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route] > :is(svg, .lucide) {
+    display:none !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a > span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] > span {
+    font-size:12.5px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .application-nav-chevron,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .application-nav-chevron {
+    flex:0 0 15px !important; width:15px !important; min-height:34px !important; height:34px !important; margin-left:-3px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions { gap:3px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions .icon-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions .icon-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-status,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status,
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-retry:not([hidden]),
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-retry:not([hidden]) {
+    width:32px !important; height:32px !important; min-height:32px !important; flex-basis:32px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button {
+    height:34px !important; min-height:34px !important; padding:0 7px !important; gap:5px !important;
+  }
+  html body.unified-shell #glass-navigation.glass-navigation-rail #account-button-label,
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button-label {
+    font-size:12px !important;
+  }
+}
+@media(min-width:901px) and (max-width:959px) {
+  html body.unified-shell #glass-navigation.glass-navigation-rail {
+    padding:0 10px !important; gap:6px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand strong,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:17.5px !important; }
-  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:28px !important; height:28px !important; flex-basis:28px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:17px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:26px !important; height:26px !important; flex-basis:26px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav { gap:2px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
-    width:38px !important; height:36px !important; padding:0 !important; gap:0 !important;
+    width:36px !important; height:34px !important; padding:0 !important; gap:0 !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a > span,
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span,
@@ -263,8 +351,10 @@ body.unified-shell #application-path .level-actions { bottom:var(--cgu-strip-hei
   html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions .icon-button,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions .icon-button,
   html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-status,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status {
-    width:34px !important; height:34px !important; min-height:34px !important; flex-basis:34px !important;
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-status,
+  html body.unified-shell #glass-navigation.glass-navigation-rail .workspace-sync-retry:not([hidden]),
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .workspace-sync-retry:not([hidden]) {
+    width:32px !important; height:32px !important; min-height:32px !important; flex-basis:32px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail #account-button,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) #account-button {
@@ -521,6 +611,15 @@ body.unified-shell #partners #discovery-criteria .discovery-form-actions button[
 body.unified-shell #partners #discovery-criteria .discovery-form-actions #discovery-clear-criteria {
   min-height:42px; padding:0 16px; border-radius:999px; border:1px solid #cbd5e1;
   background:#ffffff; color:#334155; font-size:14px; font-weight:700; cursor:pointer;
+}
+@media(max-width:900px) {
+  body.unified-shell #partners #discovery-criteria #discovery-criteria-form {
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+  body.unified-shell #partners #discovery-criteria #discovery-criteria-form > label:last-of-type,
+  body.unified-shell #partners #discovery-criteria #discovery-criteria-form .discovery-form-actions {
+    grid-column:1 / -1;
+  }
 }
 
 /* Single-Row Clean Program + College/Dept Filter Strip (Zero Grey Boxes, Zero Small Grey Text) */
