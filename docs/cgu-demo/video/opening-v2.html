@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>UniWay CGU 開場影片 v2（30 秒，含旁白）</title>
+<!-- 1920x1080 storyboard rendered frame by frame by render.js. render(t) takes seconds (0–30).
+     Narration timing comes from out/narration.json (narration.py), injected as window.NARRATION. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@400..900&family=Noto+Sans+TC:wght@400;500;700&family=Luckiest+Guy&display=block">
+<style>
+  :root { --cream:#FEF4DF; --paper:#FFFBF3; --coral:#E8604A; --coral-ink:#D24F38; --peri:#7F8FE6; --yellow:#FFD887; --ink:#1C1915; --soft:#4D4239; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+  body { font-family: 'Noto Sans TC', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--cream); }
+  .abs { position: absolute; }
+  .scene { position: absolute; inset: 0; opacity: 0; }
+  .appear { opacity: 0; will-change: transform, opacity; }
+  .gr { font-family: 'Chiron GoRound TC', sans-serif; }
+  .lk { font-family: 'Luckiest Guy', 'Chiron GoRound TC', sans-serif; }
+  .brand { left: 60px; top: 38px; display: flex; align-items: center; gap: 14px; z-index: 40; }
+  .brand img { width: 54px; height: 54px; }
+  .brand span { font-family: 'Luckiest Guy', sans-serif; font-size: 36px; letter-spacing: 1px; padding-top: 6px; }
+  .tag { right: 60px; top: 44px; z-index: 40; padding: 10px 24px; border-radius: 26px 12px 28px 14px; font: 700 24px/1.2 'Chiron GoRound TC', sans-serif; white-space: nowrap; opacity: 0; }
+  .pill { display: inline-block; padding: 10px 28px; border-radius: 30px 14px 34px 16px; font: 900 30px/1.2 'Chiron GoRound TC', sans-serif; }
+  .h1 { font: 900 72px/1.18 'Chiron GoRound TC', sans-serif; letter-spacing: 1px; margin: 0; }
+  .card { position: absolute; border-radius: 44px 22px 48px 24px; padding: 30px 30px 32px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .card .t { font: 900 40px/1.2 'Chiron GoRound TC', sans-serif; }
+  .card .d { font: 500 28px/1.5 'Noto Sans TC', sans-serif; }
+  .num { font: 400 46px/1 'Luckiest Guy', sans-serif; }
+  .frame { left: 790px; top: 150px; width: 1020px; border-radius: 26px; background: var(--paper); border: 5px solid var(--ink); overflow: hidden; }
+  .frame .chrome { height: 46px; display: flex; align-items: center; gap: 10px; padding: 0 18px; background: #F3E9D2; border-bottom: 4px solid var(--ink); }
+  .frame .chrome b { width: 13px; height: 13px; border-radius: 50%; display: inline-block; }
+  .frame .chrome .url { margin-left: 14px; height: 30px; padding: 0 16px; border-radius: 9px; background: #fff; border: 2px solid #d9cdb3; display: flex; align-items: center; font: 500 19px/1 'Noto Sans TC', sans-serif; color: var(--soft); }
+  .viewport { position: relative; width: 1010px; height: 631px; overflow: hidden; background: #fff; }
+  .viewport img { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; transform-origin: 0 0; }
+  .hl { position: absolute; border: 6px solid var(--coral); border-radius: 20px; opacity: 0; box-shadow: 0 0 0 9999px rgba(28,25,21,.30); }
+  .bul { display: flex; align-items: center; gap: 16px; font: 500 34px/1.35 'Noto Sans TC', sans-serif; }
+  .bul i { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--coral); position: relative; }
+  .bul i::after { content: ''; position: absolute; left: 11px; top: 6px; width: 9px; height: 16px; border: solid var(--cream); border-width: 0 5px 5px 0; transform: rotate(45deg); }
+  .pillar { position: absolute; top: 380px; width: 520px; border-radius: 48px 22px 52px 26px; padding: 30px 34px 30px; display: flex; flex-direction: column; gap: 14px; border: 5px solid var(--ink); }
+  .pillar .pt { display: flex; align-items: center; gap: 16px; }
+  .pillar .pt .lk { font-size: 54px; line-height: 1; }
+  .pillar .pt .gr { font-weight: 900; font-size: 60px; line-height: 1.1; }
+  .pillar .d { font: 500 29px/1.5 'Noto Sans TC', sans-serif; }
+  .pillar .need { align-self: flex-start; font: 700 25px/1.3 'Chiron GoRound TC', sans-serif; background: var(--paper); border: 3px solid var(--ink); border-radius: 18px 8px 20px 10px; padding: 8px 16px; }
+  #subs { position: absolute; left: 0; right: 0; bottom: 48px; display: flex; justify-content: center; z-index: 60; pointer-events: none; }
+  #subs span { max-width: 1560px; padding: 14px 34px; border-radius: 20px; background: rgba(28,25,21,.88); color: var(--cream); font: 500 42px/1.35 'Noto Sans TC', sans-serif; text-align: center; opacity: 0; }
+  #black { position: absolute; inset: 0; background: #000; z-index: 100; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- Decorations shared by every scene -->
+  <svg class="abs" style="right:0;top:0" width="600" height="280" viewBox="0 0 600 280"><g fill="none" stroke="#FFD887" stroke-width="30" stroke-linecap="round"><path d="M70 24 C130 96 200 -6 270 58 S410 118 480 62 S590 70 650 40"/><path d="M300 176 C360 248 430 146 500 210 S600 230 660 200"/></g></svg>
+  <svg class="abs" style="left:0;bottom:0" width="560" height="240" viewBox="0 0 560 240"><g fill="none" stroke="#FFD887" stroke-width="30" stroke-linecap="round"><path d="M-20 62 C50 132 120 24 200 84 S330 140 410 84 S520 70 580 40"/><path d="M-20 186 C50 256 120 148 200 208 S330 264 400 220"/></g></svg>
+
+  <div class="abs brand" id="brand"><img src="../../../src/exchange_info/static/assets/brand/uniway-logo.webp" alt=""><span>UniWay CGU</span></div>
+  <div class="abs tag" id="tag1" style="background:#ECE3D0;color:#3d352c;border:2px dashed #9a8f7c">情境示意｜依長庚公開規定整理</div>
+  <div class="abs tag" id="tag3" style="background:#7F8FE6;color:#1C1915">實機畫面｜展示站・虛構學生</div>
+  <div class="abs tag" id="tag4" style="background:#E8604A;color:#FEF4DF">合作構想｜尚未串接</div>
+
+  <!-- S1: four places -->
+  <section class="scene" id="s1">
+    <svg class="abs appear" id="s1path" style="left:120px;top:318px" width="1700" height="80" viewBox="0 0 1700 80"><path d="M20 50 C240 0 420 80 640 40 S1060 0 1280 44 S1520 70 1600 36" fill="none" stroke="#7F8FE6" stroke-width="10" stroke-linecap="round" stroke-dasharray="22 18"/><g transform="translate(1648 30) rotate(-14) scale(0.85)" fill="#7F8FE6"><path d="M-40 -6 L30 -6 C46 -6 54 0 54 0 C54 0 46 6 30 6 L-40 6 Z M0 -5 L-16 -44 L-2 -44 L24 -5 Z M0 5 L-16 44 L-2 44 L24 5 Z M-32 -5 L-46 -22 L-36 -22 L-20 -5 Z M-32 5 L-46 22 L-36 22 L-20 5 Z"/></g></svg>
+    <div class="abs appear" id="s1k" style="left:150px;top:140px"><span class="pill" style="background:#E8604A;color:#FEF4DF">痛點</span></div>
+    <h1 class="abs h1 appear" id="s1h" style="left:150px;top:205px">長庚交換申請，要跑<span style="color:#D24F38">四個地方</span></h1>
+    <div class="card appear" id="c1" style="left:160px;top:400px;width:370px;background:#FFD887;border:5px solid #1C1915">
+      <svg width="120" height="96" viewBox="0 0 120 96"><rect x="14" y="8" width="92" height="62" rx="8" fill="#FFFBF3" stroke="#1C1915" stroke-width="5"/><rect x="26" y="20" width="50" height="8" rx="4" fill="#7F8FE6"/><rect x="26" y="36" width="68" height="8" rx="4" fill="#E8604A"/><rect x="26" y="52" width="40" height="8" rx="4" fill="#7F8FE6"/><path d="M4 78 L116 78 L108 90 L12 90 Z" fill="#1C1915"/></svg>
+      <div class="t">線上申請表</div><div class="d">Google 表單<br>12/21 17:00 截止</div>
+    </div>
+    <div class="card appear" id="c2" style="left:570px;top:400px;width:370px;background:#E8604A;border:5px solid #1C1915;color:#FEF4DF">
+      <svg width="120" height="96" viewBox="0 0 120 96"><path d="M28 6 L76 6 L96 26 L96 90 L28 90 Z" fill="#FFFBF3" stroke="#1C1915" stroke-width="5" stroke-linejoin="round"/><path d="M76 6 L76 26 L96 26" fill="#FFD887" stroke="#1C1915" stroke-width="5" stroke-linejoin="round"/><rect x="40" y="40" width="44" height="7" rx="3.5" fill="#1C1915"/><rect x="40" y="56" width="44" height="7" rx="3.5" fill="#1C1915"/><rect x="40" y="72" width="28" height="7" rx="3.5" fill="#1C1915"/></svg>
+      <div class="t">國際事務處</div><div class="d" style="font-weight:700">紙本資料<br>（含成績單正本）</div>
+    </div>
+    <div class="card appear" id="c3" style="left:980px;top:400px;width:370px;background:#7F8FE6;border:5px solid #1C1915">
+      <svg width="120" height="96" viewBox="0 0 120 96"><polygon points="10,36 60,6 110,36" fill="#E8604A" stroke="#1C1915" stroke-width="5" stroke-linejoin="round"/><rect x="18" y="36" width="84" height="52" fill="#FFFBF3" stroke="#1C1915" stroke-width="5"/><rect x="30" y="46" width="10" height="32" fill="#7F8FE6"/><rect x="55" y="58" width="12" height="30" fill="#FFD887" stroke="#1C1915" stroke-width="3"/><rect x="80" y="46" width="10" height="32" fill="#7F8FE6"/></svg>
+      <div class="t">系所辦公室</div><div class="d">返國兩週內<br>交返校手續單</div>
+    </div>
+    <div class="card appear" id="c4" style="left:1390px;top:400px;width:370px;background:#FFD887;border:5px solid #1C1915">
+      <svg width="120" height="96" viewBox="0 0 120 96"><path d="M30 76 C12 76 6 62 12 52 C16 44 24 40 32 42 C34 26 48 16 64 18 C80 20 90 32 90 44 C102 42 112 52 110 64 C108 72 100 76 92 76 Z" fill="#FFFBF3" stroke="#1C1915" stroke-width="5" stroke-linejoin="round"/><path d="M60 70 L60 40 M48 52 L60 40 L72 52" fill="none" stroke="#E8604A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="t">教育部網站</div><div class="d">問卷、心得報告<br>經驗分享短片</div>
+    </div>
+    <p class="abs appear" id="s1f" style="left:0;right:0;top:800px;margin:0;text-align:center;font:500 26px/1.4 'Noto Sans TC',sans-serif;color:#4D4239">系辦與教育部網站為領航者補助受領生的返國義務；心得另交國際處線上表單</p>
+    <div class="abs appear" id="bubble" style="left:560px;top:470px;width:800px">
+      <svg class="abs" style="left:0;top:0" width="800" height="230" viewBox="0 0 800 230"><path d="M60 20 L740 20 C770 20 790 40 790 70 L790 150 C790 180 770 200 740 200 L470 200 L420 228 L410 200 L60 200 C30 200 10 180 10 150 L10 70 C10 40 30 20 60 20 Z" fill="#E8604A" stroke="#1C1915" stroke-width="6" stroke-linejoin="round"/></svg>
+      <p class="abs gr" style="left:0;top:62px;width:800px;margin:0;text-align:center;font-weight:900;font-size:64px;line-height:1.2;color:#FEF4DF">我現在該做哪一步？</p>
+    </div>
+  </section>
+
+  <!-- S3: what works today (real screens) -->
+  <section class="scene" id="s3">
+    <div class="abs appear" id="s3k" style="left:110px;top:170px"><span class="pill" style="background:#7F8FE6;color:#1C1915">現在做到</span></div>
+    <h1 class="abs h1 appear" id="s3h" style="left:110px;top:240px;width:660px;font-size:62px">長庚 <span class="lk" style="font-weight:400">78</span> 所合作校<br>＋六階段準備清單</h1>
+    <div class="abs" style="left:110px;top:470px;display:flex;flex-direction:column;gap:26px">
+      <div class="bul appear" id="b1"><i></i>條件相符、有列多益一眼看</div>
+      <div class="bul appear" id="b2"><i></i>每一步附官方來源</div>
+      <div class="bul appear" id="b3"><i></i>校內 12/21 截止倒數</div>
+    </div>
+    <div class="abs frame appear" id="f3"><div class="chrome"><b style="background:#E8604A"></b><b style="background:#FFD887"></b><b style="background:#7F8FE6"></b><div class="url">demo.uniway-tw.com</div></div>
+      <div class="viewport"><img id="i3a" src="shots/p1-partners.png" alt=""><img id="i3b" src="shots/p3-today.png" alt="" style="opacity:0"><div class="hl" id="h3"></div></div></div>
+  </section>
+
+  <!-- S4: proposed pilot with the international office -->
+  <section class="scene" id="s4">
+    <div class="abs appear" id="s4k" style="left:150px;top:140px"><span class="pill" style="background:#E8604A;color:#FEF4DF">合作構想・尚未串接</span></div>
+    <h1 class="abs h1 appear" id="s4h" style="left:150px;top:205px">希望和<span style="color:#D24F38">國際處</span>試辦三件事</h1>
+    <div class="pillar appear" id="p1" style="left:150px;background:#7F8FE6">
+      <div class="pt"><span class="lk">1</span><span class="gr">問得到</span></div>
+      <div class="d">官方 FAQ 附來源回答；答不了的，整理後轉給承辦</div>
+      <div class="need">學校需要：一個承辦窗口</div>
+    </div>
+    <div class="pillar appear" id="p2" style="left:700px;background:#FFD887">
+      <div class="pt"><span class="lk">2</span><span class="gr">送得出</span></div>
+      <div class="d">送件前檢查缺件，依國際處清單產出列印包</div>
+      <div class="need">學校需要：先不必改系統</div>
+    </div>
+    <div class="pillar appear" id="p3" style="left:1250px;background:#7F8FE6">
+      <div class="pt"><span class="lk">3</span><span class="gr">傳得下去</span></div>
+      <div class="d">心得寫一次，匯出校方與教育部格式；學生同意後給學弟妹參考</div>
+      <div class="need">學校需要：同意沿用報告格式</div>
+    </div>
+    <p class="abs appear" id="s4f" style="left:0;right:0;top:810px;margin:0;text-align:center;font:500 26px/1.4 'Noto Sans TC',sans-serif;color:#4D4239">實際作法需經國際處同意；受補助者仍依規定上傳教育部網站</p>
+  </section>
+
+  <!-- S5: closing card -->
+  <section class="scene" id="s5">
+    <svg class="abs" style="right:0;bottom:0" width="380" height="400" viewBox="0 0 380 400"><circle cx="250" cy="74" r="36" fill="none" stroke="#7F8FE6" stroke-width="18"/><circle cx="250" cy="270" r="176" fill="#7F8FE6"/><circle cx="250" cy="270" r="142" fill="#FEF4DF" stroke="#1C1915" stroke-width="6"/><polygon points="250,150 266,254 370,270 266,286 250,390 234,286 130,270 234,254" fill="#1C1915"/><polygon points="250,200 260,260 320,270 260,280 250,340 240,280 180,270 240,260" fill="#7F8FE6" transform="rotate(45 250 270)"/><circle cx="250" cy="270" r="18" fill="#FEF4DF" stroke="#1C1915" stroke-width="5"/></svg>
+    <div class="abs" style="left:0;right:0;top:120px;display:flex;flex-direction:column;align-items:center;text-align:center">
+      <img class="appear" id="e1" src="../../../src/exchange_info/static/assets/brand/uniway-logo.webp" alt="" style="width:160px;height:160px">
+      <div class="lk appear" id="e2" style="margin-top:14px;font-size:132px;line-height:1;letter-spacing:5px">UniWay CGU</div>
+      <div class="gr appear" id="e3" style="margin-top:22px;font-weight:900;font-size:60px;line-height:1.2">長庚交換申請導航</div>
+      <div class="gr appear" id="e4" style="margin-top:34px;font-weight:900;font-size:46px;line-height:1.3;background:#FFD887;padding:14px 40px;border-radius:40px 18px 44px 22px">讓學生更清楚，也讓行政更省力</div>
+      <div class="appear" id="e5" style="margin-top:38px"><span class="pill" style="background:#7F8FE6;color:#1C1915;font-size:34px">接下來：實機操作 →</span></div>
+    </div>
+    <p class="abs appear" id="e6" style="left:0;right:0;bottom:44px;margin:0;text-align:center;font:400 24px/1.4 'Noto Sans TC',sans-serif;color:#4D4239">獨立學生專案，非長庚大學官方網站；合作內容為構想，尚未與學校串接</p>
+  </section>
+
+  <div id="subs"><span id="sub"></span></div>
+  <div id="black"></div>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const prog = (t, s, d) => easeOut(clamp((t - s) / d));
+
+// Narration timing (narration.py → out/narration.json); fallback matches the committed track.
+const N = (window.NARRATION || { lines: [
+  { text: '表單線上填、紙本送國際處，回國還要交系辦、傳教育部。', start: 0.6, end: 7.033 },
+  { text: '學生常常不知道下一步。', start: 7.483, end: 9.915 },
+  { text: 'UniWay 先把長庚的合作校和準備清單，排成一條路徑。', start: 10.365, end: 15.961 },
+  { text: '接下來，希望和國際處試辦三件事：問得到、送得出、傳得下去。', start: 16.411, end: 23.609 },
+  { text: '讓學生更清楚，也讓行政更省力。', start: 24.059, end: 27.793 },
+] }).lines;
+// Time at which the narrator reaches a phrase inside line i (character-proportional estimate).
+const at = (i, phrase) => { const L = N[i]; const k = Math.max(0, L.text.indexOf(phrase)); return L.start + (k / L.text.length) * (L.end - L.start); };
+
+const T = {
+  s1End: N[2].start - 0.25,
+  s3Start: N[2].start - 0.45, s3End: N[3].start - 0.15,
+  s4Start: N[3].start - 0.45, s4End: N[4].start - 0.05,
+  s5Start: N[4].start - 0.5,
+  c1: N[0].start, c2: at(0, '紙本'), c3: at(0, '交系辦'), c4: at(0, '傳教育部'),
+  bubble: N[1].start,
+  swap: at(2, '準備清單'),
+  q1: at(3, '問得到'), q2: at(3, '送得出'), q3: at(3, '傳得下去'),
+};
+
+function appear(id, t, s, { d = 0.6, dy = 26, out = null, scale = 0 } = {}) {
+  const el = $(id); let p = prog(t, s, d);
+  if (out !== null) p = Math.min(p, 1 - prog(t, out, 0.4));
+  el.style.opacity = p;
+  const sc = scale ? ` scale(${(1 - scale * (1 - p)).toFixed(4)})` : '';
+  el.style.transform = `translateY(${(dy * (1 - p)).toFixed(2)}px)${sc}`;
+}
+function scene(id, t, s, e, fi = 0.45, fo = 0.45) {
+  let a = 0;
+  if (t >= s && t <= e) { a = 1; if (fi) a = Math.min(a, clamp((t - s) / fi)); if (fo) a = Math.min(a, clamp((e - t) / fo)); }
+  $(id).style.opacity = a; return a;
+}
+const VW = 1010, VH = 631, K = VW / 1440;
+function view(t, keys) {
+  let a = keys[0], b = keys[keys.length - 1];
+  for (let i = 0; i < keys.length - 1; i++) if (t >= keys[i].t && t <= keys[i + 1].t) { a = keys[i]; b = keys[i + 1]; break; }
+  if (t < keys[0].t) b = a; if (t > keys[keys.length - 1].t) a = b;
+  const p = a === b ? 0 : easeInOut(clamp((t - a.t) / (b.t - a.t)));
+  const z = a.z + (b.z - a.z) * p, cx = a.cx + (b.cx - a.cx) * p, cy = a.cy + (b.cy - a.cy) * p, s = K * z;
+  return { s, tx: clamp(VW / 2 - cx * s, VW - 1440 * s, 0), ty: clamp(VH / 2 - cy * s, VH - 900 * s, 0) };
+}
+const place = (id, v) => { $(id).style.transform = `translate(${v.tx.toFixed(2)}px, ${v.ty.toFixed(2)}px) scale(${v.s.toFixed(5)})`; };
+function highlight(id, v, r, a) {
+  const el = $(id); el.style.left = (v.tx + r.x * v.s) + 'px'; el.style.top = (v.ty + r.y * v.s) + 'px';
+  el.style.width = (r.w * v.s) + 'px'; el.style.height = (r.h * v.s) + 'px'; el.style.opacity = a;
+}
+const C = Object.assign({ p1Card: { x: 356, y: 150, w: 319, h: 532 }, p3Card: { x: 80, y: 394, w: 797, h: 246 } }, window.CAPTURED_REGIONS || {});
+// Today: the task card plus the confirmed-deadline card beside it.
+const TODAY = { x: C.p3Card.x, y: C.p3Card.y, w: 1280, h: C.p3Card.h };
+const pad = (r, p = 10) => ({ x: r.x - p, y: r.y - p, w: r.w + 2 * p, h: r.h + 2 * p });
+const ctr = (r) => ({ cx: r.x + r.w / 2, cy: r.y + r.h / 2 });
+
+function render(t) {
+  $('black').style.opacity = Math.max(1 - clamp(t / 0.4), clamp((t - 29.5) / 0.5));
+  const chrome = t < T.s5Start ? 1 : 1 - clamp((t - T.s5Start) / 0.4);
+  $('brand').style.opacity = chrome;
+  $('tag1').style.opacity = Math.min(prog(t, 0.3, 0.5), 1 - clamp((t - T.s3Start) / 0.4));
+  $('tag3').style.opacity = t < T.s3Start ? 0 : Math.min(prog(t, T.s3Start, 0.5), 1 - clamp((t - T.s4Start) / 0.4));
+  $('tag4').style.opacity = t < T.s4Start ? 0 : Math.min(prog(t, T.s4Start, 0.5), chrome);
+
+  // S1: four places, then the student's question
+  scene('s1', t, 0, T.s1End, 0, 0.45);
+  appear('s1k', t, 0.2); appear('s1h', t, 0.35); appear('s1path', t, 0.6, { dy: 0 });
+  const dim = 1 - 0.6 * prog(t, T.bubble - 0.1, 0.5);
+  [['c1', T.c1], ['c2', T.c2], ['c3', T.c3], ['c4', T.c4]].forEach(([id, s]) => { appear(id, t, s - 0.15, { d: 0.55, dy: 40 }); $(id).style.opacity = parseFloat($(id).style.opacity) * dim; });
+  appear('s1f', t, T.c4 + 0.6, { dy: 10 }); $('s1f').style.opacity = parseFloat($('s1f').style.opacity) * dim;
+  appear('bubble', t, T.bubble - 0.1, { d: 0.45, dy: 0, scale: 0.25 });
+
+  // S3: real screens — school search, then Today
+  scene('s3', t, T.s3Start, T.s3End);
+  appear('s3k', t, T.s3Start + 0.15); appear('s3h', t, T.s3Start + 0.3); appear('f3', t, T.s3Start + 0.35, { d: 0.7, dy: 40 });
+  appear('b1', t, T.s3Start + 1.0); appear('b2', t, T.swap - 0.2); appear('b3', t, T.swap + 1.0);
+  const sw = prog(t, T.swap - 0.25, 0.5); $('i3b').style.opacity = sw; $('i3a').style.opacity = 1 - sw;
+  const va = view(t, [{ t: T.s3Start + 0.4, z: 1, cx: 720, cy: 450 }, { t: T.s3Start + 1.0, z: 1, cx: 720, cy: 450 }, { t: T.swap - 0.3, z: 1.55, ...ctr(C.p1Card) }]);
+  const vb = view(t, [{ t: T.swap - 0.25, z: 1, cx: 720, cy: 450 }, { t: T.swap + 0.5, z: 1, cx: 720, cy: 450 }, { t: T.s3End - 0.6, z: 1.1, ...ctr(TODAY) }]);
+  place('i3a', va); place('i3b', vb);
+  if (t < T.swap - 0.25) highlight('h3', va, pad(C.p1Card), prog(t, T.s3Start + 1.6, 0.5) * (1 - prog(t, T.swap - 0.6, 0.3)));
+  else highlight('h3', vb, pad(TODAY), prog(t, T.swap + 1.3, 0.5));
+
+  // S4: three pilots, each emphasised as it is named
+  scene('s4', t, T.s4Start, T.s4End);
+  appear('s4k', t, T.s4Start + 0.15); appear('s4h', t, T.s4Start + 0.3);
+  appear('p1', t, T.s4Start + 0.8, { d: 0.6, dy: 40 }); appear('p2', t, T.s4Start + 1.3, { d: 0.6, dy: 40 }); appear('p3', t, T.s4Start + 1.8, { d: 0.6, dy: 40 });
+  [['p1', T.q1], ['p2', T.q2], ['p3', T.q3]].forEach(([id, s]) => {
+    const on = prog(t, s - 0.1, 0.3) * (1 - prog(t, s + 0.9, 0.4));
+    const el = $(id); el.style.transform += ` scale(${(1 + 0.05 * on).toFixed(4)})`;
+    el.style.boxShadow = on > 0.01 ? `0 0 0 ${Math.round(10 * on)}px #E8604A` : 'none';
+  });
+  appear('s4f', t, T.s4Start + 2.4, { dy: 10 });
+
+  // S5: closing card
+  scene('s5', t, T.s5Start, 30, 0.5, 0);
+  appear('e1', t, T.s5Start + 0.2); appear('e2', t, T.s5Start + 0.4); appear('e3', t, T.s5Start + 0.7);
+  appear('e4', t, N[4].start + 0.1); appear('e5', t, N[4].end + 0.2); appear('e6', t, N[4].end + 0.5, { dy: 8 });
+
+  // Captions for lines 1–4 (the closing line is already on screen as the slogan).
+  const sub = $('sub'); let shown = null;
+  for (let i = 0; i < 4; i++) if (t >= N[i].start - 0.15 && t <= N[i].end + 0.35) shown = i;
+  if (shown === null) sub.style.opacity = 0;
+  else { sub.textContent = N[shown].text; sub.style.opacity = Math.min(prog(t, N[shown].start - 0.15, 0.2), 1 - prog(t, N[shown].end + 0.2, 0.15)); }
+}
+render(0);
+</script>
+</body>
+</html>
