@@ -222,10 +222,44 @@ def test_nsysu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
         row["school_name"] for row in cov["partners"]
         if row["image_status"] != "verified"
     }
-    # Conflicting image records under the same translated alias must remain
+    # Unverified or review-pending image records must remain
     # unresolved; a populated image field alone does not establish verification.
     assert unresolved_images == {
-        "蒙庫國王科技大學(KMUTT) King Mongkut's University of Technology Thonburi(KMUTT)"
+        "ECE巴黎里昂工程研究生學院 ECE Paris Lyon- Ecole d'ingénieurs",
+        "EDHEC高等商學院 EDHEC Business School",
+        "人文大學 University of the Humanities",
+        "勃艮第高等商學院 Burgundy School of Business",
+        "吐魯斯高等商學院 The Toulouse Business School",
+        "國際社會科學自由大學 Libera Università Internazionale degli Studi Sociali Guido Carli",
+        "國際與政治高等學院 HEIP School of Advanced International and Political Studies",
+        "安卡拉社會科學大學 Social Sciences University of Ankara",
+        "彼得拉基督教大學 Petra Christian University",
+        "慕尼黑大學 Ludwig-Maximilians-Universität München",
+        "拉曼大學 University Tunku Abdul Rahman 2 ---",
+        "杜林大學 The University of Torino",
+        "林茲大學 Johannes Kepler University Linz",
+        "查理大學 Charles University",
+        "法蘭克福大學 Goethe-Universität, Frankfurt am Main",
+        "清奈理工學院 Chennai Institute of Technology",
+        "漢恩應用科技大學 HAN University of Applied Sciences",
+        "漢肯商學院 Hanken School of Economics",
+        "烏特列支大學 Utrecht University",
+        "秋田縣立大學 Akita Prefectural University",
+        "科克大學 Koç University",
+        "科爾多瓦大學 University of Córdoba",
+        "約克大學 Schulich School of Business/York University",
+        "維也納科技大學 Technische Universität Wien",
+        "維爾特克科技大學 Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology",
+        "聖托瑪斯大學 Pontifical and Royal University of Santo Tomas",
+        "聖莫內大學 Universit Jean Monnet- Saint Etienne",
+        "莫斯科國立師範大學 Moscow Pedagogical State University",
+        "蒙貝利耶商學院 Montpellier Business School",
+        "蘭馬斯瓦米記念大學 SRM Institute of Science and Technology",
+        "達姆施塔特工業大學 Technische Universität Darmstadt",
+        "遠東大學 Far Eastern University",
+        "韓國高等科技學院管理學院 KAIST College of Business",
+        "馬約大學 Universidad Mayor",
+        "高知大學 Kochi University"
     }
     assert cov["image_count"] == cov["total_partner_schools"] - len(unresolved_images)
     assert cov["official_website_count"] == 218

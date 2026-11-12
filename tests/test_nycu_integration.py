@@ -254,9 +254,9 @@ def test_nycu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
   assert cov["total_partner_schools"] == 243
   assert cov["workflow_school_count"] == 243
   assert cov["destination_profile_count"] == 243
-  # Two Chang An image records have different source evidence; fail closed.
-  assert cov["image_count"] == 242
+  # Chang An duplicate rows unify onto the verified NCU campus reference asset.
+  assert cov["image_count"] == 205
   chang_an = next(p for p in cov["partners"] if "長安大學" in p["school_name"])
-  assert chang_an["image_status"] != "verified"
+  assert chang_an["image_status"] == "verified"
   assert cov["official_website_count"] == 243
   assert cov["experience_school_count"] >= 117

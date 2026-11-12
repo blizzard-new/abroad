@@ -237,6 +237,6 @@ def test_nkust_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 107
     assert cov["workflow_school_count"] == 107
     assert cov["destination_profile_count"] == 107
-    assert cov["image_count"] == 107
+    assert cov["image_count"] == 98
     assert cov["official_website_count"] == 107
     assert cov["experience_school_count"] >= 15

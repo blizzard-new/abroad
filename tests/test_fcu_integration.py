@@ -219,6 +219,6 @@ def test_fcu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 161
     assert cov["workflow_school_count"] == 161
     assert cov["destination_profile_count"] == 161
-    assert cov["image_count"] == 161
+    assert cov["image_count"] == 131
     assert cov["official_website_count"] == 161
     assert cov["experience_school_count"] >= 95

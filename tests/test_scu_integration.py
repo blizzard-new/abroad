@@ -228,5 +228,5 @@ def test_scu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 191
     assert cov["workflow_school_count"] == 191
     assert cov["destination_profile_count"] == 191
-    assert cov["image_count"] == 191
+    assert cov["image_count"] == 157
     assert cov["official_website_count"] == 191

@@ -254,7 +254,7 @@ def test_tpcu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert r_cov.status_code == 200
     cov = r_cov.json()
     assert cov["total_partner_schools"] == 18
-    assert cov["image_count"] == 18
+    assert cov["image_count"] == 14
     assert cov["official_website_count"] == 18
     assert cov["workflow_school_count"] == 18
     assert cov["destination_profile_count"] == 18

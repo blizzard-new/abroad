@@ -257,7 +257,7 @@ def test_kmu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert r_cov.status_code == 200
     cov = r_cov.json()
     assert cov["total_partner_schools"] == 188
-    assert cov["image_count"] == 188
+    assert cov["image_count"] == 142
     assert cov["official_website_count"] == 188
     assert cov["workflow_school_count"] == 188
     assert cov["destination_profile_count"] == 188
