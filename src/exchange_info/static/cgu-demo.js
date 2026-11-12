@@ -51,12 +51,12 @@
     finally { confirm.disabled = false; }
   };
   $('#cgu-demo-seed').onclick = async () => {
-    show('載入示範申請', '<p>以原平台的申請流程建立林小程的 2027 秋季研究目標；當期資格與名額待確認。已有相同計畫時直接開啟。</p>');
+    show('載入示範申請', '<p>以原平台的申請流程建立林小程的 2027 秋季（116-1）研究目標；當期資格與名額待確認。已有相同計畫時直接開啟。</p>');
     try {
       const response = await fetch('/account/application-paths?home_school=' + encodeURIComponent('長庚大學'));
       if (!response.ok) throw new Error('無法載入展示工作區');
       const registry = await response.json();
-      const made = await fetch('/account/application-paths', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({revision:registry.revision, home_school:'長庚大學', target_school:'林肯大學 Lincoln University', academic_year:'116', departure_year:'2027', semester:'fall'})});
+      const made = await fetch('/account/application-paths', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({revision:registry.revision, home_school:'長庚大學', target_school:'林肯大學 Lincoln University', academic_year:'116', application_round:'116-1（2027 秋季出國）', departure_year:'2027', semester:'fall'})});
       if (!made.ok) { const error = await made.json(); throw new Error(typeof error.detail === 'string' ? error.detail : '建立失敗，請稍後再試'); }
       location.href = '/?home=' + encodeURIComponent('長庚大學') + '#my-application';
       location.reload();

@@ -127,9 +127,12 @@ window.UniWayMultiPlan = (() => {
       const schools=(state.dashboard?.partner_universities || []).filter(row=>(row.availability_status || "open") === "open" || (["國立中央大學", "天主教輔仁大學", "東吳大學"].includes(activeHomeSchool()) && partnerAvailabilityMeta(row).pending));
       const saved=[...state.applications];
       const names=[...new Set([...schools.map(row=>row.school_name),...saved])];
+      const maxPrefs = state.dashboard?.maximum_preferences || 5;
       form.querySelectorAll("select").forEach((select,index)=>{
+        const labelEl = select.closest("label");
+        if (labelEl) labelEl.hidden = index >= maxPrefs;
         select.innerHTML=`<option value="">${index ? "暫不設定" : "請選擇學校"}</option>${names.map(name=>`<option value="${escapeHtml(name)}">${escapeHtml(name)}${["國立中央大學", "天主教輔仁大學", "東吳大學"].includes(activeHomeSchool()) && partnerAvailabilityMeta(partnerByName(name)).pending ? " · 本期名額待核實" : ""}</option>`).join("")}`;
-        select.value=saved[index] || "";
+        select.value = index < maxPrefs ? (saved[index] || "") : "";
       });
     }
     const status=document.querySelector("#multi-plan-status");

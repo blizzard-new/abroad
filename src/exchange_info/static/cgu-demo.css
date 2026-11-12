@@ -15,6 +15,40 @@ body { padding-bottom:70px; }
 #school-switcher .school-switcher-action { display:none !important; }
 [data-home-pick-school] { pointer-events:none; }
 .mt-board-edit { display:none; }
+.verified-hook-btn.is-line, [data-copy-line-summary] { display:none !important; }
+label[for="college-filter"] { display:none !important; }
+
+/* Primary CGU 12/21 countdown banner on homepage hero & calendar tile */
+.cgu-home-deadline-banner { margin:14px 0 6px; }
+.cgu-home-deadline-pill { display:inline-flex; flex-wrap:wrap; align-items:center; gap:8px 10px; padding:10px 16px; border-radius:14px; background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%); border:1px solid #fdba74; color:#7c2d12; text-decoration:none; font-size:14px; line-height:1.45; box-shadow:0 4px 14px rgba(124,45,18,.08); transition:transform .15s ease, box-shadow .15s ease; }
+.cgu-home-deadline-pill:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(124,45,18,.13); }
+.cgu-home-deadline-pill .cgu-dl-badge { display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:999px; background:#ea580c; color:#fff; font-weight:700; font-size:12px; letter-spacing:.02em; }
+.cgu-home-deadline-pill strong { font-weight:700; color:#431407; }
+.cgu-home-deadline-pill em { font-style:normal; font-weight:700; color:#c2410c; }
+.pr-mini-dates li.is-primary-home { padding:10px 12px; border-radius:12px; background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%); border:1px solid #fdba74; }
+.pr-mini-dates li.is-primary-home .pr-mini-date { background:#ea580c; color:#fff; }
+.pr-mini-dates li.is-primary-home .pr-mini-date small { color:#ffedd5; }
+
+/* Top-of-search CGU 4-college quick filter bar */
+.cgu-college-bar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; margin:0 0 14px; padding:12px 16px; border-radius:16px; background:var(--uw-surface,#fff); border:1px solid var(--uw-line,#d8dde5); box-shadow:0 2px 10px rgba(15,23,42,.04); }
+.cgu-college-bar-main { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.cgu-college-bar-label { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:var(--uw-text,#23324a); margin-right:4px; white-space:nowrap; }
+.cgu-college-buttons { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.cgu-college-btn { display:inline-flex; align-items:center; gap:7px; padding:8px 14px; border-radius:999px; border:1px solid var(--uw-line,#cbd5e1); background:var(--uw-surface-soft,#f8fafc); color:var(--uw-text,#1e293b); font-size:14px; font-weight:600; line-height:1.2; cursor:pointer; transition:all .15s ease; }
+.cgu-college-btn:hover { border-color:#2563eb; background:#eff6ff; color:#1d4ed8; }
+.cgu-college-btn strong { font-weight:700; }
+.cgu-college-btn span { display:inline-block; padding:2px 8px; border-radius:999px; background:rgba(15,23,42,.07); color:var(--uw-muted,#475569); font-size:12px; font-weight:600; }
+.cgu-college-btn.on { background:#1e3a8a; border-color:#1e3a8a; color:#fff; box-shadow:0 3px 10px rgba(30,58,138,.22); }
+.cgu-college-btn.on span { background:rgba(255,255,255,.2); color:#fff; }
+.cgu-college-live { font-size:13px; font-weight:600; color:var(--uw-muted,#475569); margin:0; }
+.cgu-college-live b { color:#1e3a8a; font-weight:700; }
+[data-theme="dark"] .cgu-home-deadline-pill, [data-theme="dark"] .pr-mini-dates li.is-primary-home { background:rgba(234,88,12,.16); border-color:rgba(251,146,60,.45); color:#ffedd5; }
+[data-theme="dark"] .cgu-home-deadline-pill strong { color:#fff7ed; }
+[data-theme="dark"] .cgu-home-deadline-pill em { color:#fdba74; }
+[data-theme="dark"] .cgu-college-btn { background:rgba(30,41,59,.7); border-color:rgba(148,163,184,.3); color:#e2e8f0; }
+[data-theme="dark"] .cgu-college-btn span { background:rgba(255,255,255,.1); color:#cbd5e1; }
+[data-theme="dark"] .cgu-college-btn.on { background:#2563eb; border-color:#3b82f6; color:#fff; }
+[data-theme="dark"] .cgu-college-live b { color:#93c5fd; }
 
 #mt-board-school:disabled { opacity:1; cursor:default; }
 

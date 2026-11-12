@@ -43,7 +43,7 @@ def platform_html() -> str:
     soup = BeautifulSoup((STATIC / "index.html").read_text(encoding="utf-8"), "html.parser")
     soup.title.string = "UniWay CGU｜長庚大學交換申請平台"
     soup.head.append(soup.new_tag("meta", attrs={"name": "robots", "content": "noindex,nofollow,noarchive"}))
-    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261111-cgu-home-1"))
+    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261112-cgu-ux-1"))
     script = soup.new_tag("script", src="/demo/bootstrap.js")
     soup.head.insert(0, script)
     # Initial static choices must also be CGU-only, before the registry request resolves.
@@ -52,6 +52,43 @@ def platform_html() -> str:
             item.decompose()
     for item in soup.select('.pr-supported'):
         item.decompose()
+    hero_title = soup.select_one('#home-landing-title')
+    if hero_title is not None:
+        banner = soup.new_tag('div', id='cgu-home-deadline-banner', attrs={'class': 'cgu-home-deadline-banner', 'hidden': ''})
+        hero_title.insert_after(banner)
+    partners_head = soup.select_one('#partners .pr-explore-head')
+    if partners_head is not None:
+        college_bar = soup.new_tag(
+            'div',
+            id='cgu-college-quick-bar',
+            attrs={'class': 'cgu-college-bar', 'role': 'region', 'aria-label': '長庚學院快速篩選'},
+        )
+        partners_head.insert_after(college_bar)
+    for legend in soup.select('.application-preference-fields legend'):
+        legend.string = '準備志願序（最多兩所；依長庚官方規定）'
+    for selector in (
+        '#eligibility-preference-3', '#eligibility-preference-4', '#eligibility-preference-5',
+        '#multi-plan-preferences select[name="preference_3"]',
+        '#multi-plan-preferences select[name="preference_4"]',
+        '#multi-plan-preferences select[name="preference_5"]',
+    ):
+        for field in soup.select(selector):
+            parent_label = field.find_parent('label')
+            if parent_label is not None:
+                parent_label['hidden'] = ''
+    term_labels = {
+        '2027-spring': '2027 春季（115-2）',
+        '2027-fall': '2027 秋季（116-1）',
+        '2028-spring': '2028 春季（116-2）',
+        '2028-fall': '2028 秋季（117-1）',
+    }
+    for value, text in term_labels.items():
+        for opt in soup.select(f'#advisor-target-term option[value="{value}"]'):
+            opt.string = text
+    for opt in soup.select('#partner-term-tile option[value="fall"], #discovery-criteria-form select[name="term"] option[value="fall"]'):
+        opt.string = '2027 秋季（116-1）'
+    for opt in soup.select('#partner-term-tile option[value="spring"], #discovery-criteria-form select[name="term"] option[value="spring"]'):
+        opt.string = '2027 春季（115-2）'
     for item in soup.select('.uniway-header-brand strong'):
         item.string = 'UniWay CGU'
     for item in soup.select('#school-switcher'):
@@ -74,7 +111,7 @@ def platform_html() -> str:
       <button type="button" class="primary-button" id="cgu-demo-confirm" hidden>確認重設</button>
       <button type="button" class="secondary-button" id="cgu-demo-close">關閉</button></div></dialog>''', 'html.parser')
     soup.body.append(snippet)
-    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js'))
+    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js?v=20261112-cgu-ux-1'))
     return str(soup)
 
 

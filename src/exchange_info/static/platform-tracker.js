@@ -90,22 +90,56 @@ window.UniWayTracker = (() => {
     return `<div class="pr-empty"><i data-lucide="loader-circle" aria-hidden="true"></i><div><strong>正在整理你的準備任務</strong></div></div>`;
   }
 
+  function verifiedHomeEvents() {
+    const today = localDateKey();
+    return (state.dashboard?.application_periods || [])
+      .filter((p) => p.scope === "home_application" && p.date_status === "verified_exact" && p.deadline_at && p.status !== "closed")
+      .map((p) => {
+        const parsed = new Date(p.deadline_at);
+        if (Number.isNaN(parsed.getTime())) return null;
+        const dateKey = parsed.toLocaleDateString("sv-SE", { timeZone: "Asia/Taipei" });
+        const date = dateKey >= today ? parseLocalDate(dateKey) : null;
+        if (!date) return null;
+        const timeStr = parsed.toLocaleTimeString("en-GB", { timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", hour12: false });
+        const timeSuffix = timeStr && timeStr !== "00:00" ? ` ${timeStr}` : "";
+        return {
+          date,
+          timeStr: timeSuffix.trim(),
+          title: activeHomeSchool() === "長庚大學" ? `長庚 116-1 校內截止${timeSuffix}` : `${p.title}${timeSuffix}`,
+          scope: "校內截止",
+        };
+      })
+      .filter(Boolean);
+  }
+
+  function combinedUpcomingDeadlines(limit = 3) {
+    let list = [];
+    try { list = upcomingDeadlines(limit); } catch (_) { list = []; }
+    const homeEvents = verifiedHomeEvents();
+    const seenDates = new Set(list.map((item) => localDateKey(item.date)));
+    homeEvents.forEach((item) => {
+      if (!seenDates.has(localDateKey(item.date))) list.unshift(item);
+    });
+    return list.sort((a, b) => a.date - b.date).slice(0, limit);
+  }
+
   function statsHtml(rows) {
     // Tasks of the open plan are capped in the list, so their counts come from the plan itself.
     const own = rows.filter((row) => !row.href);
     const planTotals = window.UniWayApplicationPath?.workbenchTotals?.() || { done: 0, total: 0 };
     const done = own.filter((row) => row.status === "ready").length + planTotals.done;
     const totalTasks = own.length + planTotals.total;
-    let next = null;
-    try { next = upcomingDeadlines(1)[0] || null; } catch (_) { next = null; }
+    const next = combinedUpcomingDeadlines(1)[0] || null;
     const days = next ? calendarDaysUntil(localDateKey(next.date)) : null;
     const docs = state.dashboard ? documentChecklistItems() : [];
     const missing = docs.filter((item) => readinessStatus(item.id) !== "ready").length;
     const picks = state.applications.size;
+    const maxPrefs = state.dashboard?.maximum_preferences || 5;
+    const nextLabel = next ? `${shortDate(localDateKey(next.date))}${next.timeStr ? ` ${next.timeStr}` : ""} ${truncate(next.scope || next.title, 8)}` : "—";
     const cells = [
       { label: "已完成任務", value: totalTasks ? `${done} / ${totalTasks}` : "—", pct: totalTasks ? done / totalTasks : 0, tone: "navy" },
-      { label: "下一個截止", value: next ? `${shortDate(localDateKey(next.date))} ${truncate(next.scope || next.title, 8)}` : "—", pct: days === null ? 0 : Math.max(0.08, 1 - Math.min(days, 60) / 60), tone: "coral" },
-      { label: "我的志願", value: picks ? `${picks} 間` : "—", pct: Math.min(1, picks / 5), tone: "blue" },
+      { label: "下一個截止", value: nextLabel, pct: days === null ? 0 : Math.max(0.08, 1 - Math.min(days, 60) / 60), tone: "coral" },
+      { label: "我的志願", value: picks ? `${picks} 間` : "—", pct: Math.min(1, picks / maxPrefs), tone: "blue" },
       { label: "待補文件", value: docs.length ? `${missing} 份` : "—", pct: docs.length ? missing / docs.length : 0, tone: "amber" },
     ];
     return cells.map((cell) => `<div class="pr-stat ${cell.tone}"><small>${cell.label}</small><strong>${escapeHtml(cell.value)}</strong><span class="bar"><span style="width:${Math.round(cell.pct * 100)}%"></span></span></div>`).join("");
@@ -125,11 +159,10 @@ window.UniWayTracker = (() => {
   }
 
   function deadlinesHtml() {
-    let list = [];
-    try { list = upcomingDeadlines(3); } catch (_) { list = []; }
+    const list = combinedUpcomingDeadlines(3);
     const items = list.map((event, index) => {
       const key = localDateKey(event.date), days = calendarDaysUntil(key);
-      return `<li><span class="pr-date ${index === 0 ? "hot" : ""}"><small>${event.date.getMonth() + 1}月</small><strong>${pad(event.date.getDate())}</strong></span><span class="pr-deadline-copy"><strong>${escapeHtml(truncate(event.title, 26))}</strong><small>${days === 0 ? "就是今天" : `還有 ${days} 天`}</small></span></li>`;
+      return `<li><span class="pr-date ${index === 0 ? "hot" : ""}"><small>${event.date.getMonth() + 1}月</small><strong>${pad(event.date.getDate())}</strong></span><span class="pr-deadline-copy"><strong>${escapeHtml(truncate(event.title, 28))}</strong><small>${days === 0 ? "就是今天" : `還有 ${days} 天`}</small></span></li>`;
     }).join("");
     return `<section class="pr-side-card pr-pad"><strong>接下來的期限</strong>${items ? `<ol class="pr-deadlines">${items}</ol>` : '<p class="pr-group-empty">目前沒有已確認的官方期限。</p>'}</section>`;
   }

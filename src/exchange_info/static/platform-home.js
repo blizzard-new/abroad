@@ -178,7 +178,9 @@ window.UniWayHome = (() => {
       const label = match ? match.label : meta.shortLabel;
       const image = schoolImageFor(item.school_name, item.country)?.local_path;
       const deadline = partnerNextDeadline(item), quota = partnerQuotaNumber(item);
-      const facts = [quota ? `名額 ${quota}` : "", deadline ? `截止 ${monthDay(deadline)}` : ""].filter(Boolean).join(" · ");
+      const isCgu = Boolean(window.cguDemoStorageIsolated) || activeHomeSchool() === "長庚大學";
+      const deadlineFact = deadline ? (isCgu ? `合作校截止 ${monthDay(deadline)}（適用已獲提名者）` : `截止 ${monthDay(deadline)}`) : "";
+      const facts = [quota ? `名額 ${quota}` : "", deadlineFact].filter(Boolean).join(" · ");
       return `<a class="pr-mini-row" href="#school=${encodeURIComponent(item.school_name)}">
         <span class="pr-mini-thumb"${image ? ` style="background-image:url('${html(image)}')"` : ""}></span>
         <span class="pr-mini-text"><strong>${html(shortName(item.school_name))}</strong><small>${html([item.country, item.location?.city].filter(Boolean).join("・"))}${facts ? ` · ${html(facts)}` : ""}</small></span>
@@ -212,11 +214,42 @@ window.UniWayHome = (() => {
     body.innerHTML = `<small class="pr-tile-note">${html(state.homeSchool || "目前")}的合作校狀態</small><div class="pr-mini-checks">${row("ok", "circle-check", "本期可申請", groups.open)}${row("warn", "clock-alert", "名額或期間待確認", groups.pending)}${row("muted", "circle-slash", "目前不開放", groups.blocked)}</div><a class="pr-link" href="#advisor" data-requires-home-school>填寫條件，看你符合哪些${icon("arrow-right")}</a>`;
   }
 
+  function verifiedHomePeriodEvents() {
+    const today = localDateKey();
+    const isCgu = Boolean(window.cguDemoStorageIsolated) || activeHomeSchool() === "長庚大學";
+    return (state.dashboard?.application_periods || [])
+      .filter((period) => period.scope === "home_application" && period.date_status === "verified_exact" && period.deadline_at && period.status !== "closed")
+      .map((period) => {
+        const parsed = new Date(period.deadline_at);
+        if (Number.isNaN(parsed.getTime())) return null;
+        const dateKey = parsed.toLocaleDateString("sv-SE", { timeZone: "Asia/Taipei" });
+        const date = dateKey >= today ? parseLocalDate(dateKey) : null;
+        if (!date) return null;
+        const timeStr = parsed.toLocaleTimeString("en-GB", { timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", hour12: false });
+        const hm = timeStr && timeStr !== "00:00" ? timeStr : "";
+        return {
+          date,
+          timeText: hm,
+          title: isCgu ? `長庚 116-1 校內申請截止${hm ? `（${hm}）` : ""}` : `${period.title}${hm ? `（${hm}）` : ""}`,
+          scope: isCgu ? "長庚校內主截止日 · 2027 秋季（116-1）" : "校內申請主截止日",
+          personal: false,
+          primaryHome: true,
+        };
+      })
+      .filter(Boolean);
+  }
+
   function upcomingEvents() {
     const today = localDateKey();
-    const list = [];
+    const isCgu = Boolean(window.cguDemoStorageIsolated) || activeHomeSchool() === "長庚大學";
+    const list = [...verifiedHomePeriodEvents()];
+    const homeDateKeys = new Set(list.map((event) => localDateKey(event.date)));
     try {
-      upcomingDeadlines(40).forEach((event) => { if (event.date) list.push({ date: event.date, title: event.title, scope: event.scope || "官方期限", personal: false }); });
+      upcomingDeadlines(40).forEach((event) => {
+        if (event.date && !homeDateKeys.has(localDateKey(event.date))) {
+          list.push({ date: event.date, title: event.title, scope: event.scope || "官方期限", personal: false });
+        }
+      });
     } catch (_) { /* no workflow loaded yet */ }
     (state.calendarEvents || []).filter((event) => event.origin !== "official" && event.title && event.date >= today).forEach((event) => {
       const date = parseLocalDate(event.date);
@@ -229,23 +262,51 @@ window.UniWayHome = (() => {
         const date = partnerNextDeadline(item);
         if (!date) return;
         const key = localDateKey(date);
-        const entry = byDay.get(key) || { date, names: [] };
+        const entry = byDay.get(key) || { date, names: [], items: [] };
         entry.names.push(shortName(item.school_name));
+        entry.items.push(item);
         byDay.set(key, entry);
       });
-      byDay.forEach(({ date, names }) => list.push({
-        date,
-        title: names.length > 1 ? `${names.length} 間合作校申請截止` : `${names[0]} 申請截止`,
-        scope: names.length > 1 ? `${names.slice(0, 2).join("、")}等` : "合作校",
-        personal: false,
-      }));
+      byDay.forEach(({ date, names, items }) => {
+        const month = date.getMonth() + 1;
+        const springHint = month >= 9 || month <= 2 || items.some((it) => /春|spring|第\s*2\s*學期|下學期/i.test(String(it.application_deadline || "")));
+        if (isCgu) {
+          const termTag = springHint ? "合作校春季班截止" : "合作校申請截止";
+          list.push({
+            date,
+            title: `${names.length > 1 ? `${names.length} 間${termTag}` : `${names[0]} ${termTag}`}（適用已獲提名者）`,
+            scope: `適用已獲提名者 · ${names.length > 1 ? `${names.slice(0, 2).join("、")}等合作校時程` : "合作校參考時程"}`,
+            personal: false,
+          });
+        } else {
+          list.push({
+            date,
+            title: names.length > 1 ? `${names.length} 間合作校申請截止` : `${names[0]} 申請截止`,
+            scope: names.length > 1 ? `${names.slice(0, 2).join("、")}等` : "合作校",
+            personal: false,
+          });
+        }
+      });
     }
-    return list.sort((a, b) => a.date - b.date);
+    return list.sort((a, b) => Number(Boolean(b.primaryHome)) - Number(Boolean(a.primaryHome)) || a.date - b.date);
   }
 
   function renderCalendar(host) {
     const strip = host.querySelector("#home-week"), body = host.querySelector("#home-tile-calendar");
+    const heroBanner = host.querySelector("#cgu-home-deadline-banner");
     const events = upcomingEvents();
+    const primaryHome = events.find((event) => event.primaryHome);
+    if (heroBanner) {
+      if (primaryHome) {
+        const days = calendarDaysUntil(localDateKey(primaryHome.date));
+        const dayText = days === null ? "" : days === 0 ? "就是今天" : `還有 ${days} 天`;
+        heroBanner.hidden = false;
+        heroBanner.innerHTML = `<a class="cgu-home-deadline-pill" href="#my-application?view=schedule"><span class="cgu-dl-badge">長庚 116-1 校內截止</span><strong>${primaryHome.date.getMonth() + 1}/${String(primaryHome.date.getDate()).padStart(2, "0")}${primaryHome.timeText ? ` ${html(primaryHome.timeText)}` : ""}</strong><span>2027 秋季（116-1）校內交換／雙聯申請</span>${dayText ? `<em>· ${html(dayText)}</em>` : ""}${icon("arrow-right")}</a>`;
+      } else {
+        heroBanner.hidden = true;
+        heroBanner.innerHTML = "";
+      }
+    }
     const today = new Date();
     const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - ((today.getDay() + 6) % 7), 12);
     const marked = new Set(events.map((event) => localDateKey(event.date)));
@@ -264,7 +325,7 @@ window.UniWayHome = (() => {
     }
     body.innerHTML = `<ol class="pr-mini-dates">${events.slice(0, 3).map((event) => {
       const days = calendarDaysUntil(localDateKey(event.date));
-      return `<li><span class="pr-mini-date"><small>${event.date.getMonth() + 1} 月</small><strong>${String(event.date.getDate()).padStart(2, "0")}</strong></span><span class="pr-mini-text"><strong>${html(truncate(event.title, 28))}</strong><small>${days === null ? "" : `<b>${days === 0 ? "就是今天" : `還有 ${days} 天`}</b> · `}${html(event.scope)}</small></span></li>`;
+      return `<li${event.primaryHome ? ' class="is-primary-home"' : ""}><span class="pr-mini-date"><small>${event.date.getMonth() + 1} 月</small><strong>${String(event.date.getDate()).padStart(2, "0")}</strong></span><span class="pr-mini-text"><strong>${html(truncate(event.title, 36))}</strong><small>${days === null ? "" : `<b>${days === 0 ? "就是今天" : `還有 ${days} 天`}</b> · `}${html(event.scope)}</small></span></li>`;
     }).join("")}</ol><a class="pr-link" href="#calendar" data-requires-home-school>開啟申請日曆${icon("arrow-right")}</a>`;
   }
 

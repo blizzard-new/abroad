@@ -8,12 +8,37 @@ window.UniWayDetail = (() => {
 
   const formatFull = (date) => `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, "0")}/${String(date.getDate()).padStart(2, "0")}（${WEEKDAYS[date.getDay()]}）`;
 
-  function homeDeadline() {
+  function formatTaipeiTimestamp(isoValue) {
+    const parsed = new Date(isoValue);
+    if (Number.isNaN(parsed.getTime())) return null;
+    const dateStr = parsed.toLocaleDateString("sv-SE", { timeZone: "Asia/Taipei" });
+    if (dateStr < localDateKey()) return null;
+    const localDate = parseLocalDate(dateStr);
+    if (!localDate) return null;
+    const timeStr = parsed.toLocaleTimeString("en-GB", { timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", hour12: false });
+    return {
+      dateKey: dateStr,
+      text: `${formatFull(localDate)}${timeStr && timeStr !== "00:00" ? ` ${timeStr}` : ""}`,
+    };
+  }
+
+  function homeDeadlineDisplay() {
+    const periods = state.dashboard?.application_periods || [];
+    const verifiedPeriods = periods
+      .filter((period) => period.scope === "home_application" && period.date_status === "verified_exact" && period.deadline_at && period.status !== "closed")
+      .map((period) => formatTaipeiTimestamp(period.deadline_at))
+      .filter(Boolean)
+      .sort((a, b) => a.dateKey.localeCompare(b.dateKey));
+    if (verifiedPeriods.length) return verifiedPeriods[0].text;
     try {
-      return workflowDeadlineEvents()
+      const home = workflowDeadlineEvents()
         .filter((event) => event.category === "home" && event.date >= localDateKey())
         .sort((a, b) => a.date.localeCompare(b.date))[0] || null;
-    } catch (_) { return null; }
+      const homeDate = home ? parseLocalDate(home.date) : null;
+      return homeDate ? formatFull(homeDate) : "依官方公告";
+    } catch (_) {
+      return "依官方公告";
+    }
   }
 
   function requirementRows(item) {
@@ -83,11 +108,11 @@ window.UniWayDetail = (() => {
       fit.dataset.status = "unassessed";
       fit.innerHTML = `<i data-lucide="circle-help" aria-hidden="true"></i><span>尚未比對你的條件 · <a href="#advisor">填寫條件</a></span>`;
     }
-    const home = homeDeadline();
-    const homeDate = home ? parseLocalDate(home.date) : null;
-    document.querySelector("#booking-home-deadline").textContent = homeDate ? formatFull(homeDate) : "依官方公告";
+    document.querySelector("#booking-home-deadline").textContent = homeDeadlineDisplay();
     const next = partnerNextDeadline(item);
-    document.querySelector("#booking-partner-deadline").textContent = next ? formatFull(next) : truncate(partnerDeadlineReference(item).value, 36);
+    document.querySelector("#booking-partner-deadline").textContent = next
+      ? `${formatFull(next)}${activeHomeSchool() === "長庚大學" ? "（適用已獲提名者）" : ""}`
+      : truncate(partnerDeadlineReference(item).value, 36);
     if (activeHomeSchool() === "國立臺灣大學") {
       const homeReference = String(item.application_deadline || "").split("；")[0];
       document.querySelector("#booking-home-deadline").textContent = homeReference.includes("校內報名") ? homeReference : "依臺大官方公告";

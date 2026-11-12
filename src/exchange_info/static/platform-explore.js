@@ -7,6 +7,12 @@ window.UniWayExplore = (() => {
     { id: "deadline", label: "截止最近" },
     { id: "quota", label: "名額最多" },
   ];
+  const CGU_COLLEGE_BUTTONS = [
+    { short: "醫", value: "醫學院" },
+    { short: "工", value: "工學院" },
+    { short: "管", value: "管理學院" },
+    { short: "智慧運算", value: "智慧運算學院" },
+  ];
   const COUNTRY_FACETS = 8;
   const narrow = window.matchMedia("(max-width: 900px)");
   let scheduled = 0, drawerSynced = false;
@@ -23,7 +29,9 @@ window.UniWayExplore = (() => {
     try {
       const partnerDates = openList.map(partnerNextDeadline).filter(Boolean).sort((a, b) => a - b);
       const official = upcomingDeadlines(1)[0];
-      if (partnerDates.length) deadline = `最近 ${shortDate(partnerDates[0])} · ${partnerDates.length} 間有時程`;
+      if (activeHomeSchool() === "長庚大學" && partnerDates.length) {
+        deadline = `校內 12/21 · 合作校 ${partnerDates.length} 間有時程`;
+      } else if (partnerDates.length) deadline = `最近 ${shortDate(partnerDates[0])} · ${partnerDates.length} 間有時程`;
       else if (official) deadline = `最近 ${shortDate(official.date)} ${official.scope}`;
     } catch (_) { /* the tab then says the deadline follows the official notice */ }
     const picked = UniWayDiscovery.hasCriteria(discoveryCriteria);
@@ -33,6 +41,29 @@ window.UniWayExplore = (() => {
       deadline,
       quota: quotas.length ? `最多 ${Math.max(...quotas)} 名 · ${quotas.length} 間已列` : "依官方公告",
     };
+  }
+
+  function renderCguCollegeBar(host, list) {
+    const bar = host.querySelector("#cgu-college-quick-bar");
+    if (!bar) return;
+    if (activeHomeSchool() !== "長庚大學") {
+      bar.hidden = true;
+      return;
+    }
+    bar.hidden = false;
+    const pool = filteredPartners({ ignore: "college", sort: false });
+    const countFor = (collegeName) => pool.filter((item) => academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, collegeName)).length;
+    const buttonsHtml = CGU_COLLEGE_BUTTONS.map(({ short, value }) => {
+      const active = state.college === value;
+      const count = countFor(value);
+      return `<button type="button" class="cgu-college-btn${active ? " on" : ""}" data-cgu-college="${escapeHtml(value)}" aria-pressed="${active}"><strong>${escapeHtml(short)}</strong><span>${count} 所</span></button>`;
+    }).join("");
+    const allActive = !state.college;
+    const resetHtml = `<button type="button" class="cgu-college-btn is-all${allActive ? " on" : ""}" data-cgu-college="" aria-pressed="${allActive}"><strong>全部</strong><span>${pool.length} 所</span></button>`;
+    const liveHtml = state.college
+      ? `<b>${escapeHtml(state.college)}</b>可申請：共 <b>${list.length} 所</b>`
+      : `點選學院直接顯示可申請校數（共 <b>${pool.length} 所</b>）`;
+    bar.innerHTML = `<div class="cgu-college-bar-main"><span class="cgu-college-bar-label"><i data-lucide="graduation-cap" aria-hidden="true"></i>長庚學院</span><div class="cgu-college-buttons" role="group" aria-label="依長庚學院篩選">${buttonsHtml}${resetHtml}</div></div><p id="cgu-college-live-count" class="cgu-college-live" role="status">${liveHtml}</p>`;
   }
 
   function renderSortTabs(host, list) {
@@ -163,6 +194,7 @@ window.UniWayExplore = (() => {
     const host = root();
     if (!host || !state.dashboard) return;
     const list = filteredPartners({ sort: false });
+    renderCguCollegeBar(host, list);
     renderSortTabs(host, list);
     renderFacets(host);
     renderSummary(host);
@@ -187,6 +219,15 @@ window.UniWayExplore = (() => {
     const host = root();
     if (!host || !host.contains(event.target)) return;
     if (event.target.closest("[data-partner-clear-all]")) { document.querySelector("#clear-partner-filters")?.click(); return; }
+    const cguCollege = event.target.closest("[data-cgu-college]");
+    if (cguCollege) {
+      const picked = cguCollege.dataset.cguCollege || "";
+      state.college = picked && state.college === picked ? "" : picked;
+      const select = document.querySelector("#college-filter");
+      if (select) select.value = state.college;
+      refilter();
+      return;
+    }
     const tab = event.target.closest("[data-partner-sort]");
     if (tab) { state.partnerSort = tab.dataset.partnerSort; state.partnerLimit = partnerPageSize(); renderPartnerTable(); return; }
     if (event.target.closest("#partner-search-submit")) {

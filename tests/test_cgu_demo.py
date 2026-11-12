@@ -42,6 +42,15 @@ def test_exact_shared_assets_and_main_dom():
     assert original.select_one('.pr-supported') is not None
     assert demo.select_one('.pr-supported') is None
     assert demo.select_one('[data-home-discover]') is not None
+    assert demo.select_one('#cgu-home-deadline-banner') is not None
+    assert demo.select_one('#cgu-college-quick-bar') is not None
+    pref_legend = demo.select_one('.application-preference-fields legend')
+    assert pref_legend is not None and '最多兩所' in pref_legend.text
+    assert '最多五所' not in demo.get_text()
+    for rank in (3, 4, 5):
+        assert demo.select_one(f'#eligibility-preference-{rank}').find_parent('label').has_attr('hidden')
+    assert demo.select_one('#advisor-target-term option[value="2027-fall"]').text == '2027 秋季（116-1）'
+    assert demo.select_one('#partner-term-tile option[value="fall"]').text == '2027 秋季（116-1）'
 
 
 @pytest.mark.parametrize('env', [{'EXCHANGE_ENVIRONMENT':'production'}, {'SUPABASE_URL':'https://invalid.test'}, {'OPENAI_API_KEY':'synthetic-invalid'}])
@@ -151,6 +160,16 @@ def test_school_scope_dates_and_native_plan_persistence(demo_url):
     a = create(alice, demo_url)
     b = create(bob, demo_url)
     assert len(a['stages']) == 6
+    all_levels = [item for stage in a['stages'] for item in stage['levels']]
+    term_level = next(item for item in all_levels if item['id'] == 'term')
+    assert term_level['prompt'] == '2027 秋季（116-1）'
+    submit_level = next(item for item in all_levels if item['id'] == 'cgu-internal-submit')
+    assert submit_level['official_deadline_at'] == '2026-12-21T17:00:00+08:00'
+    assert submit_level['deadline_confirmed'] is True
+    ics = alice.get(demo_url + '/calendar/school-window.ics')
+    assert ics.status_code == 200
+    assert 'text/calendar' in ics.headers.get('content-type', '')
+    assert 'BEGIN:VCALENDAR' in ics.text and '20261221' in ics.text
     path = '/account/application-paths/' + a['plan']['id']
     saved = alice.put(demo_url + path + '/steps/home?home_school=長庚大學',
         json={'revision':a['revision'], 'step':{'confirmed':True}})
