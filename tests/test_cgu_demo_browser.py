@@ -130,15 +130,35 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     inactive_tab_bg = prog_tabs.locator('[data-cgu-program="exchange"]').evaluate('el => getComputedStyle(el).backgroundColor')
     assert inactive_tab_bg in ('rgba(0, 0, 0, 0)', 'transparent')
 
+    # Hovering「我的條件」summary must keep royal-blue gradient + crisp white text (never white-on-white)
+    criteria_summary = criteria.locator('summary')
+    criteria_summary.hover()
+    hover_styles = criteria_summary.evaluate(
+        """el => ({
+            sumBg: getComputedStyle(el).backgroundColor,
+            headingColor: getComputedStyle(el.querySelector('.cgu-criteria-heading')).color,
+        })"""
+    )
+    assert hover_styles['sumBg'] in ('rgba(0, 0, 0, 0)', 'transparent')
+    assert hover_styles['headingColor'] == 'rgb(255, 255, 255)'
+
     screenshot(page, 'desktop-partners.png')
 
-    # Test「我的條件」filtering & reset
-    criteria.locator('summary').click()
+    # Test「我的條件」filtering, grading scale placeholder/max sync & reset
+    criteria_summary.click()
     expect(page.locator('#discovery-criteria-form')).to_be_visible()
     screenshot(page, 'desktop-partners-criteria-open.png')
+    grade_input = page.locator('#discovery-criteria-form [name="grade"]')
+    scale_select = page.locator('#discovery-criteria-form [name="scale"]')
+    scale_select.evaluate("el => { el.value = '4.3'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
+    expect(grade_input).to_have_attribute('max', '4.3')
+    expect(grade_input).to_have_attribute('placeholder', '例如 3.6')
+    scale_select.evaluate("el => { el.value = '100'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
+    expect(grade_input).to_have_attribute('max', '100')
+    expect(grade_input).to_have_attribute('placeholder', '例如 78')
     page.locator('#discovery-test').evaluate("el => { el.value = 'toeic'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
     page.locator('#discovery-score').fill('750')
-    page.locator('#discovery-criteria-form [name="grade"]').fill('78')
+    grade_input.fill('78')
     page.locator('#discovery-criteria-form [name="degree"]').evaluate("el => { el.value = 'undergraduate'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
     page.locator('#discovery-criteria-form button[type="submit"]').click()
     expect(page.locator('#cgu-criteria-summary')).to_contain_text('TOEIC 750')
@@ -146,9 +166,12 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     expect(page.locator('#cgu-criteria-summary')).to_contain_text('大學部')
     expect(page.locator('#discovery-criteria-count')).to_have_text('已套用')
     expect(page.locator('#cgu-criteria-cta-label')).to_have_text('修改條件')
-    criteria.locator('summary').click()
+    criteria_summary.click()
+    scale_select.evaluate("el => { el.value = '4'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
     page.locator('#discovery-clear-criteria').click()
-    criteria.locator('summary').click()
+    expect(grade_input).to_have_attribute('max', '100')
+    expect(grade_input).to_have_attribute('placeholder', '例如 78')
+    criteria_summary.click()
     expect(page.locator('#discovery-criteria-count')).to_have_text('')
     expect(page.locator('#cgu-criteria-cta-label')).to_have_text('設定條件')
     expect(page.locator('#partner-result-count')).to_contain_text('78')
@@ -253,6 +276,21 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     page.reload(wait_until='domcontentloaded')
     page.locator('#boot-splash').wait_for(state='hidden')
     expect(page.locator('#detail-favorite-button')).to_contain_text('已收藏')
+
+    # Verify relocated「最近看過」popover in #partners header stays inline, inside viewport, and closes on outside click
+    page.evaluate("window.location.hash = '#partners'")
+    recents = page.locator('#partners .cgu-explore-head-actions [data-discovery-recents]')
+    expect(recents).to_be_visible()
+    ws_before = page.locator('#partners .cgu-explore-head-actions .discovery-open-workspace').bounding_box()
+    recents.locator('summary').click()
+    ws_after = page.locator('#partners .cgu-explore-head-actions .discovery-open-workspace').bounding_box()
+    recents_list_box = recents.locator('.discovery-recent-list').bounding_box()
+    assert ws_before and ws_after and recents_list_box
+    assert abs(ws_after['y'] - ws_before['y']) < 4
+    assert recents_list_box['x'] >= 12 and (recents_list_box['x'] + recents_list_box['width']) <= 1440 - 12
+    page.locator('#partners-title').click()
+    assert not recents.evaluate('el => el.open')
+
     page.locator('#cgu-demo-info').click()
     expect(page.locator('#cgu-demo-dialog')).to_contain_text('第一階段')
     expect(page.locator('#cgu-demo-dialog a')).to_have_count(6)
@@ -360,6 +398,12 @@ def test_responsive_native_journey(page, demo_url, size):
     expect(page.locator('#partners #discovery-criteria')).to_be_visible()
     expect(page.locator('#cgu-partner-filter-strip')).to_be_visible()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    # Every college & program button must wrap cleanly inside viewport (no right-edge clipping)
+    ai_college_box = page.locator('#cgu-college-quick-bar [data-cgu-college="智慧運算學院"]').bounding_box()
+    dual_prog_box = page.locator('#cgu-program-tabs [data-cgu-program="dual_degree"]').bounding_box()
+    assert ai_college_box and dual_prog_box
+    assert 0 <= ai_college_box['x'] and (ai_college_box['x'] + ai_college_box['width']) <= size[0]
+    assert 0 <= dual_prog_box['x'] and (dual_prog_box['x'] + dual_prog_box['width']) <= size[0]
     page.locator('#partners #discovery-criteria summary').click()
     expect(page.locator('#discovery-criteria-form')).to_be_visible()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
@@ -497,6 +541,33 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     expect(oia_page.locator('#cgu-oia-stats-row')).to_contain_text('各校志願數')
     expect(oia_page.locator('#cgu-oia-stats-row')).to_contain_text('缺件／要求補件數')
     expect(oia_page.locator('#cgu-oia-stats-row')).to_contain_text('最常被問的問題')
+
+    # Verify OIA inbox filter tabs keep distinct active/inactive styling and dark-mode contrast
+    oia_tab_styles = oia_page.evaluate(
+        """el => {
+            const active = el.querySelector('.cgu-oia-tabs [data-oia-filter="all"]');
+            const inactive = el.querySelector('.cgu-oia-tabs [data-oia-filter="applications"]');
+            const light = {
+                activeBg: getComputedStyle(active).backgroundColor,
+                activeColor: getComputedStyle(active).color,
+                inactiveBg: getComputedStyle(inactive).backgroundColor,
+            };
+            document.documentElement.dataset.theme = 'dark';
+            const dark = {
+                activeBg: getComputedStyle(active).backgroundColor,
+                activeColor: getComputedStyle(active).color,
+                inactiveBg: getComputedStyle(inactive).backgroundColor,
+                inactiveColor: getComputedStyle(inactive).color,
+            };
+            delete document.documentElement.dataset.theme;
+            return { light, dark };
+        }"""
+    )
+    assert oia_tab_styles['light']['activeBg'] != oia_tab_styles['light']['inactiveBg']
+    assert oia_tab_styles['light']['activeColor'] == 'rgb(255, 255, 255)'
+    assert oia_tab_styles['dark']['activeBg'] != oia_tab_styles['dark']['inactiveBg']
+    assert oia_tab_styles['dark']['activeColor'] == 'rgb(255, 255, 255)'
+    assert oia_tab_styles['dark']['inactiveColor'] != 'rgb(0, 0, 0)'
 
     app_oia_card = oia_page.locator(f'[data-oia-card="{receipt_text}"]')
     expect(app_oia_card).to_be_visible()

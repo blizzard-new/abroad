@@ -1242,6 +1242,40 @@
     duolingo: 'Duolingo',
   };
 
+  const GRADE_SCALE_META = {
+    '100': { max: '100', step: '0.01', placeholder: '例如 78' },
+    '4': { max: '4', step: '0.01', placeholder: '例如 3.4' },
+    '4.3': { max: '4.3', step: '0.01', placeholder: '例如 3.6' },
+    '5': { max: '5', step: '0.01', placeholder: '例如 4.2' },
+  };
+
+  function syncCriteriaGradeScale(clearOutOfRange = false) {
+    const form = $('#discovery-criteria-form');
+    if (!form) return;
+    const scaleSel = form.querySelector('select[name="scale"]');
+    const gradeInp = form.querySelector('input[name="grade"]');
+    if (!scaleSel || !gradeInp) return;
+    const meta = GRADE_SCALE_META[scaleSel.value] || GRADE_SCALE_META['100'];
+    if (gradeInp.max !== meta.max) gradeInp.max = meta.max;
+    if (gradeInp.step !== meta.step) gradeInp.step = meta.step;
+    if (gradeInp.placeholder !== meta.placeholder) gradeInp.placeholder = meta.placeholder;
+    if (clearOutOfRange && gradeInp.value !== '' && Number(gradeInp.value) > Number(meta.max)) {
+      gradeInp.value = '';
+    }
+  }
+
+  function syncPartnersRecentsPopover() {
+    const details = $('#partners .cgu-explore-head-actions [data-discovery-recents]');
+    if (!details || !details.open || details.hidden) return;
+    const vw = document.documentElement.clientWidth || window.innerWidth || 1024;
+    const menuW = Math.min(320, Math.max(200, vw - 32));
+    const rect = details.getBoundingClientRect();
+    const idealLeft = rect.right - menuW;
+    const clampedLeft = Math.min(Math.max(16, idealLeft), Math.max(16, vw - menuW - 16));
+    details.style.setProperty('--cgu-recents-left', `${Math.round(clampedLeft - rect.left)}px`);
+    details.style.setProperty('--cgu-recents-right', 'auto');
+  }
+
   function syncPartnersCleanRow() {
     const collegeBar = $('#cgu-college-quick-bar');
     if (!collegeBar) return;
@@ -1315,6 +1349,17 @@
     syncCriteriaBanner();
   });
 
+  $('#partners .cgu-explore-head-actions [data-discovery-recents]')?.addEventListener('toggle', () => {
+    syncPartnersRecentsPopover();
+  });
+  window.addEventListener('resize', syncPartnersRecentsPopover);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      const recents = $('#partners .cgu-explore-head-actions [data-discovery-recents]');
+      if (recents?.open) recents.open = false;
+    }
+  });
+
   function syncAdvisorMgmtNote() {
     const collegeSelect = $('#advisor-college');
     const noteAnchor = $('#advisor-department-note')?.parentElement;
@@ -1367,6 +1412,17 @@
   }
 
   document.addEventListener('click', async event => {
+    const recentsDetails = $('#partners .cgu-explore-head-actions [data-discovery-recents]');
+    if (recentsDetails?.open) {
+      if (!recentsDetails.contains(event.target)) {
+        recentsDetails.open = false;
+      } else if (event.target.closest('.discovery-recent-list button')) {
+        window.requestAnimationFrame(() => {
+          recentsDetails.open = false;
+        });
+      }
+    }
+
     const scrollBtn = event.target.closest('[data-cgu-scroll]');
     if (scrollBtn) {
       const target = document.querySelector(scrollBtn.dataset.cguScroll);
@@ -1583,7 +1639,19 @@
     }
 
     if (event.target.closest('#discovery-clear-criteria, #clear-partner-filters')) {
-      window.requestAnimationFrame(syncCriteriaBanner);
+      window.requestAnimationFrame(() => {
+        syncCriteriaGradeScale(false);
+        syncCriteriaBanner();
+      });
+    }
+  });
+
+  document.addEventListener('reset', event => {
+    if (event.target.id === 'discovery-criteria-form') {
+      window.setTimeout(() => {
+        syncCriteriaGradeScale(false);
+        syncCriteriaBanner();
+      }, 0);
     }
   });
 
@@ -1617,6 +1685,10 @@
     }
     if (event.target.id === 'cgu-report-consent') {
       simState.reportDraft.public_consent = event.target.checked;
+      return;
+    }
+    if (event.target.matches('#discovery-criteria-form select[name="scale"]')) {
+      syncCriteriaGradeScale(true);
       return;
     }
     if (event.target.id === 'advisor-college') {
@@ -1721,6 +1793,7 @@
 
   renderNavigatorCards();
   syncPartnersCleanRow();
+  syncCriteriaGradeScale(false);
   syncCriteriaBanner();
   syncPerspectiveButton();
 
@@ -1735,6 +1808,7 @@
       lockSchoolSwitcher();
       renderNavigatorCards();
       syncPartnersCleanRow();
+      syncCriteriaGradeScale(false);
       syncCriteriaBanner();
       syncAdvisorMgmtNote();
       if (['#school-connector', '#ask-oia', '#return-report', '#oia-view'].includes(window.location.hash) && typeof applyAppRoute === 'function') {

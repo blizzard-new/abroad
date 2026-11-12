@@ -9,7 +9,7 @@
 | 實際執行 | 結果 |
 | --- | --- |
 | 展示 API 與 DOM 隔離測試（`tests/test_cgu_demo.py`） | **23 passed**；確認首頁已完全移除 `#cgu-dept-finder`、保留「長庚 116-1 申請一頁看完」與「領航者補助作業要點」，且 `#partners` 將 `#discovery-criteria`（「我的條件」）移至頁首獨立醒目列、`#cgu-partner-filter-strip` 包覆計畫分頁與學院／系所列 |
-| Chromium 端對端瀏覽器測試（`tests/test_cgu_demo_browser.py`） | **9 passed**；實測驗證桌面（1440×1000）、平板（820×1180）與手機（390×844）零水平溢位、零 `pageerror`；以 bounding box 驗證「我的條件」位於搜尋與結果區上方、計畫分頁與學院／36 系所於桌面為同一排且隱藏所有多餘灰框與小灰字，並實測條件篩選／重設、雙學位／交換切換、院系過濾、地圖模式與深色模式 |
+| Chromium 端對端瀏覽器測試（`tests/test_cgu_demo_browser.py`） | **9 passed**；實測驗證桌面（1440×1000）、平板（820×1180）與手機（390×844）零水平溢位且所有學院／計畫按鈕完整換行不裁切、零 `pageerror`；以 bounding box 驗證「我的條件」位於搜尋與結果區上方且滑鼠懸停維持高對比深藍底白字、計分制（百分制／GPA）即時連動成績上限與提示字、「最近看過」浮層維持單行不撐滿且不超出視窗邊界、計畫分頁與學院／36 系所於桌面為同一排且隱藏所有多餘灰框與小灰字、國際處視角收件匣分頁於淺色與深色模式皆具清晰選取對比，並實測條件篩選／重設、雙學位／交換切換、院系過濾、地圖模式與深色模式 |
 | 主站契約、資料快照與 OpenAPI 檢查 | `scripts/export_openapi.py --check` 通過；`test_cgu_bundled_data.py`、`test_cgu_catalogue_recovery.py`、`test_cgu_deployment_package.py`、`test_static_asset_versions.py`、`test_static_caching.py`、`test_text_files_are_utf8.py`、`test_uniway_ui_contract.py`（**384 passed, 4 skipped**）全數通過 |
 
 ---
