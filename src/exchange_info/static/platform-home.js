@@ -128,7 +128,7 @@ window.UniWayHome = (() => {
     const list = host.querySelector("#home-supported-list");
     // Rewriting the row restarts the drift, so it is only rewritten when a school or its count actually changed.
     const signature = JSON.stringify(schools.map((item) => [item.school_name, item.partner_count || 0]));
-    if (list.dataset.signature !== signature) {
+    if (list && list.dataset.signature !== signature) {
       list.dataset.signature = signature;
       list.innerHTML = schools.map((item) => `<li><strong>${escapeHtml(item.school_name)}</strong><span>${item.partner_count ? `${formatNumber(item.partner_count)} 間合作校` : "資料建置中"}</span></li>`).join("");
       layoutMarquee(host);
@@ -384,7 +384,7 @@ window.UniWayHome = (() => {
       const paused = toggle.getAttribute("aria-pressed") !== "true";
       toggle.setAttribute("aria-pressed", String(paused));
       toggle.setAttribute("aria-label", paused ? "繼續學校名單捲動" : "暫停學校名單捲動");
-      host.querySelector("#home-supported-list").classList.toggle("is-paused", paused);
+      host.querySelector("#home-supported-list")?.classList.toggle("is-paused", paused);
       toggle.innerHTML = `<i data-lucide="${paused ? "play" : "pause"}" aria-hidden="true"></i>`;
       initIcons();
       return;

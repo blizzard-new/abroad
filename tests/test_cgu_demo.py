@@ -39,6 +39,9 @@ def test_exact_shared_assets_and_main_dom():
     assert [node.get('id') for node in original.select('main')] == [node.get('id') for node in demo.select('main')]
     assert {item['data-home-school'] for item in demo.select('[data-home-school]')} == {'長庚大學'}
     assert demo.select_one('#school-switcher').has_attr('disabled')
+    assert original.select_one('.pr-supported') is not None
+    assert demo.select_one('.pr-supported') is None
+    assert demo.select_one('[data-home-discover]') is not None
 
 
 @pytest.mark.parametrize('env', [{'EXCHANGE_ENVIRONMENT':'production'}, {'SUPABASE_URL':'https://invalid.test'}, {'OPENAI_API_KEY':'synthetic-invalid'}])
