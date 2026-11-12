@@ -1,5 +1,18 @@
 # Editorial intentions and next topics
 
+## 2026-11-12 每日批次：截止時間／托福日常閱讀兩篇（PR #329 待審）
+
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261112`，基於 main `0bb1d5c2f043d78451f66ade6c72d7d28c630768`。讀取 workflow、backlog、47 篇庫存與相關全文，核對全部五個 open PR #324–#328 的說明及完整分頁檔案清單；沒有同意圖 editorial 變更。#325 為學校攝影清理，未搬入。#272、#285、#302 已合併，六篇在 main，均排除重做；#78／#92 已合併，無基礎相依。開始與提交前同日全狀態 PR 均為空，沿用本日唯一隔離分支。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 9：交換申請截止時間怎麼換算？時區、夏令時間與跨日檢查表 | `exchange-deadline-timezones` | [PR #329](https://github.com/blizzard-new/abroad/pull/329) 待審，完整文章與驗收完成；後續排除 |
+| 19：托福 Read in Daily Life 怎麼練？校園公告、郵件與原創題目解析 | `toefl-read-in-daily-life` | 同一個 PR #329 待審，完整文章與驗收完成；後續排除 |
+
+依編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。時間篇以 IANA 2026f 實算四個假設時間點、冬夏跨日及回撥的兩個 01:30，附正式詢問與雙時區表；與 Fact Sheet 的整體版本／階段分工。日常閱讀有兩段原創公告／郵件、六題 24 選項解析、條件換題與訂正表，與學術科普閱讀、缺字補全及總覽分工，不以品牌或年份重發。
+
+原有 47 篇 JSON、URL、刊載日與 lastmod 不變，本分支共 49 篇。10/30 `exchange-study-plan` 更新 `97de3fda` 未重做；候選 15 無三工具實測，不捏造比較。舊標準時間網址 404，未引用，台北規則用可核對 IANA 官方資料；所有實際引用官方來源可讀。來源、兩張新增授權攝影、畫面與各跑次見[本批驗收](seo-editorial-validation-2026-11-12.md)。歷史待審狀態以本日查核優先。最終 176 項 SEO、59 項完整 E2E、六組無 JavaScript、15 張目視及 wheel 637 檔核對通過。初次 SEO 175／1 因專用照片斷言失敗，補兩張新授權攝影後完整重跑通過，保留各跑次與原斷言。本批未合併或部署。
+
 ## 2026-11-11 每日批次：AI 英文澄清／多益照片兩篇（PR #302 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261111`，基於 main `bff878eaf829230e2da1de027652300aa6cad5de`。讀取 workflow、backlog、41 篇庫存及相關正文；核對全部 29 個 open PR 的完整清單與相關說明。#272 的 `ai-english-listening-dictation`、`toefl-academic-reading`，以及 #285 的 `japan-residence-registration`、`toeic-part-four-talks` 仍待審，四題已選並排除，保持原批次。#78／#92 已合併，無基礎相依。開始前無同日分支或任何狀態同日 PR。

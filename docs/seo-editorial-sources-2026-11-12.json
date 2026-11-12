@@ -1,0 +1,208 @@
+{
+  "checked": "2026-11-12",
+  "timezone": "Asia/Taipei",
+  "base_commit": "0bb1d5c2f043d78451f66ade6c72d7d28c630768",
+  "selection_basis": "Editorial judgment within approved directions9and19. No user Search Console, volume, traffic or rankings.",
+  "articles": [
+    {
+      "slug": "exchange-deadline-timezones",
+      "title": "交換申請截止時間怎麼換算？時區、夏令時間與跨日檢查表",
+      "source_claims": [
+        {
+          "id": "uk-clocks",
+          "title": "GOV.UK：When do the clocks change?",
+          "url": "https://www.gov.uk/when-do-the-clocks-change",
+          "note": "2026-11-12 實讀，頁面 Last updated: 24 November 2025。表列 2027-03-28 前撥、2027-10-31 回撥，正文說明三月最後週日 01:00 前撥一小時、十月最後週日 02:00 回撥一小時及 BST／GMT。只支持英國規則，不作學校期限或受理依據；未來政策若變更需重新核對。",
+          "retrieval": {
+            "key": "uk-clocks",
+            "requested_url": "https://www.gov.uk/when-do-the-clocks-change",
+            "resolved_url": "https://www.gov.uk/when-do-the-clocks-change",
+            "status": 200,
+            "checked": "2026-11-12",
+            "sha256": "cc88cd13ff24d44d882a9bbec2f24b1099decbffd2a10f55b6bdd706427c920a",
+            "bytes": 63202,
+            "content_type": "text/html; charset=utf-8",
+            "title": "When do the clocks change? - GOV.UK"
+          },
+          "version_and_scope": "2026-11-12 實讀，頁面 Last updated: 24 November 2025。表列 2027-03-28 前撥、2027-10-31 回撥，正文說明三月最後週日 01:00 前撥一小時、十月最後週日 02:00 回撥一小時及 BST／GMT。只支持英國規則，不作學校期限或受理依據；未來政策若變更需重新核對。",
+          "actual_reading": "Full clock-change body and2025-2028date table read, including last-updated2025-11-24.2027Mar28forward andOct31back, March1am+1hour andOctober2am-1hour, BST/GMT. Not a university deadline or approval source."
+        },
+        {
+          "id": "iana-zones",
+          "title": "IANA：Time Zones",
+          "url": "https://www.iana.org/time-zones",
+          "note": "2026-11-12 實讀時區資料用途與依政治決定更新的說明；當日最新列 2026f、2026-10-27 發布。未將網站查核日當成資料發布日，也不宣稱讀完所有全球規則。",
+          "retrieval": {
+            "key": "iana-zones",
+            "requested_url": "https://www.iana.org/time-zones",
+            "resolved_url": "https://www.iana.org/time-zones",
+            "status": 200,
+            "checked": "2026-11-12",
+            "sha256": "8e6c9d3f1b99ffb1d56950539353ca30c71bb58eaa1c604afd0778bd7cb5254f",
+            "bytes": 8120,
+            "content_type": "text/html; charset=utf-8",
+            "title": "Time Zones"
+          },
+          "version_and_scope": "2026-11-12 實讀時區資料用途與依政治決定更新的說明；當日最新列 2026f、2026-10-27 發布。未將網站查核日當成資料發布日，也不宣稱讀完所有全球規則。",
+          "actual_reading": "Read purpose, politically determined UTC/DST updates, latest2026f released2026-10-27. Followed actual release link. Not whole global database review."
+        },
+        {
+          "id": "iana-release",
+          "title": "IANA：Time Zone Database Release 2026f",
+          "url": "https://www.iana.org/time-zones/releases/2026f",
+          "note": "2026-11-12 實讀版本頁及其官方 tzdata2026f.tar.gz 下載連結，用於固定驗算版本，不採用第三方轉載時區表。",
+          "retrieval": {
+            "key": "iana-release",
+            "requested_url": "https://www.iana.org/time-zones/releases/2026f",
+            "resolved_url": "https://www.iana.org/time-zones/releases/2026f",
+            "status": 200,
+            "checked": "2026-11-12",
+            "sha256": "018b5d1fb3f71879e8d5a71e8282723adc18ec86e1843eb07c81e1c227185b1f",
+            "bytes": 8642,
+            "content_type": "text/html; charset=utf-8",
+            "title": "Time Zone Database Release 2026f"
+          },
+          "version_and_scope": "2026-11-12 實讀版本頁及其官方 tzdata2026f.tar.gz 下載連結，用於固定驗算版本，不採用第三方轉載時區表。",
+          "actual_reading": "Read version2026f and actual official tzdata download link."
+        },
+        {
+          "id": "iana-data",
+          "title": "IANA：tzdata2026f 官方資料檔",
+          "url": "https://data.iana.org/time-zones/releases/tzdata2026f.tar.gz",
+          "note": "2026-11-12 下載並核對 version=2026f，實讀 asia 的 Asia/Taipei／Taiwan 規則及 europe 的 Europe/London／EU 現行規則。以官方資料編譯後逐一換算四個假設時間點，經 UTC 及來源時區反向核對；並非全球資料逐行審閱，不把示例當正式截止日。",
+          "retrieval": {
+            "key": "iana-data",
+            "requested_url": "https://data.iana.org/time-zones/releases/tzdata2026f.tar.gz",
+            "resolved_url": "https://data.iana.org/time-zones/releases/tzdata2026f.tar.gz",
+            "status": 200,
+            "checked": "2026-11-12",
+            "sha256": "01b4a91cec5167ed48c11e8ab78f2048cead78ce94b0cafcad0ae8c5a3044d3d",
+            "bytes": 483310,
+            "content_type": "application/x-gzip"
+          },
+          "version_and_scope": "2026-11-12 下載並核對 version=2026f，實讀 asia 的 Asia/Taipei／Taiwan 規則及 europe 的 Europe/London／EU 現行規則。以官方資料編譯後逐一換算四個假設時間點，經 UTC 及來源時區反向核對；並非全球資料逐行審閱，不把示例當正式截止日。",
+          "actual_reading": "Downloaded official tar.gz; extracted only version/asia/europe using extractfile (no arbitrary paths/code). Version2026f. Read Asia/Taipei, Taiwan last DST rules, Europe/London and EU current rules. Compiled with system zic into task scratch, ZoneInfo.from_file used; all4instants roundtrip via UTC and source zone. Other regional rules not used or claimed fully read."
+        }
+      ]
+    },
+    {
+      "slug": "toefl-read-in-daily-life",
+      "title": "托福 Read in Daily Life 怎麼練？校園公告、郵件與原創題目解析",
+      "source_claims": [
+        {
+          "id": "ets-reading",
+          "title": "ETS：TOEFL iBT Reading Section",
+          "url": "https://www.ets.org/toefl/test-takers/ibt/about/content/reading.html",
+          "note": "2026-11-12 實讀當日全文，未明示修訂日。Read in Daily Life 為公告、訊息等日常短文，考主旨、關鍵細節與隱含意思；資訊在文內、不需主題先備知識。本文不推定每篇固定字數、秒數或完整題數。",
+          "retrieval": {
+            "key": "ets-reading",
+            "requested_url": "https://www.ets.org/toefl/test-takers/ibt/about/content/reading.html",
+            "resolved_url": "https://www.ets.org/toefl/test-takers/ibt/about/content/reading.html",
+            "status": 200,
+            "checked": "2026-11-12",
+            "sha256": "f924aea579ab6f27801378ab6fb784d27b1bd2d5ffe2a67d87649a83ea7776ea",
+            "bytes": 154594,
+            "content_type": "text/html;charset=utf-8",
+            "title": "TOEFL iBT Reading Section"
+          },
+          "version_and_scope": "2026-11-12 實讀當日全文，未明示修訂日。Read in Daily Life 為公告、訊息等日常短文，考主旨、關鍵細節與隱含意思；資訊在文內、不需主題先備知識。本文不推定每篇固定字數、秒數或完整題數。",
+          "actual_reading": "Current task body read: notices/messages/informational short texts, main idea/key details/implied meaning; information in text, no prior subject knowledge. No fixed item count/word limit/seconds inferred."
+        },
+        {
+          "id": "ets-spec",
+          "title": "ETS：TOEFL iBT Test Specifications — 2026 Update",
+          "url": "https://www.ets.org/pdfs/toefl/toefl-ibt-test-specifications-2026.pdf",
+          "note": "2026-11-12 實讀標題及閱讀章節印刷頁 7–9，含日常閱讀兩題／三題組、目的、細節、資訊連接、推論與文本可持續參照的說明。未聲稱整份逐頁審閱，也未把 TextEvaluator、CEFR 或原始點數套用自編材料。",
+          "retrieval": {
+            "key": "ets-spec",
+            "requested_url": "https://www.ets.org/pdfs/toefl/toefl-ibt-test-specifications-2026.pdf",
+            "resolved_url": "https://www.ets.org/pdfs/toefl/toefl-ibt-test-specifications-2026.pdf",
+            "status": 200,
+            "checked": "2026-11-12",
+            "sha256": "72196bd328b2e2eb7e08ee031382fa174b1b80ca23b3073b9bd8743c6f39289f",
+            "bytes": 517367,
+            "content_type": "application/pdf"
+          },
+          "version_and_scope": "2026-11-12 實讀標題及閱讀章節印刷頁 7–9，含日常閱讀兩題／三題組、目的、細節、資訊連接、推論與文本可持續參照的說明。未聲稱整份逐頁審閱，也未把 TextEvaluator、CEFR 或原始點數套用自編材料。",
+          "actual_reading": "Read title2026Update and printed readingpp7-9: DailyLife2item/3itemsets, purpose, details, logical connections and inference; text remains visible. Not full document read; no TextEvaluator/CEFR/raw-point calibration applied to authored exercise."
+        },
+        {
+          "id": "ets-scores",
+          "title": "ETS：Understanding Your TOEFL iBT Scores",
+          "url": "https://www.ets.org/toefl/test-takers/ibt/scores/understand-scores.html",
+          "note": "2026-11-12 實讀 What Changed in January 2026 及尺度說明；2026-01-21 起四科與整體 1–6、半分級距，整體四科平均依官方方式取半分；兩年過渡另有可對照 0–120 整體分數。本文不引用費用、成績寄送天數或自編答對率換分。",
+          "retrieval": {
+            "key": "ets-scores",
+            "requested_url": "https://www.ets.org/toefl/test-takers/ibt/scores/understand-scores.html",
+            "resolved_url": "https://www.ets.org/toefl/test-takers/ibt/scores/understand-scores.html",
+            "status": 200,
+            "checked": "2026-11-12",
+            "sha256": "3cb50786b4b7c402c99fd3a3dfa6515a8f5b4e8da8a9e746d3f56cf9dbab05a6",
+            "bytes": 219119,
+            "content_type": "text/html;charset=utf-8",
+            "title": "TOEFL iBT Score Breakdown - What Your Scores Mean"
+          },
+          "version_and_scope": "2026-11-12 實讀 What Changed in January 2026 及尺度說明；2026-01-21 起四科與整體 1–6、半分級距，整體四科平均依官方方式取半分；兩年過渡另有可對照 0–120 整體分數。本文不引用費用、成績寄送天數或自編答對率換分。",
+          "actual_reading": "Read January2026change: Jan21start1-6half bands for sections/overall, overall average rounded by official method, comparable0-120total during2yeartransition. Fees/deliverytimes elsewhere not used; original6items not scored on official scale."
+        }
+      ]
+    }
+  ],
+  "access_limitations": [
+    {
+      "retrieval": {
+        "key": "taiwan-time",
+        "requested_url": "https://www.stdtime.gov.tw/chinese/",
+        "resolved_url": "https://www.stdtime.gov.tw/chinese/",
+        "status": 404,
+        "checked": "2026-11-12",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "content_type": "",
+        "title": ""
+      },
+      "treatment": "Legacy standard-time URL returned404/empty body; not cited. Verified Taipei offsets directly from official IANA2026fsource instead. No fabricated archive or statement based on this failed page."
+    }
+  ],
+  "timezone_example_manifest": "seo-editorial-timezone-examples-2026-11-12.json",
+  "worked_examples": {
+    "authorship": "Original timezone worksheet/inquiry/checklist with4hypothetical instants;2independently authored English texts,6MCitems/24choices, explanations and conditional transfer. Not actual applicants/notifications, expert review, model output, real test or empirical results.",
+    "winter": "London17:00GMT=UTC17:00;+8h=nextday01:00.17+8=25;25-24=1;date increases.",
+    "summer": "London17:00BST=UTC16:00;+8h=nextday00:00.17+7=24;date increases.",
+    "autumn_fold": "2027-10-31London01:30BST=UTC00:30=Taipei08:30;London01:30GMT=UTC01:30=Taipei09:30.1hour apart. Both valid in data; notification intent unresolved until originator clarifies. No later-time default or grace rule.",
+    "answers": [
+      {
+        "q": 1,
+        "answer": "D",
+        "evidence": "Notice explains donation and browsing participation; no copying service, missing-page request or donor reservation."
+      },
+      {
+        "q": 2,
+        "answer": "B",
+        "evidence": "Notes allowed IF pagescomplete; copiedpacks excluded; fourbooks violate upto3, no exemption."
+      },
+      {
+        "q": 3,
+        "answer": "C",
+        "evidence": "Non-donors explicitly included Tuesday. Donation limit is not guaranteed receipt; no reserved allocation."
+      },
+      {
+        "q": 4,
+        "answer": "A",
+        "evidence": "Add one sentence below chart about what was measured. Keep currenttitle; no visitorlist orsecondchart."
+      },
+      {
+        "q": 5,
+        "answer": "D",
+        "evidence": "Discuss colours at nextmeeting; no grade/past meeting or earlierdiscussion supplied."
+      },
+      {
+        "q": 6,
+        "answer": "B",
+        "evidence": "Clearlabels but numbers maylackcontext; supports limited inference labelsaloneinsufficient, not erroneousmeasurements or finalapproval."
+      }
+    ],
+    "conditional_transfer": "Finalnotice sentence changed to donors-only. Non-donoraccess no longer supported; still no3book receiptguarantee. Open answer accepts other clear phrasings.",
+    "math_and_score_boundary": "6x4=24originalchoices;D/B/C/A/D/Bmarkers checked.4timezone instants independently computed from official2026f androundtripped. No fee/deadline guarantee or exercise-to-TOEFLscore conversion."
+  }
+}
