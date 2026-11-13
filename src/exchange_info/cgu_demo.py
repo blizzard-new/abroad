@@ -33,7 +33,7 @@ CONTENT = Path(__file__).parent / "demo_data/content.json"
 # allowlist, so no request value is used to build a file path.
 PREVIEW_DIR = Path(__file__).parent / "demo_data/preview"
 PREVIEW_PAGES = {"office": "office.html", "inquiry": "inquiry.html", "report": "report.html"}
-ASSET_VERSION = "20261113-cgu-home-scholarships-1"
+ASSET_VERSION = "20261113-cgu-forum-seed-1"
 COOKIE = "uniway_cgu_demo_session"
 HOME = "長庚大學"
 SIM_BADGE = "模擬・尚未與校方串接"
@@ -1059,7 +1059,7 @@ def platform_html() -> str:
     soup = BeautifulSoup((STATIC / "index.html").read_text(encoding="utf-8"), "html.parser")
     soup.title.string = "UniWay CGU｜長庚大學交換申請平台"
     soup.head.append(soup.new_tag("meta", attrs={"name": "robots", "content": "noindex,nofollow,noarchive"}))
-    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261113-cgu-home-scholarships-1"))
+    soup.head.append(soup.new_tag("link", rel="stylesheet", href=f"/static/cgu-demo.css?v={ASSET_VERSION}"))
     script = soup.new_tag("script", src="/demo/bootstrap.js")
     soup.head.insert(0, script)
     # Initial static choices must also be CGU-only, before the registry request resolves.
@@ -1072,26 +1072,23 @@ def platform_html() -> str:
     for item in soup.select('.pr-supported'):
         item.decompose()
 
-    # Hide empty Forum & User Review entrances in CGU demo while keeping underlying nodes intact for shared scripts.
+    # Hide empty User Review entrances in CGU demo while keeping Forum (#forum / #community-hub) visible.
     for selector in (
-        '[data-public-route="forum"]',
         '[data-public-route="feedback"]',
-        'a[href="#forum"]',
         'a[href="#feedback"]',
-        'a[href="#university-posts"]',
-        'a[href="#university-feed"]',
-        'a[href="#cgu-feed"]',
         'a[href^="#board="]',
-        '#community-hub',
         '#feedback',
         '#feedback-thanks',
         '.global-sidebar-nav',
         '.sidebar-board-list',
-        '.pr-forum-preview',
         '#detail-tab-community',
     ):
         for node in soup.select(selector):
             node['hidden'] = ''
+    for board_link in soup.select('.featured-board-card.cgu-board-card a[data-home-school-link]'):
+        board_link['href'] = '#university-feed'
+        board_link.attrs.pop('data-home-school-link', None)
+        board_link.attrs.pop('hidden', None)
 
     # Add CGU demo navigation links: 獎學金、問國際處、返國心得、校方介接
     public_nav = soup.select_one('.uniway-public-nav')
@@ -1306,8 +1303,282 @@ def platform_html() -> str:
       <button type="button" class="primary-button" id="cgu-demo-confirm" hidden>確認重設</button>
       <button type="button" class="secondary-button" id="cgu-demo-close">關閉</button></div></dialog>''', 'html.parser')
     soup.body.append(snippet)
-    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js?v=20261113-cgu-home-scholarships-1', defer=''))
+    soup.body.append(soup.new_tag('script', src=f'/static/cgu-demo.js?v={ASSET_VERSION}', defer=''))
     return str(soup)
+
+
+def _seed_demo_forum(runtime_root: Path) -> None:
+    """Pre-seed realistic CGU exchange sample posts and replies in the isolated demo runtime."""
+    from .models import (
+        CommunityBoardKind,
+        CommunityPost,
+        CommunityPostComment,
+        CommunityPostType,
+        CommunityTopic,
+        ModerationStatus,
+        utc_now,
+    )
+    from .storage import save_community_post_comments, save_community_posts
+
+    now = utc_now()
+    demo_posts = [
+        CommunityPost(
+            id="cgu-demo-post-tum-exp",
+            board_id="cgu",
+            board_kind=CommunityBoardKind.UNIVERSITY_EXCHANGE,
+            school_name=HOME,
+            author_id="cgu-demo-author-bme",
+            display_name="長庚生醫系學長（示範資料）",
+            post_type=CommunityPostType.EXPERIENCE,
+            topic=CommunityTopic.APPLICATION,
+            country="德國",
+            academic_year="2026 秋季",
+            application_stage="accepted",
+            title="【示範心得】長庚生醫系申請德國慕尼黑工業大學（TUM）校內甄選與一頁讀書計畫準備",
+            body=(
+                "【展示示範貼文】我是工學院生物醫學工程學系學生，剛完成長庚大學出國交換校內甄選並獲提名前往德國慕尼黑工業大學（TUM）。"
+                "準備校內初審時，最重要的五項必備文件分別是：線上申請表（最多填列 2 個志願）、家長同意書、外語能力證明（多益 700 分以上或合作校指定托福／雅思門檻）、"
+                "含班級排名百分比的中文歷年成績單，以及一頁讀書計畫。\n\n"
+                "撰寫「一頁讀書計畫」時，我將版面濃縮成三個段落：第一段說明為何選擇 TUM 生醫感測與醫工實驗室課程；"
+                "第二段直接列出預計選修的 3 門全英文專業課名與學分數，對應返國後每學期至少採認 3 學分的規定；"
+                "第三段規劃出國前德語基礎自學與實驗室專題銜接。英文面試時委員主要針對讀書計畫中的選課可行性與海外生活適應提問，建議大家提早把目標課程大綱看熟！"
+            ),
+            status=ModerationStatus.APPROVED,
+            comment_count=2,
+            created_at=now - timedelta(days=2, hours=3),
+        ),
+        CommunityPost(
+            id="cgu-demo-post-tohoku-sch",
+            board_id="cgu",
+            board_kind=CommunityBoardKind.UNIVERSITY_EXCHANGE,
+            school_name=HOME,
+            author_id="cgu-demo-author-hcm",
+            display_name="長庚醫管系學姐（示範資料）",
+            post_type=CommunityPostType.EXPERIENCE,
+            topic=CommunityTopic.SCHOLARSHIP,
+            country="日本",
+            academic_year="2026 春季",
+            application_stage="returned",
+            title="【示範心得】日本東北大學交換一學期：長庚領航者補助申請、仙台宿舍與返國報告實算",
+            body=(
+                "【展示示範貼文】上學期透過長庚校級交換計畫前往日本東北大學（Tohoku University）交換一學期（IPLA 全英文授課學程）。"
+                "在獎助學金方面，通過校內甄選後即可依國際事務處公告申請「長庚大學出國交換獎助學金（領航者補助）」，同時也能評估是否符合教育部學海飛颺或學海惜珠資格。\n\n"
+                "仙台生活費相較東京親民許多：入住東北大學國際學生宿舍（University House）單人房每月住宿加水電約 28,000 日圓，"
+                "搭配學生食堂與自炊，每月生活與交通開銷大約落在新台幣 18,000 至 22,000 元。特別提醒學弟妹，返國後兩個月內須繳交四節式返國報告書"
+                "（出國前準備、上課情形、日常生活、課外活動及其他，每節各至少 300 字）並完成每學期至少 3 學分採認，建議在海外期間就隨手記錄課堂與生活點滴！"
+            ),
+            status=ModerationStatus.APPROVED,
+            comment_count=2,
+            created_at=now - timedelta(days=4, hours=6),
+        ),
+        CommunityPost(
+            id="cgu-demo-post-uci-exp",
+            board_id="public-study-abroad",
+            board_kind=CommunityBoardKind.PUBLIC_STUDY_ABROAD,
+            school_name="公共留學板",
+            author_id="cgu-demo-author-ee",
+            display_name="長庚電機系同學（示範資料）",
+            post_type=CommunityPostType.EXPERIENCE,
+            topic=CommunityTopic.ACADEMICS,
+            country="美國",
+            academic_year="2026 秋季",
+            application_stage="abroad",
+            title="【示範心得】長庚工學院赴美國加州大學爾灣分校（UCI）交換修課與實驗室專題紀錄",
+            body=(
+                "【展示示範貼文】目前正在美國加州大學爾灣分校（UC Irvine）進行秋季研修。UCI 採用學季制（Quarter System，每學季 10 週），"
+                "課程節奏非常緊湊，通常第 3 到第 4 週就有第一次期中考與專題進度報告。\n\n"
+                "這學季我選修了嵌入式系統、訊號處理與一門工程團隊實作課，課堂非常鼓勵隨時舉手提問與跨系組隊。"
+                "出發前除了準備語言檢定與財力證明辦理簽證外，也建議先到系辦確認專業選修學分抵免原則，這樣在第一週加退選調整課表時會更有把握。"
+            ),
+            status=ModerationStatus.APPROVED,
+            comment_count=1,
+            created_at=now - timedelta(days=6, hours=2),
+        ),
+        CommunityPost(
+            id="cgu-demo-post-nus-disc",
+            board_id="public-study-abroad",
+            board_kind=CommunityBoardKind.PUBLIC_STUDY_ABROAD,
+            school_name="公共留學板",
+            author_id="cgu-demo-author-csie",
+            display_name="長庚資工系學長（示範資料）",
+            post_type=CommunityPostType.DISCUSSION,
+            topic=CommunityTopic.HOUSING,
+            country="新加坡",
+            academic_year="2026 春季",
+            application_stage="returned",
+            title="【示範分享】新加坡與亞洲英語授課交換：校內宿舍申請、Student's Pass 與每月開銷整理",
+            body=(
+                "【展示示範貼文】整理一下去新加坡及亞洲英語授課合作校交換的住宿與生活費經驗。新加坡校外租屋租金較高，"
+                "因此收到合作校入學許可（Offer Letter）與學號後，務必在第一時間依指示填寫校內宿舍（Hostel / Residential College）志願。\n\n"
+                "若順利抽中校內宿舍，加上在校園餐廳與熟食中心（Hawker Centre）用餐、搭乘 MRT 與校車通勤，"
+                "整體每月生活費可穩定控制在合理預算內。行前也別忘了留意 IPA Letter 下發時間與入境後體檢、領取 Student's Pass 的預約時段。"
+            ),
+            status=ModerationStatus.APPROVED,
+            comment_count=1,
+            created_at=now - timedelta(days=8, hours=5),
+        ),
+        CommunityPost(
+            id="cgu-demo-post-lang-exp",
+            board_id="language-school",
+            board_kind=CommunityBoardKind.PUBLIC_TOPIC,
+            school_name="語言學校板",
+            author_id="cgu-demo-author-pt",
+            display_name="長庚物治系學姐（示範資料）",
+            post_type=CommunityPostType.EXPERIENCE,
+            topic=CommunityTopic.ACADEMICS,
+            country="日本",
+            academic_year="2026 暑期",
+            application_stage="returned",
+            title="【示範心得】申請交換前的暑期密集外語準備：如何把口說與聽力拉到全外語授課門檻",
+            body=(
+                "【展示示範貼文】為了銜接大三出國交換的英語與日語授課要求，我在大二暑假先安排了為期四週的短期語言密集課程，"
+                "每天上午進行小班制學術簡報與聽力訓練，下午搭配主題文化參訪與小組口語發表。"
+                "這段密集練習對於準備長庚校內甄選外語檢定（多益 700 分以上、托福或日檢 N2）以及英文面試非常有幫助，也能提前適應全外語課堂筆記節奏。"
+            ),
+            status=ModerationStatus.APPROVED,
+            comment_count=1,
+            created_at=now - timedelta(days=10, hours=4),
+        ),
+        CommunityPost(
+            id="cgu-demo-post-pref-q",
+            board_id="cgu",
+            board_kind=CommunityBoardKind.UNIVERSITY_EXCHANGE,
+            school_name=HOME,
+            author_id="cgu-demo-author-lin",
+            display_name="林小程（展示資料）",
+            post_type=CommunityPostType.QUESTION,
+            topic=CommunityTopic.APPLICATION,
+            country="韓國",
+            academic_year="2027 秋季",
+            application_stage="preparing",
+            title="【示範提問】請問長庚 116-1 出國交換志願填列（最多 2 校）建議怎麼搭配？",
+            body=(
+                "【展示示範貼文】各位學長姐好，我是工學院生醫系大三學生，目前多益 750 分、學業平均 78 分。"
+                "看到長庚校內甄選規定線上申請表最多可填列 2 個志願學校，第一志願想填歐洲或亞洲理工領域合作校，"
+                "請問第二志願大家通常會怎麼搭配名額較穩定、多益 700 分即可申請的姊妹校呢？"
+            ),
+            status=ModerationStatus.APPROVED,
+            comment_count=2,
+            created_at=now - timedelta(days=1, hours=8),
+        ),
+        CommunityPost(
+            id="cgu-demo-post-visa-q",
+            board_id="public-study-abroad",
+            board_kind=CommunityBoardKind.PUBLIC_STUDY_ABROAD,
+            school_name="公共留學板",
+            author_id="cgu-demo-author-ba",
+            display_name="長庚工商系同學（示範資料）",
+            post_type=CommunityPostType.QUESTION,
+            topic=CommunityTopic.VISA,
+            country="法國",
+            academic_year="2027 春季",
+            application_stage="accepted",
+            title="【示範提問】拿到歐洲合作校提名與入學許可後，學生簽證與住宿證明大概要預留幾週？",
+            body=(
+                "【展示示範貼文】已經通過校內甄選並收到歐洲合作校的提名確認信，目前正在等待正式入學許可（Letter of Acceptance）。"
+                "想請問去過法國或德國交換的學長姐，簽證預約、英文財力證明與校內外住宿證明大約需要提前幾週準備比較保險？"
+            ),
+            status=ModerationStatus.APPROVED,
+            comment_count=1,
+            created_at=now - timedelta(days=3, hours=1),
+        ),
+    ]
+
+    demo_comments = [
+        CommunityPostComment(
+            id="cgu-demo-comment-tum-1",
+            post_id="cgu-demo-post-tum-exp",
+            author_id="cgu-demo-author-lin",
+            display_name="林小程（展示資料）",
+            body="謝謝學長詳細整理！想請問長庚校內一頁讀書計畫的修課規劃，建議在甄選階段就直接列出合作校的英文課名嗎？",
+            status=ModerationStatus.APPROVED,
+            created_at=now - timedelta(days=2, hours=1),
+        ),
+        CommunityPostComment(
+            id="cgu-demo-comment-tum-2",
+            post_id="cgu-demo-post-tum-exp",
+            author_id="cgu-demo-author-bme",
+            display_name="長庚生醫系學長（示範資料）",
+            body="建議直接寫出 2 至 3 門目標英文課名與學分數（例如 Biomedical Sensor Systems），面試委員看一頁讀書計畫時會非常清楚你的選校動機，也有助於後續確認返國每學期至少採認 3 學分的規定。",
+            status=ModerationStatus.APPROVED,
+            created_at=now - timedelta(days=1, hours=20),
+        ),
+        CommunityPostComment(
+            id="cgu-demo-comment-tohoku-1",
+            post_id="cgu-demo-post-tohoku-sch",
+            author_id="cgu-demo-author-nursing",
+            display_name="長庚護理系同學（示範資料）",
+            body="請問學姐東北大學全英文授課（IPLA）的選課難度高嗎？返國抵免本系選修學分需要先給系辦看過課綱嗎？",
+            status=ModerationStatus.APPROVED,
+            created_at=now - timedelta(days=4, hours=2),
+        ),
+        CommunityPostComment(
+            id="cgu-demo-comment-tohoku-2",
+            post_id="cgu-demo-post-tohoku-sch",
+            author_id="cgu-demo-author-hcm",
+            display_name="長庚醫管系學姐（示範資料）",
+            body="IPLA 課程對國際交換生很友善！強烈建議出國前先下載英文教學大綱請系辦與導師預審，返國辦理每學期至少 3 學分採認時會快很多。",
+            status=ModerationStatus.APPROVED,
+            created_at=now - timedelta(days=3, hours=18),
+        ),
+        CommunityPostComment(
+            id="cgu-demo-comment-uci-1",
+            post_id="cgu-demo-post-uci-exp",
+            author_id="cgu-demo-author-csie",
+            display_name="長庚資工系同學（示範資料）",
+            body="感謝分享 Quarter 制選課節奏！提早整理課程大綱跟系辦確認抵免真的很實用。",
+            status=ModerationStatus.APPROVED,
+            created_at=now - timedelta(days=5, hours=12),
+        ),
+        CommunityPostComment(
+            id="cgu-demo-comment-nus-1",
+            post_id="cgu-demo-post-nus-disc",
+            author_id="cgu-demo-author-bme",
+            display_name="長庚生醫系學長（示範資料）",
+            body="收到入學許可後第一時間送出校內宿舍申請真的很關鍵，校園餐廳搭配地鐵通勤比校外租屋省下不少預算。",
+            status=ModerationStatus.APPROVED,
+            created_at=now - timedelta(days=7, hours=15),
+        ),
+        CommunityPostComment(
+            id="cgu-demo-comment-lang-1",
+            post_id="cgu-demo-post-lang-exp",
+            author_id="cgu-demo-author-lin",
+            display_name="林小程（展示資料）",
+            body="謝謝學姐分享！先用暑期密集練習口說再接正式學期交換，感覺能更快適應合作校課堂討論。",
+            status=ModerationStatus.APPROVED,
+            created_at=now - timedelta(days=9, hours=10),
+        ),
+        CommunityPostComment(
+            id="cgu-demo-comment-pref-1",
+            post_id="cgu-demo-post-pref-q",
+            author_id="cgu-demo-author-ee",
+            display_name="長庚電機系學長（示範資料）",
+            body="因為校內線上申請表最多就是填列 2 個志願，建議第一志願放最想去的主力校，第二志願挑歷年名額穩定且接受多益 700 分門檻的亞洲或歐洲英語授課合作校，錄取把握度會高很多！",
+            status=ModerationStatus.APPROVED,
+            created_at=now - timedelta(days=1, hours=4),
+        ),
+        CommunityPostComment(
+            id="cgu-demo-comment-pref-2",
+            post_id="cgu-demo-post-pref-q",
+            author_id="cgu-demo-author-che",
+            display_name="長庚化材系學姐（示範資料）",
+            body="也可以先用平台上的「學校搜尋 → 我的條件」篩出多益 750 分可申請的合作校，再對照各校免學費交換名額來排前兩志願。",
+            status=ModerationStatus.APPROVED,
+            created_at=now - timedelta(days=1, hours=1),
+        ),
+        CommunityPostComment(
+            id="cgu-demo-comment-visa-1",
+            post_id="cgu-demo-post-visa-q",
+            author_id="cgu-demo-author-hcm",
+            display_name="長庚醫管系學姐（示範資料）",
+            body="建議收到提名信就可以先看簽證中心預約時段並準備英文財力證明，正式入學許可一拿到就能馬上送件，至少預留 6 到 8 週最安心！",
+            status=ModerationStatus.APPROVED,
+            created_at=now - timedelta(days=2, hours=16),
+        ),
+    ]
+
+    save_community_posts(demo_posts, runtime_root)
+    save_community_post_comments(demo_comments, runtime_root)
 
 
 def create_demo_app(connector_factory=None) -> FastAPI:
@@ -1344,6 +1615,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
 
     runtime_root = Path(runtime.name)
     catalogue = FrozenCatalogue(runtime_root)
+    _seed_demo_forum(runtime_root)
     connector: SchoolConnector = (
         connector_factory(runtime_root / 'cgu_connector')
         if connector_factory is not None
@@ -1411,6 +1683,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
         account = UserAccount(
             display_name='林小程（展示資料）',
             home_university=HOME,
+            followed_boards=[HOME],
             product_tier=ProductAccessTier.SUBSCRIPTION,
             application_workspaces=[default_workspace],
         )
@@ -1469,6 +1742,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             or (re.fullmatch(r'/account/notifications/[^/]+', path) and request.method == 'DELETE')
         )
         allowed_write = plan_write or connector_write or (path == '/account/workspace' and request.method == 'PUT') or (
+            re.fullmatch(r'/community/posts/[^/]+/bookmark', path) and request.method == 'PUT') or (
             path.startswith('/account/application-drafts/') and request.method in ('POST', 'PUT')) or (
             path in ('/application-plan', '/application-plan/evaluate', '/application-plan/schedule', '/advisor/plan',
                      '/application-center/pdf', '/application-center/docx', '/public-translations', '/auth/community-identity') and request.method == 'POST')

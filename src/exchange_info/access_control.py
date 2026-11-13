@@ -160,7 +160,13 @@ def is_university_community_post(post) -> bool:
 
 
 def can_read_university_community(account: UserAccount | None) -> bool:
-    return bool(account and account.email_verified)
+    return bool(
+        account
+        and (
+            account.email_verified
+            or (str(getattr(account.product_tier, "value", account.product_tier)) == "subscription" and not account.email)
+        )
+    )
 
 
 def catalog_home_university(account: UserAccount | None) -> str | None:
