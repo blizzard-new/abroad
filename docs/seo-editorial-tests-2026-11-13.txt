@@ -1,0 +1,63 @@
+2026-11-13 Asia/Taipei; codex/seo-daily-20261113
+Base:661a4546ffc48abf7bd908a9fe500bf22968634d
+Python:/workspace/abroad/.venv/bin/python (3.12)
+
+EXCHANGE_INFO_DATA_DIR=<cache>/gate-import-data PYTHONPATH=src python scripts/check_editorial.py --base-ref origin/main
+EXCHANGE_INFO_DATA_DIR=<cache>/unit-import-data PYTHONPATH=src python -m pytest -q tests/test_seo_articles.py tests/test_seo.py tests/test_seo_content.py tests/test_seo_quality.py tests/test_seo_reporting.py tests/test_editorial_release_gate.py
+EXCHANGE_INFO_DATA_DIR=<cache>/e2e-import-data PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium PYTHONPATH=src python -m pytest -q tests/e2e/test_seo_articles.py tests/e2e/test_seo_pages.py tests/e2e/test_seo_analytics.py
+EXCHANGE_INFO_DATA_DIR=<cache>/preview-import-data PYTHONPATH=src python <cache>/qa.py preview --repo <checkout> --date 2026-11-13 --slugs exchange-currency-budget ai-english-pronunciation-practice
+uv build --wheel --out-dir <cache>/wheel
+python <cache>/qa.py package --repo <checkout> --date 2026-11-13 --slugs exchange-currency-budget ai-english-pronunciation-practice
+
+One run each; content/asset hashes frozen before tests. No retries counted as extra coverage.
+
+{
+  "ok": true,
+  "article_count": 51,
+  "errors": [],
+  "scope": "Editorial structure/assets/revision dates; not proof of factual accuracy, indexing or rankings"
+}
+
+SEO raw output:
+
+CONFTEST LOADED!
+........................................................................ [ 40%]
+........................................................................ [ 80%]
+..................................                                       [100%]
+178 passed in 92.53s (0:01:32)
+
+E2E raw output:
+
+CONFTEST LOADED!
+.............................................................            [100%]
+61 passed in 203.99s (0:03:23)
+
+Browser:
+
+{
+  "passed": 6,
+  "capture_note": "Only long element captures temporarily hide fixed decorative6px stripe and fixed reading header via screenshot style to avoid stitching over text. Full-page previews and application/assertions unmodified.",
+  "visual_review": "All15final images inspected: desktop/mobile,3:2/2:1crops,two inline photos,two HTML diagrams,eight content sections. Money assumptions/units,three Prompts,dictionary stress glyphs and captions readable. Subjects retained; mobile tables deliberately scroll horizontally.",
+  "run_history": "One full six-case no-JavaScript run and15finalcaptures; no content edits or repeated coverage."
+}
+
+Package:
+
+Successfully built /workspace/scratch/uniway-seo-20261113/wheel/taiwan_exchange_info-0.1.0-py3-none-any.whl
+
+{
+  "checked": "2026-11-13",
+  "build_command": "uv build --wheel",
+  "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+  "wheel_bytes": 2527828832,
+  "article_json_count": 51,
+  "image_count": 51,
+  "checked_files": 641,
+  "runtime_import": {
+    "module": "/workspace/scratch/uniway-seo-20261113/wheel-extracted/exchange_info/seo_articles.py",
+    "loaded_articles": 51,
+    "new_slugs_present": true
+  },
+  "outside_checkout": true,
+  "passed": true
+}
