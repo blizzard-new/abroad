@@ -21,6 +21,12 @@ from fastapi.staticfiles import StaticFiles
 
 STATIC = Path(__file__).parent / "static"
 CONTENT = Path(__file__).parent / "demo_data/content.json"
+# "合作構想示意": three static, fictional pages. Served only by this demo process
+# (never by the production app). The URL segment is only ever a key into this
+# allowlist, so no request value is used to build a file path.
+PREVIEW_DIR = Path(__file__).parent / "demo_data/preview"
+PREVIEW_PAGES = {"office": "office.html", "inquiry": "inquiry.html", "report": "report.html"}
+ASSET_VERSION = "20261113-cgu-preview-1"
 COOKIE = "uniway_cgu_demo_session"
 HOME = "長庚大學"
 
@@ -91,7 +97,7 @@ def platform_html() -> str:
     soup = BeautifulSoup((STATIC / "index.html").read_text(encoding="utf-8"), "html.parser")
     soup.title.string = "UniWay CGU｜長庚大學交換申請平台"
     soup.head.append(soup.new_tag("meta", attrs={"name": "robots", "content": "noindex,nofollow,noarchive"}))
-    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261112-cgu-ux-2"))
+    soup.head.append(soup.new_tag("link", rel="stylesheet", href=f"/static/cgu-demo.css?v={ASSET_VERSION}"))
     script = soup.new_tag("script", src="/demo/bootstrap.js")
     soup.head.insert(0, script)
     # Initial static choices must also be CGU-only, before the registry request resolves.
@@ -191,13 +197,17 @@ def platform_html() -> str:
       <button type="button" id="cgu-demo-info">來源與展示說明</button>
       <button type="button" id="cgu-demo-seed">載入示範申請</button>
       <button type="button" id="cgu-demo-reset">重設我的展示資料</button>
+      <details id="cgu-preview-menu" class="cgu-preview-menu"><summary>合作構想示意</summary><ul>
+      <li><a href="/preview/office">國際處收件匣</a></li>
+      <li><a href="/preview/inquiry">問答與轉承辦</a></li>
+      <li><a href="/preview/report">返國心得</a></li></ul></details>
       </aside><dialog id="cgu-demo-dialog" aria-label="長庚專屬展示" aria-labelledby="cgu-demo-dialog-title">
       <h2 id="cgu-demo-dialog-title">長庚專屬展示</h2><div id="cgu-demo-dialog-body"></div>
       <p id="cgu-demo-status" role="status"></p><div class="button-row">
       <button type="button" class="primary-button" id="cgu-demo-confirm" hidden>確認重設</button>
       <button type="button" class="secondary-button" id="cgu-demo-close">關閉</button></div></dialog>''', 'html.parser')
     soup.body.append(snippet)
-    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js?v=20261112-cgu-ux-2', defer=''))
+    soup.body.append(soup.new_tag('script', src=f'/static/cgu-demo.js?v={ASSET_VERSION}', defer=''))
     return str(soup)
 
 
@@ -386,6 +396,14 @@ def create_demo_app() -> FastAPI:
     @app.get('/demo/content')
     def content():
         return json.loads(CONTENT.read_text(encoding='utf-8'))
+
+    @app.get('/preview/{page}')
+    def preview(page: str):
+        # Read-only static HTML: no session, no repository access, no writes.
+        name = PREVIEW_PAGES.get(page)
+        if name is None:
+            raise HTTPException(404, '找不到此示意頁。')
+        return HTMLResponse((PREVIEW_DIR / name).read_text(encoding='utf-8'))
 
     @app.post('/demo/reset')
     def reset(request: Request):
