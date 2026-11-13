@@ -388,19 +388,26 @@ def test_html_fixes_hidden_community_fixed_school_and_forbidden_terms():
 
     demo = BeautifulSoup(demo_raw, 'html.parser')
     for hidden_sel in (
-        '[data-public-route="forum"]',
         '[data-public-route="feedback"]',
-        'a[href="#forum"]',
         'a[href="#feedback"]',
         '#detail-tab-community',
-        '#community-hub',
         '#feedback',
         '#feedback-thanks',
-        'a[href="#university-feed"]',
     ):
         nodes = demo.select(hidden_sel)
         assert nodes, f'expected {hidden_sel} in DOM'
         assert all(n.has_attr('hidden') for n in nodes)
+
+    for visible_forum_sel in (
+        '[data-public-route="forum"]',
+        'a[href="#forum"]',
+        '#community-hub',
+        '.pr-forum-preview',
+        'a[href="#university-feed"]',
+    ):
+        nodes = demo.select(visible_forum_sel)
+        assert nodes, f'expected {visible_forum_sel} in DOM'
+        assert all(not n.has_attr('hidden') for n in nodes)
 
     switcher = demo.select_one('#school-switcher')
     assert switcher is not None
@@ -411,9 +418,48 @@ def test_html_fixes_hidden_community_fixed_school_and_forbidden_terms():
     home_uni_input = demo.select_one('input[name="home_university"]')
     assert home_uni_input is not None and home_uni_input.has_attr('readonly')
 
-    for nav_route in ('ask-oia', 'return-report', 'school-connector'):
+    for nav_route in ('forum', 'ask-oia', 'return-report', 'school-connector'):
         assert demo.select_one(f'.uniway-public-nav a[data-public-route="{nav_route}"]') is not None
     assert demo.select_one('#cgu-demo-oia-toggle') is not None
+
+
+def test_demo_forum_preseeds_cgu_exchange_posts_and_comments(demo_url):
+    client = visitor(demo_url)
+    boards_res = client.get(demo_url + '/community/boards')
+    assert boards_res.status_code == 200
+    boards = {item['id']: item for item in boards_res.json()}
+    assert boards['cgu']['can_read'] is True
+
+    feed_res = client.get(demo_url + '/community/feed?limit=20&sort=latest')
+    assert feed_res.status_code == 200
+    items = feed_res.json()['items']
+    assert len(items) >= 6
+    titles = [item['title'] for item in items]
+    assert any('慕尼黑工業大學' in title for title in titles)
+    assert any('東北大學' in title for title in titles)
+    assert any('116-1 出國交換志願填列' in title for title in titles)
+    for item in items:
+        assert '官方合作' not in item['title']
+        assert '校徽' not in item['title']
+
+    cgu_feed = client.get(demo_url + '/community/feed?limit=20&sort=latest&boards=長庚大學').json()['items']
+    assert len(cgu_feed) >= 3
+    assert all(item['school_name'] == '長庚大學' for item in cgu_feed)
+
+    tum_detail = client.get(demo_url + '/community/posts/cgu-demo-post-tum-exp')
+    assert tum_detail.status_code == 200
+    assert '一頁讀書計畫' in tum_detail.json()['body']
+    tum_comments = client.get(demo_url + '/community/posts/cgu-demo-post-tum-exp/comments?sort=oldest&limit=20')
+    assert tum_comments.status_code == 200
+    assert tum_comments.json()['discussion_total'] == 2
+
+    bookmark_put = client.put(
+        demo_url + '/community/posts/cgu-demo-post-tum-exp/bookmark',
+        json={'saved': True},
+        headers={'Origin': demo_url},
+    )
+    assert bookmark_put.status_code == 200
+    assert 'cgu-demo-post-tum-exp' in client.get(demo_url + '/community/bookmarks').json()['ids']
 
 
 def test_upload_hashes_in_memory_never_writes_raw_bytes_to_disk_and_forbids_outbound_network(tmp_path):

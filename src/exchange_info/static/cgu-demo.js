@@ -64,14 +64,12 @@
   }
 
   const HIDDEN_COMMUNITY_HASHES = new Set([
-    '#forum', '#feedback', '#public-board', '#language-school-board', '#following',
-    '#university-posts', '#cgu-posts', '#cgu-feed', '#university-feed', '#community-hub',
+    '#feedback',
   ]);
 
   function isHiddenCommunityHash(hash = window.location.hash) {
     return HIDDEN_COMMUNITY_HASHES.has(hash)
-      || hash.startsWith('#board=')
-      || hash.startsWith('#post=');
+      || hash.startsWith('#board=');
   }
 
   function guardHiddenRoutes() {
@@ -169,6 +167,27 @@
     event.stopImmediatePropagation();
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     reminders.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }, true);
+
+  document.addEventListener('click', event => {
+    const composeBtn = event.target.closest(
+      '#global-community-compose, #sidebar-community-compose, #global-mobile-compose, [data-open-global-community-composer], #discussion-reader [data-open-verification]'
+    );
+    if (!composeBtn) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const reader = $('#discussion-reader');
+    if (reader && reader.open) reader.close();
+    const dialog = $('#cgu-demo-dialog');
+    if (!dialog) return;
+    $('#cgu-demo-dialog-title').textContent = '論壇示範瀏覽說明';
+    $('#cgu-demo-dialog-body').innerHTML = `
+      <p>展示站已預載<strong>長庚大學交換相關示範心得、提問與學長姐回覆</strong>，可直接切換「心得／提問／看板」或點擊貼文閱讀完整內容。</p>
+      <p>為維持展示環境隔離，公開論壇不開放新增貼文；若想體驗結構化心得填寫與每節 300 字檢核，可前往上方導覽列的<strong>「返國心得」</strong>，或至<strong>「問國際處」</strong>體驗提問分流。</p>
+    `;
+    $('#cgu-demo-status').textContent = '';
+    $('#cgu-demo-confirm').hidden = true;
+    if (!dialog.open) dialog.showModal();
   }, true);
 
   const restrictControls = () => {

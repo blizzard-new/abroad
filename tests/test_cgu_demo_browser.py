@@ -856,10 +856,14 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     """
     ready(page, demo_url)
 
-    # Item 7 fixes: Forum & Reviews hidden (including direct hashes); school switcher fixedly displays 長庚大學
-    expect(page.locator('.uniway-public-nav a[data-public-route="forum"]')).not_to_be_visible()
+    # Item 7 fixes: Forum visible with pre-seeded CGU posts, Reviews hidden, school switcher fixedly displays 長庚大學
+    expect(page.locator('.uniway-public-nav a[data-public-route="forum"]')).to_be_visible()
     expect(page.locator('.uniway-public-nav a[data-public-route="feedback"]')).not_to_be_visible()
-    for blocked_hash in ('#university-feed', '#cgu-feed', '#board=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8'):
+    page.locator('.uniway-public-nav a[data-public-route="forum"]').click()
+    expect(page.locator('#community-hub')).to_be_visible()
+    expect(page.locator('#global-community-feed')).to_contain_text('慕尼黑工業大學')
+    expect(page.locator('#global-community-feed')).to_contain_text('東北大學')
+    for blocked_hash in ('#feedback', '#board=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8'):
         page.goto(f'{demo_url}/{blocked_hash}', wait_until='domcontentloaded')
         expect(page.locator('#community-hub')).not_to_be_visible()
         expect(page.locator('#school-switcher')).to_be_disabled()
