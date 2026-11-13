@@ -1,8 +1,44 @@
 # 原平台長庚專屬版驗證
 
-本紀錄適用使用者指定的 PR #299／main `87277daf` UI/UX。所有帳號與測試寫入使用隔離暫存目錄；沒有連正式資料庫。PR #301 合併前紀錄使用 `current-main-*` 檔名；Windows 部署續作以 main `ce86f376` 為基準，結果使用 `windows-*` 檔名。各批次分開記錄，不把過去結果當成本次重跑。
+本紀錄按時間分批呈現實際執行的自動化測試與限制，不將歷史批次混充為當次重跑結果。
 
-## Windows 部署續作：main `ce86f376`
+## 首頁還原與獎學金專頁統一結構化批次（2026-11-13）
+
+本批次只修改長庚展示版檔案（`src/exchange_info/cgu_demo.py`、`src/exchange_info/cgu_demo_content.py`、`src/exchange_info/static/cgu-demo.js`、`src/exchange_info/static/cgu-demo.css`、`docs/cgu-demo/*`）及對應測試（`tests/test_cgu_demo.py`、`tests/test_cgu_demo_browser.py`）；未修改 `create_app()`、共用 `static/index.html`／`app.js`、`pyproject.toml`、`uv.lock` 或 `official_data/`。
+
+| 實際執行 | 結果 |
+| --- | --- |
+| 展示隔離與端對端瀏覽器測試（`tests/test_cgu_demo.py`、`tests/test_cgu_demo_browser.py`、`tests/test_static_asset_versions.py`） | **35 passed**；確認首頁第一屏（`scrollY = 0`）視覺與 `app.uniway` 完全一致（無縮減地球／吉祥物、無 116-1 提醒卡、無任何獎學金資訊）、下滑或點擊探索提示可捲至 `#cgu-home-reminders`（「長庚 116-1 申請一頁看完」與 `12/21 17:00` 倒數）、頂部導覽列新增「獎學金」並於全桌機／筆電寬度（930–1920px 含靜止／懸停／失敗重試）容納 8 個導覽連結不裁切不重疊、`#scholarships` 專頁以統一結構化卡片與分類篩選呈現長庚全數四項官方規章（`2B00004`、`2B00005`、`2B00010`、`2B00006`）且隱藏重複純文字手風琴，全程零水平溢位、零 `pageerror` |
+| 語法、版本、契約與回歸測試 | `node --check src/exchange_info/static/cgu-demo.js`、`scripts/update_static_versions.py --check`、`scripts/export_openapi.py --check` 通過；`test_cgu_bundled_data.py`、`test_cgu_catalogue_recovery.py`、`test_cgu_deployment_package.py`、`test_static_caching.py`、`test_text_files_are_utf8.py`、`test_uniway_ui_contract.py` **382 passed, 4 skipped** |
+
+---
+
+## 首頁精簡與找學校頁（「我的條件」置頂強化、計畫與學院單排無框整合）批次（2026-11-12）
+
+本批次只修改長庚展示版檔案（`src/exchange_info/cgu_demo.py`、`src/exchange_info/static/cgu-demo.js`、`src/exchange_info/static/cgu-demo.css`、`docs/cgu-demo/*`）及對應測試（`tests/test_cgu_demo.py`、`tests/test_cgu_demo_browser.py`）；未修改 `create_app()` 或任何主站共用靜態檔案。
+
+| 實際執行 | 結果 |
+| --- | --- |
+| 展示 API 與 DOM 隔離測試（`tests/test_cgu_demo.py`） | **23 passed**；確認首頁已完全移除 `#cgu-dept-finder`、保留「長庚 116-1 申請一頁看完」與「領航者補助作業要點」，且 `#partners` 將 `#discovery-criteria`（「我的條件」）移至頁首獨立醒目列、`#cgu-partner-filter-strip` 包覆計畫分頁與學院／系所列 |
+| Chromium 端對端瀏覽器測試（`tests/test_cgu_demo_browser.py`） | **10 passed**；實測驗證桌面、筆電與平板橫向多視窗寬度（930、960、1024、1040、1060、1100、1150、1200、1280、1366、1440、1920px）頂部導覽列 `#glass-navigation` 於靜止、懸停／聚焦及模擬同步失敗（`#account-workspace-sync-retry` 顯示＋未讀通知徽章）狀態皆完整容納 7 個導覽項目與 `#account-button`（「林小程（展示資料）」）不裁切不重疊（960px 以上顯示完整文字標籤，901–959px 提供原生 `title` 提示）、單排篩選列 `#cgu-partner-filter-strip` 於 1042–1920px（含選取最長系所名稱「奈米工程及設計碩士學位學程」）維持同一排不擠壓不溢位，並驗證平板（820×1180）與手機（390×844、360×740）底部展示列 `#cgu-demo-strip` 精簡為雙欄網格、「我的條件」展開第 7 欄（`可考慮，含待確認`）滿版不截斷、選校比較列 `#partner-compare-tray` 與浮動狀態提示 `#page-status` 於手機及桌面皆浮於展示列上方可正常點擊、卡片列表最底端及六階段表單送出鈕與學校詳細頁底部行動列捲至最底皆不遮擋，全程零水平溢位、零 `pageerror` |
+| 主站契約、資料快照與 OpenAPI 檢查 | `scripts/export_openapi.py --check` 通過；`test_cgu_bundled_data.py`、`test_cgu_catalogue_recovery.py`、`test_cgu_deployment_package.py`、`test_static_asset_versions.py`、`test_static_caching.py`、`test_text_files_are_utf8.py`、`test_uniway_ui_contract.py`（**384 passed, 4 skipped**）全數通過 |
+
+---
+
+## 校方介接模擬層（`SchoolConnector`／`MockCguConnector`）與國際處視角擴充批次（2026-11-12）
+
+本批次只修改長庚展示版檔案（`src/exchange_info/cgu_demo.py`、`src/exchange_info/cgu_demo_content.py`、`src/exchange_info/demo_data/content.json`、`src/exchange_info/static/cgu-demo.js`、`src/exchange_info/static/cgu-demo.css`、`docs/cgu-demo/*`）及對應測試（`tests/test_cgu_demo.py`、`tests/test_cgu_demo_browser.py`）；未修改 `create_app()`、共用 `static/index.html`／`app.js`、`pyproject.toml`、`uv.lock` 或 `official_data/`。
+
+| 實際執行 | 結果 |
+| --- | --- |
+| 展示 API、連接器契約、磁碟與零外部網路隔離（`tests/test_cgu_demo.py`） | **23 passed，56.66 秒**；涵蓋 `SchoolConnector` 抽象契約與純 4 方法子類別端對端抽換（含 5 項文件預檢、規則式 FAQ 查詢與列印檢視）、5 項文件缺件攔截（422）、純記憶體雜湊且磁碟零原始位元組留存、零非本機網路／DNS 連線、反向代理 HTTPS Origin `multipart/form-data` 驗證、規則式問答命中／未命中轉承辦與中文 CJK n-gram 自動關鍵字收錄、返國心得四段滿 300 字驗證與同校雙方案不串流、國際處收件匣 5 筆虛構資料與雙向通知連動、跨訪客隔離及 `/demo/reset` 完整清除與種子還原 |
+| Chromium 端對端瀏覽器測試（`tests/test_cgu_demo_browser.py`） | **9 passed，114.98 秒**；涵蓋既有搜尋／收藏／比較／六階段／工作台／storage 例外、直接導覽隱藏論壇與看板 hash 攔截、母校切換器鎖定，以及新增完整展示腳本路線（預檢缺件 → 補齊送出取 `SIM-` 編號 → 國際處視角要求補件 → 切回學生端通知鈴鐺與狀態同步 → 重整保留 → 問國際處命中與未命中轉承辦 → 承辦回覆加入 FAQ 後學生端追問即時命中 → 返國心得列印版與核可公開至學校詳細頁雙分頁且跨校切換零殘留 → 390×844 響應式零溢位 → 重設完整清除），全程零 `pageerror` |
+| 長庚資料快照與部署封裝（`test_cgu_bundled_data.py`、`test_cgu_catalogue_recovery.py`、`test_cgu_deployment_package.py`） | **全部通過**；78 所合作校快照雜湊與部署安全設定未變動 |
+| 主站回歸、靜態資產鎖與 OpenAPI／TLS 檢查 | `scripts/export_openapi.py --check` 通過；`validate_supabase_migrations.py`（42 migrations）通過；`test_static_asset_versions.py`、`test_static_caching.py`、`test_text_files_are_utf8.py`、`test_uniway_ui_contract.py`、`test_api.py`、`test_application_path.py`（29 passed；合共 **416 passed, 4 skipped**）均全數通過 |
+
+---
+
+## Windows 部署續作：main `ce86f376`（歷史紀錄）
 
 本批次沒有改動共用 UI、正式 Dockerfile、正式 Compose 或 Python dependency lock。新增的是展示專用容器、固定版本的 Windows 啟動／Caddy 候選設定流程，以及 HTTPS Origin 的驗證修正。
 

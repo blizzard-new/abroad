@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 import tempfile
 from pathlib import Path
 
@@ -55,9 +56,35 @@ def screenshot(page, name):
 
 def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     ready(page, demo_url, '?home=國立臺灣大學')
-    expect(page.locator('#home-landing-title')).to_contain_text('長庚 116-1 申請一頁看完')
+    # First screen matches app.uniway cleanly (no CGU reminder hero text or scholarships on #home)
+    expect(page.locator('#home-landing-title')).to_contain_text('你能去哪些交換學校，')
+    expect(page.locator('#home-landing-title')).to_contain_text('一次看清楚。')
+    expect(page.locator('#home-landing-title')).not_to_contain_text('長庚 116-1')
     expect(page.locator('.pr-supported')).to_have_count(0)
     expect(page.locator('[data-home-discover]')).to_be_visible()
+    expect(page.locator('#cgu-navigator-card')).to_have_count(0)
+    expect(page.locator('#cgu-dept-finder')).to_have_count(0)
+    assert '領航者補助' not in page.locator('#home-landing').inner_text()
+
+    collage_opacity = page.locator('#home-landing .pr-collage').evaluate('el => parseFloat(getComputedStyle(el).opacity)')
+    assert collage_opacity >= 0.9, f'expected unobscured globe/mascot opacity on first screen, got {collage_opacity}'
+
+    # Reminders live below the fold until user scrolls or clicks discover cue
+    reminders = page.locator('#cgu-home-reminders')
+    expect(reminders).to_be_attached()
+    rem_box = reminders.bounding_box()
+    assert rem_box and rem_box['y'] >= 560, f'expected #cgu-home-reminders below fold, got y={rem_box}'
+
+    # Desktop 1440px top bar check on #home before taking desktop-home.png: #account-button fully inside viewport
+    acct_home_box = page.locator('#account-button').bounding_box()
+    assert acct_home_box and acct_home_box['x'] >= 0 and (acct_home_box['x'] + acct_home_box['width']) <= 1440 - 8
+    assert page.locator('#account-button-label').evaluate('el => el.scrollWidth <= el.clientWidth + 1')
+
+    screenshot(page, 'desktop-home.png')
+
+    # Clicking discover cue scrolls cleanly to the CGU 116-1 reminder section
+    page.locator('#home-landing [data-home-discover]').click()
+    page.wait_for_timeout(450)
     onepager = page.locator('#cgu-hero-onepager')
     expect(onepager).to_be_visible()
     for phrase in (
@@ -75,75 +102,135 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     ):
         expect(onepager).to_contain_text(phrase)
     expect(page.locator('#cgu-home-deadline-banner')).to_contain_text('12/21 17:00')
+    expect(onepager.locator('[data-cgu-scroll="#cgu-dept-finder"]')).to_have_count(0)
+    expect(onepager.locator('a.cgu-hero-cta.is-primary[href="#partners"]')).to_be_visible()
+    screenshot(page, 'desktop-home-scrolled.png')
+
     expect(page.locator('#home-tile-calendar .pr-mini-dates li').first).to_contain_text('12 月')
     expect(page.locator('#home-tile-calendar .pr-mini-dates li').first).to_contain_text('21')
     expect(page.locator('#home-tile-calendar')).to_contain_text('適用已獲提名者')
-
-    # Item 2:「我是哪個系？」4 colleges & 36 departments finder
-    finder = page.locator('#cgu-dept-finder')
-    expect(finder).to_be_visible()
-    expect(finder.locator('[data-cgu-finder-college]')).to_have_count(4)
-    expect(finder.locator('#cgu-dept-result-summary')).to_contain_text('工學院 · 生物醫學工程學系')
-    expect(finder.locator('#cgu-dept-exchange-list')).to_contain_text('香港中文大學')
-    expect(finder.locator('#cgu-dept-exchange-list')).to_contain_text('限醫工系')
-    expect(finder.locator('#cgu-dept-exchange-list')).to_contain_text('加泰隆尼亞國際大學')
-    finder.locator('[data-cgu-finder-dept="電機工程學系"]').click()
-    expect(finder.locator('#cgu-dept-result-summary')).to_contain_text('工學院 · 電機工程學系')
-    expect(finder.locator('#cgu-dept-exchange-list')).not_to_contain_text('香港中文大學')
-    finder.locator('[data-cgu-finder-college="醫學院"]').click()
-    expect(finder.locator('[data-cgu-finder-dept]')).to_have_count(18)
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('明尼蘇達大學')
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('碩士')
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('內布拉斯加大學醫學中心分校')
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('博士')
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('馬里蘭大學巴爾的摩分校')
-    expect(finder.locator('#cgu-dept-dual-list')).to_contain_text('學士')
-    finder.locator('[data-cgu-finder-college="管理學院"]').click()
-    expect(finder).to_contain_text('管理學院另有院級交換，請洽院國際辦公室')
-
-    # Item 7:「領航者補助」說明卡 on homepage
-    nav_card = page.locator('#cgu-navigator-card')
-    expect(nav_card).to_be_visible()
-    for nav_text in ('NT$75,000', 'NT$150,000', 'NT$60,000', 'NT$120,000', '+NT$10,000', '班排名前 30%'):
-        expect(nav_card).to_contain_text(nav_text)
-    expect(nav_card.locator('a[href*="b85add3b-7d9e-43ff-b22f-f0657e11765c"]')).to_be_visible()
-
-    screenshot(page, 'desktop-home.png')
     page.locator('#home-search-input').fill('Lincoln')
     page.locator('#home-search-form button[type=submit]').click()
     expect(page.locator('#partner-table')).to_contain_text('林肯')
     page.locator('#partner-search').fill('')
     expect(page.locator('#partner-result-count')).to_contain_text('78')
 
-    # Item 4: 雙學位跟交換分開呈現 (#cgu-program-tabs)
+    # Prominent relocated「我的條件」(#discovery-criteria) near the top of #partners
+    criteria = page.locator('#partners #discovery-criteria')
+    expect(criteria).to_be_visible()
+    expect(page.locator('#partners .pr-explore-head .discovery-open-workspace')).to_be_visible()
+    head_box = page.locator('#partners .pr-explore-head').bounding_box()
+    criteria_box = criteria.bounding_box()
+    strip_box = page.locator('#cgu-partner-filter-strip').bounding_box()
+    search_box = page.locator('#partners .pr-search').bounding_box()
+    results_box = page.locator('#partners .journey-search-layout').bounding_box()
+    assert head_box and criteria_box and strip_box and search_box and results_box
+    assert criteria_box['height'] >= 52
+    assert head_box['y'] < criteria_box['y'] < strip_box['y'] < search_box['y'] < results_box['y']
+
+    # Single-row Program + College + Department strip with zero grey boxes or small grey text
     prog_tabs = page.locator('#cgu-program-tabs')
+    college_bar = page.locator('#cgu-college-quick-bar')
     expect(prog_tabs).to_be_visible()
+    expect(college_bar).to_be_visible()
+    prog_box = prog_tabs.bounding_box()
+    college_box = college_bar.bounding_box()
+    assert prog_box and college_box
+    assert abs(prog_box['y'] - college_box['y']) < 8
+    assert prog_box['x'] + prog_box['width'] <= college_box['x'] + 4
+
+    expect(page.locator('#cgu-program-tabs .cgu-program-tabs-note')).not_to_be_visible()
+    expect(page.locator('#cgu-college-live-count')).not_to_be_visible()
+    expect(page.locator('#cgu-college-quick-bar .cgu-college-bar-label')).not_to_be_visible()
+    expect(prog_tabs.locator('.cgu-program-tab > span').first).not_to_be_visible()
+    expect(college_bar.locator('.cgu-college-btn > span').first).not_to_be_visible()
+    inactive_tab_bg = prog_tabs.locator('[data-cgu-program="exchange"]').evaluate('el => getComputedStyle(el).backgroundColor')
+    assert inactive_tab_bg in ('rgba(0, 0, 0, 0)', 'transparent')
+
+    # Hovering「我的條件」summary must keep royal-blue gradient + crisp white text (never white-on-white)
+    criteria_summary = criteria.locator('summary')
+    criteria_summary.hover()
+    hover_styles = criteria_summary.evaluate(
+        """el => ({
+            sumBg: getComputedStyle(el).backgroundColor,
+            headingColor: getComputedStyle(el.querySelector('.cgu-criteria-heading')).color,
+        })"""
+    )
+    assert hover_styles['sumBg'] in ('rgba(0, 0, 0, 0)', 'transparent')
+    assert hover_styles['headingColor'] == 'rgb(255, 255, 255)'
+
+    screenshot(page, 'desktop-partners.png')
+
+    # Test「我的條件」filtering, grading scale placeholder/max sync & reset
+    criteria_summary.click()
+    expect(page.locator('#discovery-criteria-form')).to_be_visible()
+    screenshot(page, 'desktop-partners-criteria-open.png')
+    grade_input = page.locator('#discovery-criteria-form [name="grade"]')
+    scale_select = page.locator('#discovery-criteria-form [name="scale"]')
+    scale_select.evaluate("el => { el.value = '4.3'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
+    expect(grade_input).to_have_attribute('max', '4.3')
+    expect(grade_input).to_have_attribute('placeholder', '例如 3.6')
+    scale_select.evaluate("el => { el.value = '100'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
+    expect(grade_input).to_have_attribute('max', '100')
+    expect(grade_input).to_have_attribute('placeholder', '例如 78')
+    page.locator('#discovery-test').evaluate("el => { el.value = 'toeic'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
+    page.locator('#discovery-score').fill('750')
+    grade_input.fill('78')
+    page.locator('#discovery-criteria-form [name="degree"]').evaluate("el => { el.value = 'undergraduate'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
+    page.locator('#discovery-criteria-form button[type="submit"]').click()
+    expect(page.locator('#cgu-criteria-summary')).to_contain_text('TOEIC 750')
+    expect(page.locator('#cgu-criteria-summary')).to_contain_text('平均 78')
+    expect(page.locator('#cgu-criteria-summary')).to_contain_text('大學部')
+    expect(page.locator('#discovery-criteria-count')).to_have_text('已套用')
+    expect(page.locator('#cgu-criteria-cta-label')).to_have_text('修改條件')
+    criteria_summary.click()
+    scale_select.evaluate("el => { el.value = '4'; el.dispatchEvent(new Event('change', { bubbles: true })); }")
+    page.locator('#discovery-clear-criteria').click()
+    expect(grade_input).to_have_attribute('max', '100')
+    expect(grade_input).to_have_attribute('placeholder', '例如 78')
+    criteria_summary.click()
+    expect(page.locator('#discovery-criteria-count')).to_have_text('')
+    expect(page.locator('#cgu-criteria-cta-label')).to_have_text('設定條件')
+    expect(page.locator('#partner-result-count')).to_contain_text('78')
+
+    # Item 4: 雙學位跟交換分開呈現 (#cgu-program-tabs) on the same row
     dual_tab = prog_tabs.locator('[data-cgu-program="dual_degree"]')
     exch_tab = prog_tabs.locator('[data-cgu-program="exchange"]')
     all_tab = prog_tabs.locator('[data-cgu-program=""]')
-    expect(dual_tab).to_contain_text('14 所')
-    expect(exch_tab).to_contain_text('66 所')
     dual_tab.click()
     expect(dual_tab).to_have_attribute('aria-selected', 'true')
     expect(page.locator('#partner-result-count')).to_contain_text('共 14 所')
     expect(page.locator('#partner-table')).to_contain_text('瑞典皇家理工學院')
+    exch_tab.click()
+    expect(exch_tab).to_have_attribute('aria-selected', 'true')
+    expect(page.locator('#partner-result-count')).to_contain_text('共 66 所')
     all_tab.click()
     expect(page.locator('#partner-result-count')).to_contain_text('78')
 
-    college_bar = page.locator('#cgu-college-quick-bar')
-    expect(college_bar).to_be_visible()
-    for label in ['醫', '工', '管', '智慧運算']:
+    for label in ['全部學院', '醫學院', '工學院', '管理學院', '智慧運算學院']:
         expect(college_bar.locator('[data-cgu-college]', has_text=label)).to_be_visible()
     med_btn = college_bar.locator('[data-cgu-college="醫學院"]')
     med_btn.click()
     expect(med_btn).to_have_attribute('aria-pressed', 'true')
-    expect(page.locator('#cgu-college-live-count')).to_contain_text('醫學院可申請：共 45 所')
     expect(page.locator('#partner-result-count')).to_contain_text('共 45 所')
     ai_btn = college_bar.locator('[data-cgu-college="智慧運算學院"]')
     ai_btn.click()
     expect(ai_btn).to_have_attribute('aria-pressed', 'true')
-    expect(page.locator('#cgu-college-live-count')).to_contain_text('智慧運算學院可申請：共 43 所')
     expect(page.locator('#partner-result-count')).to_contain_text('共 43 所')
+
+    # Department filter inline on the same row (select 工學院 -> 生物醫學工程學系 vs 電機工程學系)
+    college_bar.locator('[data-cgu-college="工學院"]').click()
+    page.locator('#cgu-partner-dept-select').evaluate(
+        "el => { el.value = '生物醫學工程學系'; el.dispatchEvent(new Event('change', { bubbles: true })); }"
+    )
+    page.locator('#partner-search').fill('香港中文')
+    expect(page.locator('#partner-table')).to_contain_text('香港中文大學')
+    page.locator('#cgu-partner-dept-select').evaluate(
+        "el => { el.value = '電機工程學系'; el.dispatchEvent(new Event('change', { bubbles: true })); }"
+    )
+    expect(page.locator('#partner-table')).not_to_contain_text('香港中文大學')
+    page.locator('#partner-search').fill('')
+    assert abs(prog_tabs.bounding_box()['y'] - college_bar.bounding_box()['y']) < 8
 
     # Item 5: 管理學院的「院級管道」提示
     mgmt_btn = college_bar.locator('[data-cgu-college="管理學院"]')
@@ -156,6 +243,19 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     college_bar.locator('[data-cgu-college=""]').click()
     expect(page.locator('#cgu-mgmt-channel-notice')).not_to_be_visible()
     expect(page.locator('#partner-result-count')).to_contain_text('78')
+
+    # Verify Map View & Dark Mode keep「我的條件」and single-row strip clean with zero overflow
+    page.locator('[data-partner-view="map"]').click()
+    expect(page.locator('#partner-map-panel')).to_be_visible()
+    expect(criteria).to_be_visible()
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    screenshot(page, 'desktop-partners-map.png')
+    page.locator('[data-partner-view="list"]').click()
+    expect(page.locator('#partner-table')).to_be_visible()
+
+    page.evaluate("document.documentElement.dataset.theme = 'dark'")
+    screenshot(page, 'desktop-partners-dark.png')
+    page.evaluate("delete document.documentElement.dataset.theme")
     expect(page.get_by_role('group', name='交換名額')).to_contain_text('2 名以上')
     deadline_tab = page.locator('[data-partner-sort="deadline"]')
     quota_tab = page.locator('[data-partner-sort="quota"]')
@@ -193,6 +293,21 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     page.reload(wait_until='domcontentloaded')
     page.locator('#boot-splash').wait_for(state='hidden')
     expect(page.locator('#detail-favorite-button')).to_contain_text('已收藏')
+
+    # Verify relocated「最近看過」popover in #partners header stays inline, inside viewport, and closes on outside click
+    page.evaluate("window.location.hash = '#partners'")
+    recents = page.locator('#partners .cgu-explore-head-actions [data-discovery-recents]')
+    expect(recents).to_be_visible()
+    ws_before = page.locator('#partners .cgu-explore-head-actions .discovery-open-workspace').bounding_box()
+    recents.locator('summary').click()
+    ws_after = page.locator('#partners .cgu-explore-head-actions .discovery-open-workspace').bounding_box()
+    recents_list_box = recents.locator('.discovery-recent-list').bounding_box()
+    assert ws_before and ws_after and recents_list_box
+    assert abs(ws_after['y'] - ws_before['y']) < 4
+    assert recents_list_box['x'] >= 12 and (recents_list_box['x'] + recents_list_box['width']) <= 1440 - 12
+    page.locator('#partners-title').click()
+    assert not recents.evaluate('el => el.open')
+
     page.locator('#cgu-demo-info').click()
     expect(page.locator('#cgu-demo-dialog')).to_contain_text('第一階段')
     expect(page.locator('#cgu-demo-dialog a')).to_have_count(6)
@@ -259,9 +374,26 @@ def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):
     expect(page.locator('#advisor-current-year')).to_have_value('大三')
     expect(page.locator('#advisor-language-test')).to_have_value('toeic')
     expect(page.locator('#advisor-language-score')).to_have_value('750')
+    # Structured Scholarships page (#scholarships): topbar active highlight + all 4 CGU structured cards + filters
     page.goto(demo_url + '/#scholarships', wait_until='domcontentloaded')
-    expect(page.locator('#cgu-scholarships-navigator-card')).to_contain_text('領航者補助作業要點')
-    expect(page.locator('#cgu-scholarships-navigator-card')).to_contain_text('NT$75,000')
+    page.locator('#boot-splash').wait_for(state='hidden')
+    expect(page.locator('#glass-navigation a[data-public-route="scholarships"]')).to_have_class(re.compile(r'\bactive\b'))
+    expect(page.locator('#glass-navigation a[data-public-route="my-application"]')).not_to_have_class(re.compile(r'\bactive\b'))
+    expect(page.locator('#scholarships #scholarship-list')).to_be_hidden()
+    deck = page.locator('#cgu-scholarships-deck')
+    expect(deck).to_be_visible()
+    expect(deck.locator('.cgu-scholarship-card')).to_have_count(4)
+    for reg_text in ('2B00004', '2B00005', '2B00010', '2B00006', 'NT$75,000', 'NT$30,000', 'NT$40,000', '學海惜珠', '學海築夢'):
+        expect(deck).to_contain_text(reg_text)
+    screenshot(page, 'desktop-scholarships.png')
+
+    # Filter pills filter cleanly
+    deck.locator('[data-cgu-sch-filter="aid"]').click()
+    expect(deck.locator('.cgu-scholarship-card:visible')).to_have_count(1)
+    expect(deck.locator('#cgu-scholarship-xizhu')).to_be_visible()
+    deck.locator('[data-cgu-sch-filter="all"]').click()
+    expect(deck.locator('.cgu-scholarship-card:visible')).to_have_count(4)
+
     page.goto(demo_url + '/#my-application?view=today', wait_until='domcontentloaded')
     page.locator('#today-focus-title').wait_for(state='visible')
     expect(page.locator('.today-track li')).to_have_count(6)
@@ -292,18 +424,388 @@ def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):
 def test_responsive_native_journey(page, demo_url, size):
     page.set_viewport_size({'width':size[0], 'height':size[1]})
     ready(page, demo_url)
-    expect(page.locator('#cgu-hero-onepager')).to_be_visible()
-    expect(page.locator('#cgu-dept-finder')).to_be_visible()
-    expect(page.locator('#cgu-navigator-card')).to_be_visible()
+    expect(page.locator('#home-landing-title')).to_be_visible()
+    expect(page.locator('#cgu-home-reminders')).to_be_attached()
+    expect(page.locator('#cgu-dept-finder')).to_have_count(0)
+    expect(page.locator('#cgu-navigator-card')).to_have_count(0)
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    page.evaluate("window.location.hash = '#scholarships'")
+    expect(page.locator('#cgu-scholarships-deck')).to_be_visible()
+    expect(page.locator('#cgu-scholarships-deck .cgu-scholarship-card:visible')).to_have_count(4)
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    page.evaluate("window.location.hash = '#partners'")
+    expect(page.locator('#partners #discovery-criteria')).to_be_visible()
+    expect(page.locator('#cgu-partner-filter-strip')).to_be_visible()
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    # Every college & program button must wrap cleanly inside viewport (no right-edge clipping)
+    ai_college_box = page.locator('#cgu-college-quick-bar [data-cgu-college="智慧運算學院"]').bounding_box()
+    dual_prog_box = page.locator('#cgu-program-tabs [data-cgu-program="dual_degree"]').bounding_box()
+    assert ai_college_box and dual_prog_box
+    assert 0 <= ai_college_box['x'] and (ai_college_box['x'] + ai_college_box['width']) <= size[0]
+    assert 0 <= dual_prog_box['x'] and (dual_prog_box['x'] + dual_prog_box['width']) <= size[0]
+    page.locator('#partners #discovery-criteria summary').click()
+    expect(page.locator('#discovery-criteria-form')).to_be_visible()
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    # Ensure zero field value truncation inside #discovery-criteria-form (including 7th field「可考慮，含待確認」)
+    criteria_clipped = page.evaluate(
+        """() => [...document.querySelectorAll('#discovery-criteria-form > label')].some(l => {
+            const lbl = l.querySelector('.glide-select__label, input');
+            return lbl ? lbl.scrollWidth > lbl.clientWidth + 1 : false;
+        })"""
+    )
+    assert not criteria_clipped
+    page.locator('#partners #discovery-criteria summary').click()
+    page.locator('[data-partner-view="list"]').click()
+    expect(page.locator('#partner-table .pr-school-card').first).to_be_visible()
+    if size[0] == 390:
+        strip_metrics = page.evaluate(
+            """() => {
+                const strip = document.querySelector('#cgu-demo-strip');
+                const r = strip.getBoundingClientRect();
+                const btns = [...strip.querySelectorAll('button')].map(b => {
+                    const br = b.getBoundingClientRect();
+                    return { x: br.x, y: br.y, w: br.width, h: br.height, right: br.right };
+                });
+                return {
+                    stripHeight: r.height,
+                    stripTop: r.top,
+                    bodyPadBottom: parseFloat(getComputedStyle(document.body).paddingBottom),
+                    btns,
+                };
+            }"""
+        )
+        assert strip_metrics['stripHeight'] <= 136, f"mobile strip too tall: {strip_metrics['stripHeight']}"
+        assert strip_metrics['bodyPadBottom'] >= strip_metrics['stripHeight'] + 16
+        assert len(strip_metrics['btns']) == 4
+        for b in strip_metrics['btns']:
+            assert 0 <= b['x'] and b['right'] <= size[0]
+        # 2x2 button grid: 2 distinct row y positions
+        row_ys = sorted({round(b['y'] / 6) for b in strip_metrics['btns']})
+        assert len(row_ys) == 2
+        screenshot(page, 'mobile-partners.png')
+        # Verify mobile compare tray with 3 schools + floating #page-status both clear #cgu-demo-strip and remain clickable
+        mobile_tray_check = page.evaluate(
+            """async () => {
+                const picks = [...document.querySelectorAll('#partner-table input[data-compare-pick]')].slice(0, 3);
+                for (const cb of picks) {
+                    cb.checked = true;
+                    cb.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+                document.querySelector('#page-status').innerHTML = '<div class="status-message">已加入選校清單</div>';
+                window.scrollTo(0, 500);
+                const tray = document.querySelector('#partner-compare-tray');
+                const tr = tray.getBoundingClientRect();
+                const btn = tray.querySelector('[data-open-compare]').getBoundingClientRect();
+                const strip = document.querySelector('#cgu-demo-strip').getBoundingClientRect();
+                const st = document.querySelector('#page-status').getBoundingClientRect();
+                const hitEl = document.elementFromPoint(btn.left + btn.width / 2, btn.top + btn.height / 2);
+                const res = {
+                    hidden: tray.hidden,
+                    trayTop: tr.top,
+                    trayBottom: tr.bottom,
+                    trayH: tr.height,
+                    stripTop: strip.top,
+                    stBottom: st.bottom,
+                    hitTray: Boolean(hitEl && hitEl.closest('#partner-compare-tray')),
+                    inViewport: tr.left >= 4 && tr.right <= window.innerWidth - 4,
+                };
+                for (const cb of picks) {
+                    cb.checked = false;
+                    cb.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+                document.querySelector('#page-status').innerHTML = '';
+                return res;
+            }"""
+        )
+        assert not mobile_tray_check['hidden']
+        assert mobile_tray_check['hitTray'], f'mobile compare tray obscured by strip: {mobile_tray_check}'
+        assert mobile_tray_check['inViewport'] and mobile_tray_check['trayH'] <= 64
+        assert mobile_tray_check['trayBottom'] <= mobile_tray_check['stripTop'] - 8
+        assert mobile_tray_check['stBottom'] <= mobile_tray_check['trayTop'] + 2
+        # Scroll to the very bottom of #partners List View and ensure the last visible card clears #cgu-demo-strip
+        bottom_partner_clear = page.evaluate(
+            """() => {
+                window.scrollTo(0, document.documentElement.scrollHeight);
+                const cards = [...document.querySelectorAll('#partner-table .pr-school-card')];
+                const last = cards[cards.length - 1].getBoundingClientRect();
+                const strip = document.querySelector('#cgu-demo-strip').getBoundingClientRect();
+                return last.height > 40 && last.bottom <= strip.top;
+            }"""
+        )
+        assert bottom_partner_clear
+        page.evaluate('window.scrollTo(0, 0)')
     seed(page)
     expect(page.locator('.today-primary')).to_be_visible()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
     if size[0] == 390:
         screenshot(page, 'mobile-journey.png')
+        # Scroll to bottom of #my-application (with simulated submission hub) and verify bottom controls clear strip
+        bottom_my_app_clear = page.evaluate(
+            """() => {
+                window.scrollTo(0, document.documentElement.scrollHeight);
+                const hub = document.querySelector('#cgu-my-application-sim');
+                const strip = document.querySelector('#cgu-demo-strip');
+                return hub.getBoundingClientRect().bottom <= strip.getBoundingClientRect().top;
+            }"""
+        )
+        assert bottom_my_app_clear
+        page.evaluate('window.scrollTo(0, 0)')
     page.locator('.today-primary').click()
+    if size[0] == 390:
+        # Verify stage submit button clears #cgu-demo-strip when scrolled to block:'end', and page bottom clears strip
+        stage_submit_clear = page.evaluate(
+            """() => {
+                const submitBtn = document.querySelector('#level-form button[type=submit]');
+                const strip = document.querySelector('#cgu-demo-strip');
+                submitBtn.scrollIntoView({ behavior: 'instant', block: 'end' });
+                const sr = submitBtn.getBoundingClientRect();
+                const tr = strip.getBoundingClientRect();
+                const btnClear = sr.bottom <= tr.top + 1 && sr.top >= 0;
+                window.scrollTo(0, document.documentElement.scrollHeight);
+                const hub = document.querySelector('#cgu-my-application-sim');
+                const hubClear = hub.getBoundingClientRect().bottom <= strip.getBoundingClientRect().top + 1;
+                submitBtn.scrollIntoView({ behavior: 'instant', block: 'center' });
+                return { btnClear, hubClear, srBottom: sr.bottom, trTop: tr.top, srTop: sr.top };
+            }"""
+        )
+        assert stage_submit_clear['btnClear'] and stage_submit_clear['hubClear'], f'stage clearance failed: {stage_submit_clear}'
     page.locator('#level-form button[type=submit]').click()
     expect(page.locator('.success-state')).to_contain_text('已同步')
+
+
+def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page, demo_url):
+    """Verifies:
+    1) Desktop/laptop #glass-navigation fits cleanly at 960, 1060, 1100, 1150, 1280, 1366, 1440, 1920
+       on both #home and #partners (at rest AND when hovering/focusing nav items) without clipping #account-button.
+    2) #cgu-partner-filter-strip stays on a single clean row across 1042, 1060, 1100, 1150, 1280, 1366, 1440, 1920
+       inside #partners without squeezing, overlapping, or overflowing (including long department names).
+    3) Narrow mobile (360x740) keeps #cgu-demo-strip compact and bottom controls unobscured when scrolled to bottom.
+    """
+    ready(page, demo_url)
+
+    def assert_topbar_clean(vw: int, route_label: str):
+        metrics = page.evaluate(
+            """() => {
+                const nav = document.querySelector('#glass-navigation');
+                const acct = document.querySelector('#account-button');
+                const label = document.querySelector('#account-button-label');
+                const actions = document.querySelector('#glass-navigation .topbar-actions');
+                const retry = document.querySelector('#account-workspace-sync-retry');
+                const links = [...document.querySelectorAll('#glass-navigation .uniway-public-nav a[data-public-route]')]
+                    .filter(a => !a.hidden && getComputedStyle(a).display !== 'none');
+                const ar = acct.getBoundingClientRect();
+                const actR = actions.getBoundingClientRect();
+                const spanWidths = links.map(a => a.querySelector('span').getBoundingClientRect().width);
+                return {
+                    docScrollW: document.documentElement.scrollWidth,
+                    innerW: window.innerWidth,
+                    navScrollW: nav.scrollWidth,
+                    navClientW: nav.clientWidth,
+                    linkCount: links.length,
+                    linksRight: Math.max(...links.map(a => a.getBoundingClientRect().right)),
+                    linksLeft: Math.min(...links.map(a => a.getBoundingClientRect().left)),
+                    actionsLeft: actR.left,
+                    acctLeft: ar.left,
+                    acctRight: ar.right,
+                    acctWidth: ar.width,
+                    labelText: label ? label.textContent.trim() : '',
+                    labelClipped: label ? (label.scrollWidth > label.clientWidth + 1) : true,
+                    minSpanWidth: Math.min(...spanWidths),
+                    allTitled: links.every(a => Boolean(a.getAttribute('title'))),
+                    retryWidth: retry && !retry.hidden ? retry.getBoundingClientRect().width : 0,
+                };
+            }"""
+        )
+        ctx = f'{route_label}@{vw}px'
+        assert metrics['docScrollW'] <= metrics['innerW'] + 1, f'doc overflow at {ctx}: {metrics}'
+        assert metrics['navScrollW'] <= metrics['navClientW'] + 1, f'topbar overflow at {ctx}: {metrics}'
+        assert metrics['linkCount'] == 8, f'expected 8 visible CGU nav links at {ctx}: {metrics}'
+        assert metrics['linksLeft'] >= 0 and metrics['linksRight'] <= metrics['actionsLeft'] + 1, f'nav/actions overlap at {ctx}: {metrics}'
+        assert metrics['acctLeft'] >= 0 and metrics['acctRight'] <= vw - 6, f'#account-button clipped at {ctx}: {metrics}'
+        assert metrics['labelText'] == '林小程（展示資料）', f'unexpected label at {ctx}: {metrics}'
+        assert not metrics['labelClipped'], f'#account-button-label truncated at {ctx}: {metrics}'
+        assert metrics['allTitled'], f'missing title tooltip on topbar links at {ctx}: {metrics}'
+        if vw >= 960:
+            assert metrics['minSpanWidth'] >= 20, f'expected visible nav text labels at {ctx}: {metrics}'
+
+    for vw in (930, 960, 1024, 1040, 1060, 1100, 1150, 1200, 1280, 1366, 1440, 1920):
+        page.set_viewport_size({'width': vw, 'height': 900})
+        page.evaluate("window.location.hash = '#home'")
+        expect(page.locator('#home-landing-title')).to_be_visible()
+        assert_topbar_clean(vw, '#home-rest')
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="partners"]').hover()
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="school-connector"]').focus()
+        assert_topbar_clean(vw, '#home-hover-focus')
+
+        page.evaluate("window.location.hash = '#partners'")
+        expect(page.locator('#cgu-partner-filter-strip')).to_be_visible()
+        assert_topbar_clean(vw, '#partners-rest')
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="ask-oia"]').hover()
+        assert_topbar_clean(vw, '#partners-hover')
+
+    # Adversarial check: simulated sync failure (#account-workspace-sync-retry un-hidden + unread badge) at band lower edges
+    page.evaluate(
+        """() => {
+            const ctrl = document.querySelector('#account-workspace-sync-control');
+            const retry = document.querySelector('#account-workspace-sync-retry');
+            const badge = document.querySelector('#notification-badge');
+            if (ctrl) ctrl.hidden = false;
+            if (retry) retry.hidden = false;
+            if (badge) { badge.hidden = false; badge.textContent = '9'; }
+        }"""
+    )
+    for vw in (930, 960, 1040, 1041, 1200, 1400):
+        page.set_viewport_size({'width': vw, 'height': 900})
+        page.mouse.move(10, 500)
+        page.evaluate("document.activeElement?.blur?.()")
+        assert_topbar_clean(vw, '#partners-retry-rest')
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="school-connector"]').hover()
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="ask-oia"]').focus()
+        assert_topbar_clean(vw, '#partners-retry-hover')
+        assert page.locator('#account-workspace-sync-retry').bounding_box()['width'] <= 40
+    page.evaluate(
+        """() => {
+            const retry = document.querySelector('#account-workspace-sync-retry');
+            const badge = document.querySelector('#notification-badge');
+            if (retry) retry.hidden = true;
+            if (badge) badge.hidden = true;
+        }"""
+    )
+
+    page.locator('[data-partner-view="list"]').click()
+    expect(page.locator('#partner-table .pr-school-card').first).to_be_visible()
+
+    # Verify single-row #cgu-partner-filter-strip right above 1040px wrap threshold through 1920px
+    for vw in (1042, 1060, 1100, 1150, 1280, 1366, 1440, 1920):
+        page.set_viewport_size({'width': vw, 'height': 900})
+        # Reset college/dept & also test with longest CGU department name selected
+        for college_val, dept_val in (('', ''), ('工學院', '奈米工程及設計碩士學位學程')):
+            page.locator(f'#cgu-college-quick-bar [data-cgu-college="{college_val}"]').click()
+            page.locator('#cgu-partner-dept-select').evaluate(
+                f"el => {{ el.value = {dept_val!r}; el.dispatchEvent(new Event('change', {{ bubbles: true }})); }}"
+            )
+            strip_check = page.evaluate(
+                """() => {
+                    const partners = document.querySelector('#partners').getBoundingClientRect();
+                    const strip = document.querySelector('#cgu-partner-filter-strip').getBoundingClientRect();
+                    const progTabs = [...document.querySelectorAll('#cgu-program-tabs .cgu-program-tab')];
+                    const colBtns = [...document.querySelectorAll('#cgu-college-quick-bar .cgu-college-btn')];
+                    const deptWrap = document.querySelector('#cgu-college-quick-bar .cgu-dept-inline-select');
+                    const dr = deptWrap.getBoundingClientRect();
+                    const progRects = progTabs.map(el => {
+                        const r = el.getBoundingClientRect();
+                        return { left: r.left, right: r.right, midY: r.top + r.height / 2, w: r.width, h: r.height, clipped: el.scrollWidth > el.clientWidth + 1 };
+                    });
+                    const colRects = colBtns.map(el => {
+                        const r = el.getBoundingClientRect();
+                        return { left: r.left, right: r.right, midY: r.top + r.height / 2, w: r.width, h: r.height, clipped: el.scrollWidth > el.clientWidth + 1 };
+                    });
+                    const allMids = [...progRects.map(r => r.midY), ...colRects.map(r => r.midY), dr.top + dr.height / 2];
+                    return {
+                        partnersLeft: partners.left,
+                        partnersRight: partners.right,
+                        stripLeft: strip.left,
+                        stripRight: strip.right,
+                        progCount: progRects.length,
+                        colCount: colRects.length,
+                        progRight: Math.max(...progRects.map(r => r.right)),
+                        colLeft: Math.min(...colRects.map(r => r.left)),
+                        colRight: Math.max(...colRects.map(r => r.right)),
+                        deptLeft: dr.left,
+                        deptRight: dr.right,
+                        deptWidth: dr.width,
+                        ySpread: Math.max(...allMids) - Math.min(...allMids),
+                        anyClipped: [...progRects, ...colRects].some(r => r.clipped),
+                        minBtnWidth: Math.min(...[...progRects, ...colRects].map(r => r.w)),
+                    };
+                }"""
+            )
+            ctx = f'filter-strip@{vw}px({college_val or "all"}/{dept_val or "all"})'
+            assert strip_check['progCount'] == 3 and strip_check['colCount'] == 5, ctx
+            assert strip_check['ySpread'] < 8, f'wrapped to multiple rows at {ctx}: {strip_check}'
+            assert not strip_check['anyClipped'], f'pill text clipped at {ctx}: {strip_check}'
+            assert strip_check['minBtnWidth'] >= 52, f'pill squeezed at {ctx}: {strip_check}'
+            assert strip_check['progRight'] <= strip_check['colLeft'] + 2, f'program/college overlap at {ctx}: {strip_check}'
+            assert strip_check['colRight'] <= strip_check['deptLeft'] + 2, f'college/dept overlap at {ctx}: {strip_check}'
+            assert strip_check['deptWidth'] >= 130, f'dept selector squeezed at {ctx}: {strip_check}'
+            assert strip_check['stripLeft'] >= strip_check['partnersLeft'] - 1, ctx
+            assert strip_check['deptRight'] <= strip_check['partnersRight'] + 1, f'dept overflowed #partners at {ctx}: {strip_check}'
+            assert strip_check['deptRight'] <= vw - 12, f'dept too close to viewport edge at {ctx}: {strip_check}'
+            if vw in (1060, 1280) and college_val == '':
+                screenshot(page, f'laptop-{vw}-partners.png')
+
+    # Narrow mobile 360x740 edge case: #partners compare tray + criteria non-truncation + school detail .pr-booking bar clears strip
+    page.set_viewport_size({'width': 360, 'height': 740})
+    page.locator('#cgu-college-quick-bar [data-cgu-college=""]').click()
+    narrow_partners = page.evaluate(
+        """async () => {
+            document.querySelector('#discovery-criteria').open = true;
+            const criteriaClipped = [...document.querySelectorAll('#discovery-criteria-form > label')].some(l => {
+                const lbl = l.querySelector('.glide-select__label, input');
+                return lbl ? lbl.scrollWidth > lbl.clientWidth + 1 : false;
+            });
+            document.querySelector('#discovery-criteria').open = false;
+            const picks = [...document.querySelectorAll('#partner-table input[data-compare-pick]')].slice(0, 3);
+            for (const cb of picks) {
+                cb.checked = true;
+                cb.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+            window.scrollTo(0, 500);
+            const tray = document.querySelector('#partner-compare-tray');
+            const tr = tray.getBoundingClientRect();
+            const btn = tray.querySelector('[data-open-compare]').getBoundingClientRect();
+            const strip = document.querySelector('#cgu-demo-strip').getBoundingClientRect();
+            const hitEl = document.elementFromPoint(btn.left + btn.width / 2, btn.top + btn.height / 2);
+            const res = {
+                criteriaClipped,
+                trayH: tr.height,
+                trayBottom: tr.bottom,
+                stripTop: strip.top,
+                hitTray: Boolean(hitEl && hitEl.closest('#partner-compare-tray')),
+            };
+            for (const cb of picks) {
+                cb.checked = false;
+                cb.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+            return res;
+        }"""
+    )
+    assert not narrow_partners['criteriaClipped'], f'criteria truncated at 360px: {narrow_partners}'
+    assert narrow_partners['hitTray'] and narrow_partners['trayH'] <= 64 and narrow_partners['trayBottom'] <= narrow_partners['stripTop'] - 8
+    page.goto(demo_url + '/#school=' + '林肯大學%20Lincoln%20University', wait_until='domcontentloaded')
+    page.locator('#detail-favorite-button').wait_for(state='visible')
+    narrow_check = page.evaluate(
+        """() => {
+            window.scrollTo(0, document.documentElement.scrollHeight);
+            const strip = document.querySelector('#cgu-demo-strip').getBoundingClientRect();
+            const booking = document.querySelector('.pr-booking').getBoundingClientRect();
+            const detail = document.querySelector('.school-detail-view.pr-detail').getBoundingClientRect();
+            const sources = document.querySelector('#sources');
+            const bottomContent = (sources && !sources.hidden && getComputedStyle(sources).display !== 'none')
+                ? sources.getBoundingClientRect().bottom
+                : detail.bottom;
+            return {
+                docScrollW: document.documentElement.scrollWidth,
+                innerW: window.innerWidth,
+                stripH: strip.height,
+                stripTop: strip.top,
+                bookingTop: booking.top,
+                bookingBottom: booking.bottom,
+                bottomContent,
+                bodyPadBottom: parseFloat(getComputedStyle(document.body).paddingBottom),
+            };
+        }"""
+    )
+    screenshot(page, 'mobile-360-school-bottom.png')
+    assert narrow_check['docScrollW'] <= narrow_check['innerW'] + 1
+    assert narrow_check['stripH'] <= 148
+    assert narrow_check['bodyPadBottom'] >= narrow_check['stripH'] + 16
+    assert narrow_check['bookingBottom'] <= narrow_check['stripTop'] + 1
+    assert narrow_check['bottomContent'] <= narrow_check['bookingTop'] + 2, f'school detail content obscured by .pr-booking: {narrow_check}'
 
 
 def test_source_service_failure_and_storage_namespace(page, demo_url):
@@ -332,7 +834,291 @@ def test_source_service_failure_and_storage_namespace(page, demo_url):
 
 def test_storage_denial_keeps_original_ui_usable(page, demo_url):
     page.add_init_script("Object.defineProperty(window,'localStorage',{configurable:true,get(){throw new DOMException('blocked','SecurityError')}})")
+    page.set_viewport_size({'width': 390, 'height': 844})
     ready(page, demo_url)
     expect(page.locator('#cgu-demo-strip')).to_contain_text('瀏覽器儲存受限')
+    denial_clearance = page.evaluate(
+        """() => {
+            const h = document.querySelector('#cgu-demo-strip').getBoundingClientRect().height;
+            const pad = parseFloat(getComputedStyle(document.body).paddingBottom);
+            return { h, pad };
+        }"""
+    )
+    assert denial_clearance['pad'] >= denial_clearance['h'] + 16
     seed(page)
     expect(page.locator('.today-primary')).to_be_visible()
+
+
+def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
+    """Covers the full required demo script route:
+    學生預檢缺件 → 補齊後送出取得編號 → 切到國際處視角要求補件 → 切回學生端看到通知 → 提問未命中轉承辦 → 承辦回覆
+    plus hidden Forum/Reviews, fixed CGU school switcher, 116-1 deadline source, and Spec page.
+    """
+    ready(page, demo_url)
+
+    # Item 7 fixes: Forum & Reviews hidden (including direct hashes); school switcher fixedly displays 長庚大學
+    expect(page.locator('.uniway-public-nav a[data-public-route="forum"]')).not_to_be_visible()
+    expect(page.locator('.uniway-public-nav a[data-public-route="feedback"]')).not_to_be_visible()
+    for blocked_hash in ('#university-feed', '#cgu-feed', '#board=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8'):
+        page.goto(f'{demo_url}/{blocked_hash}', wait_until='domcontentloaded')
+        expect(page.locator('#community-hub')).not_to_be_visible()
+        expect(page.locator('#school-switcher')).to_be_disabled()
+        expect(page.locator('#school-switcher-label')).to_have_text('長庚大學')
+    expect(page.locator('#school-switcher')).to_contain_text('長庚大學')
+    expect(page.locator('#school-switcher')).not_to_contain_text('切換就讀學校')
+    expect(page.locator('input[name="home_university"]')).to_have_attribute('readonly', '')
+
+    # Feature 2: 校方介接規格頁
+    page.locator('.uniway-public-nav a[data-public-route="school-connector"]').click()
+    spec_page = page.locator('#cgu-connector-spec-page')
+    expect(spec_page).to_be_visible()
+    expect(spec_page).to_contain_text('模擬・尚未與校方串接')
+    for method_name in ('submit_application', 'send_inquiry', 'submit_return_report', 'get_status'):
+        expect(spec_page.locator('#cgu-connector-spec-table')).to_contain_text(method_name)
+    for phase_title in ('不需校方配合', '小型試辦', '需校方資訊單位'):
+        expect(spec_page).to_contain_text(phase_title)
+    screenshot(page, 'desktop-connector-spec.png')
+
+    # Seed plan & verify 116-1 official deadline + announcement source in 我的申請
+    seed(page)
+    deadline_panel = page.locator('#today-view .today-panel[aria-label="期限"]')
+    expect(deadline_panel).to_contain_text('116-1 校內申請截止')
+    expect(deadline_panel).to_contain_text('2026/12/21 17:00')
+    expect(deadline_panel.locator('a[href*="85785"]')).to_be_visible()
+
+    # Step 1: 學生預檢缺件（不可送出）
+    sim_hub = page.locator('#cgu-my-application-sim')
+    expect(sim_hub).to_be_visible()
+    expect(sim_hub).to_contain_text('模擬・尚未與校方串接')
+    expect(sim_hub).to_contain_text('展示版不保存檔案內容，請勿上傳真實個資')
+    expect(sim_hub).to_contain_text('實際申請仍須依國際處公告填線上表單並繳交紙本。')
+    expect(page.locator('#cgu-sim-submit-btn')).to_be_disabled()
+
+    # Upload 1 real synthetic file via file input + 1 sample button -> still missing 3 docs
+    page.locator('input[data-cgu-sim-upload="online_form"]').set_input_files({
+        'name': 'demo_online_form.pdf',
+        'mimeType': 'application/pdf',
+        'buffer': b'SYNTHETIC-ONLINE-FORM-ONLY-HASHED-IN-RAM',
+    })
+    expect(sim_hub.locator('[data-doc-row="online_form"]')).to_contain_text('demo_online_form.pdf')
+    expect(sim_hub.locator('[data-doc-row="online_form"]')).to_contain_text('SHA-256')
+
+    sim_hub.locator('[data-cgu-sim-sample="parent_consent"]').click()
+    expect(sim_hub.locator('[data-doc-row="parent_consent"]')).to_contain_text('已備齊')
+    page.locator('#cgu-sim-precheck-btn').click()
+    precheck_box = page.locator('#cgu-sim-precheck-box')
+    expect(precheck_box).to_contain_text('缺件不可送出')
+    expect(precheck_box).to_contain_text('語文證明')
+    expect(precheck_box).to_contain_text('含排名的中文歷年成績單')
+    expect(precheck_box).to_contain_text('一頁讀書計畫')
+    expect(page.locator('#cgu-sim-submit-btn')).to_be_disabled()
+
+    # Step 2: 補齊後送出取得 SIM- 收件編號
+    page.locator('#cgu-sim-fill-all').click()
+    expect(precheck_box).to_contain_text('完整性預檢通過')
+    expect(page.locator('#cgu-sim-submit-btn')).to_be_enabled()
+    page.locator('#cgu-sim-submit-btn').click()
+    records = page.locator('#cgu-sim-app-records')
+    expect(records).to_contain_text('SIM-APP-')
+    expect(records).to_contain_text('已送出')
+    expect(records).to_contain_text('已收件')
+    expect(records).to_contain_text('要求補件／初審通過')
+
+    receipt_text = records.locator('.cgu-submitted-card').first.get_attribute('data-receipt-id')
+    assert receipt_text and receipt_text.startswith('SIM-APP-')
+
+    # Step 3: 切到國際處視角要求補件
+    oia_toggle = page.locator('#cgu-demo-oia-toggle')
+    expect(oia_toggle).to_have_text('切換為國際處視角')
+    oia_toggle.click()
+    oia_page = page.locator('#cgu-oia-console-page')
+    expect(oia_page).to_be_visible()
+    expect(oia_toggle).to_have_text('切換回學生視角')
+    expect(oia_page).to_contain_text('模擬・尚未與校方串接')
+    expect(oia_page).to_contain_text('預載 5 筆明確標示之虛構示範資料')
+    expect(oia_page.locator('#cgu-oia-stats-row')).to_contain_text('各校志願數')
+    expect(oia_page.locator('#cgu-oia-stats-row')).to_contain_text('缺件／要求補件數')
+    expect(oia_page.locator('#cgu-oia-stats-row')).to_contain_text('最常被問的問題')
+
+    # Verify OIA inbox filter tabs keep distinct active/inactive styling and dark-mode contrast
+    oia_tab_styles = oia_page.evaluate(
+        """el => {
+            const active = el.querySelector('.cgu-oia-tabs [data-oia-filter="all"]');
+            const inactive = el.querySelector('.cgu-oia-tabs [data-oia-filter="applications"]');
+            const light = {
+                activeBg: getComputedStyle(active).backgroundColor,
+                activeColor: getComputedStyle(active).color,
+                inactiveBg: getComputedStyle(inactive).backgroundColor,
+            };
+            document.documentElement.dataset.theme = 'dark';
+            const dark = {
+                activeBg: getComputedStyle(active).backgroundColor,
+                activeColor: getComputedStyle(active).color,
+                inactiveBg: getComputedStyle(inactive).backgroundColor,
+                inactiveColor: getComputedStyle(inactive).color,
+            };
+            delete document.documentElement.dataset.theme;
+            return { light, dark };
+        }"""
+    )
+    assert oia_tab_styles['light']['activeBg'] != oia_tab_styles['light']['inactiveBg']
+    assert oia_tab_styles['light']['activeColor'] == 'rgb(255, 255, 255)'
+    assert oia_tab_styles['dark']['activeBg'] != oia_tab_styles['dark']['inactiveBg']
+    assert oia_tab_styles['dark']['activeColor'] == 'rgb(255, 255, 255)'
+    assert oia_tab_styles['dark']['inactiveColor'] != 'rgb(0, 0, 0)'
+
+    app_oia_card = oia_page.locator(f'[data-oia-card="{receipt_text}"]')
+    expect(app_oia_card).to_be_visible()
+    app_oia_card.locator(f'[data-oia-reason-for="{receipt_text}"]').fill('中文歷年成績單未附班級排名百分比，請補交教務處核章版。')
+    app_oia_card.locator('[data-oia-act="request_supplement"]').click()
+    expect(app_oia_card).to_contain_text('要求補件')
+    screenshot(page, 'desktop-oia-console.png')
+
+    # Step 4: 切回學生端看到通知與狀態更新（重新整理後保留）
+    oia_toggle.click()
+    expect(sim_hub).to_be_visible()
+    expect(records.locator(f'[data-receipt-id="{receipt_text}"]')).to_contain_text('要求補件')
+    expect(records.locator(f'[data-receipt-id="{receipt_text}"]')).to_contain_text('中文歷年成績單未附班級排名百分比')
+    expect(page.locator('#notification-badge')).to_be_visible()
+    expect(page.locator('#notification-badge')).to_have_text('1')
+
+    page.locator('#notification-button').click()
+    expect(page.locator('#notification-dialog')).to_be_visible()
+    expect(page.locator('#notification-center-list')).to_contain_text(receipt_text)
+    expect(page.locator('#notification-center-list')).to_contain_text('模擬・尚未與校方串接')
+    page.locator('#notification-dialog .dialog-close').click()
+
+    # Reload page -> application supplement status & notification persist
+    page.reload(wait_until='domcontentloaded')
+    page.locator('#boot-splash').wait_for(state='hidden')
+    page.evaluate('appReady')
+    expect(page.locator(f'#cgu-sim-app-records [data-receipt-id="{receipt_text}"]')).to_contain_text('要求補件')
+    expect(page.locator('#notification-badge')).to_be_visible()
+
+    # Step 5: 學生端「問國際處」— 規則比對命中 + 提問未命中轉承辦 → 承辦回覆
+    page.locator('.uniway-public-nav a[data-public-route="ask-oia"]').click()
+    ask_page = page.locator('#cgu-ask-oia-page')
+    expect(ask_page).to_be_visible()
+    expect(ask_page).to_contain_text('規則式比對，非 AI')
+
+    # First test keyword hit, plus escalating via「仍要詢問承辦」
+    page.locator('#cgu-ask-input').fill('請問 116-1 校內申請什麼時候截止？需要紙本嗎？')
+    page.locator('#cgu-ask-submit-btn').click()
+    hit_box = page.locator('#cgu-ask-result-box')
+    expect(hit_box).to_contain_text('規則式比對，非 AI')
+    expect(hit_box).to_contain_text('2026/12/21')
+    expect(hit_box.locator('a[href*="cgu.edu.tw"]').first).to_be_visible()
+    page.locator('#cgu-ask-escalate-btn').click()
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('已轉送模擬承辦收件匣')
+
+    # Next test unmatched question -> escalates to simulated OIA inbox
+    page.locator('#cgu-ask-input').fill('請問基督城冬季無障礙接駁專車要向哪個窗口預約？')
+    page.locator('#cgu-ask-submit-btn').click()
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('未命中現有規則與 FAQ')
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('SIM-INQ-')
+    inq_card = page.locator('#cgu-ask-inquiries-list .cgu-inquiry-card').first
+    expect(inq_card).to_contain_text('無障礙接駁專車')
+    inq_id = inq_card.get_attribute('data-receipt-id')
+    assert inq_id and inq_id.startswith('SIM-INQ-')
+    expect(inq_card).to_contain_text('待承辦回覆')
+
+    # Step 6: 承辦回覆並加入 FAQ → 學生端看到回覆與通知
+    oia_toggle.click()
+    inq_oia_card = page.locator(f'#cgu-oia-console-page [data-oia-card="{inq_id}"]')
+    expect(inq_oia_card).to_be_visible()
+    inq_oia_card.locator(f'[data-oia-reply-for="{inq_id}"]').fill('獲得長庚校內提名後，林肯大學國際學生服務中心會寄發無障礙接機申請連結。')
+    inq_oia_card.locator('[data-oia-act="reply_inquiry"]').click()
+    expect(inq_oia_card).to_contain_text('已回覆')
+    inq_oia_card.locator('[data-oia-act="add_to_faq"]').click()
+    expect(inq_oia_card).to_contain_text('已入 FAQ')
+
+    oia_toggle.click()
+    expect(ask_page).to_be_visible()
+    expect(page.locator(f'#cgu-ask-inquiries-list [data-receipt-id="{inq_id}"]')).to_contain_text('已回覆')
+    expect(page.locator(f'#cgu-ask-inquiries-list [data-receipt-id="{inq_id}"]')).to_contain_text('無障礙接機申請連結')
+    expect(page.locator('#notification-badge')).to_have_text('3')
+
+    # Verify add_to_faq immediately makes natural Chinese follow-up questions hit the rule-based FAQ!
+    page.locator('#cgu-ask-input').fill('請問無障礙接駁專車要找誰？')
+    page.locator('#cgu-ask-submit-btn').click()
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('規則式比對，非 AI')
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('無障礙接機申請連結')
+
+
+def test_return_report_validation_print_approval_mobile_overflow_and_reset(page, demo_url):
+    ready(page, demo_url)
+
+    # Navigate to 返國心得
+    page.locator('.uniway-public-nav a[data-public-route="return-report"]').click()
+    rpt_page = page.locator('#cgu-return-report-page')
+    expect(rpt_page).to_be_visible()
+    expect(rpt_page).to_contain_text('模擬・尚未與校方串接')
+
+    # Under 300 chars blocked on submit
+    page.locator('[data-cgu-report-sec="preparation"]').fill('太短的草稿內容')
+    page.locator('#cgu-report-submit-btn').click()
+    expect(page.locator('#cgu-report-feedback')).to_contain_text('300 字')
+
+    # Fill 300+ char fictional draft, add video URL, keep consent checked, submit
+    page.locator('#cgu-report-fill-sample').click()
+    expect(page.locator('[data-cgu-report-count="preparation"]')).to_contain_text('已達標')
+    page.locator('#cgu-report-video').fill('https://example.com/lincoln-demo-video')
+    page.locator('#cgu-report-submit-btn').click()
+
+    rpt_records = page.locator('#cgu-report-records')
+    expect(rpt_records).to_contain_text('SIM-RPT-')
+    rpt_id = rpt_records.locator('.cgu-submitted-card').first.get_attribute('data-receipt-id')
+    assert rpt_id and rpt_id.startswith('SIM-RPT-')
+
+    # Verify printable page renders in real Chromium page with CSP & zero JS errors
+    print_page = page.context.new_page()
+    print_errors = []
+    print_page.on('pageerror', lambda error: print_errors.append(str(error)))
+    print_page.goto(f'{demo_url}/demo/connector/return-reports/{rpt_id}/print', wait_until='domcontentloaded')
+    expect(print_page.locator('h1')).to_contain_text('長庚大學出國研修返國學期報告表（展示列印版）')
+    expect(print_page.locator('.cgu-sim-badge')).to_have_text('模擬・尚未與校方串接')
+    expect(print_page.locator('#cgu-print-trigger')).to_be_visible()
+    assert print_errors == []
+    print_page.close()
+
+    # Approve in OIA Console -> verify appears on Lincoln University detail page under 學長姐心得（示範資料）
+    page.locator('#cgu-demo-oia-toggle').click()
+    rpt_oia_card = page.locator(f'#cgu-oia-console-page [data-oia-card="{rpt_id}"]')
+    expect(rpt_oia_card).to_be_visible()
+    rpt_oia_card.locator('[data-oia-act="approve_report"]').click()
+    expect(rpt_oia_card).to_contain_text('已核可公開')
+
+    page.goto(demo_url + '/#school=' + '林肯大學%20Lincoln%20University', wait_until='domcontentloaded')
+    public_block = page.locator('#cgu-approved-return-reports')
+    expect(public_block).to_be_visible()
+    expect(public_block).to_contain_text('學長姐心得（示範資料）')
+    expect(public_block).to_contain_text('模擬・尚未與校方串接')
+    expect(public_block).to_contain_text(rpt_id)
+    expect(public_block.locator('a[href="https://example.com/lincoln-demo-video"]')).to_be_visible()
+    page.locator('#detail-tab-experiences').click()
+    expect(page.locator('#cgu-approved-return-reports-experiences')).to_be_visible()
+
+    # Navigating to another school in-SPA cleanly removes Lincoln's approved report blocks (zero DOM bleed)
+    page.evaluate("location.hash = '#school=' + encodeURIComponent('韓國嘉泉大學 Gachon University')")
+    expect(page.locator('#school-detail-view')).to_contain_text('韓國嘉泉大學')
+    expect(page.locator('.cgu-public-reports-block')).to_have_count(0)
+
+    # Verify mobile (390x844) has no horizontal overflow across all new routes
+    page.set_viewport_size({'width': 390, 'height': 844})
+    for route_hash in ('#school-connector', '#ask-oia', '#return-report', '#oia-view'):
+        page.goto(f'{demo_url}/{route_hash}', wait_until='domcontentloaded')
+        assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), f'overflow on {route_hash}'
+
+    # Reset wipes all newly added data (return reports, public display, notifications)
+    page.set_viewport_size({'width': 1440, 'height': 1000})
+    page.locator('#cgu-demo-reset').click()
+    with page.expect_navigation(wait_until='domcontentloaded'):
+        page.locator('#cgu-demo-confirm').click()
+    page.locator('#boot-splash').wait_for(state='hidden')
+    page.evaluate('appReady')
+
+    status_after = page.request.get(demo_url + '/demo/connector/status').json()
+    assert status_after['applications'] == []
+    assert status_after['inquiries'] == []
+    assert status_after['return_reports'] == []
+    assert page.request.get(demo_url + '/account/notifications').json()['items'] == []
