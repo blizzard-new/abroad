@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-13 每日批次：匯率預算／AI 發音兩篇（驗收完成，待開 PR）
+## 2026-11-13 每日批次：匯率預算／AI 發音兩篇（PR #346 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261113`，base main `661a4546ffc48abf7bd908a9fe500bf22968634d`。讀取 workflow、backlog、49 篇庫存與相關全文；核對全部 16 個 open PR 範圍與完整分頁檔案清單，無 editorial 變更。#329 已合併，昨天兩篇在 main，排除重做；#78／#92 已合併，無基礎相依。提交前 main／16 個 head 未變，同日全狀態 PR 為空；沿用本日唯一隔離分支。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 11：交換預算遇到匯率變動怎麼算？換匯方向、情境表與資金缺口 | `exchange-currency-budget` | 完整文章與驗收完成；待建立本日唯一 PR，後續排除 |
-| 17：用 AI 練英文發音怎麼做？字典核對、重音練習與錄音 Prompt | `ai-english-pronunciation-practice` | 同批完整文章與驗收完成，待同一個 PR，後續排除 |
+| 11：交換預算遇到匯率變動怎麼算？換匯方向、情境表與資金缺口 | `exchange-currency-budget` | [PR #346](https://github.com/blizzard-new/abroad/pull/346) 待審，完整文章與驗收完成；後續排除 |
+| 17：用 AI 練英文發音怎麼做？字典核對、重音練習與錄音 Prompt | `ai-english-pronunciation-practice` | 同一個 PR #346 待審，完整文章與驗收完成；後續排除 |
 
 依編輯判斷，無 Search Console、搜尋量或排名資料。匯率篇獨立處理未換外幣、買賣方向與費用位置，與總預算／三方案取捨分工；所有情境用 Decimal 驗算，不作行情預測。發音篇有三輪可填 Prompt、字典詞性／重音、自寫句、預期文字回饋與修正、錄音及換句表，與聽寫／澄清／TOEFL 重述分工；不虛構聲音或工具實測。五個失效探索來源排除，改用可核對官方／出版者一手頁，限制與替代均記錄。
 

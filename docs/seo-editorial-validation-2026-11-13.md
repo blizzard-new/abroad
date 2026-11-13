@@ -1,6 +1,6 @@
 # 2026-11-13 每日兩篇驗收
 
-Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261113`，base main `661a4546ffc48abf7bd908a9fe500bf22968634d`。PR：待建立。本批不合併、不部署、不寄信或要求 Google 建立索引；產出不代表已上線／收錄。
+Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261113`，base main `661a4546ffc48abf7bd908a9fe500bf22968634d`。PR：[#346](https://github.com/blizzard-new/abroad/pull/346)（OPEN、非 draft、未合併）。本批不合併、不部署、不寄信或要求 Google 建立索引；產出不代表已上線／收錄。
 
 ## 內容與分工
 
@@ -50,4 +50,4 @@ Wheel 2,527,828,832 bytes，只留任務 cache；字型目錄 CSS 計數已去�
 - [瀏覽器結果與 15 張截圖雜湊](seo-editorial-browser-2026-11-13.json)、[套件逐檔清單](seo-editorial-package-2026-11-13.json)
 - [桌面](seo-previews-2026-11-13/desktop-1440.jpg)、[手機](seo-previews-2026-11-13/mobile-320.jpg)、[裁切](seo-previews-2026-11-13/photography-crops.jpg)
 
-PR／遠端 CI 與任務附件狀態於建立後回填；不宣稱已發布。
+PR #346 已由 GitHub 核對：開啟、非草稿、尚未合併、可合併，兩篇同屬本日唯一 PR。初查兩項 image CI 進行中，Supabase Preview skipped，不宣稱遠端 CI 已全通過。已呼叫任務附件工具，40 秒內未回傳；附件清單查詢 10 秒亦未回傳，無法確認附加成功。PR 建立與網址已獨立核對，不宣稱已發布。
