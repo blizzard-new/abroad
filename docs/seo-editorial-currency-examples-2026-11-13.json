@@ -1,0 +1,59 @@
+{
+  "checked": "2026-11-13",
+  "method": "Python Decimal exact arithmetic, independent expected-value assertions",
+  "all_hypothetical": true,
+  "not_current_quotes": true,
+  "no_probability_or_forecast": true,
+  "base_assumptions": {
+    "unpaid_need_jpy": "600000",
+    "usable_held_jpy": "200000",
+    "historical_conversion_twd": "42000",
+    "remaining_jpy": "400000",
+    "separate_current_available_twd": "90000",
+    "fees": "Explicitly excluded from three-rate teaching table, not asserted zero in real life."
+  },
+  "cases": [
+    {
+      "hypothetical_rate_twd_per_jpy": "0.21",
+      "remaining_jpy": "400000",
+      "remaining_twd": "84000.00",
+      "cumulative_conversion_twd": "126000.00",
+      "shortfall_before_fees_twd": "-6000.00"
+    },
+    {
+      "hypothetical_rate_twd_per_jpy": "0.23",
+      "remaining_jpy": "400000",
+      "remaining_twd": "92000.00",
+      "cumulative_conversion_twd": "134000.00",
+      "shortfall_before_fees_twd": "2000.00"
+    },
+    {
+      "hypothetical_rate_twd_per_jpy": "0.25",
+      "remaining_jpy": "400000",
+      "remaining_twd": "100000.00",
+      "cumulative_conversion_twd": "142000.00",
+      "shortfall_before_fees_twd": "10000.00"
+    }
+  ],
+  "sensitivity": {
+    "rate_increase": ".01",
+    "additional_twd": "4000",
+    "two_cent_increase_twd": "8000"
+  },
+  "algebraic_limits": {
+    "before_fees": ".225",
+    "after_separate_hypothetical_1000_twd_fee": ".2225",
+    "formula": "(90000-F)/400000",
+    "scope": "F paid separately in TWD, not deducted from JPY receipt; not a recommended trading threshold."
+  },
+  "independent_roundtrip": {
+    "jpy": "10000",
+    "hypothetical_purchase_rate": ".23",
+    "out_twd": "2300",
+    "hypothetical_return_rate": ".20",
+    "in_twd": "2000",
+    "difference_before_fees": "300",
+    "not_added_to_main_case": true
+  },
+  "all_expected_values_verified": true
+}
