@@ -42,9 +42,14 @@ def test_exact_shared_assets_and_main_dom():
     assert original.select_one('.pr-supported') is not None
     assert demo.select_one('.pr-supported') is None
     assert demo.select_one('[data-home-discover]') is not None
-    assert demo.select_one('#cgu-home-deadline-banner') is not None
-    assert '長庚 116-1 申請一頁看完' in demo.select_one('#home-landing-title').get_text()
-    onepager = demo.select_one('#cgu-hero-onepager')
+    # Hero matches app.uniway cleanly at first paint; CGU reminders live below .pr-hero inside #cgu-home-reminders
+    assert '你能去哪些交換學校' in demo.select_one('#home-landing-title').get_text()
+    assert demo.select_one('#home-landing .pr-hero #cgu-hero-onepager') is None
+    assert demo.select_one('#home-landing .pr-hero #cgu-home-deadline-banner') is None
+    reminders = demo.select_one('#cgu-home-reminders')
+    assert reminders is not None
+    assert reminders.select_one('#cgu-home-deadline-banner') is not None
+    onepager = reminders.select_one('#cgu-hero-onepager')
     assert onepager is not None
     onepager_text = onepager.get_text()
     for phrase in (
@@ -64,8 +69,10 @@ def test_exact_shared_assets_and_main_dom():
     assert demo.select_one('#cgu-dept-finder') is None
     assert onepager.select_one('[data-cgu-scroll="#cgu-dept-finder"]') is None
     assert onepager.select_one('a.cgu-hero-cta.is-primary[href="#partners"]') is not None
-    assert demo.select_one('#cgu-navigator-card') is not None
-    assert demo.select_one('#cgu-scholarships-navigator-card') is not None
+    assert demo.select_one('#cgu-navigator-card') is None
+    assert '領航者補助' not in demo.select_one('#home-landing').get_text()
+    assert demo.select_one('.uniway-public-nav a[data-public-route="scholarships"][href="#scholarships"]') is not None
+    assert demo.select_one('#scholarships #cgu-scholarships-deck') is not None
     filter_strip = demo.select_one('#partners #cgu-partner-filter-strip')
     assert filter_strip is not None
     assert filter_strip.select_one('#cgu-program-tabs') is not None
@@ -245,6 +252,9 @@ def test_demo_student_profile_and_navigator_subsidy_sources(demo_url):
     assert profile['academic_year'] == '116'
 
     dashboard = client.get(demo_url + '/student-dashboard').json()
+    doc_titles = [item['title'] for item in dashboard['document_explanations']]
+    for reg_code in ('2B00004', '2B00005', '2B00010', '2B00006'):
+        assert any(reg_code in title for title in doc_titles), f'missing regulation {reg_code}: {doc_titles}'
     navigator = next(
         (item for item in dashboard['document_explanations'] if '2B00004' in item['title']),
         None,

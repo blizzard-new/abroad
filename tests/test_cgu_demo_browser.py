@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 import tempfile
 from pathlib import Path
 
@@ -55,9 +56,35 @@ def screenshot(page, name):
 
 def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     ready(page, demo_url, '?home=國立臺灣大學')
-    expect(page.locator('#home-landing-title')).to_contain_text('長庚 116-1 申請一頁看完')
+    # First screen matches app.uniway cleanly (no CGU reminder hero text or scholarships on #home)
+    expect(page.locator('#home-landing-title')).to_contain_text('你能去哪些交換學校，')
+    expect(page.locator('#home-landing-title')).to_contain_text('一次看清楚。')
+    expect(page.locator('#home-landing-title')).not_to_contain_text('長庚 116-1')
     expect(page.locator('.pr-supported')).to_have_count(0)
     expect(page.locator('[data-home-discover]')).to_be_visible()
+    expect(page.locator('#cgu-navigator-card')).to_have_count(0)
+    expect(page.locator('#cgu-dept-finder')).to_have_count(0)
+    assert '領航者補助' not in page.locator('#home-landing').inner_text()
+
+    collage_opacity = page.locator('#home-landing .pr-collage').evaluate('el => parseFloat(getComputedStyle(el).opacity)')
+    assert collage_opacity >= 0.9, f'expected unobscured globe/mascot opacity on first screen, got {collage_opacity}'
+
+    # Reminders live below the fold until user scrolls or clicks discover cue
+    reminders = page.locator('#cgu-home-reminders')
+    expect(reminders).to_be_attached()
+    rem_box = reminders.bounding_box()
+    assert rem_box and rem_box['y'] >= 560, f'expected #cgu-home-reminders below fold, got y={rem_box}'
+
+    # Desktop 1440px top bar check on #home before taking desktop-home.png: #account-button fully inside viewport
+    acct_home_box = page.locator('#account-button').bounding_box()
+    assert acct_home_box and acct_home_box['x'] >= 0 and (acct_home_box['x'] + acct_home_box['width']) <= 1440 - 8
+    assert page.locator('#account-button-label').evaluate('el => el.scrollWidth <= el.clientWidth + 1')
+
+    screenshot(page, 'desktop-home.png')
+
+    # Clicking discover cue scrolls cleanly to the CGU 116-1 reminder section
+    page.locator('#home-landing [data-home-discover]').click()
+    page.wait_for_timeout(450)
     onepager = page.locator('#cgu-hero-onepager')
     expect(onepager).to_be_visible()
     for phrase in (
@@ -75,28 +102,13 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     ):
         expect(onepager).to_contain_text(phrase)
     expect(page.locator('#cgu-home-deadline-banner')).to_contain_text('12/21 17:00')
+    expect(onepager.locator('[data-cgu-scroll="#cgu-dept-finder"]')).to_have_count(0)
+    expect(onepager.locator('a.cgu-hero-cta.is-primary[href="#partners"]')).to_be_visible()
+    screenshot(page, 'desktop-home-scrolled.png')
+
     expect(page.locator('#home-tile-calendar .pr-mini-dates li').first).to_contain_text('12 月')
     expect(page.locator('#home-tile-calendar .pr-mini-dates li').first).to_contain_text('21')
     expect(page.locator('#home-tile-calendar')).to_contain_text('適用已獲提名者')
-
-    # Clean homepage: #cgu-dept-finder is completely removed from homepage
-    expect(page.locator('#cgu-dept-finder')).to_have_count(0)
-    expect(onepager.locator('[data-cgu-scroll="#cgu-dept-finder"]')).to_have_count(0)
-    expect(onepager.locator('a.cgu-hero-cta.is-primary[href="#partners"]')).to_be_visible()
-
-    # Desktop 1440px top bar check on #home before taking desktop-home.png: #account-button fully inside viewport
-    acct_home_box = page.locator('#account-button').bounding_box()
-    assert acct_home_box and acct_home_box['x'] >= 0 and (acct_home_box['x'] + acct_home_box['width']) <= 1440 - 8
-    assert page.locator('#account-button-label').evaluate('el => el.scrollWidth <= el.clientWidth + 1')
-
-    # Item 7:「領航者補助」說明卡 on homepage
-    nav_card = page.locator('#cgu-navigator-card')
-    expect(nav_card).to_be_visible()
-    for nav_text in ('NT$75,000', 'NT$150,000', 'NT$60,000', 'NT$120,000', '+NT$10,000', '班排名前 30%'):
-        expect(nav_card).to_contain_text(nav_text)
-    expect(nav_card.locator('a[href*="b85add3b-7d9e-43ff-b22f-f0657e11765c"]')).to_be_visible()
-
-    screenshot(page, 'desktop-home.png')
     page.locator('#home-search-input').fill('Lincoln')
     page.locator('#home-search-form button[type=submit]').click()
     expect(page.locator('#partner-table')).to_contain_text('林肯')
@@ -362,9 +374,26 @@ def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):
     expect(page.locator('#advisor-current-year')).to_have_value('大三')
     expect(page.locator('#advisor-language-test')).to_have_value('toeic')
     expect(page.locator('#advisor-language-score')).to_have_value('750')
+    # Structured Scholarships page (#scholarships): topbar active highlight + all 4 CGU structured cards + filters
     page.goto(demo_url + '/#scholarships', wait_until='domcontentloaded')
-    expect(page.locator('#cgu-scholarships-navigator-card')).to_contain_text('領航者補助作業要點')
-    expect(page.locator('#cgu-scholarships-navigator-card')).to_contain_text('NT$75,000')
+    page.locator('#boot-splash').wait_for(state='hidden')
+    expect(page.locator('#glass-navigation a[data-public-route="scholarships"]')).to_have_class(re.compile(r'\bactive\b'))
+    expect(page.locator('#glass-navigation a[data-public-route="my-application"]')).not_to_have_class(re.compile(r'\bactive\b'))
+    expect(page.locator('#scholarships #scholarship-list')).to_be_hidden()
+    deck = page.locator('#cgu-scholarships-deck')
+    expect(deck).to_be_visible()
+    expect(deck.locator('.cgu-scholarship-card')).to_have_count(4)
+    for reg_text in ('2B00004', '2B00005', '2B00010', '2B00006', 'NT$75,000', 'NT$30,000', 'NT$40,000', '學海惜珠', '學海築夢'):
+        expect(deck).to_contain_text(reg_text)
+    screenshot(page, 'desktop-scholarships.png')
+
+    # Filter pills filter cleanly
+    deck.locator('[data-cgu-sch-filter="aid"]').click()
+    expect(deck.locator('.cgu-scholarship-card:visible')).to_have_count(1)
+    expect(deck.locator('#cgu-scholarship-xizhu')).to_be_visible()
+    deck.locator('[data-cgu-sch-filter="all"]').click()
+    expect(deck.locator('.cgu-scholarship-card:visible')).to_have_count(4)
+
     page.goto(demo_url + '/#my-application?view=today', wait_until='domcontentloaded')
     page.locator('#today-focus-title').wait_for(state='visible')
     expect(page.locator('.today-track li')).to_have_count(6)
@@ -395,9 +424,14 @@ def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):
 def test_responsive_native_journey(page, demo_url, size):
     page.set_viewport_size({'width':size[0], 'height':size[1]})
     ready(page, demo_url)
-    expect(page.locator('#cgu-hero-onepager')).to_be_visible()
+    expect(page.locator('#home-landing-title')).to_be_visible()
+    expect(page.locator('#cgu-home-reminders')).to_be_attached()
     expect(page.locator('#cgu-dept-finder')).to_have_count(0)
-    expect(page.locator('#cgu-navigator-card')).to_be_visible()
+    expect(page.locator('#cgu-navigator-card')).to_have_count(0)
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+    page.evaluate("window.location.hash = '#scholarships'")
+    expect(page.locator('#cgu-scholarships-deck')).to_be_visible()
+    expect(page.locator('#cgu-scholarships-deck .cgu-scholarship-card:visible')).to_have_count(4)
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
     page.evaluate("window.location.hash = '#partners'")
     expect(page.locator('#partners #discovery-criteria')).to_be_visible()
@@ -587,7 +621,7 @@ def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page
         ctx = f'{route_label}@{vw}px'
         assert metrics['docScrollW'] <= metrics['innerW'] + 1, f'doc overflow at {ctx}: {metrics}'
         assert metrics['navScrollW'] <= metrics['navClientW'] + 1, f'topbar overflow at {ctx}: {metrics}'
-        assert metrics['linkCount'] == 7, f'expected 7 visible CGU nav links at {ctx}: {metrics}'
+        assert metrics['linkCount'] == 8, f'expected 8 visible CGU nav links at {ctx}: {metrics}'
         assert metrics['linksLeft'] >= 0 and metrics['linksRight'] <= metrics['actionsLeft'] + 1, f'nav/actions overlap at {ctx}: {metrics}'
         assert metrics['acctLeft'] >= 0 and metrics['acctRight'] <= vw - 6, f'#account-button clipped at {ctx}: {metrics}'
         assert metrics['labelText'] == '林小程（展示資料）', f'unexpected label at {ctx}: {metrics}'

@@ -920,51 +920,60 @@ class MockCguConnector(SchoolConnector):
                 path.unlink()
 
 
-HERO_ONEPAGER_HTML = """
-<div id="cgu-hero-onepager" class="cgu-hero-onepager" aria-label="長庚 116-1 校內申請重點總覽">
-  <div class="cgu-onepager-grid">
-    <article class="cgu-onepager-card is-highlight">
-      <span class="cgu-onepager-kicker">校內申請期間</span>
-      <strong>11/02–12/21 17:00</strong>
-      <p>2026/11/02 開放線上表單，12/21 17:00 截止；紙本資料須於截止日前繳交國際事務處（預計 2027 秋季出國）。</p>
-    </article>
-    <article class="cgu-onepager-card">
-      <span class="cgu-onepager-kicker">校內基本門檻</span>
-      <strong>學業平均 70 分、多益 700</strong>
-      <p>英文可採多益 700、IELTS 5.5、TOEFL iBT 72 或 Duolingo 105 等同級檢定；合作校門檻更高或未列多益者依該校規定。</p>
-    </article>
-    <article class="cgu-onepager-card">
-      <span class="cgu-onepager-kicker">志願數與甄選流程</span>
-      <strong>最多 2 個志願</strong>
-      <div class="cgu-flow-steps" aria-label="申請流程">
-        <span>校內甄選</span><i aria-hidden="true">→</i><span>學校提名</span><i aria-hidden="true">→</i><span>合作校申請</span>
+HOME_REMINDERS_HTML = """
+<section id="cgu-home-reminders" class="pr-section cgu-home-reminders" aria-labelledby="cgu-home-reminders-title">
+  <div class="cgu-home-reminders-head">
+    <span class="cgu-home-reminders-kicker">長庚大學 116-1（2027 秋季出國）重要提醒</span>
+    <h2 id="cgu-home-reminders-title">長庚 116-1 申請一頁看完</h2>
+    <p>交換與雙學位校內甄選期限、基本門檻與應備 5 份文件一次核對。</p>
+  </div>
+  <div id="cgu-home-deadline-banner" class="cgu-home-deadline-banner" hidden=""></div>
+  <div id="cgu-hero-onepager" class="cgu-hero-onepager" aria-label="長庚 116-1 校內申請重點總覽">
+    <div class="cgu-onepager-grid">
+      <article class="cgu-onepager-card is-highlight">
+        <span class="cgu-onepager-kicker">校內申請期間</span>
+        <strong>11/02–12/21 17:00</strong>
+        <p>2026/11/02 開放線上表單，12/21 17:00 截止；紙本資料須於截止日前繳交國際事務處（預計 2027 秋季出國）。</p>
+      </article>
+      <article class="cgu-onepager-card">
+        <span class="cgu-onepager-kicker">校內基本門檻</span>
+        <strong>學業平均 70 分、多益 700</strong>
+        <p>英文可採多益 700、IELTS 5.5、TOEFL iBT 72 或 Duolingo 105 等同級檢定；合作校門檻更高或未列多益者依該校規定。</p>
+      </article>
+      <article class="cgu-onepager-card">
+        <span class="cgu-onepager-kicker">志願數與甄選流程</span>
+        <strong>最多 2 個志願</strong>
+        <div class="cgu-flow-steps" aria-label="申請流程">
+          <span>校內甄選</span><i aria-hidden="true">→</i><span>學校提名</span><i aria-hidden="true">→</i><span>合作校申請</span>
+        </div>
+      </article>
+      <article class="cgu-onepager-card is-wide">
+        <span class="cgu-onepager-kicker">校內應備 5 份文件</span>
+        <ol class="cgu-doc-pills">
+          <li><b>1</b>線上申請表</li>
+          <li><b>2</b>家長同意書</li>
+          <li><b>3</b>語文證明</li>
+          <li><b>4</b>含班級排名的中文成績單</li>
+          <li><b>5</b>1 頁讀書計畫</li>
+        </ol>
+      </article>
+    </div>
+    <div class="cgu-onepager-foot">
+      <div class="cgu-onepager-sources">
+        <span>官方來源：</span>
+        <a href="https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817" target="_blank" rel="noopener noreferrer">116-1 交換及雙聯申請公告 ↗</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656" target="_blank" rel="noopener noreferrer">校內申請選送須知 ↗</a>
+        <small>查核日期：2026-11-11</small>
       </div>
-    </article>
-    <article class="cgu-onepager-card is-wide">
-      <span class="cgu-onepager-kicker">校內應備 5 份文件</span>
-      <ol class="cgu-doc-pills">
-        <li><b>1</b>線上申請表</li>
-        <li><b>2</b>家長同意書</li>
-        <li><b>3</b>語文證明</li>
-        <li><b>4</b>含班級排名的中文成績單</li>
-        <li><b>5</b>1 頁讀書計畫</li>
-      </ol>
-    </article>
-  </div>
-  <div class="cgu-onepager-foot">
-    <div class="cgu-onepager-sources">
-      <span>官方來源：</span>
-      <a href="https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817" target="_blank" rel="noopener noreferrer">116-1 交換及雙聯申請公告 ↗</a>
-      <span aria-hidden="true">·</span>
-      <a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656" target="_blank" rel="noopener noreferrer">校內申請選送須知 ↗</a>
-      <small>查核日期：2026-11-11</small>
-    </div>
-    <div class="cgu-onepager-actions">
-      <a class="cgu-hero-cta is-primary" href="#partners">搜尋 78 所合作校</a>
-      <button type="button" class="cgu-hero-cta" data-cgu-scroll="#cgu-navigator-card">領航者補助說明</button>
+      <div class="cgu-onepager-actions">
+        <a class="cgu-hero-cta is-primary" href="#partners">搜尋 78 所合作校</a>
+        <a class="cgu-hero-cta" href="#my-application">檢視我的申請與送件</a>
+        <a class="cgu-hero-cta" href="#scholarships">查看長庚獎學金補助</a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 """
 
 PRINT_SCRIPT_JS = """(() => {
@@ -995,7 +1004,7 @@ def _render_report_print_html(report: dict[str, Any]) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
   <title>返國學期報告列印版｜{e(report.get('receipt_id', ''))}</title>
-  <link rel="stylesheet" href="/static/cgu-demo.css?v=20261112-cgu-clean-6" />
+  <link rel="stylesheet" href="/static/cgu-demo.css?v=20261113-cgu-home-scholarships-1" />
 </head>
 <body class="cgu-print-body">
   <main class="cgu-print-sheet">
@@ -1044,7 +1053,7 @@ def platform_html() -> str:
     soup = BeautifulSoup((STATIC / "index.html").read_text(encoding="utf-8"), "html.parser")
     soup.title.string = "UniWay CGU｜長庚大學交換申請平台"
     soup.head.append(soup.new_tag("meta", attrs={"name": "robots", "content": "noindex,nofollow,noarchive"}))
-    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261112-cgu-clean-6"))
+    soup.head.append(soup.new_tag("link", rel="stylesheet", href="/static/cgu-demo.css?v=20261113-cgu-home-scholarships-1"))
     script = soup.new_tag("script", src="/demo/bootstrap.js")
     soup.head.insert(0, script)
     # Initial static choices must also be CGU-only, before the registry request resolves.
@@ -1078,10 +1087,11 @@ def platform_html() -> str:
         for node in soup.select(selector):
             node['hidden'] = ''
 
-    # Add CGU demo navigation links: 問國際處、返國心得、校方介接
+    # Add CGU demo navigation links: 獎學金、問國際處、返國心得、校方介接
     public_nav = soup.select_one('.uniway-public-nav')
     if public_nav is not None:
         nav_snippet = BeautifulSoup(
+            '<a href="#scholarships" data-public-route="scholarships"><i data-lucide="badge-dollar-sign" aria-hidden="true"></i><span>獎學金</span></a>'
             '<a href="#ask-oia" data-public-route="ask-oia"><i data-lucide="help-circle" aria-hidden="true"></i><span>問國際處</span></a>'
             '<a href="#return-report" data-public-route="return-report"><i data-lucide="book-open-check" aria-hidden="true"></i><span>返國心得</span></a>'
             '<a href="#school-connector" data-public-route="school-connector"><i data-lucide="plug-zap" aria-hidden="true"></i><span>校方介接</span></a>',
@@ -1103,26 +1113,9 @@ def platform_html() -> str:
         )
         sidebar_nav.append(side_snippet)
 
-    hero_title = soup.select_one('#home-landing-title')
-    if hero_title is not None:
-        hero_title.clear()
-        hero_title.append('長庚 116-1 申請一頁看完')
-        hero_title.append(soup.new_tag('br'))
-        sub = soup.new_tag('span')
-        sub.string = '2027 秋季出國 · 交換與雙學位校內甄選重點'
-        hero_title.append(sub)
-        banner = soup.new_tag('div', id='cgu-home-deadline-banner', attrs={'class': 'cgu-home-deadline-banner', 'hidden': ''})
-        hero_title.insert_after(banner)
-        onepager = BeautifulSoup(HERO_ONEPAGER_HTML, 'html.parser')
-        banner.insert_after(onepager)
     hero_section = soup.select_one('#home-landing .pr-hero')
     if hero_section is not None:
-        navigator_sec = soup.new_tag(
-            'section',
-            id='cgu-navigator-card',
-            attrs={'class': 'pr-section cgu-navigator-section', 'aria-labelledby': 'cgu-navigator-title'},
-        )
-        hero_section.insert_after(navigator_sec)
+        hero_section.insert_after(BeautifulSoup(HOME_REMINDERS_HTML, 'html.parser'))
     partners_head = soup.select_one('#partners .pr-explore-head')
     if partners_head is not None:
         view_toggle = partners_head.select_one('.pr-view-toggle')
@@ -1192,10 +1185,17 @@ def platform_html() -> str:
             anchor = criteria_result
         anchor.insert_after(filter_strip)
         filter_strip.insert_after(mgmt_notice)
+    scholarships_title = soup.select_one('#scholarships-title')
+    if scholarships_title is not None:
+        scholarships_title.string = '獎學金與出國補助'
+        if scholarships_title.parent is not None:
+            sub = soup.new_tag('p', attrs={'class': 'cgu-scholarships-subtitle'})
+            sub.string = '依長庚大學最新規章（2B00004、2B00005、2B00010、2B00006）統一整理補助額度、申請方式、申請資格與返國義務。'
+            scholarships_title.insert_after(sub)
     scholarship_summary = soup.select_one('#scholarship-match-summary')
     if scholarship_summary is not None:
-        inline_nav = soup.new_tag('div', id='cgu-scholarships-navigator-card', attrs={'class': 'cgu-navigator-inline'})
-        scholarship_summary.insert_before(inline_nav)
+        deck = soup.new_tag('div', id='cgu-scholarships-deck', attrs={'class': 'cgu-scholarships-deck'})
+        scholarship_summary.insert_after(deck)
 
     # Inject simulated student submission panel inside #my-application route and dedicated pages inside #dashboard-view
     app_path_sec = soup.select_one('#application-path')
@@ -1296,7 +1296,7 @@ def platform_html() -> str:
       <button type="button" class="primary-button" id="cgu-demo-confirm" hidden>確認重設</button>
       <button type="button" class="secondary-button" id="cgu-demo-close">關閉</button></div></dialog>''', 'html.parser')
     soup.body.append(snippet)
-    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js?v=20261112-cgu-clean-6', defer=''))
+    soup.body.append(soup.new_tag('script', src='/static/cgu-demo.js?v=20261113-cgu-home-scholarships-1', defer=''))
     return str(soup)
 
 

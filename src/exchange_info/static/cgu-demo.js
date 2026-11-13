@@ -121,16 +121,55 @@
     };
   }
 
+  function syncPublicNavActiveState() {
+    const isScholarships = (window.location.hash || '#home') === '#scholarships';
+    const myAppLink = $('#glass-navigation .uniway-public-nav a[data-public-route="my-application"]');
+    const schLink = $('#glass-navigation .uniway-public-nav a[data-public-route="scholarships"]');
+    if (schLink) {
+      schLink.classList.toggle('active', isScholarships);
+      if (isScholarships) schLink.setAttribute('aria-current', 'page');
+      else schLink.removeAttribute('aria-current');
+    }
+    if (myAppLink && isScholarships) {
+      myAppLink.classList.remove('active');
+      myAppLink.removeAttribute('aria-current');
+    }
+  }
+
+  if (typeof updateUniWayPublicNavigation === 'function') {
+    const origUpdateUniWayPublicNavigation = updateUniWayPublicNavigation;
+    updateUniWayPublicNavigation = function (...args) {
+      const res = origUpdateUniWayPublicNavigation.apply(this, args);
+      syncPublicNavActiveState();
+      return res;
+    };
+  }
+
   if (typeof applyAppRoute === 'function') {
     const origApplyAppRoute = applyAppRoute;
     applyAppRoute = function (opts) {
       if (isHiddenCommunityHash(window.location.hash)) {
         history.replaceState(history.state, '', '#home');
-        return origApplyAppRoute.call(this, { ...(opts || {}), loadFeed: false });
+        const res = origApplyAppRoute.call(this, { ...(opts || {}), loadFeed: false });
+        syncPublicNavActiveState();
+        return res;
       }
-      return origApplyAppRoute.call(this, opts);
+      const res = origApplyAppRoute.call(this, opts);
+      syncPublicNavActiveState();
+      return res;
     };
   }
+
+  document.addEventListener('click', event => {
+    const cue = event.target.closest('#home-landing [data-home-discover]');
+    if (!cue) return;
+    const reminders = $('#cgu-home-reminders');
+    if (!reminders) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    reminders.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }, true);
 
   const restrictControls = () => {
     document.querySelectorAll(
@@ -1166,76 +1205,343 @@
   }
 
   // ──────────────────────────────────────────────────────────────
-  // Item 7: Verified《長庚大學領航者補助作業要點》（規章 2B00004）說明卡
+  // Item 7: All CGU Official Scholarships in Structured Card Format (#scholarships)
   // ──────────────────────────────────────────────────────────────
-  function navigatorCardMarkup(compact = false) {
+  const CGU_SCHOLARSHIP_CARDS = [
+    {
+      key: 'navigator',
+      id: 'cgu-scholarships-navigator-card',
+      filterKey: 'exchange',
+      categoryLabel: '長庚一般研修補助',
+      channelLabel: '隨校內甄選自動送審（免單獨填表）',
+      channelTone: 'is-auto',
+      kicker: '69 所合作校資格欄引用 · 規章編號 2B00004（114/10/28 修正）',
+      title: '長庚大學領航者補助作業要點（含教育部學海飛颺）',
+      lead: '長庚 78 所合作校中有 <strong>69 所</strong>在申請資格寫明「符合領航者補助作業要點」。本要點結合教育部學海飛颺經費與本校預算，支持在學學生赴國外修讀學分（交換或雙聯）；<strong>完成校內甄選並獲外校錄取且符合資格者，由國際事務處直接送補助金審查，不需另外單獨填表申請</strong>。',
+      tiers: [
+        {
+          tone: 'is-tier1',
+          tag: '第一類地區補助上限',
+          value: 'NT$75,000 <small>／1 學期</small>',
+          year: '一學年上限 <b>NT$150,000</b>',
+          desc: '適用美、加、智利、墨西哥、英、法、德、荷、比、盧、瑞、奧、義、西、葡、北歐五國、匈牙利、斯洛維尼亞、以色列、新加坡、澳洲、紐西蘭。',
+        },
+        {
+          tone: 'is-tier2',
+          tag: '第二類地區補助上限',
+          value: 'NT$60,000 <small>／1 學期</small>',
+          year: '一學年上限 <b>NT$120,000</b>',
+          desc: '適用日、韓、捷克、波蘭、立陶宛、拉脫維亞、泰、馬、印、巴西、哥倫比亞、俄、土、蒙、南非及大陸港澳（教育部學海飛颺經費不含大陸及港澳）。',
+        },
+        {
+          tone: 'is-bonus',
+          tag: '優秀加碼與複審配分',
+          value: '+NT$10,000 <small>／每學期</small>',
+          year: '歷年成績<b>班排名前 30%</b> 得加碼',
+          desc: '複審配分：在校成績 30%、外語能力 30%、讀書計畫及國際聲望 30%、特殊表現 10%。實際金額依當年度教育部與本校預算核定。',
+        },
+      ],
+      eligibilityTitle: '申請資格（第 3 點）',
+      eligibility: [
+        '具中華民國國籍且在臺設戶籍、於長庚就讀滿 <b>1 學期以上</b>在學生（不含在職專班）。',
+        '歷年學業平均達 <b>70 分以上</b>為原則；英文等同<b>多益 700 分</b>、IELTS 5.5、TOEFL iBT 72 或 Duolingo 105 以上（日、法、德、西語依附件一標準；合作校更高者從其規定）。',
+        '不得同時領取我國政府其他出國研修補助；同一學制曾領短期學分或其他出國研修／實習補助者，已領金額自本補助扣除。',
+      ],
+      obligationTitle: '申請方式與返國義務（第 5、9–11 點）',
+      obligations: [
+        '免額外申請：完成 116-1 校內甄選（2026/12/21 17:00 截止）且獲外校錄取後，由國際處自動送複審。',
+        '出國前簽訂《行政契約書》；每學期至少修 1 門專業科目且返校至少採認 <b>3 學分</b>（中文授課組別不予補助）。',
+        '返國後 <b>2 週內</b>繳交返校手續單至系所，並上傳問卷、心得報告及經驗分享短片。',
+      ],
+      links: [
+        { label: '長庚法規彙編 2B00004 ↗', url: 'https://www.cgu.edu.tw/regulation/RegulationManagement/RegulationDetail/b85add3b-7d9e-43ff-b22f-f0657e11765c' },
+        { label: '下載官方要點 PDF（含附件一、二）↗', url: 'https://www.cgu.edu.tw/regulation/ServerFile/Get/e3b68a9a-e820-4614-a799-e88023a40161' },
+        { label: '國際事務處補助說明頁 ↗', url: 'https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15724' },
+      ],
+    },
+    {
+      key: 'xizhu',
+      id: 'cgu-scholarship-xizhu',
+      filterKey: 'aid',
+      categoryLabel: '教育部經濟不利補助',
+      channelLabel: '需另備戶籍與經濟證明洽國際處',
+      channelTone: 'is-separate',
+      kicker: '低收／中低收／經濟不利專款 · 規章編號 2B00005（115/01/05 修正）',
+      title: '長庚大學辦理教育部學海惜珠補助要點',
+      lead: '專為具經濟不利身分且在學表現優良學生設立之海外交換與雙聯專案補助。<strong>須於校內甄選時另外備齊戶籍謄本與社福證明送國際事務處</strong>，由學校依教育部學海惜珠期程彙整報部審查。',
+      tiers: [
+        {
+          tone: 'is-tier1',
+          tag: '補助項目範圍',
+          value: '機票 + 生活費 <small>實支專案核定</small>',
+          year: '含往返經濟艙機票與<b>生活費（學費差額）</b>',
+          desc: '實際核給金額依當年度教育部學海惜珠核定補助額度、赴外地區消費水準及出國期限核定，最高額度優於一般補助。',
+        },
+        {
+          tone: 'is-tier2',
+          tag: '補助期間與限制',
+          value: '1 學期 – 1 學年 <small>以乙次為原則</small>',
+          year: '同一教育階段<b>限領乙次</b>（不含大陸港澳）',
+          desc: '補助期間最少 1 學期、最高不超過 1 學年；同教育階段已獲我國政府出國補助或修讀中文授課組別者不予重複補助。',
+        },
+        {
+          tone: 'is-bonus',
+          tag: '審查配分權重',
+          value: '40 / 30 / 30 <small>專案審查比重</small>',
+          year: '經濟與在校 <b>40%</b> · 語文 <b>30%</b> · 計畫聲望 <b>30%</b>',
+          desc: '經濟狀況及在校成績佔 40%、外語能力 30%、讀書計畫及國際聲望 30%；須經本校獎補助審查委員會複審及教育部核定。',
+        },
+      ],
+      eligibilityTitle: '申請資格與身分條件（第 2、5 點）',
+      eligibility: [
+        '具中華民國國籍且設籍臺灣之本校在學學生（不含在職專班及學士後系所外特殊自費身分別除外規定），獲校內交換／雙聯提名。',
+        '持有各縣市政府核發有效之<b>低收入戶、中低收入戶</b>、身心障礙、特殊境遇家庭或新住民／弱勢助學相關經濟不利證明。',
+        '須附<b>家長同意書、2 封師長推薦函、中文歷年成績單、語文能力證明、讀書計畫與最新全戶戶籍謄本</b>。',
+      ],
+      obligationTitle: '申請時程與返國義務（第 7–10 點）',
+      obligations: [
+        '須配合國際處公告收件期程（通常於每年 <b>2 月底／9 月底前</b>送部彙辦）另交齊備審資料與經濟證明文件。',
+        '出國前須完成行政契約書簽訂及保證人程序，每學期至少修讀 1 門專業科目（返校依規定採認學分）。',
+        '返國後 <b>1 個月內</b>繳交心得報告、成果資料並配合國際處辦理核銷結案。',
+      ],
+      links: [
+        { label: '長庚法規彙編 2B00005 ↗', url: 'https://www.cgu.edu.tw/regulation/RegulationManagement/RegulationDetail/d5fa7ac2-d65e-4dcd-8f18-0717d32d5639' },
+        { label: '下載學海惜珠官方 PDF ↗', url: 'https://www.cgu.edu.tw/regulation/ServerFile/Get/fe589216-9fe9-42b3-816c-31cde93b5d1a' },
+        { label: '國際處學海惜珠說明頁 ↗', url: 'https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15725' },
+      ],
+    },
+    {
+      key: 'short-term',
+      id: 'cgu-scholarship-short-term',
+      filterKey: 'short',
+      categoryLabel: '短期／暑期學分補助',
+      channelLabel: '教學單位出國前 2 個月專案申請',
+      channelTone: 'is-unit',
+      kicker: '寒暑假或短期境外修課 · 規章編號 2B00010（114/10/28 修正）',
+      title: '長庚大學補助學生參加境外短期學分課程作業要點',
+      lead: '鼓勵在學學生利用寒暑假或短期出國修習至少 1 學分之境外正式課程或暑期學校。<strong>須由教學單位或帶隊教師於課程開始至少 2 個月前彙整名單向國際處專案送件</strong>，不併入 116-1 學期交換表單。',
+      tiers: [
+        {
+          tone: 'is-tier1',
+          tag: '一般核實補助上限',
+          value: 'NT$30,000 <small>／每人上限</small>',
+          year: '補助<b>來回機票與註冊學分費</b>（大陸港澳實核）',
+          desc: '按實際單據核實報支往返經濟艙機票費及對方學校註冊／學分費，每人最高補助新臺幣 30,000 元為原則。',
+        },
+        {
+          tone: 'is-bonus',
+          tag: '班排前 30% 優秀加碼',
+          value: 'NT$40,000 <small>／上限提高</small>',
+          year: '歷年成績<b>班排名前 30%</b> 上限調升至 4 萬',
+          desc: '申請時檢附歷年班級排名達前 30% 證明，同一補助額度上限得由 NT$30,000 提高至 NT$40,000。',
+        },
+        {
+          tone: 'is-tier2',
+          tag: '學分採認與次數限制',
+          value: '至少 1 學分 <small>／同校內採認</small>',
+          year: '同一學制<b>限申請 1 次</b>（日後領航者須扣除）',
+          desc: '須取得教務處／學系認定至少 1 學分（大學部限專業選修或學分學程）；若同一學制日後獲領航者補助，已領金額自該補助扣除。',
+        },
+      ],
+      eligibilityTitle: '申請資格與門檻（第 2、3 點）',
+      eligibility: [
+        '本校大學部或碩博士在學滿 <b>1 學期</b>以上（不含在職專班），且前學期或歷年學業成績平均達 <b>70 分以上</b>。',
+        '英文外語能力等同<b>多益 TOEIC 700 分</b>以上（或相當等級外語檢定）；赴大陸、港澳或特定非英語課程依公告及合作校規定。',
+        '所修課程須為經本校系所及教務處認可之外校正式學分課程或暑期學分班（赴中港澳除外特殊認定者依規定）。',
+      ],
+      obligationTitle: '送件時程與核銷義務（第 4–8 點）',
+      obligations: [
+        '專案送件：須透過就讀學系或開課教師於課程開始前 <b>2 個月以上</b>檢具課程說明與學生清單向國際處提出申請。',
+        '須於短期課程完成後返校辦理學分抵免或採認登錄；未取得至少 1 學分證明者不予核撥補助。',
+        '返國後 <b>2 週內</b>提交機票購票證明／登機證正本、繳費收據、學分證明、研習心得與學習照片集錦。',
+      ],
+      links: [
+        { label: '長庚法規彙編 2B00010 ↗', url: 'https://www.cgu.edu.tw/regulation/RegulationManagement/RegulationDetail/188edb21-5c53-4cbe-9e55-81089f90528b' },
+        { label: '下載短期學分補助 PDF ↗', url: 'https://www.cgu.edu.tw/regulation/ServerFile/Get/f036738d-a1c8-46b2-b208-bebf6901f0e5' },
+        { label: '國際事務處補助說明頁 ↗', url: 'https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15724' },
+      ],
+    },
+    {
+      key: 'zhumeng',
+      id: 'cgu-scholarship-zhumeng',
+      filterKey: 'intern',
+      categoryLabel: '教育部海外實習補助',
+      channelLabel: '由本校專任教師組隊申請（不開放個人送件）',
+      channelTone: 'is-faculty',
+      kicker: '海外企業／實驗室專業實習 · 規章編號 2B00006（115/01/05 修正）',
+      title: '長庚大學辦理教育部學海築夢及新南向學海築夢補助要點',
+      lead: '由本校專任教師擔任計畫主持人，規劃並帶領學生赴海外機構或企業進行專業實習（含新南向國家專項）。<strong>不接受學生個人單獨申請</strong>；有意參與者請洽系所專任教授或實驗室確認當期教師計畫。',
+      tiers: [
+        {
+          tone: 'is-tier1',
+          tag: '補助項目與配合款',
+          value: '機票 + 生活費 <small>教育部 + 長庚配合</small>',
+          year: '教育部補助 + <b>本校對等配合款</b>',
+          desc: '實際每人補助機票及生活費額度依教育部核定計畫書與本校當年度配合款預算分配，由計畫主持人統籌支應。',
+        },
+        {
+          tone: 'is-tier2',
+          tag: '實習最少天數',
+          value: '30 天以上 <small>／新南向指定國 15–30 天</small>',
+          year: '須於核定後<b>次年 10/31 前成行</b>',
+          desc: '一般學海築夢實習期間不含來回交通至少 30 天以上；新南向印尼、印度與澳洲等依部訂規定可為 15 至 30 天。',
+        },
+        {
+          tone: 'is-bonus',
+          tag: '計畫受理梯次與限制',
+          value: '1 月底 ／ 8/15 <small>每年兩梯次</small>',
+          year: '同一教育階段<b>限領 1 次</b>（不含大陸港澳）',
+          desc: '主持教師須於每年約 1 月底及 8/15 前送研發處及國際處報部審查；新南向計畫限定赴新南向 18 國實習。',
+        },
+      ],
+      eligibilityTitle: '參與學生資格條件（第 3 點）',
+      eligibility: [
+        '具中華民國國籍且設籍臺灣地區之本校在學學生（不含國內及境外在職專班），經計畫主持人遴選錄取隨隊赴外實習。',
+        '具備良好專業基礎與相當外語能力（英文多益 <b>700 分以上</b>或與實習機構／計畫書要求相當之檢定水準）。',
+        '同一教育階段（學士／碩士／博士）曾獲本項或我國政府其他出國實習研修補助者不得重複領取。',
+      ],
+      obligationTitle: '申請管道與結案義務（第 2、6、9 點）',
+      obligations: [
+        '教師統籌送件：須由系所專任教師依教育部公告期程提出實習機構同意書與計畫書，學生向計畫主持人報名隨隊。',
+        '實習出發前應完成行政契約、保險與赴外安全登錄；實習內容不得為單純語言進修或參訪旅遊。',
+        '返國後 <b>2 週內</b>繳交 <b>1,000 字以上實習心得報告</b>、短片／照片成果，並依規定辦理經費核銷。',
+      ],
+      links: [
+        { label: '長庚法規彙編 2B00006 ↗', url: 'https://www.cgu.edu.tw/regulation/RegulationManagement/RegulationDetail/17a33812-80d0-45f1-b4ef-6c2cf40a0c50' },
+        { label: '下載學海築夢官方 PDF ↗', url: 'https://www.cgu.edu.tw/regulation/ServerFile/Get/20198fac-b649-4e2e-816d-29e6c657c370' },
+        { label: '國際事務處補助說明頁 ↗', url: 'https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15724' },
+      ],
+    },
+  ];
+
+  const SCHOLARSHIP_FILTERS = [
+    { key: 'all', label: '全部補助（4 項）' },
+    { key: 'exchange', label: '一般交換／雙聯（2B00004）' },
+    { key: 'aid', label: '經濟不利專案（2B00005）' },
+    { key: 'short', label: '短期／暑期學分（2B00010）' },
+    { key: 'intern', label: '海外專業實習（2B00006）' },
+  ];
+
+  let activeScholarshipFilter = 'all';
+
+  function evaluateScholarshipMatchLabel(itemKey, profile) {
+    if (!profile || (!profile.academicScore && !profile.scholarshipNeeded && !profile.englishType && !profile.ielts && !profile.toefl && !profile.toeic)) {
+      return { text: '依你的條件未設定（前往設定）', tone: 'is-neutral' };
+    }
+    const score = Number(profile.academicScore || 0);
+    if (score > 0 && score < 70) {
+      return { text: `目前平均 ${score} 分（多數要點原則 70 分以上）`, tone: 'is-warn' };
+    }
+    if (itemKey === 'xizhu') {
+      return profile.scholarshipNeeded
+        ? { text: '已勾選需補助：若具低收／中低收證明建議優先洽國際處', tone: 'is-match' }
+        : { text: '適用於具低收／中低收／經濟不利證明者', tone: 'is-neutral' };
+    }
+    if (itemKey === 'navigator') {
+      return score >= 70
+        ? { text: `已達平均 ${score} 分門檻 · 獲錄取自動送審`, tone: 'is-match' }
+        : { text: '已完成設定 · 獲交換／雙聯錄取自動送審', tone: 'is-match' };
+    }
+    if (itemKey === 'short-term') {
+      return score >= 70
+        ? { text: `已達平均 ${score} 分門檻 · 依系所短期課程送件`, tone: 'is-match' }
+        : { text: '適合寒暑假 1 學分以上短期境外課程', tone: 'is-neutral' };
+    }
+    return { text: '須參與本校專任教師海外實習計畫', tone: 'is-neutral' };
+  }
+
+  function syncScholarshipMatchBadges() {
+    const profile = typeof state !== 'undefined' ? state?.eligibilityProfile : null;
+    $$('[data-cgu-sch-match]').forEach(node => {
+      const badge = evaluateScholarshipMatchLabel(node.dataset.cguSchMatch, profile);
+      if (node.textContent !== badge.text) node.textContent = badge.text;
+      if (!node.classList.contains(badge.tone)) {
+        node.classList.remove('is-match', 'is-warn', 'is-neutral');
+        node.classList.add(badge.tone);
+      }
+    });
+  }
+
+  function applyScholarshipFilter(filterKey) {
+    activeScholarshipFilter = SCHOLARSHIP_FILTERS.some(item => item.key === filterKey) ? filterKey : 'all';
+    $$('#cgu-scholarship-filter-bar [data-cgu-sch-filter]').forEach(btn => {
+      const active = btn.dataset.cguSchFilter === activeScholarshipFilter;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    $$('#cgu-scholarships-deck .cgu-scholarship-card').forEach(card => {
+      card.hidden = activeScholarshipFilter !== 'all' && card.dataset.schCategory !== activeScholarshipFilter;
+    });
+  }
+
+  function scholarshipCardMarkup(spec) {
+    const tiersHtml = spec.tiers
+      .map(
+        tier => `
+          <div class="cgu-nav-tier ${esc(tier.tone)}">
+            <span class="cgu-nav-tier-tag">${esc(tier.tag)}</span>
+            <strong>${tier.value}</strong>
+            <span class="cgu-nav-year">${tier.year}</span>
+            <p>${esc(tier.desc)}</p>
+          </div>`,
+      )
+      .join('');
+    const eligibilityHtml = spec.eligibility.map(item => `<li>${item}</li>`).join('');
+    const obligationsHtml = spec.obligations.map(item => `<li>${item}</li>`).join('');
+    const linksHtml = spec.links
+      .map(link => `<a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">${esc(link.label)}</a>`)
+      .join('');
     return `
-      <article class="cgu-navigator-box${compact ? ' is-compact' : ''}">
+      <article id="${esc(spec.id)}" class="cgu-navigator-box cgu-scholarship-card" data-sch-category="${esc(spec.filterKey)}">
         <header class="cgu-navigator-head">
-          <div>
-            <span class="cgu-section-kicker">69 所合作校資格欄引用 · 規章編號 2B00004（114/10/28 修正）</span>
-            <h2 ${compact ? '' : 'id="cgu-navigator-title" '}class="cgu-navigator-heading">「領航者補助作業要點」是什麼？金額與資格一次核對</h2>
-            <p class="cgu-navigator-lead">長庚 78 所合作校中有 <strong>69 所</strong>在申請資格寫明「符合領航者補助作業要點」。這份要點結合教育部學海飛颺經費與長庚校內預算，支持在學學生出國修讀學分（交換或雙聯）；<strong>完成校內甄選並獲外校錄取且符合資格者，由國際事務處直接送補助金審查，不需另外單獨填表申請</strong>。</p>
+          <div class="cgu-scholarship-head-main">
+            <div class="cgu-scholarship-meta-row">
+              <span class="cgu-scholarship-cat-badge">${esc(spec.categoryLabel)}</span>
+              <span class="cgu-section-kicker">${esc(spec.kicker)}</span>
+              <span class="cgu-scholarship-channel-badge ${esc(spec.channelTone)}">${esc(spec.channelLabel)}</span>
+              <span class="cgu-sch-match-pill is-neutral" data-cgu-sch-match="${esc(spec.key)}">依你的條件確認中</span>
+            </div>
+            <h2 class="cgu-navigator-heading">${esc(spec.title)}</h2>
+            <p class="cgu-navigator-lead">${spec.lead}</p>
           </div>
-          ${compact ? '' : '<a class="cgu-pill-action" href="#scholarships">前往補助資訊頁 →</a>'}
         </header>
-        <div class="cgu-navigator-grid">
-          <div class="cgu-nav-tier is-tier1">
-            <span class="cgu-nav-tier-tag">第一類地區補助上限</span>
-            <strong>NT$75,000 <small>／1 學期</small></strong>
-            <span class="cgu-nav-year">一學年上限 <b>NT$150,000</b></span>
-            <p>適用美、加、智利、墨西哥、英、法、德、荷、比、盧、瑞、奧、義、西、葡、北歐五國、匈牙利、斯洛維尼亞、以色列、新加坡、澳洲、紐西蘭。</p>
-          </div>
-          <div class="cgu-nav-tier is-tier2">
-            <span class="cgu-nav-tier-tag">第二類地區補助上限</span>
-            <strong>NT$60,000 <small>／1 學期</small></strong>
-            <span class="cgu-nav-year">一學年上限 <b>NT$120,000</b></span>
-            <p>適用日、韓、捷克、波蘭、立陶宛、拉脫維亞、泰、馬、印、巴西、哥倫比亞、俄、土、蒙、南非及大陸港澳地區（教育部學海飛颺經費不含大陸及港澳，實際適用經費依國際處審查核定）。</p>
-          </div>
-          <div class="cgu-nav-tier is-bonus">
-            <span class="cgu-nav-tier-tag">優秀加碼與審核重點</span>
-            <strong>+NT$10,000 <small>／每學期</small></strong>
-            <span class="cgu-nav-year">歷年成績<b>班排名前 30%</b> 得加碼</span>
-            <p>複審配分：在校成績 30%、外語能力 30%、讀書計畫與就讀學校國際聲望 30%、特殊表現 10%。實際名額與核定金額依當年度教育部與本校預算核定。</p>
-          </div>
-        </div>
+        <div class="cgu-navigator-grid">${tiersHtml}</div>
         <div class="cgu-navigator-rules">
           <div>
-            <strong>申請資格（第 3 點）</strong>
-            <ul>
-              <li>具中華民國國籍且在臺設戶籍、於長庚就讀滿 <b>1 學期以上</b>在學生（不含在職專班）。</li>
-              <li>歷年學業平均達 <b>70 分以上</b>為原則；英文等同<b>多益 700 分</b>、IELTS 5.5、TOEFL iBT 72 或 Duolingo 105 以上（日、法、德、西語依附件一標準；合作校更高者從其規定）。</li>
-              <li>不得同時領取我國政府其他出國研修補助；同一學制曾領本校短期學分或其他出國研修／實習補助者，已領金額自額度扣除。</li>
-            </ul>
+            <strong>${esc(spec.eligibilityTitle)}</strong>
+            <ul>${eligibilityHtml}</ul>
           </div>
           <div>
-            <strong>修課與返國義務（第 9–11 點）</strong>
-            <ul>
-              <li>出國前簽訂《行政契約書》；每學期至少修讀 1 門專業科目，返校每學期至少採認 <b>3 學分</b>（未滿一學期不得領取；以中文修課組別不予補助）。</li>
-              <li>返國後 <b>2 週內</b>繳交返校手續單至系所，並上傳問卷、心得報告及經驗分享短片至教育部網站與國際處。</li>
-            </ul>
+            <strong>${esc(spec.obligationTitle)}</strong>
+            <ul>${obligationsHtml}</ul>
           </div>
         </div>
         <footer class="cgu-navigator-foot">
           <span>官方原文與查核（2026-11-12）：</span>
-          <a href="https://www.cgu.edu.tw/regulation/RegulationManagement/RegulationDetail/b85add3b-7d9e-43ff-b22f-f0657e11765c" target="_blank" rel="noopener noreferrer">長庚法規彙編 2B00004 ↗</a>
-          <a href="https://www.cgu.edu.tw/regulation/ServerFile/Get/e3b68a9a-e820-4614-a799-e88023a40161" target="_blank" rel="noopener noreferrer">下載官方要點 PDF（含附件一、二）↗</a>
-          <a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15724" target="_blank" rel="noopener noreferrer">國際事務處補助說明頁 ↗</a>
+          ${linksHtml}
         </footer>
       </article>`;
   }
 
-  function renderNavigatorCards() {
-    const homeHost = $('#cgu-navigator-card');
-    if (homeHost && !homeHost.dataset.rendered) {
-      homeHost.innerHTML = navigatorCardMarkup(false);
-      homeHost.dataset.rendered = '1';
+  function renderScholarshipsDeck() {
+    const deckHost = $('#cgu-scholarships-deck');
+    if (!deckHost) return;
+    if (!deckHost.dataset.rendered) {
+      const filtersHtml = SCHOLARSHIP_FILTERS.map(
+        f =>
+          `<button type="button" class="cgu-sch-filter-btn${f.key === activeScholarshipFilter ? ' is-active' : ''}" data-cgu-sch-filter="${esc(f.key)}" aria-pressed="${f.key === activeScholarshipFilter ? 'true' : 'false'}">${esc(f.label)}</button>`,
+      ).join('');
+      const cardsHtml = CGU_SCHOLARSHIP_CARDS.map(scholarshipCardMarkup).join('');
+      deckHost.innerHTML = `
+        <div id="cgu-scholarship-filter-bar" class="cgu-scholarship-filter-bar" role="group" aria-label="獎學金類型篩選">
+          <span class="cgu-sch-filter-label">補助類別篩選</span>
+          <div class="cgu-sch-filter-pills">${filtersHtml}</div>
+        </div>
+        <div class="cgu-scholarships-cards-list">${cardsHtml}</div>`;
+      deckHost.dataset.rendered = '1';
+      applyScholarshipFilter(activeScholarshipFilter);
     }
-    const pageHost = $('#cgu-scholarships-navigator-card');
-    if (pageHost && !pageHost.dataset.rendered) {
-      pageHost.innerHTML = navigatorCardMarkup(true);
-      pageHost.dataset.rendered = '1';
-    }
+    syncScholarshipMatchBadges();
   }
 
   // ──────────────────────────────────────────────────────────────
@@ -1400,8 +1706,9 @@
   // ──────────────────────────────────────────────────────────────
   async function syncActiveDemoRoute() {
     if (guardHiddenRoutes()) return;
+    syncPublicNavActiveState();
     syncPerspectiveButton();
-    renderNavigatorCards();
+    renderScholarshipsDeck();
     syncPartnersCleanRow();
     syncCriteriaBanner();
     syncAdvisorMgmtNote();
@@ -1437,6 +1744,12 @@
           recentsDetails.open = false;
         });
       }
+    }
+
+    const schFilterBtn = event.target.closest('[data-cgu-sch-filter]');
+    if (schFilterBtn) {
+      applyScholarshipFilter(schFilterBtn.dataset.cguSchFilter);
+      return;
     }
 
     const scrollBtn = event.target.closest('[data-cgu-scroll]');
@@ -1822,12 +2135,14 @@
     ensureTopbarTooltips();
     enhanceMyApplicationDeadline();
     enhanceNotificationItems();
+    syncScholarshipMatchBadges();
     syncPartnersCleanRow();
     syncCriteriaBanner();
   }).observe(document.body, { childList: true, subtree: true });
 
   ensureTopbarTooltips();
-  renderNavigatorCards();
+  syncPublicNavActiveState();
+  renderScholarshipsDeck();
   syncPartnersCleanRow();
   syncCriteriaGradeScale(false);
   syncCriteriaBanner();
@@ -1843,7 +2158,8 @@
     appReady.then(() => {
       lockSchoolSwitcher();
       syncStripClearance();
-      renderNavigatorCards();
+      syncPublicNavActiveState();
+      renderScholarshipsDeck();
       syncPartnersCleanRow();
       syncCriteriaGradeScale(false);
       syncCriteriaBanner();

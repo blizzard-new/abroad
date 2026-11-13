@@ -2,6 +2,17 @@
 
 本紀錄按時間分批呈現實際執行的自動化測試與限制，不將歷史批次混充為當次重跑結果。
 
+## 首頁還原與獎學金專頁統一結構化批次（2026-11-13）
+
+本批次只修改長庚展示版檔案（`src/exchange_info/cgu_demo.py`、`src/exchange_info/cgu_demo_content.py`、`src/exchange_info/static/cgu-demo.js`、`src/exchange_info/static/cgu-demo.css`、`docs/cgu-demo/*`）及對應測試（`tests/test_cgu_demo.py`、`tests/test_cgu_demo_browser.py`）；未修改 `create_app()`、共用 `static/index.html`／`app.js`、`pyproject.toml`、`uv.lock` 或 `official_data/`。
+
+| 實際執行 | 結果 |
+| --- | --- |
+| 展示隔離與端對端瀏覽器測試（`tests/test_cgu_demo.py`、`tests/test_cgu_demo_browser.py`、`tests/test_static_asset_versions.py`） | **35 passed**；確認首頁第一屏（`scrollY = 0`）視覺與 `app.uniway` 完全一致（無縮減地球／吉祥物、無 116-1 提醒卡、無任何獎學金資訊）、下滑或點擊探索提示可捲至 `#cgu-home-reminders`（「長庚 116-1 申請一頁看完」與 `12/21 17:00` 倒數）、頂部導覽列新增「獎學金」並於全桌機／筆電寬度（930–1920px 含靜止／懸停／失敗重試）容納 8 個導覽連結不裁切不重疊、`#scholarships` 專頁以統一結構化卡片與分類篩選呈現長庚全數四項官方規章（`2B00004`、`2B00005`、`2B00010`、`2B00006`）且隱藏重複純文字手風琴，全程零水平溢位、零 `pageerror` |
+| 語法、版本、契約與回歸測試 | `node --check src/exchange_info/static/cgu-demo.js`、`scripts/update_static_versions.py --check`、`scripts/export_openapi.py --check` 通過；`test_cgu_bundled_data.py`、`test_cgu_catalogue_recovery.py`、`test_cgu_deployment_package.py`、`test_static_caching.py`、`test_text_files_are_utf8.py`、`test_uniway_ui_contract.py` **382 passed, 4 skipped** |
+
+---
+
 ## 首頁精簡與找學校頁（「我的條件」置頂強化、計畫與學院單排無框整合）批次（2026-11-12）
 
 本批次只修改長庚展示版檔案（`src/exchange_info/cgu_demo.py`、`src/exchange_info/static/cgu-demo.js`、`src/exchange_info/static/cgu-demo.css`、`docs/cgu-demo/*`）及對應測試（`tests/test_cgu_demo.py`、`tests/test_cgu_demo_browser.py`）；未修改 `create_app()` 或任何主站共用靜態檔案。

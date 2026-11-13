@@ -84,11 +84,11 @@ html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:ha
   }
 }
 
-/* Desktop/Laptop Top Bar: fit 7 CGU routes + synthetic user label cleanly across 901px–1920px+ */
+/* Desktop/Laptop Top Bar: fit 8 CGU routes + synthetic user label cleanly across 901px–1920px+ */
 @media(min-width:901px) {
   html body.unified-shell #glass-navigation.glass-navigation-rail {
     box-sizing:border-box !important; max-width:100vw !important;
-    padding:0 20px !important; gap:10px !important;
+    padding:0 18px !important; gap:8px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand {
@@ -126,7 +126,7 @@ html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:ha
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
     flex:0 0 auto !important; justify-content:center !important; width:auto !important; height:38px !important;
-    padding:0 9px !important; gap:5px !important; white-space:nowrap !important;
+    padding:0 7px !important; gap:4px !important; white-space:nowrap !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route] > :is(svg, .lucide) {
     width:17px !important; height:17px !important; flex:0 0 auto !important;
@@ -195,26 +195,26 @@ html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:ha
 }
 @media(min-width:1200px) and (max-width:1399px) {
   html body.unified-shell #glass-navigation.glass-navigation-rail {
-    padding:0 12px !important; gap:6px !important;
+    padding:0 12px !important; gap:5px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand { gap:7px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand { gap:6px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand strong,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:18px !important; }
-  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:28px !important; height:28px !important; flex-basis:28px !important; }
-  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav { gap:2px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:17.5px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:26px !important; height:26px !important; flex-basis:26px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav { gap:1px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
-    height:36px !important; padding:0 6px !important; gap:4px !important;
+    height:35px !important; padding:0 5px !important; gap:3px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route] > :is(svg, .lucide) {
-    width:15px !important; height:15px !important;
+    width:14px !important; height:14px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a > span,
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] > span {
-    font-size:13px !important;
+    font-size:12.5px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .topbar-actions,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .topbar-actions { gap:4px !important; }
@@ -237,18 +237,18 @@ html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:ha
 }
 @media(min-width:1040px) and (max-width:1199px) {
   html body.unified-shell #glass-navigation.glass-navigation-rail {
-    padding:0 12px !important; gap:6px !important;
+    padding:0 10px !important; gap:5px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand { gap:6px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand { gap:5px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand strong,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:17px !important; }
-  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:26px !important; height:26px !important; flex-basis:26px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:16px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:24px !important; height:24px !important; flex-basis:24px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav { gap:1px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
-    height:34px !important; padding:0 6px !important; gap:0 !important;
+    height:34px !important; padding:0 5px !important; gap:0 !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route] > :is(svg, .lucide) {
     display:none !important;
@@ -256,7 +256,7 @@ html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:ha
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a > span,
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] > span {
-    font-size:13px !important;
+    font-size:12.5px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .application-nav-chevron,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .application-nav-chevron {
@@ -283,18 +283,18 @@ html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:ha
 }
 @media(min-width:960px) and (max-width:1039px) {
   html body.unified-shell #glass-navigation.glass-navigation-rail {
-    padding:0 10px !important; gap:5px !important;
+    padding:0 8px !important; gap:4px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand { gap:5px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand { gap:4px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-header-brand strong,
-  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:16.5px !important; }
-  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:24px !important; height:24px !important; flex-basis:24px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-header-brand strong { font-size:15.5px !important; }
+  html body.unified-shell #glass-navigation.glass-navigation-rail .brand-mark { width:22px !important; height:22px !important; flex-basis:22px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav { gap:1px !important; }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
-    height:34px !important; padding:0 5px !important; gap:0 !important;
+    height:34px !important; padding:0 4px !important; gap:0 !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route] > :is(svg, .lucide) {
     display:none !important;
@@ -302,7 +302,7 @@ html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:ha
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a > span,
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] > span {
-    font-size:12.5px !important;
+    font-size:12px !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .application-nav-chevron,
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .application-nav-chevron {
@@ -338,7 +338,7 @@ html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:ha
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route],
   html body.unified-shell #glass-navigation.glass-navigation-rail:is(:hover, :focus-within) .uniway-public-nav a[data-public-route] {
-    width:36px !important; height:34px !important; padding:0 !important; gap:0 !important;
+    width:33px !important; height:34px !important; padding:0 !important; gap:0 !important;
   }
   html body.unified-shell #glass-navigation.glass-navigation-rail .uniway-public-nav a > span,
   html body.unified-shell #glass-navigation.glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span,
@@ -414,15 +414,19 @@ a[href^="#board="],
   background:#7c2d12; border-color:#7c2d12; color:#fff;
 }
 
-/* ─── Item 1: Homepage Hero「長庚 116-1 申請一頁看完」─── */
-#home-landing .pr-hero { padding-top:clamp(22px, 4svh, 48px); padding-bottom:clamp(32px, 4cqi, 56px); min-height:0; }
-#home-landing .pr-hero-copy { width:min(100%, 1040px); }
-#home-landing .pr-hero h1 { font-size:clamp(30px, 4.4cqi, 60px); line-height:1.18; }
-#home-landing .pr-hero h1 span { display:inline-block; margin-top:6px; font-size:clamp(16px, 2cqi, 24px); font-weight:600; letter-spacing:-.01em; }
-#home-landing .pr-collage { pointer-events:none; opacity:.2; right:12px; bottom:20px; }
-@media(max-width:1280px) { #home-landing .pr-collage { display:none; } }
+/* ─── Item 1: Scrolled Homepage Reminders Section「長庚 116-1 申請一頁看完」(below fold) ─── */
+.cgu-home-reminders { margin-top:clamp(64px, 8cqi, 110px) !important; text-align:left; }
+.cgu-home-reminders-head { display:flex; flex-direction:column; align-items:flex-start; gap:8px; margin-bottom:14px; }
+.cgu-home-reminders-kicker {
+  display:inline-flex; align-items:center; padding:4px 11px; border-radius:999px;
+  background:#dbeafe; color:#1e40af; font-size:12px; font-weight:700; letter-spacing:.03em;
+}
+.cgu-home-reminders-head h2 {
+  margin:0; font-size:clamp(24px, 3cqi, 36px); line-height:1.22; color:var(--uw-navy,#0f172a); letter-spacing:-.02em;
+}
+.cgu-home-reminders-head p { margin:0; font-size:14.5px; line-height:1.55; color:var(--uw-muted,#475569); }
 
-.cgu-home-deadline-banner { margin:14px 0 10px; }
+.cgu-home-deadline-banner { margin:0 0 14px; }
 .cgu-home-deadline-pill { display:inline-flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:8px 10px; max-width:100%; box-sizing:border-box; padding:10px 16px; border-radius:14px; background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%); border:1px solid #fdba74; color:#7c2d12; text-decoration:none; font-size:14px; line-height:1.45; box-shadow:0 4px 14px rgba(124,45,18,.08); transition:transform .15s ease, box-shadow .15s ease; }
 .cgu-home-deadline-pill:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(124,45,18,.13); }
 .cgu-home-deadline-pill .cgu-dl-badge { display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:999px; background:#ea580c; color:#fff; font-weight:700; font-size:12px; letter-spacing:.02em; }
@@ -1226,3 +1230,56 @@ body.cgu-print-body {
 [data-theme="dark"] .cgu-oia-tabs .cgu-program-tab.on span {
   background:rgba(255,255,255,.22); color:#ffffff;
 }
+
+/* ─── Scholarships Structured Card Deck (#scholarships) ─── */
+#scholarships #scholarship-list { display:none !important; }
+.cgu-scholarships-subtitle { margin:6px 0 0; font-size:14px; line-height:1.55; color:var(--uw-muted,#475569); max-width:72ch; }
+.cgu-scholarships-deck { display:grid; gap:18px; margin-top:16px; }
+.cgu-scholarship-filter-bar {
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 14px;
+  padding:12px 16px; border-radius:16px; background:var(--glass-strong, #fff);
+  border:1px solid var(--uw-line,#d8dde5); box-shadow:0 4px 16px rgba(15,23,42,.04);
+}
+.cgu-sch-filter-label { font-size:13px; font-weight:800; color:var(--uw-navy,#0f172a); white-space:nowrap; }
+.cgu-sch-filter-pills { display:flex; flex-wrap:wrap; gap:8px; flex:1 1 auto; }
+.cgu-sch-filter-btn {
+  padding:7px 14px; border-radius:999px; border:1px solid #cbd5e1; background:#f8fafc;
+  color:var(--uw-text,#1e293b); font:600 13px/1.25 inherit; cursor:pointer; transition:all .15s ease;
+}
+.cgu-sch-filter-btn:hover { border-color:#3b82f6; color:#1d4ed8; background:#eff6ff; }
+.cgu-sch-filter-btn.is-active {
+  background:#1e3a8a; border-color:#1e3a8a; color:#ffffff; box-shadow:0 3px 10px rgba(30,58,138,.2);
+}
+.cgu-scholarships-cards-list { display:grid; gap:18px; }
+.cgu-scholarship-card[hidden] { display:none !important; }
+.cgu-scholarship-head-main { width:100%; }
+.cgu-scholarship-meta-row { display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; margin-bottom:2px; }
+.cgu-scholarship-cat-badge {
+  display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px;
+  background:#0f172a; color:#ffffff; font-size:12px; font-weight:800; letter-spacing:.02em;
+}
+.cgu-scholarship-channel-badge {
+  display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:700;
+}
+.cgu-scholarship-channel-badge.is-auto { background:#dcfce7; color:#166534; border:1px solid #86efac; }
+.cgu-scholarship-channel-badge.is-separate { background:#ffedd5; color:#9a3412; border:1px solid #fdba74; }
+.cgu-scholarship-channel-badge.is-unit { background:#fef3c7; color:#92400e; border:1px solid #fcd34d; }
+.cgu-scholarship-channel-badge.is-faculty { background:#f3e8ff; color:#6b21a8; border:1px solid #d8b4fe; }
+.cgu-sch-match-pill {
+  display:inline-flex; align-items:center; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:700;
+}
+.cgu-sch-match-pill.is-match { background:#ecfdf5; color:#047857; border:1px solid #6ee7b7; }
+.cgu-sch-match-pill.is-warn { background:#fff7ed; color:#c2410c; border:1px solid #fdba74; }
+.cgu-sch-match-pill.is-neutral { background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; }
+
+[data-theme="dark"] .cgu-home-reminders-kicker { background:rgba(59,130,246,.22); color:#bfdbfe; }
+[data-theme="dark"] .cgu-home-reminders-head h2, [data-theme="dark"] .cgu-sch-filter-label { color:#f8fafc; }
+[data-theme="dark"] .cgu-home-reminders-head p, [data-theme="dark"] .cgu-scholarships-subtitle { color:#cbd5e1; }
+[data-theme="dark"] .cgu-scholarship-filter-bar { background:rgba(15,23,42,.86); border-color:rgba(148,163,184,.28); }
+[data-theme="dark"] .cgu-sch-filter-btn { background:rgba(30,41,59,.8); border-color:rgba(148,163,184,.35); color:#e2e8f0; }
+[data-theme="dark"] .cgu-sch-filter-btn:hover { background:rgba(59,130,246,.2); border-color:#60a5fa; color:#93c5fd; }
+[data-theme="dark"] .cgu-sch-filter-btn.is-active { background:#2563eb; border-color:#3b82f6; color:#ffffff; }
+[data-theme="dark"] .cgu-scholarship-cat-badge { background:#3b82f6; color:#ffffff; }
+[data-theme="dark"] .cgu-sch-match-pill.is-neutral { background:rgba(30,41,59,.85); border-color:rgba(148,163,184,.35); color:#cbd5e1; }
+[data-theme="dark"] .cgu-sch-match-pill.is-match { background:rgba(16,185,129,.18); border-color:rgba(52,211,153,.4); color:#6ee7b7; }
+[data-theme="dark"] .cgu-sch-match-pill.is-warn { background:rgba(234,88,12,.2); border-color:rgba(251,146,60,.45); color:#fed7aa; }
