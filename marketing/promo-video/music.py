@@ -5,6 +5,7 @@ changes in index.html; if the timeline there moves, move CUES / POPS below with 
 
     python3 marketing/promo-video/music.py marketing/promo-video/build/music.wav
     python3 marketing/promo-video/music.py marketing/promo-video/build/music-reels.wav reels
+    python3 marketing/promo-video/music.py docs/cgu-demo/intro-video/out/music.wav cgu-intro
 """
 
 import sys
@@ -30,6 +31,12 @@ PRESETS = {
         "duration": 36.0, "drums_in": 3.0, "end_hit": 31.0,
         "cues": [3.0, 5.6, 11.6, 17.0, 22.5, 27.0, 31.0],
         "pops": [0.8, 3.9, 27.8],
+    },
+    # docs/cgu-demo/intro-video/intro.html (30-second UniWay CGU intro).
+    "cgu-intro": {
+        "duration": 30.0, "drums_in": 4.0, "end_hit": 25.4,
+        "cues": [4.0, 9.6, 15.0, 20.2, 25.4],
+        "pops": [1.5, 23.0],
     },
 }
 preset = PRESETS[sys.argv[2] if len(sys.argv) > 2 else "landscape"]

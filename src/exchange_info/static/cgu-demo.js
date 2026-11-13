@@ -248,6 +248,19 @@
     $('#cgu-demo-close').focus();
   };
   $('#cgu-demo-close').onclick = () => dialog.close();
+
+  // 「合作構想示意」 menu is a native <details>; only add Escape / outside-click close.
+  const previewMenu = $('#cgu-preview-menu');
+  if (previewMenu) {
+    document.addEventListener('click', event => {
+      if (previewMenu.open && !previewMenu.contains(event.target)) previewMenu.open = false;
+    });
+    previewMenu.addEventListener('keydown', event => {
+      if (event.key !== 'Escape' || !previewMenu.open) return;
+      previewMenu.open = false;
+      previewMenu.querySelector('summary').focus();
+    });
+  }
   $('#cgu-demo-info').onclick = async () => {
     show('來源與展示說明', '<p>正在載入來源…</p>');
     try {

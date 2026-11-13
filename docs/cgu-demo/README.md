@@ -60,4 +60,6 @@ uvicorn exchange_info.cgu_demo:create_demo_app --factory --host 127.0.0.1 --port
 - [實作盤點](implementation-plan.md)
 - [資料來源與限制](sources.md)
 - [展示操作腳本／答詢](demo-script.md)
+- [上台開場影片（30 秒）](video/README.md)
+- [30 秒快速介紹影片（可單獨分享）](intro-video/README.md)
 - [測試與截圖](validation.md)
