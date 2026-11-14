@@ -33,12 +33,13 @@ CONTENT = Path(__file__).parent / "demo_data/content.json"
 # allowlist, so no request value is used to build a file path.
 PREVIEW_DIR = Path(__file__).parent / "demo_data/preview"
 PREVIEW_PAGES = {"office": "office.html", "inquiry": "inquiry.html", "report": "report.html"}
-ASSET_VERSION = "20261113-cgu-forum-seed-1"
+ASSET_VERSION = "20261115-cgu-formal-ui-2"
 COOKIE = "uniway_cgu_demo_session"
 HOME = "長庚大學"
-SIM_BADGE = "模擬・尚未與校方串接"
-UPLOAD_NOTICE = "展示版不保存檔案內容，請勿上傳真實個資"
+UPLOAD_NOTICE = "檔案僅用於完整性檢查，不會保存內容。"
+MATCH_MODE_LABEL = "依國際處公告與常見問題回覆"
 TAIPEI_TZ = timezone(timedelta(hours=8))
+RECEIPT_PREFIX_MAP = {"APP": "A", "INQ": "Q", "RPT": "R", "A": "A", "Q": "Q", "R": "R"}
 
 OFFICIAL_REQUIRED_DOCS: list[dict[str, str]] = [
     {"key": "online_form", "title": "線上申請表", "description": "填妥校內交換／雙聯線上申請表（最多 2 個志願）"},
@@ -246,7 +247,7 @@ def _search_content_faqs(
                 "source_title": cand["source_title"],
                 "source_url": cand["source_url"],
                 "matched_keywords": matched_kw,
-                "match_mode": "規則式比對，非 AI",
+                "match_mode": MATCH_MODE_LABEL,
                 "score": sum(len(_normalize_text(k)) for k in matched_kw),
             })
     matches.sort(key=lambda r: r["score"], reverse=True)
@@ -341,7 +342,7 @@ class MockCguConnector(SchoolConnector):
     def _initial_state(self) -> dict[str, Any]:
         seed = copy.deepcopy(self._content().get("oia_seed", {}))
         return {
-            "sequence": 1001,
+            "sequences": {"A": 2, "Q": 1, "R": 2},
             "draft_files": {},
             "applications": seed.get("applications", []),
             "inquiries": seed.get("inquiries", []),
@@ -366,9 +367,18 @@ class MockCguConnector(SchoolConnector):
         tmp.replace(path)
 
     def _next_receipt(self, state: dict[str, Any], kind: str) -> str:
-        seq = int(state.get("sequence", 1001))
-        state["sequence"] = seq + 1
-        return f"SIM-{kind}-{seq:04d}"
+        letter = RECEIPT_PREFIX_MAP.get(kind, "A")
+        col_name = {"A": "applications", "Q": "inquiries", "R": "return_reports"}[letter]
+        pattern = re.compile(rf"^CGU-116-1-{letter}(\d+)$")
+        existing_max = 0
+        for item in state.get(col_name, []):
+            m = pattern.match(str(item.get("receipt_id") or ""))
+            if m:
+                existing_max = max(existing_max, int(m.group(1)))
+        seqs = state.setdefault("sequences", {})
+        seq = max(existing_max, int(seqs.get(letter, 0))) + 1
+        seqs[letter] = seq
+        return f"CGU-116-1-{letter}{seq:04d}"
 
     def _push_notification(
         self,
@@ -380,9 +390,8 @@ class MockCguConnector(SchoolConnector):
         action_url: str = "#my-application",
     ) -> dict[str, Any]:
         item = {
-            "id": f"sim-notif-{secrets.token_hex(6)}",
-            "kind": "cgu_oia_sim",
-            "badge": SIM_BADGE,
+            "id": f"cgu-notif-{secrets.token_hex(6)}",
+            "kind": "cgu_oia_update",
             "receipt_id": receipt_id,
             "title": title,
             "body": body,
@@ -433,7 +442,7 @@ class MockCguConnector(SchoolConnector):
             )
             state.setdefault("draft_files", {})[doc_key] = record
             self._save(workspace_id, state)
-            return {"badge": SIM_BADGE, "notice": UPLOAD_NOTICE, "file": record, "precheck": _build_precheck_summary(state["draft_files"])}
+            return {"notice": UPLOAD_NOTICE, "file": record, "precheck": _build_precheck_summary(state["draft_files"])}
 
     def remove_file_metadata(self, workspace_id: str, doc_key: str) -> dict[str, Any]:
         if doc_key not in REQUIRED_DOC_MAP:
@@ -442,7 +451,7 @@ class MockCguConnector(SchoolConnector):
             state = self._load(workspace_id)
             state.setdefault("draft_files", {}).pop(doc_key, None)
             self._save(workspace_id, state)
-            return {"badge": SIM_BADGE, "removed": doc_key, "precheck": _build_precheck_summary(state["draft_files"])}
+            return {"removed": doc_key, "precheck": _build_precheck_summary(state["draft_files"])}
 
     def _build_precheck(self, files_map: dict[str, dict[str, Any]]) -> dict[str, Any]:
         return _build_precheck_summary(files_map)
@@ -480,11 +489,8 @@ class MockCguConnector(SchoolConnector):
             receipt_id = self._next_receipt(state, "APP")
             record = {
                 "receipt_id": receipt_id,
-                "badge": SIM_BADGE,
                 "owner": "student",
-                "is_fictional": True,
-                "fictional_label": "展示模擬送件",
-                "student_name": "林小程（展示資料）",
+                "student_name": "林小程",
                 "department": "工學院・生物醫學工程學系 大三",
                 "academic_year": str(payload.get("academic_year") or "116")[:12],
                 "semester": str(payload.get("semester") or "116-1（2027 秋季出國）")[:40],
@@ -496,7 +502,7 @@ class MockCguConnector(SchoolConnector):
                 "submitted_at": now_iso,
                 "documents": [merged_files[d["key"]] for d in OFFICIAL_REQUIRED_DOCS],
                 "timeline": [
-                    {"step": "submitted", "label": "已送出", "state": "done", "at": now_iso, "note": "已完成 5 項官方文件預檢並送出模擬申請"},
+                    {"step": "submitted", "label": "已送出", "state": "done", "at": now_iso, "note": "已完成 5 項應備文件完整性檢查並送出申請"},
                     {"step": "received", "label": "已收件", "state": "pending", "at": None, "note": "待國際處承辦確認收件"},
                     {"step": "review_result", "label": "要求補件／初審通過", "state": "pending", "at": None, "note": "待國際處承辦初審檢核"},
                 ],
@@ -529,11 +535,8 @@ class MockCguConnector(SchoolConnector):
             topic = str(payload.get("topic") or question[:28]).strip()
             record = {
                 "receipt_id": receipt_id,
-                "badge": SIM_BADGE,
                 "owner": "student",
-                "is_fictional": True,
-                "fictional_label": "展示模擬詢問",
-                "student_name": "林小程（展示資料）",
+                "student_name": "林小程",
                 "department": "工學院・生物醫學工程學系 大三",
                 "topic": topic,
                 "question": question,
@@ -555,8 +558,7 @@ class MockCguConnector(SchoolConnector):
         if force_inquiry:
             inquiry = self.send_inquiry(workspace_id, {"question": question, "escalated_from_faq": True})
             return {
-                "badge": SIM_BADGE,
-                "mode_label": "規則式比對，非 AI",
+                "mode_label": MATCH_MODE_LABEL,
                 "matched": False,
                 "matches": [],
                 "inquiry": inquiry,
@@ -564,16 +566,14 @@ class MockCguConnector(SchoolConnector):
         matches = self.search_faq(workspace_id, question)
         if matches:
             return {
-                "badge": SIM_BADGE,
-                "mode_label": "規則式比對，非 AI",
+                "mode_label": MATCH_MODE_LABEL,
                 "matched": True,
                 "matches": matches,
                 "inquiry": None,
             }
         inquiry = self.send_inquiry(workspace_id, {"question": question, "escalated_from_faq": False})
         return {
-            "badge": SIM_BADGE,
-            "mode_label": "規則式比對，非 AI",
+            "mode_label": MATCH_MODE_LABEL,
             "matched": False,
             "matches": [],
             "inquiry": inquiry,
@@ -608,7 +608,7 @@ class MockCguConnector(SchoolConnector):
         video_url = _safe_external_url(str(payload.get("video_url") or ""))
         public_consent = bool(payload.get("public_consent", False))
         term = str(payload.get("term") or "116-1（2027 秋季）").strip()[:40]
-        author_title = str(payload.get("author_title") or "工學院・生物醫學工程學系（示範資料）").strip()[:80]
+        author_title = str(payload.get("author_title") or "工學院・生物醫學工程學系 大三").strip()[:80]
 
         with self._lock:
             state = self._load(workspace_id)
@@ -616,11 +616,8 @@ class MockCguConnector(SchoolConnector):
             receipt_id = self._next_receipt(state, "RPT")
             record = {
                 "receipt_id": receipt_id,
-                "badge": SIM_BADGE,
                 "owner": "student",
-                "is_fictional": True,
-                "fictional_label": "展示模擬心得",
-                "student_name": "林小程（展示資料）",
+                "student_name": "林小程",
                 "author_title": author_title,
                 "partner_school": partner_school,
                 "term": term,
@@ -654,13 +651,12 @@ class MockCguConnector(SchoolConnector):
                 for collection in ("applications", "inquiries", "return_reports"):
                     for item in state.get(collection, []):
                         if item.get("receipt_id") == receipt_id:
-                            return {"badge": SIM_BADGE, "collection": collection, "record": item}
+                            return {"collection": collection, "record": item}
                 raise HTTPException(status_code=404, detail=f"找不到收件編號 {receipt_id}")
 
             notifications = state.get("notifications", [])
             unread = sum(1 for n in notifications if not n.get("read_at"))
             return {
-                "badge": SIM_BADGE,
                 "upload_notice": UPLOAD_NOTICE,
                 "precheck": self._build_precheck(state.get("draft_files", {})),
                 "draft_files": state.get("draft_files", {}),
@@ -699,7 +695,6 @@ class MockCguConnector(SchoolConnector):
                 + sum(1 for r in rpts if r.get("owner") == "seed")
             )
             return {
-                "badge": SIM_BADGE,
                 "seed_count": seed_count,
                 "stats": {
                     "school_preferences": school_preferences,
@@ -731,11 +726,11 @@ class MockCguConnector(SchoolConnector):
                     target["status"] = "received"
                     target["status_label"] = "已收件"
                     if recv_step:
-                        recv_step.update(state="done", at=now_iso, note="國際處承辦已確認收件（模擬）")
+                        recv_step.update(state="done", at=now_iso, note="國際處承辦已確認收件")
                     notif = self._push_notification(
                         state,
                         receipt_id=receipt_id,
-                        title=f"【模擬・國際處】申請案件 {receipt_id} 已確認收件",
+                        title=f"已收件：申請案件 {receipt_id} 已確認收件",
                         body=f"志願「{target['preference_1']}」校內申請已由承辦確認收件，進入初審階段。",
                         action_url="#my-application",
                     )
@@ -753,7 +748,7 @@ class MockCguConnector(SchoolConnector):
                     notif = self._push_notification(
                         state,
                         receipt_id=receipt_id,
-                        title=f"【模擬・要求補件】申請案件 {receipt_id} 需補件",
+                        title=f"要求補件：申請案件 {receipt_id} 需補件",
                         body=f"承辦補件說明：{reason}",
                         action_url="#my-application",
                     )
@@ -764,16 +759,16 @@ class MockCguConnector(SchoolConnector):
                     if recv_step and recv_step.get("state") != "done":
                         recv_step.update(state="done", at=now_iso, note="國際處承辦已確認收件")
                     if rev_step:
-                        rev_step.update(label="初審通過", state="done", at=now_iso, note="初審文件檢核通過（模擬）")
+                        rev_step.update(label="初審通過", state="done", at=now_iso, note="初審文件檢核通過")
                     notif = self._push_notification(
                         state,
                         receipt_id=receipt_id,
-                        title=f"【模擬・初審通過】申請案件 {receipt_id} 初審通過",
-                        body=f"志願「{target['preference_1']}」已完成模擬初審檢核。",
+                        title=f"初審通過：申請案件 {receipt_id} 初審通過",
+                        body=f"志願「{target['preference_1']}」已完成初審檢核。",
                         action_url="#my-application",
                     )
                 self._save(workspace_id, state)
-                return {"badge": SIM_BADGE, "record": target, "notification": notif}
+                return {"record": target, "notification": notif}
 
             if action in ("reply_inquiry", "add_to_faq"):
                 target = next((i for i in state.get("inquiries", []) if i.get("receipt_id") == receipt_id), None)
@@ -791,14 +786,14 @@ class MockCguConnector(SchoolConnector):
                     notif = self._push_notification(
                         state,
                         receipt_id=receipt_id,
-                        title=f"【模擬・承辦回覆】詢問單 {receipt_id} 已獲回覆",
+                        title=f"承辦回覆：詢問單 {receipt_id} 已獲回覆",
                         body=reply,
                         action_url="#ask-oia",
                     )
                     if payload.get("add_to_faq"):
                         self._upsert_custom_faq(state, target, payload.get("keywords"))
                     self._save(workspace_id, state)
-                    return {"badge": SIM_BADGE, "record": target, "notification": notif}
+                    return {"record": target, "notification": notif}
 
                 # action == "add_to_faq"
                 reply = str(payload.get("reply") or target.get("reply") or "").strip()[:1500]
@@ -813,12 +808,12 @@ class MockCguConnector(SchoolConnector):
                 notif = self._push_notification(
                     state,
                     receipt_id=receipt_id,
-                    title=f"【模擬・FAQ 更新】詢問單 {receipt_id} 已整理納入常見問答",
-                    body=f"問題「{target['question'][:40]}」之承辦回覆已加入工作區 FAQ 規則庫。",
+                    title=f"常見問題更新：詢問單 {receipt_id} 已納入常見問答",
+                    body=f"問題「{target['question'][:40]}」之承辦回覆已收錄至常見問答。",
                     action_url="#ask-oia",
                 )
                 self._save(workspace_id, state)
-                return {"badge": SIM_BADGE, "record": target, "faq": faq_item, "notification": notif}
+                return {"record": target, "faq": faq_item, "notification": notif}
 
             if action == "approve_report":
                 target = next((r for r in state.get("return_reports", []) if r.get("receipt_id") == receipt_id), None)
@@ -832,16 +827,16 @@ class MockCguConnector(SchoolConnector):
                 notif = self._push_notification(
                     state,
                     receipt_id=receipt_id,
-                    title=f"【模擬・心得審核】返國心得 {receipt_id} 已核可",
+                    title=f"心得審核：返國心得 {receipt_id} 已核可",
                     body=(
-                        f"「{target['partner_school']}」返國心得已核可並顯示於合作校詳細頁「學長姐心得（示範資料）」。"
+                        f"「{target['partner_school']}」返國心得已核可並顯示於合作校詳細頁「學長姐心得」。"
                         if target["published"]
                         else f"「{target['partner_school']}」返國心得已核可結案（因未勾選同意公開，不對外顯示）。"
                     ),
                     action_url=action_url,
                 )
                 self._save(workspace_id, state)
-                return {"badge": SIM_BADGE, "record": target, "notification": notif}
+                return {"record": target, "notification": notif}
 
             raise ConnectorValidationError(f"不支援的承辦操作：{action}")
 
@@ -859,7 +854,7 @@ class MockCguConnector(SchoolConnector):
             "question": inquiry["question"],
             "keywords": keywords,
             "answer": inquiry["reply"],
-            "source_title": "長庚國際事務處｜校內申請選送須知（模擬承辦收錄 FAQ）",
+            "source_title": "長庚國際事務處｜校內申請選送須知（常見問題補充）",
             "source_url": "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656",
         }
         custom_list = state.setdefault("custom_faqs", [])
@@ -1001,7 +996,7 @@ def _render_report_print_html(report: dict[str, Any]) -> str:
             f"<section class='cgu-print-sec'><h2>{idx}. {e(sec['title'])} <small>（{cnt} 字）</small></h2>{paragraphs}</section>"
         )
     video = str(report.get("video_url") or "").strip()
-    video_row = f"<a href='{e(video)}' target='_blank' rel='noopener noreferrer'>{e(video)}</a>" if video else "未填寫（展示版不上傳影片檔案）"
+    video_row = f"<a href='{e(video)}' target='_blank' rel='noopener noreferrer'>{e(video)}</a>" if video else "未填寫"
     consent_text = "已勾選同意公開給學弟妹" if report.get("public_consent") else "未勾選公開（僅供承辦審核結案）"
     return f"""<!doctype html>
 <html lang="zh-Hant">
@@ -1010,17 +1005,13 @@ def _render_report_print_html(report: dict[str, Any]) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
   <title>返國學期報告列印版｜{e(report.get('receipt_id', ''))}</title>
-  <link rel="stylesheet" href="/static/cgu-demo.css?v=20261113-cgu-home-scholarships-1" />
+  <link rel="stylesheet" href="/static/cgu-demo.css?v={ASSET_VERSION}" />
 </head>
 <body class="cgu-print-body">
   <main class="cgu-print-sheet">
     <header class="cgu-print-header">
-      <div class="cgu-print-badges">
-        <span class="cgu-sim-badge">{e(SIM_BADGE)}</span>
-        <span class="cgu-fictional-tag">{e(report.get('fictional_label', '展示模擬資料'))}</span>
-      </div>
-      <h1>長庚大學出國研修返國學期報告表（展示列印版）</h1>
-      <p class="cgu-print-note">此列印版僅供展示預覽，尚未與校方串接；實際結案請依國際事務處規定於返國後 2 週內辦理。</p>
+      <h1>長庚大學出國研修返國學期報告表</h1>
+      <p class="cgu-print-note">正式結案與報告繳交請依長庚大學國際事務處規定於返國後 2 週內辦理。</p>
       <div class="cgu-print-actions">
         <button type="button" id="cgu-print-trigger" class="cgu-pill-action is-solid">列印／另存 PDF</button>
         <a href="/#return-report" class="cgu-pill-action">返回返國心得頁</a>
@@ -1028,7 +1019,7 @@ def _render_report_print_html(report: dict[str, Any]) -> str:
     </header>
     <table class="cgu-print-meta">
       <tbody>
-        <tr><th>模擬收件編號</th><td><strong>{e(report.get('receipt_id', ''))}</strong></td><th>目前審核狀態</th><td>{e(report.get('status_label', ''))}</td></tr>
+        <tr><th>收件編號</th><td><strong>{e(report.get('receipt_id', ''))}</strong></td><th>目前審核狀態</th><td>{e(report.get('status_label', ''))}</td></tr>
         <tr><th>研修合作校</th><td>{e(report.get('partner_school', ''))}</td><th>研修學期</th><td>{e(report.get('term', ''))}</td></tr>
         <tr><th>填表人標示</th><td>{e(report.get('author_title', ''))}</td><th>送出時間</th><td>{e(report.get('submitted_at', ''))}</td></tr>
         <tr><th>分享影片網址</th><td>{video_row}</td><th>公開意願</th><td>{e(consent_text)}</td></tr>
@@ -1090,14 +1081,13 @@ def platform_html() -> str:
         board_link.attrs.pop('data-home-school-link', None)
         board_link.attrs.pop('hidden', None)
 
-    # Add CGU demo navigation links: 獎學金、問國際處、返國心得、校方介接
+    # Add CGU demo navigation links: 獎學金、問國際處、返國心得（校方介接移至展示工具）
     public_nav = soup.select_one('.uniway-public-nav')
     if public_nav is not None:
         nav_snippet = BeautifulSoup(
             '<a href="#scholarships" data-public-route="scholarships"><i data-lucide="badge-dollar-sign" aria-hidden="true"></i><span>獎學金</span></a>'
             '<a href="#ask-oia" data-public-route="ask-oia"><i data-lucide="help-circle" aria-hidden="true"></i><span>問國際處</span></a>'
-            '<a href="#return-report" data-public-route="return-report"><i data-lucide="book-open-check" aria-hidden="true"></i><span>返國心得</span></a>'
-            '<a href="#school-connector" data-public-route="school-connector"><i data-lucide="plug-zap" aria-hidden="true"></i><span>校方介接</span></a>',
+            '<a href="#return-report" data-public-route="return-report"><i data-lucide="book-open-check" aria-hidden="true"></i><span>返國心得</span></a>',
             'html.parser',
         )
         my_app_link = public_nav.select_one('a[href="#my-application"]')
@@ -1110,8 +1100,7 @@ def platform_html() -> str:
     if sidebar_nav is not None:
         side_snippet = BeautifulSoup(
             '<a class="nav-item" href="#ask-oia" data-section="ask-oia" data-requires-home-school><i data-lucide="help-circle" aria-hidden="true"></i><span>問國際處</span></a>'
-            '<a class="nav-item" href="#return-report" data-section="return-report" data-requires-home-school><i data-lucide="book-open-check" aria-hidden="true"></i><span>返國心得</span></a>'
-            '<a class="nav-item" href="#school-connector" data-section="school-connector"><i data-lucide="plug-zap" aria-hidden="true"></i><span>校方介接</span></a>',
+            '<a class="nav-item" href="#return-report" data-section="return-report" data-requires-home-school><i data-lucide="book-open-check" aria-hidden="true"></i><span>返國心得</span></a>',
             'html.parser',
         )
         sidebar_nav.append(side_snippet)
@@ -1219,9 +1208,9 @@ def platform_html() -> str:
     if dashboard_view is not None:
         for page_id, sec_id, label in (
             ('school-connector', 'cgu-connector-spec-page', '校方介接規格'),
-            ('ask-oia', 'cgu-ask-oia-page', '問國際處（模擬）'),
-            ('return-report', 'cgu-return-report-page', '返國心得（模擬）'),
-            ('oia-view', 'cgu-oia-console-page', '國際處視角（模擬）'),
+            ('ask-oia', 'cgu-ask-oia-page', '問國際處'),
+            ('return-report', 'cgu-return-report-page', '返國心得'),
+            ('oia-view', 'cgu-oia-console-page', '國際處工作台'),
         ):
             sec = soup.new_tag(
                 'section',
@@ -1283,22 +1272,29 @@ def platform_html() -> str:
         school_input['title'] = '長庚大學專屬平台固定母校'
     for item in soup.select('#logout-button, #delete-account-button, #calendar-sync-button, #document-tab-vault, input[type=file]'):
         item['disabled'] = ''
-        item['title'] = '展示未開放正式登入、私人文件或外部同步'
+        item['title'] = '目前環境未開放此項外部同步或私人檔案庫功能'
     for item in soup.select('[data-home-pick-school]'):
         item['disabled'] = ''
         item['title'] = '長庚大學專屬平台'
-    snippet = BeautifulSoup('''<aside id="cgu-demo-strip" aria-label="長庚展示控制">
-      <span><strong class="cgu-strip-sim-tag">模擬・尚未與校方串接</strong> 長庚專屬展示・虛構學生林小程（生物醫學工程學系 大三・多益 750）・重啟後清除</span>
-      <button type="button" id="cgu-demo-oia-toggle" aria-pressed="false">切換為國際處視角</button>
-      <button type="button" id="cgu-demo-info">來源與展示說明</button>
-      <button type="button" id="cgu-demo-seed">載入示範申請</button>
-      <button type="button" id="cgu-demo-reset">重設我的展示資料</button>
-      <details id="cgu-preview-menu" class="cgu-preview-menu"><summary>合作構想示意</summary><ul>
-      <li><a href="/preview/office">國際處收件匣</a></li>
-      <li><a href="/preview/inquiry">問答與轉承辦</a></li>
-      <li><a href="/preview/report">返國心得</a></li></ul></details>
-      </aside><dialog id="cgu-demo-dialog" aria-label="長庚專屬展示" aria-labelledby="cgu-demo-dialog-title">
-      <h2 id="cgu-demo-dialog-title">長庚專屬展示</h2><div id="cgu-demo-dialog-body"></div>
+    snippet = BeautifulSoup('''<aside id="cgu-demo-strip" class="cgu-demo-tools" aria-label="展示工具">
+      <div id="cgu-demo-tools-panel" class="cgu-demo-tools-panel" hidden>
+        <div class="cgu-demo-tools-actions">
+          <button type="button" id="cgu-demo-oia-toggle" aria-pressed="false">切換國際處視角</button>
+          <button type="button" id="cgu-demo-seed">載入示範申請</button>
+          <button type="button" id="cgu-demo-fill-files">帶入示範檔</button>
+          <button type="button" id="cgu-demo-fill-report">帶入心得草稿</button>
+          <button type="button" id="cgu-demo-reset">重設資料</button>
+          <button type="button" id="cgu-demo-connector">校方介接規格</button>
+          <button type="button" id="cgu-demo-info">關於此展示</button>
+          <details id="cgu-preview-menu" class="cgu-preview-menu"><summary>合作構想示意</summary><ul>
+          <li><a href="/preview/office">國際處收件匣</a></li>
+          <li><a href="/preview/inquiry">問答與轉承辦</a></li>
+          <li><a href="/preview/report">返國心得</a></li></ul></details>
+        </div>
+      </div>
+      <button type="button" id="cgu-demo-tools-toggle" class="cgu-demo-tools-toggle" aria-expanded="false" aria-controls="cgu-demo-tools-panel">展示工具</button>
+      </aside><dialog id="cgu-demo-dialog" aria-label="關於此展示" aria-labelledby="cgu-demo-dialog-title">
+      <h2 id="cgu-demo-dialog-title">關於此展示</h2><div id="cgu-demo-dialog-body"></div>
       <p id="cgu-demo-status" role="status"></p><div class="button-row">
       <button type="button" class="primary-button" id="cgu-demo-confirm" hidden>確認重設</button>
       <button type="button" class="secondary-button" id="cgu-demo-close">關閉</button></div></dialog>''', 'html.parser')
@@ -1328,15 +1324,15 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             board_kind=CommunityBoardKind.UNIVERSITY_EXCHANGE,
             school_name=HOME,
             author_id="cgu-demo-author-bme",
-            display_name="長庚生醫系學長（示範資料）",
+            display_name="長庚生醫系學長",
             post_type=CommunityPostType.EXPERIENCE,
             topic=CommunityTopic.APPLICATION,
             country="德國",
             academic_year="2026 秋季",
             application_stage="accepted",
-            title="【示範心得】長庚生醫系申請德國慕尼黑工業大學（TUM）校內甄選與一頁讀書計畫準備",
+            title="長庚生醫系申請德國慕尼黑工業大學（TUM）校內甄選與一頁讀書計畫準備",
             body=(
-                "【展示示範貼文】我是工學院生物醫學工程學系學生，剛完成長庚大學出國交換校內甄選並獲提名前往德國慕尼黑工業大學（TUM）。"
+                "我是工學院生物醫學工程學系學生，剛完成長庚大學出國交換校內甄選並獲提名前往德國慕尼黑工業大學（TUM）。"
                 "準備校內初審時，最重要的五項必備文件分別是：線上申請表（最多填列 2 個志願）、家長同意書、外語能力證明（多益 700 分以上或合作校指定托福／雅思門檻）、"
                 "含班級排名百分比的中文歷年成績單，以及一頁讀書計畫。\n\n"
                 "撰寫「一頁讀書計畫」時，我將版面濃縮成三個段落：第一段說明為何選擇 TUM 生醫感測與醫工實驗室課程；"
@@ -1353,15 +1349,15 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             board_kind=CommunityBoardKind.UNIVERSITY_EXCHANGE,
             school_name=HOME,
             author_id="cgu-demo-author-hcm",
-            display_name="長庚醫管系學姐（示範資料）",
+            display_name="長庚醫管系學姐",
             post_type=CommunityPostType.EXPERIENCE,
             topic=CommunityTopic.SCHOLARSHIP,
             country="日本",
             academic_year="2026 春季",
             application_stage="returned",
-            title="【示範心得】日本東北大學交換一學期：長庚領航者補助申請、仙台宿舍與返國報告實算",
+            title="日本東北大學交換一學期：長庚領航者補助申請、仙台宿舍與返國報告實算",
             body=(
-                "【展示示範貼文】上學期透過長庚校級交換計畫前往日本東北大學（Tohoku University）交換一學期（IPLA 全英文授課學程）。"
+                "上學期透過長庚校級交換計畫前往日本東北大學（Tohoku University）交換一學期（IPLA 全英文授課學程）。"
                 "在獎助學金方面，通過校內甄選後即可依國際事務處公告申請「長庚大學出國交換獎助學金（領航者補助）」，同時也能評估是否符合教育部學海飛颺或學海惜珠資格。\n\n"
                 "仙台生活費相較東京親民許多：入住東北大學國際學生宿舍（University House）單人房每月住宿加水電約 28,000 日圓，"
                 "搭配學生食堂與自炊，每月生活與交通開銷大約落在新台幣 18,000 至 22,000 元。特別提醒學弟妹，返國後兩個月內須繳交四節式返國報告書"
@@ -1377,15 +1373,15 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             board_kind=CommunityBoardKind.PUBLIC_STUDY_ABROAD,
             school_name="公共留學板",
             author_id="cgu-demo-author-ee",
-            display_name="長庚電機系同學（示範資料）",
+            display_name="長庚電機系同學",
             post_type=CommunityPostType.EXPERIENCE,
             topic=CommunityTopic.ACADEMICS,
             country="美國",
             academic_year="2026 秋季",
             application_stage="abroad",
-            title="【示範心得】長庚工學院赴美國加州大學爾灣分校（UCI）交換修課與實驗室專題紀錄",
+            title="長庚工學院赴美國加州大學爾灣分校（UCI）交換修課與實驗室專題紀錄",
             body=(
-                "【展示示範貼文】目前正在美國加州大學爾灣分校（UC Irvine）進行秋季研修。UCI 採用學季制（Quarter System，每學季 10 週），"
+                "目前正在美國加州大學爾灣分校（UC Irvine）進行秋季研修。UCI 採用學季制（Quarter System，每學季 10 週），"
                 "課程節奏非常緊湊，通常第 3 到第 4 週就有第一次期中考與專題進度報告。\n\n"
                 "這學季我選修了嵌入式系統、訊號處理與一門工程團隊實作課，課堂非常鼓勵隨時舉手提問與跨系組隊。"
                 "出發前除了準備語言檢定與財力證明辦理簽證外，也建議先到系辦確認專業選修學分抵免原則，這樣在第一週加退選調整課表時會更有把握。"
@@ -1400,15 +1396,15 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             board_kind=CommunityBoardKind.PUBLIC_STUDY_ABROAD,
             school_name="公共留學板",
             author_id="cgu-demo-author-csie",
-            display_name="長庚資工系學長（示範資料）",
+            display_name="長庚資工系學長",
             post_type=CommunityPostType.DISCUSSION,
             topic=CommunityTopic.HOUSING,
             country="新加坡",
             academic_year="2026 春季",
             application_stage="returned",
-            title="【示範分享】新加坡與亞洲英語授課交換：校內宿舍申請、Student's Pass 與每月開銷整理",
+            title="新加坡與亞洲英語授課交換：校內宿舍申請、Student's Pass 與每月開銷整理",
             body=(
-                "【展示示範貼文】整理一下去新加坡及亞洲英語授課合作校交換的住宿與生活費經驗。新加坡校外租屋租金較高，"
+                "整理一下去新加坡及亞洲英語授課合作校交換的住宿與生活費經驗。新加坡校外租屋租金較高，"
                 "因此收到合作校入學許可（Offer Letter）與學號後，務必在第一時間依指示填寫校內宿舍（Hostel / Residential College）志願。\n\n"
                 "若順利抽中校內宿舍，加上在校園餐廳與熟食中心（Hawker Centre）用餐、搭乘 MRT 與校車通勤，"
                 "整體每月生活費可穩定控制在合理預算內。行前也別忘了留意 IPA Letter 下發時間與入境後體檢、領取 Student's Pass 的預約時段。"
@@ -1423,15 +1419,15 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             board_kind=CommunityBoardKind.PUBLIC_TOPIC,
             school_name="語言學校板",
             author_id="cgu-demo-author-pt",
-            display_name="長庚物治系學姐（示範資料）",
+            display_name="長庚物治系學姐",
             post_type=CommunityPostType.EXPERIENCE,
             topic=CommunityTopic.ACADEMICS,
             country="日本",
             academic_year="2026 暑期",
             application_stage="returned",
-            title="【示範心得】申請交換前的暑期密集外語準備：如何把口說與聽力拉到全外語授課門檻",
+            title="申請交換前的暑期密集外語準備：如何把口說與聽力拉到全外語授課門檻",
             body=(
-                "【展示示範貼文】為了銜接大三出國交換的英語與日語授課要求，我在大二暑假先安排了為期四週的短期語言密集課程，"
+                "為了銜接大三出國交換的英語與日語授課要求，我在大二暑假先安排了為期四週的短期語言密集課程，"
                 "每天上午進行小班制學術簡報與聽力訓練，下午搭配主題文化參訪與小組口語發表。"
                 "這段密集練習對於準備長庚校內甄選外語檢定（多益 700 分以上、托福或日檢 N2）以及英文面試非常有幫助，也能提前適應全外語課堂筆記節奏。"
             ),
@@ -1445,15 +1441,15 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             board_kind=CommunityBoardKind.UNIVERSITY_EXCHANGE,
             school_name=HOME,
             author_id="cgu-demo-author-lin",
-            display_name="林小程（展示資料）",
+            display_name="林小程",
             post_type=CommunityPostType.QUESTION,
             topic=CommunityTopic.APPLICATION,
             country="韓國",
             academic_year="2027 秋季",
             application_stage="preparing",
-            title="【示範提問】請問長庚 116-1 出國交換志願填列（最多 2 校）建議怎麼搭配？",
+            title="請問長庚 116-1 出國交換志願填列（最多 2 校）建議怎麼搭配？",
             body=(
-                "【展示示範貼文】各位學長姐好，我是工學院生醫系大三學生，目前多益 750 分、學業平均 78 分。"
+                "各位學長姐好，我是工學院生醫系大三學生，目前多益 750 分、學業平均 78 分。"
                 "看到長庚校內甄選規定線上申請表最多可填列 2 個志願學校，第一志願想填歐洲或亞洲理工領域合作校，"
                 "請問第二志願大家通常會怎麼搭配名額較穩定、多益 700 分即可申請的姊妹校呢？"
             ),
@@ -1467,15 +1463,15 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             board_kind=CommunityBoardKind.PUBLIC_STUDY_ABROAD,
             school_name="公共留學板",
             author_id="cgu-demo-author-ba",
-            display_name="長庚工商系同學（示範資料）",
+            display_name="長庚工商系同學",
             post_type=CommunityPostType.QUESTION,
             topic=CommunityTopic.VISA,
             country="法國",
             academic_year="2027 春季",
             application_stage="accepted",
-            title="【示範提問】拿到歐洲合作校提名與入學許可後，學生簽證與住宿證明大概要預留幾週？",
+            title="拿到歐洲合作校提名與入學許可後，學生簽證與住宿證明大概要預留幾週？",
             body=(
-                "【展示示範貼文】已經通過校內甄選並收到歐洲合作校的提名確認信，目前正在等待正式入學許可（Letter of Acceptance）。"
+                "已經通過校內甄選並收到歐洲合作校的提名確認信，目前正在等待正式入學許可（Letter of Acceptance）。"
                 "想請問去過法國或德國交換的學長姐，簽證預約、英文財力證明與校內外住宿證明大約需要提前幾週準備比較保險？"
             ),
             status=ModerationStatus.APPROVED,
@@ -1489,7 +1485,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             id="cgu-demo-comment-tum-1",
             post_id="cgu-demo-post-tum-exp",
             author_id="cgu-demo-author-lin",
-            display_name="林小程（展示資料）",
+            display_name="林小程",
             body="謝謝學長詳細整理！想請問長庚校內一頁讀書計畫的修課規劃，建議在甄選階段就直接列出合作校的英文課名嗎？",
             status=ModerationStatus.APPROVED,
             created_at=now - timedelta(days=2, hours=1),
@@ -1498,7 +1494,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             id="cgu-demo-comment-tum-2",
             post_id="cgu-demo-post-tum-exp",
             author_id="cgu-demo-author-bme",
-            display_name="長庚生醫系學長（示範資料）",
+            display_name="長庚生醫系學長",
             body="建議直接寫出 2 至 3 門目標英文課名與學分數（例如 Biomedical Sensor Systems），面試委員看一頁讀書計畫時會非常清楚你的選校動機，也有助於後續確認返國每學期至少採認 3 學分的規定。",
             status=ModerationStatus.APPROVED,
             created_at=now - timedelta(days=1, hours=20),
@@ -1507,7 +1503,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             id="cgu-demo-comment-tohoku-1",
             post_id="cgu-demo-post-tohoku-sch",
             author_id="cgu-demo-author-nursing",
-            display_name="長庚護理系同學（示範資料）",
+            display_name="長庚護理系同學",
             body="請問學姐東北大學全英文授課（IPLA）的選課難度高嗎？返國抵免本系選修學分需要先給系辦看過課綱嗎？",
             status=ModerationStatus.APPROVED,
             created_at=now - timedelta(days=4, hours=2),
@@ -1516,7 +1512,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             id="cgu-demo-comment-tohoku-2",
             post_id="cgu-demo-post-tohoku-sch",
             author_id="cgu-demo-author-hcm",
-            display_name="長庚醫管系學姐（示範資料）",
+            display_name="長庚醫管系學姐",
             body="IPLA 課程對國際交換生很友善！強烈建議出國前先下載英文教學大綱請系辦與導師預審，返國辦理每學期至少 3 學分採認時會快很多。",
             status=ModerationStatus.APPROVED,
             created_at=now - timedelta(days=3, hours=18),
@@ -1525,7 +1521,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             id="cgu-demo-comment-uci-1",
             post_id="cgu-demo-post-uci-exp",
             author_id="cgu-demo-author-csie",
-            display_name="長庚資工系同學（示範資料）",
+            display_name="長庚資工系同學",
             body="感謝分享 Quarter 制選課節奏！提早整理課程大綱跟系辦確認抵免真的很實用。",
             status=ModerationStatus.APPROVED,
             created_at=now - timedelta(days=5, hours=12),
@@ -1534,7 +1530,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             id="cgu-demo-comment-nus-1",
             post_id="cgu-demo-post-nus-disc",
             author_id="cgu-demo-author-bme",
-            display_name="長庚生醫系學長（示範資料）",
+            display_name="長庚生醫系學長",
             body="收到入學許可後第一時間送出校內宿舍申請真的很關鍵，校園餐廳搭配地鐵通勤比校外租屋省下不少預算。",
             status=ModerationStatus.APPROVED,
             created_at=now - timedelta(days=7, hours=15),
@@ -1543,7 +1539,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             id="cgu-demo-comment-lang-1",
             post_id="cgu-demo-post-lang-exp",
             author_id="cgu-demo-author-lin",
-            display_name="林小程（展示資料）",
+            display_name="林小程",
             body="謝謝學姐分享！先用暑期密集練習口說再接正式學期交換，感覺能更快適應合作校課堂討論。",
             status=ModerationStatus.APPROVED,
             created_at=now - timedelta(days=9, hours=10),
@@ -1552,7 +1548,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             id="cgu-demo-comment-pref-1",
             post_id="cgu-demo-post-pref-q",
             author_id="cgu-demo-author-ee",
-            display_name="長庚電機系學長（示範資料）",
+            display_name="長庚電機系學長",
             body="因為校內線上申請表最多就是填列 2 個志願，建議第一志願放最想去的主力校，第二志願挑歷年名額穩定且接受多益 700 分門檻的亞洲或歐洲英語授課合作校，錄取把握度會高很多！",
             status=ModerationStatus.APPROVED,
             created_at=now - timedelta(days=1, hours=4),
@@ -1561,7 +1557,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             id="cgu-demo-comment-pref-2",
             post_id="cgu-demo-post-pref-q",
             author_id="cgu-demo-author-che",
-            display_name="長庚化材系學姐（示範資料）",
+            display_name="長庚化材系學姐",
             body="也可以先用平台上的「學校搜尋 → 我的條件」篩出多益 750 分可申請的合作校，再對照各校免學費交換名額來排前兩志願。",
             status=ModerationStatus.APPROVED,
             created_at=now - timedelta(days=1, hours=1),
@@ -1570,7 +1566,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             id="cgu-demo-comment-visa-1",
             post_id="cgu-demo-post-visa-q",
             author_id="cgu-demo-author-hcm",
-            display_name="長庚醫管系學姐（示範資料）",
+            display_name="長庚醫管系學姐",
             body="建議收到提名信就可以先看簽證中心預約時段並準備英文財力證明，正式入學許可一拿到就能馬上送件，至少預留 6 到 8 週最安心！",
             status=ModerationStatus.APPROVED,
             created_at=now - timedelta(days=2, hours=16),
@@ -1681,7 +1677,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             ),
         )
         account = UserAccount(
-            display_name='林小程（展示資料）',
+            display_name='林小程',
             home_university=HOME,
             followed_boards=[HOME],
             product_tier=ProductAccessTier.SUBSCRIPTION,
@@ -1819,7 +1815,6 @@ def create_demo_app(connector_factory=None) -> FastAPI:
     def connector_spec():
         data = json.loads(CONTENT.read_text(encoding='utf-8'))
         return {
-            'badge': SIM_BADGE,
             'connector_class': type(connector).__name__,
             'interface_class': SchoolConnector.__name__,
             **data.get('connector_spec', {}),
@@ -1834,7 +1829,6 @@ def create_demo_app(connector_factory=None) -> FastAPI:
                 staged = dict(fallback_draft_files.get(account.id, {}))
             if 'draft_files' not in res or not res.get('draft_files'):
                 res = {
-                    'badge': SIM_BADGE,
                     'upload_notice': UPLOAD_NOTICE,
                     **res,
                     'draft_files': staged,
@@ -1879,7 +1873,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
                 files_map = fallback_draft_files.setdefault(account.id, {})
                 files_map[doc_key] = record
                 summary = _build_precheck_summary(files_map)
-            return {'badge': SIM_BADGE, 'notice': UPLOAD_NOTICE, 'file': record, 'precheck': summary}
+            return {'notice': UPLOAD_NOTICE, 'file': record, 'precheck': summary}
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
 
@@ -1895,7 +1889,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
                 files_map = fallback_draft_files.setdefault(account.id, {})
                 files_map.pop(doc_key, None)
                 summary = _build_precheck_summary(files_map)
-            return {'badge': SIM_BADGE, 'removed': doc_key, 'precheck': summary}
+            return {'removed': doc_key, 'precheck': summary}
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
 
@@ -1916,7 +1910,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
                 ]
         try:
             record = connector.submit_application(account.id, clean_payload)
-            return JSONResponse({'badge': SIM_BADGE, 'application': record}, status_code=201)
+            return JSONResponse({'application': record}, status_code=201)
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
 
@@ -1943,14 +1937,13 @@ def create_demo_app(connector_factory=None) -> FastAPI:
                 matches = _search_content_faqs(question, content_data)
                 if matches:
                     return {
-                        'badge': SIM_BADGE,
-                        'mode_label': '規則式比對，非 AI',
+                        'mode_label': MATCH_MODE_LABEL,
                         'matched': True,
                         'matches': matches,
                         'inquiry': None,
                     }
             inquiry = connector.send_inquiry(account.id, {**payload, 'question': question, 'escalated_from_faq': force_inquiry})
-            return {'badge': SIM_BADGE, 'mode_label': '規則式比對，非 AI', 'matched': False, 'matches': [], 'inquiry': inquiry}
+            return {'mode_label': MATCH_MODE_LABEL, 'matched': False, 'matches': [], 'inquiry': inquiry}
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
 
@@ -1963,7 +1956,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             payload = {}
         try:
             inquiry = connector.send_inquiry(account.id, payload if isinstance(payload, dict) else {})
-            return JSONResponse({'badge': SIM_BADGE, 'inquiry': inquiry}, status_code=201)
+            return JSONResponse({'inquiry': inquiry}, status_code=201)
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
 
@@ -1976,7 +1969,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             payload = {}
         try:
             report = connector.submit_return_report(account.id, payload if isinstance(payload, dict) else {})
-            return JSONResponse({'badge': SIM_BADGE, 'report': report}, status_code=201)
+            return JSONResponse({'report': report}, status_code=201)
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
 
@@ -2005,9 +1998,9 @@ def create_demo_app(connector_factory=None) -> FastAPI:
     def connector_public_reports(request: Request, school: str | None = None):
         found = session(request.state.demo_token)
         if not found:
-            return {'badge': SIM_BADGE, 'items': []}
+            return {'items': []}
         if hasattr(connector, 'list_public_reports'):
-            return {'badge': SIM_BADGE, 'items': connector.list_public_reports(found[0].id, school_name=school)}
+            return {'items': connector.list_public_reports(found[0].id, school_name=school)}
         status_data = connector.get_status(found[0].id)
         reports = [
             r for r in (status_data.get('return_reports', []) if isinstance(status_data, dict) else [])
@@ -2015,20 +2008,20 @@ def create_demo_app(connector_factory=None) -> FastAPI:
         ]
         if school:
             reports = [r for r in reports if _partner_school_matches(str(r.get('partner_school', '')), school)]
-        return {'badge': SIM_BADGE, 'items': reports}
+        return {'items': reports}
 
     @app.get('/demo/connector/oia/dashboard')
     def connector_oia_dashboard(request: Request):
         account = require_account(request)
         if not hasattr(connector, 'get_oia_dashboard'):
-            raise HTTPException(501, '目前連接器未啟用模擬承辦後台')
+            raise HTTPException(501, '目前連接器未啟用承辦工作台')
         return connector.get_oia_dashboard(account.id)
 
     @app.post('/demo/connector/oia/actions')
     async def connector_oia_actions(request: Request):
         account = require_account(request)
         if not hasattr(connector, 'oia_action'):
-            raise HTTPException(501, '目前連接器未啟用模擬承辦後台')
+            raise HTTPException(501, '目前連接器未啟用承辦工作台')
         try:
             payload = await request.json()
         except ValueError:

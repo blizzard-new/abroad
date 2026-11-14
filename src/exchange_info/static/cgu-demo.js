@@ -2,29 +2,47 @@
   'use strict';
   const $ = selector => document.querySelector(selector);
   const $$ = selector => [...document.querySelectorAll(selector)];
+  const isPresentMode = () => new URLSearchParams(window.location.search).get('present') === '1';
   function syncStripClearance() {
     const strip = $('#cgu-demo-strip');
     if (!strip) return;
-    const h = Math.ceil(strip.getBoundingClientRect().height);
-    if (h > 0) {
-      document.documentElement.style.setProperty('--cgu-strip-height', `${h}px`);
-      document.documentElement.style.setProperty('--cgu-strip-clearance', `${h + 24}px`);
+    if (isPresentMode()) {
+      document.documentElement.dataset.cguPresent = '1';
+      strip.hidden = true;
+      document.documentElement.style.setProperty('--cgu-strip-height', '0px');
+      document.documentElement.style.setProperty('--cgu-strip-clearance', '0px');
+      return;
     }
+    delete document.documentElement.dataset.cguPresent;
+    strip.hidden = false;
+    const rect = strip.getBoundingClientRect();
+    const h = rect.height > 0 ? Math.max(0, Math.ceil(window.innerHeight - rect.top)) : 0;
+    document.documentElement.style.setProperty('--cgu-strip-height', `${h}px`);
+    document.documentElement.style.setProperty('--cgu-strip-clearance', `${h + 16}px`);
   }
   if (!window.cguDemoStorageIsolated) {
-    $('#cgu-demo-strip').textContent = '展示隔離載入失敗，請重新整理；展示重設已停用。';
+    const panel = $('#cgu-demo-tools-panel');
+    if (panel) panel.textContent = '展示隔離載入失敗，請重新整理；重設功能已停用。';
     syncStripClearance();
     return;
   }
-  if (window.cguDemoStorageLimited) $('#cgu-demo-strip span').textContent += '・瀏覽器儲存受限，本機偏好不會保留';
+  if (window.cguDemoStorageLimited) {
+    const panel = $('#cgu-demo-tools-panel');
+    if (panel) {
+      const note = document.createElement('small');
+      note.className = 'cgu-demo-storage-note';
+      note.textContent = '瀏覽器儲存受限，本機偏好不會保留';
+      panel.appendChild(note);
+    }
+  }
   syncStripClearance();
   if (typeof ResizeObserver === 'function' && $('#cgu-demo-strip')) {
     new ResizeObserver(syncStripClearance).observe($('#cgu-demo-strip'));
   }
   window.addEventListener('resize', syncStripClearance);
 
-  const SIM_BADGE = '模擬・尚未與校方串接';
-  const UPLOAD_NOTICE = '展示版不保存檔案內容，請勿上傳真實個資';
+  const UPLOAD_NOTICE = '檔案僅用於完整性檢查，不會保存內容。';
+  const MATCH_MODE_LABEL = '依國際處公告與常見問題回覆';
   const SELECTION_SOURCE_URL = 'https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817';
 
   const REQUIRED_DOCS = [
@@ -43,19 +61,19 @@
   ];
 
   const SAMPLE_REPORT_PARAGRAPHS = {
-    preparation: '【虛構示範草稿】出發交換前最重要的準備工作涵蓋語文檢定成績核對、簽證體檢時程規劃、住宿預算評估以及系所專業學分抵免預審。完成長庚大學校內甄選並獲國際事務處正式提名後，我立即依照合作校國際辦公室寄發的入學申請指引，依序完成線上學籍註冊、校內學生宿舍志願填寫、必修疫苗接種證明上傳及全期醫療旅遊保險投保。出發前兩個月我也主動下載目標選修課程的英文教學大綱，與本系導師及系辦確認返國後每學期至少採認三學分專業課程之審查標準，同時完成領航者補助行政契約書簽署、開通海外信用卡動態驗證與當地電信預付方案，並整理好緊急聯絡人名冊與常備藥品英文處方說明，確保抵達當地第一週即可順利安頓生活並準時出席國際新生導向說明會。',
-    academics: '【虛構示範草稿】合作校的課堂教學非常重視問題導向式小組討論、實驗室跨領域專題實作以及每週指定期刊文獻的批判性閱讀反思。本學期我共修讀生醫感測工程導論、醫療訊號處理實務與跨文化科技溝通等三門全英文授課專業課程，課程評量方式多元，包含期中實驗架構設計提案、雙週程式模擬進度審查、團隊技術報告撰寫以及期末公開海報口頭發表。授課教授與實驗助教在每週固定的課後諮詢時間都十分親切且具耐心，經常協助國際交換生釐清儀器操作規範、統計分析方法與學術論文引用格式。透過與來自不同學術背景的當地學生共同分工完成專題原型測試，我不僅大幅強化了生醫工程專業英文詞彙的臨場表達流暢度，也深刻體會到主動提問與嚴謹實驗紀錄在國際學術環境中的核心價值。',
-    daily_life: '【虛構示範草稿】合作校園區與周邊城鎮的日常生活機能相當完善便利，從我入住的校內單人雅房學生宿舍步行約十分鐘即可抵達總圖書館、生醫工程實驗大樓、學生活動中心與室內運動場館；若需前往市中心大型連鎖超市或亞洲食材行採購日常用品，憑國際學生證搭乘市區公車與輕軌亦享有學生票價優惠。由於當地餐廳外食費用明顯高於台灣，平日我多半與同樓層來自歐洲及大洋洲的室友在宿舍公共廚房輪流下廚準備早晚餐與隔日午餐便當，不僅能將每月伙食與生活開銷穩定控制在原先規劃的領航者補助與個人預算範圍內，更常透過分享滷肉飯、蛋餅等台灣家常料理拉近彼此距離。此外，校內健康照護中心與國際學生輔導室在迎新週便清楚說明預約看診流程、夜間校園安全專線與心理支持管道，讓整學期的海外居住既充實又安心。',
-    extracurricular: '【虛構示範草稿】在課業與實驗室時間之外，我也積極參與合作校國際學生會籌辦的歷史城區文化導覽、每週語言交換下午茶會以及戶外自然步道健行社團，結識了許多來自德國、瑞典、紐西蘭、日本與韓國姊妹校的交換夥伴。期中教學休息週期間，我們更自行組成六人小隊共同規劃跨城市鐵路與長途巴士考察行程，從青年旅館比價、交通轉乘時刻銜接到突發天候備案皆由團隊分工合作完成，實際鍛鍊了跨文化協調與海外旅途風險應變能力。學期末校園舉辦國際文化嘉年華時，我與幾位台灣同學合力設置文化攤位，向當地師生介紹台灣特色飲食與長庚大學校園學習環境，獲得現場熱烈迴響。這趟珍貴的海外交換研修不僅拓展了生醫工程國際視野，更培養出獨立解決問題的自信，非常鼓勵學弟妹提早準備語文檢定並善用校內資源勇敢提出申請。',
+    preparation: '出發交換前最重要的準備工作涵蓋語文檢定成績核對、簽證體檢時程規劃、住宿預算評估以及系所專業學分抵免預審。完成長庚大學校內甄選並獲國際事務處正式提名後，我立即依照合作校國際辦公室寄發的入學申請指引，依序完成線上學籍註冊、校內學生宿舍志願填寫、必修疫苗接種證明上傳及全期醫療旅遊保險投保。出發前兩個月我也主動下載目標選修課程的英文教學大綱，與本系導師及系辦確認返國後每學期至少採認三學分專業課程之審查標準，同時完成領航者補助行政契約書簽署、開通海外信用卡動態驗證與當地電信預付方案，並整理好緊急聯絡人名冊與常備藥品英文處方說明，確保抵達當地第一週即可順利安頓生活並準時出席國際新生導向說明會。這段期間有系統地逐項建立檢查表，讓跨國銜接過程井然有序且無後顧之憂。',
+    academics: '合作校的課堂教學非常重視問題導向式小組討論、實驗室跨領域專題實作以及每週指定期刊文獻的批判性閱讀反思。本學期我共修讀生醫感測工程導論、醫療訊號處理實務與跨文化科技溝通等三門全英文授課專業課程，課程評量方式多元，包含期中實驗架構設計提案、雙週專題實作進度審查、團隊技術報告撰寫以及期末公開海報口頭發表。授課教授與實驗助教在每週固定的課後諮詢時間都十分親切且具耐心，經常協助國際交換生釐清儀器操作規範、統計分析方法與學術論文引用格式。透過與來自不同學術背景的當地學生共同分工完成專題原型測試，我不僅大幅強化了生醫工程專業英文詞彙的臨場表達流暢度，也深刻體會到主動提問與嚴謹實驗紀錄在國際學術環境中的核心價值。這段紮實的專業修課歷練也成為我後續規劃生醫感測研究方向的重要基石。',
+    daily_life: '合作校園區與周邊城鎮的日常生活機能相當完善便利，從我入住的校內單人雅房學生宿舍步行約十分鐘即可抵達總圖書館、生醫工程實驗大樓、學生活動中心與室內運動場館；若需前往市中心大型連鎖超市或亞洲食材行採購日常用品，憑國際學生證搭乘市區公車與輕軌亦享有學生票價優惠。由於當地餐廳外食費用明顯高於台灣，平日我多半與同樓層來自歐洲及大洋洲的室友在宿舍公共廚房輪流下廚準備早晚餐與隔日午餐便當，不僅能將每月伙食與生活開銷穩定控制在原先規劃的領航者補助與個人預算範圍內，更常透過分享滷肉飯、蛋餅等台灣家常料理拉近彼此距離。此外，校內健康照護中心與國際學生輔導室在迎新週便清楚說明預約看診流程、夜間校園安全專線與心理支持管道，讓整學期的海外居住既充實又安心。',
+    extracurricular: '在課業與實驗室時間之外，我也積極參與合作校國際學生會籌辦的歷史城區文化導覽、每週語言交換下午茶會以及戶外自然步道健行社團，結識了許多來自德國、瑞典、紐西蘭、日本與韓國姊妹校的交換夥伴。期中教學休息週期間，我們更自行組成六人小隊共同規劃跨城市鐵路與長途巴士考察行程，從青年旅館比價、交通轉乘時刻銜接到突發天候備案皆由團隊分工合作完成，實際鍛鍊了跨文化協調與海外旅途風險應變能力。學期末校園舉辦國際文化嘉年華時，我與幾位台灣同學合力設置文化攤位，向當地師生介紹台灣特色飲食與長庚大學校園學習環境，獲得現場熱烈迴響。這趟珍貴的海外交換研修不僅拓展了生醫工程國際視野，更培養出獨立解決問題的自信，非常鼓勵學弟妹提早準備語文檢定並善用校內資源勇敢提出申請。',
   };
 
   // Register custom CGU demo pages into UniWay's route sets
   if (typeof UNIVERSITY_PAGE_ROUTES !== 'undefined') {
     for (const [route, title] of [
-      ['school-connector', '校方介接'],
+      ['school-connector', '校方介接規格'],
       ['ask-oia', '問國際處'],
       ['return-report', '返國心得'],
-      ['oia-view', '國際處視角（模擬）'],
+      ['oia-view', '國際處工作台'],
     ]) {
       UNIVERSITY_PAGE_ROUTES.add(route);
       if (typeof UNIVERSITY_PAGE_TITLES === 'object') UNIVERSITY_PAGE_TITLES[route] = title;
@@ -180,10 +198,10 @@
     if (reader && reader.open) reader.close();
     const dialog = $('#cgu-demo-dialog');
     if (!dialog) return;
-    $('#cgu-demo-dialog-title').textContent = '論壇示範瀏覽說明';
+    $('#cgu-demo-dialog-title').textContent = '論壇瀏覽說明';
     $('#cgu-demo-dialog-body').innerHTML = `
-      <p>展示站已預載<strong>長庚大學交換相關示範心得、提問與學長姐回覆</strong>，可直接切換「心得／提問／看板」或點擊貼文閱讀完整內容。</p>
-      <p>為維持展示環境隔離，公開論壇不開放新增貼文；若想體驗結構化心得填寫與每節 300 字檢核，可前往上方導覽列的<strong>「返國心得」</strong>，或至<strong>「問國際處」</strong>體驗提問分流。</p>
+      <p>系統已收錄<strong>長庚大學交換心得、提問與學長姐回覆</strong>，可直接切換「心得／提問／看板」或點擊貼文閱讀完整內容。</p>
+      <p>目前公開論壇僅供瀏覽；若要撰寫四段式返國心得，請前往導覽列的<strong>「返國心得」</strong>，或至<strong>「問國際處」</strong>查詢常見問題與送出詢問。</p>
     `;
     $('#cgu-demo-status').textContent = '';
     $('#cgu-demo-confirm').hidden = true;
@@ -195,7 +213,7 @@
       'input[type="file"]:not([data-cgu-sim-upload]), [data-ex-upload], [data-ex-extract], [data-ex-files], [data-ex-download-file], #exchange-peer-form button[type="submit"]'
     ).forEach(control => {
       control.disabled = true;
-      control.title = '展示未開放私人文件上傳、附件解析或公開發布；請使用虛構文字情境。';
+      control.title = '目前環境未開放此項外部同步或私人檔案庫功能。';
     });
     lockSchoolSwitcher();
   };
@@ -268,31 +286,55 @@
   };
   $('#cgu-demo-close').onclick = () => dialog.close();
 
-  // 「合作構想示意」 menu is a native <details>; only add Escape / outside-click close.
+  // Collapsible bottom "展示工具" panel & nested 「合作構想示意」 menu
+  const demoStrip = $('#cgu-demo-strip');
+  const toolsToggle = $('#cgu-demo-tools-toggle');
+  const toolsPanel = $('#cgu-demo-tools-panel');
   const previewMenu = $('#cgu-preview-menu');
-  if (previewMenu) {
-    document.addEventListener('click', event => {
-      if (previewMenu.open && !previewMenu.contains(event.target)) previewMenu.open = false;
-    });
-    previewMenu.addEventListener('keydown', event => {
-      if (event.key !== 'Escape' || !previewMenu.open) return;
-      previewMenu.open = false;
-      previewMenu.querySelector('summary').focus();
-    });
-  }
+  const setToolsOpen = open => {
+    if (!toolsPanel || !toolsToggle) return;
+    toolsPanel.hidden = !open;
+    toolsToggle.setAttribute('aria-expanded', String(open));
+    if (!open && previewMenu?.open) previewMenu.open = false;
+    syncStripClearance();
+  };
+  toolsToggle?.addEventListener('click', () => {
+    setToolsOpen(Boolean(toolsPanel?.hidden));
+  });
+  document.addEventListener('click', event => {
+    if (previewMenu?.open && !previewMenu.contains(event.target)) previewMenu.open = false;
+    if (toolsPanel && !toolsPanel.hidden && demoStrip && !demoStrip.contains(event.target)) {
+      setToolsOpen(false);
+    }
+  });
+  previewMenu?.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || !previewMenu.open) return;
+    event.stopPropagation();
+    previewMenu.open = false;
+    previewMenu.querySelector('summary')?.focus();
+  });
+  demoStrip?.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    if (previewMenu?.open) return;
+    if (toolsPanel && !toolsPanel.hidden) {
+      setToolsOpen(false);
+      toolsToggle?.focus();
+    }
+  });
+
   $('#cgu-demo-info').onclick = async () => {
-    show('來源與展示說明', '<p>正在載入來源…</p>');
+    show('關於此展示', '<p>正在載入說明與來源…</p>');
     try {
       const response = await fetch('/demo/content');
       if (!response.ok) throw new Error('來源暫時無法載入');
       const data = await response.json();
-      body.innerHTML = '<p>此站共用 UniWay 原平台介面與功能，固定為長庚大學。林小程（生物醫學工程學系 大三・多益 750）為虛構示範學生，未經校方身分驗證。展示不代表校方採用、認證或背書。</p><p>每個瀏覽器有獨立展示工作區。進度暫存在此展示服務，重新整理可保留；24 小時後或服務重啟會清除。不要輸入真實個資或上傳私人文件。</p><p>合作校名冊（78 所）、表列名額、合作校參考截止日、語言門檻、領航者補助要點與 116-1 校內申請時程已與 UniWay 主站同步；送件前仍請核對長庚國際事務處最新公告與目的校提名信。</p>' + data.rules.map(rule => `<h3>${esc(rule.title)}</h3><p>${esc(rule.body)}</p>`).join('') + data.sources.map(source => `<p><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)} ↗</a><br>查核：${esc(source.checked_on)}；${esc(source.scope)}</p>`).join('') + '<h3>三階段合作架構（模擬・尚未與校方串接）</h3><p>目前以抽象介面 SchoolConnector 搭配 MockCguConnector 模擬校內送件、規則式問答、返國心得與國際處承辦收件匣。第一階段：不需校方配合（公開資料整理與自我預檢）；第二階段：小型試辦（檢核表與 FAQ 試用）；第三階段：需校方資訊單位（SSO 與正式 API 替換）。錄取與抵免均由校方決定。</p>';
+      body.innerHTML = `<p>這是 UniWay 為長庚大學製作的展示環境，資料不會送達長庚大學國際事務處。正式申請請依國際處公告辦理。</p><p><a href="${esc(SELECTION_SOURCE_URL)}" target="_blank" rel="noopener noreferrer">長庚大學國際事務處 116 學年度第 1 學期交換及雙聯申請公告 ↗</a></p><p>每個瀏覽器有獨立工作區。進度暫存在此服務，重新整理可保留；24 小時後或服務重啟會清除。請勿輸入真實個資或上傳私人機密文件。</p><p>合作校名冊（78 所）、表列名額、合作校參考截止日、語言門檻、領航者補助要點與 116-1 校內申請時程皆核對公開資訊；送件前仍請核對長庚國際事務處最新公告與目的校提名信。</p>` + data.rules.map(rule => `<h3>${esc(rule.title)}</h3><p>${esc(rule.body)}</p>`).join('') + data.sources.map(source => `<p><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)} ↗</a><br>查核：${esc(source.checked_on)}；${esc(source.scope)}</p>`).join('') + '<h3>三階段合作架構</h3><p>目前以抽象介面 SchoolConnector 搭配 MockCguConnector 提供端到端作業流程。第一階段：公開資料整理與自我預檢；第二階段：檢核表與 FAQ 試辦；第三階段：由校方資訊單位以 SSO 與正式 API 替換。錄取與抵免均由校方決定。</p>';
     } catch (error) {
       body.textContent = error.message + '，請稍後再試。';
     }
   };
   $('#cgu-demo-reset').onclick = () => {
-    show('重設我的展示資料', '<p>只刪除這個瀏覽器的虛構學生申請紀錄、模擬送件、詢問單、返國心得、承辦操作、通知與本機變更（並還原林小程預設示範系所條件），其他訪客及正式 UniWay 資料不受影響。</p>');
+    show('重設資料', '<p>只清除這個瀏覽器工作區的申請紀錄、送件、詢問單、返國心得、承辦操作、通知與本機變更（並還原林小程預設系所條件），其他訪客及主站資料不受影響。</p>');
     confirmBtn.hidden = false;
   };
   confirmBtn.onclick = async () => {
@@ -302,7 +344,7 @@
       if (!response.ok) throw new Error('重設失敗，請稍後再試');
       window.localStorage.clear();
       window.sessionStorage.clear();
-      location.href = '/';
+      location.href = isPresentMode() ? '/?present=1' : '/';
     } catch (error) {
       status.textContent = error.message;
     } finally {
@@ -310,10 +352,10 @@
     }
   };
   $('#cgu-demo-seed').onclick = async () => {
-    show('載入示範申請', '<p>以原平台的申請流程建立林小程（生物醫學工程學系 大三）的 2027 秋季（116-1）研究目標；當期資格與名額待確認。已有相同計畫時直接開啟。</p>');
+    show('載入示範申請', '<p>為林小程（生物醫學工程學系 大三・多益 750）建立 2027 秋季（116-1）申請計畫並開啟「我的申請」；已有相同計畫時直接開啟。</p>');
     try {
       const response = await fetch('/account/application-paths?home_school=' + encodeURIComponent('長庚大學'));
-      if (!response.ok) throw new Error('無法載入展示工作區');
+      if (!response.ok) throw new Error('無法載入工作區');
       const registry = await response.json();
       const made = await fetch('/account/application-paths', {
         method: 'POST',
@@ -332,7 +374,7 @@
         const error = await made.json();
         throw new Error(typeof error.detail === 'string' ? error.detail : '建立失敗，請稍後再試');
       }
-      const expectedSearch = '?home=' + encodeURIComponent('長庚大學');
+      const expectedSearch = '?home=' + encodeURIComponent('長庚大學') + (isPresentMode() ? '&present=1' : '');
       const targetUrl = '/' + expectedSearch + '#my-application';
       if (location.pathname === '/' && location.search === expectedSearch) {
         location.hash = '#my-application';
@@ -344,6 +386,45 @@
       status.textContent = error.message;
     }
   };
+  $('#cgu-demo-fill-files')?.addEventListener('click', async () => {
+    const btn = $('#cgu-demo-fill-files');
+    if (btn) btn.disabled = true;
+    try {
+      const st = await loadConnectorStatus();
+      const draftFiles = st?.draft_files || {};
+      for (const doc of REQUIRED_DOCS) {
+        if (!draftFiles[doc.key]) {
+          await uploadMetadataFile(doc.key, buildSyntheticSampleFile(doc.key));
+        }
+      }
+      await loadConnectorStatus();
+      if (!/^#my-application(?:\?|$)/.test(window.location.hash)) {
+        window.location.hash = '#my-application';
+      } else {
+        await renderMyApplicationSim(false);
+      }
+      setToolsOpen(false);
+    } catch (error) {
+      show('帶入檔案失敗', `<p>${esc(error.message)}</p>`);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  });
+  $('#cgu-demo-fill-report')?.addEventListener('click', async () => {
+    simState.reportDraft.sections = { ...SAMPLE_REPORT_PARAGRAPHS };
+    if (window.location.hash !== '#return-report') {
+      window.location.hash = '#return-report';
+    } else {
+      await renderReturnReportPage(false);
+    }
+    setToolsOpen(false);
+  });
+  $('#cgu-demo-connector')?.addEventListener('click', () => {
+    if (window.location.hash !== '#school-connector') {
+      window.location.hash = '#school-connector';
+    }
+    setToolsOpen(false);
+  });
 
   // ──────────────────────────────────────────────────────────────
   // OIA Perspective Switcher in #cgu-demo-strip
@@ -356,7 +437,7 @@
     const isOia = window.location.hash === '#oia-view';
     document.body.dataset.cguPerspective = isOia ? 'oia' : 'student';
     btn.setAttribute('aria-pressed', String(isOia));
-    btn.textContent = isOia ? '切換回學生視角' : '切換為國際處視角';
+    btn.textContent = isOia ? '切換學生視角' : '切換國際處視角';
     btn.classList.toggle('is-active-oia', isOia);
     syncStripClearance();
   }
@@ -370,6 +451,7 @@
       }
       window.location.hash = '#oia-view';
     }
+    setToolsOpen(false);
   });
 
   // ──────────────────────────────────────────────────────────────
@@ -425,7 +507,7 @@
     document.querySelectorAll('#notification-center-list .notification-center-item').forEach(card => {
       const metaSpan = card.querySelector('.notification-center-item-meta span');
       if (metaSpan && /截止前\s*0\s*天/.test(metaSpan.textContent || '')) {
-        metaSpan.innerHTML = `<strong class="cgu-sim-badge-inline">${esc(SIM_BADGE)}</strong>`;
+        metaSpan.innerHTML = '<strong class="cgu-oia-badge-inline">國際處通知</strong>';
       }
     });
   }
@@ -465,7 +547,7 @@
     reportDraft: {
       partner_school: '林肯大學 Lincoln University',
       term: '116-1（2027 秋季）',
-      author_title: '工學院・生物醫學工程學系 大三（示範資料）',
+      author_title: '工學院・生物醫學工程學系 大三',
       sections: { preparation: '', academics: '', daily_life: '', extracurricular: '' },
       video_url: '',
       public_consent: true,
@@ -499,11 +581,11 @@
     const host = $('#cgu-connector-spec-page');
     if (!host) return;
     if (!simState.spec) {
-      host.innerHTML = `<div class="cgu-sim-card"><span class="cgu-sim-badge">${esc(SIM_BADGE)}</span><h1 id="cgu-connector-spec-title">校方介接規格載入中…</h1></div>`;
+      host.innerHTML = '<div class="cgu-sim-card"><h1 id="cgu-connector-spec-title">校方介接規格載入中…</h1></div>';
       try {
         simState.spec = await apiJson('/demo/connector/spec');
       } catch (err) {
-        host.innerHTML = `<div class="cgu-sim-card"><span class="cgu-sim-badge">${esc(SIM_BADGE)}</span><h1 id="cgu-connector-spec-title">校方介接規格</h1><p class="cgu-sim-error">${esc(err.message)}</p></div>`;
+        host.innerHTML = `<div class="cgu-sim-card"><h1 id="cgu-connector-spec-title">校方介接規格</h1><p class="cgu-sim-error">${esc(err.message)}</p></div>`;
         return;
       }
     }
@@ -531,15 +613,14 @@
         <header class="cgu-sim-head">
           <div>
             <div class="cgu-sim-badges-row">
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
               <span class="cgu-arch-pill">介面：<code>${esc(spec.interface_class || 'SchoolConnector')}</code> → 目前實作：<code>${esc(spec.connector_class || 'MockCguConnector')}</code></span>
             </div>
             <h1 id="cgu-connector-spec-title">長庚大學校方介接規格與合作分期</h1>
             <p class="cgu-sim-lead">${esc(spec.summary || '')}</p>
           </div>
           <div class="cgu-sim-head-actions">
-            <a class="cgu-pill-action is-solid" href="#my-application">前往學生端模擬送件 →</a>
-            <button type="button" class="cgu-pill-action" data-cgu-open-oia="1">查看國際處視角（模擬）</button>
+            <a class="cgu-pill-action is-solid" href="#my-application">前往學生端申請 →</a>
+            <button type="button" class="cgu-pill-action" data-cgu-open-oia="1">開啟國際處工作台</button>
           </div>
         </header>
 
@@ -600,7 +681,7 @@
       try {
         await loadConnectorStatus();
       } catch (err) {
-        host.innerHTML = `<div class="cgu-sim-card"><span class="cgu-sim-badge">${esc(SIM_BADGE)}</span><p class="cgu-sim-error">${esc(err.message)}</p></div>`;
+        host.innerHTML = `<div class="cgu-sim-card"><p class="cgu-sim-error">${esc(err.message)}</p></div>`;
         return;
       }
     }
@@ -617,24 +698,20 @@
             <div class="cgu-doc-check-title">
               <span class="cgu-doc-num">${idx + 1}</span>
               <strong>${esc(doc.title)}</strong>
-              <span class="cgu-doc-status-pill ${uploaded ? 'is-ok' : 'is-lack'}">${uploaded ? '已備齊（僅存雜湊）' : '缺件'}</span>
+              <span class="cgu-doc-status-pill ${uploaded ? 'is-ok' : 'is-lack'}">${uploaded ? '已備齊' : '缺件'}</span>
             </div>
             <p class="cgu-doc-desc">${esc(doc.desc)}</p>
             ${uploaded ? `
               <div class="cgu-file-meta-box">
-                <span><b>檔名：</b>${esc(uploaded.filename)}</span>
-                <span><b>大小：</b>${esc(formatBytes(uploaded.size))}（${esc(uploaded.size)} bytes）</span>
-                <span><b>類型：</b>${esc(uploaded.content_type)}</span>
-                <span class="cgu-sha-line"><b>SHA-256：</b><code title="${esc(uploaded.sha256)}">${esc(uploaded.sha256)}</code></span>
+                <span><b>已選取檔案：</b>${esc(uploaded.filename)}</span>
               </div>
             ` : ''}
           </div>
           <div class="cgu-doc-check-actions">
             <label class="cgu-upload-btn">
               <span>${uploaded ? '重新選檔' : '選擇檔案'}</span>
-              <input type="file" data-cgu-sim-upload="${esc(doc.key)}" aria-label="選擇${esc(doc.title)}檔案（僅計算雜湊）" />
+              <input type="file" data-cgu-sim-upload="${esc(doc.key)}" aria-label="選擇${esc(doc.title)}檔案" />
             </label>
-            <button type="button" class="cgu-sample-btn" data-cgu-sim-sample="${esc(doc.key)}">帶入示範檔</button>
             ${uploaded ? `<button type="button" class="cgu-remove-file-btn" data-cgu-sim-remove="${esc(doc.key)}">移除</button>` : ''}
           </div>
         </li>`;
@@ -646,7 +723,6 @@
         <article class="cgu-submitted-card" data-receipt-id="${esc(app.receipt_id)}">
           <header class="cgu-submitted-head">
             <div>
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
               <strong class="cgu-receipt-code">收件編號：${esc(app.receipt_id)}</strong>
             </div>
             <span class="cgu-status-chip status-${esc(app.status)}">${esc(app.status_label)}</span>
@@ -659,7 +735,7 @@
           ${app.supplement_reason ? `<div class="cgu-supplement-alert" role="alert"><strong>國際處要求補件原因：</strong>${esc(app.supplement_reason)}</div>` : ''}
           ${renderTimelineHtml(app.timeline || [])}
         </article>`).join('')
-      : '<p class="cgu-empty-hint">目前尚無模擬送件紀錄。完成上方 5 項應備文件完整性預檢後即可送出取得 <code>SIM-</code> 開頭編號。</p>';
+      : '<p class="cgu-empty-hint">目前尚無送件紀錄。完成上方 5 項應備文件預檢後即可送出並取得 <code>CGU-116-1-</code> 收件編號。</p>';
 
     host.innerHTML = `
       <div class="cgu-sim-card">
@@ -673,23 +749,16 @@
 
         <header class="cgu-sim-head">
           <div>
-            <div class="cgu-sim-badges-row">
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
-              <span class="cgu-paper-reminder">實際申請仍須依國際處公告填線上表單並繳交紙本。</span>
-            </div>
-            <h2 id="cgu-sim-submit-heading">送交國際處（模擬）— 校內五項應備文件預檢</h2>
-            <p class="cgu-sim-lead">依長庚國際事務處規定逐項預檢 5 份校內應備文件；缺件時列出缺漏項目且不可送出。齊全後可模擬送件取得 <code>SIM-</code> 收件編號與狀態時間軸。</p>
+            <h2 id="cgu-sim-submit-heading">送交國際處</h2>
+            <p class="cgu-sim-lead">依長庚大學國際事務處規定逐項檢查 5 份校內應備文件；齊全後可線上送出並取得收件編號與審核時間軸。</p>
           </div>
           <div class="cgu-sim-head-actions">
-            <a class="cgu-pill-action" href="#ask-oia">問國際處（FAQ／詢問）</a>
-            <a class="cgu-pill-action" href="#return-report">填寫返國心得</a>
-            <a class="cgu-pill-action" href="#school-connector">校方介接規格</a>
+            <a class="cgu-pill-action" href="#ask-oia">問國際處</a>
+            <a class="cgu-pill-action" href="#return-report">返國心得</a>
           </div>
         </header>
 
-        <div class="cgu-upload-privacy-banner" role="note">
-          <strong>檔案雜湊保護機制：</strong>${esc(UPLOAD_NOTICE)}（檔案於記憶體計算 SHA-256 後即刻丟棄，單檔上限 250 KB，磁碟絕不留存檔案內容）。
-        </div>
+        <div class="cgu-upload-privacy-banner" role="note">${esc(UPLOAD_NOTICE)}</div>
 
         <div class="cgu-pref-grid">
           <label>
@@ -703,30 +772,29 @@
         </div>
 
         <div class="cgu-doc-toolbar">
-          <strong>官方應備 5 項文件（目前已備齊 ${precheck.provided_count} / ${precheck.required_count} 項）</strong>
-          <button type="button" id="cgu-sim-fill-all" class="cgu-pill-action">一鍵帶入全部示範測試檔</button>
+          <strong>應備 5 項文件（目前已備齊 ${precheck.provided_count} / ${precheck.required_count} 項）</strong>
         </div>
 
         <ul id="cgu-sim-doc-list" class="cgu-doc-check-list">${docRowsHtml}</ul>
 
         <div id="cgu-sim-precheck-box" class="cgu-precheck-box ${precheck.complete ? 'is-complete' : 'is-incomplete'}" role="status" aria-live="polite">
           ${precheck.complete
-            ? '<strong>完整性預檢通過：</strong>5 項官方應備文件均已登錄雜湊，可送交模擬收件匣。'
-            : `<strong>完整性預檢未通過（缺件不可送出）：</strong>尚缺 <b>${missingNames.length}</b> 項文件 — <span class="cgu-missing-names">${esc(missingNames.join('、'))}</span>`
+            ? '<strong>文件預檢通過：</strong>5 項應備文件已備齊，可送交國際事務處。'
+            : `<strong>文件尚未齊全（缺件不可送出）：</strong>尚缺 <b>${missingNames.length}</b> 項文件 — <span class="cgu-missing-names">${esc(missingNames.join('、'))}</span>`
           }
         </div>
 
         <p id="cgu-sim-submit-feedback" class="cgu-sim-feedback" role="status" aria-live="polite"></p>
 
         <div class="cgu-sim-submit-bar">
-          <button type="button" id="cgu-sim-precheck-btn" class="cgu-pill-action">執行完整性預檢</button>
-          <button type="button" id="cgu-sim-submit-btn" class="cgu-pill-action is-solid" ${precheck.complete ? '' : 'disabled'}>送交國際處（模擬）</button>
+          <button type="button" id="cgu-sim-precheck-btn" class="cgu-pill-action">檢查文件齊備狀態</button>
+          <button type="button" id="cgu-sim-submit-btn" class="cgu-pill-action is-solid" ${precheck.complete ? '' : 'disabled'}>送交國際處</button>
           <span class="cgu-paper-side-note">註：實際申請仍須依國際處公告填線上表單並繳交紙本。</span>
         </div>
 
         <section class="cgu-submitted-section" aria-labelledby="cgu-submitted-list-title">
           <div class="cgu-submitted-section-head">
-            <h3 id="cgu-submitted-list-title">我的模擬送件與狀態時間軸</h3>
+            <h3 id="cgu-submitted-list-title">我的送件紀錄</h3>
             <button type="button" class="cgu-text-btn" data-cgu-refresh-status="1">重新同步狀態</button>
           </div>
           <div id="cgu-sim-app-records">${appCardsHtml}</div>
@@ -743,8 +811,8 @@
 
   function buildSyntheticSampleFile(docKey) {
     const doc = REQUIRED_DOCS.find(d => d.key === docKey) || { key: docKey, title: docKey };
-    const content = `CGU-DEMO-SYNTHETIC-SAMPLE\ndoc_key=${doc.key}\ntitle=${doc.title}\nstudent=林小程（展示資料）\nnotice=${UPLOAD_NOTICE}\n`;
-    return new File([content], `林小程_${doc.title}_示範檔.pdf`, { type: 'application/pdf' });
+    const content = `CGU-EXCHANGE-DOCUMENT\ndoc_key=${doc.key}\ntitle=${doc.title}\nstudent=林小程\nnotice=${UPLOAD_NOTICE}\n`;
+    return new File([content], `林小程_${doc.title}.pdf`, { type: 'application/pdf' });
   }
 
   // ──────────────────────────────────────────────────────────────
@@ -765,12 +833,11 @@
     if (res) {
       if (res.matched && (res.matches || []).length) {
         resultHtml = `
-          <div id="cgu-ask-result-box" class="cgu-ask-result is-hit" role="region" aria-label="規則比對結果">
+          <div id="cgu-ask-result-box" class="cgu-ask-result is-hit" role="region" aria-label="常見問題比對結果">
             <div class="cgu-sim-badges-row">
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
-              <span class="cgu-rule-mode-badge">${esc(res.mode_label || '規則式比對，非 AI')}</span>
+              <span class="cgu-rule-mode-badge">${esc(res.mode_label || MATCH_MODE_LABEL)}</span>
             </div>
-            <h3>已命中收錄規則／FAQ（共 ${res.matches.length} 筆相關說明）</h3>
+            <h3>常見問題回覆（共 ${res.matches.length} 筆相關說明）</h3>
             <div class="cgu-faq-hits">
               ${res.matches.map(m => `
                 <article class="cgu-faq-hit-card">
@@ -783,7 +850,7 @@
                 </article>`).join('')}
             </div>
             <div class="cgu-ask-escalate-bar">
-              <span>若上述規則仍無法解答你的特殊情境：</span>
+              <span>若上述說明仍無法解答你的問題：</span>
               <button type="button" id="cgu-ask-escalate-btn" class="cgu-pill-action is-solid">仍要詢問承辦</button>
             </div>
           </div>`;
@@ -791,12 +858,11 @@
         resultHtml = `
           <div id="cgu-ask-result-box" class="cgu-ask-result is-escalated" role="status">
             <div class="cgu-sim-badges-row">
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
-              <span class="cgu-rule-mode-badge">${esc(res.mode_label || '規則式比對，非 AI')}</span>
+              <span class="cgu-rule-mode-badge">${esc(res.mode_label || MATCH_MODE_LABEL)}</span>
             </div>
-            <h3>${res.inquiry.escalated_from_faq ? '已轉送模擬承辦收件匣' : '未命中現有規則與 FAQ，已建立詢問單送交模擬收件匣'}</h3>
-            <p>模擬收件編號：<strong>${esc(res.inquiry.receipt_id)}</strong> · 狀態：<b>${esc(res.inquiry.status_label)}</b></p>
-            <p class="cgu-ask-tip">可切換底部「切換為國際處視角」體驗承辦回覆或將回覆加入 FAQ。</p>
+            <h3>${res.inquiry.escalated_from_faq ? '已轉送國際處承辦' : '已建立詢問單並轉送國際處承辦'}</h3>
+            <p>收件編號：<strong>${esc(res.inquiry.receipt_id)}</strong> · 狀態：<b>${esc(res.inquiry.status_label)}</b></p>
+            <p class="cgu-ask-tip">承辦回覆後將即時更新於下方詢問紀錄與通知中心。</p>
           </div>`;
       }
     }
@@ -806,46 +872,44 @@
         <article class="cgu-inquiry-card" data-receipt-id="${esc(inq.receipt_id)}">
           <header class="cgu-submitted-head">
             <div>
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
               <strong class="cgu-receipt-code">${esc(inq.receipt_id)}</strong>
             </div>
             <span class="cgu-status-chip status-${esc(inq.status)}">${esc(inq.status_label)}</span>
           </header>
           <p class="cgu-inq-q"><b>提問內容：</b>${esc(inq.question)}</p>
-          <small class="cgu-inq-time">建立時間：${esc(formatTime(inq.created_at))}${inq.added_to_faq ? ' · 已收錄至工作區 FAQ' : ''}</small>
-          ${inq.reply ? `<div class="cgu-inq-reply"><strong>國際處承辦回覆（模擬・${esc(formatTime(inq.replied_at))}）：</strong><p>${esc(inq.reply)}</p></div>` : '<p class="cgu-inq-waiting">等待承辦於模擬收件匣回覆…</p>'}
+          <small class="cgu-inq-time">建立時間：${esc(formatTime(inq.created_at))}${inq.added_to_faq ? ' · 已收錄至常見問題' : ''}</small>
+          ${inq.reply ? `<div class="cgu-inq-reply"><strong>承辦回覆（${esc(formatTime(inq.replied_at))}）：</strong><p>${esc(inq.reply)}</p></div>` : '<p class="cgu-inq-waiting">等待國際處承辦回覆…</p>'}
         </article>`).join('')
-      : '<p class="cgu-empty-hint">目前尚無詢問單紀錄。</p>';
+      : '<p class="cgu-empty-hint">目前尚無詢問紀錄。</p>';
 
     host.innerHTML = `
       <div class="cgu-sim-card">
         <header class="cgu-sim-head">
           <div>
             <div class="cgu-sim-badges-row">
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
-              <span class="cgu-rule-mode-badge">規則式比對，非 AI</span>
+              <span class="cgu-rule-mode-badge">${esc(MATCH_MODE_LABEL)}</span>
             </div>
-            <h1 id="cgu-ask-oia-title">問國際處（規則庫關鍵字比對與模擬詢問單）</h1>
-            <p class="cgu-sim-lead">輸入問題後，系統先以關鍵字比對 <code>demo_data</code> 已收錄之官方規則與 FAQ（不呼叫任何 AI 模型）；未命中或點選「仍要詢問承辦」時，將建立 <code>SIM-</code> 詢問單送入模擬收件匣。</p>
+            <h1 id="cgu-ask-oia-title">問國際處</h1>
+            <p class="cgu-sim-lead">輸入問題後，將依長庚大學國際事務處公告與常見問題優先回覆；若需進一步確認，將建立詢問單（<code>CGU-116-1-Q</code> 編號）轉送國際處承辦。</p>
           </div>
           <div class="cgu-sim-head-actions">
             <a class="cgu-pill-action" href="#my-application">返回我的申請</a>
           </div>
         </header>
 
-        <div class="cgu-quick-q-row" aria-label="常見測試問題範例">
-          <span>快速測試：</span>
-          <button type="button" class="cgu-chip-btn" data-cgu-sample-q="116-1 校內申請什麼時候截止？紙本也要交嗎？">截止日與紙本（命中）</button>
-          <button type="button" class="cgu-chip-btn" data-cgu-sample-q="領航者補助金額多少？班排前 30% 有加碼嗎？">領航者補助（命中）</button>
-          <button type="button" class="cgu-chip-btn" data-cgu-sample-q="請問基督城機場接機預約跟特殊飲食宿舍怎麼登記？">特殊住宿接機（未命中轉承辦）</button>
+        <div class="cgu-quick-q-row" aria-label="常見問題">
+          <span>常見問題：</span>
+          <button type="button" class="cgu-chip-btn" data-cgu-sample-q="116-1 校內申請什麼時候截止？紙本也要交嗎？">截止日與紙本規定</button>
+          <button type="button" class="cgu-chip-btn" data-cgu-sample-q="領航者補助金額多少？班排前 30% 有加碼嗎？">領航者補助金額</button>
+          <button type="button" class="cgu-chip-btn" data-cgu-sample-q="請問基督城機場接機預約跟特殊飲食宿舍怎麼登記？">接機與特殊住宿諮詢</button>
         </div>
 
         <form id="cgu-ask-form" class="cgu-ask-form">
-          <label for="cgu-ask-input" class="cgu-field-label">輸入你想詢問國際事務處的問題（請勿填寫真實學號或個資）</label>
+          <label for="cgu-ask-input" class="cgu-field-label">輸入你想詢問國際事務處的問題</label>
           <textarea id="cgu-ask-input" rows="3" maxlength="1000" required placeholder="例如：校內申請需要哪五份文件？成績單一定要有班級排名嗎？">${esc(simState.lastAskQuestion)}</textarea>
           <p id="cgu-ask-error" class="cgu-sim-error" role="alert" hidden></p>
           <div class="cgu-ask-actions">
-            <button type="submit" id="cgu-ask-submit-btn" class="cgu-pill-action is-solid">送出問題（先比對 FAQ）</button>
+            <button type="submit" id="cgu-ask-submit-btn" class="cgu-pill-action is-solid">送出問題</button>
           </div>
         </form>
 
@@ -853,7 +917,7 @@
 
         <section class="cgu-submitted-section" aria-labelledby="cgu-inq-list-title">
           <div class="cgu-submitted-section-head">
-            <h2 id="cgu-inq-list-title">我的模擬詢問紀錄與承辦回覆</h2>
+            <h2 id="cgu-inq-list-title">我的詢問紀錄</h2>
             <button type="button" class="cgu-text-btn" data-cgu-refresh-ask="1">重新整理回覆</button>
           </div>
           <div id="cgu-ask-inquiries-list">${inquiriesHtml}</div>
@@ -902,7 +966,7 @@
             <label for="cgu-report-sec-${esc(sec.key)}"><strong>${idx + 1}. ${esc(sec.title)}</strong>（必填，至少 300 字）</label>
             <span class="cgu-char-counter ${ok ? 'is-ok' : 'is-lack'}" data-cgu-report-count="${esc(sec.key)}">目前 ${cnt} 字 ／ 至少 300 字${ok ? '（已達標）' : `（尚差 ${300 - cnt} 字）`}</span>
           </div>
-          <textarea id="cgu-report-sec-${esc(sec.key)}" data-cgu-report-sec="${esc(sec.key)}" rows="5" required placeholder="請填寫${esc(sec.title)}（至少 300 字，請使用虛構示範內容，勿填真實個資）…">${esc(val)}</textarea>
+          <textarea id="cgu-report-sec-${esc(sec.key)}" data-cgu-report-sec="${esc(sec.key)}" rows="5" required placeholder="請填寫${esc(sec.title)}（至少 300 字）…">${esc(val)}</textarea>
         </div>`;
     }).join('');
 
@@ -911,7 +975,6 @@
         <article class="cgu-submitted-card" data-receipt-id="${esc(r.receipt_id)}">
           <header class="cgu-submitted-head">
             <div>
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
               <strong class="cgu-receipt-code">${esc(r.receipt_id)}</strong>
             </div>
             <span class="cgu-status-chip status-${esc(r.status)}">${esc(r.status_label)}</span>
@@ -926,20 +989,16 @@
             ${r.published ? `<a class="cgu-pill-action" href="#school=${encodeURIComponent(r.partner_school)}">前往合作校頁查看公開心得 →</a>` : ''}
           </div>
         </article>`).join('')
-      : '<p class="cgu-empty-hint">目前尚無已送出的返國心得。送出後可匯出列印版並進入國際處模擬收件匣審核。</p>';
+      : '<p class="cgu-empty-hint">目前尚無已送出的返國心得。送出後可匯出列印版並由國際處審核。</p>';
 
     host.innerHTML = `
       <div class="cgu-sim-card">
         <header class="cgu-sim-head">
           <div>
-            <div class="cgu-sim-badges-row">
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
-            </div>
-            <h1 id="cgu-return-report-title">返國心得（國際處學期報告表四段式模擬送審）</h1>
-            <p class="cgu-sim-lead">依長庚國際事務處學期報告表分為四段（出國前準備、上課情形、日常生活、課外活動及其他），每段至少 300 字；送出後可匯出列印版。經承辦核可且勾選「同意公開給學弟妹」者，將顯示於該合作校詳細頁「學長姐心得（示範資料）」區塊。</p>
+            <h1 id="cgu-return-report-title">返國心得</h1>
+            <p class="cgu-sim-lead">依長庚大學國際事務處學期報告表分為四段（出國前準備、上課情形、日常生活、課外活動及其他），每段至少 300 字；送出後可匯出列印版。經承辦核可且勾選「同意公開給學弟妹」者，將顯示於該合作校詳細頁「學長姐心得」區塊。</p>
           </div>
           <div class="cgu-sim-head-actions">
-            <button type="button" id="cgu-report-fill-sample" class="cgu-pill-action">帶入虛構 300 字示範草稿</button>
             <a class="cgu-pill-action" href="#my-application">返回我的申請</a>
           </div>
         </header>
@@ -955,11 +1014,11 @@
               <input type="text" id="cgu-report-term" maxlength="40" value="${esc(draft.term)}" required />
             </label>
             <label>
-              <span>顯示身分標示（勿填真實姓名學號）</span>
+              <span>顯示身分標示</span>
               <input type="text" id="cgu-report-author" maxlength="80" value="${esc(draft.author_title)}" required />
             </label>
             <label>
-              <span>分享影片網址（選填，展示版不上傳影片檔案）</span>
+              <span>分享影片網址（選填）</span>
               <input type="url" id="cgu-report-video" maxlength="500" value="${esc(draft.video_url)}" placeholder="https://..." />
             </label>
           </div>
@@ -968,19 +1027,19 @@
 
           <label class="cgu-consent-check">
             <input type="checkbox" id="cgu-report-consent" ${draft.public_consent ? 'checked' : ''} />
-            <span><strong>同意公開給學弟妹</strong>（經國際處模擬收件匣核可後，顯示於該合作校詳細頁「學長姐心得（示範資料）」區塊）</span>
+            <span><strong>同意公開給學弟妹</strong>（經國際處核可後，顯示於該合作校詳細頁「學長姐心得」區塊）</span>
           </label>
 
           <p id="cgu-report-feedback" class="cgu-sim-feedback" role="alert"></p>
 
           <div class="cgu-sim-submit-bar">
-            <button type="submit" id="cgu-report-submit-btn" class="cgu-pill-action is-solid">送出返國心得（模擬）</button>
+            <button type="submit" id="cgu-report-submit-btn" class="cgu-pill-action is-solid">送出返國心得</button>
           </div>
         </form>
 
         <section class="cgu-submitted-section" aria-labelledby="cgu-report-list-title">
           <div class="cgu-submitted-section-head">
-            <h2 id="cgu-report-list-title">我的返國心得紀錄與列印匯出</h2>
+            <h2 id="cgu-report-list-title">我的返國心得紀錄</h2>
           </div>
           <div id="cgu-report-records">${reportsListHtml}</div>
         </section>
@@ -1015,14 +1074,13 @@
         const wrapper = document.createElement('section');
         if (idAttr) wrapper.id = idAttr;
         wrapper.className = 'cgu-public-reports-block';
-        wrapper.setAttribute('aria-label', '學長姐心得（示範資料）');
+        wrapper.setAttribute('aria-label', '學長姐心得');
         wrapper.innerHTML = `
           <header class="cgu-public-reports-head">
             <div>
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
-              <h3>學長姐心得（示範資料）</h3>
+              <h3>學長姐心得</h3>
             </div>
-            <small>僅顯示學生勾選「同意公開給學弟妹」並經模擬國際處核可之報告</small>
+            <small>僅顯示學生勾選「同意公開給學弟妹」並經國際處核可之報告</small>
           </header>
           <div class="cgu-public-reports-list">
             ${items.map(r => `
@@ -1067,7 +1125,7 @@
   }
 
   // ──────────────────────────────────────────────────────────────
-  // Feature 6: 國際處視角（模擬）(#cgu-oia-console-page)
+  // Feature 6: 國際處工作台 (#cgu-oia-console-page)
   // ──────────────────────────────────────────────────────────────
   async function renderOiaConsolePage(forceReload = true) {
     const host = $('#cgu-oia-console-page');
@@ -1076,7 +1134,7 @@
       try {
         simState.oia = await apiJson('/demo/connector/oia/dashboard');
       } catch (err) {
-        host.innerHTML = `<div class="cgu-sim-card"><span class="cgu-sim-badge">${esc(SIM_BADGE)}</span><h1 id="cgu-oia-console-title">國際處視角（模擬）</h1><p class="cgu-sim-error">${esc(err.message)}</p></div>`;
+        host.innerHTML = `<div class="cgu-sim-card"><h1 id="cgu-oia-console-title">國際處工作台</h1><p class="cgu-sim-error">${esc(err.message)}</p></div>`;
         return;
       }
     }
@@ -1099,7 +1157,6 @@
         <header class="cgu-submitted-head">
           <div class="cgu-sim-badges-row">
             <strong class="cgu-receipt-code">${esc(app.receipt_id)}</strong>
-            <span class="cgu-fictional-tag">${esc(app.fictional_label || '虛構示範資料')}</span>
             <span>${esc(app.student_name)} · ${esc(app.department)}</span>
           </div>
           <span class="cgu-status-chip status-${esc(app.status)}">${esc(app.status_label)}</span>
@@ -1110,7 +1167,7 @@
           <span>送出時間：${esc(formatTime(app.submitted_at))}</span>
         </p>
         <div class="cgu-oia-doc-chips">
-          ${(app.documents || []).map(d => `<span class="cgu-mini-pill is-general" title="SHA-256: ${esc(d.sha256)}">${esc(d.doc_title)}（${esc(d.filename)} · ${esc(d.sha256.slice(0, 8))}…）</span>`).join('')}
+          ${(app.documents || []).map(d => `<span class="cgu-mini-pill is-general">${esc(d.doc_title)}（${esc(d.filename)}）</span>`).join('')}
         </div>
         ${app.supplement_reason ? `<p class="cgu-oia-reason-note">目前補件原因：${esc(app.supplement_reason)}</p>` : ''}
         <div class="cgu-oia-action-row">
@@ -1132,7 +1189,6 @@
         <header class="cgu-submitted-head">
           <div class="cgu-sim-badges-row">
             <strong class="cgu-receipt-code">${esc(inq.receipt_id)}</strong>
-            <span class="cgu-fictional-tag">${esc(inq.fictional_label || '虛構示範資料')}</span>
             <span>${esc(inq.student_name)} · ${esc(inq.department)}</span>
           </div>
           <span class="cgu-status-chip status-${esc(inq.status)}">${esc(inq.status_label)}${inq.added_to_faq ? '・已入 FAQ' : ''}</span>
@@ -1156,7 +1212,6 @@
         <header class="cgu-submitted-head">
           <div class="cgu-sim-badges-row">
             <strong class="cgu-receipt-code">${esc(rpt.receipt_id)}</strong>
-            <span class="cgu-fictional-tag">${esc(rpt.fictional_label || '虛構示範資料')}</span>
             <span>${esc(rpt.student_name)} · ${esc(rpt.partner_school)}</span>
           </div>
           <span class="cgu-status-chip status-${esc(rpt.status)}">${esc(rpt.status_label)}</span>
@@ -1182,12 +1237,8 @@
       <div class="cgu-sim-card cgu-oia-shell">
         <header class="cgu-sim-head">
           <div>
-            <div class="cgu-sim-badges-row">
-              <span class="cgu-sim-badge">${esc(SIM_BADGE)}</span>
-              <span class="cgu-fictional-tag">預載 ${esc(dash.seed_count || 5)} 筆明確標示之虛構示範資料</span>
-            </div>
-            <h1 id="cgu-oia-console-title">國際處視角（模擬）— 承辦收件匣與統計工作台</h1>
-            <p class="cgu-sim-lead">承辦於此處執行的每項動作（確認收件、要求補件、回覆詢問、將回覆加入 FAQ、核可心得公開）皆即時同步至本瀏覽器學生端狀態與右上角／側欄通知鈴鐺。</p>
+            <h1 id="cgu-oia-console-title">國際處工作台</h1>
+            <p class="cgu-sim-lead">承辦於此處執行的每項動作（確認收件、要求補件、回覆詢問、將回覆加入 FAQ、核可心得公開）皆即時同步至學生端狀態與通知鈴鐺。</p>
           </div>
           <div class="cgu-sim-head-actions">
             <button type="button" class="cgu-pill-action is-solid" data-cgu-back-student="1">切回學生端查看通知與狀態 →</button>
@@ -1196,7 +1247,7 @@
 
         <p id="cgu-oia-feedback" class="cgu-sim-feedback" role="status" aria-live="polite"></p>
 
-        <section id="cgu-oia-stats-row" class="cgu-oia-stats-grid" aria-label="模擬承辦統計">
+        <section id="cgu-oia-stats-row" class="cgu-oia-stats-grid" aria-label="承辦統計">
           <article class="cgu-oia-stat-card">
             <span class="cgu-stat-label">各校志願數</span>
             <ul class="cgu-stat-list">${prefSummary}</ul>
@@ -1805,43 +1856,7 @@
       return;
     }
 
-    // Simulated file sample & remove actions
-    const sampleDocBtn = event.target.closest('[data-cgu-sim-sample]');
-    if (sampleDocBtn) {
-      const docKey = sampleDocBtn.dataset.cguSimSample;
-      sampleDocBtn.disabled = true;
-      try {
-        await uploadMetadataFile(docKey, buildSyntheticSampleFile(docKey));
-        await renderMyApplicationSim(true);
-      } catch (err) {
-        const fb = $('#cgu-sim-submit-feedback');
-        if (fb) fb.textContent = err.message;
-      } finally {
-        sampleDocBtn.disabled = false;
-      }
-      return;
-    }
-
-    if (event.target.closest('#cgu-sim-fill-all')) {
-      const btn = $('#cgu-sim-fill-all');
-      if (btn) btn.disabled = true;
-      try {
-        const draftFiles = simState.status?.draft_files || {};
-        for (const doc of REQUIRED_DOCS) {
-          if (!draftFiles[doc.key]) {
-            await uploadMetadataFile(doc.key, buildSyntheticSampleFile(doc.key));
-          }
-        }
-        await renderMyApplicationSim(true);
-      } catch (err) {
-        const fb = $('#cgu-sim-submit-feedback');
-        if (fb) fb.textContent = err.message;
-      } finally {
-        if (btn) btn.disabled = false;
-      }
-      return;
-    }
-
+    // Remove staged file action
     const removeDocBtn = event.target.closest('[data-cgu-sim-remove]');
     if (removeDocBtn) {
       const docKey = removeDocBtn.dataset.cguSimRemove;
@@ -1870,7 +1885,7 @@
       const fb = $('#cgu-sim-submit-feedback');
       if (!btn || btn.disabled) return;
       btn.disabled = true;
-      if (fb) fb.textContent = '正在送出模擬申請…';
+      if (fb) fb.textContent = '正在送交國際處…';
       try {
         const res = await apiJson('/demo/connector/applications', {
           method: 'POST',
@@ -1884,7 +1899,8 @@
         await renderMyApplicationSim(true);
         const afterFb = $('#cgu-sim-submit-feedback');
         if (afterFb) {
-          afterFb.textContent = `已建立模擬申請，收件編號：${res.application.receipt_id}（狀態：${res.application.status_label}）`;
+          afterFb.className = 'cgu-sim-feedback cgu-submit-confirm';
+          afterFb.innerHTML = `已送出申請，收件編號：<strong>${esc(res.application.receipt_id)}</strong>（狀態：${esc(res.application.status_label)}）。正式申請請依國際處公告完成線上表單與紙本繳交（<a href="${esc(SELECTION_SOURCE_URL)}" target="_blank" rel="noopener noreferrer">官方公告 ↗</a>）。`;
         }
       } catch (err) {
         if (fb) fb.textContent = err.message;
@@ -1926,7 +1942,7 @@
           }),
         });
         simState.lastAskResult = {
-          mode_label: '規則式比對，非 AI',
+          mode_label: MATCH_MODE_LABEL,
           matched: false,
           matches: [],
           inquiry: res.inquiry,
@@ -1947,13 +1963,6 @@
     if (event.target.closest('[data-cgu-refresh-ask]')) {
       await renderAskOiaPage(true);
       await refreshNotificationsNow();
-      return;
-    }
-
-    // Return report sample fill
-    if (event.target.closest('#cgu-report-fill-sample')) {
-      simState.reportDraft.sections = { ...SAMPLE_REPORT_PARAGRAPHS };
-      await renderReturnReportPage(false);
       return;
     }
 

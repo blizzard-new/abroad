@@ -149,9 +149,14 @@ def test_strip_menu_links_the_three_pages_and_leaves_main_navigation_alone():
     assert menu is not None and menu.name == 'details'
     assert menu.select_one('summary').get_text(strip=True) == '合作構想示意'
     assert [a['href'] for a in menu.select('a')] == ['/preview/office', '/preview/inquiry', '/preview/report']
-    # The original control order and ids remain; the menu is only an addition.
-    assert [b['id'] for b in demo.select('#cgu-demo-strip > button')] == ['cgu-demo-oia-toggle', 'cgu-demo-info', 'cgu-demo-seed', 'cgu-demo-reset']
-    assert len(demo.select('#cgu-demo-strip span')) == 1  # cgu-demo.js appends the storage notice to the first span
+    # The collapsible demo tools panel holds the action buttons + preview menu.
+    assert demo.select_one('#cgu-demo-strip #cgu-demo-tools-toggle').get_text(strip=True) == '展示工具'
+    panel = demo.select_one('#cgu-demo-strip #cgu-demo-tools-panel')
+    assert panel is not None and panel.has_attr('hidden')
+    assert [b['id'] for b in demo.select('#cgu-demo-strip .cgu-demo-tools-actions > button')] == [
+        'cgu-demo-oia-toggle', 'cgu-demo-seed', 'cgu-demo-fill-files',
+        'cgu-demo-fill-report', 'cgu-demo-reset', 'cgu-demo-connector', 'cgu-demo-info',
+    ]
     # Main navigation: identical links, and no preview entry anywhere outside the strip.
     assert set(a.get('href') for a in original.select('nav a')).issubset(set(a.get('href') for a in demo.select('nav a')))
     outside = [a['href'] for a in demo.select('a[href]') if not a.find_parent(id='cgu-demo-strip') and '/preview/' in a['href']]

@@ -23,6 +23,9 @@
   }
   window.localStorage.setItem('exchange-guide-home-school', '長庚大學');
   const url = new URL(location.href);
+  if (url.searchParams.get('present') === '1') {
+    document.documentElement.dataset.cguPresent = '1';
+  }
   url.searchParams.set('home', '長庚大學'); url.searchParams.delete('school');
   history.replaceState(null, '', url);
   window.cguDemoStorageIsolated = true;

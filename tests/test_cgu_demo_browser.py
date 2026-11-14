@@ -43,7 +43,22 @@ def ready(page, url, suffix=''):
     expect(page.locator('#school-switcher-label')).to_have_text('長庚大學')
 
 
+def open_demo_tools(page):
+    panel = page.locator('#cgu-demo-tools-panel')
+    if not panel.is_visible():
+        page.locator('#cgu-demo-tools-toggle').click()
+        expect(panel).to_be_visible()
+
+
+def close_demo_tools(page):
+    panel = page.locator('#cgu-demo-tools-panel')
+    if panel.is_visible():
+        page.locator('#cgu-demo-tools-toggle').click()
+        expect(panel).not_to_be_visible()
+
+
 def seed(page):
+    open_demo_tools(page)
     page.locator('#cgu-demo-seed').click()
     page.locator('.today-primary').wait_for(state='visible')
     page.locator('#boot-splash').wait_for(state='hidden')
@@ -308,11 +323,14 @@ def test_shared_home_search_favorite_compare_and_sources(page, demo_url):
     page.locator('#partners-title').click()
     assert not recents.evaluate('el => el.open')
 
+    open_demo_tools(page)
     page.locator('#cgu-demo-info').click()
+    expect(page.locator('#cgu-demo-dialog')).to_contain_text('這是 UniWay 為長庚大學製作的展示環境')
     expect(page.locator('#cgu-demo-dialog')).to_contain_text('第一階段')
-    expect(page.locator('#cgu-demo-dialog a')).to_have_count(6)
+    expect(page.locator('#cgu-demo-dialog a')).to_have_count(7)
     page.keyboard.press('Escape')
     expect(page.locator('#cgu-demo-dialog')).not_to_be_visible()
+    close_demo_tools(page)
 
 
 def test_native_preparation_workspace_personal_date_and_notice_preview(page, demo_url):
@@ -321,8 +339,8 @@ def test_native_preparation_workspace_personal_date_and_notice_preview(page, dem
     page.locator('.hub-tabs [data-tab=workspace]').click()
     page.locator('[data-ex-new]').click()
     form = page.locator('#exchange-task-form')
-    form.locator('[name=title]').fill('確認示範住宿用品')
-    form.locator('[name=notes]').fill('展示資料：先整理用品清單，再向住宿單位確認。')
+    form.locator('[name=title]').fill('確認海外宿舍用品')
+    form.locator('[name=notes]').fill('先整理用品清單，再向住宿單位確認。')
     form.locator('[name=date_kind]').select_option('personal')
     form.locator('[name=due_date]').fill('2027-06-01')
     form.get_by_role('button', name='保存任務', exact=True).click()
@@ -330,12 +348,12 @@ def test_native_preparation_workspace_personal_date_and_notice_preview(page, dem
     expect(page.locator('.ex-task')).to_contain_text('個人目標 2027-06-01')
     page.reload(wait_until='domcontentloaded')
     page.evaluate('appReady')
-    expect(page.locator('.ex-task')).to_contain_text('確認示範住宿用品')
+    expect(page.locator('.ex-task')).to_contain_text('確認海外宿舍用品')
     screenshot(page, 'desktop-workspace.png')
     page.locator('[data-ex-tab=notice]').click()
     notice = page.locator('#exchange-notice-form')
-    notice.locator('[name=source_label]').fill('虛構展示通知')
-    notice.locator('[name=text]').fill('展示情境：請於 2027/1/10 前回傳申請書。')
+    notice.locator('[name=source_label]').fill('住宿單位通知')
+    notice.locator('[name=text]').fill('請於 2027/1/10 前回傳申請書。')
     notice.get_by_role('button', name='整理待辦草稿').click()
     expect(page.locator('[data-ex-preview]')).to_have_count(1)
     expect(page.locator('[data-ex-preview] [name=due_date]')).to_have_value('2027-01-10')
@@ -409,9 +427,11 @@ def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):
     page.locator('a.back-link').click()
     page.locator('a[data-tab=today]:visible').first.click()
     expect(page.locator('#today-focus-title')).to_have_text('整理兩所志願與想修的課程')
+    open_demo_tools(page)
     page.locator('#cgu-demo-reset').click()
     page.keyboard.press('Escape')
     expect(page.locator('#today-focus-title')).to_have_text('整理兩所志願與想修的課程')
+    open_demo_tools(page)
     page.locator('#cgu-demo-reset').click()
     with page.expect_navigation(wait_until='domcontentloaded'):
         page.locator('#cgu-demo-confirm').click()
@@ -458,30 +478,45 @@ def test_responsive_native_journey(page, demo_url, size):
     page.locator('[data-partner-view="list"]').click()
     expect(page.locator('#partner-table .pr-school-card').first).to_be_visible()
     if size[0] == 390:
-        strip_metrics = page.evaluate(
+        collapsed_metrics = page.evaluate(
             """() => {
                 const strip = document.querySelector('#cgu-demo-strip');
+                const toggle = document.querySelector('#cgu-demo-tools-toggle');
+                const panel = document.querySelector('#cgu-demo-tools-panel');
                 const r = strip.getBoundingClientRect();
-                const btns = [...strip.querySelectorAll('button')].map(b => {
-                    const br = b.getBoundingClientRect();
-                    return { x: br.x, y: br.y, w: br.width, h: br.height, right: br.right };
-                });
+                const tr = toggle.getBoundingClientRect();
                 return {
                     stripHeight: r.height,
-                    stripTop: r.top,
+                    panelHidden: panel.hidden,
                     bodyPadBottom: parseFloat(getComputedStyle(document.body).paddingBottom),
-                    btns,
+                    toggleX: tr.x,
+                    toggleRight: tr.right,
                 };
             }"""
         )
-        assert strip_metrics['stripHeight'] <= 136, f"mobile strip too tall: {strip_metrics['stripHeight']}"
-        assert strip_metrics['bodyPadBottom'] >= strip_metrics['stripHeight'] + 16
-        assert len(strip_metrics['btns']) == 4
-        for b in strip_metrics['btns']:
+        assert collapsed_metrics['panelHidden'] is True
+        assert collapsed_metrics['stripHeight'] <= 60, f"collapsed tools toggle too tall: {collapsed_metrics['stripHeight']}"
+        assert collapsed_metrics['bodyPadBottom'] >= collapsed_metrics['stripHeight'] + 16
+        assert 0 <= collapsed_metrics['toggleX'] and collapsed_metrics['toggleRight'] <= size[0]
+
+        open_demo_tools(page)
+        expanded_metrics = page.evaluate(
+            """() => {
+                const strip = document.querySelector('#cgu-demo-strip');
+                const btns = [...strip.querySelectorAll('.cgu-demo-tools-actions button')]
+                    .filter(b => b.offsetParent !== null)
+                    .map(b => {
+                        const br = b.getBoundingClientRect();
+                        return { x: br.x, y: br.y, right: br.right };
+                    });
+                return { docScrollW: document.documentElement.scrollWidth, btns };
+            }"""
+        )
+        assert expanded_metrics['docScrollW'] <= size[0] + 1
+        assert len(expanded_metrics['btns']) == 7
+        for b in expanded_metrics['btns']:
             assert 0 <= b['x'] and b['right'] <= size[0]
-        # 2x2 button grid: 2 distinct row y positions
-        row_ys = sorted({round(b['y'] / 6) for b in strip_metrics['btns']})
-        assert len(row_ys) == 2
+        close_demo_tools(page)
         screenshot(page, 'mobile-partners.png')
         # Verify mobile compare tray with 3 schools + floating #page-status both clear #cgu-demo-strip and remain clickable
         mobile_tray_check = page.evaluate(
@@ -624,7 +659,7 @@ def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page
         assert metrics['linkCount'] == 8, f'expected 8 visible CGU nav links at {ctx}: {metrics}'
         assert metrics['linksLeft'] >= 0 and metrics['linksRight'] <= metrics['actionsLeft'] + 1, f'nav/actions overlap at {ctx}: {metrics}'
         assert metrics['acctLeft'] >= 0 and metrics['acctRight'] <= vw - 6, f'#account-button clipped at {ctx}: {metrics}'
-        assert metrics['labelText'] == '林小程（展示資料）', f'unexpected label at {ctx}: {metrics}'
+        assert metrics['labelText'] == '林小程', f'unexpected label at {ctx}: {metrics}'
         assert not metrics['labelClipped'], f'#account-button-label truncated at {ctx}: {metrics}'
         assert metrics['allTitled'], f'missing title tooltip on topbar links at {ctx}: {metrics}'
         if vw >= 960:
@@ -636,7 +671,7 @@ def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page
         expect(page.locator('#home-landing-title')).to_be_visible()
         assert_topbar_clean(vw, '#home-rest')
         page.locator('#glass-navigation .uniway-public-nav a[data-public-route="partners"]').hover()
-        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="school-connector"]').focus()
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="return-report"]').focus()
         assert_topbar_clean(vw, '#home-hover-focus')
 
         page.evaluate("window.location.hash = '#partners'")
@@ -661,7 +696,7 @@ def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page
         page.mouse.move(10, 500)
         page.evaluate("document.activeElement?.blur?.()")
         assert_topbar_clean(vw, '#partners-retry-rest')
-        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="school-connector"]').hover()
+        page.locator('#glass-navigation .uniway-public-nav a[data-public-route="return-report"]').hover()
         page.locator('#glass-navigation .uniway-public-nav a[data-public-route="ask-oia"]').focus()
         assert_topbar_clean(vw, '#partners-retry-hover')
         assert page.locator('#account-workspace-sync-retry').bounding_box()['width'] <= 40
@@ -815,13 +850,16 @@ def test_source_service_failure_and_storage_namespace(page, demo_url):
     }""")
     ready(page, demo_url)
     page.route('**/demo/content', lambda route: route.fulfill(status=503, body='unavailable'))
+    open_demo_tools(page)
     page.locator('#cgu-demo-info').click()
     expect(page.locator('#cgu-demo-dialog')).to_contain_text('暫時無法載入')
     page.keyboard.press('Escape')
     page.unroute('**/demo/content')
+    open_demo_tools(page)
     page.locator('#cgu-demo-info').click()
     expect(page.locator('#cgu-demo-dialog')).to_contain_text('校內申請選送須知')
     page.keyboard.press('Escape')
+    open_demo_tools(page)
     page.locator('#cgu-demo-reset').click()
     with page.expect_navigation(wait_until='domcontentloaded'):
         page.locator('#cgu-demo-confirm').click()
@@ -836,7 +874,6 @@ def test_storage_denial_keeps_original_ui_usable(page, demo_url):
     page.add_init_script("Object.defineProperty(window,'localStorage',{configurable:true,get(){throw new DOMException('blocked','SecurityError')}})")
     page.set_viewport_size({'width': 390, 'height': 844})
     ready(page, demo_url)
-    expect(page.locator('#cgu-demo-strip')).to_contain_text('瀏覽器儲存受限')
     denial_clearance = page.evaluate(
         """() => {
             const h = document.querySelector('#cgu-demo-strip').getBoundingClientRect().height;
@@ -845,6 +882,9 @@ def test_storage_denial_keeps_original_ui_usable(page, demo_url):
         }"""
     )
     assert denial_clearance['pad'] >= denial_clearance['h'] + 16
+    open_demo_tools(page)
+    expect(page.locator('#cgu-demo-strip')).to_contain_text('瀏覽器儲存受限')
+    close_demo_tools(page)
     seed(page)
     expect(page.locator('.today-primary')).to_be_visible()
 
@@ -872,11 +912,13 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     expect(page.locator('#school-switcher')).not_to_contain_text('切換就讀學校')
     expect(page.locator('input[name="home_university"]')).to_have_attribute('readonly', '')
 
-    # Feature 2: 校方介接規格頁
-    page.locator('.uniway-public-nav a[data-public-route="school-connector"]').click()
+    # Feature 2: 校方介接規格頁（從學生導覽列移除，改由底部展示工具進入）
+    expect(page.locator('.uniway-public-nav a[data-public-route="school-connector"]')).to_have_count(0)
+    open_demo_tools(page)
+    page.locator('#cgu-demo-connector').click()
     spec_page = page.locator('#cgu-connector-spec-page')
     expect(spec_page).to_be_visible()
-    expect(spec_page).to_contain_text('模擬・尚未與校方串接')
+    expect(spec_page).not_to_contain_text('模擬')
     for method_name in ('submit_application', 'send_inquiry', 'submit_return_report', 'get_status'):
         expect(spec_page.locator('#cgu-connector-spec-table')).to_contain_text(method_name)
     for phase_title in ('不需校方配合', '小型試辦', '需校方資訊單位'):
@@ -893,53 +935,64 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     # Step 1: 學生預檢缺件（不可送出）
     sim_hub = page.locator('#cgu-my-application-sim')
     expect(sim_hub).to_be_visible()
-    expect(sim_hub).to_contain_text('模擬・尚未與校方串接')
-    expect(sim_hub).to_contain_text('展示版不保存檔案內容，請勿上傳真實個資')
+    expect(sim_hub).not_to_contain_text('模擬')
+    expect(sim_hub).not_to_contain_text('SIM-')
+    expect(sim_hub).not_to_contain_text('SHA-256')
+    expect(sim_hub).to_contain_text('檔案僅用於完整性檢查，不會保存內容。')
     expect(sim_hub).to_contain_text('實際申請仍須依國際處公告填線上表單並繳交紙本。')
     expect(page.locator('#cgu-sim-submit-btn')).to_be_disabled()
+    expect(sim_hub.locator('[data-cgu-sim-sample]')).to_have_count(0)
+    expect(sim_hub.locator('#cgu-sim-fill-all')).to_have_count(0)
 
-    # Upload 1 real synthetic file via file input + 1 sample button -> still missing 3 docs
+    # Upload 1 synthetic file via file input -> still missing 4 docs; SHA-256 stays hidden from student UI
     page.locator('input[data-cgu-sim-upload="online_form"]').set_input_files({
         'name': 'demo_online_form.pdf',
         'mimeType': 'application/pdf',
         'buffer': b'SYNTHETIC-ONLINE-FORM-ONLY-HASHED-IN-RAM',
     })
     expect(sim_hub.locator('[data-doc-row="online_form"]')).to_contain_text('demo_online_form.pdf')
-    expect(sim_hub.locator('[data-doc-row="online_form"]')).to_contain_text('SHA-256')
+    expect(sim_hub).not_to_contain_text('SHA-256')
 
-    sim_hub.locator('[data-cgu-sim-sample="parent_consent"]').click()
-    expect(sim_hub.locator('[data-doc-row="parent_consent"]')).to_contain_text('已備齊')
     page.locator('#cgu-sim-precheck-btn').click()
     precheck_box = page.locator('#cgu-sim-precheck-box')
     expect(precheck_box).to_contain_text('缺件不可送出')
+    expect(precheck_box).to_contain_text('家長同意書')
     expect(precheck_box).to_contain_text('語文證明')
     expect(precheck_box).to_contain_text('含排名的中文歷年成績單')
     expect(precheck_box).to_contain_text('一頁讀書計畫')
     expect(page.locator('#cgu-sim-submit-btn')).to_be_disabled()
 
-    # Step 2: 補齊後送出取得 SIM- 收件編號
-    page.locator('#cgu-sim-fill-all').click()
-    expect(precheck_box).to_contain_text('完整性預檢通過')
+    # Step 2: 透過展示工具補齊後送出取得 CGU-116-1-A 收件編號
+    open_demo_tools(page)
+    page.locator('#cgu-demo-fill-files').click()
+    expect(precheck_box).to_contain_text('文件預檢通過')
     expect(page.locator('#cgu-sim-submit-btn')).to_be_enabled()
     page.locator('#cgu-sim-submit-btn').click()
+    expect(page.locator('#cgu-sim-submit-feedback')).to_contain_text('正式申請請依國際處公告完成線上表單與紙本繳交')
+    expect(page.locator('#cgu-sim-submit-feedback a[href*="85785"]')).to_be_visible()
     records = page.locator('#cgu-sim-app-records')
-    expect(records).to_contain_text('SIM-APP-')
+    expect(records).to_contain_text('CGU-116-1-A')
     expect(records).to_contain_text('已送出')
     expect(records).to_contain_text('已收件')
     expect(records).to_contain_text('要求補件／初審通過')
 
     receipt_text = records.locator('.cgu-submitted-card').first.get_attribute('data-receipt-id')
-    assert receipt_text and receipt_text.startswith('SIM-APP-')
+    assert receipt_text and receipt_text.startswith('CGU-116-1-A')
 
-    # Step 3: 切到國際處視角要求補件
+    # Step 3: 切到國際處工作台要求補件
+    open_demo_tools(page)
     oia_toggle = page.locator('#cgu-demo-oia-toggle')
-    expect(oia_toggle).to_have_text('切換為國際處視角')
+    expect(oia_toggle).to_have_text('切換國際處視角')
     oia_toggle.click()
     oia_page = page.locator('#cgu-oia-console-page')
     expect(oia_page).to_be_visible()
-    expect(oia_toggle).to_have_text('切換回學生視角')
-    expect(oia_page).to_contain_text('模擬・尚未與校方串接')
-    expect(oia_page).to_contain_text('預載 5 筆明確標示之虛構示範資料')
+    expect(oia_page.locator('#cgu-oia-console-title')).to_have_text('國際處工作台')
+    expect(oia_page).not_to_contain_text('模擬')
+    expect(oia_page).not_to_contain_text('SIM-')
+    expect(oia_page).not_to_contain_text('虛構')
+    open_demo_tools(page)
+    expect(oia_toggle).to_have_text('切換學生視角')
+    close_demo_tools(page)
     expect(oia_page.locator('#cgu-oia-stats-row')).to_contain_text('各校志願數')
     expect(oia_page.locator('#cgu-oia-stats-row')).to_contain_text('缺件／要求補件數')
     expect(oia_page.locator('#cgu-oia-stats-row')).to_contain_text('最常被問的問題')
@@ -979,6 +1032,7 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     screenshot(page, 'desktop-oia-console.png')
 
     # Step 4: 切回學生端看到通知與狀態更新（重新整理後保留）
+    open_demo_tools(page)
     oia_toggle.click()
     expect(sim_hub).to_be_visible()
     expect(records.locator(f'[data-receipt-id="{receipt_text}"]')).to_contain_text('要求補件')
@@ -989,7 +1043,8 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     page.locator('#notification-button').click()
     expect(page.locator('#notification-dialog')).to_be_visible()
     expect(page.locator('#notification-center-list')).to_contain_text(receipt_text)
-    expect(page.locator('#notification-center-list')).to_contain_text('模擬・尚未與校方串接')
+    expect(page.locator('#notification-center-list')).not_to_contain_text('模擬')
+    expect(page.locator('#notification-center-list')).to_contain_text('國際處通知')
     page.locator('#notification-dialog .dialog-close').click()
 
     # Reload page -> application supplement status & notification persist
@@ -999,34 +1054,37 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     expect(page.locator(f'#cgu-sim-app-records [data-receipt-id="{receipt_text}"]')).to_contain_text('要求補件')
     expect(page.locator('#notification-badge')).to_be_visible()
 
-    # Step 5: 學生端「問國際處」— 規則比對命中 + 提問未命中轉承辦 → 承辦回覆
+    # Step 5: 學生端「問國際處」— 常見問題比對命中 + 提問轉承辦 → 承辦回覆
     page.locator('.uniway-public-nav a[data-public-route="ask-oia"]').click()
     ask_page = page.locator('#cgu-ask-oia-page')
     expect(ask_page).to_be_visible()
-    expect(ask_page).to_contain_text('規則式比對，非 AI')
+    expect(ask_page).to_contain_text('依國際處公告與常見問題回覆')
+    expect(ask_page).not_to_contain_text('模擬')
+    expect(ask_page).not_to_contain_text('規則式比對，非 AI')
 
     # First test keyword hit, plus escalating via「仍要詢問承辦」
     page.locator('#cgu-ask-input').fill('請問 116-1 校內申請什麼時候截止？需要紙本嗎？')
     page.locator('#cgu-ask-submit-btn').click()
     hit_box = page.locator('#cgu-ask-result-box')
-    expect(hit_box).to_contain_text('規則式比對，非 AI')
+    expect(hit_box).to_contain_text('依國際處公告與常見問題回覆')
     expect(hit_box).to_contain_text('2026/12/21')
     expect(hit_box.locator('a[href*="cgu.edu.tw"]').first).to_be_visible()
     page.locator('#cgu-ask-escalate-btn').click()
-    expect(page.locator('#cgu-ask-result-box')).to_contain_text('已轉送模擬承辦收件匣')
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('已轉送國際處承辦')
 
-    # Next test unmatched question -> escalates to simulated OIA inbox
+    # Next test unmatched question -> creates CGU-116-1-Q inquiry
     page.locator('#cgu-ask-input').fill('請問基督城冬季無障礙接駁專車要向哪個窗口預約？')
     page.locator('#cgu-ask-submit-btn').click()
-    expect(page.locator('#cgu-ask-result-box')).to_contain_text('未命中現有規則與 FAQ')
-    expect(page.locator('#cgu-ask-result-box')).to_contain_text('SIM-INQ-')
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('已建立詢問單並轉送國際處承辦')
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('CGU-116-1-Q')
     inq_card = page.locator('#cgu-ask-inquiries-list .cgu-inquiry-card').first
     expect(inq_card).to_contain_text('無障礙接駁專車')
     inq_id = inq_card.get_attribute('data-receipt-id')
-    assert inq_id and inq_id.startswith('SIM-INQ-')
+    assert inq_id and inq_id.startswith('CGU-116-1-Q')
     expect(inq_card).to_contain_text('待承辦回覆')
 
     # Step 6: 承辦回覆並加入 FAQ → 學生端看到回覆與通知
+    open_demo_tools(page)
     oia_toggle.click()
     inq_oia_card = page.locator(f'#cgu-oia-console-page [data-oia-card="{inq_id}"]')
     expect(inq_oia_card).to_be_visible()
@@ -1036,16 +1094,17 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     inq_oia_card.locator('[data-oia-act="add_to_faq"]').click()
     expect(inq_oia_card).to_contain_text('已入 FAQ')
 
+    open_demo_tools(page)
     oia_toggle.click()
     expect(ask_page).to_be_visible()
     expect(page.locator(f'#cgu-ask-inquiries-list [data-receipt-id="{inq_id}"]')).to_contain_text('已回覆')
     expect(page.locator(f'#cgu-ask-inquiries-list [data-receipt-id="{inq_id}"]')).to_contain_text('無障礙接機申請連結')
     expect(page.locator('#notification-badge')).to_have_text('3')
 
-    # Verify add_to_faq immediately makes natural Chinese follow-up questions hit the rule-based FAQ!
+    # Verify add_to_faq immediately makes natural Chinese follow-up questions hit the FAQ lookup!
     page.locator('#cgu-ask-input').fill('請問無障礙接駁專車要找誰？')
     page.locator('#cgu-ask-submit-btn').click()
-    expect(page.locator('#cgu-ask-result-box')).to_contain_text('規則式比對，非 AI')
+    expect(page.locator('#cgu-ask-result-box')).to_contain_text('依國際處公告與常見問題回覆')
     expect(page.locator('#cgu-ask-result-box')).to_contain_text('無障礙接機申請連結')
 
 
@@ -1056,36 +1115,43 @@ def test_return_report_validation_print_approval_mobile_overflow_and_reset(page,
     page.locator('.uniway-public-nav a[data-public-route="return-report"]').click()
     rpt_page = page.locator('#cgu-return-report-page')
     expect(rpt_page).to_be_visible()
-    expect(rpt_page).to_contain_text('模擬・尚未與校方串接')
+    expect(rpt_page.locator('#cgu-return-report-title')).to_have_text('返國心得')
+    expect(rpt_page).not_to_contain_text('模擬')
+    expect(rpt_page.locator('#cgu-report-fill-sample')).to_have_count(0)
 
     # Under 300 chars blocked on submit
     page.locator('[data-cgu-report-sec="preparation"]').fill('太短的草稿內容')
     page.locator('#cgu-report-submit-btn').click()
     expect(page.locator('#cgu-report-feedback')).to_contain_text('300 字')
 
-    # Fill 300+ char fictional draft, add video URL, keep consent checked, submit
-    page.locator('#cgu-report-fill-sample').click()
+    # Fill 300+ char draft via 展示工具, add video URL, keep consent checked, submit
+    open_demo_tools(page)
+    page.locator('#cgu-demo-fill-report').click()
     expect(page.locator('[data-cgu-report-count="preparation"]')).to_contain_text('已達標')
     page.locator('#cgu-report-video').fill('https://example.com/lincoln-demo-video')
     page.locator('#cgu-report-submit-btn').click()
 
     rpt_records = page.locator('#cgu-report-records')
-    expect(rpt_records).to_contain_text('SIM-RPT-')
+    expect(rpt_records).to_contain_text('CGU-116-1-R')
     rpt_id = rpt_records.locator('.cgu-submitted-card').first.get_attribute('data-receipt-id')
-    assert rpt_id and rpt_id.startswith('SIM-RPT-')
+    assert rpt_id and rpt_id.startswith('CGU-116-1-R')
 
     # Verify printable page renders in real Chromium page with CSP & zero JS errors
     print_page = page.context.new_page()
     print_errors = []
     print_page.on('pageerror', lambda error: print_errors.append(str(error)))
     print_page.goto(f'{demo_url}/demo/connector/return-reports/{rpt_id}/print', wait_until='domcontentloaded')
-    expect(print_page.locator('h1')).to_contain_text('長庚大學出國研修返國學期報告表（展示列印版）')
-    expect(print_page.locator('.cgu-sim-badge')).to_have_text('模擬・尚未與校方串接')
+    expect(print_page.locator('h1')).to_contain_text('長庚大學出國研修返國學期報告表')
+    expect(print_page.locator('h1')).not_to_contain_text('展示列印版')
+    expect(print_page.locator('.cgu-sim-badge')).to_have_count(0)
+    assert '模擬' not in print_page.inner_text('body')
+    assert 'SIM-' not in print_page.inner_text('body')
     expect(print_page.locator('#cgu-print-trigger')).to_be_visible()
     assert print_errors == []
     print_page.close()
 
-    # Approve in OIA Console -> verify appears on Lincoln University detail page under 學長姐心得（示範資料）
+    # Approve in OIA Console -> verify appears on Lincoln University detail page under 學長姐心得
+    open_demo_tools(page)
     page.locator('#cgu-demo-oia-toggle').click()
     rpt_oia_card = page.locator(f'#cgu-oia-console-page [data-oia-card="{rpt_id}"]')
     expect(rpt_oia_card).to_be_visible()
@@ -1095,8 +1161,9 @@ def test_return_report_validation_print_approval_mobile_overflow_and_reset(page,
     page.goto(demo_url + '/#school=' + '林肯大學%20Lincoln%20University', wait_until='domcontentloaded')
     public_block = page.locator('#cgu-approved-return-reports')
     expect(public_block).to_be_visible()
-    expect(public_block).to_contain_text('學長姐心得（示範資料）')
-    expect(public_block).to_contain_text('模擬・尚未與校方串接')
+    expect(public_block).to_contain_text('學長姐心得')
+    expect(public_block).not_to_contain_text('示範資料')
+    expect(public_block).not_to_contain_text('模擬')
     expect(public_block).to_contain_text(rpt_id)
     expect(public_block.locator('a[href="https://example.com/lincoln-demo-video"]')).to_be_visible()
     page.locator('#detail-tab-experiences').click()
@@ -1115,6 +1182,7 @@ def test_return_report_validation_print_approval_mobile_overflow_and_reset(page,
 
     # Reset wipes all newly added data (return reports, public display, notifications)
     page.set_viewport_size({'width': 1440, 'height': 1000})
+    open_demo_tools(page)
     page.locator('#cgu-demo-reset').click()
     with page.expect_navigation(wait_until='domcontentloaded'):
         page.locator('#cgu-demo-confirm').click()
@@ -1126,3 +1194,80 @@ def test_return_report_validation_print_approval_mobile_overflow_and_reset(page,
     assert status_after['inquiries'] == []
     assert status_after['return_reports'] == []
     assert page.request.get(demo_url + '/account/notifications').json()['items'] == []
+
+
+def test_formal_product_presentation_hides_demo_jargon_and_supports_present_mode(page, demo_url):
+    ready(page, demo_url)
+    expect(page.locator('#cgu-demo-tools-panel')).not_to_be_visible()
+    expect(page.locator('.uniway-public-nav a[data-public-route="school-connector"]')).to_have_count(0)
+
+    # Seed application + fill 5 files + submit so populated records also appear in visible UI checks
+    seed(page)
+    open_demo_tools(page)
+    page.locator('#cgu-demo-fill-files').click()
+    expect(page.locator('#cgu-sim-precheck-box')).to_contain_text('文件預檢通過')
+    page.locator('#cgu-sim-submit-btn').click()
+    expect(page.locator('#cgu-sim-app-records')).to_contain_text('CGU-116-1-A')
+
+    def assert_visible_text_clean(label: str):
+        visible_text = page.evaluate(
+            """() => {
+                const strip = document.querySelector('#cgu-demo-strip');
+                const origDisplay = strip ? strip.style.display : '';
+                if (strip) strip.style.display = 'none';
+                const txt = document.body.innerText || '';
+                if (strip) strip.style.display = origDisplay;
+                return txt;
+            }"""
+        )
+        for forbidden in ('模擬', 'SIM-', '示範', '展示版', '虛構'):
+            assert forbidden not in visible_text, f'found {forbidden!r} on {label}: {visible_text[:400]}'
+
+    for label, target_hash in (
+        ('#home', '#home'),
+        ('#partners', '#partners'),
+        ('#scholarships', '#scholarships'),
+        ('#my-application', '#my-application'),
+        ('#ask-oia', '#ask-oia'),
+        ('#return-report', '#return-report'),
+        ('#oia-view', '#oia-view'),
+    ):
+        page.evaluate(f"window.location.hash = {target_hash!r}")
+        page.wait_for_timeout(120)
+        assert_visible_text_clean(label)
+
+    # Verify ?present=1 completely hides the bottom showcase toolbar at desktop & mobile
+    for vw in (1440, 390):
+        page.set_viewport_size({'width': vw, 'height': 900})
+        ready(page, demo_url, '?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&present=1#my-application')
+        expect(page.locator('#cgu-my-application-sim')).to_be_visible()
+        expect(page.locator('#cgu-demo-strip')).to_be_hidden()
+        assert page.evaluate('getComputedStyle(document.documentElement).getPropertyValue("--cgu-strip-height").trim()') == '0px'
+        assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+
+
+def test_retained_single_about_disclaimer_and_post_submission_official_notice(page, demo_url):
+    ready(page, demo_url)
+    expected_disclaimer = '這是 UniWay 為長庚大學製作的展示環境，資料不會送達長庚大學國際事務處。正式申請請依國際處公告辦理。'
+
+    # Must NOT appear on regular visible UI outside "關於此展示"
+    assert expected_disclaimer not in page.inner_text('body')
+
+    # Open 展示工具 -> 關於此展示 and verify exact disclaimer + official link
+    open_demo_tools(page)
+    page.locator('#cgu-demo-info').click()
+    dialog = page.locator('#cgu-demo-dialog')
+    expect(dialog).to_be_visible()
+    expect(dialog).to_contain_text(expected_disclaimer)
+    expect(dialog.locator('a[href*="cgu.edu.tw/oia-ch/Subject/Detail/85785"]').first).to_be_visible()
+    page.keyboard.press('Escape')
+
+    # Fill files via 展示工具 & submit -> verify confirmation screen keeps official process notice & link
+    open_demo_tools(page)
+    page.locator('#cgu-demo-fill-files').click()
+    page.locator('#cgu-sim-submit-btn').click()
+    confirm_box = page.locator('#cgu-sim-submit-feedback')
+    expect(confirm_box).to_contain_text('正式申請請依國際處公告完成線上表單與紙本繳交')
+    expect(confirm_box.locator('a[href*="cgu.edu.tw/oia-ch/Subject/Detail/85785"]')).to_be_visible()
+    assert expected_disclaimer not in page.locator('#cgu-my-application-sim').inner_text()
+    assert expected_disclaimer not in page.inner_text('body')
