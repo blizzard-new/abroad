@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-14 每日批次：AI 簡報／多益時態兩篇（驗收完成，待開 PR）
+## 2026-11-14 每日批次：AI 簡報／多益時態兩篇（PR #351 待審）
 
 Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261114`，base main `aa2d1424d1645308b479bee648eb056a9e956f8e`。已讀 workflow、backlog、51 篇庫存與相關全文；open PR 為空，#346 已合併、昨天兩篇在 main 並排除重做。#78／#92 已合併，無基礎相依。開始與提交前同日全狀態 PR 為空，無同日本地／遠端分支後才建立本日唯一分支；main 未變。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 17：用 AI 練英文簡報怎麼做？主線、講稿修改與問答 Prompt | `ai-english-presentation-practice` | 完整文章與驗收完成；待建立本日唯一 PR，後續排除 |
-| 20：多益 Part 5 時態題怎麼判斷？時間線、完成式與原創題解析 | `toeic-part-five-verb-tenses` | 同批完整文章與驗收完成，待同一個 PR，後續排除 |
+| 17：用 AI 練英文簡報怎麼做？主線、講稿修改與問答 Prompt | `ai-english-presentation-practice` | [PR #351](https://github.com/blizzard-new/abroad/pull/351) 待審，完整文章與驗收完成；後續排除 |
+| 20：多益 Part 5 時態題怎麼判斷？時間線、完成式與原創題解析 | `toeic-part-five-verb-tenses` | 同一個 PR #351 待審，完整文章與驗收完成；後續排除 |
 
 依編輯判斷，無 Search Console、搜尋量或排名資料。簡報篇處理聽眾、主張、提案／證據、三輪可填 Prompt、講稿前後修改、提示卡及問答，與自介／澄清／發音分工；不造聲音、模型或方案實測。時態篇處理時間參照、完成／延續／進行及子句，與既有詞性／段落銜接分工；有六題 24 選項及解析、不足資訊示例，沒有官方校準或保證提分。兩個探索來源 404 已排除，替代官方頁與範圍限制詳錄。
 
