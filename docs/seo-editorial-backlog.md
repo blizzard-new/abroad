@@ -1,5 +1,18 @@
 # Editorial intentions and next topics
 
+## 2026-11-14 每日批次：AI 簡報／多益時態兩篇（驗收完成，待開 PR）
+
+Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261114`，base main `aa2d1424d1645308b479bee648eb056a9e956f8e`。已讀 workflow、backlog、51 篇庫存與相關全文；open PR 為空，#346 已合併、昨天兩篇在 main 並排除重做。#78／#92 已合併，無基礎相依。開始與提交前同日全狀態 PR 為空，無同日本地／遠端分支後才建立本日唯一分支；main 未變。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 17：用 AI 練英文簡報怎麼做？主線、講稿修改與問答 Prompt | `ai-english-presentation-practice` | 完整文章與驗收完成；待建立本日唯一 PR，後續排除 |
+| 20：多益 Part 5 時態題怎麼判斷？時間線、完成式與原創題解析 | `toeic-part-five-verb-tenses` | 同批完整文章與驗收完成，待同一個 PR，後續排除 |
+
+依編輯判斷，無 Search Console、搜尋量或排名資料。簡報篇處理聽眾、主張、提案／證據、三輪可填 Prompt、講稿前後修改、提示卡及問答，與自介／澄清／發音分工；不造聲音、模型或方案實測。時態篇處理時間參照、完成／延續／進行及子句，與既有詞性／段落銜接分工；有六題 24 選項及解析、不足資訊示例，沒有官方校準或保證提分。兩個探索來源 404 已排除，替代官方頁與範圍限制詳錄。
+
+原 51 篇 JSON、URL、刊載日與 lastmod 不變，共 53 篇。10/30 study-plan `97de3fda` 未重做，無三品牌比較實測。新增兩張專用授權真實攝影與原創 HTML 圖解。53 篇 gate、180 項 SEO、63 項 E2E、六組無 JavaScript 均首次通過；15 張目視與 wheel 646 檔核對完成。來源、教材、攝影與驗收見[本批紀錄](seo-editorial-validation-2026-11-14.md)。歷史待審狀態以本日實查優先；本批未合併或部署。
+
 ## 2026-11-13 每日批次：匯率預算／AI 發音兩篇（PR #346 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261113`，base main `661a4546ffc48abf7bd908a9fe500bf22968634d`。讀取 workflow、backlog、49 篇庫存與相關全文；核對全部 16 個 open PR 範圍與完整分頁檔案清單，無 editorial 變更。#329 已合併，昨天兩篇在 main，排除重做；#78／#92 已合併，無基礎相依。提交前 main／16 個 head 未變，同日全狀態 PR 為空；沿用本日唯一隔離分支。
