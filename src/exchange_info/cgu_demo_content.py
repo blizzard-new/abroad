@@ -102,7 +102,7 @@ def journey_levels(context, evaluated, catalog, values=None):
             item['source_urls'] = [sources[source]] if source in sources else []
             if task['id'] == 'internal-submit' and is_116_fall:
                 item.update(
-                    title='116-1 校內申請截止（2026/12/21 17:00 校內截止前完成長庚申請）',
+                    title='送出校內申請（12/21 17:00 截止）',
                     official_deadline_at='2026-12-21T17:00:00+08:00',
                     deadline_confirmed=True,
                     deadline_source_url=sources['selection'],

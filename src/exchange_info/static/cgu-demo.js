@@ -390,6 +390,11 @@
     const btn = $('#cgu-demo-fill-files');
     if (btn) btn.disabled = true;
     try {
+      const activePlan = await resolveActivePlan(true);
+      if (!activePlan) {
+        show('請先建立申請計畫', '<p>目前尚無申請計畫。請先建立申請計畫（或點選展示工具「載入示範申請」），再帶入 5 份應備文件。</p>');
+        return;
+      }
       const st = await loadConnectorStatus();
       const draftFiles = st?.draft_files || {};
       for (const doc of REQUIRED_DOCS) {
@@ -398,8 +403,9 @@
         }
       }
       await loadConnectorStatus();
-      if (!/^#my-application(?:\?|$)/.test(window.location.hash)) {
-        window.location.hash = '#my-application';
+      const targetHref = buildSubmitLevelHref(activePlan.id);
+      if (window.location.hash !== targetHref) {
+        window.location.hash = targetHref;
       } else {
         await renderMyApplicationSim(false);
       }
@@ -463,9 +469,10 @@
       const existingStepLink = panel.querySelector('a[href^="#my-application"]');
       const existingPill = panel.querySelector('.today-pill');
       const pillHtml = existingPill ? existingPill.outerHTML : '<span class="today-pill">校內截止</span>';
+      const fallbackPlanId = simState.activePlan?.id || $('#application-path #plan-select')?.value || parseMyAppRoute().planParam;
       const stepLinkHtml = existingStepLink
         ? `<a class="today-link" href="${esc(existingStepLink.getAttribute('href') || '#my-application')}">前往這一項 →</a>`
-        : '';
+        : (fallbackPlanId ? `<a class="today-link" href="${esc(buildSubmitLevelHref(fallbackPlanId))}">查看送件紀錄 →</a>` : '');
       panel.innerHTML = `
         <h3>下一個已確認的官方期限</h3>
         <p class="today-date">2026/12/21 17:00</p>
@@ -540,8 +547,16 @@
     status: null,
     oia: null,
     oiaFilter: 'all',
-    selectedPref1: '林肯大學 Lincoln University',
+    selectedPref1: '',
     selectedPref2: '',
+    pref1PlanId: null,
+    pref1UserEditedPlanId: null,
+    cachedPlans: null,
+    planFetchPromise: null,
+    activePlan: null,
+    statusNeedsRefresh: false,
+    lastSubmitReceiptId: '',
+    lastSubmitHtml: '',
     lastAskQuestion: '',
     lastAskResult: null,
     reportDraft: {
@@ -569,9 +584,80 @@
   }
 
   function renderPartnerOptions(selected, includeEmpty = false) {
-    const schools = getPartnerSchoolNames();
+    const baseSchools = getPartnerSchoolNames();
+    const schools = selected && !baseSchools.includes(selected) ? [selected, ...baseSchools] : baseSchools;
     const head = includeEmpty ? `<option value=""${!selected ? ' selected' : ''}>（不選填第二志願）</option>` : '';
     return head + schools.map(name => `<option value="${esc(name)}"${name === selected ? ' selected' : ''}>${esc(name)}</option>`).join('');
+  }
+
+  function parseMyAppRoute(hash = window.location.hash) {
+    const onMyApp = /^#my-application(?:\?|$)/.test(hash || '');
+    const queryStr = onMyApp && hash.includes('?') ? hash.slice(hash.indexOf('?') + 1) : '';
+    const params = new URLSearchParams(queryStr);
+    return {
+      onMyApp,
+      planParam: params.get('plan') || '',
+      view: params.get('view') || 'today',
+      level: params.get('level') || '',
+    };
+  }
+
+  function buildSubmitLevelHref(planId) {
+    const params = new URLSearchParams({ plan: planId, view: 'level', level: 'cgu-internal-submit' });
+    return `#my-application?${params.toString()}`;
+  }
+
+  function findPlanApplication(activePlan, apps = []) {
+    if (!activePlan || !Array.isArray(apps) || !apps.length) return null;
+    const matchedByPlan = apps.find(a => a.plan_id && a.plan_id === activePlan.id);
+    if (matchedByPlan) return matchedByPlan;
+    const planSchool = activePlan.context?.target_school || '';
+    const legacyMatch = apps.find(a => !a.plan_id && (!planSchool || a.preference_1 === planSchool));
+    return legacyMatch || null;
+  }
+
+  async function resolveActivePlan(forceFetch = false) {
+    const indexed = window.UniWayPlanIndex?.current?.();
+    let items = (!forceFetch && Array.isArray(indexed?.items)) ? indexed.items : null;
+    if (!items) {
+      if (!forceFetch && Array.isArray(simState.cachedPlans)) {
+        items = simState.cachedPlans;
+      } else {
+        if (!simState.planFetchPromise) {
+          simState.planFetchPromise = fetch('/account/application-paths?home_school=' + encodeURIComponent('長庚大學'))
+            .then(res => (res.ok ? res.json() : { items: [] }))
+            .then(data => {
+              const list = Array.isArray(data?.items) ? data.items : [];
+              simState.cachedPlans = list;
+              return list;
+            })
+            .catch(() => simState.cachedPlans || [])
+            .finally(() => {
+              simState.planFetchPromise = null;
+            });
+        }
+        items = await simState.planFetchPromise;
+      }
+    } else {
+      simState.cachedPlans = items;
+    }
+
+    const livePlans = (items || []).filter(p => !p.archived);
+    if (!livePlans.length) return null;
+
+    const { planParam } = parseMyAppRoute();
+    if (planParam) {
+      const requestedPlan = (items || []).find(p => p.id === planParam);
+      if (requestedPlan) return requestedPlan.archived ? null : requestedPlan;
+    }
+
+    const domPlanId = $('#application-path #plan-select')?.value || '';
+    if (domPlanId) {
+      const domPlan = (items || []).find(p => p.id === domPlanId);
+      if (domPlan) return domPlan.archived ? null : domPlan;
+    }
+
+    return [...livePlans].sort((a, b) => String(b.updated_at || '').localeCompare(String(a.updated_at || '')))[0];
   }
 
   // ──────────────────────────────────────────────────────────────
@@ -674,18 +760,212 @@
     </ol>`;
   }
 
+  function buildStatusNote(planApp) {
+    if (!planApp) return '';
+    if (planApp.status === 'supplement_requested') {
+      return `補件原因：${planApp.supplement_reason || '請依國際處通知補齊應備文件'}`;
+    }
+    if (planApp.status === 'passed_initial') {
+      return '初審文件檢核通過，請留意後續面試或提名通知';
+    }
+    if (planApp.status === 'received') {
+      return '國際處承辦已確認收件，進入初審階段';
+    }
+    return '已送交國際處，待承辦確認收件';
+  }
+
+  function enhanceTodayOiaStatus(activePlan = simState.activePlan, planApp = simState.activePlanApp) {
+    const { onMyApp, view } = parseMyAppRoute();
+    const todayView = $('#application-path #today-view');
+    if (!onMyApp || view !== 'today' || !todayView || todayView.hidden || !activePlan || !planApp) return;
+    const todayWrap = todayView.querySelector('.today');
+    if (!todayWrap) return;
+
+    const sig = `${activePlan.id}|${planApp.receipt_id}|${planApp.status}|${planApp.supplement_reason || ''}`;
+    const existingBanner = todayWrap.querySelector('#cgu-today-oia-status');
+    if (existingBanner && todayView.dataset.cguOiaSig === sig) return;
+
+    const submitHref = buildSubmitLevelHref(activePlan.id);
+    const statusNote = buildStatusNote(planApp);
+    const actionLabel = planApp.status === 'supplement_requested' ? '前往送件關卡補件 →' : '查看送件紀錄 →';
+
+    const banner = existingBanner || document.createElement('section');
+    banner.id = 'cgu-today-oia-status';
+    banner.className = `cgu-today-oia-banner status-${planApp.status || 'submitted'}`;
+    banner.setAttribute('aria-label', '校內送件目前狀態');
+    banner.innerHTML = `
+      <div class="cgu-today-oia-main">
+        <span class="cgu-today-oia-kicker">校內送件目前狀態</span>
+        <code class="cgu-receipt-code">${esc(planApp.receipt_id)}</code>
+        <span class="cgu-status-chip status-${esc(planApp.status)}">${esc(planApp.status_label)}</span>
+        <span class="cgu-today-oia-note">${esc(statusNote)}</span>
+      </div>
+      <a class="today-link" href="${esc(submitHref)}">${esc(actionLabel)}</a>`;
+    if (!existingBanner) {
+      todayWrap.prepend(banner);
+    }
+
+    const focusCard = todayWrap.querySelector('.today-focus');
+    if (focusCard) {
+      if (planApp.status === 'supplement_requested') {
+        const labelEl = focusCard.querySelector('.today-label');
+        const titleEl = focusCard.querySelector('#today-focus-title');
+        const actionsEl = focusCard.querySelector('.today-actions');
+        focusCard.querySelectorAll('.today-why, .today-meta').forEach(el => { el.hidden = true; });
+        let descEl = focusCard.querySelector('#today-focus-title + p');
+        if (!descEl) {
+          descEl = document.createElement('p');
+          titleEl?.insertAdjacentElement('afterend', descEl);
+        }
+        if (labelEl) labelEl.textContent = '現在做這件事 · 要求補件';
+        if (titleEl) titleEl.textContent = `補件處理：校內交換申請（${planApp.receipt_id}）`;
+        descEl.textContent = `國際處要求補件原因：${planApp.supplement_reason || '請依國際處通知補齊應備文件。'}`;
+        if (actionsEl) {
+          actionsEl.innerHTML = `<a class="today-primary" href="${esc(submitHref)}">前往送件關卡補件 →</a>`;
+        }
+        focusCard.dataset.cguSupplementActive = '1';
+      } else if (focusCard.dataset.cguSupplementActive === '1') {
+        delete focusCard.dataset.cguSupplementActive;
+        todayView.dataset.cguOiaSig = '';
+        $('#application-path #refresh-path')?.click();
+        return;
+      }
+    }
+
+    todayView.dataset.cguOiaSig = sig;
+  }
+
+  function syncSubmitLevelBridge(activePlan = simState.activePlan, planApp = simState.activePlanApp) {
+    const { onMyApp, view, level } = parseMyAppRoute();
+    const levelView = $('#application-path #level-view');
+    if (!onMyApp || view !== 'level' || level !== 'cgu-internal-submit' || !levelView || levelView.hidden || !activePlan) return;
+    const card = levelView.querySelector('.level-card');
+    if (!card) return;
+
+    const levelForm = levelView.querySelector('#level-form');
+    if (levelForm && !levelForm.hidden) levelForm.hidden = true;
+    const toolsBar = levelView.querySelector('.path-level-tools');
+    if (toolsBar && !toolsBar.hidden) toolsBar.hidden = true;
+
+    const sig = `${activePlan.id}|${planApp ? `${planApp.receipt_id}|${planApp.status}|${planApp.supplement_reason || ''}` : 'none'}`;
+    const existingBridge = card.querySelector('#cgu-level-submit-bridge');
+    if (existingBridge && card.dataset.cguBridgeSig === sig) return;
+
+    const bridge = existingBridge || document.createElement('div');
+    bridge.id = 'cgu-level-submit-bridge';
+    bridge.className = 'cgu-level-submit-bridge';
+    bridge.setAttribute('role', 'note');
+    if (!planApp) {
+      bridge.innerHTML = `
+        <div>
+          <strong>校內送件方式：</strong>請於下方「送交國際處」完成 5 份應備文件預檢並送出；送出後本關卡會自動標記完成並更新進度。
+        </div>
+        <button type="button" class="cgu-pill-action is-solid" data-cgu-scroll="#cgu-my-application-sim">往下預檢與送件 ↓</button>`;
+    } else if (planApp.status === 'supplement_requested') {
+      bridge.innerHTML = `
+        <div>
+          <strong>需處理國際處補件：</strong>案件 <code class="cgu-receipt-code">${esc(planApp.receipt_id)}</code>（${esc(planApp.supplement_reason || '請依通知補齊文件')}），請於下方更新應備文件並重新送出。
+        </div>
+        <button type="button" class="cgu-pill-action is-solid" data-cgu-scroll="#cgu-my-application-sim">前往下方補件 ↓</button>`;
+    } else {
+      bridge.innerHTML = `
+        <div>
+          <strong>已完成校內送件：</strong>收件編號 <code class="cgu-receipt-code">${esc(planApp.receipt_id)}</code> · 目前狀態：<span class="cgu-status-chip status-${esc(planApp.status)}">${esc(planApp.status_label)}</span>（下方可檢視送件紀錄與審核時間軸）。
+        </div>`;
+    }
+    if (!existingBridge) {
+      const progressBox = card.querySelector('.level-progress');
+      if (progressBox) {
+        progressBox.insertAdjacentElement('afterend', bridge);
+      } else {
+        card.appendChild(bridge);
+      }
+    }
+    card.dataset.cguBridgeSig = sig;
+  }
+
+  let renderMyAppSeq = 0;
+
   async function renderMyApplicationSim(forceReload = false) {
     const host = $('#cgu-my-application-sim');
     if (!host) return;
-    if (!simState.status || forceReload) {
+    const seq = ++renderMyAppSeq;
+    if (forceReload) simState.statusNeedsRefresh = true;
+    const { onMyApp, view, level } = parseMyAppRoute();
+    if (!onMyApp) {
+      host.hidden = true;
+      host.classList.remove('is-compact', 'is-full');
+      return;
+    }
+
+    const activePlan = await resolveActivePlan(forceReload);
+    if (seq !== renderMyAppSeq) return;
+    simState.activePlan = activePlan;
+
+    if (!activePlan) {
+      simState.activePlanApp = null;
+      host.hidden = true;
+      host.classList.remove('is-compact', 'is-full');
+      host.innerHTML = '';
+      return;
+    }
+
+    if (!simState.status || forceReload || simState.statusNeedsRefresh) {
+      simState.statusNeedsRefresh = false;
       try {
         await loadConnectorStatus();
       } catch (err) {
+        if (seq !== renderMyAppSeq) return;
+        host.hidden = false;
         host.innerHTML = `<div class="cgu-sim-card"><p class="cgu-sim-error">${esc(err.message)}</p></div>`;
         return;
       }
     }
+    if (seq !== renderMyAppSeq) return;
+
     const st = simState.status;
+    const apps = st.applications || [];
+    const planApp = findPlanApplication(activePlan, apps);
+    simState.activePlanApp = planApp;
+
+    const planSchool = activePlan.context?.target_school || '';
+    if (simState.pref1PlanId !== activePlan.id && simState.pref1UserEditedPlanId !== activePlan.id) {
+      simState.selectedPref1 = planSchool || getPartnerSchoolNames()[0];
+      simState.pref1PlanId = activePlan.id;
+    }
+
+    const submitHref = buildSubmitLevelHref(activePlan.id);
+    const isSubmitLevel = view === 'level' && level === 'cgu-internal-submit';
+
+    if (!isSubmitLevel) {
+      host.hidden = false;
+      host.classList.add('is-compact');
+      host.classList.remove('is-full');
+      if (!planApp) {
+        host.innerHTML = `
+          <div class="cgu-sim-compact-bar" role="region" aria-label="校內送件狀態摘要">
+            <span class="cgu-compact-summary"><strong>校內送件：</strong>尚未送出</span>
+            <a class="cgu-compact-link" href="${esc(submitHref)}">前往送件關卡 →</a>
+          </div>`;
+      } else {
+        host.innerHTML = `
+          <div class="cgu-sim-compact-bar is-submitted status-${esc(planApp.status)}" role="region" aria-label="校內送件狀態摘要">
+            <span class="cgu-compact-summary">
+              <strong>校內送件：</strong>收件編號 <code class="cgu-receipt-code">${esc(planApp.receipt_id)}</code>
+              <span class="cgu-status-chip status-${esc(planApp.status)}">${esc(planApp.status_label)}</span>
+              ${planApp.status === 'supplement_requested' && planApp.supplement_reason ? `<span class="cgu-compact-reason">（${esc(planApp.supplement_reason)}）</span>` : ''}
+            </span>
+            <a class="cgu-compact-link" href="${esc(submitHref)}">${planApp.status === 'supplement_requested' ? '前往送件關卡補件 →' : '查看送件紀錄 →'}</a>
+          </div>`;
+      }
+      enhanceTodayOiaStatus(activePlan, planApp);
+      return;
+    }
+
+    host.hidden = false;
+    host.classList.add('is-full');
+    host.classList.remove('is-compact');
+
     const precheck = st.precheck || { complete: false, missing_documents: REQUIRED_DOCS, provided_count: 0, required_count: 5 };
     const draftFiles = st.draft_files || {};
     const missingNames = (precheck.missing_documents || []).map(d => d.title);
@@ -717,9 +997,9 @@
         </li>`;
     }).join('');
 
-    const apps = st.applications || [];
-    const appCardsHtml = apps.length
-      ? apps.map(app => `
+    const planApps = apps.filter(a => !a.plan_id || a.plan_id === activePlan.id || a.preference_1 === planSchool);
+    const appCardsHtml = planApps.length
+      ? planApps.map(app => `
         <article class="cgu-submitted-card" data-receipt-id="${esc(app.receipt_id)}">
           <header class="cgu-submitted-head">
             <div>
@@ -736,6 +1016,10 @@
           ${renderTimelineHtml(app.timeline || [])}
         </article>`).join('')
       : '<p class="cgu-empty-hint">目前尚無送件紀錄。完成上方 5 項應備文件預檢後即可送出並取得 <code>CGU-116-1-</code> 收件編號。</p>';
+
+    const showFeedbackHtml = (simState.lastSubmitReceiptId && planApp?.receipt_id === simState.lastSubmitReceiptId && planApp?.status === 'submitted')
+      ? simState.lastSubmitHtml
+      : '';
 
     host.innerHTML = `
       <div class="cgu-sim-card">
@@ -754,7 +1038,6 @@
           </div>
           <div class="cgu-sim-head-actions">
             <a class="cgu-pill-action" href="#ask-oia">問國際處</a>
-            <a class="cgu-pill-action" href="#return-report">返國心得</a>
           </div>
         </header>
 
@@ -784,7 +1067,7 @@
           }
         </div>
 
-        <p id="cgu-sim-submit-feedback" class="cgu-sim-feedback" role="status" aria-live="polite"></p>
+        <p id="cgu-sim-submit-feedback" class="cgu-sim-feedback${showFeedbackHtml ? ' cgu-submit-confirm' : ''}" role="status" aria-live="polite">${showFeedbackHtml}</p>
 
         <div class="cgu-sim-submit-bar">
           <button type="button" id="cgu-sim-precheck-btn" class="cgu-pill-action">檢查文件齊備狀態</button>
@@ -800,6 +1083,8 @@
           <div id="cgu-sim-app-records">${appCardsHtml}</div>
         </section>
       </div>`;
+
+    syncSubmitLevelBridge(activePlan, planApp);
   }
 
   async function uploadMetadataFile(docKey, file) {
@@ -1798,9 +2083,12 @@
     enhanceMyApplicationDeadline();
 
     const hash = window.location.hash || '#home';
+    const { onMyApp } = parseMyAppRoute(hash);
+    const myAppSimHost = $('#cgu-my-application-sim');
+    if (myAppSimHost && !onMyApp) myAppSimHost.hidden = true;
     if (hash === '#school-connector') {
       await renderConnectorSpecPage();
-    } else if (/^#my-application(?:\?|$)/.test(hash)) {
+    } else if (onMyApp) {
       await renderMyApplicationSim(true);
       await refreshNotificationsNow();
     } else if (hash === '#ask-oia') {
@@ -1880,6 +2168,13 @@
       return;
     }
 
+    const scrollTrigger = event.target.closest('[data-cgu-scroll]');
+    if (scrollTrigger) {
+      const target = document.querySelector(scrollTrigger.getAttribute('data-cgu-scroll') || '');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
     if (event.target.closest('#cgu-sim-submit-btn')) {
       const btn = $('#cgu-sim-submit-btn');
       const fb = $('#cgu-sim-submit-feedback');
@@ -1887,21 +2182,25 @@
       btn.disabled = true;
       if (fb) fb.textContent = '正在送交國際處…';
       try {
+        const activePlan = simState.activePlan || await resolveActivePlan(true);
+        const targetTerm = activePlan?.context?.target_term || '116-1（2027 秋季出國）';
+        const yearMatch = String(targetTerm).match(/\b(\d{3})\b/);
+        const academicYear = yearMatch ? yearMatch[1] : '116';
         const res = await apiJson('/demo/connector/applications', {
           method: 'POST',
           body: JSON.stringify({
+            plan_id: activePlan?.id || '',
             preference_1: simState.selectedPref1,
             preference_2: simState.selectedPref2,
-            academic_year: '116',
-            semester: '116-1（2027 秋季出國）',
+            academic_year: academicYear,
+            semester: targetTerm,
           }),
         });
+        simState.lastSubmitReceiptId = res.application.receipt_id;
+        simState.lastSubmitHtml = `已送出申請，收件編號：<strong>${esc(res.application.receipt_id)}</strong>（狀態：${esc(res.application.status_label)}）。正式申請請依國際處公告完成線上表單與紙本繳交（<a href="${esc(SELECTION_SOURCE_URL)}" target="_blank" rel="noopener noreferrer">官方公告 ↗</a>）。`;
         await renderMyApplicationSim(true);
-        const afterFb = $('#cgu-sim-submit-feedback');
-        if (afterFb) {
-          afterFb.className = 'cgu-sim-feedback cgu-submit-confirm';
-          afterFb.innerHTML = `已送出申請，收件編號：<strong>${esc(res.application.receipt_id)}</strong>（狀態：${esc(res.application.status_label)}）。正式申請請依國際處公告完成線上表單與紙本繳交（<a href="${esc(SELECTION_SOURCE_URL)}" target="_blank" rel="noopener noreferrer">官方公告 ↗</a>）。`;
-        }
+        $('#application-path #refresh-path')?.click();
+        await refreshNotificationsNow();
       } catch (err) {
         if (fb) fb.textContent = err.message;
         btn.disabled = false;
@@ -2043,6 +2342,7 @@
     }
     if (event.target.id === 'cgu-sim-pref1') {
       simState.selectedPref1 = event.target.value;
+      simState.pref1UserEditedPlanId = simState.activePlan?.id || simState.pref1PlanId;
       return;
     }
     if (event.target.id === 'cgu-sim-pref2') {
@@ -2170,6 +2470,8 @@
     }
   }
 
+  let lastObservedMyAppSig = '';
+
   // Observe DOM mutations for dynamic shared renders (application-path deadline panel, notifications, file inputs, partner bars)
   new MutationObserver(() => {
     restrictControls();
@@ -2179,6 +2481,30 @@
     syncScholarshipMatchBadges();
     syncPartnersCleanRow();
     syncCriteriaBanner();
+
+    const myAppRoute = parseMyAppRoute();
+    const myAppSimHost = $('#cgu-my-application-sim');
+    if (!myAppRoute.onMyApp) {
+      if (myAppSimHost && !myAppSimHost.hidden) myAppSimHost.hidden = true;
+      lastObservedMyAppSig = '';
+      return;
+    }
+
+    const appPathHost = $('#application-path');
+    const idxRev = appPathHost?.dataset?.planIndexRev || '';
+    const planVal = $('#application-path #plan-select')?.value || '';
+    const msgHidden = $('#application-path #path-message')?.hidden ? '1' : '0';
+    const hubHidden = $('#application-path #hub')?.hidden ? '1' : '0';
+    const todayHidden = $('#application-path #today-view')?.hidden ? '1' : '0';
+    const lvlHidden = $('#application-path #level-view')?.hidden ? '1' : '0';
+    const sig = `${window.location.hash}|${idxRev}|${planVal}|${msgHidden}|${hubHidden}|${todayHidden}|${lvlHidden}`;
+    if (sig !== lastObservedMyAppSig) {
+      lastObservedMyAppSig = sig;
+      renderMyApplicationSim(false);
+    } else {
+      enhanceTodayOiaStatus();
+      syncSubmitLevelBridge();
+    }
   }).observe(document.body, { childList: true, subtree: true });
 
   ensureTopbarTooltips();

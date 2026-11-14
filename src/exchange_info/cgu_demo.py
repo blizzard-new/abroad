@@ -33,7 +33,7 @@ CONTENT = Path(__file__).parent / "demo_data/content.json"
 # allowlist, so no request value is used to build a file path.
 PREVIEW_DIR = Path(__file__).parent / "demo_data/preview"
 PREVIEW_PAGES = {"office": "office.html", "inquiry": "inquiry.html", "report": "report.html"}
-ASSET_VERSION = "20261115-cgu-formal-ui-2"
+ASSET_VERSION = "20261115-cgu-app-flow-1"
 COOKIE = "uniway_cgu_demo_session"
 HOME = "長庚大學"
 UPLOAD_NOTICE = "檔案僅用於完整性檢查，不會保存內容。"
@@ -478,7 +478,7 @@ class MockCguConnector(SchoolConnector):
                     extra={"missing_documents": precheck["missing_documents"], "precheck": precheck},
                 )
 
-            pref1 = str(payload.get("preference_1") or "林肯大學 Lincoln University").strip()[:160]
+            pref1 = str(payload.get("preference_1") or "").strip()[:160]
             pref2 = str(payload.get("preference_2") or "").strip()[:160]
             if not pref1:
                 raise ConnectorValidationError("請至少選擇第一志願合作校。")
@@ -489,6 +489,7 @@ class MockCguConnector(SchoolConnector):
             receipt_id = self._next_receipt(state, "APP")
             record = {
                 "receipt_id": receipt_id,
+                "plan_id": str(payload.get("plan_id") or "").strip()[:64],
                 "owner": "student",
                 "student_name": "林小程",
                 "department": "工學院・生物醫學工程學系 大三",
@@ -745,12 +746,18 @@ class MockCguConnector(SchoolConnector):
                         recv_step.update(state="done", at=now_iso, note="國際處承辦已收件檢核")
                     if rev_step:
                         rev_step.update(label="要求補件", state="warning", at=now_iso, note=f"要求補件：{reason}")
+                    plan_id = str(target.get("plan_id") or "").strip()
+                    supplement_action_url = (
+                        f"#my-application?plan={quote(plan_id)}&view=level&level=cgu-internal-submit"
+                        if plan_id
+                        else "#my-application?view=level&level=cgu-internal-submit"
+                    )
                     notif = self._push_notification(
                         state,
                         receipt_id=receipt_id,
                         title=f"要求補件：申請案件 {receipt_id} 需補件",
                         body=f"承辦補件說明：{reason}",
-                        action_url="#my-application",
+                        action_url=supplement_action_url,
                     )
                 else:  # approve_initial
                     target["status"] = "passed_initial"
@@ -1197,8 +1204,7 @@ def platform_html() -> str:
             id='cgu-my-application-sim',
             attrs={
                 'class': 'cgu-sim-hub',
-                'data-university-page': 'my-application',
-                'aria-labelledby': 'cgu-sim-submit-heading',
+                'aria-label': '校內申請送件',
                 'hidden': '',
             },
         )
@@ -1597,6 +1603,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
     if hosted_origin:
         os.environ['EXCHANGE_PUBLIC_BASE_URL'] = hosted_origin
     from . import api
+    from .application_path import load_registry, save_registry
     from .cgu_demo_content import FrozenCatalogue, journey_levels, source_dashboard
     from .models import (
         AccountApplicationWorkspace,
@@ -1901,6 +1908,30 @@ def create_demo_app(connector_factory=None) -> FastAPI:
         except ValueError:
             payload = {}
         clean_payload = dict(payload) if isinstance(payload, dict) else {}
+        draft_service = platform.state.form_draft_service
+        registry = load_registry(draft_service, account.id, HOME)
+        active_plans = [p for p in registry.get('plans', []) if not p.get('archived')]
+        if not active_plans:
+            return JSONResponse(
+                {'detail': '請先建立申請計畫，再送交國際處。', 'code': 'missing_application_plan'},
+                status_code=422,
+            )
+        requested_plan_id = str(clean_payload.get('plan_id') or '').strip()
+        if requested_plan_id:
+            target_plan = next((p for p in active_plans if p.get('id') == requested_plan_id), None)
+            if target_plan is None:
+                return JSONResponse(
+                    {'detail': '找不到有效的申請計畫，請先建立或選擇申請計畫。', 'code': 'missing_application_plan'},
+                    status_code=422,
+                )
+        else:
+            target_plan = max(active_plans, key=lambda p: str(p.get('updated_at') or ''))
+        plan_ctx = target_plan.get('context') or {}
+        clean_payload['plan_id'] = target_plan['id']
+        if not str(clean_payload.get('preference_1') or '').strip():
+            clean_payload['preference_1'] = str(plan_ctx.get('target_school') or '').strip()
+        if not str(clean_payload.get('academic_year') or '').strip():
+            clean_payload['academic_year'] = str(plan_ctx.get('academic_year') or '116').strip()
         if not hasattr(connector, 'record_file_metadata') and 'documents' not in clean_payload:
             with lock:
                 staged = dict(fallback_draft_files.get(account.id, {}))
@@ -1910,9 +1941,28 @@ def create_demo_app(connector_factory=None) -> FastAPI:
                 ]
         try:
             record = connector.submit_application(account.id, clean_payload)
-            return JSONResponse({'application': record}, status_code=201)
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
+        with lock:
+            latest_registry = load_registry(draft_service, account.id, HOME)
+            latest_plan = next(
+                (p for p in latest_registry.get('plans', []) if p.get('id') == target_plan['id'] and not p.get('archived')),
+                None,
+            )
+            if latest_plan is not None:
+                now_str = utc_now().isoformat()
+                latest_plan.setdefault('steps', {})['cgu-internal-submit'] = {
+                    'value': f"已送交國際處（收件編號：{record['receipt_id']}）",
+                    'confirmed': True,
+                    'version_id': None,
+                    'applicable': None,
+                    'updated_at': now_str,
+                    'recorded_by': 'student',
+                    'source_signature': None,
+                }
+                latest_plan['updated_at'] = now_str
+                save_registry(draft_service, account.id, HOME, latest_registry)
+        return JSONResponse({'application': record, 'plan_id': target_plan['id']}, status_code=201)
 
     @app.post('/demo/connector/ask')
     async def connector_ask(request: Request):

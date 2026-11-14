@@ -375,7 +375,7 @@ def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):
     page.locator('.hub-tabs [data-tab="schedule"]').click()
     expect(page.locator('#schedule-dynamic')).to_contain_text('12/21')
     expect(page.locator('#schedule-dynamic')).to_contain_text('17:00')
-    expect(page.locator('#schedule-dynamic')).to_contain_text('校內截止')
+    expect(page.locator('#schedule-dynamic')).to_contain_text('送出校內申請（12/21 17:00 截止）')
     expect(page.locator('#schedule-dynamic')).to_contain_text('2027 秋季（116-1）')
     page.goto(demo_url + '/#calendar', wait_until='domcontentloaded')
     page.locator('#calendar-verified-window-hook .verified-hook-pill').wait_for(state='visible')
@@ -925,15 +925,42 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
         expect(spec_page).to_contain_text(phase_title)
     screenshot(page, 'desktop-connector-spec.png')
 
+    # Requirement A: empty #my-application without any active plan hides #cgu-my-application-sim
+    page.goto(f'{demo_url}/#my-application', wait_until='domcontentloaded')
+    expect(page.locator('#path-message')).to_contain_text('從你的交換目標開始')
+    sim_hub = page.locator('#cgu-my-application-sim')
+    expect(sim_hub).to_be_hidden()
+
     # Seed plan & verify 116-1 official deadline + announcement source in 我的申請
     seed(page)
     deadline_panel = page.locator('#today-view .today-panel[aria-label="期限"]')
     expect(deadline_panel).to_contain_text('116-1 校內申請截止')
     expect(deadline_panel).to_contain_text('2026/12/21 17:00')
     expect(deadline_panel.locator('a[href*="85785"]')).to_be_visible()
+    expect(page.locator('#overall-caption')).to_contain_text('0 / 23')
+
+    # Requirement B: 今日與計畫分頁僅顯示單行校內送件摘要列，不展開完整表單
+    for tab_key in ('today', 'plans'):
+        if tab_key != 'today':
+            page.locator(f'.hub-tabs [data-tab="{tab_key}"]').click()
+        compact_bar = sim_hub.locator('.cgu-sim-compact-bar')
+        expect(compact_bar).to_be_visible()
+        expect(compact_bar).to_contain_text('校內送件：尚未送出')
+        expect(page.locator('#cgu-sim-submit-btn')).to_have_count(0)
+
+    sim_hub.locator('.cgu-compact-link').click()
+    expect(page.locator('#level-view')).to_be_visible()
+    expect(page.locator('#level-view')).to_contain_text('送出校內申請（12/21 17:00 截止）')
+    expect(page.locator('#cgu-level-submit-bridge')).to_be_visible()
+
+    # Requirement G: header actions keep only 問國際處
+    head_actions = sim_hub.locator('.cgu-sim-head-actions a, .cgu-sim-head-actions button')
+    expect(head_actions).to_have_count(1)
+    expect(head_actions.first).to_have_text('問國際處')
+    expect(sim_hub.locator('.cgu-sim-head-actions')).not_to_contain_text('返國心得')
+    expect(sim_hub.locator('.cgu-sim-head-actions')).not_to_contain_text('校方介接規格')
 
     # Step 1: 學生預檢缺件（不可送出）
-    sim_hub = page.locator('#cgu-my-application-sim')
     expect(sim_hub).to_be_visible()
     expect(sim_hub).not_to_contain_text('模擬')
     expect(sim_hub).not_to_contain_text('SIM-')
@@ -970,6 +997,7 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     page.locator('#cgu-sim-submit-btn').click()
     expect(page.locator('#cgu-sim-submit-feedback')).to_contain_text('正式申請請依國際處公告完成線上表單與紙本繳交')
     expect(page.locator('#cgu-sim-submit-feedback a[href*="85785"]')).to_be_visible()
+    expect(page.locator('#overall-caption')).to_contain_text('1 / 23')
     records = page.locator('#cgu-sim-app-records')
     expect(records).to_contain_text('CGU-116-1-A')
     expect(records).to_contain_text('已送出')
@@ -1053,6 +1081,14 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     page.evaluate('appReady')
     expect(page.locator(f'#cgu-sim-app-records [data-receipt-id="{receipt_text}"]')).to_contain_text('要求補件')
     expect(page.locator('#notification-badge')).to_be_visible()
+
+    # Requirement E: returning to 今日 view surfaces 要求補件 reason & links back to cgu-internal-submit
+    page.locator('.uniway-public-nav a[data-public-route="my-application"]').click()
+    expect(page.locator('#today-view')).to_be_visible()
+    expect(page.locator('#cgu-today-oia-status')).to_contain_text('要求補件')
+    expect(page.locator('#today-focus-title')).to_contain_text(receipt_text)
+    expect(page.locator('#today-view .today-focus')).to_contain_text('中文歷年成績單未附班級排名百分比')
+    expect(page.locator('#today-view .today-focus a.today-primary')).to_have_attribute('href', re.compile(r'level=cgu-internal-submit'))
 
     # Step 5: 學生端「問國際處」— 常見問題比對命中 + 提問轉承辦 → 承辦回覆
     page.locator('.uniway-public-nav a[data-public-route="ask-oia"]').click()
@@ -1235,6 +1271,11 @@ def test_formal_product_presentation_hides_demo_jargon_and_supports_present_mode
         page.evaluate(f"window.location.hash = {target_hash!r}")
         page.wait_for_timeout(120)
         assert_visible_text_clean(label)
+    if page.locator('#cgu-my-application-sim .cgu-compact-link').count():
+        page.evaluate("window.location.hash = '#my-application'")
+        page.locator('#cgu-my-application-sim .cgu-compact-link').click()
+        expect(page.locator('#cgu-sim-app-records')).to_be_visible()
+        assert_visible_text_clean('#my-application-submit-level')
 
     # Verify ?present=1 completely hides the bottom showcase toolbar at desktop & mobile
     for vw in (1440, 390):
@@ -1262,7 +1303,8 @@ def test_retained_single_about_disclaimer_and_post_submission_official_notice(pa
     expect(dialog.locator('a[href*="cgu.edu.tw/oia-ch/Subject/Detail/85785"]').first).to_be_visible()
     page.keyboard.press('Escape')
 
-    # Fill files via 展示工具 & submit -> verify confirmation screen keeps official process notice & link
+    # Seed plan, fill files via 展示工具 & submit -> verify confirmation screen keeps official process notice & link
+    seed(page)
     open_demo_tools(page)
     page.locator('#cgu-demo-fill-files').click()
     page.locator('#cgu-sim-submit-btn').click()
@@ -1271,3 +1313,51 @@ def test_retained_single_about_disclaimer_and_post_submission_official_notice(pa
     expect(confirm_box.locator('a[href*="cgu.edu.tw/oia-ch/Subject/Detail/85785"]')).to_be_visible()
     assert expected_disclaimer not in page.locator('#cgu-my-application-sim').inner_text()
     assert expected_disclaimer not in page.inner_text('body')
+
+
+def test_my_application_phase1_plan_target_pref_and_oia_approve_today_sync(page, demo_url):
+    ready(page, demo_url)
+    target_school = '瑞典皇家理工學院 KTH Royal Institute of Technology'
+    current_paths = page.request.get(f'{demo_url}/account/application-paths?home_school=長庚大學').json()
+    created = page.request.post(
+        f'{demo_url}/account/application-paths?home_school=長庚大學',
+        data={
+            'revision': current_paths['revision'],
+            'home_school': '長庚大學',
+            'target_school': target_school,
+            'academic_year': '116',
+            'departure_year': '2027',
+            'semester': 'fall',
+        },
+        headers={'Origin': demo_url},
+    )
+    assert created.status in (200, 201), created.text()
+    plan_id = created.json()['plan']['id']
+
+    # Direct URL to cgu-internal-submit renders full form & defaults preference_1 to plan target_school
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-internal-submit')
+    expect(page.locator('#cgu-sim-submit-btn')).to_be_visible()
+    expect(page.locator('#cgu-sim-pref1')).to_have_value(target_school)
+
+    open_demo_tools(page)
+    page.locator('#cgu-demo-fill-files').click()
+    expect(page.locator('#cgu-sim-precheck-box')).to_contain_text('文件預檢通過')
+    page.locator('#cgu-sim-submit-btn').click()
+    records = page.locator('#cgu-sim-app-records')
+    expect(records).to_contain_text(target_school)
+    expect(page.locator('#overall-caption')).to_contain_text('1 / 23')
+    receipt_id = records.locator('.cgu-submitted-card').first.get_attribute('data-receipt-id')
+    assert receipt_id and receipt_id.startswith('CGU-116-1-A')
+
+    # OIA confirm_receipt -> 今天 view shows 已收件; approve_initial -> 今天 view shows 初審通過
+    for action_name, expected_label in (('confirm_receipt', '已收件'), ('approve_initial', '初審通過')):
+        act = page.request.post(
+            f'{demo_url}/demo/connector/oia/actions',
+            data={'action': action_name, 'receipt_id': receipt_id},
+            headers={'Origin': demo_url},
+        )
+        assert act.status == 200, act.text()
+        ready(page, demo_url, f'#my-application?plan={plan_id}&view=today')
+        expect(page.locator('#today-view')).to_be_visible()
+        expect(page.locator('#cgu-today-oia-status')).to_contain_text(receipt_id)
+        expect(page.locator('#cgu-today-oia-status')).to_contain_text(expected_label)
