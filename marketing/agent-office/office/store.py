@@ -136,6 +136,11 @@ class Store:
         rows = self._all("SELECT * FROM runs WHERE day = ? AND status != 'failed' ORDER BY id DESC LIMIT 1", (day,))
         return rows[0] if rows else None
 
+    def last_run_day(self, before: str) -> str | None:
+        """The most recent day before `before` (ISO date) on which the office made its posts."""
+        rows = self._all("SELECT MAX(day) AS day FROM runs WHERE status != 'failed' AND day < ?", (before,))
+        return rows[0]["day"] if rows and rows[0]["day"] else None
+
     def latest_run(self) -> dict | None:
         rows = self._all("SELECT * FROM runs ORDER BY id DESC LIMIT 1")
         return rows[0] if rows else None

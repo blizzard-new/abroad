@@ -380,6 +380,8 @@ VISUAL_BRIEF = """你是繁體中文社群資訊設計師。請將我提供的�
 交付前檢查：三秒內能否看懂主旨？閱讀順序是否明確？有沒有太小的字、孤立標點或擁擠區塊？各頁是否像同一套設計？"""
 
 
-def pillar_for(day: date) -> str:
-    return PILLAR_ROTATION[day.toordinal() % len(PILLAR_ROTATION)]
+def pillar_for(day: date, every: int = 1) -> str:
+    """The content pillar of a posting day. With posts every `every` days the rotation steps once per posting day: counting
+    calendar days would only ever land on every second slot of a ten-slot rotation."""
+    return PILLAR_ROTATION[(day.toordinal() // max(1, every)) % len(PILLAR_ROTATION)]
 

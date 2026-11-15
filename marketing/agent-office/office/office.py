@@ -7,7 +7,7 @@ import json
 import re
 import threading
 from secrets import token_hex
-from datetime import date, datetime, time, timezone
+from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -22,7 +22,7 @@ from .agents.reviewer import Reviewer
 from .agents.strategist import Strategist
 from .agents.threads_writer import ThreadsWriter
 from .agents.video_editor import VideoEditor
-from . import accounts, autodm, brains
+from . import accounts, autodm, brains, cadence
 from .brand import Briefing, load_facts, load_news, load_schools
 from .config import Settings
 from .events import EventBus
@@ -68,6 +68,8 @@ SCHEDULE = {"start": ("daily_at", "開工", 1), "threads": ("threads_slots", "Th
 ROUTINE_WORK = {"threads": "寫一則 Threads", "carousel": "做一則 IG 輪播", "reel": "做一支 Reels",
                 "report": "查資料回報", "schools": "巡查學校"}
 CORE_MAKERS = {"threads": "threads", "carousel": "designer", "reel": "video"}
+# Daily jobs that end in a post: they follow OFFICE_POST_EVERY_DAYS. A report or a school patrol is not a post and stays daily.
+POSTING_KINDS = frozenset({"threads", "carousel", "reel"})
 
 
 def parse_times(times: list[str], most: int = 6) -> list[str]:
@@ -225,6 +227,8 @@ class Office:
         for agent in list(self.staff.values()):
             if not isinstance(agent, Hire) or not agent.record.get("daily_kind"):
                 continue
+            if agent.record["daily_kind"] in POSTING_KINDS and not self.posting_day(local.date()):
+                continue  # a day without posts
             due = [t for t in self.hire_times(agent) if local.strftime("%H:%M") >= t]
             if not due:
                 continue
@@ -339,6 +343,8 @@ class Office:
         local = (now or datetime.now(timezone.utc)).astimezone(self.settings.timezone)
         started = []
         for record in self.routines():
+            if record["kind"] in POSTING_KINDS and not self.posting_day(local.date()):
+                continue  # a day without posts
             due = [t for t in record["times"] if local.strftime("%H:%M") >= t]
             slot = f"{local.date().isoformat()} {max(due)}" if due else ""
             key = f"routine_slot:{record['id']}"
@@ -427,6 +433,13 @@ class Office:
 
     def today(self) -> date:
         return self.local_now().date()
+
+    def posting_day(self, day: date) -> bool:
+        """Whether the office makes and publishes posts on this day (see cadence.py)."""
+        return cadence.posting_day(self.store, self.settings.post_every_days, day)
+
+    def next_posting_day(self, day: date) -> date:
+        return cadence.next_posting_day(self.store, self.settings.post_every_days, day)
 
     def at(self, day: date, moment: time) -> datetime:
         return datetime.combine(day, moment, tzinfo=self.settings.timezone)
