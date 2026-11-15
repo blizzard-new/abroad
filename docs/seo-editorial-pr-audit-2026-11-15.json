@@ -327,5 +327,61 @@
   "new_slugs": [
     "japan-earthquake-preparedness",
     "ai-english-paraphrasing-practice"
-  ]
+  ],
+  "created_pr": {
+    "baseRefName": "main",
+    "headRefOid": "47cf30a94e75acdbba989341862aad072b7303d4",
+    "isDraft": false,
+    "mergeable": "MERGEABLE",
+    "number": 363,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/43658319064/job/132641769917",
+        "name": "image",
+        "startedAt": "2026-11-15T00:28:20Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/43658280955/job/132641647657",
+        "name": "image",
+        "startedAt": "2026-11-15T00:27:49Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-15T00:28:18Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://supabase.com/dashboard/project/wozrsrnkvbokzbbitkxf/settings/integrations",
+        "name": "Supabase Preview",
+        "startedAt": "2026-11-15T00:28:18Z",
+        "status": "COMPLETED",
+        "workflowName": ""
+      }
+    ],
+    "url": "https://github.com/blizzard-new/abroad/pull/363",
+    "snapshot_scope": "Aftercreation initialcontentcommit47cf30a9,before docs-onlymetadatafollowup;checkcurrentCI separately."
+  },
+  "task_attachment": {
+    "attempt": {
+      "status": "timeout",
+      "timeout_ms": 40000,
+      "elapsed_ms": 40001,
+      "url": "https://github.com/blizzard-new/abroad/pull/363"
+    },
+    "verification": {
+      "status": "timeout",
+      "timeout_ms": 10000
+    },
+    "confirmed": false,
+    "reason": "attach_artifact returned no response within40s; list_artifacts returned no response within10s. PRcreation verified separately; taskattachment unconfirmed."
+  }
 }

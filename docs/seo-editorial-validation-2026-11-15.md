@@ -1,6 +1,6 @@
 # 2026-11-15 每日雙篇驗收
 
-Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261115`，base main `aa2d1424d1645308b479bee648eb056a9e956f8e`。完成兩篇完整文章與配圖，待同一個新 PR 審閱；未合併、部署或申請索引。
+Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261115`，base main `aa2d1424d1645308b479bee648eb056a9e956f8e`。完成兩篇完整文章與配圖，已建立同一個 [PR #363](https://github.com/blizzard-new/abroad/pull/363) 待審；未合併、部署或申請索引。
 
 | 文章／候選方向 | slug | 與既有內容分工 |
 | --- | --- | --- |
@@ -42,4 +42,4 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261115`，base main `aa2d14
 - [完整 gate](seo-editorial-checks-2026-11-15.json)、[命令與測試輸出](seo-editorial-tests-2026-11-15.txt)、[套件逐檔](seo-editorial-package-2026-11-15.json)
 - [瀏覽器／15 圖雜湊](seo-editorial-browser-2026-11-15.json)、[桌面](seo-previews-2026-11-15/desktop-1440.jpg)、[手機](seo-previews-2026-11-15/mobile-320.jpg)、[裁切](seo-previews-2026-11-15/photography-crops.jpg)
 
-PR、遠端 CI 與任務附件狀態於建立後回填；不宣稱已發布。
+已建立 [PR #363](https://github.com/blizzard-new/abroad/pull/363)，OPEN、非 draft，base main，初始 head `47cf30a94e75acdbba989341862aad072b7303d4`，GitHub 顯示 MERGEABLE，未合併。初始 image CI 兩項進行中，Supabase Preview skipped；後續只有文件回填，請以目前 PR 的 CI 為準。任務附加工具等待 40 秒無回覆，附件列表查詢另等 10 秒也無回覆，**任務附件未確認**；不能宣稱已附加成功。PR 連結、狀態及 head 已由 GitHub 獨立驗證。未部署或要求索引。
