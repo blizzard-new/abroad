@@ -14,7 +14,7 @@ from typing import Literal
 
 from fastapi import File, Form, HTTPException, Query, Request, UploadFile
 from fastapi.responses import Response
-from pydantic import field_validator, BaseModel, ConfigDict, Field
+from pydantic import field_validator, model_validator, BaseModel, ConfigDict, Field
 
 from .form_drafts import FormDraftConflictError, FormDraftError
 from .document_vault import VaultError
@@ -61,6 +61,19 @@ class PathContext(BaseModel):
         if value.isdigit() and int(value) < 1900:
             raise ValueError("出國年份請填西元年，例如 2027。")
         return value
+
+    @model_validator(mode="after")
+    def _validate_round_consistency(self) -> "PathContext":
+        match = re.search(r"(?<!\d)(\d{2,3})\s*[-–]\s*([12])(?!\d)", self.application_round or "")
+        if match:
+            round_year, round_term = match.group(1), match.group(2)
+            if self.academic_year.isdigit() and round_year != self.academic_year:
+                raise ValueError("申請學年度與申請梯次不一致，請重新確認出發學期。")
+            if round_term == "1" and self.semester == "spring":
+                raise ValueError("春季出發（第 2 學期）與第 1 學期梯次不一致，請重新確認。")
+            if round_term == "2" and self.semester in ("fall", "full_year"):
+                raise ValueError("秋季出發（第 1 學期）與第 2 學期梯次不一致，請重新確認。")
+        return self
 
 
 class PathCreate(PathContext):

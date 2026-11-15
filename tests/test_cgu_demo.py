@@ -651,7 +651,7 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     assert synced_plan['plan']['steps']['cgu-internal-submit']['confirmed'] is True
     for key in doc_keys:
         assert synced_plan['plan']['steps'][f'cgu-doc-{key}']['confirmed'] is True
-    assert synced_plan['progress']['value'] == 6
+    assert synced_plan['progress']['value'] == 12
 
     # 4. OIA Dashboard preloads 5 fictional records & reflects actions to student + notifications
     oia = alice.get(demo_url + '/demo/connector/oia/dashboard').json()
@@ -885,7 +885,7 @@ def test_phase2_stage_order_and_bidirectional_doc_step_sync(demo_url):
         'cgu-doc-language_proof', 'cgu-doc-transcript',
         'cgu-doc-study_plan', 'cgu-internal-submit',
     ]
-    assert plan['progress'] == {'value': 0, 'total': 23}
+    assert plan['progress'] == {'value': 0, 'total': 32}
 
     up = alice.post(
         f'{demo_url}/demo/connector/files',
@@ -895,11 +895,136 @@ def test_phase2_stage_order_and_bidirectional_doc_step_sync(demo_url):
     assert up.status_code == 200, up.text
     after_up = alice.get(f'{demo_url}/account/application-paths/{plan_id}?home_school=長庚大學').json()
     assert after_up['plan']['steps']['cgu-doc-online_form']['confirmed'] is True
-    assert after_up['progress'] == {'value': 1, 'total': 23}
+    assert after_up['progress'] == {'value': 2, 'total': 32}
 
     rm = alice.delete(f'{demo_url}/demo/connector/files/online_form')
     assert rm.status_code == 200, rm.text
     after_rm = alice.get(f'{demo_url}/account/application-paths/{plan_id}?home_school=長庚大學').json()
     assert after_rm['plan']['steps']['cgu-doc-online_form']['confirmed'] is False
-    assert after_rm['progress'] == {'value': 0, 'total': 23}
+    assert after_rm['progress'] == {'value': 0, 'total': 32}
+
+
+def test_cgu_level_types_non_116_1_deadlines_and_oia_notice_sync(demo_url):
+    alice = visitor(demo_url)
+    p116 = create(alice, demo_url)
+    lvl116 = {lvl['id']: lvl for stage in p116['stages'] for lvl in stage['levels']}
+
+    assert lvl116['cgu-read-guide']['kind'] == 'confirm'
+    assert lvl116['cgu-read-guide']['cgu_level_type'] == 'reading'
+    assert lvl116['cgu-read-guide']['no_draft_input'] is True
+    guide_sum = lvl116['cgu-read-guide']['guide_summary']
+    assert '2026/11/02' in guide_sum['application_period']
+    assert '2026/12/21' in guide_sum['deadline']
+    assert len(guide_sum['required_documents']) == 5
+
+    assert lvl116['cgu-shortlist']['kind'] == 'note'
+    assert lvl116['cgu-shortlist']['cgu_level_type'] == 'select'
+    assert lvl116['cgu-shortlist']['no_draft_input'] is True
+
+    for key in ('online_form', 'parent_consent', 'language_proof', 'transcript', 'study_plan'):
+        doc_lvl = lvl116[f'cgu-doc-{key}']
+        assert doc_lvl['kind'] == 'file'
+        assert doc_lvl['cgu_level_type'] == 'document'
+        assert doc_lvl['no_draft_input'] is (key != 'study_plan')
+    assert lvl116['cgu-doc-study_plan'].get('templates') == ['study-plan']
+    assert lvl116['cgu-doc-parent_consent'].get('templates') == ['guardian-consent']
+
+    sub116 = lvl116['cgu-internal-submit']
+    assert sub116['kind'] == 'submission'
+    assert sub116['cgu_level_type'] == 'submission'
+    assert sub116['official_deadline_at'] == '2026-12-21T17:00:00+08:00'
+
+    for notice_id, ntype in (('cgu-internal-result', 'oia_notice'), ('cgu-offer', 'partner_notice')):
+        nlvl = lvl116[notice_id]
+        assert nlvl['kind'] == 'notice'
+        assert nlvl['cgu_level_type'] == ntype
+        assert nlvl['no_draft_input'] is True
+        assert nlvl['external'] is True
+        assert nlvl['counted'] is False
+
+    # Non-116-1 plan must never leak 116-1 / 2026/12/21 deadline claims
+    p117_res = alice.post(demo_url + '/account/application-paths', json=dict(
+        revision=p116['revision'],
+        home_school='長庚大學',
+        target_school='林肯大學 Lincoln University',
+        academic_year='117',
+        departure_year='2028',
+        semester='fall',
+        application_round='117-1（2028 秋季出國）',
+    ))
+    assert p117_res.status_code == 201, p117_res.text
+    p117 = p117_res.json()
+    lvl117 = {lvl['id']: lvl for stage in p117['stages'] for lvl in stage['levels']}
+    assert '117-1' in lvl117['term']['prompt']
+    assert '116-1' not in lvl117['term']['prompt']
+
+    r117 = lvl117['cgu-read-guide']
+    assert r117['guide_summary']['application_period'] == '依國際處公告'
+    assert r117['guide_summary']['deadline'] == '依國際處公告'
+    assert '116-1' not in json.dumps(r117, ensure_ascii=False)
+    assert '2026/12/21' not in json.dumps(r117, ensure_ascii=False)
+
+    s117 = lvl117['cgu-internal-submit']
+    assert s117['official_deadline_at'] is None
+    assert s117['deadline_confirmed'] is False
+    assert '依國際處公告' in s117['prompt']
+    assert '116-1' not in s117['title'] + s117['prompt']
+    assert '2026/12/21' not in s117['title'] + s117['prompt']
+
+    # Custom written study_plan draft must survive precheck file upload & deletion
+    draft_text = '一、赴外研修動機：深入生物醫學工程實驗室課程。\n二、返國抵免規劃：對應三年級選修 6 學分。'
+    saved_draft = alice.put(
+        f"{demo_url}/account/application-paths/{p116['plan']['id']}/steps/cgu-doc-study_plan",
+        params={'home_school': '長庚大學'},
+        json={'revision': p117['revision'], 'step': {'value': draft_text, 'confirmed': False}},
+    )
+    assert saved_draft.status_code == 200, saved_draft.text
+    up_sp = alice.post(
+        demo_url + '/demo/connector/files',
+        data={'doc_key': 'study_plan'},
+        files={'file': ('cgu-study-plan.txt', draft_text.encode('utf-8'), 'text/plain')},
+    )
+    assert up_sp.status_code == 200, up_sp.text
+    after_up_sp = alice.get(f"{demo_url}/account/application-paths/{p116['plan']['id']}?home_school=長庚大學").json()
+    assert after_up_sp['plan']['steps']['cgu-doc-study_plan']['value'] == draft_text
+    assert after_up_sp['plan']['steps']['cgu-doc-study_plan']['confirmed'] is True
+    assert alice.delete(demo_url + '/demo/connector/files/study_plan').status_code == 200
+    after_rm_sp = alice.get(f"{demo_url}/account/application-paths/{p116['plan']['id']}?home_school=長庚大學").json()
+    assert after_rm_sp['plan']['steps']['cgu-doc-study_plan']['value'] == draft_text
+    assert after_rm_sp['plan']['steps']['cgu-doc-study_plan']['confirmed'] is False
+
+    # OIA workbench actions sync cgu-internal-result without marking confirmed=True
+    for k in ('online_form', 'parent_consent', 'language_proof', 'transcript', 'study_plan'):
+        assert alice.post(
+            demo_url + '/demo/connector/files',
+            data={'doc_key': k},
+            files={'file': (f'{k}.pdf', b'%PDF-1.4\n1 0 obj<<>>endobj\n%%EOF\n', 'application/pdf')},
+        ).status_code == 200
+    sub_app = alice.post(demo_url + '/demo/connector/applications', json={
+        'plan_id': p116['plan']['id'],
+        'preference_1': '林肯大學 Lincoln University',
+    })
+    assert sub_app.status_code == 201, sub_app.text
+    rid = sub_app.json()['application']['receipt_id']
+
+    supp = alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'request_supplement',
+        'receipt_id': rid,
+        'reason': '請補成績單排名頁',
+    })
+    assert supp.status_code == 200
+    plan_after_supp = alice.get(f"{demo_url}/account/application-paths/{p116['plan']['id']}?home_school=長庚大學").json()
+    res_step = plan_after_supp['plan']['steps']['cgu-internal-result']
+    assert res_step['confirmed'] is False
+    assert rid in res_step['value'] and '請補成績單排名頁' in res_step['value']
+
+    appr = alice.post(demo_url + '/demo/connector/oia/actions', json={
+        'action': 'approve_initial',
+        'receipt_id': rid,
+    })
+    assert appr.status_code == 200
+    plan_after_appr = alice.get(f"{demo_url}/account/application-paths/{p116['plan']['id']}?home_school=長庚大學").json()
+    res_step2 = plan_after_appr['plan']['steps']['cgu-internal-result']
+    assert res_step2['confirmed'] is False
+    assert '初審通過' in res_step2['value']
 
