@@ -223,6 +223,7 @@ def test_school_scope_dates_and_native_plan_persistence(demo_url):
     term_level = next(item for item in all_levels if item['id'] == 'term')
     assert term_level['prompt'] == '2027 秋季（116-1）'
     submit_level = next(item for item in all_levels if item['id'] == 'cgu-internal-submit')
+    assert submit_level['title'] == '送出校內申請（12/21 17:00 截止）'
     assert submit_level['official_deadline_at'] == '2026-12-21T17:00:00+08:00'
     assert submit_level['deadline_confirmed'] is True
     ics = alice.get(demo_url + '/calendar/school-window.ics')
@@ -357,8 +358,25 @@ with TestClient(app, base_url='http://testserver') as client:
     assert client.post('/demo/connector/files', data={'doc_key': 'study_plan'},
                        files={'file': ('study_plan.pdf', b'stub-plan', 'application/pdf')}, headers=headers).status_code == 200
 
-    r1 = client.post('/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'}, headers=headers)
+    no_plan = client.post('/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'}, headers=headers)
+    assert no_plan.status_code == 422 and no_plan.json()['code'] == 'missing_application_plan'
+
+    plan_res = client.post('/account/application-paths?home_school=長庚大學', json={
+        'revision': 0,
+        'home_school': '長庚大學',
+        'target_school': '瑞典皇家理工學院 KTH Royal Institute of Technology',
+        'academic_year': '116',
+        'departure_year': '2027',
+        'semester': 'fall',
+    }, headers=headers)
+    assert plan_res.status_code in (200, 201), plan_res.text
+    plan_id = plan_res.json()['plan']['id']
+
+    r1 = client.post('/demo/connector/applications', json={}, headers=headers)
     assert r1.status_code == 201 and r1.json()['application']['receipt_id'] == 'CGU-116-1-A9001'
+    assert r1.json()['plan_id'] == plan_id
+    reloaded_plan = client.get(f'/account/application-paths/{plan_id}?home_school=長庚大學').json()
+    assert reloaded_plan['plan']['steps']['cgu-internal-submit']['confirmed'] is True
 
     ask_hit = client.post('/demo/connector/ask', json={'question': '請問 116-1 校內申請什麼時候截止？'}, headers=headers)
     assert ask_hit.status_code == 200 and ask_hit.json()['matched'] is True
@@ -584,6 +602,13 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     assert initial_status['precheck']['complete'] is False
     assert len(initial_status['precheck']['missing_documents']) == 5
 
+    no_plan = alice.post(demo_url + '/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'})
+    assert no_plan.status_code == 422
+    assert no_plan.json()['code'] == 'missing_application_plan'
+
+    alice_plan = create(alice, demo_url)['plan']
+    plan_id = alice_plan['id']
+
     blocked = alice.post(demo_url + '/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'})
     assert blocked.status_code == 422
     assert len(blocked.json()['missing_documents']) == 5
@@ -614,11 +639,16 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
         'preference_2': '嘉泉大學 Gachon University',
     })
     assert submitted.status_code == 201, submitted.text
+    assert submitted.json()['plan_id'] == plan_id
     app_rec = submitted.json()['application']
+    assert app_rec['plan_id'] == plan_id
     app_id = app_rec['receipt_id']
     assert app_id.startswith('CGU-116-1-A')
     assert app_rec['status'] == 'submitted'
     assert [step['label'] for step in app_rec['timeline']] == ['已送出', '已收件', '要求補件／初審通過']
+    synced_plan = alice.get(f'{demo_url}/account/application-paths/{plan_id}?home_school=長庚大學').json()
+    assert synced_plan['plan']['steps']['cgu-internal-submit']['confirmed'] is True
+    assert synced_plan['progress']['value'] == 1
 
     # 4. OIA Dashboard preloads 5 fictional records & reflects actions to student + notifications
     oia = alice.get(demo_url + '/demo/connector/oia/dashboard').json()
@@ -645,6 +675,11 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     notifs = alice.get(demo_url + '/account/notifications').json()
     assert notifs['unread_count'] >= 1
     assert any(app_id in item['title'] and '補件' in item['title'] for item in notifs['items'])
+    assert any(
+        f'plan={plan_id}' in (item.get('action_url') or '')
+        and 'level=cgu-internal-submit' in (item.get('action_url') or '')
+        for item in notifs['items']
+    )
 
     # Confirm receipt & initial approval also work
     assert alice.post(demo_url + '/demo/connector/oia/actions', json={
