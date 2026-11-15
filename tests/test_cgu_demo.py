@@ -81,8 +81,15 @@ def test_exact_shared_assets_and_main_dom():
     assert demo.select_one('#partners > .discovery-search-tools > #discovery-criteria') is not None
     assert demo.select_one('#partners .journey-search-layout #discovery-criteria') is None
     assert demo.select_one('#cgu-mgmt-channel-notice') is not None
-    assert '生物醫學工程學系' in demo.select_one('#cgu-demo-strip').get_text()
-    assert '多益 750' in demo.select_one('#cgu-demo-strip').get_text()
+    assert demo.select_one('#cgu-demo-tools-toggle').get_text(strip=True) == '展示工具'
+    tools_panel = demo.select_one('#cgu-demo-tools-panel')
+    assert tools_panel is not None and tools_panel.has_attr('hidden')
+    for tool_id in (
+        'cgu-demo-oia-toggle', 'cgu-demo-seed', 'cgu-demo-fill-files',
+        'cgu-demo-fill-report', 'cgu-demo-connector', 'cgu-demo-reset', 'cgu-demo-info',
+    ):
+        assert tools_panel.select_one(f'#{tool_id}') is not None
+    assert '關於此展示' in tools_panel.select_one('#cgu-demo-info').get_text()
     pref_legend = demo.select_one('.application-preference-fields legend')
     assert pref_legend is not None and '最多兩所' in pref_legend.text
     assert '最多五所' not in demo.get_text()
@@ -184,7 +191,7 @@ def test_https_proxy_origin_saves_without_trusting_forwarded_headers(demo_url):
 def test_isolated_auth_guards_and_shared_assets(demo_url):
     client = visitor(demo_url)
     profile = client.get(demo_url + '/auth/session').json()
-    assert profile['display_name'] == '林小程（展示資料）'
+    assert profile['display_name'] == '林小程'
     assert not profile.get('email_verified')
     assert 'uniway_cgu_demo_session' in client.cookies
     assert 'exchange_guide_session' not in client.cookies
@@ -272,7 +279,7 @@ def test_demo_student_profile_and_navigator_subsidy_sources(demo_url):
 
 
 def _valid_report_sections(char_len: int = 310) -> dict[str, str]:
-    base = '虛構示範返國研修心得段落內容，說明選課準備與海外學習收穫。'
+    base = '返國研修心得段落內容，說明選課準備、實作專題、海外日常生活與文化交流收穫。'
     repeats = (char_len // len(base)) + 2
     text = (base * repeats)[:char_len]
     return {
@@ -311,17 +318,17 @@ class StubSchoolConnector(SchoolConnector):
     def submit_application(self, workspace_id, payload):
         self.calls.append(('submit_application', payload.get('preference_1')))
         self.last_docs = payload.get('documents') or []
-        return {'receipt_id': 'SIM-APP-STUB0001', 'status': 'submitted', 'status_label': '已送出', 'timeline': []}
+        return {'receipt_id': 'CGU-116-1-A9001', 'status': 'submitted', 'status_label': '已送出', 'timeline': []}
     def send_inquiry(self, workspace_id, payload):
         self.calls.append(('send_inquiry', payload.get('question')))
-        return {'receipt_id': 'SIM-INQ-STUB0001', 'status': 'pending', 'status_label': '待承辦回覆'}
+        return {'receipt_id': 'CGU-116-1-Q9001', 'status': 'pending', 'status_label': '待承辦回覆'}
     def submit_return_report(self, workspace_id, payload):
         self.calls.append(('submit_return_report', payload.get('partner_school')))
         rec = {
-            'receipt_id': 'SIM-RPT-STUB0001',
+            'receipt_id': 'CGU-116-1-R9001',
             'status': 'pending_review',
             'status_label': '待承辦審核',
-            'student_name': '林小程（展示資料）',
+            'student_name': '林小程',
             'student_department': '工學院 生物醫學工程學系（大三）',
             'partner_school': payload.get('partner_school') or '林肯大學 Lincoln University',
             'term': '116-1（2027 秋季）',
@@ -333,8 +340,8 @@ class StubSchoolConnector(SchoolConnector):
         return rec
     def get_status(self, workspace_id, receipt_id=None):
         if receipt_id in self.reports:
-            return {'badge': '模擬・尚未與校方串接', 'found': True, 'kind': 'return_report', 'record': self.reports[receipt_id]}
-        return {'badge': '模擬・尚未與校方串接', 'stub': True, 'calls': len(self.calls), 'doc_count': len(self.last_docs)}
+            return {'found': True, 'kind': 'return_report', 'record': self.reports[receipt_id]}
+        return {'stub': True, 'calls': len(self.calls), 'doc_count': len(self.last_docs)}
 
 app = create_demo_app(connector_factory=StubSchoolConnector)
 with TestClient(app, base_url='http://testserver') as client:
@@ -351,22 +358,22 @@ with TestClient(app, base_url='http://testserver') as client:
                        files={'file': ('study_plan.pdf', b'stub-plan', 'application/pdf')}, headers=headers).status_code == 200
 
     r1 = client.post('/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'}, headers=headers)
-    assert r1.status_code == 201 and r1.json()['application']['receipt_id'] == 'SIM-APP-STUB0001'
+    assert r1.status_code == 201 and r1.json()['application']['receipt_id'] == 'CGU-116-1-A9001'
 
     ask_hit = client.post('/demo/connector/ask', json={'question': '請問 116-1 校內申請什麼時候截止？'}, headers=headers)
     assert ask_hit.status_code == 200 and ask_hit.json()['matched'] is True
     ask_miss = client.post('/demo/connector/ask', json={'question': '未收錄的極光觀測選課規定？'}, headers=headers)
     assert ask_miss.status_code == 200 and ask_miss.json()['matched'] is False
-    assert ask_miss.json()['inquiry']['receipt_id'] == 'SIM-INQ-STUB0001'
+    assert ask_miss.json()['inquiry']['receipt_id'] == 'CGU-116-1-Q9001'
 
-    sec_text = '虛構示範返國研修心得段落內容，說明選課準備與海外學習收穫。' * 12
+    sec_text = '返國研修心得段落內容，說明選課準備、實作專題、海外日常生活與文化交流收穫。' * 12
     r3 = client.post('/demo/connector/return-reports', json={
         'partner_school': '林肯大學 Lincoln University',
         'sections': {'preparation': sec_text, 'academics': sec_text, 'daily_life': sec_text, 'extracurricular': sec_text},
     }, headers=headers)
-    assert r3.status_code == 201 and r3.json()['report']['receipt_id'] == 'SIM-RPT-STUB0001'
-    pr = client.get('/demo/connector/return-reports/SIM-RPT-STUB0001/print')
-    assert pr.status_code == 200 and 'SIM-RPT-STUB0001' in pr.text
+    assert r3.status_code == 201 and r3.json()['report']['receipt_id'] == 'CGU-116-1-R9001'
+    pr = client.get('/demo/connector/return-reports/CGU-116-1-R9001/print')
+    assert pr.status_code == 200 and 'CGU-116-1-R9001' in pr.text
 
     st = client.get('/demo/connector/status').json()
     assert st['stub'] is True and st['calls'] == 3 and st['doc_count'] == 5
@@ -381,7 +388,11 @@ with TestClient(app, base_url='http://testserver') as client:
 def test_html_fixes_hidden_community_fixed_school_and_forbidden_terms():
     demo_raw = platform_html()
     assert '官方合作' not in demo_raw
-    assert '模擬・尚未與校方串接' in demo_raw
+    assert '模擬・尚未與校方串接' not in demo_raw
+    assert '模擬' not in demo_raw
+    assert 'SIM-' not in demo_raw
+    for forbidden in ('長庚大學官方', '國際處授權', '已與校方系統串接', '校徽'):
+        assert forbidden not in demo_raw
     for stale_count in ('75 間', '76 間', '77 間', '75 所', '76 所', '77 所'):
         assert stale_count not in demo_raw
     assert '78 間合作校' in demo_raw
@@ -418,8 +429,10 @@ def test_html_fixes_hidden_community_fixed_school_and_forbidden_terms():
     home_uni_input = demo.select_one('input[name="home_university"]')
     assert home_uni_input is not None and home_uni_input.has_attr('readonly')
 
-    for nav_route in ('forum', 'ask-oia', 'return-report', 'school-connector'):
+    for nav_route in ('forum', 'ask-oia', 'return-report'):
         assert demo.select_one(f'.uniway-public-nav a[data-public-route="{nav_route}"]') is not None
+    assert demo.select_one('.uniway-public-nav a[data-public-route="school-connector"]') is None
+    assert demo.select_one('#cgu-demo-tools-panel #cgu-demo-connector') is not None
     assert demo.select_one('#cgu-demo-oia-toggle') is not None
 
 
@@ -549,11 +562,13 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
 
     # 1. Integration Spec endpoint
     spec = alice.get(demo_url + '/demo/connector/spec').json()
-    assert spec['badge'] == '模擬・尚未與校方串接'
+    assert 'badge' not in spec
+    spec_text = json.dumps(spec, ensure_ascii=False)
+    assert '模擬' not in spec_text and 'SIM-' not in spec_text
     assert [m['method'] for m in spec['interfaces']] == [
         'submit_application', 'send_inquiry', 'submit_return_report', 'get_status',
     ]
-    assert all(m['current_status'] == '模擬' for m in spec['interfaces'])
+    assert all(m['current_status'] == 'MockCguConnector' for m in spec['interfaces'])
     assert [p['phase'] for p in spec['collaboration_phases']] == [
         '不需校方配合', '小型試辦', '需校方資訊單位',
     ]
@@ -601,7 +616,7 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     assert submitted.status_code == 201, submitted.text
     app_rec = submitted.json()['application']
     app_id = app_rec['receipt_id']
-    assert app_id.startswith('SIM-APP-')
+    assert app_id.startswith('CGU-116-1-A')
     assert app_rec['status'] == 'submitted'
     assert [step['label'] for step in app_rec['timeline']] == ['已送出', '已收件', '要求補件／初審通過']
 
@@ -643,7 +658,7 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     # 5. Ask OIA: rule hit vs miss -> OIA reply & add_to_faq
     hit = alice.post(demo_url + '/demo/connector/ask', json={'question': '請問 116-1 校內申請截止日與領航者補助金額？'}).json()
     assert hit['matched'] is True
-    assert hit['mode_label'] == '規則式比對，非 AI'
+    assert hit['mode_label'] == '依國際處公告與常見問題回覆'
     assert hit['inquiry'] is None
     assert any('cgu.edu.tw' in m['source_url'] for m in hit['matches'])
 
@@ -652,14 +667,14 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
         'escalated_from_faq': True,
     })
     assert escalated.status_code == 201
-    assert escalated.json()['inquiry']['receipt_id'].startswith('SIM-INQ-')
+    assert escalated.json()['inquiry']['receipt_id'].startswith('CGU-116-1-Q')
 
     miss = alice.post(demo_url + '/demo/connector/ask', json={
         'question': '請問紐西蘭基督城冬季無麩質宿舍廚房預約編號怎麼填？',
     }).json()
     assert miss['matched'] is False
     inq_id = miss['inquiry']['receipt_id']
-    assert inq_id.startswith('SIM-INQ-')
+    assert inq_id.startswith('CGU-116-1-Q')
 
     reply_res = alice.post(demo_url + '/demo/connector/oia/actions', json={
         'action': 'reply_inquiry',
@@ -739,11 +754,13 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
         'public_consent': True,
     }).json()['report']
     pub_id = pub_rpt['receipt_id']
-    assert pub_id.startswith('SIM-RPT-')
+    assert pub_id.startswith('CGU-116-1-R')
 
     print_res = alice.get(demo_url + f'/demo/connector/return-reports/{pub_id}/print')
     assert print_res.status_code == 200
-    assert '模擬・尚未與校方串接' in print_res.text
+    assert '模擬' not in print_res.text
+    assert 'SIM-' not in print_res.text
+    assert '展示列印版' not in print_res.text
     assert pub_id in print_res.text
 
     # Not public before OIA approval
@@ -775,11 +792,11 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
 
     # Mutating preloaded seed records works and is restored cleanly on reset
     mut_seed_1 = alice.post(demo_url + '/demo/connector/oia/actions', json={
-        'action': 'approve_initial', 'receipt_id': 'SIM-APP-SEED-0001',
+        'action': 'approve_initial', 'receipt_id': 'CGU-116-1-A0001',
     })
     assert mut_seed_1.status_code == 200 and mut_seed_1.json()['record']['status'] == 'passed_initial'
     mut_seed_3 = alice.post(demo_url + '/demo/connector/oia/actions', json={
-        'action': 'reply_inquiry', 'receipt_id': 'SIM-INQ-SEED-0003', 'reply': '示範回覆種子詢問單。',
+        'action': 'reply_inquiry', 'receipt_id': 'CGU-116-1-Q0001', 'reply': '回覆種子詢問單。',
     })
     assert mut_seed_3.status_code == 200 and mut_seed_3.json()['record']['status'] == 'replied'
 
@@ -800,7 +817,10 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     assert alice.get(demo_url + '/account/notifications').json()['items'] == []
     assert alice.post(demo_url + '/demo/connector/ask', json={'question': '想問無麩質宿舍廚房怎麼申請？'}).json()['matched'] is False
     reset_oia = alice.get(demo_url + '/demo/connector/oia/dashboard').json()
-    seed_app_1 = next(a for a in reset_oia['inboxes']['applications'] if a['receipt_id'] == 'SIM-APP-SEED-0001')
-    seed_inq_3 = next(i for i in reset_oia['inboxes']['inquiries'] if i['receipt_id'] == 'SIM-INQ-SEED-0003')
+    seed_app_1 = next(a for a in reset_oia['inboxes']['applications'] if a['receipt_id'] == 'CGU-116-1-A0001')
+    seed_inq_3 = next(i for i in reset_oia['inboxes']['inquiries'] if i['receipt_id'] == 'CGU-116-1-Q0001')
     assert seed_app_1['status'] == 'submitted'
     assert seed_inq_3['status'] == 'pending'
+    for payload in (reset_status, reset_oia, bob.get(demo_url + '/community/feed?limit=20&sort=latest').json()):
+        dumped = json.dumps(payload, ensure_ascii=False)
+        assert '模擬' not in dumped and 'SIM-' not in dumped and '虛構' not in dumped and '示範資料' not in dumped

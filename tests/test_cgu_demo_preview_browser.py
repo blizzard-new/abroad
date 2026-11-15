@@ -42,6 +42,13 @@ def home(page, url):
     expect(page.locator('#school-switcher-label')).to_have_text('長庚大學')
 
 
+def open_demo_tools(page):
+    panel = page.locator('#cgu-demo-tools-panel')
+    if not panel.is_visible():
+        page.locator('#cgu-demo-tools-toggle').click()
+        expect(panel).to_be_visible()
+
+
 def test_strip_menu_opens_upward_and_reaches_all_three_pages(page, demo_url):
     home(page, demo_url)
     menu = page.locator('#cgu-demo-strip #cgu-preview-menu')
@@ -49,11 +56,12 @@ def test_strip_menu_opens_upward_and_reaches_all_three_pages(page, demo_url):
     expect(menu.locator('a')).to_have_count(3)  # present in the DOM
     expect(menu.locator('a').first).not_to_be_visible()  # collapsed until opened
     for slug, label in PAGES:
+        open_demo_tools(page)
         menu.locator('summary').click()
         link = menu.get_by_role('link', name=label)
         expect(link).to_be_visible()
-        strip_box = page.locator('#cgu-demo-strip').bounding_box()
-        assert link.bounding_box()['y'] + link.bounding_box()['height'] <= strip_box['y'] + 1  # opens above the strip
+        panel_box = page.locator('#cgu-demo-tools-panel').bounding_box()
+        assert link.bounding_box()['y'] + link.bounding_box()['height'] <= panel_box['y'] + 1  # opens above the tools panel
         with page.expect_navigation(wait_until='domcontentloaded'):
             link.click()
         assert page.url == f'{demo_url}/preview/{slug}'
@@ -66,6 +74,7 @@ def test_strip_menu_opens_upward_and_reaches_all_three_pages(page, demo_url):
 
 def test_strip_menu_closes_with_escape_and_outside_click_and_keeps_other_controls_working(page, demo_url):
     home(page, demo_url)
+    open_demo_tools(page)
     menu = page.locator('#cgu-preview-menu')
     menu.locator('summary').focus()
     page.keyboard.press('Enter')
@@ -79,10 +88,11 @@ def test_strip_menu_closes_with_escape_and_outside_click_and_keeps_other_control
     expect(menu.get_by_role('link', name='問答與轉承辦')).to_be_visible()
     page.locator('#home-landing-title').click()
     expect(menu.get_by_role('link', name='問答與轉承辦')).not_to_be_visible()
-    # The existing strip buttons are unaffected by the addition.
+    # The existing strip buttons remain accessible via the collapsible toggle.
+    open_demo_tools(page)
     page.locator('#cgu-demo-info').click()
     expect(page.locator('#cgu-demo-dialog')).to_contain_text('第一階段')
-    expect(page.locator('#cgu-demo-dialog a')).to_have_count(6)
+    expect(page.locator('#cgu-demo-dialog a')).to_have_count(7)
     page.keyboard.press('Escape')
 
 
@@ -138,13 +148,14 @@ def test_responsive_pages_and_strip_do_not_overflow_or_hide_content(page, demo_u
         assert banner['height'] < 60  # one line, never grows into the content
     home(page, demo_url)
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
-    # With the menu in the strip, the last line of the page must still be reachable above it.
+    # With the tools button at the bottom-right, the last line of the page must still clear it.
     page.keyboard.press('End')
     page.wait_for_timeout(200)
     strip_top = page.locator('#cgu-demo-strip').bounding_box()['y']
     body_bottom = page.evaluate('document.body.getBoundingClientRect().bottom')
     assert body_bottom >= strip_top - 1
     assert page.evaluate('parseFloat(getComputedStyle(document.body).paddingBottom)') >= page.locator('#cgu-demo-strip').bounding_box()['height'] - 1
+    open_demo_tools(page)
     page.locator('#cgu-preview-menu summary').click()
     box = page.locator('#cgu-preview-menu ul').bounding_box()
     assert box['x'] >= 0 and box['x'] + box['width'] <= size[0]

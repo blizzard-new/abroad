@@ -74,52 +74,51 @@
     }
   ],
   "connector_spec": {
-    "badge": "模擬・尚未與校方串接",
-    "summary": "展示版以抽象介面 SchoolConnector 隔離所有校務資料交換，目前掛載 MockCguConnector 將模擬紀錄寫入隔離暫存工作區；日後若獲校方資訊單位授權提供正式 API，僅需替換實作類別即可銜接，學生端表單與檢核介面無須重寫。",
+    "summary": "以抽象介面 SchoolConnector 隔離所有校務資料交換邏輯，目前掛載 MockCguConnector 於獨立工作區處理送件與審核流程；日後校方資訊單位提供正式 API 時，僅需替換實作類別即可銜接，學生端表單與檢核介面無須重寫。",
     "interfaces": [
       {
         "method": "submit_application",
-        "purpose": "完成官方五項應備文件完整性預檢後，送出模擬校內申請並記錄檔案雜湊摘要（不含檔案內容）",
+        "purpose": "完成校內五項應備文件完整性預檢後，送出申請並產生收件編號與狀態時間軸（僅登錄檔案完整性資訊，不保存檔案內容）",
         "request_fields": "preference_1, preference_2, academic_year, semester, documents[5]（doc_key, filename, size, content_type, sha256）",
-        "response_fields": "receipt_id（SIM- 開頭）, status, status_label, submitted_at, timeline[]",
+        "response_fields": "receipt_id（CGU-116-1-A0001 格式）, status, status_label, submitted_at, timeline[]",
         "school_requirements": "國際處線上收件 API 規格、學生 SSO 單一登入身分識別、加密檔案儲存端點與正式收件編號規則",
-        "current_status": "模擬"
+        "current_status": "MockCguConnector"
       },
       {
         "method": "send_inquiry",
-        "purpose": "當規則庫關鍵字未命中或學生點選「仍要詢問承辦」時，建立詢問單送入國際處模擬收件匣",
+        "purpose": "當常見問題關鍵字比對未命中或學生點選「仍要詢問承辦」時，建立詢問單送入國際處收件匣",
         "request_fields": "question, escalated_from_faq, matched_faq_ids[]",
-        "response_fields": "receipt_id（SIM- 開頭）, status（pending / replied）, created_at, reply, replied_at",
+        "response_fields": "receipt_id（CGU-116-1-Q0001 格式）, status（pending / replied）, created_at, reply, replied_at",
         "school_requirements": "國際處諮詢單佇列 API 或信箱路由規則、承辦回覆同步介面與個資保護規範",
-        "current_status": "模擬"
+        "current_status": "MockCguConnector"
       },
       {
         "method": "submit_return_report",
         "purpose": "依國際處學期報告表四段（各至少 300 字）與選填外部影片網址送審，並記錄公開授權意願",
         "request_fields": "partner_school, term, author_title, sections.{preparation, academics, daily_life, extracurricular}, video_url, public_consent",
-        "response_fields": "receipt_id（SIM- 開頭）, status（pending_review / approved）, submitted_at, published, print_url",
+        "response_fields": "receipt_id（CGU-116-1-R0001 格式）, status（pending_review / approved）, submitted_at, published, print_url",
         "school_requirements": "返國報告接收與審核狀態 API、公開授權稽核欄位與資料保存／撤回下架機制",
-        "current_status": "模擬"
+        "current_status": "MockCguConnector"
       },
       {
         "method": "get_status",
-        "purpose": "查詢學生工作區內申請時間軸、補件原因、詢問回覆、心得審核進度與通知鈴鐺未讀訊息",
-        "request_fields": "workspace_id（由展示 session 自動綁定）, receipt_id（選填，單筆查詢）",
+        "purpose": "查詢學生工作區內申請時間軸、補件原因、詢問回覆、心得審核進度與通知中心未讀訊息",
+        "request_fields": "workspace_id（由目前工作階段自動綁定）, receipt_id（選填，單筆查詢）",
         "response_fields": "applications[], inquiries[], return_reports[], notifications[], unread_count, draft_files",
         "school_requirements": "最小權限之個人案件狀態查詢端點、標準狀態碼對照表與狀態異動通知推播規格",
-        "current_status": "模擬"
+        "current_status": "MockCguConnector"
       }
     ],
     "collaboration_phases": [
       {
         "phase": "不需校方配合",
         "scope": "公開資料整理與學生自主檢核",
-        "details": "僅讀取國際事務處公開公告與法規彙編，提供 78 所合作校院系過濾、116-1 申請截止提醒、領航者補助規則對照、五項文件自我預檢與附來源連結之規則式問答；零校內系統連線、不收受真實個資。"
+        "details": "僅讀取國際事務處公開公告與法規彙編，提供 78 所合作校院系過濾、116-1 申請截止提醒、領航者補助規則對照、五項文件自我預檢與附來源連結之問答查詢；不連線校內系統、不留存真實個資。"
       },
       {
         "phase": "小型試辦",
         "scope": "承辦檢核輔助與知識庫累積",
-        "details": "在不更動校方既有主機與資料庫前提下，以獨立測試環境供國際處評估五項文件預檢表、常見問答（FAQ）關鍵字整理，以及經學生勾選同意公開且核可之學長姐返國心得展示流程。"
+        "details": "在不更動校方既有主機與資料庫前提下，以獨立測試環境供國際處評估五項文件預檢表、常見問答（FAQ）關鍵字整理，以及經學生勾選同意公開且核可之學長姐返國心得審核流程。"
       },
       {
         "phase": "需校方資訊單位",
@@ -136,11 +135,9 @@
     ],
     "applications": [
       {
-        "receipt_id": "SIM-APP-SEED-0001",
+        "receipt_id": "CGU-116-1-A0001",
         "owner": "seed",
-        "is_fictional": true,
-        "fictional_label": "虛構示範資料",
-        "student_name": "陳語彤（虛構示範資料）",
+        "student_name": "陳語彤",
         "department": "醫學院・護理學系 大三",
         "academic_year": "116",
         "semester": "116-1（2027 秋季出國）",
@@ -151,24 +148,22 @@
         "supplement_reason": "",
         "submitted_at": "2026-11-11T09:30:00+08:00",
         "documents": [
-          {"doc_key": "online_form", "doc_title": "線上申請表", "filename": "demo_chen_online_form.pdf", "size": 42180, "content_type": "application/pdf", "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f9011223344556677889900aabbccddeeff"},
-          {"doc_key": "parent_consent", "doc_title": "家長同意書", "filename": "demo_chen_parent_consent.pdf", "size": 58320, "content_type": "application/pdf", "sha256": "b2c3d4e5f60718293a4b5c6d7e8f9011223344556677889900aabbccddeeff11"},
-          {"doc_key": "language_proof", "doc_title": "語文證明", "filename": "demo_chen_ielts_6_5.pdf", "size": 63910, "content_type": "application/pdf", "sha256": "c3d4e5f60718293a4b5c6d7e8f9011223344556677889900aabbccddeeff1122"},
-          {"doc_key": "transcript", "doc_title": "含排名的中文歷年成績單", "filename": "demo_chen_transcript_ranked.pdf", "size": 74500, "content_type": "application/pdf", "sha256": "d4e5f60718293a4b5c6d7e8f9011223344556677889900aabbccddeeff112233"},
-          {"doc_key": "study_plan", "doc_title": "一頁讀書計畫", "filename": "demo_chen_study_plan_1p.pdf", "size": 51200, "content_type": "application/pdf", "sha256": "e5f60718293a4b5c6d7e8f9011223344556677889900aabbccddeeff11223344"}
+          {"doc_key": "online_form", "doc_title": "線上申請表", "filename": "chen_online_form.pdf", "size": 42180, "content_type": "application/pdf", "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f9011223344556677889900aabbccddeeff"},
+          {"doc_key": "parent_consent", "doc_title": "家長同意書", "filename": "chen_parent_consent.pdf", "size": 58320, "content_type": "application/pdf", "sha256": "b2c3d4e5f60718293a4b5c6d7e8f9011223344556677889900aabbccddeeff11"},
+          {"doc_key": "language_proof", "doc_title": "語文證明", "filename": "chen_ielts_6_5.pdf", "size": 63910, "content_type": "application/pdf", "sha256": "c3d4e5f60718293a4b5c6d7e8f9011223344556677889900aabbccddeeff1122"},
+          {"doc_key": "transcript", "doc_title": "含排名的中文歷年成績單", "filename": "chen_transcript_ranked.pdf", "size": 74500, "content_type": "application/pdf", "sha256": "d4e5f60718293a4b5c6d7e8f9011223344556677889900aabbccddeeff112233"},
+          {"doc_key": "study_plan", "doc_title": "一頁讀書計畫", "filename": "chen_study_plan_1p.pdf", "size": 51200, "content_type": "application/pdf", "sha256": "e5f60718293a4b5c6d7e8f9011223344556677889900aabbccddeeff11223344"}
         ],
         "timeline": [
-          {"step": "submitted", "label": "已送出", "state": "done", "at": "2026-11-11T09:30:00+08:00", "note": "虛構示範案件：已完成五項文件預檢送出"},
+          {"step": "submitted", "label": "已送出", "state": "done", "at": "2026-11-11T09:30:00+08:00", "note": "已完成五項應備文件預檢並送出申請"},
           {"step": "received", "label": "已收件", "state": "pending", "at": null, "note": "等待承辦確認收件"},
           {"step": "review_result", "label": "要求補件／初審通過", "state": "pending", "at": null, "note": "待初審檢核"}
         ]
       },
       {
-        "receipt_id": "SIM-APP-SEED-0002",
+        "receipt_id": "CGU-116-1-A0002",
         "owner": "seed",
-        "is_fictional": true,
-        "fictional_label": "虛構示範資料",
-        "student_name": "張哲瑋（虛構示範資料）",
+        "student_name": "張哲瑋",
         "department": "管理學院・工商管理學系 大四",
         "academic_year": "116",
         "semester": "116-1（2027 秋季出國）",
@@ -176,32 +171,30 @@
         "preference_2": "",
         "status": "supplement_requested",
         "status_label": "要求補件",
-        "supplement_reason": "（虛構示範）中文歷年成績單掃描檔未含班級排名百分比，請補交含排名正本雜湊紀錄。",
+        "supplement_reason": "中文歷年成績單掃描檔未含班級排名百分比，請補交含排名之正式成績單。",
         "submitted_at": "2026-11-10T14:15:00+08:00",
         "documents": [
-          {"doc_key": "online_form", "doc_title": "線上申請表", "filename": "demo_chang_online_form.pdf", "size": 39800, "content_type": "application/pdf", "sha256": "11223344556677889900aabbccddeeff00112233445566778899aabbccddeeff"},
-          {"doc_key": "parent_consent", "doc_title": "家長同意書", "filename": "demo_chang_consent.pdf", "size": 48900, "content_type": "application/pdf", "sha256": "223344556677889900aabbccddeeff00112233445566778899aabbccddeeff11"},
-          {"doc_key": "language_proof", "doc_title": "語文證明", "filename": "demo_chang_toeic_785.pdf", "size": 55200, "content_type": "application/pdf", "sha256": "3344556677889900aabbccddeeff00112233445566778899aabbccddeeff1122"},
-          {"doc_key": "transcript", "doc_title": "含排名的中文歷年成績單", "filename": "demo_chang_transcript_no_rank.pdf", "size": 61200, "content_type": "application/pdf", "sha256": "44556677889900aabbccddeeff00112233445566778899aabbccddeeff112233"},
-          {"doc_key": "study_plan", "doc_title": "一頁讀書計畫", "filename": "demo_chang_study_plan.pdf", "size": 47300, "content_type": "application/pdf", "sha256": "556677889900aabbccddeeff00112233445566778899aabbccddeeff11223344"}
+          {"doc_key": "online_form", "doc_title": "線上申請表", "filename": "chang_online_form.pdf", "size": 39800, "content_type": "application/pdf", "sha256": "11223344556677889900aabbccddeeff00112233445566778899aabbccddeeff"},
+          {"doc_key": "parent_consent", "doc_title": "家長同意書", "filename": "chang_consent.pdf", "size": 48900, "content_type": "application/pdf", "sha256": "223344556677889900aabbccddeeff00112233445566778899aabbccddeeff11"},
+          {"doc_key": "language_proof", "doc_title": "語文證明", "filename": "chang_toeic_785.pdf", "size": 55200, "content_type": "application/pdf", "sha256": "3344556677889900aabbccddeeff00112233445566778899aabbccddeeff1122"},
+          {"doc_key": "transcript", "doc_title": "含排名的中文歷年成績單", "filename": "chang_transcript_no_rank.pdf", "size": 61200, "content_type": "application/pdf", "sha256": "44556677889900aabbccddeeff00112233445566778899aabbccddeeff112233"},
+          {"doc_key": "study_plan", "doc_title": "一頁讀書計畫", "filename": "chang_study_plan.pdf", "size": 47300, "content_type": "application/pdf", "sha256": "556677889900aabbccddeeff00112233445566778899aabbccddeeff11223344"}
         ],
         "timeline": [
-          {"step": "submitted", "label": "已送出", "state": "done", "at": "2026-11-10T14:15:00+08:00", "note": "虛構示範案件送出"},
+          {"step": "submitted", "label": "已送出", "state": "done", "at": "2026-11-10T14:15:00+08:00", "note": "已完成五項應備文件預檢並送出申請"},
           {"step": "received", "label": "已收件", "state": "done", "at": "2026-11-10T16:00:00+08:00", "note": "承辦已確認收件"},
-          {"step": "review_result", "label": "要求補件", "state": "warning", "at": "2026-11-11T10:20:00+08:00", "note": "補件原因：（虛構示範）中文歷年成績單掃描檔未含班級排名百分比，請補交含排名正本雜湊紀錄。"}
+          {"step": "review_result", "label": "要求補件", "state": "warning", "at": "2026-11-11T10:20:00+08:00", "note": "補件原因：中文歷年成績單掃描檔未含班級排名百分比，請補交含排名之正式成績單。"}
         ]
       }
     ],
     "inquiries": [
       {
-        "receipt_id": "SIM-INQ-SEED-0003",
+        "receipt_id": "CGU-116-1-Q0001",
         "owner": "seed",
-        "is_fictional": true,
-        "fictional_label": "虛構示範資料",
-        "student_name": "黃品妍（虛構示範資料）",
+        "student_name": "黃品妍",
         "department": "工學院・電機工程學系 大三",
         "topic": "合作校宿舍候補與接機時程諮詢",
-        "question": "（虛構示範提問）請問獲學校提名後若合作校校內宿舍額滿，國際處是否有歷屆學長姐校外安全租屋區域整理可參考？",
+        "question": "請問獲學校提名後若合作校校內宿舍額滿，國際處是否有歷屆學長姐校外安全租屋區域整理可參考？",
         "escalated_from_faq": false,
         "status": "pending",
         "status_label": "待回覆",
@@ -213,19 +206,17 @@
     ],
     "return_reports": [
       {
-        "receipt_id": "SIM-RPT-SEED-0004",
+        "receipt_id": "CGU-116-1-R0001",
         "owner": "seed",
-        "is_fictional": true,
-        "fictional_label": "虛構示範資料",
-        "student_name": "吳冠廷（虛構示範資料）",
-        "author_title": "智慧運算學院・人工智慧學系 大四（虛構示範資料）",
+        "student_name": "吳冠廷",
+        "author_title": "智慧運算學院・人工智慧學系 大四",
         "partner_school": "瑞典皇家理工學院 KTH Royal Institute of Technology",
         "term": "115-1（2026 秋季）",
         "sections": {
-          "preparation": "【虛構示範資料】出發前往瑞典皇家理工學院交換前，最重要的三項準備是居留許可申請、學分抵免預審與北歐冬季衣物配置。收到母校提名與對方入學許可信後，我立即在瑞典移民署網站線上送出學生居留許可申請，並整理英文財力證明與涵蓋全歐盟醫療的保險文件，建議學弟妹至少預留八到十週等待審核。課程方面，我先將對方資工與機器學習相關課綱下載成完整檔案，與系辦確認返國至少採認三學分的專業科目對照原則，避免到當地後才發現必修先修條件不符。此外，瑞典全面使用無現金電子支付，出發前先開通支援海外刷卡與動態驗證的金融卡，能大幅減少抵達初期採買生活用品的困擾。同時我也事先加入該校國際學生迎新群組，提前確認機場快線與宿舍領鑰匙的服務時段，讓長途飛行後的入住過程非常順利且安心。",
-          "academics": "【虛構示範資料】瑞典皇家理工學院將一學期拆分為兩個緊湊的修課區段，每個區段集中修讀兩門核心課程，因此每週的專案實作與小組討論密度非常高。我選修了深度學習進階實作與分散式系統兩門英文授課專業課程，課堂上教授十分鼓勵學生直接針對論文假設提出質疑，評量方式並非單靠期末筆試，而是由三次團隊程式專題報告、同儕程式碼審查與口頭答辯共同組成。實驗室二十四小時開放給修課交換生刷卡使用，助教在每週固定諮詢時段都會逐行協助檢視實驗設計。這種高強度且重視合作推理的學習節奏，讓我對跨國工程團隊如何分工撰寫技術文件有了非常扎實的體會與成長。學校圖書館亦提供免費的學術英文簡報工作坊，協助非英語母語學生練習清晰的邏輯結構與問答應對技巧，對期末專題發表幫助極大。",
-          "daily_life": "【虛構示範資料】斯德哥爾摩的日常生活井然有序，大眾運輸系統整合地鐵、公車與通勤火車，使用學生月票即可無限次搭乘往返校區與宿舍。住宿方面，我透過學校住宿中心抽中距離主校區地鐵兩站的單人雅房宿舍，共用廚房每天晚上都是來自德國、法國、日本與台灣交換生一起下廚交流的溫馨空間。由於北歐外食費用偏高，我養成每週到超市採買當季食材自煮三餐與準備隔日午餐盒的習慣，每月伙食開銷能穩定控制在合理預算內。進入十一月後高緯度日照時間明顯縮短，學校健康中心特別提醒國際學生規律運動並適度補充維生素，維持穩定作息讓我在漫長冬季依然保持良好精神。宿舍區樓下設有完善的資源回收室與預約制洗衣房，透過手機應用程式即可查詢空檔，日常起居環境乾淨舒適且相當安全。",
-          "extracurricular": "【虛構示範資料】課餘時間我積極參與學生會國際委員會舉辦的迎新城市尋寶、傳統咖啡茶敘文化體驗與北歐森林健行社團。每週五下午實驗室與社團常舉辦輕鬆的點心聚會，讓不同學院的研究生與交換生在沒有課業壓力的氛圍下暢談各自國家的科技產業與文化差異。期中休息週我與幾位歐洲室友一同搭乘夜車前往北部小鎮健行，親眼見證壯闊的自然地貌與環境永續規劃。回顧整學期的研修歷程，這段交換經驗不僅拓展了人工智慧領域的專業視野，更培養了獨立解決跨文化溝通問題的自信，非常推薦學弟妹提早準備語文檢定與讀書計畫勇敢提出申請。學期末我也參與了台灣文化日攤位分享，向各國同學介紹長庚校園與台灣飲食特色，建立起難能可貴的跨國友誼與學術交流人脈。"
+          "preparation": "出發前往瑞典皇家理工學院交換前，最重要的三項準備是居留許可申請、學分抵免預審與北歐冬季衣物配置。收到母校提名與對方入學許可信後，我立即在瑞典移民署網站線上送出學生居留許可申請，並整理英文財力證明與涵蓋全歐盟醫療的保險文件，建議學弟妹至少預留八到十週等待審核。課程方面，我先將對方資工與機器學習相關課綱下載成完整檔案，與系辦確認返國至少採認三學分的專業科目對照原則，避免到當地後才發現必修先修條件不符。此外，瑞典全面使用無現金電子支付，出發前先開通支援海外刷卡與動態驗證的金融卡，能大幅減少抵達初期採買生活用品的困擾。同時我也事先加入該校國際學生迎新群組，提前確認機場快線與宿舍領鑰匙的服務時段，讓長途飛行後的入住過程非常順利且安心。",
+          "academics": "瑞典皇家理工學院將一學期拆分為兩個緊湊的修課區段，每個區段集中修讀兩門核心課程，因此每週的專案實作與小組討論密度非常高。我選修了深度學習進階實作與分散式系統兩門英文授課專業課程，課堂上教授十分鼓勵學生直接針對論文假設提出質疑，評量方式並非單靠期末筆試，而是由三次團隊程式專題報告、同儕程式碼審查與口頭答辯共同組成。實驗室二十四小時開放給修課交換生刷卡使用，助教在每週固定諮詢時段都會逐行協助檢視實驗設計。這種高強度且重視合作推理的學習節奏，讓我對跨國工程團隊如何分工撰寫技術文件有了非常扎實的體會與成長。學校圖書館亦提供免費的學術英文簡報工作坊，協助非英語母語學生練習清晰的邏輯結構與問答應對技巧，對期末專題發表幫助極大。",
+          "daily_life": "斯德哥爾摩的日常生活井然有序，大眾運輸系統整合地鐵、公車與通勤火車，使用學生月票即可無限次搭乘往返校區與宿舍。住宿方面，我透過學校住宿中心抽中距離主校區地鐵兩站的單人雅房宿舍，共用廚房每天晚上都是來自德國、法國、日本與台灣交換生一起下廚交流的溫馨空間。由於北歐外食費用偏高，我養成每週到超市採買當季食材自煮三餐與準備隔日午餐盒的習慣，每月伙食開銷能穩定控制在合理預算內。進入十一月後高緯度日照時間明顯縮短，學校健康中心特別提醒國際學生規律運動並適度補充維生素，維持穩定作息讓我在漫長冬季依然保持良好精神。宿舍區樓下設有完善的資源回收室與預約制洗衣房，透過手機應用程式即可查詢空檔，日常起居環境乾淨舒適且相當安全。",
+          "extracurricular": "課餘時間我積極參與學生會國際委員會舉辦的迎新城市尋寶、傳統咖啡茶敘文化體驗與北歐森林健行社團。每週五下午實驗室與社團常舉辦輕鬆的點心聚會，讓不同學院的研究生與交換生在沒有課業壓力的氛圍下暢談各自國家的科技產業與文化差異。期中休息週我與幾位歐洲室友一同搭乘夜車前往北部小鎮健行，親眼見證壯闊的自然地貌與環境永續規劃。回顧整學期的研修歷程，這段交換經驗不僅拓展了人工智慧領域的專業視野，更培養了獨立解決跨文化溝通問題的自信，非常推薦學弟妹提早準備語文檢定與讀書計畫勇敢提出申請。學期末我也參與了台灣文化日攤位分享，向各國同學介紹長庚校園與台灣飲食特色，建立起難能可貴的跨國友誼與學術交流人脈，留下難忘的回憶。"
         },
         "video_url": "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15724",
         "public_consent": true,
@@ -236,19 +227,17 @@
         "approved_at": null
       },
       {
-        "receipt_id": "SIM-RPT-SEED-0005",
+        "receipt_id": "CGU-116-1-R0002",
         "owner": "seed",
-        "is_fictional": true,
-        "fictional_label": "虛構示範資料",
-        "student_name": "周子晴（虛構示範資料）",
-        "author_title": "工學院・生物醫學工程學系 大四（虛構示範資料）",
+        "student_name": "周子晴",
+        "author_title": "工學院・生物醫學工程學系 大四",
         "partner_school": "林肯大學 Lincoln University",
         "term": "115-1（2026 秋季）",
         "sections": {
-          "preparation": "【虛構示範資料】準備林肯大學交換計畫時，首要留意紐西蘭與台灣南北半球學期季節相反，以及林肯大學並未將多益列入英文門檻，必須提早報考雅思或托福並取得符合合作校要求之成績單。完成長庚校內五項應備文件甄選並獲國際處提名後，合作校國際辦公室會寄發線上入學申請指引、住宿偏好調查與強制醫療旅遊保險說明。簽證部分需線上申請紐西蘭學生簽證並預約指定醫院完成胸腔檢查，整體流程約需六週，務必在收到正式入學許可後第一時間辦理。行前我也先與醫工系導師討論生醫材料與生物統計相關課程大綱，確保返校後學分採認符合領航者補助至少三學分規定。此外，紐西蘭入境海關對食品、藥品與戶外登山鞋底清潔檢疫極為嚴格，建議列印英文處方箋並誠實申報隨身常備藥品，以利快速通關。",
-          "academics": "【虛構示範資料】林肯大學以生命科學、環境工程與農業生技聞名，校園採小班制互動教學，師生比相當友善。我本學期選修生物感測應用、實驗數據分析與環境永續管理三門專業課程，每門課除了講授理論外，都安排了高比例的田野採樣或實驗室儀器實作。授課教師非常關心國際交換生的適應狀況，第一週即提供完整的學術寫作引用規範與實驗安全訓練。在期末跨領域專題中，我與紐西蘭本地生合作設計低功耗生理監測感測模組雛形，從文獻回顧、數據校正到海報發表全程以英文溝通協作，不僅大幅提升專業英文口頭表達流暢度，也學習到實務導向的研究方法。學校學習發展中心還提供一對一的報告結構諮詢，讓我在撰寫長篇英文實驗分析報告時更能掌握嚴謹的學術論證格式。",
-          "daily_life": "【虛構示範資料】林肯校區位於基督城近郊的寧靜大學城，空氣清新且治安良好，從校內宿舍步行五到十分鐘即可抵達教學大樓、圖書館與設備齊全的運動中心。校區門口有直達基督城市區的定期公車，憑學生證設定交通卡即可享有學生票優惠，週末前往亞洲超市與大型量販店採買食材十分便利。紐西蘭日夜溫差大且紫外線強，日常穿著建議採洋蔥式保暖並隨身攜帶防風外套與防曬用品。校內醫務所與國際學生輔導室資源完善，抵達首週的新生導覽會詳細介紹銀行開戶、電信門號申辦與地震緊急避難須知，讓初次離家赴海外長住的交換生能迅速安定下來。我居住的自炊式公寓共有五位室友，大家輪流負責公共空間清潔並分享家鄉料理，在日常互動中自然提升生活英語聽說能力。",
-          "extracurricular": "【虛構示範資料】紐西蘭南島擁有得天獨厚的自然景觀，學校登山健行社與國際學生社每逢週末都會規劃不同難度的步道健行、海岸生態觀察與毛利文化工作坊。我在課餘時間加入了校園羽球社與社區志工植樹活動，認識了許多熱愛戶外運動的當地同學，也在共同參與生態復育的過程中深入了解紐西蘭對土地保育的重視。期中假期我們沿著南阿爾卑斯山脈進行環島考察，學習自主規劃交通路線與團隊風險管理。這趟交換旅程讓我跳脫熟悉的舒適圈，在專業學習與生活自理能力上都有滿滿收穫，誠摯鼓勵長庚學弟妹善用學校交換資源拓展國際視野。返國前我也主動整理了選課課綱、成績單申請流程與生活開銷明細表，希望能回饋給未來準備前往大洋洲研修的學弟妹作為實用的行前規劃參考。"
+          "preparation": "準備林肯大學交換計畫時，首要留意紐西蘭與台灣南北半球學期季節相反，以及林肯大學並未將多益列入英文門檻，必須提早報考雅思或托福並取得符合合作校要求之成績單。完成長庚校內五項應備文件甄選並獲國際處提名後，合作校國際辦公室會寄發線上入學申請指引、住宿偏好調查與強制醫療旅遊保險說明。簽證部分需線上申請紐西蘭學生簽證並預約指定醫院完成胸腔檢查，整體流程約需六週，務必在收到正式入學許可後第一時間辦理。行前我也先與醫工系導師討論生醫材料與生物統計相關課程大綱，確保返校後學分採認符合領航者補助至少三學分規定。此外，紐西蘭入境海關對食品、藥品與戶外登山鞋底清潔檢疫極為嚴格，建議列印英文處方箋並誠實申報隨身常備藥品，以利快速通關。",
+          "academics": "林肯大學以生命科學、環境工程與農業生技聞名，校園採小班制互動教學，師生比相當友善。我本學期選修生物感測應用、實驗數據分析與環境永續管理三門專業課程，每門課除了講授理論外，都安排了高比例的田野採樣或實驗室儀器實作。授課教師非常關心國際交換生的適應狀況，第一週即提供完整的學術寫作引用規範與實驗安全訓練。在期末跨領域專題中，我與紐西蘭本地生合作設計低功耗生理監測感測模組雛形，從文獻回顧、數據校正到海報發表全程以英文溝通協作，不僅大幅提升專業英文口頭表達流暢度，也學習到實務導向的研究方法。學校學習發展中心還提供一對一的報告結構諮詢，讓我在撰寫長篇英文實驗分析報告時更能掌握嚴謹的學術論證格式與實驗數據整理技巧。",
+          "daily_life": "林肯校區位於基督城近郊的寧靜大學城，空氣清新且治安良好，從校內宿舍步行五到十分鐘即可抵達教學大樓、圖書館與設備齊全的運動中心。校區門口有直達基督城市區的定期公車，憑學生證設定交通卡即可享有學生票優惠，週末前往亞洲超市與大型量販店採買食材十分便利。紐西蘭日夜溫差大且紫外線強，日常穿著建議採洋蔥式保暖並隨身攜帶防風外套與防曬用品。校內醫務所與國際學生輔導室資源完善，抵達首週的新生導覽會詳細介紹銀行開戶、電信門號申辦與地震緊急避難須知，讓初次離家赴海外長住的交換生能迅速安定下來。我居住的自炊式公寓共有五位室友，大家輪流負責公共空間清潔並分享家鄉料理，在日常互動中自然提升生活英語聽說能力與跨文化理解。",
+          "extracurricular": "紐西蘭南島擁有得天獨厚的自然景觀，學校登山健行社與國際學生社每逢週末都會規劃不同難度的步道健行、海岸生態觀察與毛利文化工作坊。我在課餘時間加入了校園羽球社與社區志工植樹活動，認識了許多熱愛戶外運動的當地同學，也在共同參與生態復育的過程中深入了解紐西蘭對土地保育的重視。期中假期我們沿著南阿爾卑斯山脈進行環島考察，學習自主規劃交通路線與團隊風險管理。這趟交換旅程讓我跳脫熟悉的舒適圈，在專業學習與生活自理能力上都有滿滿收穫，誠摯鼓勵長庚學弟妹善用學校交換資源拓展國際視野。返國前我也主動整理了選課課綱、成績單申請流程與生活開銷明細表，希望能回饋給未來準備前往大洋洲研修的學弟妹作為實用的行前規劃參考指南。"
         },
         "video_url": "",
         "public_consent": true,
@@ -263,12 +252,12 @@
   "stages": [
     {"id":"explore","title":"探索與選校","description":"先了解自己想去哪裡，再核對長庚與目的校的名額、語言及合作校參考時程。","source":"partners","tasks":[
       {"id":"read-guide","title":"閱讀長庚校內申請須知","detail":"確認 116-1 校內申請截止日（2026/12/21 17:00）與應備 5 份文件清單。","source":"selection"},
-      {"id":"shortlist","title":"整理兩所志願與想修的課程","detail":"長庚校級申請表最多可填兩所志願；本展示計畫記錄你的首選目標。","source":"partners"},
+      {"id":"shortlist","title":"整理兩所志願與想修的課程","detail":"長庚校級申請表最多可填兩所志願；可先在此記錄你的首選目標。","source":"partners"},
       {"id":"check-language","title":"確認目標校語言門檻與當期名額","detail":"核對卡片上的表列名額、是否標示「此校未列多益」、學制／系所範圍與目的校語文規定後自行勾選。","source":"partners"}]},
     {"id":"internal","title":"校內申請","description":"對照校內文件與 116-1 申請期間，為自己安排準備與送件日期。","source":"selection","tasks":[
       {"id":"transcript","title":"確認成績單、平均與排名資料","detail":"大學部成績單需含班級排名百分比；此處只記錄待辦，不收取文件。","source":"selection_guide"},
       {"id":"study-plan","title":"準備語文證明、同意書與 1 頁讀書計畫","detail":"依官方清單準備；尚未取得語文成績者請於線上申請表註明預計取得日期。","source":"selection_guide"},
-      {"id":"internal-submit","title":"依官方管道完成申請後，自行記錄","detail":"勾選只代表你的展示紀錄，沒有送件、收件編號或校方受理。","source":"selection"}]},
+      {"id":"internal-submit","title":"依官方管道完成申請後，自行記錄","detail":"勾選代表個人準備進度紀錄；正式申請請依國際處公告完成線上表單與紙本繳交。","source":"selection"}]},
     {"id":"results","title":"面試與放榜","description":"是否面試待當期通知確認；將校內結果與目的校錄取分開追蹤。","source":"selection","tasks":[
       {"id":"interview","title":"確認是否需要面試並整理準備重點","detail":"面試不是所有計畫的必經流程；依個人通知確認。不適用時可自行註記完成確認。","source":"selection_guide"},
       {"id":"internal-result","title":"查看校內初審結果與提名通知","detail":"依官方公告或個人通知查詢；本站沒有同步校方結果。","source":"selection"}]},

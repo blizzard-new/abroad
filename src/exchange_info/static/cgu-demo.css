@@ -1,16 +1,50 @@
 /* Edition controls only. Layout, colours, navigation and components come from UniWay. */
-:root { --cgu-strip-height:50px; --cgu-strip-clearance:70px; }
+:root { --cgu-strip-height:46px; --cgu-strip-clearance:64px; }
+html[data-cgu-present="1"] { --cgu-strip-height:0px; --cgu-strip-clearance:0px; }
+html[data-cgu-present="1"] #cgu-demo-strip,
+#cgu-demo-strip[hidden] { display:none !important; }
 #cgu-demo-strip {
-  position:fixed; bottom:0; left:0; right:0; z-index:1500;
-  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
-  gap:6px 8px; padding:6px 14px calc(6px + env(safe-area-inset-bottom, 0px));
+  position:fixed; bottom:calc(12px + env(safe-area-inset-bottom, 0px)); right:12px; left:auto; z-index:1500;
+  display:flex; flex-direction:column; align-items:flex-end; gap:8px;
+  max-width:calc(100vw - 24px); font:12px/1.4 system-ui; box-sizing:border-box;
+  pointer-events:none;
+}
+#cgu-demo-strip .cgu-demo-tools-toggle {
+  pointer-events:auto; font:600 12.5px/1.25 system-ui; min-height:34px; padding:6px 14px;
+  border:1px solid var(--uw-line,#cbd5e1); border-radius:999px;
   background:var(--uw-surface,#fff); color:var(--uw-text,#23324a);
-  border-top:1px solid var(--uw-line,#d8dde5); font:12px/1.4 system-ui; box-sizing:border-box;
+  box-shadow:0 6px 18px rgba(15,23,42,.14); cursor:pointer; white-space:nowrap; box-sizing:border-box;
+}
+#cgu-demo-strip .cgu-demo-tools-toggle[aria-expanded="true"] {
+  background:#1e3a8a; border-color:#1e3a8a; color:#ffffff;
+}
+#cgu-demo-strip .cgu-demo-tools-panel {
+  pointer-events:auto; max-width:min(860px, calc(100vw - 24px));
+  padding:10px 12px; border-radius:16px;
+  background:var(--uw-surface,#fff); color:var(--uw-text,#23324a);
+  border:1px solid var(--uw-line,#d8dde5); box-shadow:0 12px 30px rgba(15,23,42,.16);
+  box-sizing:border-box;
+}
+#cgu-demo-strip .cgu-demo-tools-panel[hidden] { display:none !important; }
+#cgu-demo-strip .cgu-demo-tools-actions {
+  display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; gap:6px 8px;
+}
+#cgu-demo-strip .cgu-demo-storage-note {
+  display:block; margin-top:6px; font-size:11px; color:var(--uw-muted,#64748b); text-align:right;
 }
 #cgu-demo-strip button {
   font:600 12px/1.25 system-ui; min-height:32px; padding:5px 10px;
   border:1px solid var(--uw-line,#d8dde5); border-radius:8px;
   background:transparent; color:inherit; cursor:pointer; white-space:nowrap; box-sizing:border-box;
+}
+#cgu-demo-strip .cgu-demo-tools-toggle { border-radius:999px; min-height:34px; padding:6px 14px; background:var(--uw-surface,#fff); }
+#cgu-demo-strip .cgu-demo-tools-toggle[aria-expanded="true"] { background:#1e3a8a; border-color:#1e3a8a; color:#ffffff; }
+[data-theme="dark"] #cgu-demo-strip .cgu-demo-tools-toggle,
+[data-theme="dark"] #cgu-demo-strip .cgu-demo-tools-panel {
+  background:rgba(15,23,42,.96); border-color:rgba(148,163,184,.35); color:#e2e8f0;
+}
+[data-theme="dark"] #cgu-demo-strip .cgu-demo-tools-toggle[aria-expanded="true"] {
+  background:#2563eb; border-color:#3b82f6; color:#ffffff;
 }
 #cgu-demo-dialog { max-width:760px; width:calc(100% - 32px); max-height:85vh; overflow:auto; border:1px solid var(--uw-line,#d8dde5); border-radius:20px; padding:26px; background:var(--uw-surface,#fff); color:var(--uw-text,#23324a); box-sizing:border-box; }
 #cgu-demo-dialog::backdrop { background:#15253a77; }
@@ -34,23 +68,15 @@ html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:ha
   z-index:1510;
 }
 #school-switcher { cursor:default; }
-@media(min-width:641px) and (max-width:1180px) {
-  #cgu-demo-strip { gap:4px 6px; padding:5px 10px; font-size:11.5px; }
-  #cgu-demo-strip .cgu-strip-sim-tag { padding:1px 6px; font-size:11px; }
-  #cgu-demo-strip button { min-height:28px; padding:4px 8px; font-size:11.5px; }
-}
-@media(max-width:960px) {
-  :root { --cgu-strip-height:86px; --cgu-strip-clearance:130px; }
-}
 @media(max-width:900px) {
   body.unified-shell .pr-booking,
-  .pr-booking { bottom:var(--cgu-strip-height, 116px); padding-bottom:12px; }
+  .pr-booking { bottom:var(--cgu-strip-height, 46px); padding-bottom:12px; }
   body.unified-shell .school-detail-view.pr-detail:not([hidden]) { padding-bottom:24px; }
   body.unified-shell:not(.cgu-print-body):has(.school-detail-view.pr-detail:not([hidden])) {
-    padding-bottom:calc(var(--cgu-strip-clearance, 140px) + 140px) !important;
+    padding-bottom:calc(var(--cgu-strip-clearance, 64px) + 120px) !important;
   }
   html body.unified-shell:has(.school-detail-view.pr-detail:not([hidden])) #page-status:has(> .status-message:not(.error)) {
-    bottom:calc(var(--cgu-strip-height, 116px) + 96px);
+    bottom:calc(var(--cgu-strip-height, 46px) + 96px);
     z-index:1510;
   }
 }
@@ -66,21 +92,16 @@ html body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:ha
   }
 }
 @media(max-width:640px) {
-  :root { --cgu-strip-height:116px; --cgu-strip-clearance:160px; }
-  #cgu-demo-strip {
+  #cgu-demo-strip { right:8px; bottom:calc(8px + env(safe-area-inset-bottom, 0px)); max-width:calc(100vw - 16px); }
+  #cgu-demo-strip .cgu-demo-tools-panel { max-width:calc(100vw - 16px); padding:8px; }
+  #cgu-demo-strip .cgu-demo-tools-actions {
     display:grid; grid-template-columns:repeat(2, minmax(0, 1fr));
-    gap:4px 6px; padding:5px 10px calc(5px + env(safe-area-inset-bottom, 0px));
-    font-size:11px; line-height:1.32;
+    gap:6px; font-size:11px; line-height:1.32;
   }
-  #cgu-demo-strip > span {
-    grid-column:1 / -1; width:100%; text-align:center;
-  }
-  #cgu-demo-strip .cgu-strip-sim-tag {
-    padding:1px 6px; font-size:10.5px;
-  }
-  #cgu-demo-strip button {
+  #cgu-demo-strip .cgu-demo-tools-actions button,
+  #cgu-demo-strip .cgu-demo-tools-actions .cgu-preview-menu > summary {
     width:100%; min-width:0; min-height:30px; padding:4px 6px;
-    font-size:11.5px; line-height:1.2; text-align:center;
+    font-size:11.5px; line-height:1.2; text-align:center; box-sizing:border-box;
   }
 }
 
@@ -1277,12 +1298,15 @@ body.cgu-print-body {
 [data-theme="dark"] .cgu-sch-match-pill.is-match { background:rgba(16,185,129,.18); border-color:rgba(52,211,153,.4); color:#6ee7b7; }
 [data-theme="dark"] .cgu-sch-match-pill.is-warn { background:rgba(234,88,12,.2); border-color:rgba(251,146,60,.45); color:#fed7aa; }
 
-/* 「合作構想示意」 menu: lives in the demo strip only and opens upward; the main navigation is untouched. */
+/* 「合作構想示意」 menu: lives inside 展示工具 panel only and opens upward; the main navigation is untouched. */
 .cgu-preview-menu { position:relative; }
 .cgu-preview-menu summary { list-style:none; font:600 12px/1.25 system-ui; padding:5px 10px; border:1px solid var(--uw-line,#d8dde5); border-radius:8px; background:transparent; color:inherit; cursor:pointer; }
 .cgu-preview-menu summary::-webkit-details-marker { display:none; }
 .cgu-preview-menu summary::after { content:" ▴"; }
 .cgu-preview-menu[open] summary::after { content:" ▾"; }
-.cgu-preview-menu ul { position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); z-index:1; min-width:11em; max-width:calc(100vw - 24px); margin:0; padding:6px; list-style:none; background:var(--uw-surface,#fff); border:1px solid var(--uw-line,#d8dde5); border-radius:12px; box-shadow:0 8px 24px rgba(15,23,42,.18); }
+.cgu-preview-menu ul { position:absolute; bottom:calc(100% + 8px); right:0; left:auto; transform:none; z-index:1; min-width:11em; max-width:calc(100vw - 24px); margin:0; padding:6px; list-style:none; background:var(--uw-surface,#fff); border:1px solid var(--uw-line,#d8dde5); border-radius:12px; box-shadow:0 8px 24px rgba(15,23,42,.18); }
 .cgu-preview-menu a { display:block; padding:8px 12px; border-radius:8px; color:inherit; text-decoration:none; white-space:nowrap; }
 .cgu-preview-menu a:hover, .cgu-preview-menu a:focus-visible { background:var(--uw-surface-soft,#edf0f4); }
+.cgu-oia-badge-inline { display:inline-block; padding:1px 7px; border-radius:999px; font-size:11px; font-weight:600; background:rgba(37,99,235,.12); color:#1d4ed8; margin-right:6px; vertical-align:middle; }
+.cgu-submit-confirm a { color:inherit; font-weight:600; text-decoration:underline; text-underline-offset:2px; }
+@media(max-width:640px) { .cgu-preview-menu { position:static; } }
