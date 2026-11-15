@@ -14,7 +14,7 @@ import threading
 from secrets import token_hex
 from datetime import date, datetime, time, timedelta, timezone
 
-from .. import accounts, autodm, brains
+from .. import accounts, autodm, brains, cadence
 from ..llm import WriterError
 from ..models import CarouselDraft, ChiefAction, ChiefReply, PlanItem, ThreadsAlbumDraft, ThreadsDraft, VideoScript
 from ..rules import check_carousel, check_threads, check_threads_album, check_video, instagram_caption
@@ -113,6 +113,10 @@ class Chief(Agent):
                      f"IG 發文 {clock['instagram'][0]}；YouTube 發文 {clock['youtube'][0]}")
         routines = "\n".join(f"- {office.describe_routine(r)}" for r in office.routines())
         settings = office.settings
+        if settings.post_every_days > 1:
+            now = cadence.describe(office.store, settings.post_every_days, office.today(), settings.daily_at.strftime("%H:%M"))
+            timetable += (f"。發文頻率：每 {settings.post_every_days} 天一次（OFFICE_POST_EVERY_DAYS）；{now}；"
+                          "不是發文日不寫稿、不發文（留言互動、數據、巡查學校照常；老闆直接交代的貼文照做）")
         def account(key: str, word: str) -> str:
             if not accounts.connected(settings, office.store, key):
                 return f"{word} 未連上"

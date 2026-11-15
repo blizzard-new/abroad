@@ -17,7 +17,8 @@ def tick(office: Office, now: datetime | None = None, *, background: bool = True
     local = now.astimezone(office.settings.timezone)
     day = local.date()
     done: dict = {}
-    if local.time() >= office.settings.daily_at and not office.store.run_for_day(day.isoformat()) and not office.busy.locked():
+    if (local.time() >= office.settings.daily_at and not office.store.run_for_day(day.isoformat()) and not office.busy.locked()
+            and office.posting_day(day)):
         done["run"] = day.isoformat()
         if background:
             threading.Thread(target=run_day, args=(office, day), daemon=True, name="office-day").start()

@@ -86,6 +86,7 @@ class Settings:
     auto_dm: bool = True  # answer comment keywords with a private message (only when there are rules, and only when posting for real)
     auto_dm_limit: int = 150  # at most this many private messages a day
     threads_albums: int = 1  # how many of the day's Threads posts (the latest ones) are multi-image posts; 0 for none
+    post_every_days: int = 1  # the office makes and publishes its posts every this many days (2 = every other day)
     instagram_slot: time = time(19, 30)
     youtube_slot: time = time(18, 0)
     analytics_at: time = time(23, 30)
@@ -182,6 +183,7 @@ class Settings:
             daily_at=_time(get("OFFICE_DAILY_AT") or "07:30"),
             threads_slots=tuple(_time(t) for t in (get("OFFICE_THREADS_SLOTS") or "12:30,21:00").split(",") if t.strip()),
             threads_albums=_count(get("OFFICE_THREADS_ALBUMS"), 1),
+            post_every_days=min(30, max(1, _count(get("OFFICE_POST_EVERY_DAYS"), 1))),
             auto_dm=_flag(get("OFFICE_AUTO_DM"), True),
             auto_dm_limit=_count(get("OFFICE_AUTO_DM_LIMIT"), 150),
             instagram_slot=_time(get("OFFICE_INSTAGRAM_SLOT") or "19:30"),

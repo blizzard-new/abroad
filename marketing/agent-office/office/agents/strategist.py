@@ -87,9 +87,10 @@ class Strategist(Agent):
             PlanItem(channel="threads", format="carousel" if index >= len(settings.threads_slots) - albums else "text", pillar="value", angle="pain", **blank)
             for index in range(len(settings.threads_slots))
         ]
-        pillar = pillar_for(day)
+        pillar = pillar_for(day, settings.post_every_days)
         slots.append(PlanItem(channel="instagram", format=PILLAR_FORMAT[pillar], pillar=pillar, angle="list", **blank))
-        if day.weekday() == settings.long_video_weekday:
+        # The weekly long video belongs to its weekday, or to the first posting day after it when that day is skipped.
+        if (day.weekday() - settings.long_video_weekday) % 7 < settings.post_every_days:
             slots.append(PlanItem(channel="youtube", format="long", pillar="value", angle="news", **blank))
         return slots
 

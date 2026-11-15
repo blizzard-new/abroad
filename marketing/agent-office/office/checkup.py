@@ -10,13 +10,14 @@ from __future__ import annotations
 import os
 import shutil
 import time
+from datetime import datetime
 from pathlib import Path
 from types import SimpleNamespace
 
 import httpx
 from pydantic import BaseModel
 
-from . import accounts, brains
+from . import accounts, brains, cadence
 from .accounts import Row
 from .config import PROJECT_DIR, Settings
 from .render.renderer import ffmpeg_exe
@@ -45,6 +46,15 @@ def mode_rows(settings: Settings) -> list[Row]:
     else:
         rows.append(Row(True, "人工審核", "每則貼文都等你在審核匣按核准"))
     return rows
+
+
+def cadence_rows(settings: Settings, store: Store) -> list[Row]:
+    every = settings.post_every_days
+    if every <= 1:
+        return [Row(True, "發文頻率", "每天開工、每天發文（想改成兩天一次：.env 加 OFFICE_POST_EVERY_DAYS=2）")]
+    today = datetime.now(settings.timezone).date()
+    now = cadence.describe(store, every, today, settings.daily_at.strftime("%H:%M"))
+    return [Row(True, "發文頻率", f"每 {every} 天一次（OFFICE_POST_EVERY_DAYS={every}）：{now}；沒發文的日子不寫稿、不發文，留言和數據照常")]
 
 
 def tool_rows(settings: Settings) -> list[Row]:
@@ -184,6 +194,7 @@ def run(settings: Settings, *, ping: bool = False, http: httpx.Client | None = N
     store = Store(settings.db_path)
     return [
         ("模式", mode_rows(settings)),
+        ("發文頻率", cadence_rows(settings, store)),
         ("圖片影片", tool_rows(settings)),
         ("每張桌子的 AI", brain_rows(settings, ping)),
         ("社群帳號（只讀取帳號資料，不會發文）", accounts.check(settings, store, http)),
