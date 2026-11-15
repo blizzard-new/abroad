@@ -15,10 +15,14 @@ from urllib.parse import urlsplit
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+STAGE_ALIASES = {"nomination": "interview", "arrival": "return", "abroad": "return"}
 STAGES = {
-    "selection": "選校與探索", "home": "校內申請", "interview": "面試準備",
-    "nomination": "錄取與提名", "host": "合作校申請", "departure": "出發準備",
-    "arrival": "抵達與安頓", "abroad": "交換生活", "return": "返國與學分",
+    "selection": "探索與選校",
+    "home": "校內申請",
+    "interview": "面試與放榜",
+    "host": "姊妹校申請",
+    "departure": "出發準備",
+    "return": "抵達與返國",
 }
 KINDS = {"task": "一般待辦", "document": "文件", "interview": "面試練習",
          "course": "課程", "life": "生活準備", "travel": "旅行", "internship": "實習", "community": "同梯交流"}
@@ -66,6 +70,11 @@ class WorkspaceTask(BaseModel):
     file_version_id: str | None = Field(default=None, min_length=8, max_length=80)
     file_location: str = Field(default="", max_length=500)
     course: Course | None = None
+
+    @field_validator("stage", mode="after")
+    @classmethod
+    def normalize_stage(cls, value: str) -> str:
+        return STAGE_ALIASES.get(value, value)
 
     @field_validator("source_url")
     @classmethod
@@ -155,6 +164,7 @@ def workspace_view(plan):
         return result
 
     for task in tasks:
+        task["stage"] = STAGE_ALIASES.get(task.get("stage", "departure"), task.get("stage", "departure"))
         task["blocked_by"] = [dep for dep in task.get("depends_on", []) if not done(dep)]
         task["effective_status"] = task["status"]
         if task.get("waiting_for") or (task.get("action") == "submit" and task["blocked_by"]) or (task["status"] == "done" and not done(task["id"])):

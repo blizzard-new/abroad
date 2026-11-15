@@ -888,11 +888,13 @@ function formatDate(value) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return String(value);
   return new Intl.DateTimeFormat("zh-TW", {
+    timeZone: "Asia/Taipei",
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   }).format(date);
 }
 
@@ -901,6 +903,7 @@ function formatDateOnly(value) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return String(value);
   return new Intl.DateTimeFormat("zh-TW", {
+    timeZone: "Asia/Taipei",
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -2154,7 +2157,7 @@ function schoolLockedUntil() {
 }
 
 function formatSchoolLock(until) {
-  return until.toLocaleString("zh-TW", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false });
+  return until.toLocaleString("zh-TW", { timeZone: "Asia/Taipei", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false });
 }
 
 function renderProfileVerificationSummary() {
@@ -4911,7 +4914,7 @@ function structuredWorkflowDateKey(value) {
   const direct = String(value || "").match(/^(\d{4}-\d{2}-\d{2})/);
   if (direct) return parseLocalDate(direct[1]) ? direct[1] : "";
   const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? "" : localDateKey(parsed);
+  return Number.isNaN(parsed.getTime()) ? "" : parsed.toLocaleDateString("sv-SE", { timeZone: "Asia/Taipei" });
 }
 
 function workflowDeadlineEvents(workflows = state.workflowCache.values()) {
@@ -12541,7 +12544,7 @@ function renderDeadlines() {
       const details = item.details || [];
       const meta = applicationPeriodMeta(item);
       const deadlineText = item.deadline_at
-        ? `${meta.deadlineLabel}：${formatDate(item.deadline_at)}`
+        ? `${meta.deadlineLabel}：${formatDate(item.deadline_at)}（臺灣時間）`
         : item.date_status === "reference_only"
         ? "沒有可安全套用到下一梯次的精確日期"
         : details[0] || "尚無可驗證的精確日期";

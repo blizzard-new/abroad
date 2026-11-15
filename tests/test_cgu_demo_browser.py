@@ -1367,14 +1367,19 @@ def test_my_application_phase2_tabs_gates_docs_schedule_and_shared_preferences(p
     ready(page, demo_url)
     seed(page)
 
-    # H: 5 main .hub-tabs and clickable #overall-progress-link opening view=progress without #subview-back
+    # H: 5 main .hub-tabs and clickable #overall-progress-link opening view=progress (with back link when opened from 今天; hidden when clicking tab directly)
     tabs = page.locator('#application-path .hub-tabs [data-tab]')
     expect(tabs).to_have_count(5)
     assert tabs.all_inner_texts() == ['今天', '計畫', '準備清單', '我的任務', '時程']
-    page.locator('#overall-progress-link').click()
+    page.locator('#application-path .hub-tabs [data-tab="progress"]').click()
     expect(page.locator('#progress-view')).to_be_visible()
     expect(page.locator('#application-path .hub-tabs [data-tab="progress"]')).to_have_class(re.compile(r'\bactive\b'))
     expect(page.locator('#subview-back')).to_be_hidden()
+    page.locator('#application-path .hub-tabs [data-tab="today"]').click()
+    page.locator('#overall-progress-link').click()
+    expect(page.locator('#progress-view')).to_be_visible()
+    expect(page.locator('#subview-back')).to_be_visible()
+    expect(page.locator('#subview-back')).to_contain_text('回到今天')
 
     # I & J: Stage 1 order on Checklist (home/term/target done at top, no 計畫設定 group, check-* before cgu-shortlist)
     overview_text = page.locator('#progress-view').inner_text()
@@ -1457,4 +1462,116 @@ def test_my_application_phase2_tabs_gates_docs_schedule_and_shared_preferences(p
     page.locator('#cgu-sim-pref2').select_option(alt_pref2)
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
     expect(page.locator('#tracker-side')).to_contain_text('瑞典皇家理工學院')
+
+
+def test_my_application_phase3_back_links_stages_return_report_and_unified_todos(page, demo_url):
+    ready(page, demo_url)
+    seed(page)
+    page.locator('#today-focus-title').wait_for(state='visible')
+    plan_id = page.locator('#today-view .today-actions a.today-primary').evaluate(
+        'el => new URLSearchParams((el.getAttribute("href") || "").split("?")[1] || "").get("plan")'
+    )
+    assert plan_id
+
+    # N: Source-aware back links from 今天, 時程, 路徑地圖, and direct URL fallback
+    page.locator('#today-view .today-actions a.today-primary').click()
+    expect(page.locator('#level-view .back-link')).to_contain_text('回到今天')
+    page.locator('#level-view .back-link').click()
+    expect(page.locator('#today-view')).to_be_visible()
+
+    page.locator('#overall-progress-link').click()
+    expect(page.locator('#progress-view')).to_be_visible()
+    expect(page.locator('#subview-back')).to_be_visible()
+    expect(page.locator('#subview-back')).to_contain_text('回到今天')
+    page.locator('#subview-back').click()
+    expect(page.locator('#today-view')).to_be_visible()
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
+    page.locator('#tracker-side a[href*="cgu-shortlist"]').click()
+    expect(page.locator('#level-view')).to_be_visible()
+    expect(page.locator('#level-view .back-link')).to_contain_text('回到時程')
+    page.locator('#level-view .back-link').click()
+    expect(page.locator('#schedule-view')).to_be_visible()
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=map')
+    expect(page.locator('#map-view')).to_be_visible()
+    expect(page.locator('#subview-back')).to_contain_text('回到計畫')
+    page.locator('#map-view a.node[href*="cgu-read-guide"]').click()
+    expect(page.locator('#level-view .back-link')).to_contain_text('回到路徑地圖')
+    page.locator('#level-view .back-link').click()
+    expect(page.locator('#map-view')).to_be_visible()
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-read-guide')
+    expect(page.locator('#level-view .back-link')).to_contain_text('回到準備清單')
+
+    # O: 我的任務 unified 6 stages matching the checklist stages
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=workspace')
+    expect(page.locator('#exchange-workspace-view h2')).to_have_text('我的任務')
+    stage_options = page.locator('#exchange-stage option').evaluate_all('els => els.map(e => e.textContent.trim())')
+    expected_six = ['探索與選校', '校內申請', '面試與放榜', '姊妹校申請', '出發準備', '抵達與返國']
+    assert stage_options == ['全部階段', *expected_six]
+
+    page.locator('#exchange-workspace-view button[data-ex-new]').click()
+    modal_stages = page.locator('#exchange-task-form select[name="stage"] option').evaluate_all('els => els.map(e => e.textContent.trim())')
+    assert modal_stages == expected_six
+    page.locator('#exchange-task-dialog button[data-ex-close]').click()
+
+    # P: cgu-return-credit links directly to #return-report and returns cleanly
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-return-credit')
+    expect(page.locator('#cgu-return-report-bridge')).to_be_visible()
+    page.locator('#cgu-open-return-report-btn').click()
+    expect(page.locator('#cgu-return-report-title')).to_be_visible()
+    expect(page.locator('#cgu-report-school')).to_have_value('林肯大學 Lincoln University')
+    page.locator('#cgu-return-back-link').click()
+    expect(page.locator('#cgu-return-report-bridge')).to_be_visible()
+
+    # Q: Single personal to-do store across 今天, 時程, and 我的任務
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=today')
+    expect(page.locator('#today-view .ex-summary')).to_have_count(0)
+    page.locator('#today-view [data-today-quick] input[name="title"]').fill('請指導教授寫推薦信')
+    page.locator('#today-view [data-today-quick] button[type="submit"]').click()
+    expect(page.locator('#today-view .today-own')).to_contain_text('請指導教授寫推薦信')
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=workspace')
+    expect(page.locator('#exchange-content')).to_contain_text('請指導教授寫推薦信')
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
+    expect(page.locator('#schedule-dynamic .ex-summary')).to_have_count(0)
+    expect(page.locator('#tracker-body')).to_contain_text('請指導教授寫推薦信')
+
+    page.locator('#tracker-add').click()
+    page.locator('#my-applications [data-tracker-quick] input[name="title"]').fill('預約英文檢定成績加發')
+    page.locator('#my-applications [data-tracker-quick] button[type="submit"]').click()
+    expect(page.locator('#tracker-body')).to_contain_text('預約英文檢定成績加發')
+
+    # Toggle workspace to-do done from 時程 and verify 今天 + 我的任務 reflect completion
+    todo_row = page.locator('#tracker-body li.pr-task', has_text='請指導教授寫推薦信')
+    todo_row.locator('button[data-tracker-ws-toggle]').click()
+    expect(page.locator('#tracker-body section.pr-group.ready')).to_contain_text('請指導教授寫推薦信')
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=today')
+    expect(page.locator('#today-view .today-own')).to_contain_text('預約英文檢定成績加發')
+    expect(page.locator('#today-view .today-own')).not_to_contain_text('請指導教授寫推薦信')
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=workspace')
+    done_card = page.locator('#exchange-content article.ex-task', has_text='請指導教授寫推薦信')
+    expect(done_card).to_contain_text('已完成')
+    expect(page.locator('#exchange-content')).to_contain_text('預約英文檢定成績加發')
+
+
+def test_deadlines_render_taiwan_time_in_non_taiwan_timezone(browser, demo_url):
+    context = browser.new_context(viewport={'width': 1440, 'height': 1000}, timezone_id='UTC', reduced_motion='reduce')
+    try:
+        utc_page = context.new_page()
+        utc_page.set_default_timeout(90000)
+        errors = []
+        utc_page.on('pageerror', lambda err: errors.append(str(err)))
+        ready(utc_page, demo_url, '#deadlines')
+        expect(utc_page.locator('#period-list')).to_contain_text('2026/12/21 17:00（臺灣時間）')
+        period_text = utc_page.locator('#period-list').inner_text()
+        assert '09:00' not in period_text
+        assert errors == []
+    finally:
+        context.close()
+
 

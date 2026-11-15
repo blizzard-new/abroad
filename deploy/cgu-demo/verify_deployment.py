@@ -40,7 +40,7 @@ def verify(url: str, origin: str, proxy_check: bool = False) -> dict:
     if proxy_check:
         # Simulate the edge forwarding the browser's Secure cookie over loopback.
         client.headers['Cookie'] = 'uniway_cgu_demo_session=' + client.cookies.get('uniway_cgu_demo_session')
-    assert call('GET', '/auth/session').json()['display_name'] == '林小程（展示資料）'
+    assert call('GET', '/auth/session').json()['display_name'] == '林小程'
     made = call('POST', '/account/application-paths', json=dict(revision=0,
         home_school='長庚大學', target_school='林肯大學 Lincoln University', academic_year='116',
         departure_year='2027', semester='fall'))
