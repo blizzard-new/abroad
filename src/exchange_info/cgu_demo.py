@@ -33,7 +33,7 @@ CONTENT = Path(__file__).parent / "demo_data/content.json"
 # allowlist, so no request value is used to build a file path.
 PREVIEW_DIR = Path(__file__).parent / "demo_data/preview"
 PREVIEW_PAGES = {"office": "office.html", "inquiry": "inquiry.html", "report": "report.html"}
-ASSET_VERSION = "20261115-cgu-app-flow-1"
+ASSET_VERSION = "20261115-cgu-app-flow-2"
 COOKIE = "uniway_cgu_demo_session"
 HOME = "長庚大學"
 UPLOAD_NOTICE = "檔案僅用於完整性檢查，不會保存內容。"
@@ -1771,6 +1771,10 @@ def create_demo_app(connector_factory=None) -> FastAPI:
                     if isinstance(payload, dict) and payload.get('home_school', HOME) != HOME:
                         return JSONResponse({'detail': '此站僅提供長庚大學情境。'}, status_code=422)
             response = await call_next(request)
+            if path == '/account/application-paths' and request.method == 'POST' and response.status_code == 201:
+                found = session(token)
+                if found:
+                    _sync_cgu_doc_steps(found[0].id)
         response.headers['X-Robots-Tag'] = 'noindex, nofollow, noarchive'
         response.headers['Cache-Control'] = ('public, max-age=3600' if path.startswith('/static/')
                                              and not path.endswith('.html') else 'no-store')
@@ -1817,6 +1821,76 @@ def create_demo_app(connector_factory=None) -> FastAPI:
         return HTMLResponse((PREVIEW_DIR / name).read_text(encoding='utf-8'))
 
     fallback_draft_files: dict[str, dict[str, dict[str, Any]]] = {}
+    CGU_DOC_STEP_SIG = 'cgu-doc-file-sync'
+
+    def _apply_doc_steps_to_plan(plan_row: dict[str, Any], files_map: dict[str, dict[str, Any]], now_str: str) -> bool:
+        steps = plan_row.setdefault('steps', {})
+        changed = False
+        for doc in OFFICIAL_REQUIRED_DOCS:
+            step_id = f"cgu-doc-{doc['key']}"
+            meta = files_map.get(doc['key'])
+            if isinstance(meta, dict) and meta.get('filename'):
+                expected_val = f"已選取檔案：{meta['filename']}"
+                cur = steps.get(step_id) or {}
+                if cur.get('value') != expected_val or cur.get('confirmed') is not True:
+                    steps[step_id] = {
+                        'value': expected_val,
+                        'confirmed': True,
+                        'version_id': None,
+                        'applicable': None,
+                        'updated_at': now_str,
+                        'recorded_by': 'student',
+                        'source_signature': CGU_DOC_STEP_SIG,
+                    }
+                    changed = True
+            else:
+                cur = steps.get(step_id)
+                if isinstance(cur, dict) and (
+                    cur.get('source_signature') == CGU_DOC_STEP_SIG
+                    or str(cur.get('value') or '').startswith('已選取檔案：')
+                ):
+                    if cur.get('confirmed') or cur.get('value'):
+                        steps[step_id] = {
+                            'value': '',
+                            'confirmed': False,
+                            'version_id': None,
+                            'applicable': None,
+                            'updated_at': now_str,
+                            'recorded_by': 'student',
+                            'source_signature': None,
+                        }
+                        changed = True
+        return changed
+
+    def _current_files_map(account_id: str) -> dict[str, dict[str, Any]]:
+        if hasattr(connector, 'record_file_metadata'):
+            st = connector.get_status(account_id)
+            return dict(st.get('draft_files', {})) if isinstance(st, dict) else {}
+        with lock:
+            return dict(fallback_draft_files.get(account_id, {}))
+
+    def _sync_cgu_doc_steps(
+        account_id: str,
+        files_map: dict[str, dict[str, Any]] | None = None,
+        *,
+        target_plan_id: str | None = None,
+    ) -> None:
+        resolved_files = _current_files_map(account_id) if files_map is None else files_map
+        draft_service = platform.state.form_draft_service
+        now_str = utc_now().isoformat()
+        with lock:
+            registry = load_registry(draft_service, account_id, HOME)
+            changed = False
+            for plan_row in registry.get('plans', []):
+                if plan_row.get('archived'):
+                    continue
+                if target_plan_id and plan_row.get('id') != target_plan_id:
+                    continue
+                if _apply_doc_steps_to_plan(plan_row, resolved_files, now_str):
+                    plan_row['updated_at'] = now_str
+                    changed = True
+            if changed:
+                save_registry(draft_service, account_id, HOME, registry)
 
     @app.get('/demo/connector/spec')
     def connector_spec():
@@ -1858,7 +1932,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             del file_bytes
             del body
             if hasattr(connector, 'record_file_metadata'):
-                return connector.record_file_metadata(
+                result = connector.record_file_metadata(
                     account.id,
                     doc_key=doc_key,
                     filename=filename,
@@ -1866,6 +1940,8 @@ def create_demo_app(connector_factory=None) -> FastAPI:
                     content_type=content_type,
                     sha256=sha256,
                 )
+                _sync_cgu_doc_steps(account.id)
+                return result
             record = _sanitize_doc_meta(
                 doc_key,
                 {
@@ -1879,7 +1955,9 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             with lock:
                 files_map = fallback_draft_files.setdefault(account.id, {})
                 files_map[doc_key] = record
+                snapshot = dict(files_map)
                 summary = _build_precheck_summary(files_map)
+            _sync_cgu_doc_steps(account.id, snapshot)
             return {'notice': UPLOAD_NOTICE, 'file': record, 'precheck': summary}
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
@@ -1889,13 +1967,17 @@ def create_demo_app(connector_factory=None) -> FastAPI:
         account = require_account(request)
         try:
             if hasattr(connector, 'remove_file_metadata'):
-                return connector.remove_file_metadata(account.id, doc_key)
+                result = connector.remove_file_metadata(account.id, doc_key)
+                _sync_cgu_doc_steps(account.id)
+                return result
             if doc_key not in REQUIRED_DOC_MAP:
                 raise ConnectorValidationError(f'未知的應備文件項目：{doc_key}')
             with lock:
                 files_map = fallback_draft_files.setdefault(account.id, {})
                 files_map.pop(doc_key, None)
+                snapshot = dict(files_map)
                 summary = _build_precheck_summary(files_map)
+            _sync_cgu_doc_steps(account.id, snapshot)
             return {'removed': doc_key, 'precheck': summary}
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
@@ -1943,6 +2025,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             record = connector.submit_application(account.id, clean_payload)
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
+        files_snapshot = _current_files_map(account.id)
         with lock:
             latest_registry = load_registry(draft_service, account.id, HOME)
             latest_plan = next(
@@ -1951,6 +2034,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             )
             if latest_plan is not None:
                 now_str = utc_now().isoformat()
+                _apply_doc_steps_to_plan(latest_plan, files_snapshot, now_str)
                 latest_plan.setdefault('steps', {})['cgu-internal-submit'] = {
                     'value': f"已送交國際處（收件編號：{record['receipt_id']}）",
                     'confirmed': True,

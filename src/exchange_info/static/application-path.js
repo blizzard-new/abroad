@@ -92,7 +92,7 @@ const plan=()=>view.plan, stages=()=>view?.stages||[];
 const levels=()=>stages().flatMap(s=>s.levels.map(l=>({...l,stageTitle:s.title})));
 const find=id=>levels().find(l=>l.id===id), record=id=>plan().steps[id]||{};
 const progress=l=>l.progress, hasContent=l=>Boolean(record(l.id).value||record(l.id).version_id);
-const isDone=l=>l.counted!==false&&!l.external&&l.progress.value===l.progress.total;
+const isDone=l=>(l.counted!==false||setup(l))&&!l.external&&l.progress.value===l.progress.total;
 const status=l=>l.conditional&&record(l.id).applicable===false?'skipped':l.external?(hasContent(l)?'recorded':'external'):isDone(l)?'done':l.progress.value?'started':'todo';
 const missing=l=>l.blocked_by||[];
 const setup=l=>['home','term','target'].includes(l.id);
@@ -202,6 +202,21 @@ function show(page){init();stash();window.UniWayExchangeWorkspace?.snapshot();cl
   if(!view||requested&&view.plan.id!==requested){if(!loading)load();return;}
   render();maybeOpenTarget();
 }
+function ensureTargetPreference(targetSchool){
+  if(!targetSchool||typeof state!=='object'||!(state.applications instanceof Set)||state.applications.size)return;
+  state.applications.add(targetSchool);
+  if(typeof persistAccountWorkspaceLocally==='function')persistAccountWorkspaceLocally();
+  if(typeof scheduleAccountWorkspaceSync==='function')scheduleAccountWorkspaceSync();
+}
+function syncPreferences(list){
+  if(typeof state!=='object'||!(state.applications instanceof Set))return;
+  const clean=[];
+  for(const item of (list||[])){const s=String(item||'').trim();if(s&&!clean.includes(s))clean.push(s);}
+  state.applications=new Set(clean);
+  if(typeof persistAccountWorkspaceLocally==='function')persistAccountWorkspaceLocally();
+  if(typeof scheduleAccountWorkspaceSync==='function')scheduleAccountWorkspaceSync();
+  window.UniWayTracker?.render?.();
+}
 async function load(force=false){
   if(!state.account)return show('my-application');
   const run=++epoch, captured=key();loading=true;
@@ -218,6 +233,7 @@ async function load(force=false){
     if(run!==epoch||captured!==key())return;
     if(route().get('plan')!==requested){load();return;}
     view=data;dirty=false;activeId=null;
+    if(!data.plan?.archived)ensureTargetPreference(data.plan?.context?.target_school);
     if(mapPositionPlan!==selected.id)mapPosition=null;
     render();maybeOpenTarget();window.UniWayTracker?.render();
   }catch(e){if(run===epoch&&captured===key()){message(e.message,'<button data-path-retry class="outline-button">重新載入</button>');}}
@@ -236,9 +252,10 @@ function render(){
   $('#plan-select').innerHTML=listing.items.map(p=>'<option value="'+p.id+'" '+(p.id===plan().id?'selected':'')+'>'+esc(shortSchool(p.context.target_school)+' · '+formatContextTerm(p.context)+(p.archived?'（已封存）':''))+'</option>').join('');
   $('#plan-meta').textContent=c.home_school+' · '+c.academic_year+' 學年度 · '+planRoundLabel(c);
   const t=totals();$('#overall-caption').textContent=t.done+' / '+t.count+' 項';$('#overall-meter').innerHTML=meter(t,'整體個人準備');
-  const activeTab=tab==='progress'||tab==='map'?'plans':tab;
+  const overallLink=$('#overall-progress-link');if(overallLink)overallLink.href=href('progress');
+  const activeTab=tab==='map'?'plans':tab;
   $$('[data-tab]').forEach(a=>{a.href=href(a.dataset.tab);a.classList.toggle('active',a.dataset.tab===activeTab);if(a.dataset.tab===activeTab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
-  const back=$('#subview-back');back.hidden=!(tab==='progress'||tab==='map');back.href=href('plans');back.innerHTML=icon('arrow-left')+'回到計畫';
+  const back=$('#subview-back');back.hidden=tab!=='map';back.href=href('plans');back.innerHTML=icon('arrow-left')+'回到計畫';
   const n=next();$('#stage-select').innerHTML=stages().map(s=>'<option value="'+s.index+'" '+(n?.stage===s.index?'selected':'')+'>'+String(s.index+1).padStart(2,'0')+' · '+esc(s.title)+'</option>').join('');picker.sync();
   $('#next-stage').textContent='接下來';
   $('#next-title').textContent=n?.title||(t.count?'已完成已知準備事項':'確認當期申請要求');$('#next-prompt').textContent=nextReason(n);
@@ -485,7 +502,8 @@ async function selectTarget(schoolName){
 }
 function toolsFor(l){
   if(['home','term','target'].includes(l.id))return [['advisor','sliders-horizontal','條件與推薦'],['favorites','heart','收藏與比較'],['eligibility','badge-check','資格與志願']];
-  if(l.id.startsWith('check-')||(l.kind==='note'&&/資格|志願|語組/.test(l.title)))return [['eligibility','badge-check','核對資格與志願'],['advisor','sliders-horizontal','修改我的條件']];
+  if(l.id.includes('shortlist')||(l.kind==='note'&&/選校|志願/.test(l.title)))return [['advisor','sliders-horizontal','條件與推薦'],['favorites','heart','收藏與比較'],['eligibility','badge-check','核對資格與志願']];
+  if(l.id.startsWith('check-')||(l.kind==='note'&&/資格|語組/.test(l.title)))return [['eligibility','badge-check','核對資格與志願'],['advisor','sliders-horizontal','修改我的條件']];
   const templates=(l.templates||[]).map(id=>['application-form='+encodeURIComponent(id),'file-pen-line',applicationTemplateById(id)?.name||'填寫相關表格']);
   return [...templates,['application-center','files','填表與列印'],['document-check','scan-line','檢查文件'],['documents','folder-lock','文件庫']];
 }
@@ -595,7 +613,9 @@ async function create(e){
   e.preventDefault();if(creating)return;
   if(!$('#create-departure').value){$('#create-error').textContent='請選擇預計出發學期。';$('#create-error').hidden=false;return;}creating=true;const captured=key(),run=epoch,button=$('#plan-form button[type=submit]');button.disabled=true;
   const payload={revision:listing?.revision||0,home_school:activeHomeSchool(),target_school:$('#create-target').value,academic_year:$('#create-year').value,application_round:$('#create-round').value,departure_year:$('#create-departure').value,semester:$('#create-term').value,college:$('#create-college').value,department:$('#create-department').value,degree_level:$('#create-degree').value,import_existing:$('#import-existing').checked};
+  if(!payload.application_round&&(Boolean(window.cguDemoStorageIsolated)||activeHomeSchool()==='長庚大學'))payload.application_round=defaultRoundFor('長庚大學',payload.academic_year,payload.departure_year,payload.semester);
   try{const saved=await fetchJson('/account/application-paths',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(captured!==key()||run!==epoch)return;
+    ensureTargetPreference(saved.plan?.context?.target_school);
     track('plan_create_result',{result:'success'});$('#plan-dialog').close();view=null;location.hash='#my-application?'+new URLSearchParams({plan:saved.plan.id,view:'today'});load();
   }catch(error){track('plan_create_result',{result:'failed',status:error.status||0});if(captured===key()){$('#create-error').textContent=error.message;$('#create-error').hidden=false;}}
   finally{creating=false;button.disabled=false;}
@@ -882,13 +902,13 @@ function renderOverview(){
   $('#overview-summary').innerHTML='<h2>準備清單</h2><p>'+t.done+' / '+t.count+' 項已完成'+(t.pending?' · '+t.pending+' 項待確認適用性':'')+'</p>';
   const groups=new Map();
   for(const l of levels()){
-    const group=l.external?'校方通知紀錄':setup(l)?'計畫設定':assistance(l)?'選用寫作協助':l.stageTitle;
+    const group=l.external?'校方通知紀錄':assistance(l)?'選用寫作協助':l.stageTitle;
     if(!groups.has(group))groups.set(group,[]);groups.get(group).push(l);
   }
   let shown=0;const n=next();
-  const groupOrder=([title])=>title==='校方通知紀錄'?1:title==='選用寫作協助'?2:title==='計畫設定'?3:0;
+  const groupOrder=([title])=>title==='校方通知紀錄'?1:title==='選用寫作協助'?2:0;
   $('#overview-stages').innerHTML=[...groups].sort((a,b)=>groupOrder(a)-groupOrder(b)).map(([title,items])=>{
-    const optional=title==='計畫設定'||title==='選用寫作協助',external=items.every(l=>l.external);
+    const optional=title==='選用寫作協助',external=items.every(l=>l.external);
     const rows=items.filter(l=>filter==='all'||(filter==='pending'?l.conditional&&record(l.id).applicable==null:filter==='external'?l.external:filter==='skipped'?status(l)==='skipped':!l.external&&!optional&&status(l)===filter));
     if(!rows.length)return '';shown+=rows.length;
     const st=totals(items),open=!optional&&!external&&(filter!=='all'||items.some(l=>l.id===n?.id)||(!n&&st.done<st.count));
@@ -912,5 +932,5 @@ function startTarget(schoolName){
   location.hash='#my-application?'+new URLSearchParams(existing?{plan:existing.id,view:'today'}:{target:schoolName});
 }
 
-return {init,show,refresh,clear,toolHref,formToolActive,selectTarget,startTarget,resumeOAuth,workbenchRows,workbenchTotals,workspaceCalendarEvents,hasRecoverableDrafts:()=>drafts.size>0};
+return {init,show,refresh,clear,toolHref,formToolActive,selectTarget,startTarget,resumeOAuth,workbenchRows,workbenchTotals,workspaceCalendarEvents,syncPreferences,ensureTargetPreference,hasRecoverableDrafts:()=>drafts.size>0};
 })();

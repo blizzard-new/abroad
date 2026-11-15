@@ -69,7 +69,7 @@ def test_auth_owner_persistence_and_compare_and_set(client):
     assert update(client, p, "home", {"confirmed":True}, owner="bob").status_code == 404
     saved = update(client, p, "home", {"confirmed":True})
     assert saved.status_code == 200, saved.text
-    assert saved.json()["progress"]["value"] == 1
+    assert saved.json()["progress"]["value"] == 0
     assert update(client, p, "target", {"confirmed":True}).status_code == 409
     loaded = client.get(f'/account/application-paths/{p["plan"]["id"]}', params={"home_school":CONTEXT["home_school"]}, headers={"Authorization":"alice"}).json()
     assert loaded["plan"]["steps"]["home"]["confirmed"]
@@ -400,3 +400,14 @@ def test_a_round_chosen_at_the_gate_is_what_the_plan_is_judged_with(client):
     assert gate_levels(saved)["check-application_round"]["check_status"] == "pass"
     assert seen[-1] == "第一梯次"
     assert saved["plan"]["id"] == plan["plan"]["id"]
+
+
+def test_setup_steps_auto_completed_and_uncounted(client):
+    plan = create(client).json()
+    stage0 = plan["stages"][0]["levels"]
+    assert [lvl["id"] for lvl in stage0[:3]] == ["home", "term", "target"]
+    for lvl in stage0[:3]:
+        assert lvl["counted"] is False
+        assert lvl["progress"] == {"value": 1, "total": 1}
+    assert plan["progress"]["value"] == 0
+

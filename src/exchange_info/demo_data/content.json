@@ -252,11 +252,13 @@
   "stages": [
     {"id":"explore","title":"探索與選校","description":"先了解自己想去哪裡，再核對長庚與目的校的名額、語言及合作校參考時程。","source":"partners","tasks":[
       {"id":"read-guide","title":"閱讀長庚校內申請須知","detail":"確認 116-1 校內申請截止日（2026/12/21 17:00）與應備 5 份文件清單。","source":"selection"},
-      {"id":"shortlist","title":"整理兩所志願與想修的課程","detail":"長庚校級申請表最多可填兩所志願；可先在此記錄你的首選目標。","source":"partners"},
-      {"id":"check-language","title":"確認目標校語言門檻與當期名額","detail":"核對卡片上的表列名額、是否標示「此校未列多益」、學制／系所範圍與目的校語文規定後自行勾選。","source":"partners"}]},
-    {"id":"internal","title":"校內申請","description":"對照校內文件與 116-1 申請期間，為自己安排準備與送件日期。","source":"selection","tasks":[
-      {"id":"transcript","title":"確認成績單、平均與排名資料","detail":"大學部成績單需含班級排名百分比；此處只記錄待辦，不收取文件。","source":"selection_guide"},
-      {"id":"study-plan","title":"準備語文證明、同意書與 1 頁讀書計畫","detail":"依官方清單準備；尚未取得語文成績者請於線上申請表註明預計取得日期。","source":"selection_guide"},
+      {"id":"shortlist","title":"選校推薦與排定志願順序","detail":"長庚校級交換申請最多可填兩所志願；依你的條件檢視推薦合作校並排定第一、第二志願。","source":"partners"}]},
+    {"id":"internal","title":"校內申請","description":"依長庚國際事務處規定備齊 5 份應備文件並完成預檢與送出。","source":"selection","tasks":[
+      {"id":"doc-online_form","title":"準備線上申請表","detail":"填妥校內交換／雙聯線上申請表（最多 2 個志願）。","source":"selection_guide"},
+      {"id":"doc-parent_consent","title":"準備家長同意書","detail":"依國際處規定格式填寫並經家長／監護人簽章。","source":"selection_guide"},
+      {"id":"doc-language_proof","title":"準備語文證明","detail":"多益 700 分（或同等外語檢定）及合作校規定語文證明；尚未取得成績者請依規定註明預計取得日期。","source":"selection_guide"},
+      {"id":"doc-transcript","title":"準備含排名的中文歷年成績單","detail":"大學部須檢附含歷年學業平均與班級排名百分比之中文歷年成績單。","source":"selection_guide"},
+      {"id":"doc-study_plan","title":"準備一頁讀書計畫","detail":"以 1 頁為原則，說明選校動機、修課規劃與預期成果。","source":"selection_guide"},
       {"id":"internal-submit","title":"送出校內申請","detail":"備齊 5 份校內應備文件後完成預檢與送件；正式申請請依國際處公告完成線上表單與紙本繳交。","source":"selection"}]},
     {"id":"results","title":"面試與放榜","description":"是否面試待當期通知確認；將校內結果與目的校錄取分開追蹤。","source":"selection","tasks":[
       {"id":"interview","title":"確認是否需要面試並整理準備重點","detail":"面試不是所有計畫的必經流程；依個人通知確認。不適用時可自行註記完成確認。","source":"selection_guide"},

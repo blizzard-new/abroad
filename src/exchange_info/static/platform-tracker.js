@@ -155,7 +155,11 @@ window.UniWayTracker = (() => {
       const chip = state.eligibilityProfile ? `<span class="pr-pick-state ${ok ? "ok" : "warn"}">${ok ? "符合資格" : escapeHtml(truncate(match.label, 8))}</span>` : "";
       return `<li><span class="pr-rank">${index + 1}</span><span class="pr-pick-name"><strong>${escapeHtml(item.school_name)}</strong><small>${escapeHtml([item.country, item.location?.city].filter(Boolean).join("・"))}</small></span>${chip}</li>`;
     }).join("");
-    return `<section class="pr-side-card"><header><strong>我的志願</strong><a href="#favorites">調整順序</a></header>${rows ? `<ol>${rows}</ol>` : '<p class="pr-group-empty pr-pad">還沒有志願。</p>'}</section>`;
+    const activeHashParams = new URLSearchParams((location.hash.split("?")[1] || ""));
+    const planId = activeHashParams.get("plan") || window.UniWayPlanIndex?.current?.()?.items?.find((p) => !p.archived)?.id || "";
+    const isCgu = Boolean(window.cguDemoStorageIsolated) || activeHomeSchool() === "長庚大學";
+    const adjustHref = planId ? `#my-application?${new URLSearchParams({ plan: planId, view: "level", level: isCgu ? "cgu-shortlist" : "target" }).toString()}` : "#favorites";
+    return `<section class="pr-side-card"><header><strong>我的志願</strong><a href="${escapeHtml(adjustHref)}">調整順序</a></header>${rows ? `<ol>${rows}</ol>` : '<p class="pr-group-empty pr-pad">還沒有志願。</p>'}</section>`;
   }
 
   function deadlinesHtml() {

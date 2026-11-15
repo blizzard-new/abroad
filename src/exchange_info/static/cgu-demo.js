@@ -403,11 +403,13 @@
         }
       }
       await loadConnectorStatus();
+      simState.cachedPlans = null;
+      $('#application-path #refresh-path')?.click();
       const targetHref = buildSubmitLevelHref(activePlan.id);
       if (window.location.hash !== targetHref) {
         window.location.hash = targetHref;
       } else {
-        await renderMyApplicationSim(false);
+        await renderMyApplicationSim(true);
       }
       setToolsOpen(false);
     } catch (error) {
@@ -588,6 +590,39 @@
     const schools = selected && !baseSchools.includes(selected) ? [selected, ...baseSchools] : baseSchools;
     const head = includeEmpty ? `<option value=""${!selected ? ' selected' : ''}>（不選填第二志願）</option>` : '';
     return head + schools.map(name => `<option value="${esc(name)}"${name === selected ? ' selected' : ''}>${esc(name)}</option>`).join('');
+  }
+
+  function readSharedPreferences(activePlan = simState.activePlan) {
+    const planSchool = activePlan?.context?.target_school || '';
+    const appsList = (typeof state === 'object' && state.applications instanceof Set)
+      ? [...state.applications].filter(Boolean)
+      : [];
+    if (appsList.length) {
+      const pref1 = appsList[0];
+      const pref2 = appsList[1] && appsList[1] !== pref1 ? appsList[1] : '';
+      return [pref1, pref2];
+    }
+    const fallback = planSchool || getPartnerSchoolNames()[0] || '';
+    return [fallback, ''];
+  }
+
+  function writeSharedPreferences(pref1, pref2) {
+    const clean1 = String(pref1 || '').trim();
+    let clean2 = String(pref2 || '').trim();
+    if (clean2 === clean1) clean2 = '';
+    simState.selectedPref1 = clean1;
+    simState.selectedPref2 = clean2;
+    simState.pref1UserEditedPlanId = simState.activePlan?.id || simState.pref1PlanId;
+    const nextList = [clean1, clean2].filter(Boolean);
+    if (typeof window.UniWayApplicationPath?.syncPreferences === 'function') {
+      window.UniWayApplicationPath.syncPreferences(nextList);
+    } else if (typeof state === 'object' && state.applications instanceof Set) {
+      state.applications = new Set(nextList);
+      if (typeof persistAccountWorkspaceLocally === 'function') persistAccountWorkspaceLocally();
+      if (typeof scheduleAccountWorkspaceSync === 'function') scheduleAccountWorkspaceSync();
+      window.UniWayTracker?.render?.();
+    }
+    return [clean1, clean2];
   }
 
   function parseMyAppRoute(hash = window.location.hash) {
@@ -884,6 +919,143 @@
     card.dataset.cguBridgeSig = sig;
   }
 
+  function syncDocLevelBridge(activePlan = simState.activePlan, connectorStatus = simState.status) {
+    const { onMyApp, view, level } = parseMyAppRoute();
+    const levelView = $('#application-path #level-view');
+    if (!onMyApp || view !== 'level' || !level.startsWith('cgu-doc-') || !levelView || levelView.hidden || !activePlan) return;
+    const docKey = level.slice('cgu-doc-'.length);
+    const doc = REQUIRED_DOCS.find(d => d.key === docKey);
+    if (!doc) return;
+    const card = levelView.querySelector('.level-card');
+    if (!card) return;
+
+    const draftFiles = connectorStatus?.draft_files || {};
+    const precheck = connectorStatus?.precheck || { provided_count: 0, required_count: 5, complete: false };
+    const uploaded = draftFiles[docKey] || null;
+    const sig = `${activePlan.id}|${docKey}|${uploaded ? uploaded.filename : 'none'}|${precheck.provided_count}`;
+    const existing = card.querySelector('#cgu-doc-level-bridge');
+    if (existing && card.dataset.cguDocSig === sig) return;
+
+    const bridge = existing || document.createElement('div');
+    bridge.id = 'cgu-doc-level-bridge';
+    bridge.className = 'cgu-doc-level-bridge';
+    bridge.setAttribute('role', 'region');
+    bridge.setAttribute('aria-label', `${doc.title}文件檢查與上傳`);
+    const submitHref = buildSubmitLevelHref(activePlan.id);
+    bridge.innerHTML = `
+      <div class="cgu-doc-bridge-head">
+        <div>
+          <strong>檔案預檢同步（目前 ${precheck.provided_count} / ${precheck.required_count} 項已備齊）</strong>
+          <span class="cgu-doc-status-pill ${uploaded ? 'is-ok' : 'is-lack'}">${uploaded ? '已備齊' : '尚未上傳'}</span>
+        </div>
+        <a class="cgu-compact-link" href="${esc(submitHref)}">前往送交國際處 →</a>
+      </div>
+      <p class="cgu-doc-bridge-notice">${esc(UPLOAD_NOTICE)}</p>
+      ${uploaded ? `<div class="cgu-file-meta-box"><span><b>已選取檔案：</b>${esc(uploaded.filename)}</span></div>` : ''}
+      <div class="cgu-doc-check-actions">
+        <label class="cgu-upload-btn">
+          <span>${uploaded ? '重新選檔' : '選擇檔案並標記完成'}</span>
+          <input type="file" data-cgu-sim-upload="${esc(doc.key)}" aria-label="選擇${esc(doc.title)}檔案" />
+        </label>
+        ${uploaded ? `<button type="button" class="cgu-remove-file-btn" data-cgu-sim-remove="${esc(doc.key)}">移除</button>` : ''}
+      </div>
+      <p id="cgu-doc-bridge-feedback" class="cgu-doc-bridge-feedback" role="status" aria-live="polite"></p>`;
+    if (!existing) {
+      const progressBox = card.querySelector('.level-progress');
+      if (progressBox) {
+        progressBox.insertAdjacentElement('afterend', bridge);
+      } else {
+        card.appendChild(bridge);
+      }
+    }
+    card.dataset.cguDocSig = sig;
+  }
+
+  function recommendedPartnersHtml(pref1, pref2) {
+    const partners = (typeof state === 'object' && state.dashboard?.partner_universities) || [];
+    if (!partners.length || typeof partnerMatch !== 'function') return '';
+    const ranked = partners
+      .map(item => ({ item, match: partnerMatch(item) }))
+      .filter(row => row.match && row.match.tone !== 'blocked')
+      .sort((a, b) => b.match.score - a.match.score || a.item.school_name.localeCompare(b.item.school_name, 'zh-Hant'))
+      .slice(0, 6);
+    if (!ranked.length) return '';
+    return `
+      <div class="cgu-shortlist-recs" aria-label="依你目前條件推薦的合作校">
+        <strong>依目前條件推薦的合作校</strong>
+        <ul class="cgu-shortlist-rec-list">
+          ${ranked.map(({ item, match }) => {
+            const name = item.school_name;
+            const roleTag = name === pref1 ? '第一志願' : name === pref2 ? '第二志願' : '';
+            const toneClass = match.tone === 'strong' ? 'is-ok' : 'is-lack';
+            return `
+              <li class="cgu-shortlist-rec-row">
+                <div class="cgu-shortlist-rec-info">
+                  <strong>${esc(name)}</strong>
+                  <small>${esc([item.country, item.location?.city].filter(Boolean).join('・'))}</small>
+                  <span class="cgu-doc-status-pill ${toneClass}">${esc(match.label || '建議評估')}</span>
+                  ${roleTag ? `<span class="cgu-shortlist-role-pill">${esc(roleTag)}</span>` : ''}
+                </div>
+                <div class="cgu-shortlist-rec-btns">
+                  <button type="button" class="cgu-pill-action" data-cgu-pick-pref="1" data-school-name="${esc(name)}">設為第一志願</button>
+                  <button type="button" class="cgu-pill-action" data-cgu-pick-pref="2" data-school-name="${esc(name)}">設為第二志願</button>
+                </div>
+              </li>`;
+          }).join('')}
+        </ul>
+      </div>`;
+  }
+
+  function syncShortlistLevelBridge(activePlan = simState.activePlan) {
+    const { onMyApp, view, level } = parseMyAppRoute();
+    const levelView = $('#application-path #level-view');
+    if (!onMyApp || view !== 'level' || level !== 'cgu-shortlist' || !levelView || levelView.hidden || !activePlan) return;
+    const card = levelView.querySelector('.level-card');
+    if (!card) return;
+
+    const [pref1, pref2] = readSharedPreferences(activePlan);
+    const partnersCount = ((typeof state === 'object' && state.dashboard?.partner_universities) || []).length;
+    const feedbackMsg = simState.shortlistFeedbackPlan === activePlan.id ? (simState.shortlistFeedback || '') : '';
+    const sig = `${activePlan.id}|${pref1}|${pref2}|${partnersCount}|${feedbackMsg}`;
+    const existing = card.querySelector('#cgu-shortlist-bridge');
+    if (existing && card.dataset.cguShortlistSig === sig) return;
+
+    const bridge = existing || document.createElement('div');
+    bridge.id = 'cgu-shortlist-bridge';
+    bridge.className = 'cgu-shortlist-bridge';
+    bridge.setAttribute('role', 'region');
+    bridge.setAttribute('aria-label', '選校推薦與志願順序');
+    bridge.innerHTML = `
+      <div class="cgu-shortlist-head">
+        <strong>排定校內申請志願（最多 2 所，與時程、送件表單同步）</strong>
+        <a class="cgu-compact-link" href="#partners">瀏覽全部合作校 →</a>
+      </div>
+      <div class="cgu-pref-grid">
+        <label>
+          <span>第一志願合作校（必選）</span>
+          <select id="cgu-shortlist-pref1">${renderPartnerOptions(pref1, false)}</select>
+        </label>
+        <label>
+          <span>第二志願合作校（選填，最多 2 個志願）</span>
+          <select id="cgu-shortlist-pref2">${renderPartnerOptions(pref2, true)}</select>
+        </label>
+      </div>
+      ${recommendedPartnersHtml(pref1, pref2)}
+      <div class="cgu-shortlist-actions">
+        <button type="button" id="cgu-shortlist-save-btn" class="cgu-pill-action is-solid">確認志願順序並標記完成</button>
+        <span id="cgu-shortlist-feedback" class="cgu-shortlist-feedback" role="status" aria-live="polite">${esc(feedbackMsg)}</span>
+      </div>`;
+    if (!existing) {
+      const progressBox = card.querySelector('.level-progress');
+      if (progressBox) {
+        progressBox.insertAdjacentElement('afterend', bridge);
+      } else {
+        card.appendChild(bridge);
+      }
+    }
+    card.dataset.cguShortlistSig = sig;
+  }
+
   let renderMyAppSeq = 0;
 
   async function renderMyApplicationSim(forceReload = false) {
@@ -928,11 +1100,10 @@
     const planApp = findPlanApplication(activePlan, apps);
     simState.activePlanApp = planApp;
 
-    const planSchool = activePlan.context?.target_school || '';
-    if (simState.pref1PlanId !== activePlan.id && simState.pref1UserEditedPlanId !== activePlan.id) {
-      simState.selectedPref1 = planSchool || getPartnerSchoolNames()[0];
-      simState.pref1PlanId = activePlan.id;
-    }
+    const [sharedPref1, sharedPref2] = readSharedPreferences(activePlan);
+    simState.selectedPref1 = sharedPref1;
+    simState.selectedPref2 = sharedPref2;
+    simState.pref1PlanId = activePlan.id;
 
     const submitHref = buildSubmitLevelHref(activePlan.id);
     const isSubmitLevel = view === 'level' && level === 'cgu-internal-submit';
@@ -959,6 +1130,8 @@
           </div>`;
       }
       enhanceTodayOiaStatus(activePlan, planApp);
+      syncDocLevelBridge(activePlan, st);
+      syncShortlistLevelBridge(activePlan);
       return;
     }
 
@@ -2151,12 +2324,77 @@
       removeDocBtn.disabled = true;
       try {
         await apiJson(`/demo/connector/files/${encodeURIComponent(docKey)}`, { method: 'DELETE' });
-        await renderMyApplicationSim(true);
+        simState.cachedPlans = null;
+        await loadConnectorStatus();
+        $('#application-path #refresh-path')?.click();
+        await renderMyApplicationSim(false);
       } catch (err) {
-        const fb = $('#cgu-sim-submit-feedback');
+        const fb = $('#cgu-doc-bridge-feedback') || $('#cgu-sim-submit-feedback');
         if (fb) fb.textContent = err.message;
       } finally {
         removeDocBtn.disabled = false;
+      }
+      return;
+    }
+
+    const pickPrefBtn = event.target.closest('[data-cgu-pick-pref]');
+    if (pickPrefBtn) {
+      const slot = pickPrefBtn.dataset.cguPickPref;
+      const schoolName = pickPrefBtn.dataset.schoolName || '';
+      const activePlan = simState.activePlan || await resolveActivePlan(false);
+      const [cur1, cur2] = readSharedPreferences(activePlan);
+      const next1 = slot === '1' ? schoolName : (cur1 || schoolName);
+      const next2 = slot === '2' ? (schoolName === next1 ? '' : schoolName) : (cur2 === next1 ? '' : cur2);
+      writeSharedPreferences(next1, next2);
+      const feedback = `已更新志願：第一志願「${next1}」${next2 ? `、第二志願「${next2}」` : ''}`;
+      simState.shortlistFeedback = feedback;
+      simState.shortlistFeedbackPlan = activePlan.id;
+      const shortlistCard = $('#application-path #level-view .level-card');
+      if (shortlistCard) shortlistCard.dataset.cguShortlistSig = '';
+      syncShortlistLevelBridge(activePlan);
+      const fb = $('#cgu-shortlist-feedback');
+      if (fb) fb.textContent = feedback;
+      return;
+    }
+
+    if (event.target.closest('#cgu-shortlist-save-btn')) {
+      const saveBtn = $('#cgu-shortlist-save-btn');
+      const fb = $('#cgu-shortlist-feedback');
+      const p1 = $('#cgu-shortlist-pref1')?.value || '';
+      const p2 = $('#cgu-shortlist-pref2')?.value || '';
+      if (!p1) {
+        if (fb) fb.textContent = '請至少選擇第一志願合作校。';
+        return;
+      }
+      if (saveBtn) saveBtn.disabled = true;
+      try {
+        const [saved1, saved2] = writeSharedPreferences(p1, p2);
+        const summaryText = saved2 ? `第一志願：${saved1}；第二志願：${saved2}` : `第一志願：${saved1}`;
+        const inputEl = $('#level-input');
+        if (inputEl) inputEl.value = summaryText;
+        const activePlan = simState.activePlan || await resolveActivePlan(true);
+        if (activePlan) {
+          const planUrl = `/account/application-paths/${encodeURIComponent(activePlan.id)}`;
+          const hsQuery = `?home_school=${encodeURIComponent('長庚大學')}`;
+          const currentEnv = await apiJson(`${planUrl}${hsQuery}`);
+          await apiJson(`${planUrl}/steps/cgu-shortlist${hsQuery}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+              revision: currentEnv.revision,
+              step: { value: summaryText, confirmed: true },
+            }),
+          });
+          simState.cachedPlans = null;
+          simState.shortlistFeedback = '已保存志願順序並更新進度。';
+          simState.shortlistFeedbackPlan = activePlan.id;
+          $('#application-path #refresh-path')?.click();
+        }
+        const fbAfter = $('#cgu-shortlist-feedback');
+        if (fbAfter) fbAfter.textContent = '已保存志願順序並更新進度。';
+      } catch (err) {
+        if (fb) fb.textContent = err.message || '保存失敗，請稍後再試。';
+      } finally {
+        if (saveBtn) saveBtn.disabled = false;
       }
       return;
     }
@@ -2332,21 +2570,44 @@
       try {
         await uploadMetadataFile(docKey, selectedFile);
         fileInput.value = '';
-        await renderMyApplicationSim(true);
+        simState.cachedPlans = null;
+        await loadConnectorStatus();
+        $('#application-path #refresh-path')?.click();
+        await renderMyApplicationSim(false);
       } catch (err) {
         fileInput.value = '';
-        const fb = $('#cgu-sim-submit-feedback');
+        const fb = $('#cgu-doc-bridge-feedback') || $('#cgu-sim-submit-feedback');
         if (fb) fb.textContent = err.message;
       }
       return;
     }
     if (event.target.id === 'cgu-sim-pref1') {
-      simState.selectedPref1 = event.target.value;
-      simState.pref1UserEditedPlanId = simState.activePlan?.id || simState.pref1PlanId;
+      const [n1, n2] = writeSharedPreferences(event.target.value, simState.selectedPref2);
+      const p2El = $('#cgu-sim-pref2');
+      if (p2El) p2El.value = n2;
+      if (event.target.value !== n1) event.target.value = n1;
       return;
     }
     if (event.target.id === 'cgu-sim-pref2') {
-      simState.selectedPref2 = event.target.value;
+      const [, n2] = writeSharedPreferences(simState.selectedPref1, event.target.value);
+      if (event.target.value !== n2) event.target.value = n2;
+      return;
+    }
+    if (event.target.id === 'cgu-shortlist-pref1' || event.target.id === 'cgu-shortlist-pref2') {
+      const p1 = $('#cgu-shortlist-pref1')?.value || '';
+      const p2 = $('#cgu-shortlist-pref2')?.value || '';
+      const [n1, n2] = writeSharedPreferences(p1, p2);
+      const activePlan = simState.activePlan || await resolveActivePlan(false);
+      const feedback = `已同步志願：第一志願「${n1}」${n2 ? `、第二志願「${n2}」` : ''}`;
+      if (activePlan) {
+        simState.shortlistFeedback = feedback;
+        simState.shortlistFeedbackPlan = activePlan.id;
+      }
+      const shortlistCard = $('#application-path #level-view .level-card');
+      if (shortlistCard) shortlistCard.dataset.cguShortlistSig = '';
+      syncShortlistLevelBridge(activePlan);
+      const fb = $('#cgu-shortlist-feedback');
+      if (fb) fb.textContent = feedback;
       return;
     }
     if (event.target.id === 'cgu-report-school') {
@@ -2504,6 +2765,8 @@
     } else {
       enhanceTodayOiaStatus();
       syncSubmitLevelBridge();
+      syncDocLevelBridge();
+      syncShortlistLevelBridge();
     }
   }).observe(document.body, { childList: true, subtree: true });
 

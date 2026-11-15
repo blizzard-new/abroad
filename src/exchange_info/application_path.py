@@ -292,7 +292,12 @@ def build_levels(context, evaluated, catalog, values=None):
     return stages
 
 
+SETUP_STEP_IDS = frozenset({"home", "term", "target"})
+
+
 def progress(item, record):
+    if item["id"] in SETUP_STEP_IDS:
+        return {"value": 0 if record.get("confirmed") is False else 1, "total": 1}
     if item["kind"] == "confirm":
         return {"value":int(record.get("confirmed", False)), "total":1}
     content = bool(record.get("value") or record.get("version_id"))
@@ -398,7 +403,7 @@ def register_application_path(app, *, authenticate, university_for, evaluate, ca
         for stage in stages:
             for item in stage["levels"]:
                 item["progress"] = effective(item["id"])
-                item["counted"] = not item["external"] and (not item.get("conditional") or plan["steps"].get(item["id"], {}).get("applicable") is True)
+                item["counted"] = item["id"] not in SETUP_STEP_IDS and not item["external"] and (not item.get("conditional") or plan["steps"].get(item["id"], {}).get("applicable") is True)
                 if item["counted"]:
                     done += item["progress"]["value"]
                     total += item["progress"]["total"]
