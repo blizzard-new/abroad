@@ -87,10 +87,14 @@ def journey_levels(context, evaluated, catalog, values=None):
         and str(context.get('departure_year') or '2027') == '2027'
         and context.get('semester') in ('fall', 'full_year', 'undecided', None, '')
     )
+    excluded_checks = frozenset({'check-academic_year', 'check-application_round'})
+    setup_rows = [row for row in original if row['id'] in ('home', 'term', 'target')]
+    check_rows = [
+        row for row in original
+        if row['id'].startswith('check-') and row['id'] not in excluded_checks
+    ]
     for index, stage in enumerate(data['stages']):
-        items = [row for row in original if row['id'] in ('home', 'term', 'target')] if index == 0 else []
-        if index == 1:
-            items.extend(row for row in original if row['id'].startswith('check-'))
+        items = list(setup_rows) if index == 0 else []
         for task in stage['tasks']:
             source = task.get('source')
             detail = task['detail']
@@ -109,6 +113,8 @@ def journey_levels(context, evaluated, catalog, values=None):
                     source_urls=[sources['selection']],
                 )
             items.append(item)
+            if index == 0 and task['id'] == 'read-guide':
+                items.extend(dict(r) for r in check_rows)
         for item in items:
             number += 1
             item.update(stage=index, stage_key=stage['title'], number=number)

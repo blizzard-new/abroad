@@ -234,7 +234,8 @@ def test_school_scope_dates_and_native_plan_persistence(demo_url):
     saved = alice.put(demo_url + path + '/steps/home?home_school=長庚大學',
         json={'revision':a['revision'], 'step':{'confirmed':True}})
     assert saved.ok, saved.text
-    assert saved.json()['progress']['value'] == 1
+    assert saved.json()['progress']['value'] == 0
+    assert all(lvl['progress'] == {'value': 1, 'total': 1} and lvl['counted'] is False for lvl in a['stages'][0]['levels'][:3])
     assert saved.json()['platform_submitted'] is False
     reloaded = alice.get(demo_url + path + '?home_school=長庚大學').json()
     assert reloaded['plan']['steps']['home']['confirmed']
@@ -648,7 +649,9 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     assert [step['label'] for step in app_rec['timeline']] == ['已送出', '已收件', '要求補件／初審通過']
     synced_plan = alice.get(f'{demo_url}/account/application-paths/{plan_id}?home_school=長庚大學').json()
     assert synced_plan['plan']['steps']['cgu-internal-submit']['confirmed'] is True
-    assert synced_plan['progress']['value'] == 1
+    for key in doc_keys:
+        assert synced_plan['plan']['steps'][f'cgu-doc-{key}']['confirmed'] is True
+    assert synced_plan['progress']['value'] == 6
 
     # 4. OIA Dashboard preloads 5 fictional records & reflects actions to student + notifications
     oia = alice.get(demo_url + '/demo/connector/oia/dashboard').json()
@@ -859,3 +862,44 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     for payload in (reset_status, reset_oia, bob.get(demo_url + '/community/feed?limit=20&sort=latest').json()):
         dumped = json.dumps(payload, ensure_ascii=False)
         assert '模擬' not in dumped and 'SIM-' not in dumped and '虛構' not in dumped and '示範資料' not in dumped
+
+
+def test_phase2_stage_order_and_bidirectional_doc_step_sync(demo_url):
+    alice = visitor(demo_url)
+    plan = create(alice, demo_url)
+    plan_id = plan['plan']['id']
+    stages = plan['stages']
+    stage0_ids = [lvl['id'] for lvl in stages[0]['levels']]
+    stage1_ids = [lvl['id'] for lvl in stages[1]['levels']]
+    assert stage0_ids == [
+        'home', 'term', 'target', 'cgu-read-guide',
+        'check-availability', 'check-college', 'check-degree_level',
+        'check-academic_score', 'check-language_score', 'check-workflow',
+        'cgu-shortlist',
+    ]
+    assert 'cgu-check-language' not in stage0_ids
+    assert 'check-academic_year' not in stage0_ids
+    assert 'check-application_round' not in stage0_ids
+    assert stage1_ids == [
+        'cgu-doc-online_form', 'cgu-doc-parent_consent',
+        'cgu-doc-language_proof', 'cgu-doc-transcript',
+        'cgu-doc-study_plan', 'cgu-internal-submit',
+    ]
+    assert plan['progress'] == {'value': 0, 'total': 23}
+
+    up = alice.post(
+        f'{demo_url}/demo/connector/files',
+        data={'doc_key': 'online_form'},
+        files={'file': ('online_form.pdf', b'%PDF-1.4\n1 0 obj\n<<>>\nendobj\n', 'application/pdf')},
+    )
+    assert up.status_code == 200, up.text
+    after_up = alice.get(f'{demo_url}/account/application-paths/{plan_id}?home_school=長庚大學').json()
+    assert after_up['plan']['steps']['cgu-doc-online_form']['confirmed'] is True
+    assert after_up['progress'] == {'value': 1, 'total': 23}
+
+    rm = alice.delete(f'{demo_url}/demo/connector/files/online_form')
+    assert rm.status_code == 200, rm.text
+    after_rm = alice.get(f'{demo_url}/account/application-paths/{plan_id}?home_school=長庚大學').json()
+    assert after_rm['plan']['steps']['cgu-doc-online_form']['confirmed'] is False
+    assert after_rm['progress'] == {'value': 0, 'total': 23}
+

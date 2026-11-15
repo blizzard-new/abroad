@@ -426,11 +426,11 @@ def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):
     expect(page.locator('.level-progress')).to_contain_text('已完成')
     page.locator('a.back-link').click()
     page.locator('a[data-tab=today]:visible').first.click()
-    expect(page.locator('#today-focus-title')).to_have_text('整理兩所志願與想修的課程')
+    expect(page.locator('#today-focus-title')).to_have_text('當期名額')
     open_demo_tools(page)
     page.locator('#cgu-demo-reset').click()
     page.keyboard.press('Escape')
-    expect(page.locator('#today-focus-title')).to_have_text('整理兩所志願與想修的課程')
+    expect(page.locator('#today-focus-title')).to_have_text('當期名額')
     open_demo_tools(page)
     page.locator('#cgu-demo-reset').click()
     with page.expect_navigation(wait_until='domcontentloaded'):
@@ -997,7 +997,7 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     page.locator('#cgu-sim-submit-btn').click()
     expect(page.locator('#cgu-sim-submit-feedback')).to_contain_text('正式申請請依國際處公告完成線上表單與紙本繳交')
     expect(page.locator('#cgu-sim-submit-feedback a[href*="85785"]')).to_be_visible()
-    expect(page.locator('#overall-caption')).to_contain_text('1 / 23')
+    expect(page.locator('#overall-caption')).to_contain_text('6 / 23')
     records = page.locator('#cgu-sim-app-records')
     expect(records).to_contain_text('CGU-116-1-A')
     expect(records).to_contain_text('已送出')
@@ -1345,7 +1345,7 @@ def test_my_application_phase1_plan_target_pref_and_oia_approve_today_sync(page,
     page.locator('#cgu-sim-submit-btn').click()
     records = page.locator('#cgu-sim-app-records')
     expect(records).to_contain_text(target_school)
-    expect(page.locator('#overall-caption')).to_contain_text('1 / 23')
+    expect(page.locator('#overall-caption')).to_contain_text('6 / 23')
     receipt_id = records.locator('.cgu-submitted-card').first.get_attribute('data-receipt-id')
     assert receipt_id and receipt_id.startswith('CGU-116-1-A')
 
@@ -1361,3 +1361,100 @@ def test_my_application_phase1_plan_target_pref_and_oia_approve_today_sync(page,
         expect(page.locator('#today-view')).to_be_visible()
         expect(page.locator('#cgu-today-oia-status')).to_contain_text(receipt_id)
         expect(page.locator('#cgu-today-oia-status')).to_contain_text(expected_label)
+
+
+def test_my_application_phase2_tabs_gates_docs_schedule_and_shared_preferences(page, demo_url, tmp_path):
+    ready(page, demo_url)
+    seed(page)
+
+    # H: 5 main .hub-tabs and clickable #overall-progress-link opening view=progress without #subview-back
+    tabs = page.locator('#application-path .hub-tabs [data-tab]')
+    expect(tabs).to_have_count(5)
+    assert tabs.all_inner_texts() == ['今天', '計畫', '準備清單', '我的任務', '時程']
+    page.locator('#overall-progress-link').click()
+    expect(page.locator('#progress-view')).to_be_visible()
+    expect(page.locator('#application-path .hub-tabs [data-tab="progress"]')).to_have_class(re.compile(r'\bactive\b'))
+    expect(page.locator('#subview-back')).to_be_hidden()
+
+    # I & J: Stage 1 order on Checklist (home/term/target done at top, no 計畫設定 group, check-* before cgu-shortlist)
+    overview_text = page.locator('#progress-view').inner_text()
+    assert '計畫設定' not in overview_text
+    assert 'academic_year' not in overview_text
+    assert 'application_round' not in overview_text
+    stage1_panel = page.locator('#progress-view details.task-stage').first
+    stage1_hrefs = stage1_panel.locator('a.task-row').evaluate_all('els => els.map(e => e.getAttribute("href") || "")')
+    assert [h.split('level=')[1].split('&')[0] for h in stage1_hrefs[:3]] == ['home', 'term', 'target']
+    assert 'level=cgu-read-guide' in stage1_hrefs[3]
+    assert 'level=cgu-shortlist' in stage1_hrefs[-1]
+    assert any('level=check-language_score' in h for h in stage1_hrefs[4:-1])
+    assert all('level=check-academic_year' not in h and 'level=check-application_round' not in h for h in stage1_hrefs)
+
+    # Map also has home/term/target at start of Stage 1 and no bottom 計畫設定 group
+    plan_id = page.evaluate('() => new URLSearchParams(location.hash.split("?")[1] || "").get("plan")')
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=map')
+    expect(page.locator('#map-view')).to_be_visible()
+    expect(page.locator('#subview-back')).to_be_visible()
+    assert '計畫設定' not in page.locator('#map-view').inner_text()
+    map_stage1_hrefs = page.locator('#map-view section.path-stage').first.locator('a.node').evaluate_all('els => els.map(e => e.getAttribute("href") || "")')
+    assert [h.split('level=')[1].split('&')[0] for h in map_stage1_hrefs[:3]] == ['home', 'term', 'target']
+
+    # Mobile (390px) check on Checklist
+    page.set_viewport_size({'width': 390, 'height': 844})
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=progress')
+    assert page.evaluate('() => document.documentElement.scrollWidth <= window.innerWidth + 1')
+    page.set_viewport_size({'width': 1440, 'height': 1000})
+
+    # K: Uploading & removing PDF on cgu-doc-online_form syncs with #overall-caption and cgu-internal-submit
+    sample_pdf = tmp_path / 'online_form.pdf'
+    sample_pdf.write_bytes(b'%PDF-1.4\n1 0 obj\n<<>>\nendobj\n')
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-doc-online_form')
+    bridge = page.locator('#cgu-doc-level-bridge')
+    expect(bridge).to_be_visible()
+    bridge.locator('input[data-cgu-sim-upload="online_form"]').set_input_files(str(sample_pdf))
+    expect(page.locator('#overall-caption')).to_contain_text('1 / 23')
+    expect(bridge).to_contain_text('online_form.pdf')
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-internal-submit')
+    expect(page.locator('[data-doc-row="online_form"]')).to_contain_text('已備齊')
+    expect(page.locator('[data-doc-row="online_form"]')).to_contain_text('online_form.pdf')
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-doc-online_form')
+    page.locator('#cgu-doc-level-bridge button[data-cgu-sim-remove="online_form"]').click()
+    expect(page.locator('#overall-caption')).to_contain_text('0 / 23')
+
+    # L: Slimmed view=schedule hides redundant disclosures while keeping deadlines, tracker, and buffer-day form
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
+    expect(page.locator('#sched-deadlines-title')).to_be_visible()
+    expect(page.locator('#my-applications')).to_be_visible()
+    expect(page.locator('#planning-schedule-form')).to_be_visible()
+    expect(page.locator('#planning-preparation-days')).to_be_visible()
+    expect(page.locator('#application-plan-details')).to_be_hidden()
+    expect(page.locator('#application-schedule-details')).to_be_hidden()
+    expect(page.locator('#schedule-legacy .planning-documents')).to_be_hidden()
+
+    # M: Shared preference ordering across cgu-shortlist, 時程, and cgu-internal-submit
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-shortlist')
+    expect(page.locator('#cgu-shortlist-bridge')).to_be_visible()
+    pref1_school = '林肯大學 Lincoln University'
+    pref2_school = '韓國嘉泉大學 Gachon University'
+    page.locator('#cgu-shortlist-pref1').select_option(pref1_school)
+    page.locator('#cgu-shortlist-pref2').select_option(pref2_school)
+    page.locator('#cgu-shortlist-save-btn').click()
+    expect(page.locator('#cgu-shortlist-feedback')).to_contain_text('已保存')
+    expect(page.locator('#level-view .level-progress strong')).to_have_text('已完成')
+    expect(page.locator('#overall-caption')).to_contain_text('1 / 23')
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
+    expect(page.locator('#tracker-side')).to_contain_text('林肯大學')
+    expect(page.locator('#tracker-side')).to_contain_text('韓國嘉泉大學')
+
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-internal-submit')
+    expect(page.locator('#cgu-sim-pref1')).to_have_value(pref1_school)
+    expect(page.locator('#cgu-sim-pref2')).to_have_value(pref2_school)
+
+    # Updating #cgu-sim-pref2 in submit form updates 時程 ("我的志願")
+    alt_pref2 = '瑞典皇家理工學院 KTH Royal Institute of Technology'
+    page.locator('#cgu-sim-pref2').select_option(alt_pref2)
+    ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
+    expect(page.locator('#tracker-side')).to_contain_text('瑞典皇家理工學院')
+

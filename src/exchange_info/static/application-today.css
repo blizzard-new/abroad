@@ -216,3 +216,15 @@
 /* phones: the plan name beside "back" stays on one line */
 #application-path .level-topline .level-plan-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; max-width: 60%; text-align: right; }
 #application-path .plan-choice select { text-overflow: ellipsis; }
+
+/* Phase 2: clickable header progress link, 5-tab mobile wrapping, and focused 時程 workbench */
+#application-path a.plan-progress { display: block; color: inherit; text-decoration: none; border-radius: 14px; padding: 6px 8px; margin: -6px -8px; transition: background .15s ease; }
+#application-path a.plan-progress:hover, #application-path a.plan-progress:focus-visible { background: var(--uw-surface-soft, #edf0f4); }
+#application-path a.plan-progress:focus-visible { outline: 2px solid var(--uw-accent, #23324a); outline-offset: 2px; }
+@media (max-width: 600px) {
+  #application-path .hub-tabs { flex-wrap: wrap; gap: 6px; padding: 12px 0; }
+  #application-path .hub-tabs > a { padding: 8px 10px; font-size: 13px; gap: 5px; }
+}
+#application-path #schedule-legacy .in-workbench #application-plan-details,
+#application-path #schedule-legacy .in-workbench #application-schedule-details,
+#application-path #schedule-legacy .in-workbench .planning-documents { display: none; }
