@@ -5,7 +5,7 @@ import pytest
 from docx import Document
 from pydantic import ValidationError
 
-from exchange_info.exchange_workspace import NoticePreview, preview_notice, suggestion_packs
+from exchange_info.exchange_workspace import STAGES, NoticePreview, WorkspaceTask, preview_notice, suggestion_packs, workspace_view
 from test_application_path import CONTEXT, client, create
 
 
@@ -199,3 +199,50 @@ def test_workspace_routes_require_the_plan_owner(client):
         assert client.put(url(plan), json={"revision":plan["revision"],"tasks":[]}, **kwargs).status_code == expected
         assert client.post(url(plan,"/preview"), json={"source_label":"通知","text":"請交文件"}, **kwargs).status_code == expected
         assert client.get(url(plan,"/suggestions"), **kwargs).status_code == expected
+
+
+def test_workspace_six_unified_stages_and_legacy_stage_normalization(client):
+    assert STAGES == {
+        "selection": "探索與選校",
+        "home": "校內申請",
+        "interview": "面試與放榜",
+        "host": "姊妹校申請",
+        "departure": "出發準備",
+        "return": "抵達與返國",
+    }
+
+    assert WorkspaceTask(id="task_nom_1", title="面試", stage="nomination").stage == "interview"
+    assert WorkspaceTask(id="task_arr_1", title="報到", stage="arrival").stage == "return"
+    assert WorkspaceTask(id="task_abr_1", title="學分", stage="abroad").stage == "return"
+
+    viewed = workspace_view(
+        {
+            "workspace": {
+                "revision": 2,
+                "tasks": [
+                    {"id": "v1", "title": "面試通知", "stage": "nomination", "status": "todo"},
+                    {"id": "v2", "title": "落地註冊", "stage": "arrival", "status": "todo"},
+                    {"id": "v3", "title": "抵免申請", "stage": "abroad", "status": "done"},
+                ],
+            }
+        }
+    )
+    assert [t["stage"] for t in viewed["tasks"]] == ["interview", "return", "return"]
+
+    plan = create(client).json()
+    res = save(
+        client,
+        plan,
+        [
+            {"id": "task_nom_api", "title": "校內面試", "stage": "nomination", "status": "todo"},
+            {"id": "task_arr_api", "title": "抵達報到", "stage": "arrival", "status": "todo"},
+            {"id": "task_abr_api", "title": "選課清單", "stage": "abroad", "status": "todo"},
+        ],
+    )
+    assert res.status_code == 200
+    saved_tasks = res.json()["workspace"]["tasks"]
+    assert [(t["id"], t["stage"]) for t in saved_tasks] == [
+        ("task_nom_api", "interview"),
+        ("task_arr_api", "return"),
+        ("task_abr_api", "return"),
+    ]

@@ -33,7 +33,7 @@ CONTENT = Path(__file__).parent / "demo_data/content.json"
 # allowlist, so no request value is used to build a file path.
 PREVIEW_DIR = Path(__file__).parent / "demo_data/preview"
 PREVIEW_PAGES = {"office": "office.html", "inquiry": "inquiry.html", "report": "report.html"}
-ASSET_VERSION = "20261115-cgu-app-flow-2"
+ASSET_VERSION = "20261115-cgu-app-flow-3"
 COOKIE = "uniway_cgu_demo_session"
 HOME = "長庚大學"
 UPLOAD_NOTICE = "檔案僅用於完整性檢查，不會保存內容。"

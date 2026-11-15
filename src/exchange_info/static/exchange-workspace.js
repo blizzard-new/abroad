@@ -1,7 +1,10 @@
 /* One student-owned workspace per exchange plan. All saves use the plan's server revision. */
 window.UniWayExchangeWorkspace = (() => {
   'use strict';
-  const STAGES={selection:'選校與探索',home:'校內申請',interview:'面試準備',nomination:'錄取與提名',host:'合作校申請',departure:'出發準備',arrival:'抵達與安頓',abroad:'交換生活',return:'返國與學分'};
+  const STAGES={selection:'探索與選校',home:'校內申請',interview:'面試與放榜',host:'姊妹校申請',departure:'出發準備',return:'抵達與返國'};
+  const STAGE_MAP={nomination:'interview',arrival:'return',abroad:'return'};
+  const stageKey=s=>STAGE_MAP[s]||s;
+  const stageLabel=s=>STAGES[stageKey(s)]||STAGES.departure;
   const KINDS={task:'一般待辦',document:'文件',interview:'面試練習',course:'課程',life:'生活準備',travel:'旅行',internship:'實習',community:'同梯交流'};
   const STATUS={todo:'尚未開始',doing:'準備中',waiting:'等待中',done:'已完成'};
   const FIELDS=['id','title','stage','kind','status','action','optional','notes','due_date','date_kind','date_reviewed','recipient','batch','signers','waiting_for','depends_on','source_label','source_url','source_excerpt','origin','file_version_id','file_location','course'];
@@ -50,7 +53,7 @@ window.UniWayExchangeWorkspace = (() => {
   }
   function summary(value, schedule=false){
     const rows=(value?.workspace?.tasks||[]).filter(t=>t.effective_status!=='done');
-    if(!rows.length)return '<section class="ex-summary"><h3>從申請到交換生活</h3><a href="#my-application?'+new URLSearchParams({plan:value?.plan.id||'',view:'workspace'})+'">開啟準備工作台 →</a></section>';
+    if(!rows.length)return '<section class="ex-summary"><h3>從申請到交換生活</h3><a href="#my-application?'+new URLSearchParams({plan:value?.plan.id||'',view:'workspace'})+'">開啟我的任務 →</a></section>';
     const ready=rows.filter(t=>t.status!=='waiting'&&!t.waiting_for&&!(t.action==='submit'&&t.blocked_by?.length));
     const waiting=rows.filter(t=>!ready.includes(t));
     const listed=(schedule?rows.filter(t=>t.due_date):ready).sort((a,b)=>(a.due_date||'9999').localeCompare(b.due_date||'9999')).slice(0,schedule?12:4);
@@ -60,8 +63,8 @@ window.UniWayExchangeWorkspace = (() => {
   function render(){
     const locked=view().plan.archived;
     if(locked)tab='tasks';
-    host.innerHTML='<div class="exchange-workspace"><div class="ex-head"><div><h2>準備工作台</h2></div><button class="primary-button" data-ex-new '+(locked?'disabled':'')+'>新增待辦</button></div><p id="exchange-message" role="status" tabindex="-1"></p>'+
-      '<nav class="ex-tabs" aria-label="準備工作台工具">'+Object.entries({tasks:'我的任務',notice:'通知轉待辦',library:'加入準備清單',peers:'同梯交流'}).map(([key,name])=>'<button data-ex-tab="'+key+'" aria-pressed="'+(tab===key)+'" '+(locked&&key!=='tasks'?'disabled':'')+'>'+name+'</button>').join('')+'</nav>'+
+    host.innerHTML='<div class="exchange-workspace"><div class="ex-head"><div><h2>我的任務</h2></div><button class="primary-button" data-ex-new '+(locked?'disabled':'')+'>新增待辦</button></div><p id="exchange-message" role="status" tabindex="-1"></p>'+
+      '<nav class="ex-tabs" aria-label="我的任務工具">'+Object.entries({tasks:'我的任務',notice:'通知轉待辦',library:'加入準備清單',peers:'同梯交流'}).map(([key,name])=>'<button data-ex-tab="'+key+'" aria-pressed="'+(tab===key)+'" '+(locked&&key!=='tasks'?'disabled':'')+'>'+name+'</button>').join('')+'</nav>'+
       (locked?'<p>這份計畫已封存，恢復後可繼續編輯。</p>':'')+'<div id="exchange-content"></div><dialog id="exchange-task-dialog" aria-labelledby="exchange-task-title"></dialog></div>';
     if(tab==='tasks')renderTasks();
     if(tab==='notice')renderNotice();
@@ -71,12 +74,12 @@ window.UniWayExchangeWorkspace = (() => {
   }
   function renderTasks(){
     const all=tasks(), needed=all.filter(t=>!t.optional), optional=all.filter(t=>t.optional);
-    const rows=all.filter(t=>(!kind||t.kind===kind)&&(!stage||t.stage===stage)&&(!status||t.effective_status===status));
+    const rows=all.filter(t=>(!kind||t.kind===kind)&&(!stage||stageKey(t.stage)===stage)&&(!status||t.effective_status===status));
     const done=xs=>xs.filter(t=>t.effective_status==='done').length;
     $('#exchange-content').innerHTML='<div class="ex-counts"><span>準備任務 <b>'+done(needed)+' / '+needed.length+'</b></span><span>自選目標 <b>'+done(optional)+' / '+optional.length+'</b></span><span>個人紀錄，不代表校方受理或錄取</span></div>'+
       '<div class="ex-filters"><label>階段<select id="exchange-stage"><option value="">全部階段</option>'+option(STAGES,stage)+'</select></label><label>類型<select id="exchange-kind"><option value="">全部類型</option>'+option(KINDS,kind)+'</select></label><label>狀態<select id="exchange-status"><option value="">全部狀態</option>'+option(STATUS,status)+'</select></label><div class="ex-actions"><button data-ex-export="text">下載準備筆記</button><button data-ex-export="calendar">匯出日期到行事曆</button></div></div>'+
       (kind==='course'?courseSummary():kind==='interview'?'<p class="ex-note">寫下自介、選校研究與回答，完成後可下載練習稿。練習題不代表校方考古題。<button data-ex-pack="interview">加入面試練習清單</button></p>':'')+
-      '<div class="ex-task-list">'+(rows.length?rows.map(t=>'<article class="ex-task" data-ex-task="'+esc(t.id)+'"><div><div class="ex-meta">'+esc(STAGES[t.stage])+' · '+esc(KINDS[t.kind])+(t.batch?' · '+esc(t.batch):'')+(t.optional?' · 自選':'')+'</div><h3><button data-ex-edit="'+esc(t.id)+'">'+esc(t.title)+'</button></h3><p>'+esc(dateLabel(t))+'</p>'+(t.waiting_for?'<p class="ex-wait">等待：'+esc(t.waiting_for)+'</p>':'')+(t.blocked_by?.length?'<p class="ex-wait">'+(t.action==='submit'?'送件前須完成：':'可先準備；前置事項：')+esc(t.blocked_by.map(id=>all.find(x=>x.id===id)?.title||id).join('、'))+'</p>':'')+(t.file_unavailable?'<p class="is-error">文件已過期或移除，請重新連結並核對。</p>':'')+(t.recipient||t.signers?'<p>'+esc([t.recipient&&'交給 '+t.recipient,t.signers&&'簽名 '+t.signers].filter(Boolean).join(' · '))+'</p>':'')+'</div><div class="ex-task-action"><span>'+esc(STATUS[t.effective_status])+'</span><button class="outline-button" data-ex-edit="'+esc(t.id)+'">'+(t.kind==='interview'?'寫下回答':'開啟任務')+'</button></div></article>').join(''):'<div class="ex-empty"><h3>'+ (all.length?'此分類沒有任務':'先放進你正在準備的事')+'</h3><p>可以貼上校方通知、選擇適合的清單，或自己新增一項。</p><button class="outline-button" data-ex-tab="library">查看準備清單</button></div>')+'</div>';
+      '<div class="ex-task-list">'+(rows.length?rows.map(t=>'<article class="ex-task" data-ex-task="'+esc(t.id)+'"><div><div class="ex-meta">'+esc(stageLabel(t.stage))+' · '+esc(KINDS[t.kind])+(t.batch?' · '+esc(t.batch):'')+(t.optional?' · 自選':'')+'</div><h3><button data-ex-edit="'+esc(t.id)+'">'+esc(t.title)+'</button></h3><p>'+esc(dateLabel(t))+'</p>'+(t.waiting_for?'<p class="ex-wait">等待：'+esc(t.waiting_for)+'</p>':'')+(t.blocked_by?.length?'<p class="ex-wait">'+(t.action==='submit'?'送件前須完成：':'可先準備；前置事項：')+esc(t.blocked_by.map(id=>all.find(x=>x.id===id)?.title||id).join('、'))+'</p>':'')+(t.file_unavailable?'<p class="is-error">文件已過期或移除，請重新連結並核對。</p>':'')+(t.recipient||t.signers?'<p>'+esc([t.recipient&&'交給 '+t.recipient,t.signers&&'簽名 '+t.signers].filter(Boolean).join(' · '))+'</p>':'')+'</div><div class="ex-task-action"><span>'+esc(STATUS[t.effective_status])+'</span><button class="outline-button" data-ex-edit="'+esc(t.id)+'">'+(t.kind==='interview'?'寫下回答':'開啟任務')+'</button></div></article>').join(''):'<div class="ex-empty"><h3>'+ (all.length?'此分類沒有任務':'先放進你正在準備的事')+'</h3><p>可以貼上校方通知、選擇適合的清單，或自己新增一項。</p><button class="outline-button" data-ex-tab="library">查看準備清單</button></div>')+'</div>';
   }
   function courseSummary(){
     const all=tasks().filter(t=>t.kind==='course'),conflicts=data().course_conflicts||[];
@@ -90,7 +93,7 @@ window.UniWayExchangeWorkspace = (() => {
     editor=clean(task);changed=recover;
     const c=task.course||{}, f=$('#exchange-task-dialog');
     f.innerHTML='<form id="exchange-task-form"><div class="ex-head"><h2 id="exchange-task-title">'+(tasks().some(t=>t.id===task.id)?'編輯任務':'新增待辦')+'</h2><button type="button" data-ex-close aria-label="關閉任務">關閉</button></div><p role="alert" id="exchange-edit-error"></p><fieldset '+(view().plan.archived?'disabled':'')+'>'+input('title','要做的事',task.title,'required maxlength="160"')+
-      '<div class="ex-grid"><label>階段<select name="stage">'+option(STAGES,task.stage)+'</select></label><label>類型<select name="kind">'+option(KINDS,task.kind)+'</select></label><label>狀態<select name="status">'+option(STATUS,task.status)+'</select></label><label>日期類型<select name="date_kind">'+option({unknown:'日期待確認',personal:'個人目標',notice:'通知期限（自行核對）'},task.date_kind)+'</select></label>'+input('due_date','日期',task.due_date,'type="date"')+input('waiting_for','正在等誰／什麼通知',task.waiting_for,'maxlength="300"')+'</div><label class="ex-check"><input type="checkbox" name="optional" '+(task.optional?'checked':'')+'>這是自選目標，不計入準備任務進度</label>'+
+      '<div class="ex-grid"><label>階段<select name="stage">'+option(STAGES,stageKey(task.stage))+'</select></label><label>類型<select name="kind">'+option(KINDS,task.kind)+'</select></label><label>狀態<select name="status">'+option(STATUS,task.status)+'</select></label><label>日期類型<select name="date_kind">'+option({unknown:'日期待確認',personal:'個人目標',notice:'通知期限（自行核對）'},task.date_kind)+'</select></label>'+input('due_date','日期',task.due_date,'type="date"')+input('waiting_for','正在等誰／什麼通知',task.waiting_for,'maxlength="300"')+'</div><label class="ex-check"><input type="checkbox" name="optional" '+(task.optional?'checked':'')+'>這是自選目標，不計入準備任務進度</label>'+
       '<label>'+(task.kind==='interview'?'我的回答／自我介紹':'準備內容與筆記')+'<textarea name="notes" rows="6" maxlength="12000">'+esc(task.notes)+'</textarea></label>'+
       '<div data-ex-course-fields '+(task.kind==='course'?'':'hidden')+'><h3>課程資訊</h3><div class="ex-grid">'+input('credits','學分',c.credits,'type="number" min="0" max="60" step="0.5"')+'<label>星期<select name="weekday"><option value="">待確認</option>'+option({1:'星期一',2:'星期二',3:'星期三',4:'星期四',5:'星期五',6:'星期六',7:'星期日'},String(c.weekday||''))+'</select></label>'+input('start','開始時間',c.start?.slice(0,5),'type="time"')+input('end','結束時間',c.end?.slice(0,5),'type="time"')+'<label>學分認列（自行記錄）<select name="recognition">'+option({unknown:'待確認',asking:'已向母校詢問',confirmed:'已收到確認',not_recognized:'不認列'},c.recognition||'unknown')+'</select></label></div></div>'+
       '<details '+(task.origin==='notice'||task.date_kind==='notice'?'open':'')+'><summary>來源、日期核對與原文</summary>'+input('source_label','來源名稱',task.source_label,'maxlength="200"')+input('source_url','來源或辦理網址',task.source_url,'type="url" maxlength="2000"')+'<label>通知原文／來源摘錄<textarea name="source_excerpt" maxlength="6000" rows="3">'+esc(task.source_excerpt)+'</textarea></label><label class="ex-check"><input name="date_reviewed" type="checkbox" '+(task.date_reviewed?'checked':'')+'>我已核對通知的適用對象、年份與期限</label>'+(safe(task.source_url)?'<a href="'+esc(safe(task.source_url))+'" target="_blank" rel="noopener noreferrer">開啟來源／辦理入口 ↗</a>':'')+'</details>'+
@@ -133,7 +136,7 @@ window.UniWayExchangeWorkspace = (() => {
     if(previews.length)renderPreview();
   }
   function renderPreview(){
-    $('#exchange-preview').innerHTML='<form id="exchange-review-form"><h3>逐項核對，再加入計畫</h3>'+previews.map((p,i)=>'<article class="ex-preview" data-ex-preview="'+i+'"><label class="ex-check"><input type="checkbox" name="include" '+(p.included===false?'':'checked')+'>加入這項</label>'+input('title','任務名稱',p.task.title,'required maxlength="160"')+'<div class="ex-grid">'+input('due_date','候選日期（未確認可留空）',p.candidate_date,'type="date"')+input('batch','批次',p.task.batch,'maxlength="80"')+input('recipient','收件對象',p.task.recipient,'maxlength="200"')+input('signers','簽名',p.task.signers,'maxlength="200"')+'<label>階段<select name="stage">'+option(STAGES,p.task.stage)+'</select></label></div><details open><summary>原文與需要確認的地方</summary><blockquote>'+esc(p.task.source_excerpt)+'</blockquote><p>'+esc(p.warnings.join(' '))+'</p></details></article>').join('')+'<label class="ex-check"><input type="checkbox" name="reviewed" required>我已逐項核對來源、適用學期與日期；這些是我的通知紀錄</label><button class="primary-button" type="submit">加入選取的待辦</button></form>';
+    $('#exchange-preview').innerHTML='<form id="exchange-review-form"><h3>逐項核對，再加入計畫</h3>'+previews.map((p,i)=>'<article class="ex-preview" data-ex-preview="'+i+'"><label class="ex-check"><input type="checkbox" name="include" '+(p.included===false?'':'checked')+'>加入這項</label>'+input('title','任務名稱',p.task.title,'required maxlength="160"')+'<div class="ex-grid">'+input('due_date','候選日期（未確認可留空）',p.candidate_date,'type="date"')+input('batch','批次',p.task.batch,'maxlength="80"')+input('recipient','收件對象',p.task.recipient,'maxlength="200"')+input('signers','簽名',p.task.signers,'maxlength="200"')+'<label>階段<select name="stage">'+option(STAGES,stageKey(p.task.stage))+'</select></label></div><details open><summary>原文與需要確認的地方</summary><blockquote>'+esc(p.task.source_excerpt)+'</blockquote><p>'+esc(p.warnings.join(' '))+'</p></details></article>').join('')+'<label class="ex-check"><input type="checkbox" name="reviewed" required>我已逐項核對來源、適用學期與日期；這些是我的通知紀錄</label><button class="primary-button" type="submit">加入選取的待辦</button></form>';
   }
   async function loadPacks(country){
     const captured=scope;
@@ -162,7 +165,7 @@ window.UniWayExchangeWorkspace = (() => {
     const b=e.target.closest('button');if(!b)return;
     if(b.dataset.exTab){snapshot();tab=b.dataset.exTab;editor=null;changed=false;render();return;}
     if(b.hasAttribute('data-ex-new'))return openEditor();
-    if(b.hasAttribute('data-ex-course'))return openEditor({...base(),kind:'course',stage:'abroad'});
+    if(b.hasAttribute('data-ex-course'))return openEditor({...base(),kind:'course',stage:'return'});
     if(b.dataset.exEdit)return openEditor(tasks().find(t=>t.id===b.dataset.exEdit));
     if(b.hasAttribute('data-ex-close')){snapshot();$('#exchange-task-dialog').close();return;}
     if(b.hasAttribute('data-ex-discard')){changed=false;drafts.delete(scope);editor=null;$('#exchange-task-dialog').close();history.replaceState(history.state,'',link());return;}
@@ -260,7 +263,7 @@ window.UniWayExchangeWorkspace = (() => {
   function download(type){
     const c=view().plan.context;
     let text=c.home_school+' → '+c.target_school+'\n'+c.departure_year+' · '+c.semester+'\n個人準備紀錄；不代表校方受理或錄取。\n\n';
-    for(const t of tasks())text+=`${t.title}\n${STAGES[t.stage]} · ${STATUS[t.effective_status]}${t.optional?' · 自選':''}\n${dateLabel(t)}\n${t.batch?'批次：'+t.batch+'\n':''}${t.recipient?'交給：'+t.recipient+'\n':''}${t.signers?'簽名：'+t.signers+'\n':''}${t.waiting_for?'等待：'+t.waiting_for+'\n':''}${t.notes}\n${t.file_location?'文件位置：'+t.file_location+'\n':''}${t.source_label} ${t.source_url}\n\n`;
+    for(const t of tasks())text+=`${t.title}\n${stageLabel(t.stage)} · ${STATUS[t.effective_status]}${t.optional?' · 自選':''}\n${dateLabel(t)}\n${t.batch?'批次：'+t.batch+'\n':''}${t.recipient?'交給：'+t.recipient+'\n':''}${t.signers?'簽名：'+t.signers+'\n':''}${t.waiting_for?'等待：'+t.waiting_for+'\n':''}${t.notes}\n${t.file_location?'文件位置：'+t.file_location+'\n':''}${t.source_label} ${t.source_url}\n\n`;
     if(type==='calendar'){
       const escI=v=>String(v||'').replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');
       const stamp=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';

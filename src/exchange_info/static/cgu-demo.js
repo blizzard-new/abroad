@@ -557,6 +557,7 @@
     planFetchPromise: null,
     activePlan: null,
     statusNeedsRefresh: false,
+    returnFromHref: '',
     lastSubmitReceiptId: '',
     lastSubmitHtml: '',
     lastAskQuestion: '',
@@ -634,11 +635,14 @@
       planParam: params.get('plan') || '',
       view: params.get('view') || 'today',
       level: params.get('level') || '',
+      from: params.get('from') || '',
     };
   }
 
-  function buildSubmitLevelHref(planId) {
-    const params = new URLSearchParams({ plan: planId, view: 'level', level: 'cgu-internal-submit' });
+  function buildSubmitLevelHref(planId, fromOverride = '') {
+    const cur = parseMyAppRoute();
+    const from = fromOverride || (cur.onMyApp && ['today', 'plans', 'progress', 'workspace', 'schedule', 'map'].includes(cur.view) ? cur.view : '');
+    const params = new URLSearchParams({ plan: planId, view: 'level', level: 'cgu-internal-submit', ...(from ? { from } : {}) });
     return `#my-application?${params.toString()}`;
   }
 
@@ -1056,6 +1060,56 @@
     card.dataset.cguShortlistSig = sig;
   }
 
+  function syncReturnReportLevelBridge(activePlan = simState.activePlan, connectorStatus = simState.status) {
+    const { onMyApp, view, level } = parseMyAppRoute();
+    const levelView = $('#application-path #level-view');
+    if (!levelView) return;
+    const existing = levelView.querySelector('#cgu-return-report-bridge');
+    if (!onMyApp || view !== 'level' || level !== 'cgu-return-credit' || levelView.hidden || !activePlan) {
+      if (existing) existing.remove();
+      return;
+    }
+    const card = levelView.querySelector('.level-card');
+    if (!card) return;
+
+    const targetSchool = activePlan.context?.target_school || '';
+    const reports = connectorStatus?.return_reports || [];
+    const matched = reports.find(r => r.partner_school === targetSchool) || reports[0] || null;
+    const sig = `${activePlan.id}|${targetSchool}|${matched ? `${matched.receipt_id}:${matched.status}` : 'none'}`;
+    if (existing && card.dataset.cguReturnReportSig === sig) return;
+
+    const bridge = existing || document.createElement('div');
+    bridge.id = 'cgu-return-report-bridge';
+    bridge.className = 'cgu-return-report-bridge';
+    bridge.setAttribute('role', 'region');
+    bridge.setAttribute('aria-label', '長庚返國心得報告連結');
+    bridge.innerHTML = `
+      <div class="cgu-doc-bridge-head">
+        <strong>返國心得報告（四段式，每段至少 300 字）</strong>
+        ${matched ? `<span class="cgu-status-chip status-${esc(matched.status)}">${esc(matched.status_label)}</span>` : ''}
+      </div>
+      <p class="cgu-doc-bridge-notice">
+        ${matched
+          ? `已送出返國心得（收件編號 <code class="cgu-receipt-code">${esc(matched.receipt_id)}</code>，合作校：${esc(matched.partner_school)}）。你可前往查看紀錄、匯出列印版或補充心得。`
+          : `依長庚大學國際處及領航者補助規定，返國後須完成四段式學期報告（出國前準備、上課情形、日常生活、課外活動及其他，每段至少 300 字）。`}
+      </p>
+      <div class="cgu-shortlist-actions">
+        <button type="button" id="cgu-open-return-report-btn" class="cgu-pill-action is-solid">
+          ${matched ? '查看／新增返國心得 →' : '前往填寫返國心得 →'}
+        </button>
+        ${matched ? `<a class="cgu-pill-action" href="${esc(matched.print_url || `/demo/connector/return-reports/${matched.receipt_id}/print`)}" target="_blank" rel="noopener noreferrer">匯出列印版 ↗</a>` : ''}
+      </div>`;
+    if (!existing) {
+      const progressBox = card.querySelector('.level-progress');
+      if (progressBox) {
+        progressBox.insertAdjacentElement('afterend', bridge);
+      } else {
+        card.appendChild(bridge);
+      }
+    }
+    card.dataset.cguReturnReportSig = sig;
+  }
+
   let renderMyAppSeq = 0;
 
   async function renderMyApplicationSim(forceReload = false) {
@@ -1132,6 +1186,7 @@
       enhanceTodayOiaStatus(activePlan, planApp);
       syncDocLevelBridge(activePlan, st);
       syncShortlistLevelBridge(activePlan);
+      syncReturnReportLevelBridge(activePlan, st);
       return;
     }
 
@@ -1457,7 +1512,7 @@
             <p class="cgu-sim-lead">依長庚大學國際事務處學期報告表分為四段（出國前準備、上課情形、日常生活、課外活動及其他），每段至少 300 字；送出後可匯出列印版。經承辦核可且勾選「同意公開給學弟妹」者，將顯示於該合作校詳細頁「學長姐心得」區塊。</p>
           </div>
           <div class="cgu-sim-head-actions">
-            <a class="cgu-pill-action" href="#my-application">返回我的申請</a>
+            <a class="cgu-pill-action" id="cgu-return-back-link" href="${esc(simState.returnFromHref || '#my-application')}">返回我的申請</a>
           </div>
         </header>
 
@@ -2399,6 +2454,19 @@
       return;
     }
 
+    if (event.target.closest('#cgu-open-return-report-btn')) {
+      simState.returnFromHref = window.location.hash || '#my-application';
+      const activePlan = simState.activePlan || await resolveActivePlan(false);
+      const targetSchool = activePlan?.context?.target_school || '';
+      if (targetSchool) simState.reportDraft.partner_school = targetSchool;
+      window.location.hash = '#return-report';
+      return;
+    }
+
+    if (event.target.closest('a[href="#return-report"], [data-public-route="return-report"]')) {
+      simState.returnFromHref = '';
+    }
+
     if (event.target.closest('#cgu-sim-precheck-btn')) {
       await renderMyApplicationSim(true);
       const box = $('#cgu-sim-precheck-box');
@@ -2767,6 +2835,7 @@
       syncSubmitLevelBridge();
       syncDocLevelBridge();
       syncShortlistLevelBridge();
+      syncReturnReportLevelBridge();
     }
   }).observe(document.body, { childList: true, subtree: true });
 

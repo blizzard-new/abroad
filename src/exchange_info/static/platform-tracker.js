@@ -28,7 +28,15 @@ window.UniWayTracker = (() => {
     path.forEach((row) => rows.push(row));
     plan.forEach((task) => rows.push({ key: task.id, title: task.title, status: ["todo", "preparing", "ready"].includes(task.status) ? task.status : "todo", school: task.schoolName || "", date: task.date || "", plan: true }));
     (state.calendarEvents || []).filter((event) => event.origin !== "official" && event.title && parseLocalDate(event.date)).forEach((event) => {
-      rows.push({ key: `event-${event.id || `${event.title}-${event.date}`}`, title: event.title, status: "todo", school: event.schoolName || "", date: event.date, plan: false });
+      rows.push({
+        key: `event-${event.id || `${event.title}-${event.date}`}`,
+        title: event.title,
+        status: ["todo", "preparing", "ready"].includes(event.status) ? event.status : "todo",
+        school: event.schoolName || "",
+        date: event.date,
+        plan: false,
+        calendarEventId: event.id ? String(event.id) : "",
+      });
     });
     rows.sort((a, b) => (a.date || "9999").localeCompare(b.date || "9999") || ((a.order ?? 1e9) - (b.order ?? 1e9)) || a.title.localeCompare(b.title, "zh-Hant"));
     rows.forEach((row, index) => { row.number = `UW-${pad(index + 1)}`; });
@@ -51,8 +59,13 @@ window.UniWayTracker = (() => {
 
   function rowHtml(row) {
     const level = priority(row);
-    const ring = row.plan
-      ? `<button type="button" class="pr-ring ${row.status}" role="checkbox" aria-checked="${row.status === "ready"}" aria-label="${escapeHtml(row.title)}：${row.status === "ready" ? "已完成，點擊改回待辦" : "標記為已完成"}" data-tracker-toggle="${escapeHtml(row.key)}"></button>`
+    const label = `${escapeHtml(row.title)}：${row.status === "ready" ? "已完成，點擊改回待辦" : "標記為已完成"}`;
+    const ring = row.workspaceTaskId
+      ? `<button type="button" class="pr-ring ${row.status}" role="checkbox" aria-checked="${row.status === "ready"}" aria-label="${label}" data-tracker-ws-toggle="${escapeHtml(row.workspaceTaskId)}"></button>`
+      : row.calendarEventId
+      ? `<button type="button" class="pr-ring ${row.status}" role="checkbox" aria-checked="${row.status === "ready"}" aria-label="${label}" data-tracker-cal-toggle="${escapeHtml(row.calendarEventId)}" data-tracker-status="${escapeHtml(row.status)}"></button>`
+      : row.plan
+      ? `<button type="button" class="pr-ring ${row.status}" role="checkbox" aria-checked="${row.status === "ready"}" aria-label="${label}" data-tracker-toggle="${escapeHtml(row.key)}"></button>`
       : `<span class="pr-ring ${row.status}" aria-hidden="true"></span>`;
     return `<li class="pr-task ${row.status}" data-tracker-row>
       <span class="pr-prio ${level.tone}" title="${level.label}"><i data-lucide="${level.icon}" aria-hidden="true"></i><span class="visually-hidden">${level.label}</span></span>
@@ -158,7 +171,7 @@ window.UniWayTracker = (() => {
     const activeHashParams = new URLSearchParams((location.hash.split("?")[1] || ""));
     const planId = activeHashParams.get("plan") || window.UniWayPlanIndex?.current?.()?.items?.find((p) => !p.archived)?.id || "";
     const isCgu = Boolean(window.cguDemoStorageIsolated) || activeHomeSchool() === "長庚大學";
-    const adjustHref = planId ? `#my-application?${new URLSearchParams({ plan: planId, view: "level", level: isCgu ? "cgu-shortlist" : "target" }).toString()}` : "#favorites";
+    const adjustHref = planId ? `#my-application?${new URLSearchParams({ plan: planId, view: "level", level: isCgu ? "cgu-shortlist" : "target", from: "schedule" }).toString()}` : "#favorites";
     return `<section class="pr-side-card"><header><strong>我的志願</strong><a href="${escapeHtml(adjustHref)}">調整順序</a></header>${rows ? `<ol>${rows}</ol>` : '<p class="pr-group-empty pr-pad">還沒有志願。</p>'}</section>`;
   }
 
@@ -212,6 +225,23 @@ window.UniWayTracker = (() => {
     const form = event.target.closest?.("[data-tracker-quick]");
     if (!form) return;
     event.preventDefault();
+    if (window.UniWayApplicationPath?.hasActivePlan?.()) {
+      const fd = new FormData(form);
+      const title = String(fd.get("title") || "").trim();
+      const dueDate = String(fd.get("date") || "");
+      if (!title) return;
+      window.UniWayApplicationPath.addPersonalTodo({ title, dueDate })
+        .then((ok) => {
+          if (ok) {
+            form.reset();
+            form.hidden = true;
+            render();
+            announce("已加入待辦。", "info");
+          }
+        })
+        .catch((err) => announce(err.message || "加入待辦失敗。", "info"));
+      return;
+    }
     if (addCalendarEvent(form)) {
       form.reset();
       form.hidden = true;
@@ -233,6 +263,19 @@ window.UniWayTracker = (() => {
     }
     if (event.target.closest("#tracker-add, [data-tracker-add]")) { addTask(); return; }
     if (event.target.closest("[data-tracker-login]")) { openAuthDialog("login"); return; }
+    const wsToggle = event.target.closest("[data-tracker-ws-toggle]");
+    if (wsToggle) {
+      window.UniWayApplicationPath?.togglePersonalTodo?.(wsToggle.dataset.trackerWsToggle)
+        ?.catch((err) => announce(err.message || "更新待辦失敗。", "info"));
+      return;
+    }
+    const calToggle = event.target.closest("[data-tracker-cal-toggle]");
+    if (calToggle) {
+      const nextStatus = calToggle.dataset.trackerStatus === "ready" ? "todo" : "ready";
+      if (typeof updateCalendarTaskStatus === "function") updateCalendarTaskStatus(calToggle.dataset.trackerCalToggle, nextStatus);
+      render();
+      return;
+    }
     const toggle = event.target.closest("[data-tracker-toggle]");
     if (toggle) {
       const checkbox = document.querySelector(`[data-multi-task="${CSS.escape(toggle.dataset.trackerToggle)}"]`);
