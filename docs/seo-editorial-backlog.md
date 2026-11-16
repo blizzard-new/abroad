@@ -288,6 +288,23 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261114`，base main `aa2d14
 - 在選題紀錄中標記批次日期、題目、slug、狀態及對應 PR；待審內容也視為已選題。若候選已耗盡、來源不足或沒有可合理獨立成文的題目，回報具體狀況，不捏造資料或以重複薄內容湊數。
 - 排程時間是開始執行時間，PR 在文章、圖片與必要驗證完成後建立；不自動合併或部署。
 
+## 2026-11-16 每日批次：托福短對話／AI 英文語調兩篇（PR #369 待審）
+
+Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261116`，base main `cc576012cf3626696a4210d0d08397964dab60bd`。已讀最新 workflow／backlog、51 篇庫存及相關正文；13 個 open PR 的說明與完整檔案清單已查。提交前最近 100 個全狀態 PR 無同日批次、main 與 13 個 head 未變。#78／#92 已合併，無基礎相依；同日本地／遠端分支與 PR 原不存在後建立本日唯一隔離分支。
+
+前批 [PR #351](https://github.com/blizzard-new/abroad/pull/351)（11/14：`ai-english-presentation-practice`／`toeic-part-five-verb-tenses`）與 [PR #363](https://github.com/blizzard-new/abroad/pull/363)（11/15：`japan-earthquake-preparedness`／`ai-english-paraphrasing-practice`）仍待審，四篇均已選且完整，未重做或匯入。本日記錄放候選列表前，保留這兩個待審批次在頁首及末尾的改動。#346 已合併；歷史待審標記以本日實查優先。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 19：托福 Listen to a Conversation 怎麼練？轉折、說話目的與原創題組解析 | `toefl-listen-to-conversation` | 完整文章與驗收完成，[PR #369](https://github.com/blizzard-new/abroad/pull/369) 待審；後續排除 |
+| 17：用 AI 練英文語調怎麼做？句子焦點、意群與錄音 Prompt | `ai-english-intonation-practice` | 同批完整文章與驗收完成，同一 PR #369 待審；後續排除 |
+
+編輯判斷選題，無 Search Console、搜尋量或排名資料。短對話處理聽者跨話輪理解與原創六題解析，和口說重述／訪談、總覽、聽寫及圖表對話分工；語調處理整句意群／焦點／目的，和單字詞性重音、澄清、簡報及書面改寫分工。三輪可填 Prompt、情境前後對照、人工表皆原創，不造聲學／模型／學生實測。九個引用來源可讀且實讀；ETS 導語不一致與兩個探索 404 如實揭露。10/30 study-plan `97de3fda` 未重做，沒有三品牌實測就不寫比較。
+
+原 51 篇 JSON、網址、published／lastmod 不變，本分支共 53 篇，不計入四篇待審內容。新增兩張專用授權攝影及兩個 HTML 圖解。最終 53 篇 gate、180 SEO、63 E2E、六組無 JavaScript、15 張目視及 wheel 646 檔核對均通過；首輪通過後精確化 alt，再完整重驗，保留兩輪。來源、教材、圖片與驗收見[本批紀錄](seo-editorial-validation-2026-11-16.md)。未合併或部署。
+
+PR #369 已建立（OPEN、非 draft），初始內容 head `b136116c75e3b265cceb46c0cfd1fbc594f0c7dc`，GitHub 顯示 MERGEABLE，未合併。初始 image CI 兩項進行中、Supabase Preview skipped；以目前 PR 狀態為準。任務附加工具 40 秒及附件查詢 10 秒均無回覆，附件未確認；PR 建立與連結已獨立驗證，未宣稱附加成功。
+
 ## Candidate intentions for later batches
 
 Prioritize two distinct questions after checking existing/open PR content and current official sources. These are candidates, not prewritten or scheduled-to-publish pages. Update an existing guide if a topic is too close to it.
