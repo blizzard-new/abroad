@@ -332,3 +332,20 @@ Do not launch near-duplicate country articles that repeat the three cost guides.
 - 「沒有 AI 味」指具體、有個人聲音、少套話且可核對的寫作；不提供通過 AI 偵測的保證，不把偵測分數當成原創或品質證明。
 - 工具功能、方案、價格與地區可用性在寫作時查核官方資料並標示日期；未實測不得聲稱某工具絕對最好或捏造比較結果。AI 回饋與模擬分數不可冒充官方語言能力評量。
 - 托福與多益內容依發稿時可核對的官方考試版本、題型與計分規則撰寫；以高分目標與可執行方法承接搜尋需求，避免「保證滿分」或「幾天必拿高分」。
+
+## 2026-11-15 每日批次：日本防災／AI 英文改寫兩篇（PR #363 待審）
+
+Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261115`，base main `aa2d1424d1645308b479bee648eb056a9e956f8e`。已讀 workflow、backlog、51 篇庫存與相關全文，核對全部 12 個 open PR 說明及完整檔案清單；提交前 main 與 12 個 head 未變，最近 100 個全狀態 PR 沒有同日批次。#78／#92 已合併，無基礎相依；同日本地／遠端分支及 PR 原不存在後才建立本日唯一分支。
+
+前批 **2026-11-14 [PR #351](https://github.com/blizzard-new/abroad/pull/351)** 仍待審，head `6a0e591a7d512c56b0f5525ff7974631c4e5ec31`；`ai-english-presentation-practice`（英文簡報）及 `toeic-part-five-verb-tenses`（多益時態）均已選且完整，不跨日重做、未匯入本分支。#346 已合併，匯率／發音兩篇已在 main。歷史「待審」標記以本日實查優先。為保留 #351 在文件開頭的既有待審改動，本批記錄新增於文件末尾。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 6：日本交換生防災怎麼準備？地震避難、離線聯絡卡與宿舍檢查表 | `japan-earthquake-preparedness` | 完整文章與驗收完成；[PR #363](https://github.com/blizzard-new/abroad/pull/363) 待審，後續排除 |
+| 17：用 AI 練英文改寫怎麼做？原意、限定詞與引用 Prompt | `ai-english-paraphrasing-practice` | 同批完整文章與驗收完成；同一 PR #363 待審，後續排除 |
+
+編輯判斷選題，無 Search Console、搜尋量或排名。防災獨立處理日本適用資訊、宿舍風險、離線聯絡及速報限制，與一般抵達行政分工；改寫獨立處理新表達保留命題與引用，與閱讀問答、文法訂正、個人語氣分工。三輪可填 Prompt、A／B 全新虛構教材、反例、參考稿與人工表皆原創，不造工具或學生實測。東京都頁面維護及兩個探索 404 排除；15 個實際引用來源均可讀且實讀，版本與限制留紀錄。10/30 study-plan `97de3fda` 未重做，無三品牌比較實測。
+
+原 51 篇 JSON、URL、刊載日期與 lastmod 不變，本分支共 53 篇，未計入待審 #351。新增兩張專用授權攝影與兩個原創 HTML 圖解。53 篇 gate、180 項 SEO、63 項 E2E、六組無 JavaScript 閱讀、15 張目視及 wheel 646 檔逐檔核對全部通過。來源、教材、攝影及驗收見[本批紀錄](seo-editorial-validation-2026-11-15.md)。本批未合併或部署。
+
+PR #363 已建立（OPEN、非 draft，初始 head `47cf30a94e75acdbba989341862aad072b7303d4`），可合併狀態但未合併。初始遠端 image CI 兩項進行中、Supabase Preview skipped；請以目前 PR 狀態為準。任務附加工具 40 秒及附件查詢 10 秒均未回覆，附件狀態未確認；PR 建立及連結另已驗證，未宣稱附加成功。

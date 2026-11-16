@@ -1,0 +1,303 @@
+{
+  "slug": "ai-english-paraphrasing-practice",
+  "title": "用 AI 練英文改寫怎麼做？原意、限定詞與引用 Prompt",
+  "description": "英文 paraphrase 不是逐字換同義詞。用三輪可填 Prompt、原創短文與錯誤改寫對照，練習保留對象、條件、否定和未定資訊，再人工檢查引用及遷移到新文章。",
+  "category": "申請準備",
+  "published": "2026-11-15",
+  "modified": "2026-11-15",
+  "checked": "2026-11-15",
+  "image": "english-paraphrasing-notes-photo",
+  "image_alt": "一位讀者拿著螢光筆標記紙本英文，桌面上放著平板與夾住的講義。",
+  "image_caption": "標記英文紙本的閱讀素材照片；紙上文字不是本文練習 A 或 B，人物也不是本篇受訪學生，不代表使用 AI 後的學習成效。",
+  "image_credit": {
+    "photographer": "Charlotte May",
+    "source_url": "https://www.pexels.com/photo/black-person-in-earphones-highlighting-words-in-text-on-paper-5965889/"
+  },
+  "summary": [
+    "先寫清楚原文不可改變的意思，再用自己的句構表達；借用外部觀點或資訊仍要依課程要求標明來源。",
+    "請 AI 對照原文與自己的初稿，指出遺漏、擴大與新增，不直接接受一段看似流暢的替代答案。",
+    "用新的短文重做，檢查 may、only、not、during 與未定事項是否被保留；練習結果不換算官方程度或保證進步。"
+  ],
+  "intro": [
+    "用 AI 練英文改寫，建議採「原文意思表 → 自己先寫 → AI 逐項對照 → 人工修訂 → 新文重做」。成功的 paraphrase 要保留必要意思、改用自己的表達，並處理來源標示；只換幾個單字，或把限制條件改掉，都不能因英文順暢就當成完成。",
+    "本文適合已能讀懂短段英文、想練習用不同句構表達同一意思的學生。重點是重述既有資訊，不是閱讀問答、自己作文的文法訂正，或用個人語氣寫申請文章。以下兩段短文、錯誤示例、參考改寫及 Prompt 都由 UniWay 為本篇原創，情境皆虛構；示例回覆是編輯設計，沒有宣稱來自某品牌模型、學生實測或老師評分。依 2026 年 11 月 15 日讀取的 Purdue OWL 與 OpenAI 官方資料整理。"
+  ],
+  "sections": [
+    {
+      "id": "task-and-boundaries",
+      "title": "先確認任務：改寫、摘要與直接引用不同",
+      "paragraphs": [
+        "先問這次要保留多少資訊。Purdue OWL 區分直接引用、改寫與摘要：直接引用保留原文字句；改寫用自己的話重述資訊；摘要則聚焦主要意思、通常更精簡。借用外部來源的觀點或資訊，即使換成自己的措辭，仍需適當標示來源；更換英文句型不會自動消除引用責任。",
+        "本篇把改寫練習設定為「保留短段中的所有必要條件」。若作業實際要求摘要，可以省略什麼要回到任務決定，不能用本篇的完整保留表代替所有寫作目的。若要保留原文的特殊用語或一段原句，也要依指定格式處理引號與引用，不把原句混進自己的段落卻不標示。",
+        "在貼入工具前，確認課程或目的校當期的 AI 規範：允許哪種協助、是否需揭露、能否上傳材料。只使用自己有權提供的短文；機密、同學未同意的內容、完整受限教材或個人敏感資料不要隨手貼上。本文不保證任何作業可以用 AI，也不承諾規避 AI 偵測。"
+      ],
+      "refs": [
+        "purdue-overview",
+        "purdue-paraphrase"
+      ],
+      "table": {
+        "caption": "先選對任務，再決定輸出",
+        "headers": [
+          "任務",
+          "本次檢查重點",
+          "外部來源如何處理"
+        ],
+        "rows": [
+          [
+            "直接引用",
+            "原句是否精確、是否清楚標出引用範圍",
+            "依指定格式標明來源與位置"
+          ],
+          [
+            "短段完整改寫",
+            "必要意思與條件保留，句構有自己的組織",
+            "外部資訊仍須標示來源"
+          ],
+          [
+            "摘要",
+            "主要意思正確，省略符合摘要目的",
+            "仍保留適當來源標示"
+          ],
+          [
+            "本篇虛構練習",
+            "保留指定命題，再與編輯參考稿比對",
+            "標為 UniWay 原創練習，不偽造研究文獻"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "original-text-and-meaning",
+      "title": "練習 A：先列意思，不急著找同義詞",
+      "paragraphs": [
+        "原創練習 A（虛構社團說明，非真實校規）：The campus sketching group lends pencils to registered members during its weekly meetings. Members may bring their own paper, but the group does not provide sketchbooks. Booking a place does not include a personal lesson.",
+        "先用中文說出對象、行為、範圍與否定：已登記會員能在每週聚會借用鉛筆；會員可以自備紙張；社團不提供素描本；預約席位不包含個別教學。這裡的「可以」不是「必須」，借用也不是贈送。若原文有看不懂的地方，先查清意思，再進入改寫；讓 AI 直接補上合理情節，會把尚未理解的部分藏在流暢英文裡。",
+        "把下表當成檢查基準，先不要看後面的參考稿。你可以保留 pencils、members 等必要常用字，練習改變資訊安排與句構；不必為了讓每個字都不同，換成不適合情境的詞。原文沒說的費用、每週日期、會員資格或課程時長，都留在「未提供」。"
+      ],
+      "table": {
+        "caption": "A 段的意思保留表：本篇編輯解析，不是官方評分規準",
+        "headers": [
+          "命題",
+          "必須保留",
+          "常見偏移"
+        ],
+        "rows": [
+          [
+            "對象",
+            "registered members：已登記會員",
+            "擴成所有人或所有訪客"
+          ],
+          [
+            "物品與行為",
+            "lend pencils：借用鉛筆",
+            "改成贈送素描本"
+          ],
+          [
+            "範圍",
+            "during weekly meetings：聚會期間",
+            "改成每天隨時都能借"
+          ],
+          [
+            "選擇",
+            "may bring paper：可以自備紙張",
+            "改成必須帶紙"
+          ],
+          [
+            "否定",
+            "不提供 sketchbooks",
+            "省略或反過來說會提供"
+          ],
+          [
+            "預約的界線",
+            "預約席位不含 personal lesson",
+            "把預約寫成含私人教學"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-one-draft",
+      "title": "Prompt 1：只檢查理解，自己寫第一版",
+      "paragraphs": [
+        "先讀原文並填好自己的意思表，再把下面的欄位換成真實內容，交給你目前能使用、且符合規定的文字工具。不需指定付費方案或品牌。OpenAI 的提示建議強調清楚目標、背景與逐輪調整；這支持把任務拆小，並不表示照貼這段就一定得到正確答案。",
+        "可複製 Prompt 1：「你是英文改寫練習的對照助手。任務：[保留短段所有必要意思／請填實際要求]。我的程度與需要：[例如能讀短段、需要中文說明限定詞]。可使用 AI 的範圍：[課程規範]。原文：[貼有權使用的短文]。來源卡：[作者／標題／年份或日期／段落或頁碼；未知填待查]。我整理的必要意思：[自己先列]。請逐項比對我是否漏掉對象、條件、否定與未定事項；只引用必要的短語作定位，不重製全文。資訊不足就標未提供，不添加背景，不生成完整改寫稿。若我的理解正確，請讓我先自行起稿。」",
+        "拿到檢查意見後，回到原文逐一確認。接著暫時移開原文，按已理解的意思自己起稿，再把原文打開比對。若句子太長，就拆成幾句；若兩句有清楚的轉折，也可重新安排，但不得把「可自備」接成「因為社團提供，所以不用帶」。你正在練習重新表達關係，不是找一組可機械替換的詞。",
+        "初階任務可以先改一個句子，專門保留對象與否定；中階再完成整段，核對句間範圍；進階則為不同讀者調整語域，另外解釋哪些條件不能省。這是編輯安排的練習梯度，不是 CEFR 測驗或能力認證。遇到理解缺口時縮小任務，比讓工具一次代寫整篇更容易看出問題。"
+      ],
+      "refs": [
+        "openai-prompt",
+        "purdue-paraphrase"
+      ]
+    },
+    {
+      "id": "before-after",
+      "title": "修改前後：英文很順，也可能把意思改錯",
+      "paragraphs": [
+        "編輯設計的錯誤稿：Everyone can get free sketchbooks from the campus sketching group every day. Members must bring paper, and each booking includes a private lesson.",
+        "這段有六個意思偏移：registered members 被擴成 everyone；借鉛筆變成取得素描本；聚會期間變成每天；may 變 must；不提供素描本被改成會提供；不含個別教學被改成包含。free 也不是原文能推得的條件。它不是某工具實際產出的回覆，而是用來練習找錯的原創反例；不要用「讀起來自然」替它過關。",
+        "編輯參考改寫：At weekly meetings, members who have registered can borrow pencils from the sketching group. They may bring paper themselves, but sketchbooks are not supplied. A place reservation does not come with an individual lesson.",
+        "這版把時間範圍移到開頭、將 registered 展開成關係子句，並把不提供素描本改成被動句。它保留借用、選擇與兩項否定，沒有新增費用或日期。這只是可接受的表達方向之一；你的版本也可以不同。特定常用詞重複並不自動等於錯，但若只是複製外部原句再換少數詞，仍應重新檢查表達與引用方式。"
+      ],
+      "table": {
+        "caption": "A 段人工對照：先找意思，再看英文",
+        "headers": [
+          "檢查位置",
+          "錯誤稿",
+          "參考稿如何保留"
+        ],
+        "rows": [
+          [
+            "誰能借",
+            "Everyone",
+            "members who have registered"
+          ],
+          [
+            "何時、做什麼",
+            "free sketchbooks／every day",
+            "At weekly meetings／borrow pencils"
+          ],
+          [
+            "是否有義務",
+            "must bring",
+            "may bring"
+          ],
+          [
+            "不提供什麼",
+            "get sketchbooks",
+            "sketchbooks are not supplied"
+          ],
+          [
+            "預約不包含什麼",
+            "includes a private lesson",
+            "does not come with an individual lesson"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-two-compare",
+      "title": "Prompt 2：要求逐項證據，不讓流暢度蓋過原意",
+      "paragraphs": [
+        "可複製 Prompt 2：「請比較原文與我的改寫，先檢查意思，再看表達。原文：[短文]。必要意思表：[自己核對後填入]。我的改寫：[本人初稿]。來源卡與引用要求：[填實際資料／規範]。請輸出表格：原文必要命題｜我稿中的對應片段｜保留／遺漏／擴大／新增／待確認｜原因。特別檢查 may、must、only、not、時間範圍及尚未決定的事。不要編造原文沒有的資訊、文獻或頁碼，不評官方分數；只對有問題的部分提出修改方向，先不要替換整段。若詞義或情境無法判斷，寫出需要我確認的地方。」",
+        "以錯誤稿的 may／must 為例，合用的檢查意見應指出「原文允許自備，改寫變成義務」，再請你改回允許的表達。如果回覆只說 must 更正式、聽起來更專業，卻沒說義務被改變，就回到原文拒絕這個建議。這裡描述的是預期的檢查方式，不是品牌間實測結果。",
+        "OpenAI 的準確性說明提醒，模型可能自信地提供錯誤資訊，甚至捏造引用；所以你仍需人工逐項比對。意思確認後，再檢查代名詞是否清楚、詞語搭配與文法是否正確；必要時查可靠字典或請授課教師說明疑義。不要把 AI 的百分比相似度、程度標籤或自評分數當成作業評分與原創保證。"
+      ],
+      "refs": [
+        "openai-accuracy",
+        "openai-prompt"
+      ],
+      "bullets": [
+        "[ ] 對象、行為與物品沒有被換成另一件事。",
+        "[ ] 可以、必須、只有、全部等範圍沒有被擴大或縮小。",
+        "[ ] 否定、時間與未定事項仍存在，沒有被補成確定安排。",
+        "[ ] 所有新增句都有原文依據，否則刪除或明確另作自己的評論。",
+        "[ ] 句構由自己重新組織；引自外部的資訊與原句依指定格式處理。",
+        "[ ] 已回原文覆核 AI 意見，沒有將流暢度或 AI 自評當成驗收。"
+      ]
+    },
+    {
+      "id": "source-card",
+      "title": "來源卡怎麼留？改寫後也找得到原文",
+      "paragraphs": [
+        "來源卡至少記下實際作者或機構、標題、年份或可核對日期、連結與段落／頁碼定位，再依課程指定引用格式寫入作品。網頁若沒有明示年份，就依規範處理，不能請工具猜一個；沒有頁碼也不要編造。你要能從改寫段落回到原文，核對同一份版本及範圍。",
+        "本篇 A 段可以記為「UniWay 編輯｜本篇原創練習 A：素描社團｜2026-11-15｜本文 A 段｜虛構教材」。這是教材定位卡，不是期刊文獻；沒有 DOI、受訪者或真實社團規定。若練習實際論文，必須換成真實作者、標題及定位，不能把這個示例作者套上去。",
+        "為讀者改寫官方申請要求時，除引用之外還要保留適用對象、版本與限制，並連回原始公告。若那段資訊會影響資格、期限或權益，不用改寫練習的參考稿替代當期原文與校方確認。申請文件中的本人經歷也只能來自真實素材，不因練習句型而添加不存在的成果。"
+      ],
+      "refs": [
+        "purdue-overview",
+        "purdue-paraphrase"
+      ]
+    },
+    {
+      "id": "new-text-and-review",
+      "title": "Prompt 3：換一篇，測試是否能自己保留限制",
+      "paragraphs": [
+        "原創練習 B（虛構社團說明，非真實活動）：The campus film group allows guests to attend its open discussion, but only members may vote on the next screening. Guests do not have to give a presentation. The organiser has not decided whether the next meeting will be online.",
+        "先自己寫 B 的意思表與改寫，不看下段參考。至少保留：訪客可參與公開討論、只有會員能投票、訪客沒有做簡報的義務、下一次是否線上尚未決定。尤其 do not have to 是「不必」，不是「不得」；has not decided 不能被改成「已決定改線上」。",
+        "可複製 Prompt 3：「我想確認是否能把改寫方法用到新短文。新原文：[有權使用的短文／來源卡]。我的意思表：[本人先列]。我的新稿：[本人先寫]。上次錯誤與我的修正原則：[例如把 may 改成 must；這次先圈權利與義務]。請照必要命題逐項指出偏移，先不要提供整段答案；挑一項仍需我自己修訂的地方，讓我改好後再對照。若全部保留，請解釋依據，並提出一個不增加事實的改句構任務。不預測考試分數、進步幅度或教師評分。」",
+        "B 段編輯參考改寫：Guests can join the film group’s open discussion, although voting on the next screening is restricted to members. Giving a presentation is not required of guests. Whether the next meeting will take place online remains undecided.",
+        "檢查參考稿時，對照 restricted to members、not required、remains undecided 是否完整保留原來關係。再選一句自行改成另一種句構，回到原文核對；不要反過來只背本篇答案。複習可以留下「我漏了哪個命題、為何會錯、自己修成什麼」三欄，之後換新的短文重做。這能留下可比較的作品，不代表已用固定天數驗證能力提升。"
+      ],
+      "refs": [
+        "openai-prompt",
+        "openai-accuracy"
+      ],
+      "diagram": {
+        "title": "英文改寫：讓每個版本都能回查原意",
+        "steps": [
+          [
+            "拆意思",
+            "找出對象、條件、否定與未定事項"
+          ],
+          [
+            "先起稿",
+            "理解後以自己的句構表達"
+          ],
+          [
+            "請對照",
+            "AI 逐項定位遺漏、擴大與新增"
+          ],
+          [
+            "人工覆核",
+            "回原文修訂，補上真實來源標示"
+          ],
+          [
+            "換新文",
+            "先自己重做，再記錄偏移與修正"
+          ]
+        ],
+        "caption": "UniWay 原創練習流程。AI 意見須由本人查核；不是官方考試評分、工具比較或 AI 偵測規避方法。"
+      }
+    }
+  ],
+  "faq": [
+    [
+      "英文 paraphrase 一定要每個字都換掉嗎？",
+      "不用把常用詞或必要名稱全部換掉。重點是理解後以自己的方式重新組織，保留意思及適當來源標示。為了不同而亂換詞，可能把借用變贈送、允許變義務；只複製原句再替換少數詞，也不能因此保證完成合適改寫。"
+    ],
+    [
+      "改寫和用 AI 改英文作文有什麼不同？",
+      "作文訂正通常先修你自己寫下的意思與文法；本篇改寫多了一份作為依據的原文，要檢查輸出是否保留其必要資訊。可以先把原意對齊，再檢查文法，避免把語言變順卻把內容改掉。"
+    ],
+    [
+      "用自己的話寫了，還要引用嗎？",
+      "借用外部資訊或觀點時仍需適當標示來源，依課程與引用格式要求處理。來源作者、年份、位置必須真實可核對；AI 生成的文獻清單不能直接當成已查證。"
+    ],
+    [
+      "這些 Prompt 在 Claude、ChatGPT、Gemini 都保證一樣有效嗎？",
+      "沒有這種保證。本文提供通用文字任務設計，沒有進行三品牌、模型、方案或地區的比較測試，也沒有聲稱特定功能可用。使用自己能使用且符合規範的工具，逐項查核回覆；若課程禁止此類協助，就用原文與人工表格練習。"
+    ]
+  ],
+  "sources": [
+    {
+      "id": "purdue-paraphrase",
+      "title": "Purdue OWL：Paraphrasing: Write It in Your Own Words",
+      "url": "https://owl.purdue.edu/owl/research_and_citation/using_research/quoting_paraphrasing_and_summarizing/paraphrasing.html",
+      "note": "2026-11-15 實讀正文，參考理解後用新表達、比對必要資訊與記錄來源等原則；頁面未明示本次修訂日期，不將版權年份當新版日期。不重製、翻譯整份講義、其範文或將其中特定引句比例當普遍規則。"
+    },
+    {
+      "id": "purdue-overview",
+      "title": "Purdue OWL：Quoting, Paraphrasing, and Summarizing",
+      "url": "https://owl.purdue.edu/owl/research_and_citation/using_research/quoting_paraphrasing_and_summarizing/index.html",
+      "note": "2026-11-15 實讀引用、改寫與摘要的區分及來源標示原則；未標明修訂日。一般學術寫作資源，非任何目的校允許 AI 的政策；未轉載其範文。"
+    },
+    {
+      "id": "openai-prompt",
+      "title": "OpenAI：Prompt engineering best practices for ChatGPT",
+      "url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "note": "2026-11-15 實讀明確目標、背景與逐輪調整；頁面顯示 Updated: 26 days ago，保留相對文字，不反推發布日。本篇三組 Prompt 為編輯設計，未做品牌、模型、方案或地區實測。"
+    },
+    {
+      "id": "openai-accuracy",
+      "title": "OpenAI：Does ChatGPT tell the truth?",
+      "url": "https://help.openai.com/en/articles/8313428-does-chatgpt-tell-the-truth",
+      "note": "2026-11-15 實讀自信誤答、虛構引用與重要資訊查核限制；頁面顯示 Updated: 23 days ago。未將文中工具／方案描述轉為本篇可用性保證，也未把 AI 回覆當官方分數。"
+    }
+  ],
+  "related": [
+    "ai-english-reading-practice",
+    "ai-english-writing-feedback",
+    "natural-writing-prompts",
+    "ai-english-learning"
+  ]
+}
