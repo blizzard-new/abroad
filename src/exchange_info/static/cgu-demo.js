@@ -44,6 +44,7 @@
   const UPLOAD_NOTICE = '檔案僅用於完整性檢查，不會保存內容。';
   const MATCH_MODE_LABEL = '依國際處公告與常見問題回覆';
   const SELECTION_SOURCE_URL = 'https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817';
+  const SELECTION_GUIDE_URL = 'https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656';
 
   const REQUIRED_DOCS = [
     { key: 'online_form', title: '線上申請表', desc: '校內交換／雙聯線上申請表（最多 2 個志願）' },
@@ -462,38 +463,168 @@
     setToolsOpen(false);
   });
 
-  // ──────────────────────────────────────────────────────────────
-  // Enhance「我的申請」->「下一個已確認的官方期限」with 116-1 2026/12/21 17:00 + source
-  // ──────────────────────────────────────────────────────────────
-  function enhanceMyApplicationDeadline() {
-    const panel = document.querySelector('#today-view .today-panel[aria-label="期限"]');
-    if (panel && !panel.querySelector('.cgu-deadline-source-link')) {
-      const existingStepLink = panel.querySelector('a[href^="#my-application"]');
-      const existingPill = panel.querySelector('.today-pill');
-      const pillHtml = existingPill ? existingPill.outerHTML : '<span class="today-pill">校內截止</span>';
-      const fallbackPlanId = simState.activePlan?.id || $('#application-path #plan-select')?.value || parseMyAppRoute().planParam;
-      const stepLinkHtml = existingStepLink
-        ? `<a class="today-link" href="${esc(existingStepLink.getAttribute('href') || '#my-application')}">前往這一項 →</a>`
-        : (fallbackPlanId ? `<a class="today-link" href="${esc(buildSubmitLevelHref(fallbackPlanId))}">查看送件紀錄 →</a>` : '');
-      panel.innerHTML = `
-        <h3>下一個已確認的官方期限</h3>
-        <p class="today-date">2026/12/21 17:00</p>
-        <p><b>116-1 校內申請截止</b> ${pillHtml}</p>
-        <p>2026/11/02 開放線上表單，2026/12/21 17:00 校內截止（紙本資料須於截止前送交國際事務處）。</p>
-        <div class="cgu-deadline-links">
-          ${stepLinkHtml}
-          <a class="today-link cgu-deadline-source-link" href="${esc(SELECTION_SOURCE_URL)}" target="_blank" rel="noopener noreferrer">公告來源：116-1 交換及雙聯申請公告 ↗</a>
-        </div>`;
+  function getPlanTermMeta(plan = null) {
+    const ctx = plan?.context || {};
+    const ay = ctx.academic_year != null && String(ctx.academic_year).trim() ? String(ctx.academic_year).trim() : '';
+    const dy = ctx.departure_year != null && String(ctx.departure_year).trim() ? String(ctx.departure_year).trim() : '';
+    const sem = String(ctx.semester || '').trim().toLowerCase();
+    const round = String(ctx.application_round || '').trim();
+    const targetTerm = String(ctx.target_term || '').trim();
+    const roundMatch = round.match(/(?<!\d)(\d{2,3})\s*[-–]\s*([12])(?!\d)/);
+    const termMatch = targetTerm.match(/(?<!\d)(\d{2,3})\s*[-–]\s*([12])(?!\d)/);
+    const roundToken = roundMatch ? `${roundMatch[1]}-${roundMatch[2]}` : (termMatch ? `${termMatch[1]}-${termMatch[2]}` : '');
+    const combined = `${round} ${targetTerm}`;
+
+    const isVerified1161 = Boolean(
+      plan
+      && ay === '116'
+      && (!dy || dy === '2027')
+      && (!sem || sem === 'fall' || sem === 'full_year' || sem === '第一學期')
+      && (!roundToken || roundToken === '116-1')
+      && !/春季|spring|未定|undecided|116-2|115-2|117-/i.test(combined)
+    );
+
+    if (isVerified1161) {
+      return {
+        hasPlan: true,
+        isVerified1161: true,
+        academicYear: '116',
+        termCode: '116-1',
+        termShort: '116-1',
+        termLabel: targetTerm || '116-1（2027 秋季出國）',
+        deadlineText: '2026/12/21 17:00',
+        sourceUrl: SELECTION_SOURCE_URL,
+        sourceTitle: '116-1 交換及雙聯申請公告',
+      };
     }
+
+    if (!plan) {
+      return {
+        hasPlan: false,
+        isVerified1161: false,
+        academicYear: '',
+        termCode: '',
+        termShort: '當期',
+        termLabel: '尚未建立申請計畫',
+        deadlineText: '依國際處公告',
+        sourceUrl: SELECTION_GUIDE_URL,
+        sourceTitle: '長庚大學校內甄選申請說明',
+      };
+    }
+
+    let termCode = roundToken;
+    if (!termCode && sem !== 'undecided' && /^\d{2,3}$/.test(ay)) {
+      if (sem === 'spring') termCode = `${ay}-2`;
+      else if (sem === 'fall' || sem === 'full_year' || sem === '第一學期') termCode = `${ay}-1`;
+    }
+    const termShort = termCode || (ay ? `${ay} 學年度` : '當期');
+    const termLabel = targetTerm || round || termCode || (ay ? `${ay} 學年度（出國學期未定）` : '當期交換計畫');
+    return {
+      hasPlan: true,
+      isVerified1161: false,
+      academicYear: ay || (termCode ? termCode.split('-')[0] : ''),
+      termCode,
+      termShort,
+      termLabel,
+      deadlineText: '依國際處公告',
+      sourceUrl: SELECTION_GUIDE_URL,
+      sourceTitle: '長庚大學校內甄選申請說明',
+    };
+  }
+
+  function resolveSyncPlanFromDom() {
+    const routePlanId = parseMyAppRoute().planParam || '';
+    const selectVal = $('#application-path #plan-select')?.value || '';
+    const targetId = routePlanId || selectVal || '';
+    if (simState.activePlan && (!targetId || String(simState.activePlan.id) === String(targetId))) {
+      return simState.activePlan;
+    }
+    if (targetId && Array.isArray(simState.cachedPlans)) {
+      const matched = simState.cachedPlans.find(p => String(p.id) === String(targetId));
+      if (matched) return matched;
+    }
+    if (!targetId) return simState.activePlan || null;
+    return null;
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // Enhance「我的申請」-> 官方期限摘要（116-1 顯示 2026/12/21，非 116-1 依國際處公告）
+  // ──────────────────────────────────────────────────────────────
+  function enhanceMyApplicationDeadline(activePlan = null) {
+    const plan = activePlan || resolveSyncPlanFromDom();
+    if (!plan) {
+      const selectVal = $('#application-path #plan-select')?.value || parseMyAppRoute().planParam || '';
+      if (selectVal && !simState._fetchingDeadlinePlan) {
+        simState._fetchingDeadlinePlan = true;
+        simState.cachedPlans = null;
+        resolveActivePlan(true)
+          .then(p => {
+            simState._fetchingDeadlinePlan = false;
+            if (p) enhanceMyApplicationDeadline(p);
+          })
+          .catch(() => {
+            simState._fetchingDeadlinePlan = false;
+          });
+      }
+      return;
+    }
+
+    const meta = getPlanTermMeta(plan);
+    const sig = `${plan.id}|${meta.termCode}|${meta.isVerified1161 ? '1' : '0'}`;
+    const submitHref = buildSubmitLevelHref(plan.id);
+
+    const panel = document.querySelector('#today-view .today-panel[aria-label="期限"]');
+    if (panel && panel.dataset.cguDeadlineSig !== sig) {
+      const origAttr = panel.dataset.cguOrigStepHref || '';
+      const rawStepHref = origAttr || panel.querySelector('a[href^="#my-application"]')?.getAttribute('href') || '';
+      if (!origAttr && rawStepHref) {
+        panel.dataset.cguOrigStepHref = rawStepHref;
+      }
+      const existingPill = panel.querySelector('.today-pill');
+      const pillHtml = meta.isVerified1161
+        ? (existingPill ? existingPill.outerHTML : '<span class="today-pill">校內截止</span>')
+        : '<span class="today-pill">依公告更新</span>';
+      const stepLinkHtml = `<a class="today-link" href="${esc(submitHref)}">${rawStepHref && rawStepHref.includes(plan.id) ? '前往這一項 →' : '前往送件關卡 →'}</a>`;
+      if (meta.isVerified1161) {
+        panel.innerHTML = `
+          <h3>下一個已確認的官方期限</h3>
+          <p class="today-date">2026/12/21 17:00</p>
+          <p><b>116-1 校內申請截止</b> ${pillHtml}</p>
+          <p>2026/11/02 開放線上表單，2026/12/21 17:00 校內截止（紙本資料須於截止前送交國際事務處）。</p>
+          <div class="cgu-deadline-links">
+            ${stepLinkHtml}
+            <a class="today-link cgu-deadline-source-link" href="${esc(SELECTION_SOURCE_URL)}" target="_blank" rel="noopener noreferrer">公告來源：116-1 交換及雙聯申請公告 ↗</a>
+          </div>`;
+      } else {
+        panel.innerHTML = `
+          <h3>當期官方申請期限</h3>
+          <p class="today-date">依國際處公告</p>
+          <p><b>${esc(meta.termShort)} 校內申請期限</b> ${pillHtml}</p>
+          <p>${esc(meta.termLabel)}之線上表單開放與紙本收件截止日尚未公告，請依國際事務處最新公告辦理。</p>
+          <div class="cgu-deadline-links">
+            ${stepLinkHtml}
+            <a class="today-link cgu-deadline-source-link" href="${esc(SELECTION_GUIDE_URL)}" target="_blank" rel="noopener noreferrer">公告入口：${esc(meta.sourceTitle)} ↗</a>
+          </div>`;
+      }
+      panel.dataset.cguDeadlineSig = sig;
+    }
+
     const headerCard = document.querySelector('#application-path #deadline-card');
-    if (headerCard && headerCard.innerHTML.trim() && !headerCard.querySelector('.cgu-deadline-source-link')) {
+    if (headerCard && headerCard.innerHTML.trim() && headerCard.dataset.cguDeadlineSig !== sig) {
+      headerCard.querySelectorAll('.cgu-deadline-source-link').forEach(el => el.remove());
       const link = document.createElement('a');
       link.className = 'cgu-deadline-inline-source cgu-deadline-source-link';
-      link.href = SELECTION_SOURCE_URL;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      link.textContent = '116-1 校內申請截止 2026/12/21 17:00（查看官方公告 ↗）';
-      headerCard.querySelector('div')?.appendChild(link);
+      if (meta.isVerified1161) {
+        link.href = SELECTION_SOURCE_URL;
+        link.textContent = '116-1 校內申請截止 2026/12/21 17:00（查看官方公告 ↗）';
+      } else {
+        link.href = SELECTION_GUIDE_URL;
+        link.textContent = `${meta.termShort ? `${meta.termShort} ` : ''}校內申請期限：依國際處公告（查看申請說明 ↗）`;
+      }
+      (headerCard.querySelector('div') || headerCard).appendChild(link);
+      headerCard.dataset.cguDeadlineSig = sig;
     }
   }
 
@@ -557,6 +688,9 @@
     planFetchPromise: null,
     activePlan: null,
     statusNeedsRefresh: false,
+    studyPlanDrafts: {},
+    studyPlanFeedback: {},
+    _fetchingDeadlinePlan: false,
     returnFromHref: '',
     lastSubmitReceiptId: '',
     lastSubmitHtml: '',
@@ -923,6 +1057,140 @@
     card.dataset.cguBridgeSig = sig;
   }
 
+  const DOC_LEVEL_NOTES = {
+    online_form: '請依當期國際處公告完成線上申請表填報與簽章；在此選取已完成表單電子檔，即可標記並同步送件預檢。',
+    parent_consent: '須由家長或監護人親筆簽章；可點選下方「家長同意書整理與列印」範本，完成後上傳掃描檔。',
+    language_proof: '須附仍在效期內且達目標姊妹校門檻之官方外語檢定成績證明（TOEFL iBT、IELTS、TOEIC、JLPT 等）。',
+    transcript: '須檢附含歷年學業成績與班／系排名百分比之正式成績單影本，以供核對申請資格與分數比對。',
+    study_plan: '簡要說明出國修課規劃、學習目標與返國學分採認方向（約一頁 A4）。可直接在下方撰寫並同步至送件預檢，或直接上傳 PDF。',
+  };
+
+  function renderEmptyAppHintHtml(activePlan) {
+    const meta = getPlanTermMeta(activePlan);
+    if (meta.isVerified1161) {
+      return '<p class="cgu-empty-hint">目前尚無送件紀錄。完成上方 5 項應備文件預檢後即可送出並取得 <code>CGU-116-1-</code> 收件編號。</p>';
+    }
+    return '<p class="cgu-empty-hint">目前尚無送件紀錄。完成上方 5 項應備文件預檢後即可送出校內申請並取得收件編號。</p>';
+  }
+
+  function renderDeadlineBarHtml(activePlan) {
+    const meta = getPlanTermMeta(activePlan);
+    if (meta.isVerified1161) {
+      return `
+        <div class="cgu-my-app-deadline-bar" aria-label="下一個已確認的官方期限摘要">
+          <div>
+            <span class="cgu-dl-kicker">下一個已確認的官方期限</span>
+            <strong>116-1 校內申請截止：2026/12/21 17:00</strong>
+          </div>
+          <a href="${esc(SELECTION_SOURCE_URL)}" target="_blank" rel="noopener noreferrer">官方公告來源：116 學年度第 1 學期交換及雙聯申請公告 ↗</a>
+        </div>`;
+    }
+    return `
+      <div class="cgu-my-app-deadline-bar" aria-label="當期官方申請期限摘要">
+        <div>
+          <span class="cgu-dl-kicker">當期官方申請期限</span>
+          <strong>${esc(meta.termShort)} 校內申請期限：依國際處公告</strong>
+        </div>
+        <a href="${esc(SELECTION_GUIDE_URL)}" target="_blank" rel="noopener noreferrer">官方公告入口：長庚大學校內甄選申請說明 ↗</a>
+      </div>`;
+  }
+
+  function syncNoticeLevelBridge(activePlan = simState.activePlan, planApp = simState.activePlanApp) {
+    const { onMyApp, view, level } = parseMyAppRoute();
+    const levelView = $('#application-path #level-view');
+    if (!levelView) return;
+    const existing = levelView.querySelector('#cgu-notice-level-panel');
+    const isNotice = onMyApp && view === 'level' && !levelView.hidden && activePlan && (level === 'cgu-internal-result' || level === 'cgu-offer');
+    if (!isNotice) {
+      if (existing) existing.remove();
+      return;
+    }
+    const card = levelView.querySelector('.level-card');
+    if (!card) return;
+
+    const levelForm = levelView.querySelector('#level-form');
+    if (levelForm && !levelForm.hidden) levelForm.hidden = true;
+
+    const resolvedApp = planApp || findPlanApplication(activePlan, simState.status?.applications || []);
+    const sig = `${activePlan.id}|${level}|${resolvedApp ? `${resolvedApp.receipt_id}|${resolvedApp.status}|${resolvedApp.supplement_reason || ''}|${(resolvedApp.timeline || []).length}` : 'none'}`;
+    if (existing && card.dataset.cguNoticeSig === sig) return;
+
+    const bridge = existing || document.createElement('div');
+    bridge.id = 'cgu-notice-level-panel';
+    bridge.className = 'cgu-notice-level-panel';
+    bridge.setAttribute('role', 'region');
+    const submitHref = buildSubmitLevelHref(activePlan.id);
+
+    if (level === 'cgu-internal-result') {
+      bridge.setAttribute('aria-label', '校內審查與提名結果通知');
+      if (!resolvedApp) {
+        bridge.innerHTML = `
+          <div class="cgu-doc-bridge-head">
+            <strong>校內審查與提名結果</strong>
+            <span class="cgu-status-chip">待送件</span>
+          </div>
+          <p class="cgu-doc-bridge-notice">尚未送出校內申請。完成 5 份應備文件預檢並送交國際處後，國際處工作台之收件確認、補件通知與初審結果將自動同步於此，不需手動打勾。</p>
+          <div class="cgu-shortlist-actions">
+            <a class="cgu-pill-action is-solid" href="${esc(submitHref)}">前往送交國際處 →</a>
+            <button type="button" class="cgu-pill-action" data-cgu-refresh-notice>重新整理狀態</button>
+          </div>`;
+      } else {
+        bridge.innerHTML = `
+          <div class="cgu-doc-bridge-head">
+            <div>
+              <strong>收件編號：<code class="cgu-receipt-code">${esc(resolvedApp.receipt_id)}</code></strong>
+              <span class="cgu-status-chip status-${esc(resolvedApp.status)}">${esc(resolvedApp.status_label)}</span>
+            </div>
+            <a class="cgu-compact-link" href="${esc(submitHref)}">查看送件紀錄 →</a>
+          </div>
+          <p class="cgu-doc-bridge-notice">${esc(buildStatusNote(resolvedApp))}（第一志願：${esc(resolvedApp.preference_1)}${resolvedApp.preference_2 ? `；第二志願：${esc(resolvedApp.preference_2)}` : ''}）</p>
+          ${resolvedApp.status === 'supplement_requested' ? `
+            <div class="cgu-notice-supplement-alert" role="alert">
+              <strong>國際處要求補件說明：</strong>${esc(resolvedApp.supplement_reason || '請依通知補齊文件後重新預檢與送出。')}
+              <div class="cgu-shortlist-actions">
+                <a class="cgu-pill-action is-solid" href="${esc(submitHref)}">前往送件關卡補件 →</a>
+              </div>
+            </div>` : ''}
+          ${renderTimelineHtml(resolvedApp.timeline || [])}
+          <div class="cgu-shortlist-actions">
+            <button type="button" class="cgu-pill-action" data-cgu-refresh-notice>重新整理狀態</button>
+          </div>`;
+      }
+    } else {
+      bridge.setAttribute('aria-label', '合作校錄取通知與入學許可狀態');
+      let bodyText = '尚未完成校內送件。請先完成校內 5 項文件預檢並送交國際處，待國際處初審通過並對姊妹校提名後，依姊妹校來信追蹤錄取結果與入學許可（LOA）。';
+      if (resolvedApp) {
+        if (resolvedApp.status === 'passed_initial') {
+          bodyText = `校內初審已通過（收件編號 ${resolvedApp.receipt_id}，第一志願：${resolvedApp.preference_1}）。請依國際處提名作業及目的姊妹校通知追蹤後續申請與入學許可（LOA）；正式錄取資訊以目的校通知為準，此頁自動同步校內狀態，不需手動打勾。`;
+        } else if (resolvedApp.status === 'supplement_requested') {
+          bodyText = `校內申請（${resolvedApp.receipt_id}）目前需先處理補件：${resolvedApp.supplement_reason || '請依通知補件'}。完成補件並通過校內初審後，再進入姊妹校提名與錄取追蹤階段。`;
+        } else {
+          bodyText = `校內申請（${resolvedApp.receipt_id}）目前狀態為「${resolvedApp.status_label}」。待國際處完成校內審查並對目的姊妹校正式提名後，即可追蹤合作校錄取通知。`;
+        }
+      }
+      bridge.innerHTML = `
+        <div class="cgu-doc-bridge-head">
+          <strong>合作校錄取與入學許可（系統同步提示）</strong>
+          <span class="cgu-status-chip ${resolvedApp ? `status-${esc(resolvedApp.status)}` : ''}">${esc(resolvedApp ? resolvedApp.status_label : '待校內送件')}</span>
+        </div>
+        <p class="cgu-doc-bridge-notice">${esc(bodyText)}</p>
+        <div class="cgu-shortlist-actions">
+          <button type="button" class="cgu-pill-action" data-cgu-refresh-notice>重新整理狀態</button>
+          <a class="cgu-compact-link" href="#my-application?plan=${encodeURIComponent(activePlan.id)}&view=level&level=cgu-internal-result">查看校內審查結果 →</a>
+        </div>`;
+    }
+
+    if (!existing) {
+      const progressBox = card.querySelector('.level-progress');
+      if (progressBox) {
+        progressBox.insertAdjacentElement('afterend', bridge);
+      } else {
+        card.appendChild(bridge);
+      }
+    }
+    card.dataset.cguNoticeSig = sig;
+  }
+
   function syncDocLevelBridge(activePlan = simState.activePlan, connectorStatus = simState.status) {
     const { onMyApp, view, level } = parseMyAppRoute();
     const levelView = $('#application-path #level-view');
@@ -933,6 +1201,9 @@
     const card = levelView.querySelector('.level-card');
     if (!card) return;
 
+    const levelForm = levelView.querySelector('#level-form');
+    if (levelForm && !levelForm.hidden) levelForm.hidden = true;
+
     const draftFiles = connectorStatus?.draft_files || {};
     const precheck = connectorStatus?.precheck || { provided_count: 0, required_count: 5, complete: false };
     const uploaded = draftFiles[docKey] || null;
@@ -940,12 +1211,30 @@
     const existing = card.querySelector('#cgu-doc-level-bridge');
     if (existing && card.dataset.cguDocSig === sig) return;
 
+    let studyPlanDraft = '';
+    if (docKey === 'study_plan') {
+      if (Object.prototype.hasOwnProperty.call(simState.studyPlanDrafts, activePlan.id)) {
+        studyPlanDraft = simState.studyPlanDrafts[activePlan.id] || '';
+      } else {
+        const domVal = levelView.querySelector('#level-input')?.value || '';
+        const planVal = activePlan.steps?.['cgu-doc-study_plan']?.value || '';
+        const candidate = (domVal && !domVal.startsWith('已選取檔案：'))
+          ? domVal
+          : ((planVal && !planVal.startsWith('已選取檔案：')) ? planVal : '');
+        studyPlanDraft = candidate;
+        simState.studyPlanDrafts[activePlan.id] = candidate;
+      }
+    }
+
     const bridge = existing || document.createElement('div');
     bridge.id = 'cgu-doc-level-bridge';
     bridge.className = 'cgu-doc-level-bridge';
     bridge.setAttribute('role', 'region');
     bridge.setAttribute('aria-label', `${doc.title}文件檢查與上傳`);
     const submitHref = buildSubmitLevelHref(activePlan.id);
+    const guideText = DOC_LEVEL_NOTES[docKey] || doc.desc || '';
+    const studyPlanFeedback = simState.studyPlanFeedback[activePlan.id] || '';
+
     bridge.innerHTML = `
       <div class="cgu-doc-bridge-head">
         <div>
@@ -954,11 +1243,25 @@
         </div>
         <a class="cgu-compact-link" href="${esc(submitHref)}">前往送交國際處 →</a>
       </div>
+      ${guideText ? `<p class="cgu-doc-bridge-guide">${esc(guideText)}</p>` : ''}
+      ${docKey === 'study_plan' ? `
+        <div id="cgu-study-plan-writer" class="cgu-study-plan-writer">
+          <label for="cgu-study-plan-draft-input"><strong>一頁讀書計畫草稿撰寫區</strong></label>
+          <textarea id="cgu-study-plan-draft-input" rows="7" maxlength="20000" placeholder="建議包含：一、赴外申請動機與修課目標；二、預計修習課程與專業領域規劃；三、返國後學分採認與分享計畫...">${esc(studyPlanDraft)}</textarea>
+          <div class="cgu-study-plan-writer-foot">
+            <span id="cgu-study-plan-char-count">目前 ${studyPlanDraft.trim().length} 字</span>
+            <div class="cgu-study-plan-writer-actions">
+              <button type="button" id="cgu-study-plan-save-draft-btn" class="cgu-pill-action">儲存草稿</button>
+              <button type="button" id="cgu-study-plan-sync-btn" class="cgu-pill-action is-solid">儲存並同步至送件預檢</button>
+            </div>
+          </div>
+          <p id="cgu-study-plan-writer-feedback" class="cgu-doc-bridge-feedback" role="status" aria-live="polite">${esc(studyPlanFeedback)}</p>
+        </div>` : ''}
       <p class="cgu-doc-bridge-notice">${esc(UPLOAD_NOTICE)}</p>
       ${uploaded ? `<div class="cgu-file-meta-box"><span><b>已選取檔案：</b>${esc(uploaded.filename)}</span></div>` : ''}
       <div class="cgu-doc-check-actions">
         <label class="cgu-upload-btn">
-          <span>${uploaded ? '重新選檔' : '選擇檔案並標記完成'}</span>
+          <span>${uploaded ? '重新選檔' : (docKey === 'study_plan' ? '或改傳已完稿 PDF 並標記完成' : '選擇檔案並標記完成')}</span>
           <input type="file" data-cgu-sim-upload="${esc(doc.key)}" aria-label="選擇${esc(doc.title)}檔案" />
         </label>
         ${uploaded ? `<button type="button" class="cgu-remove-file-btn" data-cgu-sim-remove="${esc(doc.key)}">移除</button>` : ''}
@@ -1016,6 +1319,8 @@
     if (!onMyApp || view !== 'level' || level !== 'cgu-shortlist' || !levelView || levelView.hidden || !activePlan) return;
     const card = levelView.querySelector('.level-card');
     if (!card) return;
+    const levelForm = levelView.querySelector('#level-form');
+    if (levelForm && !levelForm.hidden) levelForm.hidden = true;
 
     const [pref1, pref2] = readSharedPreferences(activePlan);
     const partnersCount = ((typeof state === 'object' && state.dashboard?.partner_universities) || []).length;
@@ -1183,12 +1488,17 @@
             <a class="cgu-compact-link" href="${esc(submitHref)}">${planApp.status === 'supplement_requested' ? '前往送件關卡補件 →' : '查看送件紀錄 →'}</a>
           </div>`;
       }
+      enhanceMyApplicationDeadline(activePlan);
       enhanceTodayOiaStatus(activePlan, planApp);
       syncDocLevelBridge(activePlan, st);
       syncShortlistLevelBridge(activePlan);
+      syncNoticeLevelBridge(activePlan, planApp);
       syncReturnReportLevelBridge(activePlan, st);
       return;
     }
+
+    enhanceMyApplicationDeadline(activePlan);
+    syncNoticeLevelBridge(activePlan, planApp);
 
     host.hidden = false;
     host.classList.add('is-full');
@@ -1243,7 +1553,7 @@
           ${app.supplement_reason ? `<div class="cgu-supplement-alert" role="alert"><strong>國際處要求補件原因：</strong>${esc(app.supplement_reason)}</div>` : ''}
           ${renderTimelineHtml(app.timeline || [])}
         </article>`).join('')
-      : '<p class="cgu-empty-hint">目前尚無送件紀錄。完成上方 5 項應備文件預檢後即可送出並取得 <code>CGU-116-1-</code> 收件編號。</p>';
+      : renderEmptyAppHintHtml(activePlan);
 
     const showFeedbackHtml = (simState.lastSubmitReceiptId && planApp?.receipt_id === simState.lastSubmitReceiptId && planApp?.status === 'submitted')
       ? simState.lastSubmitHtml
@@ -1251,13 +1561,7 @@
 
     host.innerHTML = `
       <div class="cgu-sim-card">
-        <div class="cgu-my-app-deadline-bar" aria-label="下一個已確認的官方期限摘要">
-          <div>
-            <span class="cgu-dl-kicker">下一個已確認的官方期限</span>
-            <strong>116-1 校內申請截止：2026/12/21 17:00</strong>
-          </div>
-          <a href="${esc(SELECTION_SOURCE_URL)}" target="_blank" rel="noopener noreferrer">官方公告來源：116 學年度第 1 學期交換及雙聯申請公告 ↗</a>
-        </div>
+        ${renderDeadlineBarHtml(activePlan)}
 
         <header class="cgu-sim-head">
           <div>
@@ -2481,6 +2785,103 @@
       return;
     }
 
+    if (event.target.closest('#cgu-study-plan-save-draft-btn')) {
+      const btn = $('#cgu-study-plan-save-draft-btn');
+      const inputEl = $('#cgu-study-plan-draft-input');
+      const fb = $('#cgu-study-plan-writer-feedback');
+      const draftText = inputEl ? inputEl.value : '';
+      const activePlan = simState.activePlan || await resolveActivePlan(true);
+      if (!activePlan) return;
+      simState.studyPlanDrafts[activePlan.id] = draftText;
+      if (btn) btn.disabled = true;
+      try {
+        const uploaded = Boolean(simState.status?.draft_files?.study_plan);
+        const planUrl = `/account/application-paths/${encodeURIComponent(activePlan.id)}`;
+        const hsQuery = `?home_school=${encodeURIComponent('長庚大學')}`;
+        const currentEnv = await apiJson(`${planUrl}${hsQuery}`);
+        await apiJson(`${planUrl}/steps/cgu-doc-study_plan${hsQuery}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+            revision: currentEnv.revision,
+            step: { value: draftText, confirmed: uploaded },
+          }),
+        });
+        const hiddenInput = $('#level-input');
+        if (hiddenInput) hiddenInput.value = draftText;
+        simState.cachedPlans = null;
+        simState.studyPlanFeedback[activePlan.id] = uploaded
+          ? '已保存一頁讀書計畫草稿（送件預檢維持已備齊）。'
+          : '已保存一頁讀書計畫草稿；完成後可按「儲存並同步至送件預檢」或上傳 PDF。';
+        const fbAfter = $('#cgu-study-plan-writer-feedback');
+        if (fbAfter) fbAfter.textContent = simState.studyPlanFeedback[activePlan.id];
+        $('#application-path #refresh-path')?.click();
+      } catch (err) {
+        if (fb) fb.textContent = err.message || '保存失敗，請稍後再試。';
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+      return;
+    }
+
+    if (event.target.closest('#cgu-study-plan-sync-btn')) {
+      const btn = $('#cgu-study-plan-sync-btn');
+      const inputEl = $('#cgu-study-plan-draft-input');
+      const fb = $('#cgu-study-plan-writer-feedback');
+      const rawText = inputEl ? inputEl.value : '';
+      const activePlan = simState.activePlan || await resolveActivePlan(true);
+      if (!activePlan) return;
+      if (!rawText.trim()) {
+        if (fb) fb.textContent = '請先輸入一頁讀書計畫內容，再同步至送件預檢（或於下方改傳 PDF）。';
+        inputEl?.focus();
+        return;
+      }
+      simState.studyPlanDrafts[activePlan.id] = rawText;
+      if (btn) btn.disabled = true;
+      try {
+        const planUrl = `/account/application-paths/${encodeURIComponent(activePlan.id)}`;
+        const hsQuery = `?home_school=${encodeURIComponent('長庚大學')}`;
+        const currentEnv = await apiJson(`${planUrl}${hsQuery}`);
+        await apiJson(`${planUrl}/steps/cgu-doc-study_plan${hsQuery}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+            revision: currentEnv.revision,
+            step: { value: rawText, confirmed: true },
+          }),
+        });
+        const hiddenInput = $('#level-input');
+        if (hiddenInput) hiddenInput.value = rawText;
+        const generatedFile = new File([rawText], 'cgu-study-plan.txt', { type: 'text/plain;charset=utf-8' });
+        await uploadMetadataFile('study_plan', generatedFile);
+        simState.cachedPlans = null;
+        simState.studyPlanFeedback[activePlan.id] = '已保存草稿並同步至「送交國際處」預檢清單。';
+        await loadConnectorStatus();
+        $('#application-path #refresh-path')?.click();
+        await renderMyApplicationSim(false);
+        const fbAfter = $('#cgu-study-plan-writer-feedback');
+        if (fbAfter) fbAfter.textContent = simState.studyPlanFeedback[activePlan.id];
+      } catch (err) {
+        if (fb) fb.textContent = err.message || '同步失敗，請稍後再試。';
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+      return;
+    }
+
+    if (event.target.closest('[data-cgu-refresh-notice]')) {
+      const btn = event.target.closest('[data-cgu-refresh-notice]');
+      if (btn) btn.disabled = true;
+      try {
+        simState.cachedPlans = null;
+        await loadConnectorStatus();
+        await renderMyApplicationSim(true);
+        $('#application-path #refresh-path')?.click();
+        await refreshNotificationsNow();
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+      return;
+    }
+
     if (event.target.closest('#cgu-sim-submit-btn')) {
       const btn = $('#cgu-sim-submit-btn');
       const fb = $('#cgu-sim-submit-feedback');
@@ -2489,21 +2890,19 @@
       if (fb) fb.textContent = '正在送交國際處…';
       try {
         const activePlan = simState.activePlan || await resolveActivePlan(true);
-        const targetTerm = activePlan?.context?.target_term || '116-1（2027 秋季出國）';
-        const yearMatch = String(targetTerm).match(/\b(\d{3})\b/);
-        const academicYear = yearMatch ? yearMatch[1] : '116';
+        const termMeta = getPlanTermMeta(activePlan);
         const res = await apiJson('/demo/connector/applications', {
           method: 'POST',
           body: JSON.stringify({
             plan_id: activePlan?.id || '',
             preference_1: simState.selectedPref1,
             preference_2: simState.selectedPref2,
-            academic_year: academicYear,
-            semester: targetTerm,
+            academic_year: termMeta.academicYear || '116',
+            semester: termMeta.termLabel || '116-1（2027 秋季出國）',
           }),
         });
         simState.lastSubmitReceiptId = res.application.receipt_id;
-        simState.lastSubmitHtml = `已送出申請，收件編號：<strong>${esc(res.application.receipt_id)}</strong>（狀態：${esc(res.application.status_label)}）。正式申請請依國際處公告完成線上表單與紙本繳交（<a href="${esc(SELECTION_SOURCE_URL)}" target="_blank" rel="noopener noreferrer">官方公告 ↗</a>）。`;
+        simState.lastSubmitHtml = `已送出申請，收件編號：<strong>${esc(res.application.receipt_id)}</strong>（狀態：${esc(res.application.status_label)}）。正式申請請依國際處公告完成線上表單與紙本繳交（<a href="${esc(termMeta.sourceUrl)}" target="_blank" rel="noopener noreferrer">官方公告 ↗</a>）。`;
         await renderMyApplicationSim(true);
         $('#application-path #refresh-path')?.click();
         await refreshNotificationsNow();
@@ -2692,12 +3091,33 @@
     }
     if (event.target.id === 'advisor-college') {
       syncAdvisorMgmtNote();
+      return;
+    }
+    if (event.target.id === 'plan-select') {
+      simState.cachedPlans = null;
+      simState.activePlan = null;
+      window.requestAnimationFrame(() => {
+        void renderMyApplicationSim(true);
+      });
     }
   });
 
   document.addEventListener('input', event => {
     if (event.target.matches('[data-cgu-report-sec]')) {
       syncReportSectionCounters();
+      return;
+    }
+    if (event.target.id === 'cgu-study-plan-draft-input') {
+      const val = event.target.value || '';
+      const planId = simState.activePlan?.id || parseMyAppRoute().planParam || '';
+      if (planId) {
+        simState.studyPlanDrafts[planId] = val;
+        simState.studyPlanFeedback[planId] = '';
+      }
+      const hiddenInput = $('#level-input');
+      if (hiddenInput) hiddenInput.value = val;
+      const counter = $('#cgu-study-plan-char-count');
+      if (counter) counter.textContent = `目前 ${val.trim().length} 字`;
       return;
     }
     if (event.target.id === 'cgu-report-term') {
@@ -2712,6 +3132,11 @@
   });
 
   document.addEventListener('submit', async event => {
+    if (event.target.id === 'plan-form') {
+      simState.cachedPlans = null;
+      simState.activePlan = null;
+      return;
+    }
     if (event.target.id === 'cgu-ask-form') {
       event.preventDefault();
       const input = $('#cgu-ask-input');
@@ -2831,10 +3256,12 @@
       lastObservedMyAppSig = sig;
       renderMyApplicationSim(false);
     } else {
+      enhanceMyApplicationDeadline();
       enhanceTodayOiaStatus();
       syncSubmitLevelBridge();
       syncDocLevelBridge();
       syncShortlistLevelBridge();
+      syncNoticeLevelBridge();
       syncReturnReportLevelBridge();
     }
   }).observe(document.body, { childList: true, subtree: true });

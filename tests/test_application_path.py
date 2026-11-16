@@ -411,3 +411,42 @@ def test_setup_steps_auto_completed_and_uncounted(client):
         assert lvl["progress"] == {"value": 1, "total": 1}
     assert plan["progress"]["value"] == 0
 
+
+def test_round_consistency_validation_rejects_mismatched_year_or_semester(client):
+    bad_year = create(
+        client,
+        academic_year="117",
+        departure_year="2028",
+        semester="fall",
+        application_round="115-2（2027 春季出國）",
+    )
+    assert bad_year.status_code == 422
+
+    bad_sem = create(
+        client,
+        academic_year="116",
+        departure_year="2027",
+        semester="spring",
+        application_round="116-1（2027 秋季出國）",
+    )
+    assert bad_sem.status_code == 422
+
+    ok_117 = create(
+        client,
+        academic_year="117",
+        departure_year="2028",
+        semester="fall",
+        application_round="117-1（2028 秋季出國）",
+    )
+    assert ok_117.status_code == 201, ok_117.text
+
+    ok_115 = create(
+        client,
+        revision=ok_117.json()["revision"],
+        academic_year="115",
+        departure_year="2027",
+        semester="spring",
+        application_round="115-2（2027 春季出國）",
+    )
+    assert ok_115.status_code == 201, ok_115.text
+
