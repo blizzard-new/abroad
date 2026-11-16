@@ -26,6 +26,8 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 
+from .cgu_demo_content import CGU_REQUIRED_DOCUMENTS as OFFICIAL_REQUIRED_DOCS
+
 STATIC = Path(__file__).parent / "static"
 CONTENT = Path(__file__).parent / "demo_data/content.json"
 # "合作構想示意": three static, fictional pages. Served only by this demo process
@@ -33,21 +35,13 @@ CONTENT = Path(__file__).parent / "demo_data/content.json"
 # allowlist, so no request value is used to build a file path.
 PREVIEW_DIR = Path(__file__).parent / "demo_data/preview"
 PREVIEW_PAGES = {"office": "office.html", "inquiry": "inquiry.html", "report": "report.html"}
-ASSET_VERSION = "20261115-cgu-app-flow-3"
+ASSET_VERSION = "20261116-cgu-levels-1"
 COOKIE = "uniway_cgu_demo_session"
 HOME = "長庚大學"
 UPLOAD_NOTICE = "檔案僅用於完整性檢查，不會保存內容。"
 MATCH_MODE_LABEL = "依國際處公告與常見問題回覆"
 TAIPEI_TZ = timezone(timedelta(hours=8))
 RECEIPT_PREFIX_MAP = {"APP": "A", "INQ": "Q", "RPT": "R", "A": "A", "Q": "Q", "R": "R"}
-
-OFFICIAL_REQUIRED_DOCS: list[dict[str, str]] = [
-    {"key": "online_form", "title": "線上申請表", "description": "填妥校內交換／雙聯線上申請表（最多 2 個志願）"},
-    {"key": "parent_consent", "title": "家長同意書", "description": "依國際處規定格式填寫並經家長／監護人簽章"},
-    {"key": "language_proof", "title": "語文證明", "description": "多益 700 分（或同等外語檢定）及合作校規定語文證明"},
-    {"key": "transcript", "title": "含排名的中文歷年成績單", "description": "含歷年學業平均與大學部班級排名百分比"},
-    {"key": "study_plan", "title": "一頁讀書計畫", "description": "以 1 頁為原則，說明選校動機、修課規劃與預期成果"},
-]
 REQUIRED_DOC_MAP = {item["key"]: item for item in OFFICIAL_REQUIRED_DOCS}
 
 RETURN_REPORT_SECTIONS: list[dict[str, str]] = [
@@ -1830,27 +1824,52 @@ def create_demo_app(connector_factory=None) -> FastAPI:
         for doc in OFFICIAL_REQUIRED_DOCS:
             step_id = f"cgu-doc-{doc['key']}"
             meta = files_map.get(doc['key'])
+            cur = steps.get(step_id) or {}
+            cur_val = str(cur.get('value') or '')
+            has_custom_study_draft = (
+                doc['key'] == 'study_plan'
+                and bool(cur_val.strip())
+                and not cur_val.startswith('已選取檔案：')
+                and cur.get('source_signature') != CGU_DOC_STEP_SIG
+            )
             if isinstance(meta, dict) and meta.get('filename'):
-                expected_val = f"已選取檔案：{meta['filename']}"
-                cur = steps.get(step_id) or {}
-                if cur.get('value') != expected_val or cur.get('confirmed') is not True:
-                    steps[step_id] = {
-                        'value': expected_val,
-                        'confirmed': True,
-                        'version_id': None,
-                        'applicable': None,
-                        'updated_at': now_str,
-                        'recorded_by': 'student',
-                        'source_signature': CGU_DOC_STEP_SIG,
-                    }
-                    changed = True
+                if has_custom_study_draft:
+                    if cur.get('confirmed') is not True:
+                        steps[step_id] = {
+                            **cur,
+                            'confirmed': True,
+                            'updated_at': now_str,
+                            'recorded_by': 'student',
+                        }
+                        changed = True
+                else:
+                    expected_val = f"已選取檔案：{meta['filename']}"
+                    if cur.get('value') != expected_val or cur.get('confirmed') is not True:
+                        steps[step_id] = {
+                            'value': expected_val,
+                            'confirmed': True,
+                            'version_id': None,
+                            'applicable': None,
+                            'updated_at': now_str,
+                            'recorded_by': 'student',
+                            'source_signature': CGU_DOC_STEP_SIG,
+                        }
+                        changed = True
             else:
-                cur = steps.get(step_id)
-                if isinstance(cur, dict) and (
+                if has_custom_study_draft:
+                    if cur.get('confirmed'):
+                        steps[step_id] = {
+                            **cur,
+                            'confirmed': False,
+                            'updated_at': now_str,
+                            'recorded_by': 'student',
+                        }
+                        changed = True
+                elif isinstance(cur, dict) and (
                     cur.get('source_signature') == CGU_DOC_STEP_SIG
-                    or str(cur.get('value') or '').startswith('已選取檔案：')
+                    or cur_val.startswith('已選取檔案：')
                 ):
-                    if cur.get('confirmed') or cur.get('value'):
+                    if cur.get('confirmed') or cur_val:
                         steps[step_id] = {
                             'value': '',
                             'confirmed': False,
@@ -1892,6 +1911,47 @@ def create_demo_app(connector_factory=None) -> FastAPI:
                     changed = True
             if changed:
                 save_registry(draft_service, account_id, HOME, registry)
+
+    def _apply_result_step_to_plan(plan_row: dict[str, Any], app_record: dict[str, Any], now_str: str) -> None:
+        receipt_id = str(app_record.get('receipt_id') or '').strip()
+        status_label = str(app_record.get('status_label') or '').strip()
+        reason = str(app_record.get('supplement_reason') or '').strip()
+        summary = f'{receipt_id}：{status_label}' if receipt_id else status_label
+        if app_record.get('status') == 'supplement_requested' and reason:
+            summary = f'{summary}（{reason}）'
+        plan_row.setdefault('steps', {})['cgu-internal-result'] = {
+            'value': summary,
+            'confirmed': False,
+            'version_id': None,
+            'applicable': None,
+            'updated_at': now_str,
+            'recorded_by': 'oia',
+            'source_signature': None,
+        }
+
+    def _sync_cgu_result_step(account_id: str, app_record: dict[str, Any] | None) -> None:
+        if not isinstance(app_record, dict) or not app_record.get('receipt_id'):
+            return
+        draft_service = platform.state.form_draft_service
+        now_str = utc_now().isoformat()
+        target_plan_id = str(app_record.get('plan_id') or '').strip()
+        pref1 = str(app_record.get('preference_1') or '').strip()
+        with lock:
+            registry = load_registry(draft_service, account_id, HOME)
+            active_plans = [p for p in registry.get('plans', []) if not p.get('archived')]
+            target_plan = (
+                next((p for p in active_plans if p.get('id') == target_plan_id), None)
+                if target_plan_id
+                else None
+            ) or next(
+                (p for p in active_plans if (p.get('context') or {}).get('target_school') == pref1),
+                None,
+            )
+            if target_plan is None:
+                return
+            _apply_result_step_to_plan(target_plan, app_record, now_str)
+            target_plan['updated_at'] = now_str
+            save_registry(draft_service, account_id, HOME, registry)
 
     @app.get('/demo/connector/spec')
     def connector_spec():
@@ -2015,6 +2075,9 @@ def create_demo_app(connector_factory=None) -> FastAPI:
             clean_payload['preference_1'] = str(plan_ctx.get('target_school') or '').strip()
         if not str(clean_payload.get('academic_year') or '').strip():
             clean_payload['academic_year'] = str(plan_ctx.get('academic_year') or '116').strip()
+        if not str(clean_payload.get('semester') or '').strip():
+            from .cgu_demo_content import _cgu_plan_term_info
+            clean_payload['semester'] = _cgu_plan_term_info(plan_ctx)['term_label']
         if not hasattr(connector, 'record_file_metadata') and 'documents' not in clean_payload:
             with lock:
                 staged = dict(fallback_draft_files.get(account.id, {}))
@@ -2045,6 +2108,7 @@ def create_demo_app(connector_factory=None) -> FastAPI:
                     'recorded_by': 'student',
                     'source_signature': None,
                 }
+                _apply_result_step_to_plan(latest_plan, record, now_str)
                 latest_plan['updated_at'] = now_str
                 save_registry(draft_service, account.id, HOME, latest_registry)
         return JSONResponse({'application': record, 'plan_id': target_plan['id']}, status_code=201)
@@ -2164,12 +2228,16 @@ def create_demo_app(connector_factory=None) -> FastAPI:
         if not isinstance(payload, dict):
             payload = {}
         try:
-            return connector.oia_action(
+            action_name = str(payload.get('action') or '')
+            res = connector.oia_action(
                 account.id,
-                str(payload.get('action') or ''),
+                action_name,
                 str(payload.get('receipt_id') or ''),
                 payload,
             )
+            if action_name in ('confirm_receipt', 'request_supplement', 'approve_initial') and isinstance(res, dict) and isinstance(res.get('record'), dict):
+                _sync_cgu_result_step(account.id, res['record'])
+            return res
         except ConnectorValidationError as exc:
             return JSONResponse({'detail': exc.message, **exc.extra}, status_code=422)
 

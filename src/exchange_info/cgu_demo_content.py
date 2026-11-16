@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from .cgu_catalogue import CguCatalogue, CatalogueView
@@ -10,6 +11,13 @@ from .application_path import build_levels, level
 CONTENT = Path(__file__).parent / 'demo_data/content.json'
 
 CGU_SELECTION_GUIDE_URL = 'https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656'
+CGU_REQUIRED_DOCUMENTS: list[dict[str, str]] = [
+    {'key': 'online_form', 'title': '線上申請表', 'description': '填妥校內交換／雙聯線上申請表（最多 2 個志願）'},
+    {'key': 'parent_consent', 'title': '家長同意書', 'description': '依國際處規定格式填寫並經家長／監護人簽章'},
+    {'key': 'language_proof', 'title': '語文證明', 'description': '多益 700 分（或同等外語檢定）及合作校規定語文證明'},
+    {'key': 'transcript', 'title': '含排名的中文歷年成績單', 'description': '含歷年學業平均與大學部班級排名百分比'},
+    {'key': 'study_plan', 'title': '一頁讀書計畫', 'description': '以 1 頁為原則，說明選校動機、修課規劃與預期成果'},
+]
 CGU_SUBSIDY_PAGE_URL = 'https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15724'
 CGU_XIZHU_PAGE_URL = 'https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15725'
 CGU_NAVIGATOR_REGULATION_URL = (
@@ -69,24 +77,217 @@ def _cgu_term_prompt(context) -> str:
     return f'{year} 尚未決定'.strip()
 
 
-def journey_levels(context, evaluated, catalog, values=None):
-    """Keep native direction/rule steps; add explicitly suggested personal tasks.
+def _cgu_plan_term_info(context: dict) -> dict:
+    academic_year = str(context.get('academic_year') or '').strip()
+    departure_year = str(context.get('departure_year') or '').strip()
+    semester = str(context.get('semester') or '').strip()
+    app_round = str(context.get('application_round') or '').strip()
 
-    The shared renderer, revision checks, storage and next-step logic remain in
-    application_path.py. No recommendation is represented as official approval.
-    """
+    roc_year = academic_year
+    if not roc_year and departure_year.isdigit():
+        roc_year = str(int(departure_year) - (1912 if semester == 'spring' else 1911))
+
+    term_suffix = '2' if semester == 'spring' else ('1' if semester in ('fall', 'full_year') else '')
+    term_code = (
+        f'{roc_year}-{term_suffix}'
+        if roc_year and term_suffix
+        else (f'{roc_year} 學年度' if roc_year else '當期')
+    )
+    if semester == 'fall':
+        term_label = f'{roc_year}-1（{departure_year} 秋季出國）' if roc_year and departure_year else _cgu_term_prompt(context)
+    elif semester == 'full_year':
+        term_label = f'{roc_year}-1（{departure_year} 秋季・全學年出國）' if roc_year and departure_year else _cgu_term_prompt(context)
+    elif semester == 'spring':
+        term_label = f'{roc_year}-2（{departure_year} 春季出國）' if roc_year and departure_year else _cgu_term_prompt(context)
+    else:
+        term_label = f'{roc_year} 學年度（出發學期待定）' if roc_year else '當期（出發學期待定）'
+
+    is_verified_116_1 = (
+        roc_year == '116'
+        and departure_year in ('2027', '')
+        and semester in ('fall', 'full_year')
+        and not re.search(r'(?<!\d)(?:11[0-57-9]|116\s*[-–]\s*2)(?!\d)', app_round)
+    )
+    return {
+        'roc_year': roc_year,
+        'term_code': term_code,
+        'term_label': term_label,
+        'is_verified_116_1': is_verified_116_1,
+    }
+
+
+def _cgu_level_config(task: dict, context: dict, detail: str, source: str | None, sources: dict, term_info: dict) -> dict:
+    """Build per-task CGU level type, prompt, templates, and official deadline/source metadata."""
+    tid = task['id']
+    term_code = term_info['term_code']
+    is_verified_116_1 = term_info['is_verified_116_1']
+    resolved_source = 'selection_guide' if (source == 'selection' and not is_verified_116_1) else source
+    source_urls = [sources[resolved_source]] if resolved_source in sources else []
+
+    if tid == 'read-guide':
+        data = json.loads(CONTENT.read_text(encoding='utf-8'))
+        guide_detail = (
+            '閱讀 116-1 校內申請重點摘要（申請期間 2026/11/02–2026/12/21 17:00、應備 5 份文件與基本門檻），讀完後按下方確認。'
+            if is_verified_116_1
+            else f'閱讀 {term_code} 校內申請重點摘要（申請期間與截止日：依國際處公告；應備 5 份文件與基本門檻），讀完後按下方確認。'
+        )
+        return {
+            'kind': 'confirm',
+            'cgu_level_type': 'reading',
+            'no_draft_input': True,
+            'icon': 'book-open-check',
+            'detail': guide_detail,
+            'warning': '',
+            'source_urls': (
+                [sources['selection'], sources['selection_guide']]
+                if is_verified_116_1
+                else [sources['selection_guide']]
+            ),
+            'guide_summary': {
+                'term_code': term_code,
+                'term_label': term_info['term_label'],
+                'application_period': '2026/11/02 – 2026/12/21 17:00' if is_verified_116_1 else '依國際處公告',
+                'deadline': '2026/12/21（週一）17:00（線上表單與紙本同步截止）' if is_verified_116_1 else '依國際處公告',
+                'eligibility_summary': '大學部大二以上或碩博在學；前一學年平均 70 分（GPA 2.44）或班排前 50%；多益 700／托福 iBT 72／雅思 5.5（依姊妹校要求）',
+                'preference_limit': '每人至多填寫 2 個志願合作校',
+                'required_documents': [
+                    {'num': idx + 1, 'key': doc['key'], 'title': doc['title'], 'desc': doc['description']}
+                    for idx, doc in enumerate(CGU_REQUIRED_DOCUMENTS)
+                ],
+                'official_links': (
+                    [
+                        {'label': '116-1 交換及雙聯申請公告', 'url': sources['selection']},
+                        {'label': '長庚大學校內甄選申請說明', 'url': sources['selection_guide']},
+                    ]
+                    if is_verified_116_1
+                    else [
+                        {'label': '長庚大學校內甄選申請說明（查詢當期公告）', 'url': sources['selection_guide']},
+                    ]
+                ),
+            },
+        }
+
+    if tid == 'shortlist':
+        return {
+            'kind': 'note',
+            'cgu_level_type': 'select',
+            'no_draft_input': True,
+            'icon': 'list-ordered',
+            'detail': detail,
+            'warning': '',
+            'source_urls': source_urls,
+        }
+
+    if tid.startswith('doc-'):
+        doc_key = tid.removeprefix('doc-')
+        templates = []
+        if doc_key == 'parent_consent':
+            templates = ['guardian-consent']
+        elif doc_key == 'study_plan':
+            templates = ['study-plan']
+        return {
+            'kind': 'file',
+            'cgu_level_type': 'document',
+            'doc_key': doc_key,
+            'no_draft_input': doc_key != 'study_plan',
+            'icon': 'file-text' if doc_key == 'study_plan' else 'file-check',
+            'detail': detail,
+            'warning': '',
+            'templates': templates,
+            'source_urls': source_urls,
+        }
+
+    if tid == 'internal-submit':
+        if is_verified_116_1:
+            return {
+                'kind': 'submission',
+                'cgu_level_type': 'submission',
+                'no_draft_input': True,
+                'icon': 'send',
+                'title': '送出校內申請（12/21 17:00 截止）',
+                'detail': '備齊 116-1 校內 5 份應備文件後完成預檢與送交國際處（截止日：2026/12/21 17:00）；正式申請請依國際處公告完成線上表單與紙本繳交。',
+                'warning': '',
+                'official_deadline_at': '2026-12-21T17:00:00+08:00',
+                'deadline_confirmed': True,
+                'deadline_source_url': sources['selection'],
+                'source_urls': [sources['selection'], sources['selection_guide']],
+            }
+        return {
+            'kind': 'submission',
+            'cgu_level_type': 'submission',
+            'no_draft_input': True,
+            'icon': 'send',
+            'title': '送出校內申請',
+            'detail': f'備齊 {term_code} 校內 5 份應備文件後完成預檢與送交國際處（申請期限：依國際處公告）；正式申請請依國際處公告完成線上表單與紙本繳交。',
+            'warning': '',
+            'official_deadline_at': None,
+            'deadline_confirmed': False,
+            'deadline_source_url': '',
+            'source_urls': [sources['selection_guide']],
+        }
+
+    if tid == 'internal-result':
+        return {
+            'kind': 'notice',
+            'cgu_level_type': 'oia_notice',
+            'no_draft_input': True,
+            'icon': 'bell',
+            'detail': detail,
+            'warning': '',
+            'source_urls': source_urls,
+        }
+
+    if tid == 'offer':
+        return {
+            'kind': 'notice',
+            'cgu_level_type': 'partner_notice',
+            'no_draft_input': True,
+            'icon': 'bell',
+            'detail': detail,
+            'warning': '',
+            'source_urls': source_urls,
+        }
+
+    if tid in ('interview', 'partner-instructions', 'housing-insurance', 'courses'):
+        templates = []
+        if tid == 'courses':
+            templates = ['course-preapproval']
+        elif tid == 'housing-insurance':
+            templates = ['overseas-affidavit']
+        return {
+            'kind': 'note',
+            'cgu_level_type': 'note',
+            'no_draft_input': False,
+            'icon': 'notebook-pen',
+            'detail': detail,
+            'warning': '個人準備紀錄／適用性待確認；不代表已送件、受理或錄取。',
+            'templates': templates,
+            'source_urls': source_urls,
+        }
+
+    return {
+        'kind': 'confirm',
+        'cgu_level_type': 'return_report' if tid == 'return-credit' else 'confirm',
+        'no_draft_input': True,
+        'icon': 'file-spreadsheet' if tid == 'return-credit' else 'badge-check',
+        'detail': detail,
+        'warning': '' if tid == 'return-credit' else '個人準備紀錄／適用性待確認；不代表已送件、受理或錄取。',
+        'source_urls': source_urls,
+    }
+
+
+def journey_levels(context, evaluated, catalog, values=None):
+    """Keep native direction/rule steps; map each CGU stage task to its proper action level type."""
     data = json.loads(CONTENT.read_text(encoding='utf-8'))
     sources = {row['id']: row['url'] for row in data['sources']}
     original = [item for stage in build_levels(context, evaluated, catalog, values) for item in stage['levels']]
+    term_info = _cgu_plan_term_info(context)
     for row in original:
         if row['id'] == 'term':
             row['prompt'] = _cgu_term_prompt(context)
+        if row['id'] == 'target' or row['id'] == 'home' or row['id'] == 'term' or row['id'].startswith('check-'):
+            row['no_draft_input'] = True
     stages, number = [], 0
-    is_116_fall = (
-        str(context.get('academic_year') or '') in ('116', '')
-        and str(context.get('departure_year') or '2027') == '2027'
-        and context.get('semester') in ('fall', 'full_year', 'undecided', None, '')
-    )
     excluded_checks = frozenset({'check-academic_year', 'check-application_round'})
     setup_rows = [row for row in original if row['id'] in ('home', 'term', 'target')]
     check_rows = [
@@ -101,17 +302,22 @@ def journey_levels(context, evaluated, catalog, values=None):
             if source == 'lincoln' and 'Lincoln' not in context['target_school']:
                 source = None
                 detail = '此事項是否適用、文件及日期待目的校通知確認；請記下你查到的結果。'
-            item = level('cgu-' + task['id'], task['title'], 'confirm', detail,
-                         stage['title'], warning='個人準備紀錄／適用性待確認；不代表已送件、受理或錄取。')
-            item['source_urls'] = [sources[source]] if source in sources else []
-            if task['id'] == 'internal-submit' and is_116_fall:
-                item.update(
-                    title='送出校內申請（12/21 17:00 截止）',
-                    official_deadline_at='2026-12-21T17:00:00+08:00',
-                    deadline_confirmed=True,
-                    deadline_source_url=sources['selection'],
-                    source_urls=[sources['selection']],
-                )
+            cfg = _cgu_level_config(task, context, detail, source, sources, term_info)
+            item = level(
+                'cgu-' + task['id'],
+                cfg.get('title', task['title']),
+                cfg['kind'],
+                cfg['detail'],
+                stage['title'],
+                warning=cfg['warning'],
+                cgu_level_type=cfg['cgu_level_type'],
+                no_draft_input=cfg['no_draft_input'],
+            )
+            item['icon'] = cfg['icon']
+            item['source_urls'] = cfg['source_urls']
+            for extra_key in ('guide_summary', 'doc_key', 'templates', 'official_deadline_at', 'deadline_confirmed', 'deadline_source_url'):
+                if extra_key in cfg:
+                    item[extra_key] = cfg[extra_key]
             items.append(item)
             if index == 0 and task['id'] == 'read-guide':
                 items.extend(dict(r) for r in check_rows)

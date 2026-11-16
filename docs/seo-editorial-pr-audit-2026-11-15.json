@@ -1,0 +1,387 @@
+{
+  "checked": "2026-11-15",
+  "timezone": "Asia/Taipei",
+  "base_commit": "aa2d1424d1645308b479bee648eb056a9e956f8e",
+  "branch": "codex/seo-daily-20261115",
+  "same_day_before_work": {
+    "all_state_prs": [],
+    "matching_local_remote_branches": []
+  },
+  "open_pull_requests": [
+    {
+      "number": 362,
+      "title": "feat(cgu-demo): integrate my-application submission flow (Phase 1 A-G)",
+      "body": "## 摘要（第一階段：僅長庚專屬層 A–G）\n\n依計畫完成「我的申請（`#my-application`）」流程順序第一階段修正（Commit `18252e273acbc3aa307f764acf2834580fb9e9a1`），**未修改任何 66 校共用檔案**，並保留 `feat/cgu-demo-formal-ui`（PR #352）正式產品呈現與 `CGU-116-1-*` 編號規則。\n\n- **A（無計畫隱藏與拒絕送件）**：無有效（未封存）申請計畫時隱藏 `#cgu-my-application-sim`；後端 `POST /demo/connector/applications` 回傳 `422`（`code=\"missing_application_plan\"`）。\n- **B（收斂完整送件表單出現位置）**：完整「送交國際處」表單僅於關卡 `cgu-internal-submit` 或直接網址 `#my-application?...&view=level&level=cgu-internal-submit` 顯示；「今天／計畫／準備／時程／清單／地圖」與其他關卡僅顯示單行狀態摘要列（`.cgu-sim-compact-bar`）。390px 手機版「今天」總高度由 **4,299px** 降至 **2,602px**。\n- **C（關卡動作句標題）**：116-1 `cgu-internal-submit` 標題改為「送出校內申請（12/21 17:00 截止）」（`content.json` 為「送出校內申請」）。\n- **D（送出自動同步進度）**：成功呼叫 `POST /demo/connector/applications` 後自動確認 `cgu-internal-submit`（`confirmed=True`），並觸發 `#refresh-path` 即時將「準備完成」更新為 `1 / 23 項`。\n- **E（國際處操作即時回寫今天）**：`今天` 分頁顯示 `#cgu-today-oia-status` 狀態列（支援 `已送出`、`已收件`、`要求補件`、`初審通過`）；`request_supplement` 時主行動卡切換為補件處理標題、補件原因與連回 `cgu-internal-submit` 之按鈕。\n- **F（第一志願讀取計畫目標校）**：移除前後端硬編碼「林肯大學」預設值，未指定時自動帶入目前計畫 `context.target_school`。\n- **G（簡化表單右上操作按鈕）**：移除 `#cgu-my-application-sim` 右上重複的「填寫返國心得」「校方介接規格」按鈕，僅保留「問國際處」。\n\n## 修改與新增檔案\n- 長庚專屬後端／資料：`src/exchange_info/cgu_demo.py`、`src/exchange_info/cgu_demo_content.py`、`src/exchange_info/demo_data/content.json`\n- 長庚專屬前端：`src/exchange_info/static/cgu-demo.js`、`src/exchange_info/static/cgu-demo.css`\n- 測試：`tests/test_cgu_demo.py`、`tests/test_cgu_demo_browser.py`\n- 文件與證據截圖：`docs/cgu-demo/README.md`、`docs/cgu-demo/demo-script.md`、`docs/cgu-demo/evidence/my-application-flow/*.png`（8 張前後對照圖）\n\n## 更新與新增之測試斷言及原因\n1. `tests/test_cgu_demo.py`\n   - `test_school_scope_dates_and_native_plan_persistence`：新增斷言 `submit_level['title'] == '送出校內申請（12/21 17:00 截止）'`（對應項目 C）。\n   - `test_school_connector_interface_and_swappability`：因項目 A 要求無計畫禁止送件且項目 F 取消寫死預設第一志願，改為先驗證無計畫回傳 `422 missing_application_plan`，建立 KTH 計畫後再送出空 `preference_1`，並驗證 `plan_id` 與 `cgu-internal-submit` 自動確認（項目 D/F）。\n   - `test_connector_spec_precheck_submission_ask_report_oia_and_reset`：先驗證無計畫送件回傳 `422 missing_application_plan`，再建立計畫執行 0/5、3/5 缺件測試、驗證送出自動完成 `cgu-internal-submit`（`progress['value'] == 1`）與要求補件通知 `action_url` 指向 `cgu-internal-submit`。\n2. `tests/test_cgu_demo_browser.py`\n   - `test_native_six_stages_keyboard_save_refresh_reset`：因 `cgu-internal-submit` 標題改為「送出校內申請（12/21 17:00 截止）」，更新 `#schedule-dynamic` 文字斷言（原檢查舊標題片語「校內截止」）。\n   - `test_demo_script_end_to_end_student_and_oia_workflow`：補充驗證無計畫隱藏 `#cgu-my-application-sim`、今天/計畫分頁為單行摘要、關卡頁標題與僅剩「問國際處」按鈕、`0 / 23` → `1 / 23`、要求補件後「今天」分頁 `#today-focus-title` 與原因同步。\n   - `test_formal_product_presentation_hides_demo_jargon_and_supports_present_mode`：於切換為單行摘要後補測完整 `cgu-internal-submit` 關卡頁亦無禁用字樣。\n   - `test_retained_single_about_disclaimer_and_post_submission_official_notice`：因無計畫禁止送件，送檔前改先 `seed(page)` 建立計畫。\n   - 新增 `test_my_application_phase1_plan_target_pref_and_oia_approve_today_sync`：驗證直連關卡網址、非林肯大學目標校自動帶入 `preference_1`，及 `confirm_receipt`／`approve_initial` 回寫「今天」狀態列。\n\n## 前後對照截圖與實測數據\n- 無計畫空狀態（1440px）：`before-empty-my-application.png`（顯示送件區塊）→ `after-empty-my-application.png`（`empty_sim_visible: false`）\n- 390px 手機版「今天」分頁：`before-390-today.png`（總高 `4,299px`）→ `after-390-today.png`（總高 `2,602px`，`scrollWidth <= innerWidth + 1`）\n- 送出關卡：`before-level-internal-submit.png` → `after-level-internal-submit-submitted.png`（收件編號 `CGU-116-1-A0003`，進度更新為 `1 / 23 項`）\n- 要求補件後「今天」分頁：`before-today-after-supplement.png`（主卡片仍停在閱讀須知）→ `after-today-after-supplement.png`（顯示「補件處理：校內交換申請（CGU-116-1-A0003）」與補件原因）\n\n## 驗證結果\n- `uv sync --frozen --extra dev` + 7 支測試檔：`403 passed`（0 failed, 0 skipped）\n- 文件更新後複測 `tests/test_cgu_deployment_package.py` 與 `tests/test_text_files_are_utf8.py`：`331 passed`（0 failed）\n",
+      "head": {
+        "ref": "feat/cgu-my-application-flow-phase1",
+        "sha": "18252e273acbc3aa307f764acf2834580fb9e9a1"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/362",
+      "draft": true,
+      "filenames": [
+        "docs/cgu-demo/README.md",
+        "docs/cgu-demo/demo-script.md",
+        "docs/cgu-demo/evidence/my-application-flow/after-390-today.png",
+        "docs/cgu-demo/evidence/my-application-flow/after-empty-my-application.png",
+        "docs/cgu-demo/evidence/my-application-flow/after-level-internal-submit-submitted.png",
+        "docs/cgu-demo/evidence/my-application-flow/after-today-after-supplement.png",
+        "docs/cgu-demo/evidence/my-application-flow/before-390-today.png",
+        "docs/cgu-demo/evidence/my-application-flow/before-empty-my-application.png",
+        "docs/cgu-demo/evidence/my-application-flow/before-level-internal-submit.png",
+        "docs/cgu-demo/evidence/my-application-flow/before-today-after-supplement.png",
+        "src/exchange_info/cgu_demo.py",
+        "src/exchange_info/cgu_demo_content.py",
+        "src/exchange_info/demo_data/content.json",
+        "src/exchange_info/static/cgu-demo.css",
+        "src/exchange_info/static/cgu-demo.js",
+        "tests/test_cgu_demo.py",
+        "tests/test_cgu_demo_browser.py"
+      ]
+    },
+    {
+      "number": 361,
+      "title": "資料更新提案：淡江大學（新公告）",
+      "body": "## 資料更新提案：淡江大學\n\n**新公告**｜Dora 於 2026-11-12 巡查發現｜UniWay 行銷辦公室依老闆核准開的 draft PR\n\n### 發現\n> 國際處最新公告有一則 2026-11-04 新公告「公告2027-2028年英歐（法、德、西、俄）語組姊妹校交換生聯合甄選作業簡章」。公告寫申請系統開放時間為 11/11（三）上午9時至 11/25（三）下午5時，系所助理要在 11/26（四）下午5時前以公文送件到國際處；學生要先照所屬系所規定的收件截止時間送系所審查推薦。附件有簡章 PDF 和「2027-28英歐語組姊妹校一覽表.xlsx」。網頁本文沒寫名額、校數、語言門檻和面試日期，要看附件才知道。平台還寫著「英歐正式新名額未齊」，跟這則公告不一致。11/6 說明會和日語組公告沒有新的變動。\n\n### 二次驗證\n**小公主** 重新打開官網核對後，判定**平台需要更新**。\n> 國際處 2026-11-04 公告 2027-2028 英歐（法、德、西、俄）語組聯合甄選簡章：申請系統 11/11（三）09:00 開放到 11/25（三）17:00；學生要先在系所規定的期限內送系所審查推薦，系所再於 11/26（四）17:00 前用公文送國際處。附件有簡章 PDF 和英歐語組姊妹校一覽表 xlsx，網頁本文沒寫名額。平台還寫「英歐新版待查核」「未取得英歐語組新版簡章」，跟現況不一致。另外英文版把 11/26 標成週三，中文版寫（四），2026/11/26 實際是星期四。\n\n### 建議修改清單\n**修改 1**\n> 位置：verified_window_deadlines.py → tku → window_badge\n> 目前：日語二甄已於 09/30 截止 · 其他語組待新版公告\n> 建議：英歐語組申請中 · 11/11 09:00–11/25 17:00（系所送件期限以各系所規定為準）· 日語二甄已於 09/30 截止\n> 依據：2026-11-04 公告：申請系統開放時間 11/11（三）上午9時至 11/25（三）下午5時\n\n**修改 2**\n> 位置：verified_window_deadlines.py → tku → cycle_label\n> 目前：2027–2028 年赴日本姊妹校（日語組）第二次聯合甄選（09/30 12:00 已截止；英歐／中文組新版待查核）\n> 建議：2027–2028 年英歐（法、德、西、俄）語組姊妹校交換生聯合甄選（線上 11/11 09:00–11/25 17:00）；日語組第二次聯合甄選 09/30 12:00 已截止；赴大陸／港澳交換新版待查核\n> 依據：2026-11-04 公告標題「公告2027-2028年英歐（法、德、西、俄）語組姊妹校交換生聯合甄選作業簡章」\n\n**修改 3**\n> 位置：verified_window_deadlines.py → tku → online_deadline.value_text\n> 目前：2027–2028 日語組第二次聯合甄選已於 2026/09/30 12:00 截止；……本輪所查列表未取得2027–2028英歐語組與赴大陸／港澳交換新版簡章，不推論官方尚未發布\n> 建議：2027–2028 英歐（法、德、西、俄）語組聯合甄選：申請系統 2026/11/11（三）09:00 至 2026/11/25（三）17:00（2026-11-04 國際處公告，附件有簡章 PDF 和 2027-28 英歐語組姊妹校一覽表 xlsx；名額、校數和語言門檻等附件核對後再補）。日語組第二次聯合甄選已於 2026/09/30 12:00 截止；11/06 說明會額滿只是說明會名額，不是交換名額額滿。赴大陸／港澳交換新版簡章本輪未取得，不推論官方尚未發布。以各校官方公告為準。\n> 依據：2026-11-04 公告：申請系統開放時間 11/11（三）上午9時至 11/25（三）下午5時\n\n**修改 4**\n> 位置：verified_window_deadlines.py → tku → paper_deadline.value_text\n> 目前：申請表本人與系主任簽名後，連同文件依各系所指定期限送系所……本輪未核實各系紙本或系所送國際處的新截止，不能直接沿用線上時刻。\n> 建議：英歐語組：學生依所屬系所規定的收件期限，將申請表和文件送系所審查推薦；系所助理要在 2026/11/26（四）17:00 前用公文送國際處。11/26 是系所送國際處的期限，不是學生的截止時間，學生截止以系所規定為準。日語組各系紙本截止本輪未核實。\n> 依據：2026-11-04 公告：系所助理於 11月26日（四）下午5時前以公文送件至國際處；學生要先在所屬系所規定的收件截止時間內送系所審查推薦\n\n### 巡查同事的建議\n> 新增 2027–2028 英歐（法、德、西、俄）語組聯合甄選：線上申請 2026-11-11 09:00 至 2026-11-25 17:00；系所送件到國際處截止 2026-11-26 17:00（學生的截止時間以系所規定為準）。資料來源為 2026-11-04 國際處公告，附件是簡章 PDF 和英歐語組姊妹校一覽表 xlsx。名額、校數和語言門檻要等附件核對完再補上。\n\n### 官方來源\n- https://oieie.tku.edu.tw/oieie/?tkuisotope=%e5%85%ac%e5%91%8a2027-2028%e5%b9%b4%e8%8b%b1%e6%ad%90%ef%bc%88%e6%b3%95%e3%80%81%e5%be%b7%e3%80%81%e8%a5%bf%e3%80%81%e4%bf%84%ef%bc%89%e8%aa%9e%e7%b5%84%e5%a7%8a%e5%a6%b9%e6%a0%a1%e4%ba%a4%e6%8f%9b\n\n### 平台目前的紀錄\n> 部分支援：287校全量名錄／甄選機構聯集；2027–2028日語二甄4校7名已截止，11/6說明會（cid=auix1106）額滿可候補非交換名額額滿。新增第一梯25校50歷史名額，其他協議及一般原文列參考；新版、校區、期限與照片授權缺口逐校保存。（支援程度 basic，合作校約 287 所）\n\n---\n這個 PR 只新增提案檔 `sources/audit/proposals/2026-11-12-tku-e8d6acad.json`，不會改動任何平台資料。內容是 AI 同事讀官網後整理的，**請先點開官方來源核對**；確認無誤後，依上面的修改清單在這個分支補上實際的資料更新再合併，或關閉不用。\n",
+      "head": {
+        "ref": "office/2026-11-12-tku-e8d6acad",
+        "sha": "6f4d61b1afedba2dbd5f6e016d60b49722b711a4"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/361",
+      "draft": true,
+      "filenames": [
+        "sources/audit/proposals/2026-11-12-tku-e8d6acad.json"
+      ]
+    },
+    {
+      "number": 360,
+      "title": "資料更新提案：國立臺北大學（新公告）",
+      "body": "## 資料更新提案：國立臺北大學\n\n**新公告**｜Dora 於 2026-11-12 巡查發現｜UniWay 行銷辦公室依老闆核准開的 draft PR\n\n### 發現\n> 國際處 2026-11-12 公告「本校116學年度校級赴外交換生甄選面試場次公告」，面試是團體形式，地點在三峽校區行政大樓四樓國際處第五會議室。場次：英文組 11/23（一）、11/25（三），兩天都是 10:00-12:30 和 13:30-16:00；中文組 11/27（五）10:00-11:00；日文組 11/27（五）13:30-16:00。場次通知會用 email 寄給申請者，最後薦派名單預計 12 月下旬公告在國際處網頁。10/12 EFREI 說明會跟平台資料一樣。\n\n### 二次驗證\n**小公主** 重新打開官網核對後，判定**平台需要更新**。\n> 國際處 2026/11/12 公告面試場次：英文組 11/23（一）、11/25（三），兩天都是 10:00–12:30、13:30–16:00；中文組 11/27（五）10:00–11:00；日文組 11/27（五）13:30–16:00。地點是三峽校區行政大樓四樓國際處第五會議室，場次用 email 通知，最後薦派名單預計 12 月下旬公告在國際處網頁。平台雖然有面試日期，但 window_badge 還寫「10 週窗口進行中」，而且沒寫時段、地點和薦派名單公告時間，也沒附這則公告當來源。\n\n### 建議修改清單\n**修改 1**\n> 位置：verified_window_deadlines.py → ntpu → window_badge\n> 目前：10 週窗口進行中 · 10/23 17:00 截止（含 10/22 學海修正公告）\n> 建議：報名已於 10/23 17:00 截止 · 甄選面試 11/23、11/25（英文組）、11/27（中、日文組）· 薦派名單預計 12 月下旬公告\n> 依據：2026/11/12 公告「本校116學年度校級赴外交換生甄選面試場次公告」列出各組面試日期，並寫最後薦派名單預計 12 月下旬公告在國際處網頁\n\n**修改 2**\n> 位置：verified_window_deadlines.py → ntpu → online_deadline.value_text\n> 目前：線上申請至2026/10/23（五）17:00止（已截止）；英文組11/23、11/25，中日文組11/27面試。另有2026/10/22學海甄選辦法修正公告及10/12法國EFREI說明會；法律院交換10/30 11:00截止……\n> 建議：線上申請至2026/10/23（五）17:00止（已截止）。面試為團體形式，地點在三峽校區行政大樓四樓國際處第五會議室：英文組11/23（一）、11/25（三），兩天都是10:00–12:30、13:30–16:00；中文組11/27（五）10:00–11:00；日文組11/27（五）13:30–16:00；場次用 email 通知申請者；最後薦派名單預計2026年12月下旬公告在國際處網頁（以官方公告為準，來源 `https://new.ntpu.edu.tw/oia/news/6af51ea27dfc18428a05d63e）。其餘學海修正公告、EFREI` 說明會、法律院截止說明維持原文。\n> 依據：2026/11/12 面試場次公告：英文組 11/23、11/25，中文組 11/27 10:00–11:00，日文組 11/27 13:30–16:00，行政大樓四樓國際處第五會議室\n\n### 巡查同事的建議\n> 新增 116 學年度校級赴外交換甄選面試時程：英文組 2026-11-23、11-25，中文組與日文組 2026-11-27（地點：三峽校區行政大樓四樓國際處第五會議室）；最後薦派名單預計 2026 年 12 月下旬公告。\n\n### 官方來源\n- https://new.ntpu.edu.tw/oia/news/6af51ea27dfc18428a05d63e\n\n### 平台目前的紀錄\n> 完整支援試點：已套用交換申請流程、116 學年度三語組官方名額表（校內申請 10/23 17:00 已截止）、2026/10/22 學海飛颺與惜珠甄選辦法修正公告及 10/12 法國 EFREI 交換說明會；法律學院院級交換（10/30 11:00 截止，僅適用法律院）與校級預告／商院公告讀取缺口分開標示。（支援程度 full，合作校約 169 所）\n\n---\n這個 PR 只新增提案檔 `sources/audit/proposals/2026-11-12-ntpu-3dc49426.json`，不會改動任何平台資料。內容是 AI 同事讀官網後整理的，**請先點開官方來源核對**；確認無誤後，依上面的修改清單在這個分支補上實際的資料更新再合併，或關閉不用。\n",
+      "head": {
+        "ref": "office/2026-11-12-ntpu-3dc49426",
+        "sha": "0b877c34d2750060d0574d0473df6c03f2f3ccf9"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/360",
+      "draft": true,
+      "filenames": [
+        "sources/audit/proposals/2026-11-12-ntpu-3dc49426.json"
+      ]
+    },
+    {
+      "number": 359,
+      "title": "資料更新提案：中山醫學大學（新公告）",
+      "body": "## 資料更新提案：中山醫學大學\n\n**新公告**｜小小郭 於 2026-11-13 巡查發現｜UniWay 行銷辦公室依老闆核准開的 draft PR\n\n### 發現\n> 首頁最新消息列出 116 學年度赴美國聖馬丁大學、美國奧克蘭大學、日本德島文理大學交換學生甄選「錄取名單」公告；另有教育部 116 年度學海築夢、新南向學海築夢甄選公告與美國奧克蘭大學 OU 暑期計畫。頁面沒有標日期、名額或截止日，也沒看到平台寫的 10/26 座談會與 116 年 Young 飛全球。\n\n### 二次驗證\n**小公主** 重新打開官網核對後，判定**平台需要更新**。\n> 首頁最新消息確有三則 116 學年度錄取名單公告：美國聖馬丁大學、美國密西根州奧克蘭大學、日本德島文理大學交換學生甄選，頁面未標日期。學海築夢公告在「活動申請及公告」區，屬教育部計畫，不是校級交換，不納入；也沒看到座談會與 Young 飛全球公告，但不能據此推論已下架。\n\n### 建議修改清單\n**修改 1**\n> 位置：verified_window_deadlines.py → csmu → 116 學年度甄選狀態\n> 目前：沒有\n> 建議：首頁最新消息已列 116 學年度赴美國聖馬丁大學、美國密西根州奧克蘭大學、日本德島文理大學交換學生甄選「錄取名單」公告（頁面未標公告日期），以各校官方公告為準\n> 依據：「116學年度赴美國聖馬丁大學交換學生甄選錄取名單」等三則\n\n### 巡查同事的建議\n> 將三校 116 學年度甄選狀態更新為「已公布錄取名單」（公告日期待確認）；另新增教育部 116 年度學海築夢／新南向學海築夢甄選公告，截止日以官網公告為準。\n\n### 官方來源\n- https://oia.csmu.edu.tw/?Lang=zh-tw\n\n### 平台目前的紀錄\n> 完整支援：國際事務處 116 學年度（2027–2028）赴美國聖馬丁大學（每學期 3 名免學費）、美國密西根州奧克蘭大學（每年 15 名 ASAP 交換暨生物學 4+1/4+2 學碩連讀）、日本德島文理大學（每學期 2 名免學費＋PP 升學研究所計畫 1 名免學費）甄選（2026/10/22 17:00 收件截止，2026/11/02–11/06 面試）、2026/10/26 首頁公告「2026 海外交換生研修心得分享座談會」（10 月共 6 場，開放報名中）、「教育部學海計畫說明會」與「116 年 Young 飛全球行動計畫培訓營」（首頁未標發布日期、截止日或名額）、教育部 116 年度學\n\n---\n這個 PR 只新增提案檔 `sources/audit/proposals/2026-11-13-csmu-5ba1a79b.json`，不會改動任何平台資料。內容是 AI 同事讀官網後整理的，**請先點開官方來源核對**；確認無誤後，依上面的修改清單在這個分支補上實際的資料更新再合併，或關閉不用。\n",
+      "head": {
+        "ref": "office/2026-11-13-csmu-5ba1a79b",
+        "sha": "832eeb3eee84d5be849c6809daaf3e409ce775cf"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/359",
+      "draft": true,
+      "filenames": [
+        "sources/audit/proposals/2026-11-13-csmu-5ba1a79b.json"
+      ]
+    },
+    {
+      "number": 358,
+      "title": "資料更新提案：國立陽明交通大學（新公告）",
+      "body": "## 資料更新提案：國立陽明交通大學\n\n**新公告**｜dora2 於 2026-11-13 巡查發現｜UniWay 行銷辦公室依老闆核准開的 draft PR\n\n### 發現\n> 公告列表（共 9 則）最上面多了一則 2026/11/12 的「【活動】116學年度 AY 2027/2028出國交換展暨校內甄選申請說明會」，平台資料還沒收錄。2026/10/07 的 UST 第一梯次（12/31 截止）仍在列表。列表中沒有看到 2026/10/13 轉知阿聯青年交流計畫那則，也沒有 116 學年度校級簡章；這兩點是否有變動，列表上看不出來，建議人工確認。\n\n### 二次驗證\n**小公主** 重新打開官網核對後，判定**平台需要更新**。\n> 列表最上方確有 2026/11/12（民國115-11-12）「116學年度 AY 2027/2028出國交換展暨校內甄選申請說明會」，內頁載明 12/3、12/4 11:00–15:00、光復校區浩然圖書館6樓，報名至11/23 12:00，12/4 11:30–12:30 有 AY2027/2028 第一學期申請說明會；平台未收錄。內頁沒有校內甄選截止日，列表上仍沒有116校級簡章，所以校級日程維持待確認。\n\n### 建議修改清單\n**修改 1**\n> 位置：verified_window_deadlines.py → nycu → online_deadline.value_text\n> 目前：……官網列表目前尚未公布陽明交大自身116學年校級出國交換簡章（最近一則校級為115學年第二梯次，07/10已截止）。\n> 建議：在前述文字後補：「國際處2026/11/12另公告『116學年度 AY 2027/2028出國交換展暨校內甄選申請說明會』：2026/12/03（四）、12/04（五）每日11:00–15:00，光復校區浩然圖書館6樓，並有Google Meet直播；報名至11/23 12:00；12/04 11:30–12:30為AY 2027/2028第一學期申請說明會。公告內頁未列校內甄選截止日，116校級簡章列表上仍未見，以各校官方公告為準。」\n> 依據：公告頁：Dec 3 and Dec 4, 2026, 11:00–15:00, Hao-Ran Library 6F；Registration due Nov 23, 2026 12:00；內頁未列具體甄選申請截止日\n\n**修改 2**\n> 位置：verified_window_deadlines.py → nycu → window_badge\n> 目前：台聯大UST 12/31 16:00電子郵件收件 · 校級新期日程待確認\n> 建議：台聯大UST 12/31 16:00電子郵件收件 · 校級新期日程待確認（12/3–12/4出國交換展暨說明會）\n> 依據：2026/11/12 公告：116學年度 AY 2027/2028出國交換展暨校內甄選申請說明會，12/3、12/4 舉行\n\n### 巡查同事的建議\n> 新增公告紀錄：2026/11/12「116學年度 AY 2027/2028出國交換展暨校內甄選申請說明會」（活動日期與地點需點進公告頁確認，以學校官方公告為準）。\n\n### 官方來源\n- https://www.nycu.edu.tw/oia/ch/app/data/view?module=nycu0006&id=286&serno=f31e8bb1-bfc0-4aa7-b6a6-ac2d26881717\n\n### 平台目前的紀錄\n> 已核對國際處出國交換申請公告列表（module=nycu0006&id=286）：2026/10/07 公告「116年度第一梯次臺灣聯合大學系統（UST）交換學生計畫」校內收件至 2026/12/31（週四）16:00 截止（PDF 寄至 ex-out@​nycu.edu.tw）；2026/10/13 轉知政大辦理「2027 臺灣與阿拉伯聯合大公國（阿聯）青年交流計畫」遴選（全額補助機票及食宿）；116 學年度校級出國交換簡章尚未公布（最新校級為 115-2，已於 2026/07/10 截止）。243 筆合作資料中 182 筆對上 115-2 已截止名額表、4 筆對上 116 台聯大第一梯次方案\n\n---\n這個 PR 只新增提案檔 `sources/audit/proposals/2026-11-13-nycu-b8ba603d.json`，不會改動任何平台資料。內容是 AI 同事讀官網後整理的，**請先點開官方來源核對**；確認無誤後，依上面的修改清單在這個分支補上實際的資料更新再合併，或關閉不用。\n",
+      "head": {
+        "ref": "office/2026-11-13-nycu-b8ba603d",
+        "sha": "ee86ffbf74fd6aff1074a809d5870324d58a725e"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/358",
+      "draft": true,
+      "filenames": [
+        "sources/audit/proposals/2026-11-13-nycu-b8ba603d.json"
+      ]
+    },
+    {
+      "number": 357,
+      "title": "資料更新提案：天主教輔仁大學（新公告）",
+      "body": "## 資料更新提案：天主教輔仁大學\n\n**新公告**｜Dora 於 2026-11-12 巡查發現｜UniWay 行銷辦公室依老闆核准開的 draft PR\n\n### 發現\n> 國際學生中心公告（newsID=1062，2026-10-20 發布，公告上寫 2026/11/6 更新）標題是「輔仁大學116-1 (2027秋季班)赴姊妹校交換學生開放申請(收件截止日至12月24日止)」。申請期間是 11/1 到 12/24 下午4點30分，公告寫「逾時不候，交件後不得更改」。名額和開放學校會在 11 月由姊妹校陸續提供，目前「尚未更新完成」。附件已經有「116-1(日語組)_開放交換姊妹校一覽表(1109更新).pdf」和「116-1(非日語組)_開放交換姊妹校一覽表(1112更新).pdf」，另有申請表和說明會簡報。平台寫的是「116-1名額預計11月底公告」，跟官網現況不一樣：官網已經陸續放出一覽表，還有明確的收件截止日。\n\n### 二次驗證\n**小公主** 重新打開官網核對後，判定**平台需要更新**。\n> 公告 newsID=1062（2026-10-20 發布，名額說明寫「更新日期：2026/11/6」）的收件期間是 11/1 到 12/24 下午4:30，平台日期已經一致。Dora 說平台寫「名額預計11月底公告」，但平台紀錄裡沒有這句。不過 window_badge 還寫「即將開放」，實際上 11/1 已經開放；附件也已經有日語組一覽表（1109更新）和非日語組一覽表（1112更新），官網同時寫名額「目前尚未更新完成」，平台都沒寫到。\n\n### 建議修改清單\n**修改 1**\n> 位置：verified_window_deadlines.py → fju → window_badge\n> 目前：10 週窗口即將開放 · 11/01–12/24 16:30（限校內網路）\n> 建議：申請中 · 12/24 16:30 截止（限校內網路；逾時不候，交件後不得更改）\n> 依據：公告：申請期間 11/1～12/24 下午4:30，逾時不候，交件後不得更改\n\n**修改 2**\n> 位置：verified_window_deadlines.py → fju → cycle_label\n> 目前：116-1（2027 秋季班）校級赴姊妹校交換學生申請（系統開放及紙本收件 11/01–12/24 16:30；名額於 11 月陸續更新）\n> 建議：116-1（2027 秋季班）校級赴姊妹校交換學生申請（系統開放及紙本收件 11/01–12/24 16:30；已有日語組一覽表 1109 更新、非日語組一覽表 1112 更新，名額及開放學校仍在陸續更新）\n> 依據：附件「116-1(日語組)_開放交換姊妹校一覽表(1109更新).pdf」「116-1(非日語組)_開放交換姊妹校一覽表(1112更新).pdf」；本文：「目前尚未更新完成」\n\n### 巡查同事的建議\n> 116-1 校內收件截止日改為 2026-12-24 16:30（申請期間 2026-11-01 起）。名額狀態改為「日語組一覽表 11/09 更新、非日語組一覽表 11/12 更新，名額及開放學校仍陸續更新中」。\n\n### 官方來源\n- https://iscoie.fju.edu.tw/newsDetail.jsp?newsID=1062&newsClassID=14\n\n### 平台目前的紀錄\n> 已整理116-1公告、申請表及237筆合作校／交換方案。附表名額與條件供規劃參考，當期開放及接待校要求仍須逐項確認；116-1名額預計11月底公告。（支援程度 full，合作校約 237 所）\n\n---\n這個 PR 只新增提案檔 `sources/audit/proposals/2026-11-12-fju-c960aae7.json`，不會改動任何平台資料。內容是 AI 同事讀官網後整理的，**請先點開官方來源核對**；確認無誤後，依上面的修改清單在這個分支補上實際的資料更新再合併，或關閉不用。\n",
+      "head": {
+        "ref": "office/2026-11-12-fju-c960aae7",
+        "sha": "e6a2c380e908eb7276d86c58a78da2ad9306ddfe"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/357",
+      "draft": true,
+      "filenames": [
+        "sources/audit/proposals/2026-11-12-fju-c960aae7.json"
+      ]
+    },
+    {
+      "number": 356,
+      "title": "資料更新提案：國立中山大學（新公告）",
+      "body": "## 資料更新提案：國立中山大學\n\n**新公告**｜dora2 於 2026-11-13 巡查發現｜UniWay 行銷辦公室依老闆核准開的 draft PR\n\n### 發現\n> 最新公告列表（7頁，今日看第1頁）：2026/10/21 的「其他國家與地區出國交換甄選簡章」標題現在帶有「(11/6已最終更新)」，平台只寫簡章已發布，沒提 11/6 更新；甄選時程與線上說明會公告同為 10/21。簡章內容有無變動（申請期間、名額等）未開啟內頁核對，另 10/29 的交換校資訊與志願表尚未在列表看到獨立公告。\n\n### 二次驗證\n**小公主** 重新打開官網核對後，判定**平台需要更新**。\n> 公告列表第1則（2026/10/21）標題確實帶「(11/6已最終更新)」，簡章頁也標示 last updated 11/6；平台紀錄（查核日10/28）沒有反映。簡章內頁的申請期間 11/03 09:00–11/17 17:00、補正至11/20 17:00、結果2027年1月第2週都與平台一致，名額簡章未列固定數字；10/29 的交換校資訊與志願表，列表上仍沒有獨立公告。所以只需補註 11/6 更新，不改日期。\n\n### 建議修改清單\n**修改 1**\n> 位置：verified_window_deadlines.py → nsysu → cycle_label\n> 目前：2027–2028赴其他國家與地區第一次甄選（正式簡章384608已公告：11/03 09:00–11/17 17:00申請、補正至11/20 17:00、結果預計2027年1月第2週公告；交換校資訊與志願表10/29公布）\n> 建議：2027–2028赴其他國家與地區第一次甄選（正式簡章384608已公告，標題註記11/6已最終更新：11/03 09:00–11/17 17:00申請、補正至11/20 17:00、結果預計2027年1月第2週公告；交換校資訊與志願表10/29公布，列表尚未見獨立公告）\n> 依據：公告列表：「2027-2028 其他國家與地區出國交換甄選簡章(11/6已最終更新)」；簡章頁標示 last updated 11/6\n\n**修改 2**\n> 位置：verified_window_deadlines.py → nsysu → online_deadline.value_text\n> 目前：……名額載明「以國際處最新簡章公告為準」，交換校資訊和志願表於10/29公布（名額待10/29公布後再核對，以各校官方公告為準）……\n> 建議：在前述文字後補：「簡章公告標題現註記『11/6已最終更新』（2026/11/13 查核，申請期間、補正期限、結果預計時間與上列一致，簡章未列固定名額，以各校官方公告為準）」\n> 依據：簡章頁：申請 Nov 3 9:00–Nov 17 17:00、補正至 Nov 20 17:00、結果 2027 年 1 月第 2 週；名額依各交換校提名，以最新公告為準\n\n### 巡查同事的建議\n> 簡章公告標題註記「11/6已最終更新」；建議人工開啟簡章內頁核對 11/6 更新內容（申請期間 11/03–11/17、名額、志願表）後再更新平台。\n\n### 官方來源\n- https://oia.nsysu.edu.tw/p/405-1308-384608,c20621.php?Lang=zh-tw\n\n### 平台目前的紀錄\n> 完整支援：國際處最新公告列表已發布正式簡章「2027-2028 其他國家與地區出國交換甄選簡章」（p/405-1308-384608,c20621.php，列表日期標2026/10/21、內頁未標日期；同日另有甄選時程&4場線上說明會公告384613：10/29、10/31 20:00–21:30及11/4、11/5 12:00–13:30）：系統申請 2026/11/03 09:00 至 11/17 17:00，審核及補正至 11/20 17:00，甄選結果預計 2027 年 1 月第 2 週公告；名額載明「以國際處最新簡章公告為準」，交換校資訊和志願表 10/29 公布（待 10/29 公\n\n---\n這個 PR 只新增提案檔 `sources/audit/proposals/2026-11-13-nsysu-42f06152.json`，不會改動任何平台資料。內容是 AI 同事讀官網後整理的，**請先點開官方來源核對**；確認無誤後，依上面的修改清單在這個分支補上實際的資料更新再合併，或關閉不用。\n",
+      "head": {
+        "ref": "office/2026-11-13-nsysu-42f06152",
+        "sha": "6cd5936f16bd4df24990c9d97b14aa9aff165d12"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/356",
+      "draft": true,
+      "filenames": [
+        "sources/audit/proposals/2026-11-13-nsysu-42f06152.json"
+      ]
+    },
+    {
+      "number": 355,
+      "title": "資料更新提案：國立高雄師範大學（和平台不一致）",
+      "body": "## 資料更新提案：國立高雄師範大學\n\n**和平台不一致**｜小小郭 於 2026-11-13 巡查發現｜UniWay 行銷辦公室依老闆核准開的 draft PR\n\n### 發現\n> exchange-programs.php 現在顯示的是「116年選送學生出國研修說明會」簡報與手冊（PDF），頁面沒有標日期；平台寫的是 115 年說明會（檔名 20251027／20251029）。另有 2025/10/07 左右上傳的學長姐心得簡報。頁面沒有甄選日期、名額或補助資訊。首頁公告 id=460、id=496 這次沒有打開核對。\n\n### 二次驗證\n**小公主** 重新打開官網核對後，判定**平台需要更新**。\n> exchange-programs.php 目前只有兩份「116年選送學生出國研修說明會」簡報與手冊 PDF，沒有 115 年項目，頁面未標日期，也沒有甄選日期、名額或補助。平台寫 115 年說明會已與官網不一致。\n\n### 建議修改清單\n**修改 1**\n> 位置：校級交換說明會資料（exchange-programs 專頁敘述）→ nknu\n> 目前：僅放 115 年說明會簡報與手冊（檔名 20251027／20251029）\n> 建議：專頁已放 116 年選送學生出國研修說明會簡報與手冊（PDF，頁面未標日期）；申請日期、名額、補助頁面未列，以各校官方公告為準\n> 依據：頁面連結：「116年選送學生出國研修說明會」簡報／手冊\n\n### 巡查同事的建議\n> 將赴外交換專頁敘述由「僅放 115 年說明會簡報與手冊」改為「已放 116 年選送學生出國研修說明會簡報與手冊（頁面未標日期）」，並待人工確認檔案內的申請日期。\n\n### 官方來源\n- https://oia.nknu.edu.tw/exchange-programs.php\n\n### 平台目前的紀錄\n> 已整合國際事務處首頁（`https://oia.nknu.edu.tw/）與赴外交換專頁（exchange-programs.php）：（1）首頁` 2026-10-01 公告「大陸地區（含港澳地區）姊妹校2027年春季班交換申請資訊（1001更新）」（news-detail.php?id=460，校內收件至 2026/10/16 已截止），首頁／公告標題列出北京師範大學、香港教育大學、澳門城市大學、西南大學、華中師範大學、華東師範大學、南京師範大學、東北師範大學等 8 校，惟內文編號 1–8 及附件第 7 項實列「南京大學（2 名，10/13 截止）」而非「南京師範大學」（平台同步標註標題與內文\n\n---\n這個 PR 只新增提案檔 `sources/audit/proposals/2026-11-13-nknu-bae45498.json`，不會改動任何平台資料。內容是 AI 同事讀官網後整理的，**請先點開官方來源核對**；確認無誤後，依上面的修改清單在這個分支補上實際的資料更新再合併，或關閉不用。\n",
+      "head": {
+        "ref": "office/2026-11-13-nknu-bae45498",
+        "sha": "e489b7e341405d18d2783520189baca603db298f"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/355",
+      "draft": true,
+      "filenames": [
+        "sources/audit/proposals/2026-11-13-nknu-bae45498.json"
+      ]
+    },
+    {
+      "number": 354,
+      "title": "資料更新提案：國立臺灣海洋大學（新公告）",
+      "body": "## 資料更新提案：國立臺灣海洋大學\n\n**新公告**｜小小郭 於 2026-11-13 巡查發現｜UniWay 行銷辦公室依老闆核准開的 draft PR\n\n### 發現\n> 交換頁列出 2027 春/秋季校內甄選：簡章預計 2026/3/1 公告、報名截止 2026/5/8 中午 12:00、面試 5 月下旬、6 月中旬通知結果；2027 春季向姊妹校申請 2026/8–11 月。頁面註明 2027 簡章尚未更新，建議先參考前期簡章。頁面未列說明會、名額、補助。這是預計時程，以各校官方公告為準。\n\n### 二次驗證\n**小公主** 重新打開官網核對後，判定**平台需要更新**。\n> 交換頁確實列出 2027 春/秋季校內甄選時程（簡章 2026/3/1、報名 5/8 中午 12:00、面試 5 月下旬、6 月中旬 email 通知），並註明「簡章尚未更新，同學可先參考下方前期(2026年春/秋季學期)簡章」。平台沒有 ntou 紀錄。但頁面日期都是 2026 年且已過，不能當成現行截止日，只能原樣標註。\n\n### 建議修改清單\n**修改 1**\n> 位置：verified_window_deadlines.py → ntou → online_deadline.value_text\n> 目前：沒有\n> 建議：交換頁列出 2027 春/秋季校內甄選時程：簡章 2026/3/1 公告、報名至 2026/5/8 中午 12:00、面試 5 月下旬、6 月中旬 email 通知結果。頁面註明簡章尚未更新，可先參考前期（2026 春/秋季）簡章；日期為頁面所列，不一定是現行梯次，以各校官方公告為準。\n> 依據：「簡章尚未更新，同學可先參考下方前期(2026年春/秋季學期)簡章。」\n\n### 巡查同事的建議\n> 在母校規則補充 2027 春/秋季校內甄選預計時程（報名截止 2026/5/8 12:00、面試 5 月下旬、6 月中旬通知），並標註 2027 簡章尚未更新、以官方公告為準。\n\n### 官方來源\n- https://oia.ntou.edu.tw/p/412-1022-6958.php?Lang=zh-tw\n\n### 平台目前的紀錄\n> 123筆合作紀錄；母校規則及45筆已截止名單中文校名部分核對，個別接待校、生活資訊與其餘欄位待查，不是完整驗證。（支援程度 basic，合作校約 123 所）\n\n---\n這個 PR 只新增提案檔 `sources/audit/proposals/2026-11-13-ntou-4e1dff89.json`，不會改動任何平台資料。內容是 AI 同事讀官網後整理的，**請先點開官方來源核對**；確認無誤後，依上面的修改清單在這個分支補上實際的資料更新再合併，或關閉不用。\n",
+      "head": {
+        "ref": "office/2026-11-13-ntou-4e1dff89",
+        "sha": "b2e41aea92de8bc3889f3000fe4bcbf386543a63"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/354",
+      "draft": true,
+      "filenames": [
+        "sources/audit/proposals/2026-11-13-ntou-4e1dff89.json"
+      ]
+    },
+    {
+      "number": 353,
+      "title": "資料更新提案：國立中正大學（新公告）",
+      "body": "## 資料更新提案：國立中正大學\n\n**新公告**｜Dora 於 2026-11-12 巡查發現｜UniWay 行銷辦公室依老闆核准開的 draft PR\n\n### 發現\n> 出國留學最新消息列表上有兩則 10～11 月的新公告：2026-10-29「2027春季校級姊妹校薦外交換校內初審通過名單」（頁面寫明這只是校內初審，最終錄取以姊妹校通知為準）；2026-11-11「出國交換暨獎學金說明會」。說明會內文抓不到，日期、時間、地點都還沒確認。\n\n### 二次驗證\n**小公主** 重新打開官網核對後，判定**平台需要更新**。\n> 出國留學最新消息列表上，2026-10-29 有「2027春季校級姊妹校薦外交換校內初審通過名單」，內文寫「此階段僅為校內初審，最終交換之錄取結果要以姊妹校通知為主」。平台還停在「三梯次已於 09/21 截止」，沒寫初審名單已公告。2026-11-11 說明會的內文抓不到，日期、時間、地點都還不能確認，所以不寫進平台。\n\n### 建議修改清單\n**修改 1**\n> 位置：verified_window_deadlines.py → ccu → window_badge\n> 目前：2027 春季三梯次已於 09/21 截止 · 後續梯次待核實\n> 建議：2027 春季三梯次已於 09/21 截止 · 10/29 已公告校內初審通過名單（最終錄取以姊妹校通知為準）· 後續梯次待核實\n> 依據：列表 2026-10-29「2027春季校級姊妹校薦外交換校內初審通過名單」；內文寫「此階段僅為校內初審，最終交換之錄取結果要以姊妹校通知為主」\n\n### 巡查同事的建議\n> 2027 春季校級薦外交換狀態補上：2026-10-29 已公告校內初審通過名單（最終錄取以姊妹校通知為準）。\n\n### 官方來源\n- https://oia.ccu.edu.tw/p/406-1008-96864,r1714.php?Lang=zh-tw\n\n### 平台目前的紀錄\n> 已核對2027春季校級薦外交換；灰字參考與空白名額分開，三梯次校內收件已截止。（支援程度 basic，合作校約 52 所）\n\n---\n這個 PR 只新增提案檔 `sources/audit/proposals/2026-11-12-ccu-5890e30b.json`，不會改動任何平台資料。內容是 AI 同事讀官網後整理的，**請先點開官方來源核對**；確認無誤後，依上面的修改清單在這個分支補上實際的資料更新再合併，或關閉不用。\n",
+      "head": {
+        "ref": "office/2026-11-12-ccu-5890e30b",
+        "sha": "76513d1d1a26ea220275909296147325ba9cd432"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/353",
+      "draft": true,
+      "filenames": [
+        "sources/audit/proposals/2026-11-12-ccu-5890e30b.json"
+      ]
+    },
+    {
+      "number": 352,
+      "title": "feat(cgu-demo): 將長庚展示站改為正式產品介面呈現並收納展示工具",
+      "body": "## 摘要\n\n將長庚大學專屬展示站（`uvicorn exchange_info.cgu_demo:create_demo_app --factory`）調整為接近正式上線產品的介面與語氣，方便對評審與長庚校方展示系統完成後的呈現；後端仍維持 `MockCguConnector`，未對真實校方系統送出資料。\n\n- **修改範圍嚴格限制於長庚專屬層與對應文件／測試**：僅異動 `src/exchange_info/cgu_demo.py`、`src/exchange_info/demo_data/content.json`、`src/exchange_info/static/cgu-demo-bootstrap.js`、`src/exchange_info/static/cgu-demo.css`、`src/exchange_info/static/cgu-demo.js`、`docs/cgu-demo/README.md`、`docs/cgu-demo/demo-script.md` 及 `tests/test_cgu_demo*.py`。未改動 `pyproject.toml`、`uv.lock` 與主站共用檔案，一般 `create_app()` 行為完全不變（`routes: 203`）。\n- **必須保留項目不變**：\n  - （A）全站唯一一處展示環境說明集中於底部右下角可收合「展示工具 → 關於此展示」，保留「這是 UniWay 為長庚大學製作的展示環境，資料不會送達長庚大學國際事務處。正式申請請依國際處公告辦理。」並附官方公告連結。\n  - （B）送出申請確認訊息保留「正式申請請依國際處公告完成線上表單與紙本繳交」及官方公告連結。\n  - （C／D／E）不使用長庚大學校徽與未授權宣稱、頁尾保留「資格、期限與文件以校方公告為準」、維持 `noindex`／記憶體計算雜湊不寫入檔案／瀏覽器工作區隔離／同源與重設驗證，以及已查核之 116-1 時程、78 所合作校與領航者補助資訊。\n\n---\n\n## 改動字樣與介面調整前後對照表\n\n| 類別／位置 | 修改前（Before） | 修改後（After） |\n|---|---|---|\n| 全站「模擬」徽章 | 各區塊顯示 `模擬・尚未與校方串接`（`SIM_BADGE`）及通知列徽章 | 全面移除（通知列改為 `國際處通知`） |\n| 學生送件區塊與按鈕 | `送交國際處（模擬）— 校內五項應備文件預檢`、`送交國際處（模擬）`、`執行完整性預檢` | `送交國際處`、`檢查文件齊備狀態` |\n| 送件紀錄與空白提示 | `我的模擬送件與狀態時間軸`、`目前尚無模擬送件紀錄…SIM-` | `我的送件紀錄`、`目前尚無送件紀錄…CGU-116-1-` |\n| 問國際處頁面與比對標籤 | `問國際處（模擬）`、`問國際處（規則庫關鍵字比對與模擬詢問單）`、`規則式比對，非 AI`、`我的模擬詢問紀錄與承辦回覆` | `問國際處`、`依國際處公告與常見問題回覆`、`我的詢問紀錄` |\n| 問國際處轉送與 FAQ 提示 | `已轉送模擬承辦收件匣`、`未命中現有規則與 FAQ，已建立詢問單送交模擬收件匣`、`等待承辦於模擬收件匣回覆…` | `已轉送國際處承辦`、`已建立詢問單並轉送國際處承辦`、`等待國際處承辦回覆…` |\n| 返國心得頁面與合作校公開心得 | `返國心得（模擬）`、`返國心得（國際處學期報告表四段式模擬送審）`、`送出返國心得（模擬）`、`我的返國心得紀錄與列印匯出`、`學長姐心得（示範資料）` | `返國心得`、`送出返國心得`、`我的返國心得紀錄`、`學長姐心得` |\n| 返國報告列印版 | `長庚大學出國研修返國學期報告表（展示列印版）`、`模擬收件編號`、`此列印版僅供展示預覽，尚未與校方串接；…` | `長庚大學出國研修返國學期報告表`、`收件編號`、`正式結案與報告繳交請依長庚大學國際事務處規定於返國後 2 週內辦理。` |\n| 國際處工作台與切換按鈕 | `國際處視角（模擬）— 承辦收件匣與統計工作台`、`預載 5 筆明確標示之虛構示範資料`、`切換為國際處視角` / `切換回學生視角` | `國際處工作台`、`切換國際處視角` / `切換學生視角` |\n| 通知標題與時間軸 | `【模擬・國際處】`、`【模擬・要求補件】`、`【模擬・初審通過】`、`【模擬・承辦回覆】`、`【模擬・FAQ 更新】`、`【模擬・心得審核】` | `已收件：`、`要求補件：`、`初審通過：`、`承辦回覆：`、`常見問題更新：`、`心得審核：` |\n| 收件編號格式（前後端／預載／列印） | `SIM-APP-xxxx`（含 `SIM-APP-SEED-0001`）、`SIM-INQ-xxxx`（含 `SIM-INQ-SEED-0003`）、`SIM-RPT-xxxx` | `CGU-116-1-A0001`、`CGU-116-1-Q0001`、`CGU-116-1-R0001` |\n| 學生帳號與論壇種子資料 | `林小程（展示資料）`、論壇 `（示範資料）`、`【示範心得】` / `【示範分享】` / `【示範提問】` / `【展示示範貼文】` | `林小程`、移除示範括號與貼文前綴 |\n| 檔案上傳區與技術欄位 | `檔案雜湊保護機制：展示版不保存檔案內容，請勿上傳真實個資`、顯示檔案 `大小 / bytes / 類型 / SHA-256`、`已備齊（僅存雜湊）` | 中性說明 `檔案僅用於完整性檢查，不會保存內容。`、僅顯示 `已選取檔案：<檔名>` 與 `已備齊` |\n| 示範帶入、校方介接與底部工具列 | 學生頁內直接放置 `帶入示範檔`、`一鍵帶入全部示範測試檔`、`帶入虛構 300 字示範草稿`；導覽列固定顯示 `校方介接`；底部常駐長條控制列 | 自學生介面與導覽列移除，集中收入右下角預設收合的 `展示工具`（內含：切換視角、載入示範申請、帶入示範檔、帶入心得草稿、重設資料、校方介接規格、關於此展示、合作構想示意）；網址帶 `?present=1` 時整條隱藏 |\n| 展示說明與送件確認保留文字 | 底部控制列 `來源與展示說明` + `mock` / `虛構` 說明；確認文字 `已建立模擬申請…` | 唯一保留於「展示工具 → 關於此展示」＋官方公告連結；送出確認保留 `正式申請請依國際處公告完成線上表單與紙本繳交` 與官方公告連結 |\n\n---\n\n## 更新與新增的測試斷言＋實測結果\n\n### 1. 更新的測試斷言\n- `tests/test_cgu_demo.py`：\n  - 更新 `#cgu-demo-tools-toggle`（「展示工具」）、預設摺疊 `#cgu-demo-tools-panel[hidden]` 與面板內「關於此展示」／工具按鈕集合斷言。\n  - 更新個人帳號名稱 `林小程`、預載與新建編號格式 `CGU-116-1-A...` / `CGU-116-1-Q...` / `CGU-116-1-R...`、`match_mode` 字串「依國際處公告與常見問題回覆」。\n  - `test_html_fixes_hidden_community_fixed_school_and_forbidden_terms` 改為驗證初始 HTML、`/demo/connector/*` JSON（含 `MockCguConnector` spec）、列印頁與 reset API 回應皆不含 `模擬`、`SIM-`、`長庚大學官方`、`國際處授權`、`已與校方系統串接`、`校徽`，且學生導覽列不含 `school-connector`。\n- `tests/test_cgu_demo_browser.py`：\n  - 新增 `open_demo_tools` / `close_demo_tools` 操作可收合底部工具；更新 390px 手機版收合高度（`<= 60px`）與展開 7 按鈕佈局斷言。\n  - 更新學生送件（不含頁內帶入按鈕與 SHA-256、出現中性隱私說明與正式送出確認提醒）、國際處工作台（「國際處工作台」、通知中心「國際處通知」）、問國際處（「依國際處公告與常見問題回覆」、`CGU-116-1-Q`）、返國心得（4 段 300 字不帶「虛構」前綴、`CGU-116-1-R` 列印版不含「展示列印版」、合作校詳細頁「學長姐心得」）。\n- `tests/test_cgu_demo_preview.py` & `tests/test_cgu_demo_preview_browser.py`：\n  - 更新 `#cgu-demo-strip` 結構為可收合 `#cgu-demo-tools-toggle`＋`#cgu-demo-tools-panel` 內 7 按鈕與向上展開之 `#cgu-preview-menu`（含 `關於此展示` 對話框 7 條連結）。\n\n### 2. 新增的 2 個測試（`tests/test_cgu_demo_browser.py`）\n1. `test_formal_product_presentation_hides_demo_jargon_and_supports_present_mode`：遍歷 `#home`、`#partners`、`#scholarships`、`#my-application`（含已送出案件）、`#ask-oia`、`#return-report`、`#oia-view`，檢查學生端與國際處工作台可見文字皆不含 `模擬`、`SIM-`、`示範`、`展示版`、`虛構`，並驗證 `?present=1` 在 1440px 與 390px 下完全隱藏 `#cgu-demo-strip`。\n2. `test_retained_single_about_disclaimer_and_post_submission_official_notice`：驗證一般畫面與「我的申請」皆不出現展示說明文字；僅在展開「展示工具 → 關於此展示」後出現完整展示環境說明與長庚國際處 116-1 公告連結；並驗證送出申請後的確認畫面保留「正式申請請依國際處公告完成線上表單與紙本繳交」與官方公告連結。\n\n### 3. 實際執行結果\n- `uv sync --frozen`：exit 0\n- `uv run --no-sync pytest tests/test_cgu_demo.py tests/test_cgu_demo_browser.py tests/test_cgu_demo_preview.py tests/test_cgu_demo_preview_browser.py -v`：\n  - **`69 passed in 395.73s (0:06:35)`**（0 failed, 0 skipped）\n- 守護與主站檢查：\n  - `tests/test_cgu_deployment_package.py tests/test_static_asset_versions.py tests/test_text_files_are_utf8.py`：**`333 passed in 1.76s`**\n  - `create_app()`：`create_app OK, routes: 203`\n\n---\n\n## 前後截圖（真實執行 `PORT=8765 sh scripts/run_cgu_demo.sh` 實測走完完整動線）\n\n### 我的申請／送件與狀態時間軸（1440px）\n| Before（舊展示標示） | After（一般模式，右下角「展示工具」收合） | After（`?present=1` 簡報模式） |\n|---|---|---|\n| ![before-1440-my-application](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/before-1440-my-application.png?raw=true) | ![after-1440-my-application](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/after-1440-my-application.png?raw=true) | ![after-1440-present-my-application](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/after-1440-present-my-application.png?raw=true) |\n\n### 國際處工作台／問國際處／返國心得／關於此展示（1440px）\n| 畫面 | Before | After |\n|---|---|---|\n| 國際處工作台 | ![before-1440-oia-console](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/before-1440-oia-console.png?raw=true) | ![after-1440-oia-console](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/after-1440-oia-console.png?raw=true) |\n| 問國際處 | ![before-1440-ask-oia](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/before-1440-ask-oia.png?raw=true) | ![after-1440-ask-oia](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/after-1440-ask-oia.png?raw=true) |\n| 返國心得 | ![before-1440-return-report](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/before-1440-return-report.png?raw=true) | ![after-1440-return-report](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/after-1440-return-report.png?raw=true) |\n| 展示工具 → 關於此展示（唯一展示環境說明） | — | ![after-1440-tools-about](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/after-1440-tools-about.png?raw=true) |\n\n### 手機版（390px：一般模式 vs `?present=1`）\n| Before (390px) | After 一般模式 (390px) | After `?present=1` (390px) |\n|---|---|---|\n| ![before-390-my-application](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/before-390-my-application.png?raw=true) | ![after-390-my-application](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/after-390-my-application.png?raw=true) | ![after-390-present-my-application](https://github.com/blizzard-new/abroad/blob/feat/cgu-demo-formal-ui/docs/cgu-demo/evidence/formal-ui/after-390-present-my-application.png?raw=true) |\n",
+      "head": {
+        "ref": "feat/cgu-demo-formal-ui",
+        "sha": "1a7f3a1d207c5c3f4c194cb14c17912b53fdd951"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/352",
+      "draft": true,
+      "filenames": [
+        "docs/cgu-demo/README.md",
+        "docs/cgu-demo/demo-script.md",
+        "docs/cgu-demo/evidence/formal-ui/after-1440-ask-oia.png",
+        "docs/cgu-demo/evidence/formal-ui/after-1440-my-application.png",
+        "docs/cgu-demo/evidence/formal-ui/after-1440-oia-console.png",
+        "docs/cgu-demo/evidence/formal-ui/after-1440-present-my-application.png",
+        "docs/cgu-demo/evidence/formal-ui/after-1440-return-report.png",
+        "docs/cgu-demo/evidence/formal-ui/after-1440-tools-about.png",
+        "docs/cgu-demo/evidence/formal-ui/after-390-my-application.png",
+        "docs/cgu-demo/evidence/formal-ui/after-390-present-my-application.png",
+        "docs/cgu-demo/evidence/formal-ui/before-1440-ask-oia.png",
+        "docs/cgu-demo/evidence/formal-ui/before-1440-my-application.png",
+        "docs/cgu-demo/evidence/formal-ui/before-1440-oia-console.png",
+        "docs/cgu-demo/evidence/formal-ui/before-1440-return-report.png",
+        "docs/cgu-demo/evidence/formal-ui/before-390-my-application.png",
+        "src/exchange_info/cgu_demo.py",
+        "src/exchange_info/demo_data/content.json",
+        "src/exchange_info/static/cgu-demo-bootstrap.js",
+        "src/exchange_info/static/cgu-demo.css",
+        "src/exchange_info/static/cgu-demo.js",
+        "tests/test_cgu_demo.py",
+        "tests/test_cgu_demo_browser.py",
+        "tests/test_cgu_demo_preview.py",
+        "tests/test_cgu_demo_preview_browser.py"
+      ]
+    },
+    {
+      "number": 351,
+      "title": "content(seo): 11/14 AI 英文簡報與多益時態兩篇",
+      "body": "新增 2026-11-14（Asia/Taipei）兩篇完整繁體中文 SEO 圖文指南，讓學生能從素材整理、實際表達到問答練英文簡報，也能依時間參照判斷 TOEIC Part 5 動詞時態。既有 51 篇內容、URL、刊載日與 lastmod 保留，沿用既有 renderer、canonical／JSON-LD／社群標記／Sitemap、手機橫捲表格及原生 FAQ。\n\n- **用 AI 練英文簡報怎麼做？主線、講稿修改與問答 Prompt**（`ai-english-presentation-practice`）：三輪可填 Prompt、任務卡、原創未試行提案、弱稿／修改稿、畫面與提示卡、問答及錄音檢查。分清已知、安排與未知；不冒稱模型輸出、語音、方案或投影片檔案實測。\n- **多益 Part 5 時態題怎麼判斷？時間線、完成式與原創題解析**（`toeic-part-five-verb-tenses`）：六題 24 個原創選項、逐項解析、參照時點／完成與進行／時間子句、資訊不足案例及訂正表。明示 TOEIC Listening & Reading，題目不是官方樣題或校準模考，不以自編答對率換分。\n\n每篇都有直接回答、摘要、H1/H2、目錄、表格、原創 HTML 五步圖、FAQ、來源版本與日期、相關文章及母校／目的地／選校連結。新增兩張專用 Pexels 真實授權攝影，1536×1024 WebP，41,210／77,962 bytes，保留 alt、圖說、作者來源、尺寸及 lazy loading。\n\n已讀最新 workflow／backlog、51 篇庫存與相關全文。提交前 open PR 及同日全狀態 PR 均為空，main 未變；#346 已合併，昨天兩篇已在 main，排除重做。#78／#92 已合併，沒有基礎相依。選題依編輯判斷，無虛構搜尋量、排名或 Search Console 成效。\n\n11 個實際引用官方／出版者來源均 HTTP 200 並實讀適用正文；未轉載官方題庫、影片或講義。Kent 及一個舊文法路徑 404 已排除，採可核對 UNC／British Council，時間子句循官方連結到新 canonical 頁。原創示例、來源範圍及限制有完整紀錄。\n\n驗證首次通過：\n\n- `scripts/check_editorial.py --base-ref origin/main`：53 篇、0 errors。\n- 六模組 SEO 單元／整合／release gate：**180 passed**。\n- 三模組桌面／手機 E2E：**63 passed**。\n- 兩篇 × 320／390／1440，JavaScript 關閉：**6 組通過**；**15 張**最終畫面目視確認。\n- Wheel：53 JSON、53 專用 WebP、全部 CSS／字型及其他閱讀資產，共 **646 唯一檔逐位元核對**；checkout 外成功載入 53 篇及新 slug。其他學校素材未全面重驗，manifest 明示範圍。\n\n[來源、練習核對、攝影、畫面與驗收證據](https://github.com/blizzard-new/abroad/blob/6a0e591a7d512c56b0f5525ff7974631c4e5ec31/docs/seo-editorial-validation-2026-11-14.md)。本 PR 待人工審閱，不自動合併或部署，不宣稱已上線、已收錄或保證進步；GitHub CI 以 Checks 即時狀態為準。\n\n任務附件工具已呼叫，40秒未回傳；附件清單查詢亦未回傳，無法確認附加成功。GitHub 已核對 PR 開啟、非草稿、未合併、同日唯一；初查兩項 image CI 進行中，最終以 Checks 即時結果為準。\n",
+      "head": {
+        "ref": "codex/seo-daily-20261114",
+        "sha": "6a0e591a7d512c56b0f5525ff7974631c4e5ec31"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/351",
+      "draft": false,
+      "filenames": [
+        "docs/seo-editorial-backlog.md",
+        "docs/seo-editorial-browser-2026-11-14.json",
+        "docs/seo-editorial-checks-2026-11-14.json",
+        "docs/seo-editorial-exercises-2026-11-14.json",
+        "docs/seo-editorial-inventory-2026-11-14.json",
+        "docs/seo-editorial-package-2026-11-14.json",
+        "docs/seo-editorial-photography-2026-11-14.json",
+        "docs/seo-editorial-pr-audit-2026-11-14.json",
+        "docs/seo-editorial-sources-2026-11-14.json",
+        "docs/seo-editorial-tests-2026-11-14.txt",
+        "docs/seo-editorial-validation-2026-11-14.md",
+        "docs/seo-previews-2026-11-14/ai-english-presentation-practice-diagram-390.jpg",
+        "docs/seo-previews-2026-11-14/ai-english-presentation-practice-original-before-and-after-390.jpg",
+        "docs/seo-previews-2026-11-14/ai-english-presentation-practice-prompt-three-audience-questions-390.jpg",
+        "docs/seo-previews-2026-11-14/ai-english-presentation-practice-prompt-two-say-it-aloud-390.jpg",
+        "docs/seo-previews-2026-11-14/ai-english-presentation-practice-slides-and-cue-card-390.jpg",
+        "docs/seo-previews-2026-11-14/desktop-1440.jpg",
+        "docs/seo-previews-2026-11-14/english-presentation-photo-390.jpg",
+        "docs/seo-previews-2026-11-14/mobile-320.jpg",
+        "docs/seo-previews-2026-11-14/photography-crops.jpg",
+        "docs/seo-previews-2026-11-14/tense-timeline-photo-390.jpg",
+        "docs/seo-previews-2026-11-14/toeic-part-five-verb-tenses-answers-four-six-390.jpg",
+        "docs/seo-previews-2026-11-14/toeic-part-five-verb-tenses-answers-one-three-390.jpg",
+        "docs/seo-previews-2026-11-14/toeic-part-five-verb-tenses-diagram-390.jpg",
+        "docs/seo-previews-2026-11-14/toeic-part-five-verb-tenses-not-enough-context-390.jpg",
+        "docs/seo-previews-2026-11-14/toeic-part-five-verb-tenses-original-questions-one-three-390.jpg",
+        "src/exchange_info/editorial/ai-english-presentation-practice.json",
+        "src/exchange_info/editorial/toeic-part-five-verb-tenses.json",
+        "src/exchange_info/static/assets/editorial/english-presentation-photo.webp",
+        "src/exchange_info/static/assets/editorial/tense-timeline-photo.webp"
+      ]
+    }
+  ],
+  "review_scope": "Reviewed all12open PR scopes and complete paginated filenames.351contains two prior articles;352/362CGUdemo only;9sourceaudit proposals. Pending351 topics excluded; no pending changes imported.",
+  "pending_editorial": {
+    "number": 351,
+    "head": "6a0e591a7d512c56b0f5525ff7974631c4e5ec31",
+    "slugs": [
+      "ai-english-presentation-practice",
+      "toeic-part-five-verb-tenses"
+    ],
+    "action": "Preserve original batch,exclude and do not import"
+  },
+  "foundation": [
+    {
+      "number": 78,
+      "merged": true
+    },
+    {
+      "number": 92,
+      "merged": true
+    }
+  ],
+  "selection": "Editorial judgment in approved directions6and17; no SearchConsole,volume,rankings or traffic.",
+  "precommit_recheck": {
+    "date": "2026-11-15",
+    "main": "aa2d1424d1645308b479bee648eb056a9e956f8e",
+    "open_heads": [
+      {
+        "number": 362,
+        "sha": "18252e273acbc3aa307f764acf2834580fb9e9a1"
+      },
+      {
+        "number": 361,
+        "sha": "6f4d61b1afedba2dbd5f6e016d60b49722b711a4"
+      },
+      {
+        "number": 360,
+        "sha": "0b877c34d2750060d0574d0473df6c03f2f3ccf9"
+      },
+      {
+        "number": 359,
+        "sha": "832eeb3eee84d5be849c6809daaf3e409ce775cf"
+      },
+      {
+        "number": 358,
+        "sha": "ee86ffbf74fd6aff1074a809d5870324d58a725e"
+      },
+      {
+        "number": 357,
+        "sha": "e6a2c380e908eb7276d86c58a78da2ad9306ddfe"
+      },
+      {
+        "number": 356,
+        "sha": "6cd5936f16bd4df24990c9d97b14aa9aff165d12"
+      },
+      {
+        "number": 355,
+        "sha": "e489b7e341405d18d2783520189baca603db298f"
+      },
+      {
+        "number": 354,
+        "sha": "b2e41aea92de8bc3889f3000fe4bcbf386543a63"
+      },
+      {
+        "number": 353,
+        "sha": "76513d1d1a26ea220275909296147325ba9cd432"
+      },
+      {
+        "number": 352,
+        "sha": "1a7f3a1d207c5c3f4c194cb14c17912b53fdd951"
+      },
+      {
+        "number": 351,
+        "sha": "6a0e591a7d512c56b0f5525ff7974631c4e5ec31"
+      }
+    ],
+    "same_day": [],
+    "all_state_recent_count": 100,
+    "main_unchanged": true,
+    "all_open_heads_unchanged": true
+  },
+  "new_slugs": [
+    "japan-earthquake-preparedness",
+    "ai-english-paraphrasing-practice"
+  ],
+  "created_pr": {
+    "baseRefName": "main",
+    "headRefOid": "47cf30a94e75acdbba989341862aad072b7303d4",
+    "isDraft": false,
+    "mergeable": "MERGEABLE",
+    "number": 363,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/43658319064/job/132641769917",
+        "name": "image",
+        "startedAt": "2026-11-15T00:28:20Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/43658280955/job/132641647657",
+        "name": "image",
+        "startedAt": "2026-11-15T00:27:49Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-15T00:28:18Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://supabase.com/dashboard/project/wozrsrnkvbokzbbitkxf/settings/integrations",
+        "name": "Supabase Preview",
+        "startedAt": "2026-11-15T00:28:18Z",
+        "status": "COMPLETED",
+        "workflowName": ""
+      }
+    ],
+    "url": "https://github.com/blizzard-new/abroad/pull/363",
+    "snapshot_scope": "Aftercreation initialcontentcommit47cf30a9,before docs-onlymetadatafollowup;checkcurrentCI separately."
+  },
+  "task_attachment": {
+    "attempt": {
+      "status": "timeout",
+      "timeout_ms": 40000,
+      "elapsed_ms": 40001,
+      "url": "https://github.com/blizzard-new/abroad/pull/363"
+    },
+    "verification": {
+      "status": "timeout",
+      "timeout_ms": 10000
+    },
+    "confirmed": false,
+    "reason": "attach_artifact returned no response within40s; list_artifacts returned no response within10s. PRcreation verified separately; taskattachment unconfirmed."
+  }
+}

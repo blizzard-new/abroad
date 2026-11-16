@@ -1,0 +1,287 @@
+{
+  "slug": "ai-english-presentation-practice",
+  "title": "用 AI 練英文簡報怎麼做？主線、講稿修改與問答 Prompt",
+  "description": "英文簡報先定聽眾與一句主張，再用 AI 整理已確認素材、修改可說的講稿並模擬問答。附三輪可填 Prompt、原創提案前後對照、提示卡及錄音檢查表。",
+  "category": "申請準備",
+  "published": "2026-11-14",
+  "modified": "2026-11-14",
+  "checked": "2026-11-14",
+  "image": "english-presentation-photo",
+  "image_alt": "一人穿淺色襯衫與領帶，手持白板筆指向白板上貼著的圖表。",
+  "image_caption": "把主張與支點說給聽眾理解，是簡報練習的一部分。這是白板說明的素材照片，並非真實交換課堂、本篇提案成果或 AI 操作紀錄。",
+  "image_credit": {
+    "photographer": "Pavel Danilyuk",
+    "source_url": "https://www.pexels.com/photo/a-man-writing-on-paper-posted-on-white-board-7869057/"
+  },
+  "summary": [
+    "先寫聽眾、用途、一句主張及可用素材，再請 AI 排順序；沒有依據的數據、成果與承諾不補成事實。",
+    "講稿、投影片提示與實際說話分開：用短句和清楚轉場，保留課程格式，再自己錄音計時，不靠字數保證長度。",
+    "問答先讓自己回答，再核對回答是否有素材支持；提案與已證明效果要分清，文字回饋不能代替聲音或官方成績。"
+  ],
+  "intro": [
+    "用 AI 練英文簡報，可以先決定「我要讓誰理解或決定什麼」，把一句主張、支持素材與未知項目交給文字工具排成主線。接著自己說一遍，依實際錄音修改，再請工具扮演聽眾逐題追問。最重要的是能用自己的話說清楚，並知道哪句是事實、哪句只是提案。",
+    "本文於 2026 年 11 月 14 日實讀 UNC 寫作中心、British Council 與 OpenAI 的相關說明。三輪 Prompt、課堂提案、弱稿與修改稿、預期回覆及問答均為編輯自寫，不是學生真實成果或模型實測。方法以自己已確認可用的文字聊天為起點；沒有比較三品牌、付費方案、地區、語音或投影片生成功能。"
+  ],
+  "sections": [
+    {
+      "id": "purpose-audience-and-rules",
+      "title": "先寫聽眾與目的：這次不是再做一份自我介紹",
+      "paragraphs": [
+        "課堂簡報可以是解釋一個概念、比較方案或提出待討論的建議。先說清楚聽眾知道什麼、需要補什麼，以及聽完應能回答哪個問題。UNC 寫作中心指出，口頭內容要配合聽眾與目的，主張及組織要讓聽者容易理解；本篇以此安排練習，不搬用該站完整講義或當作本校評分表。",
+        "先核對自己的課程題目、時間、頁數、引用、檔案格式及 AI 使用要求。若有指定結構就保留，不因工具給了一套漂亮標題而跳過必答內容。需要真實課程或研究材料時，只提供自己有權使用的內容，個人資料與未公開組員資訊不必成為聊天輸入。",
+        "本文處理一個主題如何說給聽眾理解，與「我是誰」的自介、「請回答問題」的交換面試不同。正式語言資格仍查母校及目的地當期公告，不把簡報聊天回饋當成能力證明。"
+      ],
+      "refs": [
+        "unc-speeches"
+      ],
+      "table": {
+        "caption": "可複製的簡報任務卡",
+        "headers": [
+          "欄位",
+          "請填入",
+          "要保留的界線"
+        ],
+        "rows": [
+          [
+            "聽眾與用途",
+            "[誰在聽／解釋、比較或提案]",
+            "不預設對方已知道全部背景"
+          ],
+          [
+            "一句主張",
+            "[希望聽眾記住的一件事]",
+            "主張不等於已證明成果"
+          ],
+          [
+            "可用素材",
+            "[本人材料／來源／確認狀態]",
+            "不補不存在的調查或成效"
+          ],
+          [
+            "課程限制",
+            "[時間／格式／引用／AI 規範]",
+            "以實際作業要求為準"
+          ],
+          [
+            "未知與下一步",
+            "[未確認處／需要的問題]",
+            "保留未知，不替組員承諾"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-one-outline",
+      "title": "第一輪 Prompt：先查缺漏，再排主張與支點",
+      "paragraphs": [
+        "OpenAI 的提示建議強調清楚背景、具體任務及逐輪修訂。先讓工具找出缺漏，再排順序，比直接要求「寫一份完美英文簡報」更容易核對。本文採一句主張、兩個支點和下一步作練習起點，這是編輯選擇，不是所有簡報都必須套用的官方格式。",
+        "可複製 Prompt：「我要做英文簡報，聽眾是 [對象及已知背景]，用途是 [要解釋或討論什麼]，課程規定為 [時間、格式、引用及 AI 使用要求]。一句主張：[草案]。可用素材：[有權分享的事實或來源]；提案：[尚未實施的安排]；未知：[未確認事項]。請先問最多三個影響主線的問題，不先寫成稿。補完後再列開場主張、兩個支點、收尾下一步，逐項註明依據。不要新增成果、數字、訪談或組員承諾，缺資料就標待確認。」",
+        "本篇虛構練習設定：向課堂同學提出「短暫碰面確認下一步，加上共享任務表」的分工提案。每人可在會面說自己的下一項工作與卡點，表格記負責人及下一步；安排尚未試行，也未決定缺席如何處理。這是自寫素材，不是真實團隊已同意的規則，更沒有任何效率測量。",
+        "依這份輸入，人工預期的大綱是：主張＝讓下一步與負責人更清楚；支點＝口頭確認卡點、表格留下分工；下一步＝先討論缺席情況與試行方式。若工具改寫成「實驗證明效率大幅提升」，應刪去，因為素材並未提供這項證據。"
+      ],
+      "refs": [
+        "openai-prompt",
+        "openai-accuracy"
+      ],
+      "diagram": {
+        "title": "從素材走到能自己說明的簡報",
+        "steps": [
+          [
+            "定任務",
+            "聽眾、主張及課程要求"
+          ],
+          [
+            "分素材",
+            "事實、提案與未知分開"
+          ],
+          [
+            "排主線",
+            "支點各自連回依據"
+          ],
+          [
+            "說一次",
+            "錄音計時，再調整提示"
+          ],
+          [
+            "練問答",
+            "先回答，核對支持與缺口"
+          ]
+        ],
+        "caption": "UniWay 原創簡報練習流程；工具文字不代表已製作檔案、已播放聲音或已完成成效測試。"
+      }
+    },
+    {
+      "id": "original-before-and-after",
+      "title": "原創弱稿到修改稿：把空泛保證改成可討論的提案",
+      "paragraphs": [
+        "下面兩稿均為編輯自寫，不是 AI 的實際回答。弱稿：「Teamwork is very important. Our amazing project will solve every problem. Everyone will work better, and there will be no delays. Thank you.」這段缺少要做什麼的說明，卻先保證所有問題都能解決；素材沒有支持這種結果。",
+        "修改稿：「Our group proposes a short check-in and a shared task list to make the next steps easier to see. During the check-in, each person would name one next task and any blocker. The list would show who is responsible and what comes next. We have not tested this proposal, so we cannot say it will prevent delays. Before trying it, we need to agree on how absent members can contribute.」這是教學文字，尚未錄音計時，不宣稱能在某個秒數內念完。",
+        "修改後有具體安排，也把「希望達到什麼」與「尚未證明」分開。would 在這裡協助呈現提案，不把安排寫成已發生；最後留下真正要討論的缺口。你可換成自己的真實主題，但不能直接把這組虛構團隊內容當成自己的已完成專題。"
+      ],
+      "table": {
+        "caption": "前後修改要能說明理由，不只更換漂亮詞句",
+        "headers": [
+          "弱稿問題",
+          "修改方向",
+          "本例保留的限制"
+        ],
+        "rows": [
+          [
+            "solve every problem",
+            "說清楚要採用的安排",
+            "沒有宣稱問題全部解決"
+          ],
+          [
+            "everyone will work better",
+            "指出分工與下一步如何呈現",
+            "沒有量測效率"
+          ],
+          [
+            "there will be no delays",
+            "改成待試行的提案",
+            "不保證避免延誤"
+          ],
+          [
+            "只說 Thank you",
+            "留下需要討論的下一步",
+            "缺席處理尚未決定"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-two-say-it-aloud",
+      "title": "第二輪 Prompt：把講稿改成自己能說的話，再實際計時",
+      "paragraphs": [
+        "UNC 的說明重視清楚轉場、簡單句構與關鍵名詞，避免讓聽者猜代名詞指什麼。British Council 的口頭簡報頁也建議短句、停頓、練習及錄音，並提醒不要只看著整篇稿朗讀。這些是準備原則；真正課程若要求朗讀或指定稿件，仍按題目辦理。",
+        "可複製 Prompt：「以下是我自己核對的講稿：[文字]。聽眾是 [對象]，我希望保留 [主張與不可刪事實]。請先指出一句太長、指涉不明或支點接不上的地方，再給最小修改，分開必改意思與可選語氣。不要新增資料，將提案與未知保留原狀。我的實際錄音是 [自行填秒數或尚未錄]，要求為 [正式要求]；不要預測改完一定幾秒，也不要從文字評發音或流暢度。等我自己重錄後再調整。」",
+        "可以把 The list would show who is responsible and what comes next. 說成 The list would show each task, its owner and the next step.，再核對是否仍符合素材。這是編輯提出的另一種文字說法，不代表任何模型真的改過，也不保證較短就更好。若較簡單的句子改掉角色或承諾範圍，就不應接受。",
+        "第一次錄音先留下原樣，標記說不順、跳過支點或超過要求的位置；再只改一項並重錄。沒有實際聲音與適當評量時，工具最多協助文字安排，不能因稿子順就宣布口說已進步。若自己無法判斷聽眾能否跟上，請同學只依所聽內容重述主張，記下實際回應，不預先捏造結果。"
+      ],
+      "refs": [
+        "unc-speeches",
+        "bc-presentation"
+      ]
+    },
+    {
+      "id": "slides-and-cue-card",
+      "title": "投影片與提示卡：支點看得見，完整說明留給口說",
+      "paragraphs": [
+        "先服從課程指定版型。若沒有指定，可讓每張投影片承擔一個清楚工作：標題說明這張的主張，正文留下支點或必要依據，講者提示另記例子與轉場。這是本篇編輯建議，不是任何 AI 工具已產生了簡報檔，也不保證套用某個字級就適合所有教室。",
+        "本例可把畫面標題寫成 A proposal for clearer next steps，下面只留 Short check-in／Shared task list／Open question: absent members。口頭再說明每項用途及尚未試行，不能為了畫面簡潔把「提案」與「未知」刪光，讓聽者誤會成已完成成果。這些是自寫的投影片文字建議，不是已匯出的檔案。",
+        "若允許提示卡，寫主張、支點順序與收尾關鍵詞；卡片與整篇逐字稿分開。實際開啟文件檢查字型、對比、換行、圖表標示及引用，在需要的裝置與尺寸確認可讀。若圖表或圖片有外部來源，保留出處與可用條件；本例沒有研究數據，不應配上一張看似證明成效的假統計圖。"
+      ],
+      "refs": [
+        "bc-presentation"
+      ],
+      "table": {
+        "caption": "本例的三種文字版本，各有不同用途",
+        "headers": [
+          "版本",
+          "自寫提示",
+          "人工檢查"
+        ],
+        "rows": [
+          [
+            "口說主張",
+            "We propose a short check-in and a shared task list.",
+            "能否用自己的話說明兩項安排"
+          ],
+          [
+            "畫面支點",
+            "Short check-in / Shared task list",
+            "是否仍清楚標為提案"
+          ],
+          [
+            "提示卡",
+            "purpose → check-in → list → unknown",
+            "不因只剩關鍵詞而漏掉限制"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-three-audience-questions",
+      "title": "第三輪 Prompt：一次一題，先自己回答再看素材",
+      "paragraphs": [
+        "可複製 Prompt：「請當英文簡報的聽眾。主張：[一句話]；已確認素材：[材料]；提案：[安排]；未知：[缺口]。一次只問一個與簡報有關的問題，等我回答，不先代寫標準答案。回答後請列我說的主張、素材能支持的部分與仍未知處；不要因為語氣自信就替我補證據。最多追問一輪，再換新問題。這是文字問答，不評發音、CEFR 或官方成績。」",
+        "人工問答示例一：Q: Why do you think the task list would help? A: It would make task ownership visible, but we have not measured whether it improves our work. 這個回答說明設計理由並保留未量測，沒有把理由變成已證明效果。",
+        "示例二：Q: What would happen if someone missed the check-in? A: We have not agreed on that yet. We need to discuss how absent members could add their updates. 素材本來就說缺席處理未定，回答可以承認未知，再指出要討論什麼，不編出老師核准的補交制度。這兩段都是編輯自寫，不是 AI 或真實聽眾的回覆。",
+        "若工具稱「既然你解釋完整，所有組員必定接受，老師也會給高分」，請要求撤回沒有依據的結果判斷。OpenAI 準確性說明提醒流暢而自信的回答仍可能錯誤；回到素材與實際作業標準核對，不用一次稱讚作為成果證明。"
+      ],
+      "refs": [
+        "openai-accuracy"
+      ]
+    },
+    {
+      "id": "transfer-and-human-check",
+      "title": "換主題重做，確認不是只背熟一份稿",
+      "paragraphs": [
+        "起步可只練一句主張與一個支點；下一層完成前後有連結的短講；再加入聽眾問答與未知問題。這是編輯分層，不對應固定程度、分數或練習天數。下次把題目換成自己的另一項可核對課堂提案，保留同一流程，但不要沿用舊題的角色、理由與承諾。",
+        "每次保留任務卡、首次稿、實際錄音、修改理由與問答缺口。寫得更長不一定更清楚，背稿更熟也不等於新問題能回答；用新主題的第一次表達與實際觀察安排下一步。來源頁的影片、範例及教材分類是它們自己的內容，不是本篇練習已被官方評量。",
+        "要處理自己介紹、對話澄清或單字聲音，接著讀相關指南；真實交換需求則從下方母校、目的地與選校工具連回公告。簡報方法協助學習，不改變課程 AI 規範、申請資格或正式語言採認。"
+      ],
+      "bullets": [
+        "[ ] 聽眾、用途與一句主張明確，符合課程要求。",
+        "[ ] 事實、提案、未知與外部來源各自標示。",
+        "[ ] 修改沒有新增成果、統計或他人承諾。",
+        "[ ] 完成自己的錄音計時，不靠字數宣稱達標。",
+        "[ ] 畫面與提示可讀，問答能說明依據或承認未知。"
+      ]
+    }
+  ],
+  "faq": [
+    [
+      "AI 幫我寫好講稿，就代表已練好英文簡報嗎？",
+      "還要自己說、錄音計時與核對聽眾是否能理解。文字可以整理主線，不能單獨證明實際發音、流暢度、現場表達或問答能力。"
+    ],
+    [
+      "英文簡報和自我介紹有什麼不同？",
+      "本篇讓聽眾理解一項主題或提案；自介則讓對方認識你的經歷與目標。可以共用真實素材，但須依各自題目安排，不能把同一份稿換標題提交。"
+    ],
+    [
+      "簡報沒有成果數據怎麼辦？",
+      "把內容明示為提案，說明設計理由與需要確認的事。不要請工具編調查、訪談、效率提升或老師背書；若作業要求研究證據，就先補找適當來源。"
+    ],
+    [
+      "必須用付費工具或生成整套投影片嗎？",
+      "本文沒有這項前提，也沒有評測方案。先用自己確認可用的文字工具安排素材，實際文件與錄音另行檢查；特定功能、額度與地區依當時官方資訊。"
+    ],
+    [
+      "問答遇到不確定的問題可以直接猜嗎？",
+      "練習時分開已知、推測及未知，說明需要確認什麼。角色扮演不會產生真實組員同意、老師許可或正式規定，不應把猜測說成承諾。"
+    ]
+  ],
+  "sources": [
+    {
+      "id": "unc-speeches",
+      "title": "UNC Writing Center：Speeches",
+      "url": "https://writingcenter.unc.edu/tips-and-tools/speeches/",
+      "note": "2026-11-14 實讀目的、聽眾、主張、清楚轉場、短句與練習檢查段落。未見固定修訂日；只引用一般準備原則，未重製或翻譯完整講義。素材表、Prompt、提案及講稿自寫，非 UNC 作業或評分表。"
+    },
+    {
+      "id": "bc-presentation",
+      "title": "British Council LearnEnglish Teens：Oral presentation",
+      "url": "https://learnenglishteens.britishcouncil.org/exams/speaking-exams/oral-presentation",
+      "note": "2026-11-14 實讀 Do／Don’t、提示卡、短句、停頓及錄音練習建議；未觀看或測量影片，也未轉載影片、逐字稿或工作紙。頁面 B1／B2 為其教材分類，不授予本文讀者能力等級；未見固定修訂日。"
+    },
+    {
+      "id": "openai-prompt",
+      "title": "OpenAI：Prompt engineering best practices for ChatGPT",
+      "url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "note": "2026-11-14 實讀清楚具體背景及逐輪修訂。相對更新顯示 25 days ago，不推定發布日。本文三輪 Prompt 為編輯設計，無模型／語音／投影片或方案實測。"
+    },
+    {
+      "id": "openai-accuracy",
+      "title": "OpenAI：Does ChatGPT tell the truth?",
+      "url": "https://help.openai.com/en/articles/8313428-does-chatgpt-tell-the-truth",
+      "note": "2026-11-14 實讀錯誤、自信誤答、虛構依據與查證建議；相對更新 22 days ago，不反推發布日。未引用方案或工具可用性，不以聊天稱讚當成效或官方分數。"
+    }
+  ],
+  "related": [
+    "ai-self-introduction",
+    "ai-english-learning",
+    "ai-english-clarification",
+    "ai-english-pronunciation-practice"
+  ]
+}

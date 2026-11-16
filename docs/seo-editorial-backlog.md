@@ -1,5 +1,18 @@
 # Editorial intentions and next topics
 
+## 2026-11-14 每日批次：AI 簡報／多益時態兩篇（PR #351 待審）
+
+Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261114`，base main `aa2d1424d1645308b479bee648eb056a9e956f8e`。已讀 workflow、backlog、51 篇庫存與相關全文；open PR 為空，#346 已合併、昨天兩篇在 main 並排除重做。#78／#92 已合併，無基礎相依。開始與提交前同日全狀態 PR 為空，無同日本地／遠端分支後才建立本日唯一分支；main 未變。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 17：用 AI 練英文簡報怎麼做？主線、講稿修改與問答 Prompt | `ai-english-presentation-practice` | [PR #351](https://github.com/blizzard-new/abroad/pull/351) 待審，完整文章與驗收完成；後續排除 |
+| 20：多益 Part 5 時態題怎麼判斷？時間線、完成式與原創題解析 | `toeic-part-five-verb-tenses` | 同一個 PR #351 待審，完整文章與驗收完成；後續排除 |
+
+依編輯判斷，無 Search Console、搜尋量或排名資料。簡報篇處理聽眾、主張、提案／證據、三輪可填 Prompt、講稿前後修改、提示卡及問答，與自介／澄清／發音分工；不造聲音、模型或方案實測。時態篇處理時間參照、完成／延續／進行及子句，與既有詞性／段落銜接分工；有六題 24 選項及解析、不足資訊示例，沒有官方校準或保證提分。兩個探索來源 404 已排除，替代官方頁與範圍限制詳錄。
+
+原 51 篇 JSON、URL、刊載日與 lastmod 不變，共 53 篇。10/30 study-plan `97de3fda` 未重做，無三品牌比較實測。新增兩張專用授權真實攝影與原創 HTML 圖解。53 篇 gate、180 項 SEO、63 項 E2E、六組無 JavaScript 均首次通過；15 張目視與 wheel 646 檔核對完成。來源、教材、攝影與驗收見[本批紀錄](seo-editorial-validation-2026-11-14.md)。歷史待審狀態以本日實查優先；本批未合併或部署。
+
 ## 2026-11-13 每日批次：匯率預算／AI 發音兩篇（PR #346 待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261113`，base main `661a4546ffc48abf7bd908a9fe500bf22968634d`。讀取 workflow、backlog、49 篇庫存與相關全文；核對全部 16 個 open PR 範圍與完整分頁檔案清單，無 editorial 變更。#329 已合併，昨天兩篇在 main，排除重做；#78／#92 已合併，無基礎相依。提交前 main／16 個 head 未變，同日全狀態 PR 為空；沿用本日唯一隔離分支。
@@ -275,6 +288,23 @@
 - 在選題紀錄中標記批次日期、題目、slug、狀態及對應 PR；待審內容也視為已選題。若候選已耗盡、來源不足或沒有可合理獨立成文的題目，回報具體狀況，不捏造資料或以重複薄內容湊數。
 - 排程時間是開始執行時間，PR 在文章、圖片與必要驗證完成後建立；不自動合併或部署。
 
+## 2026-11-16 每日批次：托福短對話／AI 英文語調兩篇（PR #369 待審）
+
+Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261116`，base main `cc576012cf3626696a4210d0d08397964dab60bd`。已讀最新 workflow／backlog、51 篇庫存及相關正文；13 個 open PR 的說明與完整檔案清單已查。提交前最近 100 個全狀態 PR 無同日批次、main 與 13 個 head 未變。#78／#92 已合併，無基礎相依；同日本地／遠端分支與 PR 原不存在後建立本日唯一隔離分支。
+
+前批 [PR #351](https://github.com/blizzard-new/abroad/pull/351)（11/14：`ai-english-presentation-practice`／`toeic-part-five-verb-tenses`）與 [PR #363](https://github.com/blizzard-new/abroad/pull/363)（11/15：`japan-earthquake-preparedness`／`ai-english-paraphrasing-practice`）仍待審，四篇均已選且完整，未重做或匯入。本日記錄放候選列表前，保留這兩個待審批次在頁首及末尾的改動。#346 已合併；歷史待審標記以本日實查優先。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 19：托福 Listen to a Conversation 怎麼練？轉折、說話目的與原創題組解析 | `toefl-listen-to-conversation` | 完整文章與驗收完成，[PR #369](https://github.com/blizzard-new/abroad/pull/369) 待審；後續排除 |
+| 17：用 AI 練英文語調怎麼做？句子焦點、意群與錄音 Prompt | `ai-english-intonation-practice` | 同批完整文章與驗收完成，同一 PR #369 待審；後續排除 |
+
+編輯判斷選題，無 Search Console、搜尋量或排名資料。短對話處理聽者跨話輪理解與原創六題解析，和口說重述／訪談、總覽、聽寫及圖表對話分工；語調處理整句意群／焦點／目的，和單字詞性重音、澄清、簡報及書面改寫分工。三輪可填 Prompt、情境前後對照、人工表皆原創，不造聲學／模型／學生實測。九個引用來源可讀且實讀；ETS 導語不一致與兩個探索 404 如實揭露。10/30 study-plan `97de3fda` 未重做，沒有三品牌實測就不寫比較。
+
+原 51 篇 JSON、網址、published／lastmod 不變，本分支共 53 篇，不計入四篇待審內容。新增兩張專用授權攝影及兩個 HTML 圖解。最終 53 篇 gate、180 SEO、63 E2E、六組無 JavaScript、15 張目視及 wheel 646 檔核對均通過；首輪通過後精確化 alt，再完整重驗，保留兩輪。來源、教材、圖片與驗收見[本批紀錄](seo-editorial-validation-2026-11-16.md)。未合併或部署。
+
+PR #369 已建立（OPEN、非 draft），初始內容 head `b136116c75e3b265cceb46c0cfd1fbc594f0c7dc`，GitHub 顯示 MERGEABLE，未合併。初始 image CI 兩項進行中、Supabase Preview skipped；以目前 PR 狀態為準。任務附加工具 40 秒及附件查詢 10 秒均無回覆，附件未確認；PR 建立與連結已獨立驗證，未宣稱附加成功。
+
 ## Candidate intentions for later batches
 
 Prioritize two distinct questions after checking existing/open PR content and current official sources. These are candidates, not prewritten or scheduled-to-publish pages. Update an existing guide if a topic is too close to it.
@@ -319,3 +349,20 @@ Do not launch near-duplicate country articles that repeat the three cost guides.
 - 「沒有 AI 味」指具體、有個人聲音、少套話且可核對的寫作；不提供通過 AI 偵測的保證，不把偵測分數當成原創或品質證明。
 - 工具功能、方案、價格與地區可用性在寫作時查核官方資料並標示日期；未實測不得聲稱某工具絕對最好或捏造比較結果。AI 回饋與模擬分數不可冒充官方語言能力評量。
 - 托福與多益內容依發稿時可核對的官方考試版本、題型與計分規則撰寫；以高分目標與可執行方法承接搜尋需求，避免「保證滿分」或「幾天必拿高分」。
+
+## 2026-11-15 每日批次：日本防災／AI 英文改寫兩篇（PR #363 待審）
+
+Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261115`，base main `aa2d1424d1645308b479bee648eb056a9e956f8e`。已讀 workflow、backlog、51 篇庫存與相關全文，核對全部 12 個 open PR 說明及完整檔案清單；提交前 main 與 12 個 head 未變，最近 100 個全狀態 PR 沒有同日批次。#78／#92 已合併，無基礎相依；同日本地／遠端分支及 PR 原不存在後才建立本日唯一分支。
+
+前批 **2026-11-14 [PR #351](https://github.com/blizzard-new/abroad/pull/351)** 仍待審，head `6a0e591a7d512c56b0f5525ff7974631c4e5ec31`；`ai-english-presentation-practice`（英文簡報）及 `toeic-part-five-verb-tenses`（多益時態）均已選且完整，不跨日重做、未匯入本分支。#346 已合併，匯率／發音兩篇已在 main。歷史「待審」標記以本日實查優先。為保留 #351 在文件開頭的既有待審改動，本批記錄新增於文件末尾。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 6：日本交換生防災怎麼準備？地震避難、離線聯絡卡與宿舍檢查表 | `japan-earthquake-preparedness` | 完整文章與驗收完成；[PR #363](https://github.com/blizzard-new/abroad/pull/363) 待審，後續排除 |
+| 17：用 AI 練英文改寫怎麼做？原意、限定詞與引用 Prompt | `ai-english-paraphrasing-practice` | 同批完整文章與驗收完成；同一 PR #363 待審，後續排除 |
+
+編輯判斷選題，無 Search Console、搜尋量或排名。防災獨立處理日本適用資訊、宿舍風險、離線聯絡及速報限制，與一般抵達行政分工；改寫獨立處理新表達保留命題與引用，與閱讀問答、文法訂正、個人語氣分工。三輪可填 Prompt、A／B 全新虛構教材、反例、參考稿與人工表皆原創，不造工具或學生實測。東京都頁面維護及兩個探索 404 排除；15 個實際引用來源均可讀且實讀，版本與限制留紀錄。10/30 study-plan `97de3fda` 未重做，無三品牌比較實測。
+
+原 51 篇 JSON、URL、刊載日期與 lastmod 不變，本分支共 53 篇，未計入待審 #351。新增兩張專用授權攝影與兩個原創 HTML 圖解。53 篇 gate、180 項 SEO、63 項 E2E、六組無 JavaScript 閱讀、15 張目視及 wheel 646 檔逐檔核對全部通過。來源、教材、攝影及驗收見[本批紀錄](seo-editorial-validation-2026-11-15.md)。本批未合併或部署。
+
+PR #363 已建立（OPEN、非 draft，初始 head `47cf30a94e75acdbba989341862aad072b7303d4`），可合併狀態但未合併。初始遠端 image CI 兩項進行中、Supabase Preview skipped；請以目前 PR 狀態為準。任務附加工具 40 秒及附件查詢 10 秒均未回覆，附件狀態未確認；PR 建立及連結另已驗證，未宣稱附加成功。

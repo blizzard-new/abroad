@@ -937,7 +937,7 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     expect(deadline_panel).to_contain_text('116-1 校內申請截止')
     expect(deadline_panel).to_contain_text('2026/12/21 17:00')
     expect(deadline_panel.locator('a[href*="85785"]')).to_be_visible()
-    expect(page.locator('#overall-caption')).to_contain_text('0 / 23')
+    expect(page.locator('#overall-caption')).to_contain_text('0 / 21')
 
     # Requirement B: 今日與計畫分頁僅顯示單行校內送件摘要列，不展開完整表單
     for tab_key in ('today', 'plans'):
@@ -997,7 +997,7 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     page.locator('#cgu-sim-submit-btn').click()
     expect(page.locator('#cgu-sim-submit-feedback')).to_contain_text('正式申請請依國際處公告完成線上表單與紙本繳交')
     expect(page.locator('#cgu-sim-submit-feedback a[href*="85785"]')).to_be_visible()
-    expect(page.locator('#overall-caption')).to_contain_text('6 / 23')
+    expect(page.locator('#overall-caption')).to_contain_text('6 / 21')
     records = page.locator('#cgu-sim-app-records')
     expect(records).to_contain_text('CGU-116-1-A')
     expect(records).to_contain_text('已送出')
@@ -1345,7 +1345,7 @@ def test_my_application_phase1_plan_target_pref_and_oia_approve_today_sync(page,
     page.locator('#cgu-sim-submit-btn').click()
     records = page.locator('#cgu-sim-app-records')
     expect(records).to_contain_text(target_school)
-    expect(page.locator('#overall-caption')).to_contain_text('6 / 23')
+    expect(page.locator('#overall-caption')).to_contain_text('6 / 21')
     receipt_id = records.locator('.cgu-submitted-card').first.get_attribute('data-receipt-id')
     assert receipt_id and receipt_id.startswith('CGU-116-1-A')
 
@@ -1416,7 +1416,7 @@ def test_my_application_phase2_tabs_gates_docs_schedule_and_shared_preferences(p
     bridge = page.locator('#cgu-doc-level-bridge')
     expect(bridge).to_be_visible()
     bridge.locator('input[data-cgu-sim-upload="online_form"]').set_input_files(str(sample_pdf))
-    expect(page.locator('#overall-caption')).to_contain_text('1 / 23')
+    expect(page.locator('#overall-caption')).to_contain_text('1 / 21')
     expect(bridge).to_contain_text('online_form.pdf')
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-internal-submit')
@@ -1425,7 +1425,7 @@ def test_my_application_phase2_tabs_gates_docs_schedule_and_shared_preferences(p
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-doc-online_form')
     page.locator('#cgu-doc-level-bridge button[data-cgu-sim-remove="online_form"]').click()
-    expect(page.locator('#overall-caption')).to_contain_text('0 / 23')
+    expect(page.locator('#overall-caption')).to_contain_text('0 / 21')
 
     # L: Slimmed view=schedule hides redundant disclosures while keeping deadlines, tracker, and buffer-day form
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
@@ -1447,7 +1447,7 @@ def test_my_application_phase2_tabs_gates_docs_schedule_and_shared_preferences(p
     page.locator('#cgu-shortlist-save-btn').click()
     expect(page.locator('#cgu-shortlist-feedback')).to_contain_text('已保存')
     expect(page.locator('#level-view .level-progress strong')).to_have_text('已完成')
-    expect(page.locator('#overall-caption')).to_contain_text('1 / 23')
+    expect(page.locator('#overall-caption')).to_contain_text('1 / 21')
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
     expect(page.locator('#tracker-side')).to_contain_text('林肯大學')
@@ -1573,5 +1573,175 @@ def test_deadlines_render_taiwan_time_in_non_taiwan_timezone(browser, demo_url):
         assert errors == []
     finally:
         context.close()
+
+
+def test_cgu_in_page_level_types_and_contextual_tools(browser, demo_url):
+    context = browser.new_context(viewport={'width': 1440, 'height': 900}, reduced_motion='reduce')
+    try:
+        page = context.new_page()
+        page.set_default_timeout(90000)
+        errors = []
+        page.on('pageerror', lambda err: errors.append(str(err)))
+
+        ready(page, demo_url, '#my-application')
+        seed(page)
+        plan_id = page.locator('#plan-select').input_value()
+        assert plan_id
+
+        # 1. Reading level (cgu-read-guide): summary visible directly in-page (no collapsed <details>), no draft buttons
+        ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-read-guide')
+        lvl_view = page.locator('#level-view')
+        guide = lvl_view.locator('.cgu-guide-summary')
+        expect(guide).to_be_visible()
+        expect(guide).to_contain_text('2026/11/02')
+        expect(guide).to_contain_text('2026/12/21')
+        expect(guide).to_contain_text('校內應備 5 份文件')
+        expect(guide.locator('a[href*="85785"]')).to_be_visible()
+        expect(lvl_view.locator('.source-details')).to_have_count(0)
+        expect(lvl_view.locator('#save-draft')).to_have_count(0)
+        expect(lvl_view.locator('#level-input')).to_have_count(0)
+        expect(lvl_view).not_to_contain_text('輸入後自動儲存')
+        tools = lvl_view.locator('.path-level-tools')
+        expect(tools).to_contain_text('查看出國補助')
+        expect(tools).to_contain_text('問國際處')
+        expect(tools).not_to_contain_text('文件庫')
+        expect(tools).not_to_contain_text('家長同意書')
+        lvl_view.locator('#level-form button[type=submit]').click()
+        expect(lvl_view.locator('.success-state')).to_be_visible()
+
+        # 2. Select level (cgu-shortlist): hides generic #level-form, saves to shared preference store
+        ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-shortlist')
+        expect(lvl_view.locator('#cgu-shortlist-bridge')).to_be_visible()
+        expect(lvl_view.locator('#level-form')).to_be_hidden()
+        expect(lvl_view).not_to_contain_text('輸入後自動儲存')
+        expect(lvl_view.locator('.path-level-tools')).to_contain_text('條件與推薦')
+        expect(lvl_view.locator('.path-level-tools')).not_to_contain_text('文件庫')
+        page.locator('#cgu-shortlist-pref1').select_option('林肯大學 Lincoln University')
+        page.locator('#cgu-shortlist-pref2').select_option('韓國嘉泉大學 Gachon University')
+        page.locator('#cgu-shortlist-save-btn').click()
+        expect(page.locator('#cgu-shortlist-feedback')).to_contain_text('已保存')
+
+        # 3. Document levels: hides disabled vault form; transcript vs study_plan in-page writer
+        ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-doc-transcript')
+        expect(lvl_view.locator('#cgu-doc-level-bridge')).to_be_visible()
+        expect(lvl_view.locator('#level-form')).to_be_hidden()
+        expect(lvl_view.locator('#cgu-study-plan-writer')).to_have_count(0)
+        expect(lvl_view.locator('.path-level-tools')).to_contain_text('問國際處')
+        expect(lvl_view.locator('.path-level-tools')).not_to_contain_text('文件庫')
+
+        ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-doc-study_plan')
+        expect(lvl_view.locator('#level-form')).to_be_hidden()
+        expect(lvl_view.locator('#cgu-study-plan-writer')).to_be_visible()
+        expect(lvl_view.locator('.path-level-tools')).to_contain_text('分段欄位輔助產出列印版')
+        expect(lvl_view.locator('.path-level-tools')).not_to_contain_text('文件庫')
+        draft_text = '赴外修課計畫：修習生物醫學工程英文授課課程並返國採認學分。'
+        page.locator('#cgu-study-plan-draft-input').fill(draft_text)
+        expect(page.locator('#cgu-study-plan-char-count')).to_contain_text(f'目前 {len(draft_text)} 字')
+        page.locator('#cgu-study-plan-sync-btn').click()
+        expect(page.locator('#cgu-study-plan-writer-feedback')).to_contain_text('已保存草稿並同步至「送交國際處」預檢清單')
+        expect(page.locator('#cgu-doc-level-bridge')).to_contain_text('目前 1 / 5 項已備齊')
+        expect(page.locator('#cgu-doc-level-bridge')).to_contain_text('cgu-study-plan.txt')
+
+        # 4. Submit & Notice level (cgu-internal-result): no student checkoff button; syncs live OIA action
+        ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-internal-submit')
+        open_demo_tools(page)
+        page.locator('#cgu-demo-fill-files').click()
+        page.locator('#cgu-sim-submit-btn').click()
+        expect(page.locator('#cgu-sim-submit-feedback')).to_contain_text('CGU-116-1-A')
+        receipt_id = page.locator('#cgu-sim-app-records .cgu-submitted-card').first.get_attribute('data-receipt-id')
+        assert receipt_id
+
+        open_demo_tools(page)
+        page.locator('#cgu-demo-oia-toggle').click()
+        oia_page = page.locator('#cgu-oia-console-page')
+        expect(oia_page).to_be_visible()
+        oia_page.locator(f'[data-oia-reason-for="{receipt_id}"]').fill('請補含班級排名百分比成績單。')
+        oia_page.locator(f'[data-oia-act="request_supplement"][data-receipt="{receipt_id}"]').click()
+        expect(page.locator('#cgu-oia-feedback')).to_contain_text(receipt_id)
+        page.locator('[data-cgu-back-student]').first.click()
+
+        ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-internal-result')
+        expect(lvl_view.locator('#level-form')).to_be_hidden()
+        expect(lvl_view).not_to_contain_text('輸入後自動儲存')
+        notice_panel = lvl_view.locator('#cgu-notice-level-panel')
+        expect(notice_panel).to_be_visible()
+        expect(notice_panel).to_contain_text(receipt_id)
+        expect(notice_panel).to_contain_text('要求補件')
+        expect(notice_panel).to_contain_text('請補含班級排名百分比成績單')
+        assert errors == []
+    finally:
+        context.close()
+
+
+def test_cgu_plan_dialog_round_sync_and_non_116_1_deadlines(browser, demo_url):
+    context = browser.new_context(viewport={'width': 1440, 'height': 900}, reduced_motion='reduce')
+    try:
+        page = context.new_page()
+        page.set_default_timeout(90000)
+        errors = []
+        page.on('pageerror', lambda err: errors.append(str(err)))
+
+        ready(page, demo_url, '#my-application')
+        expect(page.locator('#path-message')).to_contain_text('從你的交換目標開始')
+        page.locator('#path-message [data-path-new]').click()
+        dialog = page.locator('#plan-dialog')
+        expect(dialog).to_be_visible()
+        dialog.locator('details.ap-academic-fields summary').click()
+
+        # Default CGU choice prefers 2027 fall (116-1) rather than 115-2
+        expect(page.locator('#create-round')).to_have_value('116-1（2027 秋季出國）')
+
+        # Switching 115-2 -> 117-1 -> undecided updates #create-round cleanly (never 117 + 115-2)
+        page.locator('#create-semesters input[value="spring:2027"]').check()
+        expect(page.locator('#create-year')).to_have_value('115')
+        expect(page.locator('#create-round')).to_have_value('115-2（2027 春季出國）')
+
+        page.locator('#create-semesters input[value="fall:2028"]').check()
+        expect(page.locator('#create-year')).to_have_value('117')
+        expect(page.locator('#create-round')).to_have_value('117-1（2028 秋季出國）')
+        assert '115-2' not in page.locator('#create-round').input_value()
+
+        page.locator('#create-semesters input[value^="undecided:"]').check()
+        assert '115-2' not in page.locator('#create-round').input_value()
+        expect(page.locator('#create-round')).to_have_value('')
+
+        # Create the 117-1 plan and verify zero 116-1 / 2026/12/21 leakage
+        page.locator('#create-semesters input[value="fall:2028"]').check()
+        page.locator('#create-target').select_option('林肯大學 Lincoln University')
+        page.locator('#plan-form button[type=submit]').click()
+        expect(dialog).to_be_hidden()
+
+        expect(page.locator('#today-view')).to_be_visible()
+        expect(page.locator('#plan-meta')).to_contain_text('117 學年度')
+        expect(page.locator('#plan-meta')).to_contain_text('117-1')
+        expect(page.locator('#plan-meta')).not_to_contain_text('115-2')
+
+        deadline_panel = page.locator('#today-view .today-panel[aria-label="期限"]')
+        expect(deadline_panel).to_contain_text('依國際處公告')
+        expect(deadline_panel).to_contain_text('117-1')
+        expect(deadline_panel).not_to_contain_text('116-1')
+        expect(deadline_panel).not_to_contain_text('2026/12/21')
+
+        deadline_card = page.locator('#application-path #deadline-card')
+        expect(deadline_card).to_contain_text('依國際處公告')
+        expect(deadline_card).not_to_contain_text('116-1')
+        expect(deadline_card).not_to_contain_text('2026/12/21')
+
+        plan_id = page.locator('#plan-select').input_value()
+        ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-read-guide')
+        expect(page.locator('#level-view .cgu-guide-summary')).to_contain_text('依國際處公告')
+        expect(page.locator('#level-view')).not_to_contain_text('116-1')
+        expect(page.locator('#level-view')).not_to_contain_text('2026/12/21')
+
+        ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-internal-submit')
+        expect(page.locator('#level-view')).not_to_contain_text('116-1')
+        expect(page.locator('#level-view')).not_to_contain_text('2026/12/21')
+        expect(page.locator('.cgu-my-app-deadline-bar')).to_contain_text('依國際處公告')
+        expect(page.locator('.cgu-my-app-deadline-bar')).not_to_contain_text('116-1')
+        expect(page.locator('.cgu-my-app-deadline-bar')).not_to_contain_text('2026/12/21')
+        assert errors == []
+    finally:
+        context.close()
+
 
 
