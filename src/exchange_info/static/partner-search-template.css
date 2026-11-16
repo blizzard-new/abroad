@@ -1,0 +1,770 @@
+/* Shared Partner Search (#partners) Template — ported from demo.uniway and adapted across all supported universities. */
+
+/* ─── 1. Header Actions: 最近看過 Popover, 我的選校 Pill & 卡片/地圖 Switch ─── */
+body.unified-shell #partners.pr-explore .cgu-explore-head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-open-workspace {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(30, 58, 138, 0.24);
+  background: #ffffff;
+  color: #1e3a8a;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-open-workspace:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #1d4ed8;
+}
+body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents,
+body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents[open] {
+  position: relative;
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  border: 1px solid rgba(148, 163, 184, 0.38);
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: none;
+}
+body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents[hidden] {
+  display: none !important;
+}
+body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents > summary {
+  min-height: 42px;
+  padding: 0 15px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1e293b;
+}
+body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents:not([open]) > summary:hover,
+body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents[open] > summary {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents[open] .discovery-recent-list {
+  position: absolute;
+  left: var(--cgu-recents-left, auto);
+  right: var(--cgu-recents-right, 0);
+  top: calc(100% + 8px);
+  z-index: 80;
+  width: min(320px, calc(100vw - 32px));
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.16);
+}
+@media (max-width: 720px) {
+  body.unified-shell #partners.pr-explore .cgu-explore-head-actions {
+    justify-content: flex-start;
+  }
+  body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents[open] .discovery-recent-list {
+    left: var(--cgu-recents-left, 0);
+    right: var(--cgu-recents-right, auto);
+  }
+}
+
+/* ─── 2. Prominent Top「我的條件」Inline Callout Bar ─── */
+body.unified-shell #partners.pr-explore > .discovery-search-tools {
+  display: block;
+  width: 100%;
+  margin: 16px 0 0;
+  padding: 0;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria-result {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border-radius: 18px;
+  border: 1.5px solid #1d4ed8;
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  box-shadow: 0 8px 22px rgba(30, 58, 138, 0.18);
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: box-shadow 0.16s ease, transform 0.16s ease;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria:not([open]):hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  border-color: #1d4ed8;
+  box-shadow: 0 11px 26px rgba(30, 58, 138, 0.26);
+  transform: translateY(-1px);
+}
+body.unified-shell #partners.pr-explore #discovery-criteria > summary,
+body.unified-shell #partners.pr-explore #discovery-criteria:not([open]) > summary:hover {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  min-height: 56px;
+  padding: 10px 18px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria > summary::-webkit-details-marker {
+  display: none;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  min-width: 0;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  flex: 0 0 auto;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-icon svg {
+  width: 18px;
+  height: 18px;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-heading {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  white-space: nowrap;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-summary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  font-weight: 600;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria.has-active-criteria .cgu-criteria-summary {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1e3a8a;
+  font-weight: 700;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria #discovery-criteria-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #fde047;
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 800;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria #discovery-criteria-count:empty {
+  display: none;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1e3a8a;
+  font-size: 13.5px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.14);
+}
+body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-action svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.18s ease;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria[open] {
+  background: #ffffff;
+  border-color: #2563eb;
+  border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(30, 58, 138, 0.16);
+}
+body.unified-shell #partners.pr-explore #discovery-criteria[open] > summary,
+body.unified-shell #partners.pr-explore #discovery-criteria[open] > summary:hover {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  color: #ffffff;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria[open] .cgu-criteria-action svg {
+  transform: rotate(180deg);
+}
+body.unified-shell #partners #discovery-criteria #discovery-criteria-form {
+  padding: 18px 20px 20px;
+  gap: 14px 16px;
+  background: #ffffff;
+}
+body.unified-shell #partners #discovery-criteria #discovery-criteria-form label {
+  color: #0f172a;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+body.unified-shell #partners #discovery-criteria #discovery-criteria-form :is(input, select, .glide-select__trigger) {
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 14.5px;
+  font-weight: 600;
+  box-shadow: none;
+}
+body.unified-shell #partners #discovery-criteria .discovery-form-actions button[type="submit"] {
+  min-height: 42px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 0;
+  background: #1e3a8a;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+body.unified-shell #partners #discovery-criteria .discovery-form-actions button[type="submit"]:hover {
+  background: #1d4ed8;
+}
+body.unified-shell #partners #discovery-criteria .discovery-form-actions #discovery-clear-criteria {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+@media (max-width: 900px) {
+  body.unified-shell #partners #discovery-criteria #discovery-criteria-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  body.unified-shell #partners #discovery-criteria #discovery-criteria-form > label:last-of-type,
+  body.unified-shell #partners #discovery-criteria #discovery-criteria-form .discovery-form-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ─── 3. Single-Row Clean Program + College/Dept Filter Strip ─── */
+body.unified-shell #partners #cgu-partner-filter-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 14px;
+  margin: 14px 0 4px;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body.unified-shell #partners #cgu-partner-filter-strip[hidden],
+body.unified-shell #partners #cgu-program-tabs[hidden],
+body.unified-shell #partners #cgu-college-quick-bar[hidden] {
+  display: none !important;
+}
+body.unified-shell #partners #cgu-program-tabs {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body.unified-shell #partners #cgu-program-tabs .cgu-program-tabs-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4px;
+}
+body.unified-shell #partners #cgu-college-quick-bar {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 8px;
+  margin: 0;
+  padding: 0 0 0 14px;
+  border: 0;
+  border-left: 1.5px solid rgba(148, 163, 184, 0.38);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body.unified-shell #partners #cgu-program-tabs[hidden] + #cgu-college-quick-bar {
+  padding-left: 0;
+  border-left: 0;
+}
+body.unified-shell #partners #cgu-college-quick-bar .cgu-college-bar-main {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 6px;
+  width: 100%;
+}
+body.unified-shell #partners #cgu-college-quick-bar .cgu-college-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+/* Eliminate small grey notes, labels, and inner grey count pills */
+body.unified-shell #partners #cgu-program-tabs .cgu-program-tabs-note,
+body.unified-shell #partners #cgu-college-quick-bar #cgu-college-live-count,
+body.unified-shell #partners #cgu-college-quick-bar .cgu-college-live,
+body.unified-shell #partners #cgu-college-quick-bar .cgu-college-bar-label,
+body.unified-shell #partners #cgu-program-tabs .cgu-program-tab > span,
+body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn > span {
+  display: none !important;
+}
+body.unified-shell #partners #cgu-college-quick-bar .cgu-dept-inline-select > span:not(.glide-select),
+body.unified-shell #partners #cgu-college-quick-bar .cgu-more-college-wrap > span:not(.glide-select) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body.unified-shell #partners #cgu-program-tabs .cgu-program-tab,
+body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #334155;
+  font: 700 14.5px/1 inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+body.unified-shell #partners #cgu-program-tabs .cgu-program-tab strong,
+body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn strong {
+  font-weight: 700;
+}
+body.unified-shell #partners #cgu-program-tabs .cgu-program-tab:not(.on):hover,
+body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn:not(.on):hover {
+  background: rgba(37, 99, 235, 0.09);
+  color: #1d4ed8;
+}
+body.unified-shell #partners #cgu-program-tabs .cgu-program-tab.on {
+  background: #0f172a;
+  color: #ffffff;
+}
+body.unified-shell #partners #cgu-program-tabs .cgu-program-tab.on.is-dual {
+  background: #6b21a8;
+  color: #ffffff;
+}
+body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn.on {
+  background: #1e3a8a;
+  color: #ffffff;
+}
+
+/* Overflow College Pill Dropdown (for universities with > 4 colleges) */
+body.unified-shell #partners #cgu-college-quick-bar .cgu-more-college-wrap {
+  flex: 0 1 164px;
+  min-width: 118px;
+  max-width: 176px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+body.unified-shell #partners #cgu-college-quick-bar .cgu-dept-inline-select {
+  margin-left: auto;
+  flex: 0 1 210px;
+  min-width: 148px;
+  max-width: 210px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+body.unified-shell #partners #cgu-college-quick-bar .glide-select {
+  width: 100%;
+  min-width: 0;
+}
+body.unified-shell #partners #cgu-college-quick-bar .glide-select__trigger,
+body.unified-shell #partners #cgu-college-quick-bar select {
+  min-height: 38px;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(30, 58, 138, 0.26);
+  background: transparent;
+  color: #1e3a8a;
+  font-size: 13.5px;
+  font-weight: 700;
+  box-shadow: none;
+}
+body.unified-shell #partners #cgu-college-quick-bar .glide-select__trigger:hover {
+  background: rgba(37, 99, 235, 0.07);
+  border-color: #2563eb;
+}
+body.unified-shell #partners #cgu-college-quick-bar .cgu-more-college-wrap.has-more-college .glide-select__trigger,
+body.unified-shell #partners #cgu-college-quick-bar .cgu-more-college-wrap.has-more-college select {
+  background: #1e3a8a;
+  border-color: #1e3a8a;
+  color: #ffffff;
+}
+body.unified-shell #partners #cgu-college-quick-bar .cgu-more-college-wrap.has-more-college .glide-select__trigger :is(.lucide, svg) {
+  color: #ffffff;
+}
+body.unified-shell #partners #cgu-college-quick-bar .cgu-dept-inline-select.has-dept .glide-select__trigger,
+body.unified-shell #partners #cgu-college-quick-bar .cgu-dept-inline-select.has-dept select {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #1d4ed8;
+}
+
+/* Hide redundant sidebar college select when the top college bar is active */
+body.unified-shell #partners:has(#cgu-college-quick-bar:not([hidden])) .pr-facet-selects label[for="college-filter"] {
+  display: none !important;
+}
+
+body.unified-shell #dashboard-view #partners.pr-explore .pr-search {
+  margin-top: 12px;
+}
+body.unified-shell #partners.pr-explore .journey-search-results > .pr-results-head {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 1041px) and (max-width: 1219px) {
+  body.unified-shell #partners #cgu-partner-filter-strip {
+    gap: 10px;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar {
+    padding-left: 10px;
+    gap: 6px;
+  }
+  body.unified-shell #partners #cgu-program-tabs .cgu-program-tab,
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn {
+    height: 36px;
+    padding: 0 11px;
+    font-size: 13.5px;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-more-college-wrap {
+    flex: 0 1 146px;
+    min-width: 108px;
+    max-width: 152px;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-dept-inline-select {
+    flex: 0 1 196px;
+    min-width: 136px;
+    max-width: 196px;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar .glide-select__trigger,
+  body.unified-shell #partners #cgu-college-quick-bar select {
+    min-height: 36px;
+    height: 36px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 1040px) {
+  body.unified-shell #partners #cgu-partner-filter-strip {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    max-width: 100%;
+  }
+  body.unified-shell #partners #cgu-program-tabs,
+  body.unified-shell #partners #cgu-program-tabs .cgu-program-tabs-row,
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-college-bar-main,
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-college-buttons {
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    min-width: 0;
+    max-width: 100%;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar {
+    flex: 1 1 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding-left: 0;
+    border-left: 0;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-more-college-wrap {
+    max-width: min(200px, 100%);
+  }
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-dept-inline-select {
+    margin-left: 0;
+    max-width: min(240px, 100%);
+  }
+}
+
+@media (max-width: 700px) {
+  html body.unified-shell #partners.pr-explore .pr-compare-tray {
+    max-width: calc(100% - 12px);
+    box-sizing: border-box;
+  }
+  html body.unified-shell #partners.pr-explore .pr-compare-tray button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 8px 12px;
+  }
+}
+
+/* ─── 4. Departmental / College Channel Callout Notice ─── */
+.cgu-mgmt-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  margin: 8px 0 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid #f59e0b;
+  color: #78350f;
+  box-sizing: border-box;
+}
+.cgu-mgmt-notice[hidden] {
+  display: none !important;
+}
+.cgu-mgmt-notice.is-inline {
+  margin: 14px 0 0;
+}
+.cgu-mgmt-badge {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #d97706;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.cgu-mgmt-copy {
+  flex: 1 1 280px;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.cgu-mgmt-copy strong {
+  font-weight: 700;
+  color: #451a03;
+}
+.cgu-mgmt-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cgu-mgmt-links a {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.cgu-mgmt-links a:hover {
+  background: #fef3c7;
+}
+
+/* ─── 5. Partner Card Badges（語言多益標記、雙學位、系所限定）─── */
+.pr-card-lang {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.cgu-lang-flag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-style: normal;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+.cgu-lang-flag.is-no-toeic {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}
+.cgu-lang-flag.is-has-toeic {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #6ee7b7;
+}
+.pr-tags span.is-dual-degree {
+  background: #f3e8ff !important;
+  color: #6b21a8 !important;
+  border: 1px solid #d8b4fe;
+  font-weight: 700;
+}
+.pr-tags span.is-dept-limit {
+  background: #ffedd5 !important;
+  color: #9a3412 !important;
+  border: 1px solid #fdba74;
+  font-weight: 700;
+}
+
+/* ─── 6. Dark Mode Overrides ─── */
+[data-theme="dark"] body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-open-workspace,
+[data-theme="dark"] body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents,
+[data-theme="dark"] body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents[open] {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(148, 163, 184, 0.35);
+  color: #e2e8f0;
+}
+[data-theme="dark"] body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents > summary {
+  color: #e2e8f0;
+}
+[data-theme="dark"] body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-open-workspace:hover,
+[data-theme="dark"] body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents:not([open]) > summary:hover,
+[data-theme="dark"] body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents[open] > summary {
+  background: rgba(37, 99, 235, 0.22);
+  border-color: #60a5fa;
+  color: #bfdbfe;
+}
+[data-theme="dark"] body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents[open] .discovery-recent-list {
+  background: #0f172a;
+  border-color: rgba(148, 163, 184, 0.35);
+}
+[data-theme="dark"] body.unified-shell #partners.pr-explore #discovery-criteria:not([open]) > summary,
+[data-theme="dark"] body.unified-shell #partners.pr-explore #discovery-criteria:not([open]) > summary:hover {
+  background: transparent;
+  color: #ffffff;
+}
+[data-theme="dark"] body.unified-shell #partners.pr-explore #discovery-criteria[open],
+[data-theme="dark"] body.unified-shell #partners.pr-explore #discovery-criteria #discovery-criteria-form {
+  background: #0f172a;
+  border-color: #3b82f6;
+}
+[data-theme="dark"] body.unified-shell #partners.pr-explore #discovery-criteria #discovery-criteria-form label {
+  color: #e2e8f0;
+}
+[data-theme="dark"] body.unified-shell #partners.pr-explore #discovery-criteria #discovery-criteria-form :is(input, select, .glide-select__trigger) {
+  background: #1e293b;
+  border-color: rgba(148, 163, 184, 0.35);
+  color: #f8fafc;
+}
+[data-theme="dark"] body.unified-shell #partners.pr-explore #discovery-criteria .discovery-form-actions #discovery-clear-criteria {
+  background: #1e293b;
+  border-color: rgba(148, 163, 184, 0.35);
+  color: #e2e8f0;
+}
+[data-theme="dark"] body.unified-shell #partners #cgu-program-tabs .cgu-program-tab,
+[data-theme="dark"] body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn {
+  color: #cbd5e1;
+}
+[data-theme="dark"] body.unified-shell #partners #cgu-program-tabs .cgu-program-tab:not(.on):hover,
+[data-theme="dark"] body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn:not(.on):hover {
+  background: rgba(59, 130, 246, 0.18);
+  color: #93c5fd;
+}
+[data-theme="dark"] body.unified-shell #partners #cgu-program-tabs .cgu-program-tab.on,
+[data-theme="dark"] body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn.on {
+  background: #2563eb;
+  color: #ffffff;
+}
+[data-theme="dark"] body.unified-shell #partners #cgu-program-tabs .cgu-program-tab.on.is-dual {
+  background: #7e22ce;
+  color: #ffffff;
+}
+[data-theme="dark"] body.unified-shell #partners #cgu-college-quick-bar .glide-select__trigger,
+[data-theme="dark"] body.unified-shell #partners #cgu-college-quick-bar select {
+  border-color: rgba(147, 197, 253, 0.4);
+  color: #93c5fd;
+  background: transparent;
+}
+[data-theme="dark"] body.unified-shell #partners #cgu-college-quick-bar .cgu-more-college-wrap.has-more-college .glide-select__trigger,
+[data-theme="dark"] body.unified-shell #partners #cgu-college-quick-bar .cgu-more-college-wrap.has-more-college select {
+  background: #2563eb;
+  border-color: #60a5fa;
+  color: #ffffff;
+}
+[data-theme="dark"] body.unified-shell #partners #cgu-college-quick-bar .cgu-dept-inline-select.has-dept .glide-select__trigger,
+[data-theme="dark"] body.unified-shell #partners #cgu-college-quick-bar .cgu-dept-inline-select.has-dept select {
+  background: rgba(37, 99, 235, 0.22);
+  border-color: #60a5fa;
+  color: #dbeafe;
+}
+[data-theme="dark"] .cgu-mgmt-notice {
+  background: rgba(217, 119, 6, 0.18);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #fef3c7;
+}
+[data-theme="dark"] .cgu-mgmt-copy strong {
+  color: #fffbeb;
+}
+[data-theme="dark"] .cgu-mgmt-links a {
+  background: rgba(15, 23, 42, 0.7);
+  color: #fcd34d;
+}
+[data-theme="dark"] .cgu-lang-flag.is-no-toeic {
+  background: rgba(220, 38, 38, 0.22);
+  color: #fca5a5;
+  border-color: rgba(248, 113, 113, 0.45);
+}
+[data-theme="dark"] .cgu-lang-flag.is-has-toeic {
+  background: rgba(5, 150, 105, 0.22);
+  color: #6ee7b7;
+  border-color: rgba(52, 211, 153, 0.45);
+}
+[data-theme="dark"] .pr-tags span.is-dual-degree {
+  background: rgba(126, 34, 206, 0.28) !important;
+  color: #e9d5ff !important;
+  border-color: rgba(192, 132, 252, 0.45);
+}
+[data-theme="dark"] .pr-tags span.is-dept-limit {
+  background: rgba(234, 88, 12, 0.24) !important;
+  color: #fed7aa !important;
+  border-color: rgba(251, 146, 60, 0.45);
+}

@@ -54,6 +54,7 @@
     <link rel="stylesheet" href="/static/application-today.css?v=20261115-cgu-app-flow-3" />
     <link rel="stylesheet" href="/static/assets/fonts/notosans-tc/notosans-tc.css?v=20261108-metro-1" />
     <link rel="stylesheet" href="/static/metro.css?v=20261111-globe-layout-1" />
+    <link rel="stylesheet" href="/static/partner-search-template.css?v=20261116-partner-search-1" />
   </head>
   <body class="global-home-mode unified-shell">
     <noscript><section style="position:relative;z-index:100;padding:2rem;background:#fff;color:#142c35"><h1>UniWay 交換學生申請與選校資訊</h1><p>依就讀大學查詢合作校、名額狀態、申請條件與官方來源。</p><a href="/schools">瀏覽交換學校指南（不需 JavaScript）</a><p>互動選校、收藏及申請工具需要啟用 JavaScript。</p></section></noscript>
@@ -1064,11 +1065,47 @@
                 <span class="pr-explore-context"><i data-lucide="graduation-cap" aria-hidden="true"></i><span id="partners-context">合作學校</span></span>
                 <h1 id="partners-title">找交換學校</h1>
               </div>
-              <div class="partner-view-switch pr-view-toggle" role="group" aria-label="合作學校檢視方式">
-                <button type="button" data-partner-view="list" aria-pressed="true" aria-controls="partner-table"><i data-lucide="layers" aria-hidden="true"></i>卡片</button>
-                <button type="button" data-partner-view="map" aria-pressed="false" aria-controls="partner-map-panel"><i data-lucide="map" aria-hidden="true"></i>地圖</button>
+              <div class="cgu-explore-head-actions">
+                <details class="discovery-recents" data-discovery-recents hidden></details>
+                <a class="discovery-open-workspace" href="#favorites"><i data-lucide="bookmark" aria-hidden="true"></i>我的選校 <span id="discovery-selection-count"></span></a>
+                <div class="partner-view-switch pr-view-toggle" role="group" aria-label="合作學校檢視方式">
+                  <button type="button" data-partner-view="list" aria-pressed="true" aria-controls="partner-table"><i data-lucide="layers" aria-hidden="true"></i>卡片</button>
+                  <button type="button" data-partner-view="map" aria-pressed="false" aria-controls="partner-map-panel"><i data-lucide="map" aria-hidden="true"></i>地圖</button>
+                </div>
               </div>
             </header>
+            <div class="discovery-search-tools">
+              <details id="discovery-criteria" class="discovery-criteria">
+                <summary>
+                  <span class="cgu-criteria-main">
+                    <span class="cgu-criteria-icon" aria-hidden="true"><i data-lucide="sliders-horizontal"></i></span>
+                    <strong class="cgu-criteria-heading">我的條件</strong>
+                    <span id="cgu-criteria-summary" class="cgu-criteria-summary">檢定成績 · 學業成績 · 學制</span>
+                    <span id="discovery-criteria-count"></span>
+                  </span>
+                  <span class="cgu-criteria-action">
+                    <span id="cgu-criteria-cta-label">設定條件</span>
+                    <i data-lucide="chevron-down" aria-hidden="true"></i>
+                  </span>
+                </summary>
+                <form id="discovery-criteria-form">
+                  <label>語言檢定<select id="discovery-test" name="test"><option value="">暫不篩選</option><option value="ielts">IELTS</option><option value="toefl">TOEFL iBT</option><option value="toeic">TOEIC</option><option value="jlpt">日檢 JLPT</option><option value="topik">韓檢 TOPIK</option><option value="duolingo">Duolingo</option></select></label>
+                  <label>檢定成績<input id="discovery-score" name="score" type="number" min="0" max="990" step="0.5" placeholder="成績"></label>
+                  <label>學業成績<input name="grade" type="number" min="0" max="100" step="0.01" placeholder="例如 78"></label>
+                  <label>計分制<select name="scale"><option value="100">百分制</option><option value="4">GPA 4.0</option><option value="4.3">GPA 4.3</option><option value="5">GPA 5.0</option></select></label>
+                  <label>學制<select name="degree"><option value="">不限</option><option value="undergraduate">大學部</option><option value="graduate">研究所</option></select></label>
+                  <label>交換學期<select name="term"><option value="">不限</option><option value="fall">秋季／上學期</option><option value="spring">春季／下學期</option></select></label>
+                  <label class="discovery-criteria-mode">顯示方式<select name="mode"><option value="possible">可考慮，含待確認</option><option value="confirmed">僅已知門檻符合</option></select></label>
+                  <div class="discovery-form-actions"><button id="discovery-clear-criteria" type="button" class="secondary-button">重設</button><button type="submit" class="primary-button">套用條件</button></div>
+                </form>
+              </details>
+            </div>
+            <p id="discovery-criteria-result" class="discovery-muted" role="status"></p>
+            <div id="cgu-partner-filter-strip" class="cgu-partner-filter-strip" role="region" aria-label="計畫類型與學院篩選">
+              <div id="cgu-program-tabs" class="cgu-program-tabs" role="tablist" aria-label="計畫類型分頁"></div>
+              <div id="cgu-college-quick-bar" class="cgu-college-bar" role="region" aria-label="學院與系所快速篩選"></div>
+            </div>
+            <div id="cgu-mgmt-channel-notice" class="cgu-mgmt-notice" role="status" hidden></div>
             <div class="partner-view-toolbar pr-search" role="search">
               <label class="pr-field search-field" for="partner-search">
                 <span class="pr-field-icon"><i data-lucide="map-pin" aria-hidden="true"></i></span>
@@ -1102,23 +1139,6 @@
               </div>
             </details>
             <div class="journey-search-results">
-            <div class="discovery-search-tools">
-              <details id="discovery-criteria" class="discovery-criteria"><summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i>我的條件 <span id="discovery-criteria-count"></span></summary>
-                <form id="discovery-criteria-form">
-                  <label>語言檢定<select id="discovery-test" name="test"><option value="">暫不篩選</option><option value="ielts">IELTS</option><option value="toefl">TOEFL iBT</option><option value="toeic">TOEIC</option><option value="jlpt">日檢 JLPT</option><option value="topik">韓檢 TOPIK</option><option value="duolingo">Duolingo</option></select></label>
-                  <label>檢定成績<input id="discovery-score" name="score" type="number" min="0" max="990" step="0.5" placeholder="成績"></label>
-                  <label>學業成績<input name="grade" type="number" min="0" max="100" step="0.01" placeholder="例如 3.5"></label>
-                  <label>計分制<select name="scale"><option value="100">百分制</option><option value="4">GPA 4.0</option><option value="4.3">GPA 4.3</option><option value="5">GPA 5.0</option></select></label>
-                  <label>學制<select name="degree"><option value="">不限</option><option value="undergraduate">大學部</option><option value="graduate">研究所</option></select></label>
-                  <label>交換學期<select name="term"><option value="">不限</option><option value="fall">秋季／上學期</option><option value="spring">春季／下學期</option></select></label>
-                  <label class="discovery-criteria-mode">顯示方式<select name="mode"><option value="possible">可考慮，含待確認</option><option value="confirmed">僅已知門檻符合</option></select></label>
-                  <div class="discovery-form-actions"><button id="discovery-clear-criteria" type="button" class="secondary-button">重設</button><button type="submit" class="primary-button">套用條件</button></div>
-                </form>
-              </details>
-              <details class="discovery-recents" data-discovery-recents hidden></details>
-              <a class="discovery-open-workspace" href="#favorites"><i data-lucide="bookmark" aria-hidden="true"></i>我的選校 <span id="discovery-selection-count"></span></a>
-            </div>
-            <p id="discovery-criteria-result" class="discovery-muted" role="status"></p>
             <div class="pr-results-head"><p id="partner-result-count" class="partner-result-count"></p><span id="partner-applied" class="pr-applied" role="status"></span></div>
             <div id="partner-table" class="partner-results" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-table"></div></div>
             <button id="show-more-partners" type="button" class="secondary-button centered-button" hidden>顯示更多學校</button>
@@ -1624,7 +1644,7 @@
     <script src="/static/discovery-ui.js?v=20261112-cgu-ux-1" defer></script>
     <script src="/static/navigation.js?v=20261029-level-tools-3" defer></script>
     <script src="/static/motion.js?v=20261014-aria-picker-1" defer></script>
-    <script src="/static/community-reader.js?v=20261029-midnight-1" defer></script>
+    <script src="/static/community-reader.js?v=20261116-partner-search-1" defer></script>
     <script src="/static/community-moderation.js?v=20261102-adm1" defer></script>
     <script src="/static/academic-units.js?v=20261111-71schools-1" defer></script>
     <script src="/static/ccu-academic-units.js?v=20261008-ccu-filter-23" defer></script>
@@ -1649,12 +1669,12 @@
     <script src="/static/application-path-template.js?v=20261115-cgu-app-flow-3" defer></script>
     <script src="/static/exchange-workspace.js?v=20261115-cgu-app-flow-3" defer></script>
     <script src="/static/application-path.js?v=20261115-cgu-app-flow-3" defer></script>
-    <script src="/static/app.js?v=20261115-cgu-app-flow-3" defer></script>
+    <script src="/static/app.js?v=20261116-partner-search-1" defer></script>
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261029-midnight-1" defer></script>
     <script src="/static/platform-home.js?v=20261112-cgu-ux-1" defer></script>
     <script src="/static/home-motion.js?v=20261110-home-center-1" defer></script>
-    <script src="/static/platform-explore.js?v=20261112-cgu-ux-2" defer></script>
+    <script src="/static/platform-explore.js?v=20261116-partner-search-1" defer></script>
     <script src="/static/platform-detail.js?v=20261112-cgu-ux-1" defer></script>
     <script src="/static/platform-guide.js?v=20261111-search-copy-1" defer></script>
     <script src="/static/platform-tracker.js?v=20261115-cgu-app-flow-3" defer></script>
