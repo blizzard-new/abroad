@@ -1,0 +1,63 @@
+2026-11-14 Asia/Taipei; isolated codex/seo-daily-20261114
+Base:aa2d1424d1645308b479bee648eb056a9e956f8e
+Python:/workspace/abroad/.venv/bin/python (3.12)
+
+EXCHANGE_INFO_DATA_DIR=<cache>/gate-import-data PYTHONPATH=src python scripts/check_editorial.py --base-ref origin/main
+EXCHANGE_INFO_DATA_DIR=<cache>/unit-import-data PYTHONPATH=src python -m pytest -q tests/test_seo_articles.py tests/test_seo.py tests/test_seo_content.py tests/test_seo_quality.py tests/test_seo_reporting.py tests/test_editorial_release_gate.py
+EXCHANGE_INFO_DATA_DIR=<cache>/e2e-import-data PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium PYTHONPATH=src python -m pytest -q tests/e2e/test_seo_articles.py tests/e2e/test_seo_pages.py tests/e2e/test_seo_analytics.py
+EXCHANGE_INFO_DATA_DIR=<cache>/preview-import-data PYTHONPATH=src python <cache>/qa.py preview --repo <checkout> --date 2026-11-14 --slugs ai-english-presentation-practice toeic-part-five-verb-tenses
+uv build --wheel --out-dir <cache>/wheel
+python <cache>/qa.py package --repo <checkout> --date 2026-11-14 --slugs ai-english-presentation-practice toeic-part-five-verb-tenses
+
+One run each; frozen content/assets; no retries counted as extra coverage.
+
+{
+  "ok": true,
+  "article_count": 53,
+  "errors": [],
+  "scope": "Editorial structure/assets/revision dates; not proof of factual accuracy, indexing or rankings"
+}
+
+SEO raw:
+
+CONFTEST LOADED!
+........................................................................ [ 40%]
+........................................................................ [ 80%]
+....................................                                     [100%]
+180 passed in 84.02s (0:01:24)
+
+E2E raw:
+
+CONFTEST LOADED!
+...............................................................          [100%]
+63 passed in 186.87s (0:03:06)
+
+Browser:
+
+{
+  "passed": 6,
+  "capture_note": "Only long element captures temporarily hide fixed decorative6px stripe and fixed reading header via screenshot style to avoid stitching over text. Full-page previews and application/assertions unmodified.",
+  "visual_review": "All15final images inspected: desktop/mobile,3:2/2:1crops,two inlinephotos,two HTML diagrams,eight selected contentsections. Chinese/English scriptrevision,Prompts,QA,time-reference questions/explanations and captions readable. Subjects retained; mobiletables intentionally scroll horizontally.",
+  "run_history": "One six-case no-JavaScript run plus15finalcaptures. Content/assets frozen beforetests; no retests counted as extra coverage."
+}
+
+Package:
+
+Successfully built /workspace/scratch/uniway-seo-20261114/wheel/taiwan_exchange_info-0.1.0-py3-none-any.whl
+
+{
+  "checked": "2026-11-14",
+  "build_command": "uv build --wheel",
+  "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+  "wheel_bytes": 2528030515,
+  "article_json_count": 53,
+  "image_count": 53,
+  "checked_files": 646,
+  "runtime_import": {
+    "module": "/workspace/scratch/uniway-seo-20261114/wheel-extracted/exchange_info/seo_articles.py",
+    "loaded_articles": 53,
+    "new_slugs_present": true
+  },
+  "outside_checkout": true,
+  "passed": true
+}
