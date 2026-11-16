@@ -364,7 +364,7 @@ window.UniWayExplore = (() => {
   }
 
   function syncTermOptionLabels() {
-    const isCgu = activeHomeSchool() === "長庚大學";
+    const isCgu = Boolean(window.cguDemoStorageIsolated);
     const fallLabel = isCgu ? "2027 秋季（116-1）" : "秋季／上學期";
     const springLabel = isCgu ? "2027 春季（115-2）" : "春季／下學期";
     document.querySelectorAll('#partner-term-tile, #discovery-criteria-form select[name="term"]').forEach((sel) => {
@@ -400,7 +400,7 @@ window.UniWayExplore = (() => {
     const c = (typeof discoveryCriteria === "object" && discoveryCriteria) ? discoveryCriteria : {};
     const active = Boolean(window.UniWayDiscovery?.hasCriteria?.(c))
       || Boolean((document.querySelector("#discovery-criteria-count")?.textContent || "").trim());
-    const isCgu = activeHomeSchool() === "長庚大學";
+    const isCgu = Boolean(window.cguDemoStorageIsolated);
 
     const parts = [];
     if (active) {

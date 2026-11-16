@@ -42,7 +42,7 @@ html body.unified-shell :is(.application-workspace-stages [aria-current], .study
 html body.unified-shell .application-nav-group > summary:has(a[aria-current="page"]) .application-nav-chevron {
   color: var(--uw-on-accent); background-color: transparent;
 }
-html body.unified-shell :is(.pr-supported-label > .lucide, .pr-check input:checked + .pr-check-box, .pr-compare input:checked + .pr-compare-box) {
+html body.unified-shell :is(.pr-check input:checked + .pr-check-box, .pr-compare input:checked + .pr-compare-box) {
   background: var(--uw-accent); color: var(--uw-on-accent); border-color: var(--uw-accent-edge);
 }
 html body.unified-shell .glass-navigation-rail .glass-rail-brand {
