@@ -1110,7 +1110,7 @@ def platform_html() -> str:
     if hero_section is not None:
         hero_section.insert_after(BeautifulSoup(HOME_REMINDERS_HTML, 'html.parser'))
     partners_head = soup.select_one('#partners .pr-explore-head')
-    if partners_head is not None:
+    if partners_head is not None and partners_head.select_one('.cgu-explore-head-actions') is None:
         view_toggle = partners_head.select_one('.pr-view-toggle')
         recents_details = soup.select_one('#partners [data-discovery-recents]')
         open_workspace = soup.select_one('#partners .discovery-open-workspace')
@@ -1123,10 +1123,11 @@ def platform_html() -> str:
                 head_actions.append(open_workspace.extract())
             head_actions.append(view_toggle.extract())
 
+    if partners_head is not None and soup.select_one('#partners #cgu-partner-filter-strip') is None:
         search_tools = soup.select_one('#partners .discovery-search-tools')
         criteria_details = soup.select_one('#partners #discovery-criteria')
         criteria_result = soup.select_one('#partners #discovery-criteria-result')
-        if criteria_details is not None:
+        if criteria_details is not None and criteria_details.select_one('.cgu-criteria-main') is None:
             summary_node = criteria_details.select_one('summary')
             if summary_node is not None:
                 summary_node.clear()

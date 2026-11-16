@@ -1,4 +1,4 @@
-/* Explore schools (#partners): sort tabs, facet panel, search tiles and the compare tray around the card grid.
+/* Explore schools (#partners): sort tabs, program/college/department strip, prominent criteria bar, facet panel, search tiles and compare tray.
    app.js renders the grid; it calls UniWayExplore.render() after every partner render. */
 window.UniWayExplore = (() => {
   "use strict";
@@ -7,17 +7,46 @@ window.UniWayExplore = (() => {
     { id: "deadline", label: "截止最近" },
     { id: "quota", label: "名額最多" },
   ];
-  const CGU_COLLEGE_BUTTONS = [
-    { short: "醫", value: "醫學院" },
-    { short: "工", value: "工學院" },
-    { short: "管", value: "管理學院" },
-    { short: "智慧運算", value: "智慧運算學院" },
-  ];
   const CGU_PROGRAM_TABS = [
     { id: "", label: "全部計畫" },
     { id: "exchange", label: "交換學生" },
     { id: "dual_degree", label: "雙學位" },
   ];
+  const PRIMARY_PROGRAM_DEFS = [
+    { id: "exchange", label: "交換學生" },
+    { id: "dual_degree", label: "雙學位" },
+    { id: "short_term", label: "短期研修" },
+    { id: "internship", label: "海外實習" },
+    { id: "fee_paying", label: "自費研修" },
+  ];
+  const LANG_GROUP_DEFS = [
+    { id: "lang_en", label: "英語組" },
+    { id: "lang_ja", label: "日語組" },
+    { id: "lang_zh", label: "中文組" },
+    { id: "lang_other", label: "其他語組" },
+  ];
+  const UNIT_COLLEGE_ALIASES = {
+    "外語學院": ["外國語文學院"],
+    "外國語文學院": ["外語學院"],
+    "海洋科學學院": ["海洋科學院"],
+    "海洋科學院": ["海洋科學學院"],
+    "醫學工程學院": ["生醫工程學院"],
+    "生醫工程學院": ["醫學工程學院"],
+  };
+  const CRITERIA_TEST_LABELS = {
+    ielts: "IELTS",
+    toefl: "TOEFL iBT",
+    toeic: "TOEIC",
+    jlpt: "日檢 N",
+    topik: "TOPIK ",
+    duolingo: "Duolingo",
+  };
+  const GRADE_SCALE_META = {
+    "100": { max: "100", step: "0.01", placeholder: "例如 78" },
+    "4": { max: "4", step: "0.01", placeholder: "例如 3.4" },
+    "4.3": { max: "4.3", step: "0.01", placeholder: "例如 3.6" },
+    "5": { max: "5", step: "0.01", placeholder: "例如 4.2" },
+  };
   const COUNTRY_FACETS = 8;
   const narrow = window.matchMedia("(max-width: 900px)");
   let scheduled = 0, drawerSynced = false;
@@ -36,8 +65,13 @@ window.UniWayExplore = (() => {
       const official = upcomingDeadlines(1)[0];
       if (activeHomeSchool() === "長庚大學" && partnerDates.length) {
         deadline = `校內 12/21 · 合作校 ${partnerDates.length} 間有時程`;
-      } else if (partnerDates.length) deadline = `最近 ${shortDate(partnerDates[0])} · ${partnerDates.length} 間有時程`;
-      else if (official) deadline = `最近 ${shortDate(official.date)} ${official.scope}`;
+      } else if (official && partnerDates.length) {
+        deadline = `校內 ${shortDate(official.date)} · 合作校 ${partnerDates.length} 間有時程`;
+      } else if (partnerDates.length) {
+        deadline = `最近 ${shortDate(partnerDates[0])} · ${partnerDates.length} 間有時程`;
+      } else if (official) {
+        deadline = `最近 ${shortDate(official.date)} ${official.scope}`;
+      }
     } catch (_) { /* the tab then says the deadline follows the official notice */ }
     const picked = UniWayDiscovery.hasCriteria(discoveryCriteria);
     const fits = picked ? list.filter((item) => UniWayDiscovery.assess(item, discoveryCriteria).matched).length : 0;
@@ -48,103 +82,368 @@ window.UniWayExplore = (() => {
     };
   }
 
-  function cguDeptCollegeMap() {
-    const units = window.UniWayAcademicUnits?.["長庚大學"]?.colleges || {};
-    const map = new Map();
-    Object.entries(units).forEach(([college, depts]) => {
-      (depts || []).forEach((dept) => map.set(dept, college));
+  function resolveAcademicUnits(home = activeHomeSchool(), colleges = homeCollegeOptions()) {
+    const rawUnits = window.UniWayAcademicUnits?.[home]?.colleges || {};
+    const unitsByCollege = {};
+    const deptToCollege = new Map();
+    const usedRawKeys = new Set();
+    colleges.forEach((col) => {
+      let matchedKey = Object.prototype.hasOwnProperty.call(rawUnits, col) ? col : "";
+      if (!matchedKey) {
+        matchedKey = (UNIT_COLLEGE_ALIASES[col] || []).find((alias) => Object.prototype.hasOwnProperty.call(rawUnits, alias)) || "";
+      }
+      if (matchedKey) {
+        usedRawKeys.add(matchedKey);
+        const depts = Array.isArray(rawUnits[matchedKey]) ? rawUnits[matchedKey].filter(Boolean) : [];
+        if (depts.length) {
+          unitsByCollege[col] = depts;
+          depts.forEach((dept) => deptToCollege.set(dept, col));
+        }
+      }
     });
-    return { units, map };
+    Object.entries(rawUnits).forEach(([rawCol, rawDepts]) => {
+      if (usedRawKeys.has(rawCol)) return;
+      const canonical = colleges.includes(rawCol)
+        ? rawCol
+        : (UNIT_COLLEGE_ALIASES[rawCol] || []).find((alias) => colleges.includes(alias)) || "";
+      if (!canonical) return;
+      const depts = Array.isArray(rawDepts) ? rawDepts.filter(Boolean) : [];
+      if (!depts.length) return;
+      unitsByCollege[canonical] = [...(unitsByCollege[canonical] || []), ...depts];
+      depts.forEach((dept) => deptToCollege.set(dept, canonical));
+    });
+    const totalDepts = Object.values(unitsByCollege).reduce((sum, depts) => sum + depts.length, 0);
+    return { unitsByCollege, deptToCollege, totalDepts };
   }
 
-  function renderCguProgramTabs(host) {
+  function computeProgramTabs(allPartners = state.dashboard?.partner_universities || []) {
+    const home = activeHomeSchool();
+    if (home === "長庚大學") return CGU_PROGRAM_TABS;
+    const all = Array.isArray(allPartners) ? allPartners : [];
+    if (!all.length) return [];
+    const total = all.length;
+    const countKind = (id) => all.filter((item) => cguProgramKindMatches(item, id)).length;
+
+    const primaryCounts = PRIMARY_PROGRAM_DEFS.map((def) => ({ ...def, count: countKind(def.id) }));
+    const nonEmptyPrimary = primaryCounts.filter((d) => d.count > 0);
+    if (nonEmptyPrimary.length >= 2 && nonEmptyPrimary.some((d) => d.count < total)) {
+      const ordered = [
+        ...nonEmptyPrimary.filter((d) => d.id === "exchange"),
+        ...nonEmptyPrimary.filter((d) => d.id !== "exchange").sort((a, b) => b.count - a.count),
+      ].slice(0, 3);
+      return [{ id: "", label: "全部計畫" }, ...ordered.map(({ id, label }) => ({ id, label }))];
+    }
+
+    const univCount = countKind("level_univ");
+    const deptCount = countKind("level_dept");
+    if (univCount > 0 && deptCount > 0 && univCount < total && deptCount < total) {
+      return [
+        { id: "", label: "全部計畫" },
+        { id: "level_univ", label: "校級交換" },
+        { id: "level_dept", label: "院系級" },
+      ];
+    }
+
+    const langGroups = LANG_GROUP_DEFS
+      .map((def) => ({ ...def, count: countKind(def.id) }))
+      .filter((d) => d.count > 0 && d.count < total);
+    if (langGroups.length >= 2) {
+      const pickedLangs = langGroups.sort((a, b) => b.count - a.count).slice(0, 3);
+      return [{ id: "", label: "全部計畫" }, ...pickedLangs.map(({ id, label }) => ({ id, label }))];
+    }
+
+    const intlCount = countKind("region_intl");
+    const csCount = countKind("region_cross_strait");
+    if (intlCount > 0 && csCount > 0 && intlCount < total && csCount < total) {
+      return [
+        { id: "", label: "全部計畫" },
+        { id: "region_intl", label: "國際交換" },
+        { id: "region_cross_strait", label: "兩岸港澳" },
+      ];
+    }
+
+    const openCount = countKind("status_open");
+    const refCount = countKind("status_ref");
+    if (openCount > 0 && refCount > 0 && openCount < total && refCount < total) {
+      return [
+        { id: "", label: "全部計畫" },
+        { id: "status_open", label: "本期開放" },
+        { id: "status_ref", label: "備查待確認" },
+      ];
+    }
+
+    return [];
+  }
+
+  function renderCguProgramTabs(host, tabs) {
     const bar = host.querySelector("#cgu-program-tabs");
     if (!bar) return;
-    if (!window.cguDemoStorageIsolated || activeHomeSchool() !== "長庚大學") {
+    if (!tabs.length) {
+      if (state.cguProgramTab) state.cguProgramTab = "";
       bar.hidden = true;
+      bar.innerHTML = "";
       return;
+    }
+    if (state.cguProgramTab && !tabs.some((t) => t.id === state.cguProgramTab)) {
+      state.cguProgramTab = "";
     }
     bar.hidden = false;
     const pool = filteredPartners({ ignore: "program", sort: false });
-    const countFor = (tabId) => tabId ? pool.filter((item) => cguProgramKindMatches(item, tabId)).length : pool.length;
-    const buttonsHtml = CGU_PROGRAM_TABS.map(({ id, label }) => {
+    const countFor = (tabId) => (tabId ? pool.filter((item) => cguProgramKindMatches(item, tabId)).length : pool.length);
+    const buttonsHtml = tabs.map(({ id, label }) => {
       const active = (state.cguProgramTab || "") === id;
       const count = countFor(id);
-      return `<button type="button" role="tab" aria-selected="${active}" class="cgu-program-tab${active ? " on" : ""}${id === "dual_degree" ? " is-dual" : ""}" data-cgu-program="${escapeHtml(id)}"><strong>${escapeHtml(label)}</strong><span>${count} 所</span></button>`;
+      const isDual = id === "dual_degree";
+      return `<button type="button" role="tab" aria-selected="${active}" class="cgu-program-tab${active ? " on" : ""}${isDual ? " is-dual" : ""}" data-cgu-program="${escapeHtml(id)}"><strong>${escapeHtml(label)}</strong><span>${count} 所</span></button>`;
     }).join("");
-    const note = state.cguProgramTab === "dual_degree"
-      ? "長庚雙學位計畫：修業年限、學費與學位授予規定與交換不同（多為醫／工／管院限定）"
-      : state.cguProgramTab === "exchange"
-        ? "交換學生計畫（含國際處中央名單與管理學院院級參考）"
-        : "雙學位與交換分開檢視：點選「雙學位」單獨查看 14 個雙聯計畫";
+    let note = "";
+    if (activeHomeSchool() === "長庚大學") {
+      note = state.cguProgramTab === "dual_degree"
+        ? "長庚雙學位計畫：修業年限、學費與學位授予規定與交換不同（多為醫／工／管院限定）"
+        : state.cguProgramTab === "exchange"
+          ? "交換學生計畫（含國際處中央名單與管理學院院級參考）"
+          : "雙學位與交換分開檢視：點選「雙學位」單獨查看 14 個雙聯計畫";
+    } else {
+      const activeObj = tabs.find((t) => t.id === (state.cguProgramTab || ""));
+      note = activeObj && activeObj.id ? `目前檢視：${activeObj.label}` : "依計畫類別快速切換檢視";
+    }
     bar.innerHTML = `<div class="cgu-program-tabs-row">${buttonsHtml}</div><small class="cgu-program-tabs-note">${escapeHtml(note)}</small>`;
+  }
+
+  function shortPartnerAnchorLabel(name) {
+    const text = String(name || "").trim();
+    const zhPrefix = text.match(/^([\u4e00-\u9fff·・A-Za-z0-9]{2,14}?)(?:\s+[A-Za-z(])/);
+    if (zhPrefix) return zhPrefix[1];
+    return text.length > 16 ? `${text.slice(0, 15)}…` : text;
   }
 
   function renderCguMgmtNotice(host) {
     const notice = host.querySelector("#cgu-mgmt-channel-notice");
     if (!notice) return;
-    if (!window.cguDemoStorageIsolated || activeHomeSchool() !== "長庚大學") {
-      notice.hidden = true;
+    const home = activeHomeSchool();
+    if (home === "長庚大學") {
+      const query = String(state.partnerQuery || "");
+      const show = state.college === "管理學院"
+        || (Boolean(state.partnerFit) && state.eligibilityProfile?.college === "管理學院")
+        || state.availability === "departmental_reference"
+        || /管理學院|商學|iae|aix|marseille|艾克斯|馬賽|rennes|雷恩/i.test(query);
+      notice.hidden = !show;
+      if (!show) {
+        notice.innerHTML = "";
+        return;
+      }
+      notice.innerHTML = `
+        <span class="cgu-mgmt-badge">院級管道提示</span>
+        <div class="cgu-mgmt-copy">
+          <strong>管理學院另有院級交換，請洽院國際辦公室</strong>
+          <span>法國 IAE 艾克斯馬賽大學管理研究所、雷恩商學院共 2 所屬於管理學院自有管道，不在國際事務處中央當期名單上。</span>
+        </div>
+        <div class="cgu-mgmt-links">
+          <a href="#school=${encodeURIComponent("法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management")}">IAE 艾克斯馬賽</a>
+          <a href="#school=${encodeURIComponent("雷恩商學院 Rennes School of Business")}">雷恩商學院</a>
+        </div>`;
       return;
     }
-    const query = String(state.partnerQuery || "");
-    const show = state.college === "管理學院"
-      || (Boolean(state.partnerFit) && state.eligibilityProfile?.college === "管理學院")
+
+    const all = state.dashboard?.partner_universities || [];
+    const deptChannelPartners = all.filter((item) => item.availability_status === "departmental_reference"
+      || /院級|院系級|系級|系所級|\bOIP\b/i.test(item.program_type || ""));
+    if (!deptChannelPartners.length) {
+      notice.hidden = true;
+      notice.innerHTML = "";
+      return;
+    }
+    const scopedByCollege = state.college
+      ? deptChannelPartners.filter((item) => !academicScopeNeedsConfirmation(item, "colleges") && collegeMatches(item.colleges, state.college))
+      : [];
+    const show = state.cguProgramTab === "level_dept"
       || state.availability === "departmental_reference"
-      || /管理學院|商學|iae|aix|marseille|艾克斯|馬賽|rennes|雷恩/i.test(query);
+      || scopedByCollege.length > 0;
     notice.hidden = !show;
     if (!show) {
       notice.innerHTML = "";
       return;
     }
+    const displayPartners = scopedByCollege.length ? scopedByCollege : deptChannelPartners;
+    const heading = state.college && scopedByCollege.length
+      ? `${state.college}另有 ${scopedByCollege.length} 所院系級交換管道，請依院系公告辦理`
+      : `本名單收錄 ${deptChannelPartners.length} 所院系級交換管道，請洽所屬院系辦公室確認`;
+    const linksHtml = displayPartners.slice(0, 3)
+      .map((item) => `<a href="#school=${encodeURIComponent(item.school_name)}">${escapeHtml(shortPartnerAnchorLabel(item.school_name))}</a>`)
+      .join("");
     notice.innerHTML = `
       <span class="cgu-mgmt-badge">院級管道提示</span>
       <div class="cgu-mgmt-copy">
-        <strong>管理學院另有院級交換，請洽院國際辦公室</strong>
-        <span>法國 IAE 艾克斯馬賽大學管理研究所、雷恩商學院共 2 所屬於管理學院自有管道，不在國際事務處中央當期名單上。</span>
+        <strong>${escapeHtml(heading)}</strong>
+        <span>院系級交換由各學院或系所獨立受理甄選與提名，申請期限與應備文件請以該院系公告為準。</span>
       </div>
-      <div class="cgu-mgmt-links">
-        <a href="#school=${encodeURIComponent("法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management")}">IAE 艾克斯馬賽</a>
-        <a href="#school=${encodeURIComponent("雷恩商學院 Rennes School of Business")}">雷恩商學院</a>
-      </div>`;
+      ${linksHtml ? `<div class="cgu-mgmt-links">${linksHtml}</div>` : ""}`;
   }
 
-  function renderCguCollegeBar(host, list) {
+  function partitionCollegesForRow(colleges, progTabCount, hasDepts) {
+    const totalChars = colleges.reduce((sum, name) => sum + name.length, 0);
+    const allFitInline = (colleges.length <= 4 && totalChars <= 18 && progTabCount <= 3)
+      || (colleges.length <= 5 && totalChars <= 20 && (progTabCount === 0 || !hasDepts));
+    if (allFitInline) {
+      return { inlineColleges: colleges, moreColleges: [] };
+    }
+    const maxInlineCount = progTabCount >= 4 ? 2 : 3;
+    const maxInlineChars = progTabCount >= 4 ? 11 : 15;
+    const inlineColleges = [];
+    let usedChars = 0;
+    for (const col of colleges) {
+      if (inlineColleges.length >= maxInlineCount) break;
+      if (inlineColleges.length > 0 && usedChars + col.length > maxInlineChars) break;
+      inlineColleges.push(col);
+      usedChars += col.length;
+    }
+    const moreColleges = colleges.slice(inlineColleges.length);
+    if (moreColleges.length === 1 && usedChars + moreColleges[0].length <= (progTabCount >= 4 ? 14 : 18)) {
+      return { inlineColleges: colleges, moreColleges: [] };
+    }
+    return { inlineColleges, moreColleges };
+  }
+
+  function renderCguCollegeBar(host, list, progTabs) {
     const bar = host.querySelector("#cgu-college-quick-bar");
     if (!bar) return;
-    if (activeHomeSchool() !== "長庚大學") {
+    const home = activeHomeSchool();
+    const colleges = homeCollegeOptions();
+    if (!colleges.length) {
       bar.hidden = true;
+      bar.innerHTML = "";
       return;
     }
     bar.hidden = false;
+    const { unitsByCollege, deptToCollege, totalDepts } = resolveAcademicUnits(home, colleges);
+    if (state.cguDepartment) {
+      const mappedCol = deptToCollege.get(state.cguDepartment);
+      if (!mappedCol || (state.college && mappedCol !== state.college)) {
+        state.cguDepartment = "";
+      }
+    }
+
     const pool = filteredPartners({ ignore: "college", sort: false });
-    const isDemo = Boolean(window.cguDemoStorageIsolated);
-    const countFor = (collegeName) => pool.filter((item) => isDemo
-      ? cguOptionScopeMatches(item, collegeName, "", state.cguProgramTab)
-      : (academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, collegeName))).length;
-    const buttonsHtml = CGU_COLLEGE_BUTTONS.map(({ short, value }) => {
-      const active = state.college === value;
-      const count = countFor(value);
-      return `<button type="button" class="cgu-college-btn${active ? " on" : ""}" data-cgu-college="${escapeHtml(value)}" aria-pressed="${active}"><strong>${escapeHtml(short)}</strong><span>${count} 所</span></button>`;
-    }).join("");
+    const countFor = (collegeName) => pool.filter((item) => cguOptionScopeMatches(item, collegeName, "", state.cguProgramTab)).length;
+    const { inlineColleges, moreColleges } = partitionCollegesForRow(colleges, progTabs.length, totalDepts > 0);
+
     const allActive = !state.college && !state.cguDepartment;
-    const resetHtml = `<button type="button" class="cgu-college-btn is-all${allActive ? " on" : ""}" data-cgu-college="" aria-pressed="${allActive}"><strong>全部</strong><span>${pool.length} 所</span></button>`;
+    const resetHtml = `<button type="button" class="cgu-college-btn is-all${allActive ? " on" : ""}" data-cgu-college="" aria-pressed="${allActive}"><strong>全部學院</strong><span>${pool.length} 所</span></button>`;
+    const inlineButtonsHtml = inlineColleges.map((collegeName) => {
+      const active = state.college === collegeName;
+      const count = countFor(collegeName);
+      return `<button type="button" class="cgu-college-btn${active ? " on" : ""}" data-cgu-college="${escapeHtml(collegeName)}" aria-pressed="${active}"><strong>${escapeHtml(collegeName)}</strong><span>${count} 所</span></button>`;
+    }).join("");
+
+    let moreCollegeHtml = "";
+    if (moreColleges.length) {
+      const inMore = Boolean(state.college && moreColleges.includes(state.college));
+      const moreOpts = moreColleges.map((col) => `<option value="${escapeHtml(col)}"${state.college === col ? " selected" : ""}>${escapeHtml(col)}</option>`).join("");
+      moreCollegeHtml = `<label class="cgu-more-college-wrap${inMore ? " has-more-college" : ""}" for="cgu-more-college-select"><span>更多學院</span><select id="cgu-more-college-select" aria-label="更多學院篩選"><option value="">更多學院（${moreColleges.length}）</option>${moreOpts}</select></label>`;
+    }
+
     let deptSelectHtml = "";
-    if (isDemo) {
-      const { units } = cguDeptCollegeMap();
-      const collegeKeys = state.college && units[state.college] ? [state.college] : Object.keys(units);
+    if (totalDepts > 0) {
+      const collegeKeys = state.college && unitsByCollege[state.college] ? [state.college] : Object.keys(unitsByCollege);
       const optgroups = collegeKeys.map((col) => {
-        const opts = (units[col] || []).map((dept) => `<option value="${escapeHtml(dept)}"${state.cguDepartment === dept ? " selected" : ""}>${escapeHtml(dept)}</option>`).join("");
+        const opts = (unitsByCollege[col] || []).map((dept) => `<option value="${escapeHtml(dept)}"${state.cguDepartment === dept ? " selected" : ""}>${escapeHtml(dept)}</option>`).join("");
         return `<optgroup label="${escapeHtml(col)}">${opts}</optgroup>`;
       }).join("");
-      deptSelectHtml = `<label class="cgu-dept-inline-select" for="cgu-partner-dept-select"><span>系所</span><select id="cgu-partner-dept-select" aria-label="依長庚 36 系所篩選"><option value="">${state.college ? `全部${escapeHtml(state.college)}系所` : "全部 36 系所"}</option>${optgroups}</select></label>`;
+      const shortSchool = home === "長庚大學" ? "長庚" : (activeUniversityProfile()?.short_name || home);
+      const hasDept = Boolean(state.cguDepartment);
+      deptSelectHtml = `<label class="cgu-dept-inline-select${hasDept ? " has-dept" : ""}" for="cgu-partner-dept-select"><span>系所</span><select id="cgu-partner-dept-select" aria-label="依${escapeHtml(shortSchool)} ${totalDepts} 系所篩選"><option value="">${state.college ? `全部${escapeHtml(state.college)}系所` : `全部 ${totalDepts} 系所`}</option>${optgroups}</select></label>`;
     }
+
+    const shortLabel = home === "長庚大學" ? "長庚學院" : `${activeUniversityProfile()?.short_name || home}學院`;
     const liveHtml = state.college && state.cguDepartment
       ? `<b>${escapeHtml(state.college)}・${escapeHtml(state.cguDepartment)}</b>可申請：共 <b>${list.length} 所</b>`
       : state.college
         ? `<b>${escapeHtml(state.college)}</b>可申請：共 <b>${list.length} 所</b>`
         : `點選學院直接顯示可申請校數（共 <b>${pool.length} 所</b>）`;
-    bar.innerHTML = `<div class="cgu-college-bar-main"><span class="cgu-college-bar-label"><i data-lucide="graduation-cap" aria-hidden="true"></i>長庚學院</span><div class="cgu-college-buttons" role="group" aria-label="依長庚學院篩選">${buttonsHtml}${resetHtml}</div>${deptSelectHtml}</div><p id="cgu-college-live-count" class="cgu-college-live" role="status">${liveHtml}</p>`;
+    bar.innerHTML = `<div class="cgu-college-bar-main"><span class="cgu-college-bar-label"><i data-lucide="graduation-cap" aria-hidden="true"></i>${escapeHtml(shortLabel)}</span><div class="cgu-college-buttons" role="group" aria-label="依${escapeHtml(shortLabel)}篩選">${resetHtml}${inlineButtonsHtml}</div>${moreCollegeHtml}${deptSelectHtml}</div><p id="cgu-college-live-count" class="cgu-college-live" role="status">${liveHtml}</p>`;
+  }
+
+  function syncTermOptionLabels() {
+    const isCgu = activeHomeSchool() === "長庚大學";
+    const fallLabel = isCgu ? "2027 秋季（116-1）" : "秋季／上學期";
+    const springLabel = isCgu ? "2027 春季（115-2）" : "春季／下學期";
+    document.querySelectorAll('#partner-term-tile, #discovery-criteria-form select[name="term"]').forEach((sel) => {
+      let changed = false;
+      const fallOpt = sel.querySelector('option[value="fall"]');
+      const springOpt = sel.querySelector('option[value="spring"]');
+      if (fallOpt && fallOpt.textContent !== fallLabel) { fallOpt.textContent = fallLabel; changed = true; }
+      if (springOpt && springOpt.textContent !== springLabel) { springOpt.textContent = springLabel; changed = true; }
+      if (changed) sel.uniwayGlide?.sync?.();
+    });
+  }
+
+  function syncCriteriaGradeScale(clearOutOfRange = false) {
+    const form = document.querySelector("#discovery-criteria-form");
+    if (!form) return;
+    const scaleSel = form.querySelector('select[name="scale"]');
+    const gradeInp = form.querySelector('input[name="grade"]');
+    if (!scaleSel || !gradeInp) return;
+    const meta = GRADE_SCALE_META[scaleSel.value] || GRADE_SCALE_META["100"];
+    if (gradeInp.max !== meta.max) gradeInp.max = meta.max;
+    if (gradeInp.step !== meta.step) gradeInp.step = meta.step;
+    if (gradeInp.placeholder !== meta.placeholder) gradeInp.placeholder = meta.placeholder;
+    if (clearOutOfRange && gradeInp.value !== "" && Number(gradeInp.value) > Number(meta.max)) {
+      gradeInp.value = "";
+    }
+  }
+
+  function syncCriteriaBanner() {
+    const details = document.querySelector("#discovery-criteria");
+    if (!details) return;
+    const summarySpan = document.querySelector("#cgu-criteria-summary");
+    const ctaLabel = document.querySelector("#cgu-criteria-cta-label");
+    const c = (typeof discoveryCriteria === "object" && discoveryCriteria) ? discoveryCriteria : {};
+    const active = Boolean(window.UniWayDiscovery?.hasCriteria?.(c))
+      || Boolean((document.querySelector("#discovery-criteria-count")?.textContent || "").trim());
+    const isCgu = activeHomeSchool() === "長庚大學";
+
+    const parts = [];
+    if (active) {
+      if (c.test || c.score) {
+        const tLabel = CRITERIA_TEST_LABELS[c.test] || (c.test ? String(c.test).toUpperCase() : "檢定");
+        if (c.test === "jlpt" && c.score) parts.push(`JLPT N${c.score}`);
+        else if (c.test === "topik" && c.score) parts.push(`TOPIK ${c.score} 級`);
+        else parts.push([tLabel.trim(), c.score].filter(Boolean).join(" "));
+      }
+      if (c.grade) {
+        const prefix = (!c.scale || c.scale === "100") ? "平均" : "GPA";
+        parts.push(`${prefix} ${c.grade}`);
+      }
+      if (c.degree === "undergraduate") parts.push("大學部");
+      else if (c.degree === "graduate") parts.push("研究所");
+      if (c.term === "fall") parts.push(isCgu ? "2027 秋季" : "秋季／上學期");
+      else if (c.term === "spring") parts.push(isCgu ? "2027 春季" : "春季／下學期");
+    }
+
+    const nextSummary = parts.length ? parts.join(" · ") : "檢定成績 · 學業成績 · 學制";
+    const nextCta = details.open ? "收合條件" : active ? "修改條件" : "設定條件";
+
+    if (details.classList.contains("has-active-criteria") !== active) {
+      details.classList.toggle("has-active-criteria", active);
+    }
+    if (summarySpan && summarySpan.textContent !== nextSummary) {
+      summarySpan.textContent = nextSummary;
+    }
+    if (ctaLabel && ctaLabel.textContent !== nextCta) {
+      ctaLabel.textContent = nextCta;
+    }
+  }
+
+  function syncPartnersRecentsPopover() {
+    const details = document.querySelector("#partners .cgu-explore-head-actions [data-discovery-recents]");
+    if (!details || !details.open || details.hidden) return;
+    const vw = document.documentElement.clientWidth || window.innerWidth || 1024;
+    const menuW = Math.min(320, Math.max(200, vw - 32));
+    const rect = details.getBoundingClientRect();
+    const idealLeft = rect.right - menuW;
+    const clampedLeft = Math.min(Math.max(16, idealLeft), Math.max(16, vw - menuW - 16));
+    details.style.setProperty("--cgu-recents-left", `${Math.round(clampedLeft - rect.left)}px`);
+    details.style.setProperty("--cgu-recents-right", "auto");
   }
 
   function renderSortTabs(host, list) {
@@ -185,13 +484,14 @@ window.UniWayExplore = (() => {
 
   function appliedFilters() {
     const labels = [];
-    if (window.cguDemoStorageIsolated && state.cguProgramTab) {
-      labels.push(state.cguProgramTab === "dual_degree" ? "雙學位" : "交換學生");
+    if (state.cguProgramTab) {
+      const activeTab = computeProgramTabs().find((t) => t.id === state.cguProgramTab);
+      labels.push(activeTab ? activeTab.label : (state.cguProgramTab === "dual_degree" ? "雙學位" : "交換學生"));
     }
     if (state.region) labels.push(state.region);
     if (state.country) labels.push(state.country);
     if (state.college) labels.push(state.college);
-    if (window.cguDemoStorageIsolated && state.cguDepartment) labels.push(state.cguDepartment);
+    if (state.cguDepartment) labels.push(state.cguDepartment);
     if (state.degree) labels.push(state.degree);
     if (state.availability) labels.push(host_text("#availability-filter", state.availability));
     if (state.partnerQuota) labels.push(state.partnerQuota === "2plus" ? "名額 2 名以上" : "名額 1 名");
@@ -278,9 +578,19 @@ window.UniWayExplore = (() => {
     scheduled = 0;
     const host = root();
     if (!host || !state.dashboard) return;
+    syncTermOptionLabels();
+    syncCriteriaGradeScale(false);
+    syncCriteriaBanner();
+    const progTabs = computeProgramTabs();
+    renderCguProgramTabs(host, progTabs);
     const list = filteredPartners({ sort: false });
-    renderCguProgramTabs(host);
-    renderCguCollegeBar(host, list);
+    renderCguCollegeBar(host, list, progTabs);
+    const strip = host.querySelector("#cgu-partner-filter-strip");
+    if (strip) {
+      const progHidden = Boolean(host.querySelector("#cgu-program-tabs")?.hidden);
+      const colHidden = Boolean(host.querySelector("#cgu-college-quick-bar")?.hidden);
+      strip.hidden = progHidden && colHidden;
+    }
     renderCguMgmtNotice(host);
     renderSortTabs(host, list);
     renderFacets(host);
@@ -303,9 +613,18 @@ window.UniWayExplore = (() => {
   }
 
   document.addEventListener("click", (event) => {
+    const recents = document.querySelector("#partners .cgu-explore-head-actions [data-discovery-recents]");
+    if (recents?.open && !recents.contains(event.target)) recents.open = false;
+
     const host = root();
     if (!host || !host.contains(event.target)) return;
     if (event.target.closest("[data-partner-clear-all]")) { document.querySelector("#clear-partner-filters")?.click(); return; }
+    if (event.target.closest("#discovery-clear-criteria, #clear-partner-filters")) {
+      window.requestAnimationFrame(() => {
+        syncCriteriaGradeScale(false);
+        syncCriteriaBanner();
+      });
+    }
     const cguProg = event.target.closest("[data-cgu-program]");
     if (cguProg) {
       state.cguProgramTab = cguProg.dataset.cguProgram || "";
@@ -340,13 +659,26 @@ window.UniWayExplore = (() => {
   document.addEventListener("change", (event) => {
     const host = root();
     if (!host || !host.contains(event.target)) return;
+    if (event.target.matches('#discovery-criteria-form select[name="scale"]')) {
+      syncCriteriaGradeScale(true);
+      return;
+    }
+    const moreColSelect = event.target.closest("#cgu-more-college-select");
+    if (moreColSelect) {
+      state.college = moreColSelect.value || "";
+      state.cguDepartment = "";
+      const select = document.querySelector("#college-filter");
+      if (select) select.value = state.college;
+      refilter();
+      return;
+    }
     const deptSelect = event.target.closest("#cgu-partner-dept-select");
     if (deptSelect) {
       const dept = deptSelect.value || "";
       state.cguDepartment = dept;
       if (dept) {
-        const { map } = cguDeptCollegeMap();
-        const col = map.get(dept);
+        const { deptToCollege } = resolveAcademicUnits();
+        const col = deptToCollege.get(dept);
         if (col) {
           state.college = col;
           const select = document.querySelector("#college-filter");
@@ -384,6 +716,33 @@ window.UniWayExplore = (() => {
     }
   });
 
+  document.addEventListener("submit", (event) => {
+    if (event.target.id === "discovery-criteria-form") {
+      window.requestAnimationFrame(syncCriteriaBanner);
+    }
+  });
+
+  document.addEventListener("reset", (event) => {
+    if (event.target.id === "discovery-criteria-form") {
+      window.setTimeout(() => {
+        syncCriteriaGradeScale(false);
+        syncCriteriaBanner();
+      }, 0);
+    }
+  });
+
+  document.querySelector("#discovery-criteria")?.addEventListener("toggle", syncCriteriaBanner);
+  document.querySelector("#partners .cgu-explore-head-actions [data-discovery-recents]")?.addEventListener("toggle", syncPartnersRecentsPopover);
+  window.addEventListener("resize", syncPartnersRecentsPopover);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      const recents = document.querySelector("#partners .cgu-explore-head-actions [data-discovery-recents]");
+      if (recents?.open) recents.open = false;
+    }
+  });
+
+  syncCriteriaGradeScale(false);
+  syncCriteriaBanner();
   narrow.addEventListener("change", () => { drawerSynced = false; schedule(); });
   return { render: schedule, refilter };
 })();
