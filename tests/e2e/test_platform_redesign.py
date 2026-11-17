@@ -83,10 +83,7 @@ def test_home_has_no_decorative_guide_lines_or_sample_cards(page, live_server) -
     enter_public_site(page, live_server, "home")
     expect(page.locator("#home-landing")).to_be_visible()
     assert page.locator(".pr-guide-grid").count() == 0
-    borders = page.evaluate(
-        "() => ['top', 'bottom'].map((side) => parseFloat(getComputedStyle(document.querySelector('.pr-supported'))[`border${side[0].toUpperCase()}${side.slice(1)}Width`]))"
-    )
-    assert borders == [0, 0]
+    assert page.locator(".pr-supported").count() == 0
     assert "示意" not in page.locator("#home-landing").inner_text()
 
 
@@ -252,49 +249,17 @@ def test_the_globe_is_left_to_the_flat_map_on_a_software_renderer(browser, live_
         context.close()
 
 
-def test_home_supported_schools_drift_left_and_can_be_paused(browser, live_server) -> None:
+def test_home_omits_supported_schools_strip_and_keeps_stats_band(browser, live_server) -> None:
     context = browser.new_context(viewport={"width": 1440, "height": 900})
     page = context.new_page()
     try:
         enter_public_site(page, live_server, "home")
-        track = page.locator("#home-supported-list")
-        expect(track).to_have_class(re.compile(r"is-moving"), timeout=15_000)
-        shown = page.evaluate("() => [...document.querySelectorAll('#home-supported-list > li:not([data-marquee-copy])')].map((li) => li.querySelector('strong').textContent)")
-        assert shown and shown == page.evaluate("state.supportedUniversities.map((item) => item.school_name)")
-        # Copies exist only to make the loop seamless and are hidden from assistive technology.
-        assert page.evaluate("() => [...document.querySelectorAll('#home-supported-list > li[data-marquee-copy]')].every((li) => li.getAttribute('aria-hidden') === 'true')")
-        assert page.evaluate("() => document.querySelectorAll('#home-supported-list > li[data-marquee-copy]').length") >= len(shown)
-
-        def offset() -> float:
-            return page.evaluate("() => new DOMMatrix(getComputedStyle(document.querySelector('#home-supported-list')).transform).m41")
-
-        first = offset()
-        page.wait_for_function(f"() => new DOMMatrix(getComputedStyle(document.querySelector('#home-supported-list')).transform).m41 < {first - 5}", timeout=10_000)
-        toggle = page.locator("#home-supported-toggle")
-        toggle.click()
-        expect(toggle).to_have_attribute("aria-pressed", "true")
-        assert page.evaluate("() => getComputedStyle(document.querySelector('#home-supported-list')).animationPlayState") == "paused"
-        held = offset()
-        page.wait_for_timeout(600)
-        assert offset() == held
-        toggle.click()
-        expect(toggle).to_have_attribute("aria-pressed", "false")
-        assert page.evaluate("() => getComputedStyle(document.querySelector('#home-supported-list')).animationPlayState") == "running"
-    finally:
-        context.close()
-
-
-def test_home_supported_schools_stand_still_for_reduced_motion(browser, live_server) -> None:
-    context = browser.new_context(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
-    page = context.new_page()
-    try:
-        enter_public_site(page, live_server, "home")
-        expect(page.locator("#home-supported-list > li").first).to_be_visible(timeout=15_000)
-        assert page.evaluate("() => getComputedStyle(document.querySelector('#home-supported-list')).animationName") == "none"
-        # Every school stays in view instead of sliding past.
-        assert page.evaluate("() => [...document.querySelectorAll('#home-supported-list > li')].filter((li) => li.getClientRects().length).length") == len(
-            page.evaluate("state.supportedUniversities")
-        )
+        expect(page.locator(".pr-supported")).to_have_count(0)
+        expect(page.locator("#home-supported-marquee")).to_have_count(0)
+        expect(page.locator("#home-supported-list")).to_have_count(0)
+        expect(page.locator("#home-supported-toggle")).to_have_count(0)
+        expected_count = str(page.evaluate("state.supportedUniversities.length"))
+        expect(page.locator("#home-stat-schools")).to_have_text(expected_count)
     finally:
         context.close()
 
