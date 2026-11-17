@@ -1,6 +1,6 @@
 # Editorial intentions and next topics
 
-## 2026-11-17 每日批次：課綱評量／AI 小組討論兩篇（驗收完成，待開 PR）
+## 2026-11-17 每日批次：課綱評量／AI 小組討論兩篇（PR #372 待審）
 
 依實際時鐘採 Asia/Taipei 11/17（開始為 UTC 11/16 23:55），非 11/16 重試。隔離分支 `codex/seo-daily-20261117`，base main `ae68380d7ac1c503100696e3aaefd8960ed69239`。讀取最新 workflow／backlog、57 篇庫存與相關全文；僅 open #371 首頁調整，說明及 10 檔案完整清單已查，無 editorial 重疊。開始前無同日分支／PR，提交前 main／#371 head 未變、最近 100 個全狀態 PR 無同日批次。
 
@@ -8,12 +8,14 @@
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 4：交換課綱 Syllabus 怎麼看？評量權重、必做項目與作業高峰檢查表 | `exchange-course-syllabus-assessment` | 完整文章與驗收完成，待本日唯一 PR；後續排除 |
-| 17：用 AI 練英文小組討論：表達立場、接話與不同意的 Prompt | `ai-english-group-discussion` | 同批完整文章與驗收完成，待同一 PR；後續排除 |
+| 4：交換課綱 Syllabus 怎麼看？評量權重、必做項目與作業高峰檢查表 | `exchange-course-syllabus-assessment` | 完整文章與驗收完成，[PR #372](https://github.com/blizzard-new/abroad/pull/372) 待審；後續排除 |
+| 17：用 AI 練英文小組討論：表達立場、接話與不同意的 Prompt | `ai-english-group-discussion` | 同批完整文章與驗收完成，同一 PR #372 待審；後續排除 |
 
 編輯判斷，無 Search Console、搜尋量或排名。課綱篇深讀成果—任務、權重／各項門檻、未給分必做與跨課高峰，和語言／入班初篩、抵免、改課分工；實讀 LTH 2026/27 個案與有日期限制的 Lund 規則。所有配分／門檻／時數明示假設並以 Decimal 驗算。討論篇處理一輪一回應、立場理由與有限共識，和澄清、簡報、面試、語調與書面改寫分工；有三輪可填 Prompt、原創來回與前後修改，不造模型／學生／錄音實測。八個引用一手來源可讀且實讀，舊政策日期與適用限制清楚保留。10/30 study-plan `97de3fda` 未重做，無三品牌比較實測。
 
 原 57 篇 JSON、URL、published／lastmod 不變，共 59 篇。兩張新授權真實攝影、原創 HTML 圖解、來源與選校連結完成。59 篇 gate、186 SEO、69 E2E、六組無 JavaScript、15 張目視及 wheel 659 檔核對均首次通過；詳見[本批驗收](seo-editorial-validation-2026-11-17.md)。本批未合併或部署。
+
+PR #372 已建立（OPEN、非 draft），初始內容 head `7f2bad0ba3fdf217f556d4241789ab706676f236`，GitHub 顯示 MERGEABLE，未合併。初始 image CI 兩項進行中，Supabase Preview skipped；以目前 PR 狀態為準。任務附加工具 40 秒與附件查詢 10 秒均無回覆，附件未確認；PR 連結與狀態另已驗證，未宣稱附加成功。
 
 ## 2026-11-14 每日批次：AI 簡報／多益時態兩篇（PR #351 待審）
 

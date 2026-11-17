@@ -89,5 +89,61 @@
     "all_open_heads_unchanged": true,
     "same_day": [],
     "all_state_recent_count": 100
+  },
+  "created_pr": {
+    "baseRefName": "main",
+    "headRefOid": "7f2bad0ba3fdf217f556d4241789ab706676f236",
+    "isDraft": false,
+    "mergeable": "MERGEABLE",
+    "number": 372,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/43986180927/job/133714788376",
+        "name": "image",
+        "startedAt": "2026-11-17T00:15:43Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/43986080724/job/133714455101",
+        "name": "image",
+        "startedAt": "2026-11-17T00:15:01Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-17T00:15:40Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://supabase.com/dashboard/project/wozrsrnkvbokzbbitkxf/settings/integrations",
+        "name": "Supabase Preview",
+        "startedAt": "2026-11-17T00:15:40Z",
+        "status": "COMPLETED",
+        "workflowName": ""
+      }
+    ],
+    "url": "https://github.com/blizzard-new/abroad/pull/372",
+    "snapshot_scope": "Initialcontenthead7f2bad0b,beforedocs-onlymetadatafollowup;currentCIseparatelyverified."
+  },
+  "task_attachment": {
+    "attempt": {
+      "status": "timeout",
+      "timeout_ms": 40000,
+      "elapsed_ms": 40002,
+      "url": "https://github.com/blizzard-new/abroad/pull/372"
+    },
+    "verification": {
+      "status": "timeout",
+      "timeout_ms": 10000
+    },
+    "confirmed": false,
+    "reason": "attach_artifact no response within40s; list_artifacts no response within10s. PRcreation verified independently;taskattachmentunconfirmed."
   }
 }
