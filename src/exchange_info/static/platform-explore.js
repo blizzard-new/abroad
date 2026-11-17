@@ -579,6 +579,7 @@ window.UniWayExplore = (() => {
     const host = root();
     if (!host || !state.dashboard) return;
     syncTermOptionLabels();
+    window.UniWayDiscoveryUI?.prefillCriteriaFormFromProfile?.();
     syncCriteriaGradeScale(false);
     syncCriteriaBanner();
     const progTabs = computeProgramTabs();
@@ -708,10 +709,15 @@ window.UniWayExplore = (() => {
       const name = pick.dataset.comparePick;
       if (pick.checked) {
         if (discoveryCompare.size >= 3) { pick.checked = false; announce("一次比較最多 3 所", "info"); return; }
-        if (!activeSchoolSelections().has(name)) toggleFavorite(name);
+        discoveryCompareScope = discoveryKey();
         discoveryCompare.add(name);
+        if (!activeSchoolSelections().has(name)) toggleFavorite(name);
+        else renderFavorites();
         if (discoveryCompare.size >= 2) document.dispatchEvent(new CustomEvent("uniway:compare", {detail: {school_count: discoveryCompare.size}}));
-      } else discoveryCompare.delete(name);
+      } else {
+        discoveryCompare.delete(name);
+        renderFavorites();
+      }
       renderPartnerTable();
     }
   });

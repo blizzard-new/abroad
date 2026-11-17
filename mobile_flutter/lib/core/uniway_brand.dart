@@ -147,13 +147,13 @@ class UniWayProgress extends StatelessWidget {
   Widget build(BuildContext context) => TweenAnimationBuilder<double>(
     tween: Tween(begin: 0, end: value.clamp(0, 1)),
     duration: Duration(
-      milliseconds: MediaQuery.disableAnimationsOf(context) ? 0 : 650,
+      milliseconds: MediaQuery.disableAnimationsOf(context) ? 0 : 400,
     ),
     curve: Curves.easeOutCubic,
     builder: (context, progress, _) => LinearProgressIndicator(
       value: progress,
-      minHeight: 10,
-      borderRadius: BorderRadius.circular(20),
+      minHeight: 8,
+      borderRadius: BorderRadius.circular(6),
       color: color,
       backgroundColor: ExchangeColors.surfaceMuted,
       semanticsLabel: label,
@@ -175,17 +175,17 @@ class UniWayPill extends StatelessWidget {
   final Color color, background;
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
     decoration: BoxDecoration(
       color: background,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(8),
     ),
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         if (icon != null) ...[
-          Icon(icon, size: 16, color: color),
-          const SizedBox(width: 6),
+          Icon(icon, size: 15, color: color),
+          const SizedBox(width: 5),
         ],
         Flexible(
           child: Text(

@@ -3147,8 +3147,94 @@ function persistAccountWorkspaceLocally() {
   }
 }
 
+function saveLocalState() {
+  try {
+    if (state.eligibilityProfile && Object.keys(state.eligibilityProfile).length) {
+      if (!state.applicationContext?.school_name) {
+        state.applicationContext = { ...state.applicationContext, school_name: activeHomeSchool() };
+      }
+      window.localStorage.setItem(STORAGE_KEYS.applicationContext, JSON.stringify(state.applicationContext));
+      window.localStorage.setItem(STORAGE_KEYS.eligibility, JSON.stringify(state.eligibilityProfile));
+    } else {
+      window.localStorage.removeItem(STORAGE_KEYS.eligibility);
+    }
+  } catch (_) {
+    // Session state remains usable when browser storage is unavailable.
+  }
+  if (state.account) persistAccountWorkspaceLocally();
+}
+
+function syncEligibilityFromDiscoveryCriteria(criteria = {}) {
+  if (!criteria || typeof criteria !== "object") return;
+  const next = { ...(state.eligibilityProfile || {}) };
+  let changed = false;
+  if (criteria.test === "jlpt") {
+    const lvl = Number(criteria.score);
+    if (Number.isFinite(lvl) && lvl >= 1 && lvl <= 5) {
+      next.jlptLevel = `N${Math.round(lvl)}`;
+      changed = true;
+    }
+  } else if (criteria.test && ["toeic", "ielts", "toefl", "duolingo", "topik", "other"].includes(criteria.test)) {
+    next.languageTest = criteria.test === "topik" ? "other" : criteria.test;
+    changed = true;
+    if (criteria.score !== undefined && String(criteria.score).trim() !== "" && Number.isFinite(Number(criteria.score))) {
+      next.languageScore = Number(criteria.score);
+    }
+    next.languageLabel = selectionLanguageLabel(next.languageTest, next.languageScore);
+  }
+  if (criteria.scale && ["100", "4", "4.3", "5"].includes(String(criteria.scale))) {
+    next.gpaScale = String(criteria.scale);
+  }
+  if (criteria.grade !== undefined && String(criteria.grade).trim() !== "" && Number.isFinite(Number(criteria.grade))) {
+    const gradeNum = Number(criteria.grade);
+    const scale = String(criteria.scale || next.gpaScale || (gradeNum > 5 ? "100" : "4.3"));
+    next.gpaScale = scale;
+    if (scale === "100") {
+      next.academicScore = gradeNum;
+    } else {
+      next.academicGpa = Math.min(4.3, gradeNum);
+      if (gradeNum <= 4.5 && (next.academicScore === undefined || next.academicScore === null || Number(next.academicScore) <= 5)) {
+        next.academicScore = gradeNum;
+      }
+    }
+    changed = true;
+  }
+  if (criteria.degree === "undergraduate") {
+    next.degree = "大學部";
+    changed = true;
+  } else if (criteria.degree === "graduate") {
+    if (!["碩士班", "博士班"].includes(next.degree)) next.degree = "研究所";
+    changed = true;
+  }
+  if (criteria.term === "fall" || criteria.term === "spring") {
+    if (!next.targetTerm || !new RegExp(criteria.term, "i").test(String(next.targetTerm))) {
+      const termSelect = $("#advisor-target-term");
+      const matchedOpt = termSelect
+        ? [...termSelect.options].map((opt) => opt.value).find((val) => new RegExp(criteria.term, "i").test(val))
+        : "";
+      next.targetTerm = matchedOpt || criteria.term;
+      changed = true;
+    }
+  }
+  if (!changed) return;
+  state.eligibilityProfile = next;
+  saveLocalState();
+  const clearBtn = $("#clear-saved-eligibility");
+  if (clearBtn) clearBtn.hidden = false;
+  if (state.account && state.accountWorkspaceLoadedSchool === activeHomeSchool()) {
+    scheduleAccountWorkspaceSync({ selectionConditions: true });
+  }
+  const advisorForm = $("#advisor-form");
+  if (advisorForm && !advisorForm.dataset?.draftOwner) renderAdvisorForm();
+  restoreEligibilityForm?.({ preserveDraft: true });
+  restoreApplicationProfileForm();
+  window.UniWayDetail?.render?.();
+}
+
 function renderAccountWorkspaceState() {
   window.UniWayMultiPlan?.render();
+  window.UniWayDiscoveryUI?.prefillCriteriaFormFromProfile?.();
+  window.UniWayApplicationPath?.refreshEmpty?.();
   if (!state.dashboard) {
     updateFavoriteCounts();
     renderApplicationJourney();
@@ -5982,17 +6068,50 @@ function renderDocumentWorkspace() {
 }
 
 function sharedApplicationCondition(key) {
-  const values = {college:state.eligibilityProfile?.college,department:state.eligibilityProfile?.department,degree_level:state.eligibilityProfile?.degree,year_level:state.eligibilityProfile?.currentYear};
+  const profile = state.eligibilityProfile || {};
+  const scale = String(profile.gpaScale || "");
+  const rawScore = profile.academicScore !== undefined && profile.academicScore !== null && profile.academicScore !== ""
+    ? Number(profile.academicScore)
+    : null;
+  const rawGpa = profile.academicGpa !== undefined && profile.academicGpa !== null && profile.academicGpa !== ""
+    ? Number(profile.academicGpa)
+    : null;
+  const gpaVal = scale !== "100"
+    ? (rawGpa !== null && Number.isFinite(rawGpa) && rawGpa > 0 && rawGpa <= 4.5
+      ? String(rawGpa)
+      : rawScore !== null && Number.isFinite(rawScore) && rawScore > 0 && rawScore <= 4.5
+        ? String(rawScore)
+        : "")
+    : "";
+  const pctVal = rawScore !== null && Number.isFinite(rawScore) && rawScore > 0 && (scale === "100" || rawScore > 4.5)
+    ? String(rawScore)
+    : "";
+  const values = {
+    college: profile.college,
+    department: profile.department,
+    degree_level: profile.degree,
+    year_level: profile.currentYear,
+    gpa: gpaVal,
+    academic_gpa: gpaVal,
+    percentage_average: pctVal,
+    academic_average: pctVal,
+    academic_score: pctVal,
+  };
   return values[key] || "";
 }
 
 function applicationValue(template, field) {
   if (field.reusable_profile_key) {
-    const remembered = state.applicationProfile?.[field.reusable_profile_key] ?? sharedApplicationCondition(field.reusable_profile_key);
+    const saved = state.applicationProfile?.[field.reusable_profile_key];
+    const remembered = applicationValuePresent(saved) ? saved : sharedApplicationCondition(field.reusable_profile_key);
     if (applicationValuePresent(remembered)) return remembered;
   }
   const answer = state.applicationAnswers?.[template.id]?.[field.id];
   if (applicationValuePresent(answer)) return answer;
+  if (["gpa", "academic_gpa", "percentage_average", "academic_average", "academic_score"].includes(field.id)) {
+    const fallback = state.applicationProfile?.[field.id] || sharedApplicationCondition(field.id);
+    if (applicationValuePresent(fallback)) return fallback;
+  }
   return answer ?? "";
 }
 
@@ -8585,16 +8704,119 @@ function renderBudgetSource(schoolName) {
   initIcons();
 }
 
+function inferredBudgetMonths(schoolName = "") {
+  const planItems = window.UniWayPlanIndex?.current()?.items || [];
+  const activePlan = planItems.find((p) => !p.archived && p.context?.target_school === schoolName)
+    || planItems.find((p) => !p.archived);
+  const terms = [
+    activePlan?.context?.semester,
+    state.applicationContext?.target_school === schoolName ? state.applicationContext?.semester : "",
+    state.applicationContext?.semester,
+    state.eligibilityProfile?.targetTerm,
+  ].filter(Boolean).join(" ");
+  if (/一學年|全學年|學年|full[_-]?year/i.test(terms) && !/一學期|單學期/.test(terms)) return 10;
+  return 5;
+}
+
+function officialScholarshipCaps(months = 5) {
+  if (!state.dashboard) return [];
+  const rawSources = [
+    ...(Array.isArray(state.dashboard.scholarships) ? state.dashboard.scholarships : []),
+    ...(typeof scholarshipItems === "function" ? scholarshipItems() : []),
+  ];
+  const seenSources = new Set();
+  const caps = [];
+  const fullYear = Number(months) >= 8;
+  rawSources.forEach((item) => {
+    if (!item || typeof item !== "object") return;
+    const title = String(item.title || item.name || "校內獎助").trim();
+    if (seenSources.has(title)) return;
+    seenSources.add(title);
+    const shortTitle = title.replace(/作業要點|實施要點|辦法|簡章/g, "").slice(0, 14);
+    const directCap = Number(item.max_amount ?? item.amount_cap ?? item.amount);
+    if (Number.isFinite(directCap) && directCap >= 1000) {
+      caps.push({ amount: Math.round(directCap), scope: "", title: shortTitle });
+      return;
+    }
+    const text = [item.title, item.summary, ...(item.key_points || []), ...(item.details || [])]
+      .filter(Boolean)
+      .join("；");
+    const itemCaps = [];
+    for (const m of text.matchAll(/(一學期|一學年|全學年|每學期)?[^。；\n]{0,18}?(\d{1,3}(?:,\d{3})+)(?:\s*或\s*(\d{1,3}(?:,\d{3})+))?\s*元/g)) {
+      const scope = m[1] || "";
+      [m[2], m[3]].filter(Boolean).forEach((raw) => {
+        const amount = Number(raw.replace(/,/g, ""));
+        if (Number.isFinite(amount) && amount >= 3000 && amount <= 2000000) {
+          itemCaps.push({ amount, scope, title: shortTitle });
+        }
+      });
+    }
+    for (const m of text.matchAll(/(一般學生|經濟不利|每學期|上限|最高)?[^。；、\n]{0,10}?(\d+(?:\.\d+)?)\s*(?:[–\-~至]\s*(\d+(?:\.\d+)?))?\s*萬(?:元)?/g)) {
+      const scope = m[1] || "";
+      const hi = Number(m[3] || m[2]);
+      const amount = Math.round(hi * 10000);
+      if (Number.isFinite(amount) && amount >= 5000 && amount <= 2000000) {
+        itemCaps.push({ amount, scope, title: shortTitle });
+      }
+    }
+    const scoped = itemCaps.filter((c) => (fullYear ? !/一學期|每學期/.test(c.scope) : !/一學年|全學年/.test(c.scope)));
+    (scoped.length ? scoped : itemCaps).forEach((c) => caps.push(c));
+  });
+  const deduped = [];
+  const seenAmounts = new Set();
+  caps.forEach((cap) => {
+    const key = `${cap.amount}`;
+    if (seenAmounts.has(key)) return;
+    seenAmounts.add(key);
+    deduped.push(cap);
+  });
+  return deduped.slice(0, 4);
+}
+
+function renderBudgetScholarshipChips() {
+  const host = $("#budget-scholarship-chips");
+  if (!host) return;
+  const months = Number($("#budget-months")?.value) || 5;
+  const caps = officialScholarshipCaps(months);
+  if (!caps.length) {
+    host.hidden = true;
+    host.innerHTML = "";
+    return;
+  }
+  const currentVal = Number($("#budget-scholarship")?.value) || 0;
+  host.hidden = false;
+  host.innerHTML = `
+    <div class="budget-scholarship-chips-head">
+      <span>帶入校內獎學金參考上限</span>
+      <small>官方參考上限（TWD），實際核定以當期簡章為準</small>
+    </div>
+    <div class="budget-scholarship-chips-list">${caps.map((cap) => {
+      const formatted = formatBudgetAmount(cap.amount, "TWD");
+      const active = currentVal === cap.amount && ($("#budget-currency")?.value || "TWD") === "TWD";
+      const scopeNote = cap.scope ? `${cap.scope}・` : "";
+      return `<button type="button" class="secondary-button budget-scholarship-chip${active ? " is-active" : ""}" data-scholarship-cap="${cap.amount}" aria-pressed="${active}">${escapeHtml(`帶入 ${formatted}（${cap.title}・${scopeNote}官方參考上限）`)}</button>`;
+    }).join("")}</div>`;
+}
+
 function populateBudgetForm(schoolName) {
   const plan = budgetPlanForSchool(schoolName) || {};
   populateBudgetFormValues(schoolName, plan);
 }
 
 function populateBudgetFormValues(schoolName, plan = {}) {
+  const schoolChanged = state.budgetSchool !== schoolName;
   state.budgetSchool = schoolName;
   $("#budget-school").value = schoolName;
   $("#budget-currency").value = plan.currency || "TWD";
-  $("#budget-months").value = plan.months || 5;
+  const monthsInput = $("#budget-months");
+  if (monthsInput) {
+    if (schoolChanged) delete monthsInput.dataset.userEdited;
+    if (plan.months) {
+      monthsInput.value = plan.months;
+    } else if (!monthsInput.dataset.userEdited || schoolChanged) {
+      monthsInput.value = inferredBudgetMonths(schoolName);
+    }
+  }
   $("#budget-housing").value = plan.housing || 0;
   $("#budget-food").value = plan.food || 0;
   $("#budget-transport").value = plan.transport || 0;
@@ -8602,6 +8824,7 @@ function populateBudgetFormValues(schoolName, plan = {}) {
   $("#budget-onetime").value = plan.oneTime || 0;
   $("#budget-scholarship").value = plan.scholarship || 0;
   renderBudgetSource(schoolName);
+  renderBudgetScholarshipChips();
   updateBudgetResult();
 }
 
@@ -8632,6 +8855,8 @@ function renderBudgetPlanner() {
   if (selected) {
     if (pending) populateBudgetFormValues(selected, pending);
     else populateBudgetForm(selected);
+  } else {
+    renderBudgetScholarshipChips();
   }
   renderBudgetAuthState();
 }
@@ -9423,13 +9648,33 @@ function partnerCardTags(item) {
 }
 
 function partnerCardFoot(item) {
+  const availability = partnerAvailabilityMeta(item);
+  const quotaNum = partnerQuotaNumber(item);
+  const rawQuota = String(item.quota || "").trim();
+  const quotaPart = quotaNum !== null
+    ? `<strong>名額 ${escapeHtml(String(quotaNum))}</strong>`
+    : rawQuota && !/依公告|待確認/.test(rawQuota)
+      ? `<strong>名額 ${escapeHtml(truncate(rawQuota, 12))}</strong>`
+      : "";
   const next = partnerNextDeadline(item);
-  if (!next) return `<span>截止日請依官方公告</span>`;
-  const mmdd = `${next.getMonth() + 1}/${String(next.getDate()).padStart(2, "0")}`;
-  if (window.cguDemoStorageIsolated || activeHomeSchool() === "長庚大學") {
-    return `<strong>合作校截止 ${mmdd}</strong> · 適用已獲提名者`;
+  let deadlinePart = "";
+  if (next) {
+    const mmdd = `${next.getMonth() + 1}/${String(next.getDate()).padStart(2, "0")}`;
+    const note = window.cguDemoStorageIsolated || activeHomeSchool() === "長庚大學"
+      ? "適用已獲提名者"
+      : partnerDeadlineReference(item).label;
+    deadlinePart = `<strong>截止 ${mmdd}</strong> · ${escapeHtml(note)}`;
+  } else {
+    const ref = partnerDeadlineReference(item);
+    deadlinePart = ref?.value && !/當期公告待確認|未核實/.test(ref.value)
+      ? `<span>截止 ${escapeHtml(truncate(ref.value, 18))}</span>`
+      : `<span>截止依公告</span>`;
   }
-  return `<strong>合作校截止 ${mmdd}</strong> · ${escapeHtml(partnerDeadlineReference(item).label)}`;
+  const meta = [quotaPart, deadlinePart].filter(Boolean).join(" · ");
+  const cta = availability.blocked
+    ? ""
+    : `<a class="pr-card-prepare-link" href="#my-application?target=${encodeURIComponent(item.school_name)}">開始準備</a>`;
+  return `<span class="pr-card-foot-meta">${meta}</span>${cta}`;
 }
 
 // The language requirement the detail page shows, on the card, so comparing schools does not mean opening each one.
@@ -9693,6 +9938,7 @@ function toggleFavorite(schoolName) {
   renderDecisionBrief();
   renderApplicationJourney();
   renderPersonalPlanSnapshot();
+  window.UniWayApplicationPath?.refreshEmpty?.();
   if (state.activeSchool === schoolName) updateDetailFavoriteButton();
 }
 
@@ -9712,22 +9958,79 @@ function renderFavorites() {
   renderDiscoveryWorkspace();
 }
 
+function comparisonEligibilityCell(item) {
+  const activeCrit = window.UniWayDiscoveryUI?.criteria?.() || {};
+  let status = "none";
+  let badge = "尚未填寫條件";
+  let detail = "填寫語言或成績後可自動初步比對";
+  if (window.UniWayDiscovery?.hasCriteria(activeCrit)) {
+    const assessed = window.UniWayDiscovery.assess(item, activeCrit);
+    if (assessed.status === "match") {
+      status = "match";
+      badge = "已知條件初步相符";
+      detail = assessed.reasons?.[0] || "公開條件初步符合，正式資格仍須核對簡章";
+    } else if (assessed.status === "mismatch") {
+      status = "mismatch";
+      badge = "目前條件不符";
+      detail = assessed.reasons?.[0] || "公開門檻與目前已填條件有落差";
+    } else {
+      status = "check";
+      badge = "資格待確認";
+      detail = assessed.reasons?.[0] || "部分門檻未公開或須人工核對";
+    }
+  } else if (state.eligibilityProfile) {
+    const match = partnerMatch(item, state.eligibilityProfile);
+    if (match.tone === "strong") {
+      status = "match";
+      badge = "已知條件初步相符";
+      detail = match.reasons?.[0] || "公開條件初步符合，正式資格仍須核對簡章";
+    } else if (match.tone === "review") {
+      status = "check";
+      badge = "資格待確認";
+      detail = match.risks?.[0] || match.reasons?.[0] || "個別條件仍須核對簡章";
+    } else {
+      status = "mismatch";
+      badge = "目前條件不符";
+      detail = match.risks?.[0] || "與目前已儲存條件有落差";
+    }
+  }
+  return `<div class="compare-fit-cell is-${status}"><span class="compare-fit-badge">${escapeHtml(badge)}</span><small>${escapeHtml(detail)}</small></div>`;
+}
+
+function comparisonSourceCell(item) {
+  const sourceUrl = safeSourceUrl(item.source_url);
+  const websiteUrl = safeSourceUrl(item.website);
+  const links = [];
+  if (sourceUrl) links.push(`<a class="compare-source-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">官方簡章／來源 ↗</a>`);
+  if (websiteUrl && websiteUrl !== sourceUrl) links.push(`<a class="compare-source-link" href="${escapeHtml(websiteUrl)}" target="_blank" rel="noreferrer">合作校網站 ↗</a>`);
+  return links.length ? `<div class="compare-source-links">${links.join("")}</div>` : "<span>依校方公告</span>";
+}
+
 function renderComparison(items) {
-  const rows = [
+  if (!items.length) return "";
+  const deadlineLabel = activeUniversityProfile().id === "tku" ? "申請期限（外校）" : "申請期限";
+  const textRows = [
     ["國家", (item) => item.country || "依公告"],
+    [deadlineLabel, (item) => partnerDeadlineReference(item).value],
+    ["名額", (item) => item.quota || "依公告"],
     ["語言與資格", (item) => summarizePartnerCondition(item, 180)],
     ["費用", (item) => discoveryCostSummary(item)],
-    ["我的備註", (item) => discoveryData().school_preferences[item.school_name]?.note || "—"],
-    ["名額", (item) => item.quota || "依公告"],
-    ["研修期間", (item) => item.study_period || "依公告"],
-    [activeUniversityProfile().id === "tku" ? "外校申請期限（獲母校推薦後）" : "合作校參考時程", (item) => partnerDeadlineReference(item).value],
+    ["研修期間", (item) => localizedPartnerValue(item, "study_period", "study_period")],
     ["適用身分", (item) => [item.colleges, item.degree_levels].filter(Boolean).join("／") || "依公告"],
+    ["我的備註", (item) => discoveryData().school_preferences[item.school_name]?.note || "—"],
   ];
   return `
-    <div class="compare-heading"><div><span class="section-kicker">最多先比較 3 所</span><h3>候選學校差異</h3></div><span>${items.length} 所比較中</span></div>
-    <div class="compare-scroll"><table class="compare-table"><thead><tr><th>比較項目</th>${items.map((item) => `<th>${escapeHtml(item.school_name)}</th>`).join("")}</tr></thead><tbody>${rows
-      .map(([label, getter]) => `<tr><th>${escapeHtml(label)}</th>${items.map((item) => `<td>${highlightHtml(getter(item))}</td>`).join("")}</tr>`)
-      .join("")}</tbody></table></div>`;
+    <div class="compare-heading"><div><span class="section-kicker">最多先比較 3 所</span><h3>候選學校決策比較</h3></div><span>${items.length} 所比較中</span></div>
+    <div class="compare-scroll"><table class="compare-table"><thead><tr><th>比較項目</th>${items.map((item) => {
+      const avail = partnerAvailabilityMeta(item);
+      const tone = avail.blocked || avail.pending ? "warn" : "ok";
+      return `<th><div class="compare-col-head"><span class="compare-avail-badge is-${tone}">${escapeHtml(avail.cardLabel)}</span><button type="button" class="compare-school-trigger school-detail-trigger" data-school-name="${escapeHtml(item.school_name)}">${escapeHtml(item.school_name)}</button></div></th>`;
+    }).join("")}</tr></thead><tbody>
+      <tr><th>個人條件初步比對</th>${items.map((item) => `<td>${comparisonEligibilityCell(item)}</td>`).join("")}</tr>
+      ${textRows.map(([label, getter]) => `<tr><th>${escapeHtml(label)}</th>${items.map((item) => `<td>${highlightHtml(getter(item))}</td>`).join("")}</tr>`).join("")}
+      <tr><th>官方簡章／來源</th>${items.map((item) => `<td>${comparisonSourceCell(item)}</td>`).join("")}</tr>
+      <tr class="compare-actions-row"><th>下一步</th>${items.map((item) => `<td><div class="compare-col-actions"><a class="primary-button compare-start-btn" href="#my-application?target=${encodeURIComponent(item.school_name)}">開始準備申請</a><button type="button" class="secondary-button compare-remove-btn" data-remove-compare="${escapeHtml(item.school_name)}">移出比較</button></div></td>`).join("")}</tr>
+    </tbody></table></div>`;
 }
 
 function ncuSourceReadingScope(source) {
@@ -10116,19 +10419,16 @@ function renderUniversityOverview(item) {
       <section id="detail-overview" class="detail-section university-overview" role="tabpanel" tabindex="0" aria-labelledby="detail-tab-overview">
         <div class="overview-intro-grid">
           <div class="detail-section-heading"><h2 id="detail-overview-title">申請重點</h2></div>
-          <div class="rule-scope-grid">
-            <article class="rule-scope home-rule"><div class="rule-step-heading"><span class="rule-step-number" aria-label="第一階段">01</span><span><i data-lucide="building-2" aria-hidden="true"></i>${escapeHtml(activeHomeSchool())}規定</span></div><h3>校內甄選</h3><p>通過${escapeHtml(activeUniversityProfile().short_name)}甄選後，由校方提名。</p></article>
-            <article class="rule-scope partner-rule"><div class="rule-step-heading"><span class="rule-step-number" aria-label="第二階段">02</span><span><i data-lucide="globe-2" aria-hidden="true"></i>合作校規定</span></div><h3>提名後申請</h3><p>依合作校要求送件，等待審查結果。</p></article>
-          </div>
+          <p class="overview-process-note"><i data-lucide="info" aria-hidden="true"></i><span>兩階段流程：先通過${escapeHtml(activeUniversityProfile().short_name)}校內甄選取得提名，再依合作校規定送件審查。</span></p>
         </div>
         ${renderPartnerAvailabilityNotice(item)}
         ${renderPartnerFieldEvidence(item)}
         ${activeHomeSchool() === "淡江大學" ? "" : window.UniWayCcuDetails?.render(item, escapeHtml, undefined, activeHomeSchool()) || ""}
         <details class="overview-more school-data-completeness"><summary>這所學校的資料完整度</summary><div id="school-data-completeness-body" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div></details>
         ${activeHomeSchool() === "國立中央大學" ? '<details id="ncu-source-audit" class="overview-more"><summary>已查來源、適用年度與未解問題</summary><div id="ncu-source-audit-body">展開讀取逐欄查核與原文頁碼。</div></details>' : ""}
-        <details class="overview-more"><summary>選校參考</summary><div id="quick-decision-fit">${renderQuickDecisionFit(item)}</div></details>
+        <details class="overview-more" open><summary>選校參考</summary><div id="quick-decision-fit">${renderQuickDecisionFit(item)}</div></details>
         ${renderProgramOptions(item)}
-        <details class="overview-more"><summary>方案資料</summary><div class="university-facts">${facts.map(([label, value]) => `<div class="university-fact"><span>${escapeHtml(label)}</span><strong>${highlightHtml(value)}</strong></div>`).join("")}</div></details>
+        <details class="overview-more" open><summary>方案資料</summary><div class="university-facts detail-fact-grid">${facts.map(([label, value]) => `<div class="university-fact"><span>${escapeHtml(label)}</span><strong>${highlightHtml(value)}</strong></div>`).join("")}</div></details>
         ${renderPartnerStudentSummary(item)}
         <div class="partner-links detail-source-links">${renderPartnerLinks(item)}</div>
       </section>
@@ -13943,7 +14243,7 @@ function optionalNumber(value) {
 
 const ADVISOR_ASSISTANT_STATE_META = {
   idle: {
-    eyebrow: "留學小助手",
+    eyebrow: "",
     title: "建立第一份申請方案",
     detail: "填寫條件後，我會整理候選學校、條件缺口與下一步。",
   },
@@ -15312,12 +15612,31 @@ function bindEvents() {
   $("#writing-assistant-form").addEventListener("submit", submitWritingAssistant);
 
   $("#budget-form").addEventListener("submit", saveBudgetPlan);
-  $("#budget-form").addEventListener("input", () => {
+  $("#budget-form").addEventListener("input", (event) => {
+    if (event.target?.id === "budget-months") event.target.dataset.userEdited = "1";
     state.pendingBudgetDraft = null;
+    renderBudgetScholarshipChips();
+    updateBudgetResult();
+  });
+  $("#budget-form").addEventListener("click", (event) => {
+    const chip = event.target.closest("[data-scholarship-cap]");
+    if (!chip) return;
+    const cap = Number(chip.dataset.scholarshipCap) || 0;
+    if (!cap) return;
+    const currency = $("#budget-currency");
+    if (currency && currency.value !== "TWD") {
+      currency.value = "TWD";
+      currency.uniwayGlide?.sync?.();
+    }
+    const scholarshipInput = $("#budget-scholarship");
+    if (scholarshipInput) scholarshipInput.value = String(cap);
+    state.pendingBudgetDraft = null;
+    renderBudgetScholarshipChips();
     updateBudgetResult();
   });
   $("#budget-currency").addEventListener("change", () => {
     state.pendingBudgetDraft = null;
+    renderBudgetScholarshipChips();
     updateBudgetResult();
   });
   $("#budget-school").addEventListener("change", (event) => {

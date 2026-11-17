@@ -8,6 +8,7 @@ import '../core/school_visuals.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
 import 'community_screen.dart';
+import 'schools_screen.dart' show selectSchoolAsApplicationTarget;
 
 enum _DetailSection { overview, workflow, life, stories, community }
 
@@ -47,6 +48,23 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
     final store = ExchangeStoreScope.of(context);
     final school = widget.school;
     final favorite = store.favorites.contains(school.schoolName);
+    final inCompare = store.isInCompare(school.schoolName);
+    final isTarget = store.applicationContext.targetSchool == school.schoolName;
+    final hasVerifiedPhoto =
+        school.imageStatus == 'verified' && school.imageUrl.trim().isNotEmpty;
+    final (badgeBg, badgeFg) = switch (school.availabilityStatus) {
+      'open' => (ExchangeColors.successSoft, ExchangeColors.success),
+      'agreement_only' => (
+        ExchangeColors.referenceSoft,
+        ExchangeColors.referenceInk,
+      ),
+      'quota_unconfirmed' || 'visiting_fee_paying' => (
+        ExchangeColors.amberSoft,
+        ExchangeColors.amber,
+      ),
+      'closed' => (ExchangeColors.coralSoft, ExchangeColors.danger),
+      _ => (ExchangeColors.surfaceMuted, ExchangeColors.secondaryInk),
+    };
     const sections = <_DetailSection, (IconData, String)>{
       _DetailSection.overview: (Icons.info_outline_rounded, '重點'),
       _DetailSection.workflow: (Icons.route_outlined, '流程'),
@@ -73,22 +91,98 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
         ),
       ),
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(24),
-          child: SizedBox(height: 240, child: SchoolPhoto(school: school)),
-        ),
-        const SizedBox(height: 24),
+        if (hasVerifiedPhoto) ...[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: SizedBox(height: 176, child: SchoolPhoto(school: school)),
+          ),
+          const SizedBox(height: 16),
+        ],
         StudentHeading(school.schoolName),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         Wrap(
-          spacing: 16,
+          spacing: 10,
           runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: badgeBg,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                school.availabilityLabel,
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: badgeFg,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
             StudentIconLabel(Icons.place_outlined, school.country),
-            StudentIconLabel(Icons.school_outlined, school.programType),
+            if (school.programType.trim().isNotEmpty)
+              StudentIconLabel(Icons.school_outlined, school.programType),
           ],
         ),
-        const SizedBox(height: 24),
+        if (!school.isOpenThisCycle &&
+            school.availabilityNote.trim().isNotEmpty) ...[
+          const SizedBox(height: 12),
+          StudentNotice(
+            school.availabilityNote.trim(),
+            icon: Icons.info_outline_rounded,
+            color: ExchangeColors.referenceInk,
+          ),
+        ],
+        const SizedBox(height: 14),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            FilledButton.icon(
+              key: const ValueKey('detail-set-target-school'),
+              onPressed: () {
+                if (isTarget) {
+                  store.selectMainTab(2);
+                  Navigator.of(context).maybePop();
+                } else {
+                  selectSchoolAsApplicationTarget(
+                    context,
+                    store,
+                    school,
+                    popCurrentRoute: true,
+                  );
+                }
+              },
+              icon: Icon(
+                isTarget
+                    ? Icons.assignment_turned_in_outlined
+                    : Icons.flag_outlined,
+                size: 18,
+              ),
+              label: Text(isTarget ? '前往申請文件（已設目標校）' : '設為申請目標校'),
+            ),
+            OutlinedButton.icon(
+              onPressed: () {
+                final ok = store.toggleCompareSchool(school.schoolName);
+                if (!ok) {
+                  ScaffoldMessenger.maybeOf(context)
+                    ?..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      const SnackBar(content: Text('最多同時比較 4 間學校。')),
+                    );
+                }
+              },
+              icon: Icon(
+                inCompare
+                    ? Icons.check_box_outlined
+                    : Icons.compare_arrows_rounded,
+                size: 18,
+              ),
+              label: Text(inCompare ? '已加入比較' : '加入比較'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -107,7 +201,7 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
                 .toList(),
           ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
         _selectedContent(store),
       ],
     );

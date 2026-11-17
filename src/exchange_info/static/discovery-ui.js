@@ -148,7 +148,7 @@ function renderDiscoveryWorkspace() {
       <div class="discovery-candidate-facts"><span>名額 ${escapeHtml(item.quota || "待公告")}</span><span>${escapeHtml(truncate(localizedPartnerValue(item, "study_period", "study_period"), 32))}</span></div>
       <div class="discovery-interest" role="group" aria-label="${name}的喜愛度">${[1,2,3,4,5].map(n => `<button type="button" data-interest-school="${name}" data-interest="${n}" aria-pressed="${pref.interest >= n}" aria-label="${n} 顆愛心">♥</button>`).join("")}<small>${pref.interest >= 4 ? "很想去" : pref.interest ? "考慮中" : "我的喜愛度"}</small></div>
       <label class="discovery-note-label"><span class="visually-hidden">${name}的私人備註</span><textarea data-school-note="${name}" maxlength="1000" rows="2" placeholder="留下選校理由…">${escapeHtml(pref.note)}</textarea></label>
-      <footer><label><input type="checkbox" data-compare-school="${name}" ${discoveryCompare.has(item.school_name) ? "checked" : ""}> 比較</label><button type="button" class="secondary-button" data-preference-toggle="${name}" aria-pressed="${inOrder}">${inOrder ? "移出志願" : "加入志願"}</button></footer></article>`;
+      <footer><label><input type="checkbox" data-compare-school="${name}" ${discoveryCompare.has(item.school_name) ? "checked" : ""}> 比較</label><button type="button" class="secondary-button" data-preference-toggle="${name}" aria-pressed="${inOrder}">${inOrder ? "移出志願" : "加入志願"}</button><a class="primary-button discovery-candidate-plan-link" href="#my-application?target=${encodeURIComponent(item.school_name)}">建立申請計畫</a></footer></article>`;
     }).join("") : '<div class="discovery-empty"><i data-lucide="heart" aria-hidden="true"></i><a href="#partners">開始找學校 ↗</a></div>'}</section>
     <aside class="discovery-ranking"><div class="discovery-ranking-title"><h3>我的志願</h3><span>${data.preference_order.length} 所</span></div><ol id="discovery-preference-list">${data.preference_order.map((name,i) => `<li draggable="true" data-rank-school="${escapeHtml(name)}" tabindex="0" aria-label="第 ${i+1} 志願 ${escapeHtml(name)}，Alt 加上下鍵調整"><span class="discovery-rank-number">${i+1}</span><div><strong>${escapeHtml(name)}</strong><small>${escapeHtml(partnerByName(name)?.country || "資料待更新")}</small></div><div class="discovery-rank-controls"><button type="button" data-rank-up="${escapeHtml(name)}" aria-label="上移${escapeHtml(name)}" ${i === 0 ? "disabled" : ""}>↑</button><button type="button" data-rank-down="${escapeHtml(name)}" aria-label="下移${escapeHtml(name)}" ${i === data.preference_order.length-1 ? "disabled" : ""}>↓</button><button type="button" data-preference-toggle="${escapeHtml(name)}" aria-label="移出志願${escapeHtml(name)}">×</button></div></li>`).join("")}</ol>${!data.preference_order.length ? '' : '<button type="button" class="primary-button" id="discovery-use-preferences">帶入申請清單</button>'}</aside>
     <section class="discovery-comparison" id="discovery-comparison" aria-label="學校比較">${schools.length > 1 ? renderComparison(schools.filter(p => discoveryCompare.has(p.school_name))) : ""}</section></div>
@@ -218,10 +218,118 @@ async function openDiscoveryReader(source) {
   dialog.querySelector("[data-close-reader]").focus(); initIcons();
 }
 function closeDiscoveryReader() { $("#discovery-reader").close(); discoveryReaderReturn?.isConnected && discoveryReaderReturn.focus(); }
+function criteriaFromEligibilityProfile(profile = state.eligibilityProfile) {
+  if (!profile || typeof profile !== "object") return {};
+  const out = {};
+  if (profile.jlptLevel && /^N[1-5]$/i.test(String(profile.jlptLevel))) {
+    out.test = "jlpt";
+    out.score = String(profile.jlptLevel).replace(/^N/i, "");
+  } else if (["ielts", "toefl", "toeic", "jlpt", "topik", "duolingo"].includes(profile.languageTest)) {
+    out.test = profile.languageTest;
+    if (profile.languageScore !== null && profile.languageScore !== undefined && profile.languageScore !== "") {
+      out.score = String(profile.languageScore);
+    }
+  }
+  const explicitScale = ["100", "4", "4.3", "5"].includes(String(profile.gpaScale || "")) ? String(profile.gpaScale) : "";
+  if (explicitScale && explicitScale !== "100") {
+    out.scale = explicitScale;
+    const g = profile.academicGpa ?? profile.academicScore;
+    if (g !== null && g !== undefined && g !== "") out.grade = String(g);
+  } else if (profile.academicScore !== null && profile.academicScore !== undefined && profile.academicScore !== "" && (explicitScale === "100" || Number(profile.academicScore) > 5)) {
+    out.scale = "100";
+    out.grade = String(profile.academicScore);
+  } else if (profile.academicGpa !== null && profile.academicGpa !== undefined && profile.academicGpa !== "") {
+    out.scale = explicitScale || "4.3";
+    out.grade = String(profile.academicGpa);
+  } else if (profile.academicScore !== null && profile.academicScore !== undefined && profile.academicScore !== "") {
+    out.scale = Number(profile.academicScore) <= 4.3 ? "4.3" : "100";
+    out.grade = String(profile.academicScore);
+  }
+  if (profile.degree === "大學部" || profile.degree === "undergraduate") out.degree = "undergraduate";
+  else if (["研究所", "碩士班", "博士班", "graduate"].includes(profile.degree)) out.degree = "graduate";
+  const termRaw = String(profile.targetTerm || "");
+  if (/fall/i.test(termRaw) || termRaw === "第一學期") out.term = "fall";
+  else if (/spring/i.test(termRaw) || termRaw === "第二學期") out.term = "spring";
+  return out;
+}
+function syncDiscoveryScoreInputMeta(testVal) {
+  const input = $("#discovery-score");
+  if (!input) return;
+  const limits = { ielts: [0, 9, 0.5], jlpt: [1, 5, 1], topik: [1, 6, 1], toefl: [0, 120, 1], toeic: [0, 990, 1], duolingo: [0, 160, 5] };
+  const [min, max, step] = limits[testVal] || [0, 990, 0.5];
+  input.min = min; input.max = max; input.step = step;
+  input.placeholder = testVal === "jlpt" ? "N2 請填 2" : "成績";
+}
+function prefillCriteriaFormFromProfile() {
+  const form = $("#discovery-criteria-form");
+  const applyBtn = $("#discovery-apply-saved");
+  const saved = criteriaFromEligibilityProfile();
+  const hasSaved = UniWayDiscovery.hasCriteria(saved);
+  const active = UniWayDiscovery.hasCriteria(discoveryCriteria);
+  if (applyBtn) applyBtn.hidden = !hasSaved || active;
+  if (!form || active || !hasSaved) return;
+  if (form.contains(document.activeElement)) return;
+  const setField = (name, val) => {
+    const el = form.elements[name];
+    if (!el || val === undefined) return;
+    const str = String(val ?? "");
+    if (el.value !== str) {
+      el.value = str;
+      el.uniwayGlide?.sync?.();
+    }
+  };
+  setField("test", saved.test || "");
+  syncDiscoveryScoreInputMeta(saved.test || "");
+  setField("score", saved.score || "");
+  setField("scale", saved.scale || "100");
+  setField("grade", saved.grade || "");
+  setField("degree", saved.degree || "");
+  setField("term", saved.term || "");
+}
+function applySavedCriteria() {
+  const saved = criteriaFromEligibilityProfile();
+  if (!UniWayDiscovery.hasCriteria(saved)) return;
+  prefillCriteriaFormFromProfile();
+  const form = $("#discovery-criteria-form");
+  discoveryCriteria = { mode: form?.elements?.mode?.value || "possible", scale: saved.scale || "100", ...saved };
+  if (typeof syncEligibilityFromDiscoveryCriteria === "function") syncEligibilityFromDiscoveryCriteria(discoveryCriteria);
+  renderDiscoveryCriteria();
+  renderPartnerTable();
+  renderDiscoveryWorkspace();
+  const details = $("#discovery-criteria");
+  if (details) details.open = false;
+}
+function toggleCompareSchool(schoolName) {
+  if (!schoolName) return;
+  if (discoveryCompare.has(schoolName)) {
+    discoveryCompare.delete(schoolName);
+  } else {
+    if (discoveryCompare.size >= 3) { announce("一次比較最多 3 所", "info"); return; }
+    discoveryCompareScope = discoveryKey();
+    discoveryCompare.add(schoolName);
+    if (typeof activeSchoolSelections === "function" && !activeSchoolSelections().has(schoolName) && typeof toggleFavorite === "function") {
+      toggleFavorite(schoolName);
+    }
+    if (discoveryCompare.size >= 2) document.dispatchEvent(new CustomEvent("uniway:compare", { detail: { school_count: discoveryCompare.size } }));
+  }
+  document.querySelectorAll("[data-compare-school]").forEach(cb => {
+    if (cb.dataset.compareSchool === schoolName) cb.checked = discoveryCompare.has(schoolName);
+  });
+  const cmpHost = $("#discovery-comparison");
+  if (cmpHost && state.dashboard) {
+    const items = state.dashboard.partner_universities.filter(p => discoveryCompare.has(p.school_name));
+    cmpHost.innerHTML = items.length ? renderComparison(items) : "";
+    initIcons();
+  }
+  if (typeof renderPartnerTable === "function" && state.dashboard) renderPartnerTable();
+  window.UniWayDetail?.render?.();
+}
 function renderDiscoveryCriteria() {
   const c = discoveryCriteria, active = UniWayDiscovery.hasCriteria(c);
   $("#discovery-criteria-count").textContent = active ? "已套用" : "";
   $("#discovery-criteria-result").textContent = active ? "依已公開的合作校條件初篩；待確認不代表不符合。" : "";
+  const applyBtn = $("#discovery-apply-saved");
+  if (applyBtn) applyBtn.hidden = active || !UniWayDiscovery.hasCriteria(criteriaFromEligibilityProfile());
 }
 function discoveryCriteriaMatch(item) {
   const result = UniWayDiscovery.assess(item, discoveryCriteria);
@@ -272,6 +380,7 @@ function loadDiscoveryPreview(item) {
 }
 function initDiscovery() {
   discoveryData(); renderDiscoveryRecents();
+  prefillCriteriaFormFromProfile();
   document.addEventListener("input", event => {
     const el = event.target;
     if (!el.dataset.schoolNote) return;
@@ -281,18 +390,30 @@ function initDiscovery() {
   });
   $("#discovery-criteria-form").addEventListener("submit", event => {
     event.preventDefault(); discoveryCriteria = Object.fromEntries(new FormData(event.currentTarget));
-    renderDiscoveryCriteria(); renderPartnerTable();
+    if (typeof syncEligibilityFromDiscoveryCriteria === "function") syncEligibilityFromDiscoveryCriteria(discoveryCriteria);
+    renderDiscoveryCriteria(); renderPartnerTable(); renderDiscoveryWorkspace();
     $("#discovery-criteria").open = false;
   });
-  $("#discovery-clear-criteria").addEventListener("click", () => { discoveryCriteria = {}; $("#discovery-criteria-form").reset(); renderDiscoveryCriteria(); renderPartnerTable(); });
+  $("#discovery-apply-saved")?.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    applySavedCriteria();
+  });
+  $("#discovery-clear-criteria").addEventListener("click", () => {
+    discoveryCriteria = {}; $("#discovery-criteria-form").reset();
+    prefillCriteriaFormFromProfile();
+    renderDiscoveryCriteria(); renderPartnerTable(); renderDiscoveryWorkspace();
+  });
   $("#discovery-test").addEventListener("change", event => {
-    const input = $("#discovery-score"), limits = { ielts: [0,9,.5], jlpt:[1,5,1], topik:[1,6,1], toefl:[0,120,1], toeic:[0,990,1], duolingo:[0,160,5] };
-    const [min,max,step] = limits[event.target.value] || [0,990,.5]; input.min = min; input.max = max; input.step = step; input.value = ""; input.placeholder = event.target.value === "jlpt" ? "N2 請填 2" : "成績";
+    syncDiscoveryScoreInputMeta(event.target.value);
+    const input = $("#discovery-score");
+    if (input) input.value = "";
   });
   $("#discovery-reader").addEventListener("cancel", event => { event.preventDefault(); closeDiscoveryReader(); });
   document.addEventListener("click", event => {
     const target = event.target.closest("button, a"); if (!target) return;
     const d = target.dataset;
+    if (d.removeCompare) { toggleCompareSchool(d.removeCompare); return; }
     if (d.discoveryShelf) { discoveryShelf = d.discoveryShelf; renderDiscoveryWorkspace(); }
     if (d.interestSchool) {
       const data = discoveryData(), old = data.school_preferences[d.interestSchool] || { note:"", interest:0 };
@@ -304,6 +425,7 @@ function initDiscovery() {
       if (!exists && data.preference_order.length >= 30) { announce("最多保留 30 個候選志願", "info"); return; }
       data.preference_order = exists ? data.preference_order.filter(n => n !== d.preferenceToggle) : [...data.preference_order, d.preferenceToggle];
       persistDiscovery(); renderDiscoveryWorkspace();
+      window.UniWayApplicationPath?.refreshEmpty?.();
     }
     if (d.rankUp) moveDiscoveryPreference(d.rankUp, -1);
     if (d.rankDown) moveDiscoveryPreference(d.rankDown, 1);
@@ -342,6 +464,7 @@ function initDiscovery() {
       data.school_preferences[el.dataset.schoolNote] = {...old, note:el.value.slice(0,1000)}; persistDiscovery();
       const items = state.dashboard.partner_universities.filter(p => discoveryCompare.has(p.school_name));
       $("#discovery-comparison").innerHTML = items.length ? renderComparison(items) : "";
+      initIcons();
     }
     if (el.dataset.compareSchool) {
       if (el.checked && discoveryCompare.size >= 3) { el.checked = false; announce("一次比較最多 3 所", "info"); return; }
@@ -349,6 +472,7 @@ function initDiscovery() {
       if (el.checked && discoveryCompare.size >= 2) document.dispatchEvent(new CustomEvent("uniway:compare", {detail: {school_count: discoveryCompare.size}}));
       const items = state.dashboard.partner_universities.filter(p => discoveryCompare.has(p.school_name));
       $("#discovery-comparison").innerHTML = items.length ? renderComparison(items) : "";
+      initIcons();
     }
     if (el.id === "discovery-saved-country") { discoverySavedCountry = el.value; discoverySavedSchool = ""; renderSavedDiscoveryExperiences(); }
     if (el.id === "discovery-saved-school") { discoverySavedSchool = el.value; renderSavedDiscoveryExperiences(); }
@@ -360,3 +484,8 @@ function initDiscovery() {
   document.addEventListener("dragend", () => { dragged = ""; });
   document.addEventListener("keydown", event => { const row = event.target.closest("[data-rank-school]"); if (row && event.altKey && ["ArrowUp","ArrowDown"].includes(event.key)) { event.preventDefault(); moveDiscoveryPreference(row.dataset.rankSchool, event.key === "ArrowUp" ? -1 : 1); } });
 }
+window.UniWayDiscoveryUI = {
+  criteria: () => ({ ...discoveryCriteria }),
+  prefillCriteriaFormFromProfile,
+  applySavedCriteria,
+};

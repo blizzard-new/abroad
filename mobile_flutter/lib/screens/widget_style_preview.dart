@@ -20,7 +20,7 @@ class WidgetStylePreview extends StatelessWidget {
 
   static IconData icon(StudyPlanWidgetStyle style) => switch (style) {
     StudyPlanWidgetStyle.overview => Icons.flight_takeoff_rounded,
-    StudyPlanWidgetStyle.countdown => Icons.auto_awesome_outlined,
+    StudyPlanWidgetStyle.countdown => Icons.timer_outlined,
     StudyPlanWidgetStyle.checklist => Icons.checklist_rounded,
     StudyPlanWidgetStyle.progress => Icons.donut_large_rounded,
   };

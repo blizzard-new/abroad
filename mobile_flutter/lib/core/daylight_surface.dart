@@ -15,7 +15,7 @@ class LiquidControlSurface extends StatelessWidget {
     this.active = false,
     this.disabled = false,
     this.pressed = false,
-    this.radius = 20,
+    this.radius = 12,
     super.key,
   });
   final Widget child;
@@ -24,15 +24,20 @@ class LiquidControlSurface extends StatelessWidget {
   @override
   Widget build(BuildContext context) => AnimatedContainer(
     duration: Duration(
-      milliseconds: MediaQuery.disableAnimationsOf(context) ? 0 : 160,
+      milliseconds: MediaQuery.disableAnimationsOf(context) ? 0 : 120,
     ),
     decoration: BoxDecoration(
       color: disabled
           ? ExchangeColors.surfaceMuted
           : active
-          ? (pressed ? ExchangeColors.primaryEnd : ExchangeColors.teal)
-          : ExchangeColors.surface,
+          ? (pressed ? ExchangeColors.primaryEnd : ExchangeColors.actionBlue)
+          : (pressed ? ExchangeColors.surfaceMuted : ExchangeColors.surface),
       borderRadius: BorderRadius.circular(radius),
+      border: active
+          ? null
+          : Border.all(
+              color: disabled ? ExchangeColors.line : ExchangeColors.line,
+            ),
     ),
     child: child,
   );

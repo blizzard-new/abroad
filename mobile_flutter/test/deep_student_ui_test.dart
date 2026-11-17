@@ -6,7 +6,9 @@ import 'package:exchange_guide_flutter/screens/ai_tools_screens.dart';
 import 'package:exchange_guide_flutter/screens/application_document_form_screen.dart';
 import 'package:exchange_guide_flutter/screens/application_documents_screen.dart';
 import 'package:exchange_guide_flutter/screens/feature_screens.dart';
+import 'package:exchange_guide_flutter/screens/journey_screen.dart';
 import 'package:exchange_guide_flutter/screens/school_detail_screen.dart';
+import 'package:exchange_guide_flutter/screens/schools_screen.dart';
 import 'package:exchange_guide_flutter/screens/student_plan_screens.dart';
 import 'package:exchange_guide_flutter/state/exchange_store.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +113,7 @@ Widget deepApp(ExchangeStore store, Widget page, {double scale = 2}) =>
           ).copyWith(textScaler: TextScaler.linear(scale)),
           child: child!,
         ),
-        home: page,
+        home: Scaffold(body: page),
       ),
     );
 
@@ -130,13 +132,13 @@ void main() {
     FlutterSecureStorage.setMockInitialValues({});
   });
   final pages = <String, Widget>{
+    'journey': JourneyScreen(onSelectTab: (_) {}),
+    'schools': const SchoolsScreen(),
     'setup': const ApplicationSetupScreen(),
     'profile': const ApplicationProfileScreen(),
     'packet': const ApplicationPacketScreen(),
     'budget': const BudgetScreen(),
-    'advisor': const AdvisorScreen(),
     'document check': const DocumentCheckScreen(),
-    'writing': const WritingAssistantScreen(),
     'eligibility': const EligibilityScreen(),
   };
   for (final entry in pages.entries) {

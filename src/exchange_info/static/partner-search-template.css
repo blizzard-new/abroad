@@ -98,23 +98,25 @@ body.unified-shell #partners.pr-explore #discovery-criteria-result {
   white-space: nowrap;
   border: 0;
 }
-body.unified-shell #partners.pr-explore #discovery-criteria {
+body.unified-shell #partners.pr-explore #discovery-criteria,
+html[data-skin="metro"] body.unified-shell #partners.pr-explore.pr-explore #discovery-criteria:not([open]) {
   display: block;
   width: 100%;
   margin: 0;
-  border-radius: 18px;
-  border: 1.5px solid #1d4ed8;
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-  box-shadow: 0 8px 22px rgba(30, 58, 138, 0.18);
+  border-radius: 14px;
+  border: 1px solid #104b94;
+  background: #165cb4;
+  box-shadow: none;
   overflow: hidden;
   box-sizing: border-box;
-  transition: box-shadow 0.16s ease, transform 0.16s ease;
+  transform: none;
 }
-body.unified-shell #partners.pr-explore #discovery-criteria:not([open]):hover {
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
-  border-color: #1d4ed8;
-  box-shadow: 0 11px 26px rgba(30, 58, 138, 0.26);
-  transform: translateY(-1px);
+body.unified-shell #partners.pr-explore #discovery-criteria:not([open]):hover,
+html[data-skin="metro"] body.unified-shell #partners.pr-explore.pr-explore #discovery-criteria:not([open]):hover {
+  background: #104b94;
+  border-color: #0d3d7a;
+  box-shadow: none;
+  transform: none;
 }
 body.unified-shell #partners.pr-explore #discovery-criteria > summary,
 body.unified-shell #partners.pr-explore #discovery-criteria:not([open]) > summary:hover {
@@ -123,8 +125,8 @@ body.unified-shell #partners.pr-explore #discovery-criteria:not([open]) > summar
   align-items: center;
   justify-content: space-between;
   gap: 10px 16px;
-  min-height: 56px;
-  padding: 10px 18px;
+  min-height: 54px;
+  padding: 8px 16px;
   background: transparent;
   color: #ffffff;
   cursor: pointer;
@@ -144,10 +146,10 @@ body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-main {
 body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-icon {
   display: inline-grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.18);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.16);
   color: #ffffff;
   flex: 0 0 auto;
 }
@@ -156,7 +158,7 @@ body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-icon s
   height: 18px;
 }
 body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-heading {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 800;
   letter-spacing: 0.01em;
   color: #ffffff;
@@ -169,14 +171,14 @@ body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-summar
   border-radius: 0;
   background: transparent;
   color: rgba(255, 255, 255, 0.92);
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 600;
 }
 body.unified-shell #partners.pr-explore #discovery-criteria.has-active-criteria .cgu-criteria-summary {
   padding: 4px 12px;
   border-radius: 999px;
   background: #ffffff;
-  color: #1e3a8a;
+  color: #165cb4;
   font-weight: 700;
 }
 body.unified-shell #partners.pr-explore #discovery-criteria #discovery-criteria-count {
@@ -194,31 +196,46 @@ body.unified-shell #partners.pr-explore #discovery-criteria #discovery-criteria-
 }
 body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-action {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  padding: 7px 15px;
+  padding: 5px 12px;
   border-radius: 999px;
   background: #ffffff;
-  color: #1e3a8a;
-  font-size: 13.5px;
+  color: #165cb4;
+  font-size: 13px;
   font-weight: 800;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.14);
+  box-shadow: none;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria .cgu-apply-saved-btn {
+  min-height: 28px;
+  padding: 3px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: #fde047;
+  color: #0f172a;
+  font: 800 12px/1.2 inherit;
+  cursor: pointer;
+}
+body.unified-shell #partners.pr-explore #discovery-criteria .cgu-apply-saved-btn[hidden] {
+  display: none !important;
 }
 body.unified-shell #partners.pr-explore #discovery-criteria .cgu-criteria-action svg {
   width: 16px;
   height: 16px;
   transition: transform 0.18s ease;
 }
-body.unified-shell #partners.pr-explore #discovery-criteria[open] {
+body.unified-shell #partners.pr-explore #discovery-criteria[open],
+html[data-skin="metro"] body.unified-shell #partners.pr-explore.pr-explore #discovery-criteria[open] {
   background: #ffffff;
-  border-color: #2563eb;
-  border-radius: 20px;
-  box-shadow: 0 14px 34px rgba(30, 58, 138, 0.16);
+  border: 1px solid #165cb4;
+  border-radius: 16px;
+  box-shadow: none;
 }
 body.unified-shell #partners.pr-explore #discovery-criteria[open] > summary,
 body.unified-shell #partners.pr-explore #discovery-criteria[open] > summary:hover {
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  background: #165cb4;
   color: #ffffff;
 }
 body.unified-shell #partners.pr-explore #discovery-criteria[open] .cgu-criteria-action svg {
@@ -543,12 +560,111 @@ body.unified-shell #partners.pr-explore .journey-search-results > .pr-results-he
 }
 
 @media (max-width: 700px) {
+  html[data-skin="metro"] body.unified-shell #dashboard-view > #partners.pr-explore {
+    padding-top: 6px !important;
+  }
+  body.unified-shell #partners.pr-explore .pr-explore-head {
+    gap: 6px 10px;
+  }
+  [data-skin="metro"] body.unified-shell #partners.pr-explore .pr-explore-head > div:first-child {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 8px;
+  }
+  html[data-skin="metro"] body.unified-shell #partners.pr-explore h1 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.25;
+  }
+  [data-skin="metro"] body.unified-shell #partners.pr-explore .pr-explore-context {
+    margin: 0;
+    font-size: 12.5px;
+  }
+  body.unified-shell #partners.pr-explore .cgu-explore-head-actions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-open-workspace,
+  body.unified-shell #partners.pr-explore .cgu-explore-head-actions .discovery-recents > summary {
+    min-height: 44px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+  body.unified-shell #partners.pr-explore .cgu-explore-head-actions .pr-view-toggle {
+    min-height: 44px;
+    align-items: center;
+  }
+  body.unified-shell #partners.pr-explore .cgu-explore-head-actions .pr-view-toggle button {
+    min-height: 36px;
+    padding: 0 12px;
+  }
+  body.unified-shell #partners.pr-explore > .discovery-search-tools {
+    margin: 6px 0 0;
+  }
+  body.unified-shell #partners.pr-explore #discovery-criteria > summary,
+  body.unified-shell #partners.pr-explore #discovery-criteria:not([open]) > summary:hover {
+    min-height: 52px;
+    padding: 6px 12px;
+    gap: 6px 10px;
+  }
+  body.unified-shell #partners.pr-explore #discovery-criteria:not(.has-active-criteria) .cgu-criteria-summary {
+    display: none;
+  }
+  body.unified-shell #partners #cgu-partner-filter-strip {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    margin: 6px 0 2px;
+    padding: 2px 0;
+    max-width: 100%;
+  }
+  body.unified-shell #partners #cgu-partner-filter-strip::-webkit-scrollbar {
+    display: none;
+  }
+  body.unified-shell #partners #cgu-program-tabs,
+  body.unified-shell #partners #cgu-program-tabs .cgu-program-tabs-row,
+  body.unified-shell #partners #cgu-college-quick-bar,
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-college-bar-main,
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-college-buttons {
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    width: auto;
+    min-width: max-content;
+    max-width: none;
+  }
+  body.unified-shell #partners #cgu-program-tabs .cgu-program-tab,
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-college-btn {
+    height: 44px;
+    min-height: 44px;
+    padding: 0 12px;
+    font-size: 13.5px;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-more-college-wrap,
+  body.unified-shell #partners #cgu-college-quick-bar .cgu-dept-inline-select {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 148px;
+    max-width: none;
+    margin-left: 0;
+  }
+  body.unified-shell #partners #cgu-college-quick-bar .glide-select__trigger,
+  body.unified-shell #partners #cgu-college-quick-bar select {
+    height: 44px;
+    min-height: 44px;
+    padding: 0 12px;
+  }
   html body.unified-shell #partners.pr-explore .pr-compare-tray {
     max-width: calc(100% - 12px);
     box-sizing: border-box;
   }
   html body.unified-shell #partners.pr-explore .pr-compare-tray button {
     flex: 0 0 auto;
+    min-height: 44px;
     white-space: nowrap;
     padding: 8px 12px;
   }
@@ -564,7 +680,7 @@ body.unified-shell #partners.pr-explore .journey-search-results > .pr-results-he
   margin: 8px 0 12px;
   padding: 12px 16px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  background: #fffbeb;
   border: 1px solid #f59e0b;
   color: #78350f;
   box-sizing: border-box;
@@ -683,6 +799,7 @@ body.unified-shell #partners.pr-explore .journey-search-results > .pr-results-he
   color: #ffffff;
 }
 [data-theme="dark"] body.unified-shell #partners.pr-explore #discovery-criteria[open],
+html[data-skin="metro"][data-theme="dark"] body.unified-shell #partners.pr-explore.pr-explore #discovery-criteria[open],
 [data-theme="dark"] body.unified-shell #partners.pr-explore #discovery-criteria #discovery-criteria-form {
   background: #0f172a;
   border-color: #3b82f6;

@@ -182,7 +182,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
       child: RefreshIndicator(
         onRefresh: _loadAll,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 18, 20, 110),
+          padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
           children: [content],
         ),
       ),

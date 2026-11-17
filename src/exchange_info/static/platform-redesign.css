@@ -552,18 +552,22 @@ body.unified-shell .pr-booking .primary-button { min-height: 52px; margin-top: 1
 body.unified-shell .pr-booking .secondary-button { min-height: 48px; margin-top: 8px; border: 1px solid var(--uw-line); border-radius: 14px; background: transparent; box-shadow: none; color: var(--uw-navy); font-size: 15px; font-weight: 700; }
 .pr-booking .lucide { width: 18px; height: 18px; }
 .pr-booking > p { margin: 14px 0 0; color: var(--uw-muted); font-size: 12px; line-height: 1.7; text-align: center; }
+.pr-booking .pr-booking-mobile-deadline { display: none; }
 
 @media (max-width: 900px) {
-  body.unified-shell .school-detail-view.pr-detail:not([hidden]) { width: calc(100% - 28px); margin: 0 14px; padding-bottom: 150px; }
+  body.unified-shell .school-detail-view.pr-detail:not([hidden]) { width: calc(100% - 28px); margin: 0 14px; padding-bottom: 176px; }
   .pr-detail-body { grid-template-columns: minmax(0, 1fr); }
   .pr-gallery, .pr-gallery:not([data-count="1"]) { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; border-radius: 20px; }
-  body.unified-shell .pr-gallery .school-detail-photo .school-photo, .pr-gallery:not([data-count="1"]) .school-detail-photo .school-photo { height: 240px; min-height: 0; }
+  body.unified-shell .pr-gallery .school-detail-photo .school-photo, .pr-gallery:not([data-count="1"]) .school-detail-photo .school-photo { height: 220px; min-height: 0; }
   .pr-gallery:not([data-count="1"]) .school-detail-photo { grid-row: auto; }
   .pr-gallery-extra, .pr-gallery:not([data-count="1"]) .pr-gallery-extra { display: none; }
-  .pr-booking { position: fixed; inset: auto 0 0 0; z-index: 30; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px 14px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); border-radius: 20px 20px 0 0; box-shadow: 0 -12px 40px #14223f26; }
-  .pr-booking > small, .pr-booking-dates, .pr-booking > p, .pr-booking #detail-compare-button { display: none; }
-  .pr-booking-fit { grid-column: 1; margin: 0; padding: 8px 10px; font-size: 13px; }
-  body.unified-shell .pr-booking .primary-button { grid-column: 2; width: auto; margin: 0; padding: 0 18px; min-height: 48px; font-size: 15px; }
+  .pr-booking { position: fixed; inset: auto 0 0 0; z-index: 30; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)); border-radius: 18px 18px 0 0; box-shadow: 0 -8px 28px #14223f22; }
+  .pr-booking > small, .pr-booking-dates, .pr-booking > p:not(.pr-booking-mobile-deadline) { display: none; }
+  .pr-booking-fit { flex: 1 1 100%; margin: 0; padding: 7px 10px; font-size: 13px; }
+  .pr-booking .pr-booking-mobile-deadline { display: block; flex: 1 1 100%; margin: 0; padding: 0 2px; color: var(--uw-muted); font-size: 12px; font-weight: 600; line-height: 1.4; text-align: left; }
+  body.unified-shell .pr-booking .primary-button { flex: 1 1 0; width: auto; min-width: 112px; margin: 0; padding: 0 14px; min-height: 44px; font-size: 14px; }
+  body.unified-shell .pr-booking #detail-compare-button { display: inline-flex; flex: 0 0 auto; width: auto; min-height: 44px; margin: 0; padding: 0 12px; font-size: 13.5px; }
+  body.unified-shell .pr-booking [hidden] { display: none !important; }
 }
 
 /* ---------- 4. Application guide (#guide) ---------- */

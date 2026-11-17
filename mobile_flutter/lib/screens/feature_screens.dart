@@ -889,10 +889,12 @@ class _RecommendedSchoolRow extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              '${match.score}',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: ExchangeColors.teal,
-                fontWeight: FontWeight.w600,
+              school.availabilityLabel,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                color: school.isOpenThisCycle
+                    ? ExchangeColors.success
+                    : ExchangeColors.referenceInk,
+                fontWeight: FontWeight.w700,
               ),
             ),
             const Icon(Icons.chevron_right_rounded, size: 20),
