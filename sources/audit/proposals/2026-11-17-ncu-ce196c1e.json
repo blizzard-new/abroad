@@ -1,0 +1,34 @@
+{
+  "detail": "國際處 2026-11-12 新公告「【出國申請】116學年度第一梯次交換學生計畫申請｜自11/16（一）至12/4（五）」，內文寫申請期間 11/16（一）至 12/4（五）中午 12 時止，和平台的截止時間一致，申請目前進行中（公告沒有寫 09:00 開放時間，這點以簡章為準）。交換生計畫頁的簡章仍是 2026-09-05 版、姐妹校列表仍是 116exchangeschoollist-1022.pdf，沒有更新的版本；公告沒提說明會或補助。",
+  "edits": [
+    {
+      "basis": "「【出國申請】116學年度第一梯次交換學生計畫申請｜自11/16（一）至12/4（五）」中午12時止",
+      "current": "10 週窗口即將開放 · 線上 12/04 12:00・紙本 12/11 17:00",
+      "proposed": "申請中 · 線上 12/04 12:00 截止・紙本 12/11 17:00",
+      "target": "verified_window_deadlines.py → ncu → window_badge"
+    },
+    {
+      "basis": "公告內文「自11/16（一）至12/4（五）中午12時止」，與簡章截止時間一致",
+      "current": "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf",
+      "proposed": "保留簡章來源，另加國際處公告 https://oia.ncu.edu.tw/p/406-1026-14582,r342.php?Lang=zh-tw",
+      "target": "verified_window_deadlines.py → ncu → online_deadline.source_url"
+    }
+  ],
+  "note": "AI 同事讀取學校官網後整理的提案，不是已核實的資料；修改清單只是建議，合併前請人工對照官方來源。合併這個檔案不會自動更新平台資料。",
+  "official_url": "https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",
+  "platform_record": "116學年度第一梯次簡章（2026-09-05公告，11/16 09:00開放線上申請至12/04 12:00）與2026/10/22最新交換姐妹校列表（116exchangeschoollist-1022.pdf，較10/13版移除北方高等商業學院EDHEC後共214列）已公告；外校當期條件逐項待核對。（支援程度 basic，合作校約 214 所）",
+  "proposed_by": "Dora",
+  "proposed_on": "2026-11-17",
+  "schema": "uniway-office-proposal/2",
+  "school_id": "ncu",
+  "school_name": "國立中央大學",
+  "source_url": "https://oia.ncu.edu.tw/p/406-1026-14582,r342.php?Lang=zh-tw",
+  "status": "new_notice",
+  "suggested_update": "日期與名單不用改；建議把 116 學年度第一梯次的狀態標為「申請開放中（至 2026-12-04 12:00）」，並在來源加上 2026-11-12 國際處公告連結。",
+  "verification": {
+    "note": "",
+    "reason": "官網公告標題與內文寫申請期間「自11/16（一）至12/4（五）中午12時止」，日期和平台一致；今天 11/17 已在公告所列期間內，平台 badge 還寫「即將開放」，只需改狀態文字。公告頁沒顯示發布日期，Dora 說的 11-12 我沒能證實；公告也沒寫 09:00、紙本期限或說明會。",
+    "verdict": "confirmed_update",
+    "verified_by": "小公主"
+  }
+}
