@@ -91,8 +91,11 @@ def test_archive_has_no_browser_dialog_and_can_be_undone(page, live_server):
 def test_finishing_a_task_shows_progress_and_can_be_undone(page, live_server):
     verified_login(page, live_server)
     plan = make_plan(page, live_server)
-    open_view(page, live_server, plan, 'level', level='check-availability')
-    page.get_by_role('button', name='確認內容', exact=True).click()
+    task = next(l for s in plan['stages'] for l in s['levels'] if l['kind'] == 'note' and l['counted'] and not l.get('blocked_by'))
+    open_view(page, live_server, plan, 'level', level=task['id'])
+    # a note is optional: one click finishes the step and returns to the overview
+    page.get_by_role('button', name='完成', exact=True).click()
+    expect(page.locator('#today-view')).to_be_visible()
     toast = page.locator('#toast')
     expect(toast).to_contain_text(re.compile(r'準備進度 1 / \d+'))
     toast.locator('.toast-action').click()
@@ -127,7 +130,9 @@ def test_old_schedule_address_opens_the_schedule_tab_with_this_plans_tasks(page,
     expect(rows.first).to_be_visible()
     assert rows.count() >= 3
     expect(rows.first.locator('a.pr-task-title')).to_have_attribute('href', re.compile('view=level'))
-    expect(page.locator('#schedule-view .pr-stat').first).to_contain_text(re.compile(r'0 / \d+'))
+    # progress has one home, the plan header: the schedule does not repeat it
+    expect(page.locator('#schedule-view #tracker-stats')).to_be_hidden()
+    expect(page.locator('#overall-caption')).to_have_text(re.compile(r'^0 / \d+ 項$'))
     expect(page.locator('#schedule-view .sched-deadlines')).to_be_visible()
     # the old navigation item is gone
     expect(page.locator('.uniway-public-nav a[href="#overview"]')).to_have_count(0)
@@ -136,15 +141,17 @@ def test_old_schedule_address_opens_the_schedule_tab_with_this_plans_tasks(page,
 def test_a_personal_task_can_be_added_without_leaving_the_page(page, live_server):
     verified_login(page, live_server)
     plan = make_plan(page, live_server)
-    open_view(page, live_server, plan)
-    form = page.locator('[data-today-quick]')
+    # personal tasks belong to 時程 and 我的待辦; the overview stays the checklist
+    open_view(page, live_server, plan, 'schedule')
+    page.locator('#schedule-view #tracker-add').click()
+    form = page.locator('#schedule-view [data-tracker-quick]')
     form.locator('input[name=title]').fill('請系主任簽名')
     form.locator('input[name=date]').fill(date.today().isoformat())
-    form.get_by_role('button', name='加入').click()
-    expect(page.locator('.today-own')).to_contain_text('請系主任簽名')
-    assert '#my-application' in page.evaluate('location.hash')
-    page.evaluate('location.hash = "#my-application?view=schedule"')
-    expect(page.locator('#schedule-view')).to_contain_text('請系主任簽名')
+    form.locator('input[name=title]').press('Enter')
+    expect(page.locator('#schedule-view #tracker-body')).to_contain_text('請系主任簽名')
+    assert 'view=schedule' in page.evaluate('location.hash')
+    open_view(page, live_server, plan, 'workspace')
+    expect(page.locator('#exchange-workspace-view')).to_contain_text('請系主任簽名')
 
 
 def test_offline_save_says_so_in_plain_language_and_keeps_the_text(page, live_server):

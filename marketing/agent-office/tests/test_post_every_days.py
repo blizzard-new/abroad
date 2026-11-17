@@ -31,8 +31,8 @@ def started(office: Office, day: date) -> bool:
 DAY = date(2030, 1, 7)
 
 
-def test_every_day_is_still_the_default(tmp_path):
-    office = make(tmp_path)
+def test_one_means_every_day(tmp_path):
+    office = make(tmp_path, OFFICE_POST_EVERY_DAYS=1)
     assert office.settings.post_every_days == 1
     assert started(office, DAY) and started(office, DAY + timedelta(days=1)) and started(office, DAY + timedelta(days=2))
 

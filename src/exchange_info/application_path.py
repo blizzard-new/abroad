@@ -316,7 +316,8 @@ def progress(item, record):
     content = bool(record.get("value") or record.get("version_id"))
     if item["external"]:
         return {"value":int(content), "total":1}
-    return {"value":int(content) + int(content and record.get("confirmed", False)), "total":2}
+    # A note is optional: the student marking the step done is what completes it.
+    return {"value":2 if record.get("confirmed") else int(content), "total":2}
 
 
 def register_application_path(app, *, authenticate, university_for, evaluate, catalog_for, release_mode, feature_enabled, levels_builder=None):
@@ -638,8 +639,6 @@ def register_application_path(app, *, authenticate, university_for, evaluate, ca
                 raise HTTPException(422, "尚有前置事項未完成，請先查看關卡中的前置需求。")
             if item["kind"] == "assemble":
                 record["value"] = "已核對組合草稿"
-            if item["kind"] != "confirm" and not record["value"] and not record["version_id"]:
-                raise HTTPException(422, "請先留下內容或選擇文件，再確認完成。")
         record.update(updated_at=utc_now().isoformat(), recorded_by="student", source_signature=item.get("source_signature"))
         plan["steps"][step_id] = record
         plan["updated_at"] = record["updated_at"]

@@ -128,7 +128,7 @@ class ModelWriter:
             self.chains[role] = [brains.build(key, self.settings) for key in keys]
         base = self.chains.get(role, [None])
         key = self.tuning(role).get("brain")
-        if not key or self.settings is None:
+        if not key or self.settings is None or not brains.allowed(self.settings, key):
             return base
         if key not in self._extra:
             self._extra[key] = brains.build(key, self.settings)
@@ -136,7 +136,7 @@ class ModelWriter:
 
     @property
     def mode(self) -> str:
-        keys = {self.primary(role) for role in self.chains}
+        keys = {self.primary(role) for role in list(self.chains)}  # a copy: a colleague's chain can be added on another thread
         return keys.pop() if len(keys) == 1 else "mixed"
 
     def primary(self, role: str) -> str:

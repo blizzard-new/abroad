@@ -264,8 +264,8 @@ def test_app_uniway_multi_school_partner_search_template(page, app_url):
     heading_color = criteria_summary.locator('.cgu-criteria-heading').evaluate('el => getComputedStyle(el).color')
     assert heading_color == 'rgb(255, 255, 255)'
 
-    # CGU term label, program tabs, 5 inline college buttons, 36 departments, TOEIC flags & dual-degree tags
-    expect(page.locator('#partner-term-tile option[value="fall"]')).to_have_text('2027 秋季（116-1）')
+    # Term label, program tabs, 5 inline college buttons, 36 departments, TOEIC flags & dual-degree tags
+    expect(page.locator('#partner-term-tile option[value="fall"]')).to_have_text('秋季／上學期')
     prog_tabs = page.locator('#cgu-program-tabs')
     college_bar = page.locator('#cgu-college-quick-bar')
     expect(prog_tabs.locator('.cgu-program-tab')).to_have_count(3)

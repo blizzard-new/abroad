@@ -47,14 +47,14 @@
 
 | 座位 | 角色 | 用哪個 AI（`.env.example` 的分配） | 每天做什麼 |
 |------|------|------|------------|
-| Ivy | 企劃總監 | 查資料：Antigravity；排內容：Claude Code | 先上網查這兩週學生在討論什麼（每條附來源），再讀平台數字（目前支援幾所大學、幾筆合作校）、`sources/audit/` 最新一天的已核實官方公告、上週成效，排出今天的內容；照 3:3:3:1 輪替 IG 內容支柱 |
-| 阿脆 | Threads 小編 | Claude Code | 去商業化的真人口吻；第一行點名族群或痛點，用提問、二選一、清單、小編碎碎念、今日公告五種角度；主文不放網址，網址放第一則留言；每篇附一張 4:5 圖卡（`OFFICE_THREADS_IMAGES=0` 可關掉）；每天最後一篇預設是帶多張圖的輪播貼文（`OFFICE_THREADS_ALBUMS`，見「圖片都由 Mori 做」） |
-| Mori | 視覺設計師（全公司唯一做圖的人） | IG 文案與做圖排版：Claude Code；封面插圖：Codex | 寫 IG 輪播文案；**所有圖片**（輪播、限動、Threads 配圖）都由她先讀設計準則、再讀需求，排好版面才出圖（見「圖片都由 Mori 做」）；封面插圖可交給 Codex 畫；hashtag 最多 5 個 |
-| 阿剪 | 影片剪輯 | Claude Code | 30～45 秒直式腳本（前 3 秒鉤子、每個畫面都有大字幕），逐格算圖並配上合成音樂；同一支影片發 Reels 和 YouTube Shorts；週日做 2～4 分鐘橫式「本週交換情報懶人包」 |
+| Ivy | 企劃總監 | Antigravity（查資料、排內容） | 先上網查這兩週學生在討論什麼（每條附來源），再讀平台數字（目前支援幾所大學、幾筆合作校）、`sources/audit/` 最新一天的已核實官方公告、上週成效，排出今天的內容；照 3:3:3:1 輪替 IG 內容支柱 |
+| 阿脆 | Threads 小編 | Codex | 去商業化的真人口吻；第一行點名族群或痛點，用提問、二選一、清單、小編碎碎念、今日公告五種角度；主文不放網址，網址放第一則留言；每篇附一張 4:5 圖卡（`OFFICE_THREADS_IMAGES=0` 可關掉）；每天最後一篇預設是帶多張圖的輪播貼文（`OFFICE_THREADS_ALBUMS`，見「圖片都由 Mori 做」） |
+| Mori | 視覺設計師（全公司唯一做圖的人） | IG 文案與做圖排版、封面插圖：Codex | 寫 IG 輪播文案；**所有圖片**（輪播、限動、Threads 配圖）都由她先讀設計準則、再讀需求，排好版面才出圖（見「圖片都由 Mori 做」）；封面插圖可交給 Codex 畫；hashtag 最多 5 個 |
+| 阿剪 | 影片剪輯 | Codex | 30～45 秒直式腳本（前 3 秒鉤子、每個畫面都有大字幕），逐格算圖並配上合成音樂；同一支影片發 Reels 和 YouTube Shorts；週日做 2～4 分鐘橫式「本週交換情報懶人包」 |
 | Kiki | 審稿查核 | Codex | 程式規則＋AI 審稿：字數、連結位置、hashtag 數、平台數字不能誇大、沒有官方來源不能寫日期、禁用「保證錄取／官方合作」等字眼；不合格退回作者改一次。寫的人和審的人用不同家的 AI，比較容易抓到盲點 |
 | Pat | 發佈排程 | Antigravity | 發文前最後檢查一次（公告有沒有改、是不是跟最近重複），有疑慮就退回給你；到排定時間用程式呼叫 Threads／Instagram／YouTube 官方 API，Threads 發完主文立刻在第一則留言補上連結；你核准的資料更新提案，也由 Pat 用程式開成 GitHub draft PR（見「資料更新提案與 draft PR」，不合併） |
 | Nana | 數據分析 | Antigravity | 每晚抓成效，把 Threads 上互動最好的題目交給企劃重製成 IG（Threads 測試題目、IG 放大轉換的雙平台閉環），並寫 2～4 點建議給隔天的企劃 |
-| Momo | 社群互動 | Claude Code | 發文後 30 分鐘～3 小時去看留言、擬回覆；回覆陌生人一律等你核准 |
+| Momo | 社群互動 | Antigravity | 發文後 30 分鐘～3 小時去看留言、擬回覆；回覆陌生人一律等你核准 |
 | Leo | 總管（主腦） | Antigravity | 你和大家之間的窗口：聽你在聊天裡交代的事、分派給對的同事、做完回報；每天開工結束會整理「哪些等你看」 |
 | 你 | 老闆 | — | 跟 Leo 聊天交代事情；在「待你審核」核准、修改、立即發佈或退回 |
 
@@ -74,7 +74,7 @@
 
 時間都可以在 `.env` 改。沒核准的草稿不會發；核准時已經過了排定時間的，下一輪（30 秒內）就發。
 
-**不想每天都發：兩天發一次**。在 `.env` 加一行 `OFFICE_POST_EVERY_DAYS=2`（3 就是三天一次，預設 1 是每天），存檔後重啟辦公室：
+**預設就是兩天發一次**，不用設定，更新程式後重啟就生效。想改頻率才需要在 `.env` 加一行 `OFFICE_POST_EVERY_DAYS=`（1 是每天、3 是三天一次，最大 30）：
 
 - 發文日照上面的時間表做完整的一天（Threads 幾篇、IG、Shorts 都照 `.env` 的設定）；中間那一天**不開工、不寫稿、不發文**。要一個發文日只發一篇 Threads，把 `OFFICE_THREADS_SLOTS` 改成一個時間（例如 `12:30`）。
 - 從「最後一次開工的那天」算起：電腦關機或視窗被關掉幾天，開回來的第一天就是發文日，不會再等下一個「偶數日」。你在網頁按「開始今天的工作」手動開工，也從那天重新算。
@@ -140,7 +140,7 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 建議依序做，每一步都確認沒問題再往下：
 
 1. **離線試跑**：照上面先跑一天，看草稿長什麼樣子。
-2. **接上 AI 工具**：登入 Claude Code、Codex、Antigravity，`uv run office check --ping` 的 AI 都是 ○。
+2. **接上 AI 工具**：登入 Codex 和 Antigravity（Claude Code 在 `OFFICE_BRAINS_ALLOWED` 擋掉 Claude 時用不到，可以不裝），`uv run office check --ping` 的 AI 都是 ○。
 3. **接上社群帳號**（見「接上 Threads、Instagram、YouTube」），`uv run office check` 的帳號都是 ○，仍保持 `OFFICE_DRY_RUN=1`，到 `var/outbox/` 看會送出的內容。
 4. **正式發佈**：改成 `OFFICE_DRY_RUN=0`，保持 `OFFICE_APPROVAL=manual`，每天花 5 分鐘審核。
 5. 跑順幾週後，想放手再改 `OFFICE_APPROVAL=auto`（審稿通過就自動排程；留言回覆仍然要你核准）。
@@ -159,7 +159,7 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 
 - 「大家現在用什麼模型？」「Kiki 改用 Sonnet，思考強度 high」「阿脆改用 Opus，xhigh」「Kiki 改回原本的設定」→ Leo 會換掉那位同事用的工具、模型或思考強度，桌上螢幕和同事資訊卡會顯示新的設定
 
-- 「新增一位同事叫小美，負責研究 Dcard 和 PTT 上學生在討論什麼，用 Claude Code 的 Sonnet，思考強度 high」→ 辦公室多一張桌子和一個新的像素人
+- 「新增一位同事叫小美，負責研究 Dcard 和 PTT 上學生在討論什麼，用 Antigravity」→ 辦公室多一張桌子和一個新的像素人
 - 「請小美查這週大家在問什麼」→ 小美做完在聊天裡回報（附來源）；「請阿寫寫一則 Threads 講托福和雅思怎麼選」→ 草稿先給 Kiki 審稿，再放進審核匣等你核准
 - 「小美改用 Opus」「請小美離開」
 
@@ -297,11 +297,21 @@ App 沒有用 Google 的推播，所以是在背景每 30 秒問辦公室一次�
 
 ## Claude Code、Codex、Antigravity 怎麼分工
 
-每張桌子的 AI 在 `.env` 的 `OFFICE_BRAINS` 指定，格式是「角色=工具」。`.env.example` 預設的分工：
+每張桌子的 AI 在 `.env` 的 `OFFICE_BRAINS` 指定，格式是「角色=工具」。`.env.example` 現在的分工**只用 Codex 和 Antigravity，不接 Claude**：
 
-- **Claude Code**：寫文案（Threads、IG 說明欄、留言回覆）、寫影片腳本、排內容。
-- **Codex**：審稿，和畫 IG 封面插圖（`OFFICE_IMAGES=codex`）。
-- **Antigravity**：主腦（總管 Leo），以及上網查資料、解讀數據、發文前最後檢查。
+- **Antigravity（Gemini 4 Argon, High）**：主腦（總管 Leo）、上網查資料、排內容（Ivy）、留言回覆（Momo）、發文前最後檢查、解讀數據。
+- **Codex（GPT-6.1 Sol, high）**：寫 Threads 和 IG 文案、影片腳本、做圖排版（阿脆、Mori、阿剪）、審稿（Kiki），和畫 IG 封面插圖（`OFFICE_IMAGES=codex`）。
+
+**這些都是程式內建的預設值，更新程式後重啟辦公室就生效，不用改 `.env`。** 你的 `.env` 裡如果還寫著舊的分工（某些桌子用 Claude Code、備援有 Claude），辦公室會自動把那些桌子換成上面分給它們的那一家，另一家當備援，不會掉到離線範本。要改的話才需要在 `.env` 寫對應的設定（`.env` 寫的會蓋過預設值）：
+
+| 設定 | 作用 |
+|------|------|
+| `OFFICE_BRAINS_ALLOWED=codex,antigravity`（預設） | **只准用這些工具**。Claude Code 和 Claude API 在任何情況都不會被叫：備援不會換過去、Leo 用聊天也不能把哪張桌子改成它們，Claude 的模型（opus、sonnet…）也不能選，之前用聊天存下來的相關設定會被略過。留空＝不限制 |
+| `OFFICE_CODEX_MODEL=gpt-6.1-sol`（預設） | Codex 用的模型 |
+| `OFFICE_CODEX_EFFORT=high`（預設） | 每次呼叫 Codex 的思考強度；留空就各桌用自己的。Leo 明確幫某張桌子改過的，以那張桌子為準 |
+| `OFFICE_ANTIGRAVITY_MODEL="Gemini 4 Argon (High)"`（預設） | 傳給 `agy --model` 的模型名。Antigravity 的名字要照 `agy models` 列出來的寫法（括號裡是思考強度），列表和這裡不一樣就改成列表上的 |
+
+設定好以後跑 `uv run office check --ping`：每個工具會寫出它用的模型和思考強度，並實際問一句測試題，確認登入和模型名都對。
 
 辦公室不會打開這些工具的視窗，而是用它們的「無介面模式」從程式呼叫，用的是你已經登入的訂閱：
 
@@ -314,14 +324,14 @@ App 沒有用 Google 的推播，所以是在背景每 30 秒問辦公室一次�
 幾件要知道的事：
 
 - **每次都在空資料夾裡執行**：審稿、寫稿只能讀不能寫；Codex 只在畫圖時能寫進那個暫存資料夾。工具碰不到辦公室的檔案和你的程式碼。
-- **會自動換人**：某個工具沒安裝、沒登入、額度用完或超過 `OFFICE_BRAIN_TIMEOUT` 秒沒回應，就依 `OFFICE_BRAIN_FALLBACK` 往下換（預設 Claude Code → Claude API → 離線範本），換人時桌上的泡泡會說出原因。
-- **查資料一定要能上網**：查資料這一步只會交給能上網的工具（Antigravity、Claude Code）；都不行就跳過，不會讓不能上網的 AI 憑空編。查到的東西都附來源，只當線索，審稿仍會擋下沒有官方來源的日期。
+- **會自動換人**：某個工具沒安裝、沒登入、額度用完或超過 `OFFICE_BRAIN_TIMEOUT` 秒沒回應，就依 `OFFICE_BRAIN_FALLBACK` 往下換（`.env.example` 是 Codex ↔ Antigravity 互相備援，最後是離線範本），換人時桌上的泡泡會說出原因。
+- **查資料一定要能上網**：查資料這一步只會交給能上網的工具（目前是 Antigravity，Claude Code 在被允許時也可以）；都不行就跳過，不會讓不能上網的 AI 憑空編。查到的東西都附來源，只當線索，審稿仍會擋下沒有官方來源的日期。
 - **發文本身是程式，不是 AI**：Antigravity 只能在發文前「擋下來給你看」，不能決定發什麼、發到哪；按下送出的永遠是固定的程式碼。被擋下的貼文會回到你的審核匣並寫明原因，你再核准一次就會直接發。
 - **Claude Code 會用你的訂閱**：辦公室呼叫 Claude Code 時會拿掉 `ANTHROPIC_API_KEY`，避免它改用 API 計費。
 - **Antigravity 的 CLI 還在變動**：有人回報從程式呼叫會卡住，所以它的每次呼叫都有逾時，逾時就換下一個工具。
 - 三家官方都建議「自動化用 API 金鑰」。用訂閱跑自己的排程沒有問題，但會吃訂閱額度；如果哪天某個工具不再允許用訂閱登入跑無介面模式，把那張桌子改成 `api` 就好。
 
-想換分工，只要改 `OFFICE_BRAINS`，例如全部交給 Claude Code：`OFFICE_BRAINS=claude-code`；只換審稿：把 `reviewer=codex` 改成 `reviewer=antigravity`。
+想換分工，只要改 `OFFICE_BRAINS`，例如只換審稿：把 `reviewer=codex` 改成 `reviewer=antigravity`。想讓 Claude 回來：在 `.env` 寫 `OFFICE_BRAINS_ALLOWED=`（留空＝不限制；或寫 `codex,antigravity,claude-code`），再改 `OFFICE_BRAINS` 和 `OFFICE_BRAIN_FALLBACK`。
 
 ## 接上 Threads、Instagram、YouTube
 
@@ -501,7 +511,7 @@ Dora 巡查發現落差 → 驗證員（例如小公主）重新打開官網驗�
 
 ## 費用
 
-用 `.env.example` 的分工時，AI 都走你既有的 Claude、ChatGPT、Google 訂閱，不另外付 API 費，但會吃各自的用量額度：每天大約 Claude Code 8～12 次、Codex 4～6 次（含 1 張圖）、Antigravity 3～8 次再加上你跟總管聊天的次數（每句一次）。只有備援換到 Claude API 時才會計費（以 `claude-opus-5-5` 估計全天約 1～2 美元，`OFFICE_MODEL=claude-sonnet-5-5` 約可省一半）。Threads、Instagram、YouTube API 本身免費（有每日發文上限，遠高於這裡的用量）。
+用 `.env.example` 的分工時，AI 都走你既有的 Claude、ChatGPT、Google 訂閱，不另外付 API 費，但會吃各自的用量額度：每天大約 Codex 12～18 次（含 1 張圖）、Antigravity 8～15 次再加上你跟總管聊天的次數（每句一次）。這是照原本的次數換算過來的粗估，用的是高思考強度的模型，額度的消耗要看你的方案，用一兩天再看實際用量。`OFFICE_BRAINS_ALLOWED` 擋掉了 Claude API，所以不會有任何 API 計費。Threads、Instagram、YouTube API 本身免費（有每日發文上限，遠高於這裡的用量）。
 
 ## 設定一覽
 

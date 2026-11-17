@@ -414,23 +414,25 @@ def test_native_six_stages_keyboard_save_refresh_reset(page, demo_url):
 
     page.goto(demo_url + '/#my-application?view=today', wait_until='domcontentloaded')
     page.locator('#today-focus-title').wait_for(state='visible')
-    expect(page.locator('.today-track li')).to_have_count(6)
+    expect(page.locator('#progress-view details.task-stage')).to_have_count(6)
     screenshot(page, 'desktop-journey.png')
     page.locator('.today-primary').focus()
     page.keyboard.press('Enter')
     page.locator('#level-form button[type=submit]').focus()
     page.keyboard.press('Enter')
-    expect(page.locator('.success-state')).to_contain_text('已同步')
+    expect(page.locator('#today-view')).to_be_visible()
+    expect(page.locator('#today-focus-title')).to_have_text('申請資格')
+    page.locator('#progress-view a.task-row[href*="cgu-read-guide"]').click()
+    expect(page.locator('#level-view .level-progress')).to_contain_text('已完成')
     page.reload(wait_until='domcontentloaded')
     page.locator('#boot-splash').wait_for(state='hidden')
-    expect(page.locator('.level-progress')).to_contain_text('已完成')
+    expect(page.locator('#level-view .level-progress')).to_contain_text('已完成')
     page.locator('a.back-link').click()
-    page.locator('a[data-tab=today]:visible').first.click()
-    expect(page.locator('#today-focus-title')).to_have_text('當期名額')
+    expect(page.locator('#today-focus-title')).to_have_text('申請資格')
     open_demo_tools(page)
     page.locator('#cgu-demo-reset').click()
     page.keyboard.press('Escape')
-    expect(page.locator('#today-focus-title')).to_have_text('當期名額')
+    expect(page.locator('#today-focus-title')).to_have_text('申請資格')
     open_demo_tools(page)
     page.locator('#cgu-demo-reset').click()
     with page.expect_navigation(wait_until='domcontentloaded'):
@@ -607,7 +609,7 @@ def test_responsive_native_journey(page, demo_url, size):
         )
         assert stage_submit_clear['btnClear'] and stage_submit_clear['hubClear'], f'stage clearance failed: {stage_submit_clear}'
     page.locator('#level-form button[type=submit]').click()
-    expect(page.locator('.success-state')).to_contain_text('已同步')
+    expect(page.locator('#today-view')).to_be_visible()
 
 
 def test_desktop_laptop_topbar_and_single_row_filter_strip_across_viewports(page, demo_url):
@@ -937,10 +939,10 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     expect(deadline_panel).to_contain_text('116-1 校內申請截止')
     expect(deadline_panel).to_contain_text('2026/12/21 17:00')
     expect(deadline_panel.locator('a[href*="85785"]')).to_be_visible()
-    expect(page.locator('#overall-caption')).to_contain_text('0 / 21')
+    expect(page.locator('#overall-caption')).to_contain_text('0 / 16')
 
-    # Requirement B: 今日與計畫分頁僅顯示單行校內送件摘要列，不展開完整表單
-    for tab_key in ('today', 'plans'):
+    # Requirement B: 總覽與時程分頁僅顯示單行校內送件摘要列，不展開完整表單
+    for tab_key in ('today', 'schedule'):
         if tab_key != 'today':
             page.locator(f'.hub-tabs [data-tab="{tab_key}"]').click()
         compact_bar = sim_hub.locator('.cgu-sim-compact-bar')
@@ -997,7 +999,7 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     page.locator('#cgu-sim-submit-btn').click()
     expect(page.locator('#cgu-sim-submit-feedback')).to_contain_text('正式申請請依國際處公告完成線上表單與紙本繳交')
     expect(page.locator('#cgu-sim-submit-feedback a[href*="85785"]')).to_be_visible()
-    expect(page.locator('#overall-caption')).to_contain_text('6 / 21')
+    expect(page.locator('#overall-caption')).to_contain_text('6 / 16')
     records = page.locator('#cgu-sim-app-records')
     expect(records).to_contain_text('CGU-116-1-A')
     expect(records).to_contain_text('已送出')
@@ -1345,7 +1347,7 @@ def test_my_application_phase1_plan_target_pref_and_oia_approve_today_sync(page,
     page.locator('#cgu-sim-submit-btn').click()
     records = page.locator('#cgu-sim-app-records')
     expect(records).to_contain_text(target_school)
-    expect(page.locator('#overall-caption')).to_contain_text('6 / 21')
+    expect(page.locator('#overall-caption')).to_contain_text('6 / 16')
     receipt_id = records.locator('.cgu-submitted-card').first.get_attribute('data-receipt-id')
     assert receipt_id and receipt_id.startswith('CGU-116-1-A')
 
@@ -1367,43 +1369,42 @@ def test_my_application_phase2_tabs_gates_docs_schedule_and_shared_preferences(p
     ready(page, demo_url)
     seed(page)
 
-    # H: 5 main .hub-tabs and clickable #overall-progress-link opening view=progress (with back link when opened from 今天; hidden when clicking tab directly)
-    tabs = page.locator('#application-path .hub-tabs [data-tab]')
-    expect(tabs).to_have_count(5)
-    assert tabs.all_inner_texts() == ['今天', '計畫', '準備清單', '我的任務', '時程']
-    page.locator('#application-path .hub-tabs [data-tab="progress"]').click()
+    # H: 3 visible .hub-tabs on single plan (總覽 / 時程 / 我的待辦; 計畫比較 hidden) and unified #progress-view on 總覽
+    visible_tabs = page.locator('#application-path .hub-tabs [data-tab]:visible')
+    expect(visible_tabs).to_have_count(3)
+    assert visible_tabs.all_inner_texts() == ['總覽', '時程', '我的待辦']
+    expect(page.locator('#application-path .hub-tabs [data-tab="plans"]')).to_be_hidden()
+    expect(page.locator('#today-view')).to_be_visible()
     expect(page.locator('#progress-view')).to_be_visible()
-    expect(page.locator('#application-path .hub-tabs [data-tab="progress"]')).to_have_class(re.compile(r'\bactive\b'))
     expect(page.locator('#subview-back')).to_be_hidden()
-    page.locator('#application-path .hub-tabs [data-tab="today"]').click()
+    page.locator('#application-path .hub-tabs [data-tab="schedule"]').click()
+    expect(page.locator('#schedule-view')).to_be_visible()
+    expect(page.locator('#progress-view')).to_be_hidden()
     page.locator('#overall-progress-link').click()
+    expect(page.locator('#today-view')).to_be_visible()
     expect(page.locator('#progress-view')).to_be_visible()
-    expect(page.locator('#subview-back')).to_be_visible()
-    expect(page.locator('#subview-back')).to_contain_text('回到今天')
+    expect(page.locator('#subview-back')).to_be_hidden()
 
-    # I & J: Stage 1 order on Checklist (home/term/target done at top, no 計畫設定 group, check-* before cgu-shortlist)
+    # I & J: Stage 1 order on Checklist (no home/term/target setup rows, single 申請資格 before cgu-shortlist)
     overview_text = page.locator('#progress-view').inner_text()
     assert '計畫設定' not in overview_text
+    assert '確認你的母校' not in overview_text
     assert 'academic_year' not in overview_text
     assert 'application_round' not in overview_text
     stage1_panel = page.locator('#progress-view details.task-stage').first
     stage1_hrefs = stage1_panel.locator('a.task-row').evaluate_all('els => els.map(e => e.getAttribute("href") || "")')
-    assert [h.split('level=')[1].split('&')[0] for h in stage1_hrefs[:3]] == ['home', 'term', 'target']
-    assert 'level=cgu-read-guide' in stage1_hrefs[3]
-    assert 'level=cgu-shortlist' in stage1_hrefs[-1]
-    assert any('level=check-language_score' in h for h in stage1_hrefs[4:-1])
-    assert all('level=check-academic_year' not in h and 'level=check-application_round' not in h for h in stage1_hrefs)
+    assert [h.split('level=')[1].split('&')[0] for h in stage1_hrefs] == ['cgu-read-guide', 'checks', 'cgu-shortlist']
 
-    # Map also has home/term/target at start of Stage 1 and no bottom 計畫設定 group
+    # Map keeps home/term/target at start of Stage 1, collapses checks into 申請資格, and has no bottom 計畫設定 group
     plan_id = page.evaluate('() => new URLSearchParams(location.hash.split("?")[1] || "").get("plan")')
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=map')
     expect(page.locator('#map-view')).to_be_visible()
     expect(page.locator('#subview-back')).to_be_visible()
     assert '計畫設定' not in page.locator('#map-view').inner_text()
     map_stage1_hrefs = page.locator('#map-view section.path-stage').first.locator('a.node').evaluate_all('els => els.map(e => e.getAttribute("href") || "")')
-    assert [h.split('level=')[1].split('&')[0] for h in map_stage1_hrefs[:3]] == ['home', 'term', 'target']
+    assert [h.split('level=')[1].split('&')[0] for h in map_stage1_hrefs] == ['home', 'term', 'target', 'cgu-read-guide', 'checks', 'cgu-shortlist']
 
-    # Mobile (390px) check on Checklist
+    # Mobile (390px) check on Checklist (via legacy view=progress alias)
     page.set_viewport_size({'width': 390, 'height': 844})
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=progress')
     assert page.evaluate('() => document.documentElement.scrollWidth <= window.innerWidth + 1')
@@ -1416,7 +1417,7 @@ def test_my_application_phase2_tabs_gates_docs_schedule_and_shared_preferences(p
     bridge = page.locator('#cgu-doc-level-bridge')
     expect(bridge).to_be_visible()
     bridge.locator('input[data-cgu-sim-upload="online_form"]').set_input_files(str(sample_pdf))
-    expect(page.locator('#overall-caption')).to_contain_text('1 / 21')
+    expect(page.locator('#overall-caption')).to_contain_text('1 / 16')
     expect(bridge).to_contain_text('online_form.pdf')
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-internal-submit')
@@ -1425,7 +1426,7 @@ def test_my_application_phase2_tabs_gates_docs_schedule_and_shared_preferences(p
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-doc-online_form')
     page.locator('#cgu-doc-level-bridge button[data-cgu-sim-remove="online_form"]').click()
-    expect(page.locator('#overall-caption')).to_contain_text('0 / 21')
+    expect(page.locator('#overall-caption')).to_contain_text('0 / 16')
 
     # L: Slimmed view=schedule hides redundant disclosures while keeping deadlines, tracker, and buffer-day form
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
@@ -1447,7 +1448,7 @@ def test_my_application_phase2_tabs_gates_docs_schedule_and_shared_preferences(p
     page.locator('#cgu-shortlist-save-btn').click()
     expect(page.locator('#cgu-shortlist-feedback')).to_contain_text('已保存')
     expect(page.locator('#level-view .level-progress strong')).to_have_text('已完成')
-    expect(page.locator('#overall-caption')).to_contain_text('1 / 21')
+    expect(page.locator('#overall-caption')).to_contain_text('1 / 16')
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
     expect(page.locator('#tracker-side')).to_contain_text('林肯大學')
@@ -1473,17 +1474,10 @@ def test_my_application_phase3_back_links_stages_return_report_and_unified_todos
     )
     assert plan_id
 
-    # N: Source-aware back links from 今天, 時程, 路徑地圖, and direct URL fallback
+    # N: Source-aware back links from 總覽, 時程, 路徑地圖, and direct URL fallback
     page.locator('#today-view .today-actions a.today-primary').click()
-    expect(page.locator('#level-view .back-link')).to_contain_text('回到今天')
+    expect(page.locator('#level-view .back-link')).to_contain_text('回到總覽')
     page.locator('#level-view .back-link').click()
-    expect(page.locator('#today-view')).to_be_visible()
-
-    page.locator('#overall-progress-link').click()
-    expect(page.locator('#progress-view')).to_be_visible()
-    expect(page.locator('#subview-back')).to_be_visible()
-    expect(page.locator('#subview-back')).to_contain_text('回到今天')
-    page.locator('#subview-back').click()
     expect(page.locator('#today-view')).to_be_visible()
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
@@ -1495,18 +1489,19 @@ def test_my_application_phase3_back_links_stages_return_report_and_unified_todos
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=map')
     expect(page.locator('#map-view')).to_be_visible()
-    expect(page.locator('#subview-back')).to_contain_text('回到計畫')
+    expect(page.locator('#subview-back')).to_contain_text('回到總覽')
     page.locator('#map-view a.node[href*="cgu-read-guide"]').click()
     expect(page.locator('#level-view .back-link')).to_contain_text('回到路徑地圖')
     page.locator('#level-view .back-link').click()
     expect(page.locator('#map-view')).to_be_visible()
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-read-guide')
-    expect(page.locator('#level-view .back-link')).to_contain_text('回到準備清單')
+    expect(page.locator('#level-view .back-link')).to_contain_text('回到總覽')
 
-    # O: 我的任務 unified 6 stages matching the checklist stages
+    # O: 我的待辦 unified 6 stages matching the checklist stages (and empty state hides filters until a task exists)
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=workspace')
-    expect(page.locator('#exchange-workspace-view h2')).to_have_text('我的任務')
+    expect(page.locator('#exchange-workspace-view h2')).to_have_text('我的待辦')
+    expect(page.locator('#exchange-content .ex-filters')).to_be_hidden()
     stage_options = page.locator('#exchange-stage option').evaluate_all('els => els.map(e => e.textContent.trim())')
     expected_six = ['探索與選校', '校內申請', '面試與放榜', '姊妹校申請', '出發準備', '抵達與返國']
     assert stage_options == ['全部階段', *expected_six]
@@ -1525,15 +1520,16 @@ def test_my_application_phase3_back_links_stages_return_report_and_unified_todos
     page.locator('#cgu-return-back-link').click()
     expect(page.locator('#cgu-return-report-bridge')).to_be_visible()
 
-    # Q: Single personal to-do store across 今天, 時程, and 我的任務
+    # Q: Single personal to-do store across 時程 and 我的待辦 (總覽 stays focused on the checklist)
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=today')
-    expect(page.locator('#today-view .ex-summary')).to_have_count(0)
-    page.locator('#today-view [data-today-quick] input[name="title"]').fill('請指導教授寫推薦信')
-    page.locator('#today-view [data-today-quick] button[type="submit"]').click()
-    expect(page.locator('#today-view .today-own')).to_contain_text('請指導教授寫推薦信')
+    expect(page.locator('#today-view .ex-summary, #today-view [data-today-quick]')).to_have_count(0)
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=workspace')
+    page.locator('#exchange-workspace-view button[data-ex-new]').click()
+    page.locator('#exchange-task-form input[name="title"]').fill('請指導教授寫推薦信')
+    page.locator('#exchange-task-form button[type="submit"]').click()
     expect(page.locator('#exchange-content')).to_contain_text('請指導教授寫推薦信')
+    expect(page.locator('#exchange-content .ex-filters')).to_be_visible()
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=schedule')
     expect(page.locator('#schedule-dynamic .ex-summary')).to_have_count(0)
@@ -1544,14 +1540,10 @@ def test_my_application_phase3_back_links_stages_return_report_and_unified_todos
     page.locator('#my-applications [data-tracker-quick] button[type="submit"]').click()
     expect(page.locator('#tracker-body')).to_contain_text('預約英文檢定成績加發')
 
-    # Toggle workspace to-do done from 時程 and verify 今天 + 我的任務 reflect completion
+    # Toggle workspace to-do done from 時程 and verify 我的待辦 reflects completion
     todo_row = page.locator('#tracker-body li.pr-task', has_text='請指導教授寫推薦信')
     todo_row.locator('button[data-tracker-ws-toggle]').click()
     expect(page.locator('#tracker-body section.pr-group.ready')).to_contain_text('請指導教授寫推薦信')
-
-    ready(page, demo_url, f'#my-application?plan={plan_id}&view=today')
-    expect(page.locator('#today-view .today-own')).to_contain_text('預約英文檢定成績加發')
-    expect(page.locator('#today-view .today-own')).not_to_contain_text('請指導教授寫推薦信')
 
     ready(page, demo_url, f'#my-application?plan={plan_id}&view=workspace')
     done_card = page.locator('#exchange-content article.ex-task', has_text='請指導教授寫推薦信')
@@ -1607,7 +1599,7 @@ def test_cgu_in_page_level_types_and_contextual_tools(browser, demo_url):
         expect(tools).not_to_contain_text('文件庫')
         expect(tools).not_to_contain_text('家長同意書')
         lvl_view.locator('#level-form button[type=submit]').click()
-        expect(lvl_view.locator('.success-state')).to_be_visible()
+        expect(page.locator('#today-view')).to_be_visible()
 
         # 2. Select level (cgu-shortlist): hides generic #level-form, saves to shared preference store
         ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-shortlist')
@@ -1721,11 +1713,6 @@ def test_cgu_plan_dialog_round_sync_and_non_116_1_deadlines(browser, demo_url):
         expect(deadline_panel).to_contain_text('117-1')
         expect(deadline_panel).not_to_contain_text('116-1')
         expect(deadline_panel).not_to_contain_text('2026/12/21')
-
-        deadline_card = page.locator('#application-path #deadline-card')
-        expect(deadline_card).to_contain_text('依國際處公告')
-        expect(deadline_card).not_to_contain_text('116-1')
-        expect(deadline_card).not_to_contain_text('2026/12/21')
 
         plan_id = page.locator('#plan-select').input_value()
         ready(page, demo_url, f'#my-application?plan={plan_id}&view=level&level=cgu-read-guide')

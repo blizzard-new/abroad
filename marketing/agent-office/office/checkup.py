@@ -95,6 +95,8 @@ def brain_rows(settings: Settings, ping: bool = False) -> list[Row]:
         label = brains.LABELS[key]
         desks = list(dict.fromkeys(names[desk_of(role)] for role, chain in chains.items() if chain[0] == key))
         duty = f"負責 {'、'.join(desks)}" if desks else "備援"
+        note = brains.settings_note(settings, key)
+        duty = f"{duty}；{note}" if note else duty
         brain = brains.build(key, settings)
         if brain is None:
             rows.append(Row(True, label, f"內建，永遠可用（{duty}）"))

@@ -387,7 +387,17 @@ class Office:
             value = json.loads(self.store.get(f"tuning:{role}") or "{}")
         except json.JSONDecodeError:
             return {}
-        return value if isinstance(value, dict) else {}
+        return self._permitted(value) if isinstance(value, dict) else {}
+
+    def _permitted(self, tune: dict) -> dict:
+        """What a desk's saved tuning still means under OFFICE_BRAINS_ALLOWED: a tool that is not allowed, or a Claude model
+        while Claude is off, is ignored (the saved choice stays; it just does nothing)."""
+        tune = dict(tune)
+        if tune.get("brain") and not brains.allowed(self.settings, tune["brain"]):
+            tune.pop("brain")
+        if tune.get("model") and _model_family(tune["model"]) == "claude" and not brains.claude_allowed(self.settings):
+            tune.pop("model")
+        return tune
 
     def tune(self, role: str, *, brain: str = "", model: str = "", effort: str = "") -> dict:
         """Change one desk's AI. "default" for a field puts that field back to the .env setting."""
@@ -398,6 +408,9 @@ class Office:
             if brain == "default":
                 current.pop("brain", None)
             elif brain in brains.LABELS:
+                if not brains.allowed(self.settings, brain):
+                    raise ValueError(f"這台辦公室只允許用 {'、'.join(brains.LABELS[k] for k in self.settings.brains_allowed if k in brains.LABELS)}，"
+                                     f"不能改用 {brains.LABELS[brain]}（.env 的 OFFICE_BRAINS_ALLOWED）")
                 current["brain"] = brain
             else:
                 raise ValueError(f"沒有「{brain}」這個工具（可用：{'、'.join(brains.LABELS)}）")
@@ -407,6 +420,8 @@ class Office:
                 current.pop("model", None)
             elif not MODEL_NAME.fullmatch(model):
                 raise ValueError(f"模型名稱「{model[:40]}」看起來不對")
+            elif _model_family(model) == "claude" and not brains.claude_allowed(self.settings):
+                raise ValueError("這台辦公室不用 Claude 的模型（.env 的 OFFICE_BRAINS_ALLOWED 沒有 claude-code 或 api）")
             else:
                 current["model"] = model
         if effort:
@@ -416,7 +431,7 @@ class Office:
                 current["effort"] = effort
             else:
                 raise ValueError(f"思考強度只能是 {'、'.join(brains.EFFORTS)}")
-        tool = current.get("brain") or brains.resolve(self.settings.brains, role)
+        tool = current.get("brain") or brains.chain(self.settings, role)[0]
         family = _model_family(current.get("model", ""))
         if family and tool not in MODEL_TOOLS[family]:
             raise ValueError(f"{current['model']} 不能在 {brains.LABELS[tool]} 上跑，要用 {'或'.join(brains.LABELS[k] for k in MODEL_TOOLS[family])}")
@@ -429,12 +444,13 @@ class Office:
 
     def describe_brain(self, role: str) -> str:
         tune = self.tuning(role)
-        tool = tune.get("brain") or brains.resolve(self.settings.brains, role)
+        tool = tune.get("brain") or brains.chain(self.settings, role)[0]
         default_model = {"claude-code": self.settings.claude_code_model, "codex": self.settings.codex_model,
-                         "api": self.settings.model}.get(tool, "")
+                         "antigravity": self.settings.antigravity_model, "api": self.settings.model}.get(tool, "")
+        default_effort = self.settings.codex_effort if tool == "codex" else ""
         parts = [brains.LABELS[tool], f"模型 {tune.get('model') or default_model or '預設'}"]
         if tool != "offline":
-            parts.append(f"思考強度 {tune.get('effort') or '預設'}")
+            parts.append(f"思考強度 {tune.get('effort') or default_effort or '預設'}")
         return "｜".join(parts)
 
     # ---- time ----

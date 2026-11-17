@@ -138,7 +138,9 @@ class Chief(Agent):
             f"今天主軸：{plan.get('theme') or '還沒排'}\n"
             f"草稿（最新在前）：\n" + ("\n".join(rows) or "（還沒有草稿）") + "\n\n"
             f"記給明天的事：{'；'.join(notes) or '（無）'}\n\n同事：\n{staff}\n\n"
-            f"每個工作現在用的 AI（role=後面是 set_brain 要填的值）：\n{minds}\n\n"
+            f"每個工作現在用的 AI（role=後面是 set_brain 要填的值）：\n{minds}\n"
+            + (f"這台辦公室只允許用 {'、'.join(brains.LABELS[k] for k in settings.brains_allowed if k in brains.LABELS)}（.env 的 OFFICE_BRAINS_ALLOWED）：不要提議改成別的工具，Claude 的模型也不能用。\n" if settings.brains_allowed else "")
+            + "\n"
             f"新同事每天固定的工作：\n{daily or '（還沒有新同事）'}\n\n"
             f"每天的時間表（台北，set_office_times 可改）：{timetable}\n"
             f"固定排程（add_routine 新增、remove_routine 刪除，編號是 R 後面的數字）：\n{routines or '（還沒有）'}\n"

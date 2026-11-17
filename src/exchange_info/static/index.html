@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
     <link rel="stylesheet" href="/static/glass-theme.css?v=20261029-midnight-1" />
-    <link rel="stylesheet" href="/static/platform-redesign.css?v=20261110-home-center-1" />
+    <link rel="stylesheet" href="/static/platform-redesign.css?v=20261116-home-clean-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261102-1" />
@@ -46,14 +46,14 @@
     <link rel="stylesheet" href="/static/home-motion.css?v=20261110-home-center-1" />
     <noscript><style>.boot-splash { display: none !important; }</style></noscript>
       <link rel="stylesheet" href="/static/application-path.css?v=20261102-tokens-3" />
-    <link rel="stylesheet" href="/static/midnight-theme.css?v=20261102-nopath-1" />
+    <link rel="stylesheet" href="/static/midnight-theme.css?v=20261116-home-clean-1" />
     <link rel="stylesheet" href="/static/glide-select.css?v=20261029-level-tools-3" />
     <link rel="stylesheet" href="/static/application-level-tools.css?v=20261029-level-tools-3" />
     <link rel="stylesheet" href="/static/partner-space.css?v=20261111-globe-layout-1" />
     <link rel="stylesheet" href="/static/ux-task-first.css?v=20261101-1" />
-    <link rel="stylesheet" href="/static/application-today.css?v=20261115-cgu-app-flow-3" />
+    <link rel="stylesheet" href="/static/application-today.css?v=20261117-app-overview-2" />
     <link rel="stylesheet" href="/static/assets/fonts/notosans-tc/notosans-tc.css?v=20261108-metro-1" />
-    <link rel="stylesheet" href="/static/metro.css?v=20261111-globe-layout-1" />
+    <link rel="stylesheet" href="/static/metro.css?v=20261117-app-overview-2" />
     <link rel="stylesheet" href="/static/partner-search-template.css?v=20261116-partner-search-1" />
   </head>
   <body class="global-home-mode unified-shell">
@@ -93,7 +93,7 @@
           </nav>
           <div id="global-topbar-context" class="global-topbar-context">
             <span class="school-switcher-icon"><i data-lucide="messages-square" aria-hidden="true"></i></span>
-            <span><small>全台學生共用</small><strong id="global-topbar-label">全部留學貼文</strong></span>
+            <span><strong id="global-topbar-label">全部留學貼文</strong></span>
           </div>
           <a id="back-to-global-home" class="icon-button board-home-button" href="#home" aria-label="返回留學首頁" data-tooltip="留學首頁"><i data-lucide="arrow-left" aria-hidden="true"></i></a>
           <div class="mobile-brand"><span class="brand-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40" decoding="async" /></span><span><strong>UniWay</strong><small id="mobile-school-label">選擇就讀學校</small></span></div>
@@ -251,7 +251,7 @@
           <section id="registration-account-step" class="registration-account-step" aria-labelledby="registration-account-title">
             <div class="verification-heading">
               <span class="verification-step-number">1</span>
-              <div><strong id="registration-account-title">建立一般帳號</strong><small>驗證信箱後即可使用。</small></div>
+              <div><strong id="registration-account-title">建立一般帳號</strong></div>
             </div>
             <label><span>公開暱稱</span><input name="display_name" autocomplete="nickname" minlength="2" maxlength="30" required placeholder="例如：準備去日本的小林" /></label>
             <label><span>電子郵件</span><input id="registration-email" name="email" type="email" autocomplete="email" required placeholder="student@example.com" /></label>
@@ -319,7 +319,7 @@
         </a>
         <a class="brand university-brand" href="#home" aria-label="返回 UniWay 首頁">
           <span class="brand-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40" decoding="async" /></span>
-          <span><strong>UniWay</strong><small>個人申請工作區</small></span>
+          <span><strong>UniWay</strong></span>
         </a>
 
         <nav class="global-sidebar-nav" aria-label="留學社群功能選單">
@@ -330,7 +330,7 @@
 
         <section class="sidebar-board-list" aria-labelledby="sidebar-board-title">
           <div class="sidebar-board-heading"><span id="sidebar-board-title">推薦看板</span></div>
-          <a href="#public-board" data-community-route="public"><span class="sidebar-board-icon public"><i data-lucide="globe-2" aria-hidden="true"></i></span><span><strong>公共留學板</strong><small>所有留學話題</small></span></a>
+          <a href="#public-board" data-community-route="public"><span class="sidebar-board-icon public"><i data-lucide="globe-2" aria-hidden="true"></i></span><span><strong>公共留學板</strong></span></a>
           <a href="#language-school-board" data-community-route="language"><span class="sidebar-board-icon language"><i data-lucide="languages" aria-hidden="true"></i></span><span><strong>語言學校板</strong></span></a>
           <div class="sidebar-board-row">
             <a href="#board=長庚大學" data-home-school-link><span class="sidebar-board-icon cgu"><i data-lucide="graduation-cap" aria-hidden="true"></i></span><span><strong data-home-school-board>長庚大學板</strong><small>申請資訊與討論</small></span></a>
@@ -429,14 +429,6 @@
                   </span>
                 </div>
                 <button class="hm-scroll-cue" type="button" data-home-discover hidden><span>往下探索你的交換旅程</span><i data-lucide="arrow-down" aria-hidden="true"></i></button>
-              </section>
-
-              <section class="pr-supported" aria-label="目前支援的學校">
-                <div class="pr-supported-label"><i data-lucide="badge-check" aria-hidden="true"></i><span><b>目前支援</b><small id="home-supported-count">9 所大學</small></span></div>
-                <div id="home-supported-marquee" class="pr-marquee">
-                  <ul id="home-supported-list" class="pr-marquee-track"></ul>
-                </div>
-                <button id="home-supported-toggle" type="button" class="pr-marquee-toggle" aria-pressed="false" aria-label="暫停學校名單捲動" hidden><i data-lucide="pause" aria-hidden="true"></i></button>
               </section>
 
               <section class="pr-section pr-editorial" aria-labelledby="home-guides-title">
@@ -676,14 +668,14 @@
                   <h2 id="profile-section-notifications-title" class="pr-set-heading">提醒與通知</h2>
                   <fieldset id="profile-section-notifications" class="pr-set-panel profile-notification-settings">
                     <legend class="visually-hidden">提醒與通知</legend>
-                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>Web 站內截止提醒</strong><small>在 UniWay 通知中心顯示</small></span><input class="pr-switch" name="web_notifications" type="checkbox" role="switch" /></label>
-                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>電子郵件 截止提醒（選擇加入）</strong><small>寄到你驗證過的信箱</small></span><input class="pr-switch" name="email_notifications" type="checkbox" role="switch" /></label>
-                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>官方規定與文件更新提醒</strong><small>合作校或學校公告有變動時通知你</small></span><input class="pr-switch" name="content_updates" type="checkbox" role="switch" /></label>
+                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>Web 站內截止提醒</strong></span><input class="pr-switch" name="web_notifications" type="checkbox" role="switch" /></label>
+                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>電子郵件 截止提醒（選擇加入）</strong></span><input class="pr-switch" name="email_notifications" type="checkbox" role="switch" /></label>
+                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>官方規定與文件更新提醒</strong></span><input class="pr-switch" name="content_updates" type="checkbox" role="switch" /></label>
                     <div class="pr-set-row" role="group" aria-labelledby="profile-label-days">
                       <div class="pr-set-label"><strong id="profile-label-days" class="profile-setting-label">截止前提醒日</strong><small>可複選</small></div>
                       <div class="pr-set-control profile-reminder-days"><label><input name="reminder_days" type="checkbox" value="30" /><span>30 天</span></label><label><input name="reminder_days" type="checkbox" value="14" /><span>14 天</span></label><label><input name="reminder_days" type="checkbox" value="7" /><span>7 天</span></label><label><input name="reminder_days" type="checkbox" value="3" /><span>3 天</span></label><label><input name="reminder_days" type="checkbox" value="1" /><span>1 天</span></label></div>
                     </div>
-                    <p class="pr-set-note">勾選並儲存後啟用電子郵件提醒。</p>
+                    
                   </fieldset>
                   <div class="pr-set-save">
                     <div class="form-status" role="status" aria-live="polite"></div>
@@ -701,8 +693,8 @@
                 <h2 id="profile-section-language-title" class="pr-set-heading">語言</h2>
                 <section id="profile-section-language" class="pr-set-panel" aria-labelledby="profile-section-language-title">
                   <div class="pr-set-row">
-                    <div class="pr-set-label"><strong id="profile-label-language">介面語言</strong><small id="profile-help-language">目前提供繁體中文。</small></div>
-                    <div class="pr-set-control"><select class="pr-field" disabled aria-labelledby="profile-label-language" aria-describedby="profile-help-language"><option>繁體中文</option></select></div>
+                    <div class="pr-set-label"><strong id="profile-label-language">介面語言</strong></div>
+                    <div class="pr-set-control"><select class="pr-field" disabled aria-labelledby="profile-label-language"><option>繁體中文</option></select></div>
                   </div>
                 </section>
 
@@ -861,7 +853,7 @@
               <button id="planning-confirm" type="button" class="primary-button" hidden><i data-lucide="calendar-plus" aria-hidden="true"></i><span>確認加入我的時程</span></button>
             </section>
             <details id="application-schedule-details" class="application-disclosure">
-              <summary><span><strong>進階時間安排</strong><small>需要時再設定工時、每週空檔與任務順序</small></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+              <summary><span><strong>進階時間安排</strong></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
             <section id="journey-workspace" class="journey-workspace glass-panel" aria-labelledby="journey-workspace-title" hidden>
               <header class="concise-heading"><div><h2 id="journey-workspace-title">我的準備工作台</h2></div><a href="#calendar">完整日曆<i data-lucide="arrow-right" aria-hidden="true"></i></a></header>
               <div id="journey-today" class="journey-today" aria-live="polite"></div>
@@ -997,7 +989,7 @@
                     <label><span>每月預算</span><input id="advisor-monthly-budget" name="monthly_budget" type="number" min="0" step="1000" inputmode="decimal" placeholder="新台幣" /></label>
                     <label><span>偏好授課語言</span><select id="advisor-teaching-language" name="preferred_teaching_language"><option value="">不限</option><option value="english">英語</option><option value="japanese">日語</option><option value="chinese">中文</option><option value="other">其他語言</option></select></label>
                     <label><span>想修的領域或課程</span><input id="advisor-course-interests" name="course_interests" type="text" maxlength="120" placeholder="例如：資料科學、國際法（選填）" /></label>
-                    <label class="advisor-toggle"><input id="advisor-scholarship" name="needs_scholarship" type="checkbox" /><span><strong>需要補助</strong><small>一併整理補助限制</small></span></label>
+                    <label class="advisor-toggle"><input id="advisor-scholarship" name="needs_scholarship" type="checkbox" /><span><strong>需要補助</strong></span></label>
                   </div>
                 <label class="advisor-question-field"><span>想問什麼？</span><textarea id="advisor-question" name="question" maxlength="500" rows="3" placeholder="例如：申請日本交換需要哪些文件？"></textarea></label>
                 <div class="advisor-question-chips" aria-label="常見問題">
@@ -1221,9 +1213,9 @@
               <div class="calendar-sync-content">
                 <div id="calendar-sync-status" class="calendar-sync-status"></div>
                 <div class="calendar-provider-grid" aria-label="支援的日曆服務">
-                  <article><span class="calendar-provider-icon google">G</span><div><strong>Google 日曆</strong><small>使用網址訂閱，系統更新後會由 Google 定期同步。</small></div><button type="button" class="secondary-button" data-calendar-provider="google">設定</button></article>
-                  <article><span class="calendar-provider-icon apple"><i data-lucide="apple" aria-hidden="true"></i></span><div><strong>Apple 行事曆</strong><small>用訂閱連結加入 iPhone、iPad 或 Mac。</small></div><button type="button" class="secondary-button" data-calendar-provider="apple">設定</button></article>
-                  <article><span class="calendar-provider-icon outlook">O</span><div><strong>Outlook</strong><small>從網路訂閱同一份交換申請時程。</small></div><button type="button" class="secondary-button" data-calendar-provider="outlook">設定</button></article>
+                  <article><span class="calendar-provider-icon google">G</span><div><strong>Google 日曆</strong></div><button type="button" class="secondary-button" data-calendar-provider="google">設定</button></article>
+                  <article><span class="calendar-provider-icon apple"><i data-lucide="apple" aria-hidden="true"></i></span><div><strong>Apple 行事曆</strong></div><button type="button" class="secondary-button" data-calendar-provider="apple">設定</button></article>
+                  <article><span class="calendar-provider-icon outlook">O</span><div><strong>Outlook</strong></div><button type="button" class="secondary-button" data-calendar-provider="outlook">設定</button></article>
                 </div>
                 <div id="calendar-subscription-actions" class="calendar-subscription-actions"></div>
                 <small class="calendar-privacy-note"><i data-lucide="shield-check" aria-hidden="true"></i>訂閱網址等同私人鑰匙，請勿公開；可隨時撤銷並產生新網址。</small>
@@ -1239,7 +1231,7 @@
                 <label><span>類型</span><select name="category"><option value="documents">文件準備</option><option value="home">校內申請</option><option value="partner">合作校申請</option><option value="language">語言考試</option><option value="visa">簽證</option><option value="housing">住宿</option><option value="other">其他</option></select></label>
                 <label><span>提前提醒</span><select name="reminder_days"><option value="0">當天</option><option value="3">3 天前</option><option value="7" selected>7 天前</option><option value="14">14 天前</option></select></label>
                 <label><span>預估準備天數</span><input name="preparation_days" type="number" min="0" max="90" value="7" inputmode="numeric" aria-describedby="calendar-preparation-help" /><small id="calendar-preparation-help">0 表示不自動安排開始日</small></label>
-                <label><span>預估工作時數（可稍後設定）</span><input name="effort_hours" type="number" min="0.1" max="1000" step="0.1" placeholder="例如 3" /><small>工作時數搭配每週可投入時間，安排逐日準備。</small></label>
+                <label><span>預估工作時數（可稍後設定）</span><input name="effort_hours" type="number" min="0.1" max="1000" step="0.1" placeholder="例如 3" /></label>
                 <label><span>目前狀態</span><select name="status"><option value="todo" selected>未開始</option><option value="preparing">準備中</option><option value="ready">已完成</option></select></label>
                 <label class="calendar-event-note"><span>備註</span><input name="note" maxlength="160" placeholder="需要準備的資料或來源" /></label>
                 <div class="form-status" role="status"></div>
@@ -1378,8 +1370,8 @@
             <div class="application-center-layout">
               <section class="application-template-area" aria-labelledby="application-template-title">
                 <div class="concise-heading"><h3 id="application-template-title">可填寫的準備工具</h3><span id="application-template-count" class="count-badge">--</span></div>
-                <label class="document-stage-control" for="application-document-stage"><span>先看這個階段</span><select id="application-document-stage" aria-describedby="document-stage-help"></select></label><p id="document-stage-help" class="application-template-note">切換階段僅供查看。</p>
-                <p class="application-template-note">草稿工具；必備文件以上方官方規定為準。</p>
+                <label class="document-stage-control" for="application-document-stage"><span>先看這個階段</span><select id="application-document-stage"></select></label>
+                
                 <div id="application-template-list" class="application-template-list" aria-live="polite"><div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div></div>
               </section>
 
@@ -1666,15 +1658,15 @@
     <script src="/static/react-aria-school-picker.js?v=20261016-lattice-1" defer></script>
     <script src="/static/application-plan-index.js?v=20261112-cgu-ux-1" defer></script>
     <script src="/static/application-path-select.js?v=20261029-level-tools-3" defer></script>
-    <script src="/static/application-path-template.js?v=20261115-cgu-app-flow-3" defer></script>
-    <script src="/static/exchange-workspace.js?v=20261115-cgu-app-flow-3" defer></script>
-    <script src="/static/application-path.js?v=20261116-cgu-levels-1" defer></script>
+    <script src="/static/application-path-template.js?v=20261117-app-overview-2" defer></script>
+    <script src="/static/exchange-workspace.js?v=20261117-app-overview-2" defer></script>
+    <script src="/static/application-path.js?v=20261117-app-overview-2" defer></script>
     <script src="/static/app.js?v=20261117-state-machines-1" defer></script>
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261029-midnight-1" defer></script>
-    <script src="/static/platform-home.js?v=20261112-cgu-ux-1" defer></script>
-    <script src="/static/home-motion.js?v=20261110-home-center-1" defer></script>
-    <script src="/static/platform-explore.js?v=20261116-partner-search-1" defer></script>
+    <script src="/static/platform-home.js?v=20261116-home-clean-1" defer></script>
+    <script src="/static/home-motion.js?v=20261116-home-clean-1" defer></script>
+    <script src="/static/platform-explore.js?v=20261116-home-clean-1" defer></script>
     <script src="/static/platform-detail.js?v=20261112-cgu-ux-1" defer></script>
     <script src="/static/platform-guide.js?v=20261111-search-copy-1" defer></script>
     <script src="/static/platform-tracker.js?v=20261115-cgu-app-flow-3" defer></script>
