@@ -1,8 +1,5 @@
-/* 我的申請 · 今天. One strong element (the task to do now); everything else is flat and quiet.
+/* 我的申請 · 總覽. One strong element (the task to do now); everything else is flat and quiet.
    Uses the shared --uw-* tokens only. Loaded after the older application-path layers so it wins by order, not by !important. */
-
-#application-path #hub[data-tab="today"] > .next-sidebar,
-#application-path #hub[data-tab="today"] > .preparation-boundary { display: none; }
 
 #application-path .today { display: grid; gap: 22px; margin-top: 18px; color: var(--uw-text, #23324a); }
 #application-path .today h2, #application-path .today h3 { margin: 0; line-height: 1.3; }
@@ -21,57 +18,34 @@
 #application-path .today-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 24px; border-radius: 16px; background: #fff; color: var(--uw-navy, #23324a); font-weight: 700; text-decoration: none; }
 #application-path .today-primary:hover { background: #edf0f4; }
 
-#application-path .today-panel { display: grid; gap: 8px; align-content: start; padding: 20px 22px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; background: #fff; }
+#application-path .today-panel { display: grid; gap: 8px; align-content: start; padding: 20px 22px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; background: var(--uw-surface, #fff); }
 #application-path .today-panel h3 { font-size: 14px; font-weight: 600; color: var(--uw-muted, #586579); }
 #application-path .today-panel p { margin: 0; }
 #application-path .today-date { font-size: 44px; line-height: 1.05; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 #application-path .today-empty { font-weight: 600; }
 #application-path .today-hint { font-size: 13px; color: var(--uw-muted, #586579); }
 #application-path .today-pill { display: inline-block; margin-left: 6px; padding: 1px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--uw-accent-wash, #edf0f4); color: var(--uw-muted, #586579); }
-#application-path .today-pill.soon { background: #f8e9e7; color: #a83c39; }
-#application-path .today-pill.late { background: #f8e9e7; color: #a83c39; }
-#application-path .today-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; color: var(--uw-navy, #23324a); text-decoration: underline; text-underline-offset: 4px; width: fit-content; }
-#application-path .today-text { min-height: 44px; padding: 0 4px; border: 0; background: none; font: inherit; font-weight: 600; color: var(--uw-navy, #23324a); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+#application-path .today-pill.soon, #application-path .today-pill.late { background: #f8e9e7; color: #a83c39; }
+#application-path .today-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; color: var(--uw-accent, #165cb4); text-decoration: underline; text-underline-offset: 4px; width: fit-content; }
+#application-path .today-text { min-height: 44px; padding: 0 4px; border: 0; background: none; font: inherit; font-weight: 600; color: var(--uw-accent, #165cb4); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
 
-/* stages */
+/* shared section head + rows (used in 時程) */
 #application-path .today-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 12px; }
 #application-path .today-head h2 { font-size: 16px; }
 #application-path .today-head p { margin: 0; font-size: 14px; color: var(--uw-muted, #586579); }
 #application-path .today-head b { color: var(--uw-text, #23324a); font-variant-numeric: tabular-nums; }
-#application-path .today-track { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; }
-#application-path .today-track li { flex: 1; height: 8px; border-radius: 8px; background: var(--uw-line, #d8dde5); }
-#application-path .today-track li[data-s="done"] { background: #1f7a4d; }
-#application-path .today-track li[data-s="now"] { background: var(--uw-navy, #23324a); }
-#application-path .today-stage-now { margin: 10px 0 0; font-size: 14px; color: var(--uw-muted, #586579); }
-#application-path .today-stage-now b { color: var(--uw-text, #23324a); }
-
-/* queue + checks */
-#application-path .today-bottom { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
-#application-path .today-queue h2 { font-size: 18px; margin-bottom: 4px; }
-#application-path .today-queue ul { margin: 0; padding: 0; list-style: none; }
-#application-path .today-queue li { border-bottom: 1px solid var(--uw-line, #d8dde5); }
-#application-path .today-queue li a { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 8px 4px; color: inherit; text-decoration: none; }
-#application-path .today-queue li a:hover { background: #ffffff99; }
 #application-path .today-row { display: grid; gap: 2px; flex: 1; min-width: 0; }
 #application-path .today-row b { font-weight: 600; }
 #application-path .today-row small { font-size: 12.5px; color: var(--uw-muted, #586579); }
-#application-path .today-tag { flex: none; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--uw-amber-soft, #fff4d6); color: var(--uw-amber-ink, #8a5a00); }
-#application-path .today-queue li svg, #application-path .today-queue li i { flex: none; color: var(--uw-muted, #586579); }
-#application-path .today-counts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
-#application-path .today-counts li { display: grid; gap: 2px; justify-items: center; padding: 10px 4px; border-radius: 14px; background: var(--uw-surface-soft, #edf0f4); font-size: 12.5px; color: var(--uw-muted, #586579); }
-#application-path .today-counts b { font-size: 24px; line-height: 1.1; color: var(--uw-text, #23324a); font-variant-numeric: tabular-nums; }
-#application-path .today-counts .pass b { color: #1f7a4d; }
-#application-path .today-counts .fail b { color: #a83c39; }
-#application-path .today-counts .needs b { color: var(--uw-amber-ink, #8a5a00); }
 #application-path .today-boundary { display: flex; gap: 8px; align-items: flex-start; margin: 0; font-size: 12.5px; color: var(--uw-muted, #586579); }
 #application-path .today-boundary svg, #application-path .today-boundary i { width: 16px; height: 16px; margin-top: 3px; flex: none; }
 
 /* task page: rule status first (replaces the collapsed note) and calmer spacing */
 #application-path .check-status { display: flex; gap: 10px; align-items: baseline; margin: 0 0 14px; padding: 12px 14px; border-radius: 14px; font-size: 14px; line-height: 1.55; background: var(--uw-surface-soft, #edf0f4); }
-#application-path .check-status b { flex: none; padding: 1px 10px; border-radius: 999px; font-size: 12.5px; background: #fff; }
+#application-path .check-status b { flex: none; padding: 1px 10px; border-radius: 999px; font-size: 12.5px; background: rgb(255 255 255 / .75); }
 #application-path .check-status.pass { background: #e6f3ec; color: #14573a; }
 #application-path .check-status.fail { background: #f8e9e7; color: #7e2b29; }
-#application-path .check-status.needs { background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; }
+#application-path .check-status.needs { background: var(--uw-amber-soft, #fff4d6); color: var(--uw-amber-ink, #5e3d00); }
 
 /* A gate that lacks the student's data asks for it in place; the confirm button waits until it has it. */
 #application-path .gate-inputs { margin: 0 0 16px; padding: 16px 18px 18px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 14px; background: var(--uw-surface, #fff); min-inline-size: 0; }
@@ -84,7 +58,7 @@
 #application-path .gate-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 14px; }
 #application-path .gate-grid label { margin: 0; }
 #application-path .gate-grid label > span { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; font-size: 13px; font-weight: 700; }
-#application-path .gate-grid label > span em { font-style: normal; font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; }
+#application-path .gate-grid label > span em { font-style: normal; font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--uw-amber-soft, #fff4d6); color: var(--uw-amber-ink, #5e3d00); }
 #application-path .gate-grid :is(input, select) { width: 100%; box-sizing: border-box; min-height: 44px; }
 #application-path .gate-grid [data-missing="true"] { border-color: var(--uw-amber-ink, #8a5a00); }
 #application-path .gate-inputs .error-box { margin: 12px 0 0; }
@@ -101,26 +75,26 @@
 
 @media (max-width: 760px) {
   #application-path .today { gap: 16px; }
-  #application-path .today-top, #application-path .today-bottom { grid-template-columns: 1fr; }
+  #application-path .today-top { grid-template-columns: 1fr; }
   #application-path .today-focus { min-height: 0; padding: 22px 20px 20px; border-radius: 24px; }
   #application-path .today-focus h2 { font-size: 22px; }
   #application-path .today-primary { width: 100%; }
   #application-path .today-date { font-size: 32px; }
 }
 
-/* tabs: 今天 first; rule text is a statement, not a button; footer inset like the rest of the card */
+/* tabs: 總覽 first; rule text is a statement, not a button; footer inset like the rest of the card */
 #application-path .hub-tabs [data-tab="today"] { order: -1; }
-#application-path .level-card .choice-box { background: #fff; color: var(--uw-text, #23324a); border: 1px solid var(--uw-line, #d8dde5); box-shadow: none; }
+#application-path .level-card .choice-box { background: var(--uw-surface, #fff); color: var(--uw-text, #23324a); border: 1px solid var(--uw-line, #d8dde5); box-shadow: none; }
 #application-path .level-card .choice-box svg, #application-path .level-card .choice-box i { color: var(--uw-muted, #586579); }
 #application-path .level-card .level-actions { padding-inline: 22px; }
 
 /* ===== 我的申請 workbench: header menu, tabs, plans, schedule, forms ===== */
 #application-path .header-actions { display: flex; align-items: center; }
 #application-path .ap-menu { position: relative; }
-#application-path .ap-menu summary { list-style: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--uw-line, #d8dde5); background: #fff; color: var(--uw-text, #23324a); cursor: pointer; }
+#application-path .ap-menu summary { list-style: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--uw-line, #d8dde5); background: var(--uw-surface, #fff); color: var(--uw-text, #23324a); cursor: pointer; }
 #application-path .ap-menu summary::-webkit-details-marker { display: none; }
 #application-path .ap-menu[open] summary { background: var(--uw-accent-wash, #edf0f4); }
-#application-path .ap-menu-list { position: absolute; right: 0; top: 52px; z-index: 30; display: grid; min-width: 180px; padding: 6px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 16px; background: #fff; box-shadow: var(--uw-shadow, 0 18px 48px #42627d18); }
+#application-path .ap-menu-list { position: absolute; right: 0; top: 52px; z-index: 30; display: grid; min-width: 180px; padding: 6px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 16px; background: var(--uw-surface, #fff); box-shadow: var(--uw-shadow, 0 18px 48px #42627d18); }
 #application-path .ap-menu-list button { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 12px; border: 0; border-radius: 10px; background: none; color: var(--uw-text, #23324a); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
 #application-path .ap-menu-list button:hover { background: var(--uw-accent-wash, #edf0f4); }
 #application-path .ap-menu-list button[hidden] { display: none; }
@@ -128,7 +102,7 @@
 #application-path #subview-back { margin: 4px 0 0; }
 
 /* toast with an action */
-#application-path #toast { display: flex; align-items: center; gap: 14px; max-width: min(92vw, 520px); font-size: 14px; background: var(--uw-navy, #23324a); color: #fff; border: 0; bottom: 64px; z-index: 80; text-align: left; }
+#application-path #toast { display: flex; align-items: center; gap: 14px; max-width: min(92vw, 520px); font-size: 14px; background: #1e293b; color: #fff; border: 0; bottom: 64px; z-index: 80; text-align: left; }
 #application-path #toast.error { background: #7e2b29; color: #fff; }
 #application-path #toast[hidden] { display: none; }
 #application-path .toast-action { min-height: 44px; padding: 0 8px; border: 0; background: none; color: #fff; font: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; flex: none; }
@@ -137,24 +111,24 @@
 #application-path .ap-semester { margin: 12px 0; padding: 0; border: 0; }
 #application-path .ap-semester legend { padding: 0; font-weight: 600; margin-bottom: 8px; }
 #application-path .ap-semester-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-#application-path .ap-semester-option { position: relative; display: flex; align-items: center; min-height: 48px; padding: 0 14px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 14px; background: #fff; font-weight: 600; font-size: 14px; cursor: pointer; }
+#application-path .ap-semester-option { position: relative; display: flex; align-items: center; min-height: 48px; padding: 0 14px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 14px; background: var(--uw-surface, #fff); font-weight: 600; font-size: 14px; cursor: pointer; }
 #application-path .ap-semester-option input { position: absolute; opacity: 0; inset: 0; }
-#application-path .ap-semester-option:has(input:checked) { background: var(--uw-navy, #23324a); color: #fff; border-color: var(--uw-navy, #23324a); }
+#application-path .ap-semester-option:has(input:checked) { background: var(--uw-accent, #165cb4); color: var(--uw-on-accent, #fff); border-color: var(--uw-accent, #165cb4); }
 #application-path .ap-semester-option:has(input:focus-visible) { outline: 3px solid #3b6fd8; outline-offset: 2px; }
 
-/* 計畫 */
+/* 計畫比較 */
 #application-path .plans { display: grid; gap: 18px; margin-top: 18px; }
 #application-path .plan-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-#application-path .plan-card { display: grid; gap: 10px; align-content: start; padding: 20px 22px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; background: #fff; }
-#application-path .plan-card.current { border-color: var(--uw-navy, #23324a); }
+#application-path .plan-card { display: grid; gap: 10px; align-content: start; padding: 20px 22px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; background: var(--uw-surface, #fff); }
+#application-path .plan-card.current { border-color: var(--uw-accent, #165cb4); }
 #application-path .plan-card h3 { margin: 0; font-size: 18px; line-height: 1.3; }
 #application-path .plan-nums { display: flex; gap: 24px; flex-wrap: wrap; margin: 0; }
 #application-path .plan-nums div { display: grid; gap: 2px; }
 #application-path .plan-nums dt { font-size: 12.5px; color: var(--uw-muted, #586579); }
 #application-path .plan-nums dd { margin: 0; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
-#application-path .today-primary.dark { background: var(--uw-navy, #23324a); color: #fff; justify-self: start; }
-#application-path .today-primary.dark:hover { background: var(--uw-accent-hover, #18263b); }
-#application-path .plan-compare { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--uw-line, #d8dde5); border-radius: 18px; overflow: hidden; font-size: 14px; }
+#application-path .today-primary.dark { background: var(--uw-accent, #165cb4); color: var(--uw-on-accent, #fff); justify-self: start; }
+#application-path .today-primary.dark:hover { background: var(--uw-accent-hover, #104b94); }
+#application-path .plan-compare { width: 100%; border-collapse: collapse; background: var(--uw-surface, #fff); border: 1px solid var(--uw-line, #d8dde5); border-radius: 18px; overflow: hidden; font-size: 14px; }
 #application-path .plan-compare th, #application-path .plan-compare td { padding: 12px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--uw-hairline, #e3edf2); }
 #application-path .plan-compare thead th, #application-path .plan-compare tbody th { background: var(--uw-surface-soft, #edf0f4); color: var(--uw-muted, #586579); font-weight: 600; }
 #application-path .plan-compare td { font-variant-numeric: tabular-nums; }
@@ -166,7 +140,7 @@
 #application-path #plans-legacy { margin-top: 18px; }
 
 /* 時程 */
-#application-path .sched-deadlines { margin: 18px 0; padding: 20px 22px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; background: #fff; }
+#application-path .sched-deadlines { margin: 18px 0; padding: 20px 22px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; background: var(--uw-surface, #fff); }
 #application-path .sched-deadlines ol { margin: 0; padding: 0; list-style: none; }
 #application-path .sched-deadlines li { border-bottom: 1px solid var(--uw-line, #d8dde5); }
 #application-path .sched-deadlines li:last-child { border: 0; }
@@ -185,25 +159,10 @@
 #application-path #schedule-legacy .pr-tracker-title kbd, #application-path #schedule-legacy #tracker-add kbd { display: none; }
 @media (hover: none) { #application-path #tracker-add kbd { display: none; } }
 
-/* 今天: personal tasks + quick add */
-#application-path .today-own { margin-top: 22px; }
-#application-path .today-own-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 6px; }
-#application-path .today-own h3 { margin: 0; font-size: 15px; }
-#application-path .today-own ul { margin: 0; padding: 0; list-style: none; }
-#application-path .today-own li { display: flex; justify-content: space-between; gap: 10px; min-height: 44px; align-items: center; border-bottom: 1px solid var(--uw-line, #d8dde5); }
-#application-path .today-own-link { flex: 1 1 auto; min-width: 0; color: inherit; text-decoration: none; font-weight: 600; overflow-wrap: anywhere; }
-#application-path .today-own-link:hover { text-decoration: underline; }
-#application-path .today-own small { flex: none; color: var(--uw-muted, #586579); font-variant-numeric: tabular-nums; }
-#application-path .today-quick { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-#application-path .today-quick input[name=title] { flex: 1 1 200px; min-width: 0; min-height: 48px; padding: 0 14px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 14px; background: #fff; }
-#application-path .today-quick input[type=date] { min-height: 48px; padding: 0 10px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 14px; background: #fff; }
-#application-path .today-add { min-height: 48px; padding: 0 20px; border: 0; border-radius: 14px; background: var(--uw-navy, #23324a); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+#application-path .today-add { min-height: 48px; padding: 0 20px; border: 0; border-radius: 14px; background: var(--uw-accent, #165cb4); color: var(--uw-on-accent, #fff); font: inherit; font-weight: 700; cursor: pointer; }
 @media (max-width: 760px) { #application-path .ap-semester-options { grid-template-columns: 1fr; } }
 
-/* the old 接下來 card belongs to the checklist and map only */
-#application-path #hub[data-tab="today"] > .next-sidebar, #application-path #hub[data-tab="plans"] > .next-sidebar, #application-path #hub[data-tab="schedule"] > .next-sidebar,
-#application-path #hub[data-tab="plans"] > .preparation-boundary, #application-path #hub[data-tab="schedule"] > .preparation-boundary { display: none; }
-#application-path .sched-context { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 18px 0 0; padding: 14px 18px; border-radius: 16px; background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; }
+#application-path .sched-context { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 18px 0 0; padding: 14px 18px; border-radius: 16px; background: var(--uw-amber-soft, #fff4d6); color: var(--uw-amber-ink, #5e3d00); }
 #application-path .sched-context p { margin: 0; }
 
 /* Primary navigation keeps its names when the rail is collapsed: icon above a short label (icon-only nav is hard to read). */
@@ -245,13 +204,13 @@
 /* A step: the title, its state only when there is one, then the work. */
 #application-path .level-heading .level-progress { margin: 0 0 0 auto; padding: 0; flex: none; }
 #application-path .level-heading .level-progress[hidden] { display: none; }
-#application-path .level-progress strong { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 14px; font-weight: 500; white-space: nowrap; background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; }
+#application-path .level-progress strong { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 14px; font-weight: 500; white-space: nowrap; background: var(--uw-amber-soft, #fff4d6); color: var(--uw-amber-ink, #5e3d00); }
 #application-path .level-progress[data-s="done"] strong { background: #e6f3ec; color: #14573a; }
 
 /* 申請資格: every rule and its result in one list, one form for what is missing. */
 #application-path .check-list { list-style: none; margin: 0 0 20px; padding: 0; border-top: 1px solid var(--uw-line, #d6dae1); }
 #application-path .check-list li { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 14px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--uw-line, #d6dae1); }
-#application-path .check-list b { justify-self: start; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 500; white-space: nowrap; background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; }
+#application-path .check-list b { justify-self: start; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 500; white-space: nowrap; background: var(--uw-amber-soft, #fff4d6); color: var(--uw-amber-ink, #5e3d00); }
 #application-path .check-list .pass b { background: #e6f3ec; color: #14573a; }
 #application-path .check-list .fail b { background: #f8e9e7; color: #7e2b29; }
 #application-path .check-list strong { display: block; font-size: 16px; font-weight: 700; }
@@ -268,3 +227,13 @@
 
 /* 我的待辦 with nothing in it: no counters, filters or exports for an empty list. */
 #application-path #exchange-content[data-empty="true"] :is(.ex-counts, .ex-filters) { display: none; }
+
+/* Dark mode: preserve dark focus card, readable status pills, and high-contrast primary actions */
+html[data-theme="dark"] #application-path .today-focus { background: #1b2432; border: 1px solid var(--uw-line, #2f3846); }
+html[data-theme="dark"] #application-path .today-focus .today-primary { background: var(--uw-accent, #8bbcff); color: var(--uw-on-accent, #11151c); }
+html[data-theme="dark"] #application-path .today-focus .today-primary:hover { background: var(--uw-accent-hover, #b4d4ff); }
+html[data-theme="dark"] #application-path .square-icon { color: var(--uw-on-accent, #11151c); }
+html[data-theme="dark"] #application-path .check-status b { background: rgb(0 0 0 / .28); color: inherit; }
+html[data-theme="dark"] #application-path :is(.check-status.pass, .level-progress[data-s="done"] strong, .check-list .pass b) { background: #143529; color: #8ce6be; }
+html[data-theme="dark"] #application-path :is(.check-status.fail, .check-list .fail b, .today-pill.soon, .today-pill.late) { background: #3b1d20; color: #ff9da0; }
+html[data-theme="dark"] #application-path #toast:not(.error) { background: #1e293b; color: #f8fafc; border: 1px solid var(--uw-line-strong, #5d6879); }

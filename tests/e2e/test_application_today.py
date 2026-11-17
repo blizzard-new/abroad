@@ -84,7 +84,9 @@ def test_rule_checks_are_one_step_with_one_form(page, live_server):
     expect(rows.filter(has_text='申請資格')).to_have_count(1)
     for check in checks:
         expect(rows.get_by_text(check['title'], exact=True)).to_have_count(0)
-    counted = int(page.locator('#overall-caption').inner_text().split('/')[1].replace('項', '').strip())
+    caption = page.locator('#overall-caption')
+    expect(caption).to_have_text(re.compile(r'^\d+ / \d+ 項$'))
+    counted = int((caption.text_content() or '').split('/')[1].replace('項', '').strip())
     rows.filter(has_text='申請資格').click()
     items = page.locator('#level-view .check-list li')
     expect(items).to_have_count(len(checks))

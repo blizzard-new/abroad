@@ -82,7 +82,8 @@ One page answers "what do I do now, and what is left": **總覽** holds the sing
 
 - One number for progress, in the plan header. Do not repeat it in cards, tabs or summaries.
 - A step asks for one action. No second confirmation for what the button already says, and no screen between finishing a step and returning to 總覽 (the toast carries "撤銷").
-- The rule checks are one step, **申請資格**: every rule and its result in one list, one form for the missing data, one confirmation. A rule the system judged as met needs no click. A rule that still lacks the student's data keeps the step open; it never counts as done.
+- The rule checks are one step, **申請資格**: every rule and its result in one list, one form for the missing data, one confirmation (with undo). A rule the system judged as met needs no click. A rule that still lacks the student's data (for example, an unattempted language test) keeps the step open and never counts as done, while saving the already-known fields lets "現在做這件事" move on to the next preparation step without blocking progress.
+- Personal to-dos belong to **時程** and **我的待辦**; **總覽** stays focused on the plan checklist without a quick-add box.
 - Plan settings (母校、學期、目標) are shown in the plan selector, not as checklist rows.
 - Notes are optional. Marking a step done is what completes it.
 - Explanatory helper text is removed rather than shrunk and greyed. What stays is text the student needs to act (errors, warnings, official-source links) and one line stating that personal progress is not the school's decision.

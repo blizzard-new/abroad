@@ -57,7 +57,7 @@ def test_a_gate_missing_data_asks_for_it_and_the_confirm_button_waits(page, live
     expect(page.locator('#save-note')).not_to_have_text('尚未儲存')
     # Typing answers the earlier complaint: it does not stay on screen.
     expect(page.locator('#gate-error')).to_be_hidden()
-    SHOTS.mkdir(exist_ok=True)
+    SHOTS.mkdir(parents=True, exist_ok=True)
     page.locator('#level-view').scroll_into_view_if_needed()
     page.screenshot(path=str(SHOTS / f'gate-missing-{size[0]}.png'))
     page.locator('#gate-department').press('Enter')

@@ -142,15 +142,24 @@ const rawLevels=()=>stages().flatMap(s=>s.levels.map(l=>({...l,stageTitle:s.titl
 const checkOk=l=>l.check_status==='pass'||l.progress.value===l.progress.total;
 // The rule checks are one step for the student (申請資格): one screen, one form, one confirmation.
 function collapse(list){
-  const checks=list.filter(l=>l.check_status);if(!checks.length)return list;
+  const checks=list.filter(l=>l.check_status);if(!checks.length)return list.map((l,i)=>({...l,number:i+1}));
   const first=checks[0],fields=[...new Set(checks.flatMap(c=>c.input_fields||[]))];
   const group={id:'checks',title:'申請資格',kind:'checks',icon:'badge-check',prompt:'',warning:'',stageTitle:first.stageTitle,stage:first.stage,stage_key:first.stage_key,
     children:checks,source_urls:[...new Set(checks.flatMap(c=>c.source_urls||[]))],dependency_ids:[],blocked_by:[],counted:true,external:false,
     progress:{value:checks.filter(checkOk).length,total:checks.length},
     input_fields:fields,input_values:Object.assign({},...checks.map(c=>c.input_values||{})),missing_inputs:[...new Set(checks.flatMap(c=>c.missing_inputs||[]))]};
-  return list.flatMap(l=>l===first?[group]:l.check_status?[]:[l]);
+  return list.flatMap(l=>l===first?[group]:l.check_status?[]:[l]).map((l,i)=>({...l,number:i+1}));
 }
 const levels=()=>collapse(rawLevels());
+function mapStages(){
+  const all=levels(),byId=new Map(all.map(l=>[l.id,l]));
+  let placed=false;
+  return stages().map(s=>({...s,levels:s.levels.flatMap(l=>{
+    if(!l.check_status)return [byId.get(l.id)||l];
+    if(placed)return [];
+    placed=true;return byId.get('checks')?[byId.get('checks')]:[];
+  })})).filter(s=>s.levels.length>0);
+}
 const find=id=>(id==='checks'?levels():rawLevels()).find(l=>l.id===id), record=id=>plan().steps[id]||{};
 const progress=l=>l.progress, hasContent=l=>Boolean(record(l.id).value||record(l.id).version_id);
 const isDone=l=>(l.counted!==false||setup(l))&&!l.external&&l.progress.value===l.progress.total;
@@ -174,7 +183,7 @@ function next(){
 }
 // "Synced" is the normal state and says nothing; only a state the student should know about is written out.
 function setSync(text){const el=$('#sync-message');if(!el)return;el.textContent=text;const box=el.closest('.ap-status');if(box)box.hidden=text==='已同步至帳號'||text==='已連接帳號';}
-function nextReason(l){return !l?'校方結果請以正式通知為準。':drafts.has(draftKey(l.id))?'接著處理尚未儲存的內容。':confirmedDeadline(l)&&Date.parse(l.official_deadline_at)>=Date.now()&&Date.parse(l.official_deadline_at)-Date.now()<=14*86400000?'官方期限將近，先處理這項。':status(l)==='started'?'接著完成上次的草稿。':'下一項可開始的準備。';}
+function nextReason(l){return !l?'校方結果請以正式通知為準。':drafts.has(draftKey(l.id))?'接著處理尚未儲存的內容。':confirmedDeadline(l)&&Date.parse(l.official_deadline_at)>=Date.now()&&Date.parse(l.official_deadline_at)-Date.now()<=14*86400000?'官方期限將近，先處理這項。':l.kind!=='checks'&&status(l)==='started'?'接著完成上次的草稿。':'下一項可開始的準備。';}
 
 const pct=p=>p.total?Math.round(p.value/p.total*100):0;
 function totals(list=levels()){
@@ -232,7 +241,7 @@ function init(){
   $('#plan-form').onsubmit=create;
   if($('#create-round'))$('#create-round').oninput=()=>{ $('#create-round').dataset.userEdited='1'; };
   $('#plan-select').onchange=e=>{location.hash='#my-application?'+new URLSearchParams({plan:e.target.value,view:'today'});};
-  $('#stage-select').onchange=e=>scrollMap(stages()[Number(e.target.value)]?.levels[0]?.id);
+  $('#stage-select').onchange=e=>scrollMap(mapStages()[Number(e.target.value)]?.levels[0]?.id);
   $('#go-origin').onclick=()=>{scrollMap(null);$('#stage-select').value='0';picker.sync();};
   $('#go-current').onclick=()=>{const n=next();if(n)location.hash=href('level',n.id,'map');};
   root.addEventListener('click',e=>{
@@ -314,18 +323,20 @@ function render(){
   const c=plan().context;
   $('#plan-select').innerHTML=listing.items.map(p=>'<option value="'+p.id+'" '+(p.id===plan().id?'selected':'')+'>'+esc(shortSchool(p.context.target_school)+' · '+formatContextTerm(p.context)+(p.archived?'（已封存）':''))+'</option>').join('');
   $('#plan-meta').textContent=c.home_school+' · '+c.academic_year+' 學年度 · '+planRoundLabel(c);
-  const plansTab=$('[data-tab="plans"]');if(plansTab)plansTab.hidden=tab!=='plans'&&tab!=='map'&&listing.items.filter(p=>!p.archived).length<2;
+  const hasMultiPlans=listing.items.filter(p=>!p.archived).length>=2;
+  const plansTab=$('[data-tab="plans"]');if(plansTab)plansTab.hidden=tab!=='plans'&&!hasMultiPlans;
   const t=totals();$('#overall-caption').textContent=t.done+' / '+t.count+' 項';$('#overall-meter').innerHTML=meter(t,'整體個人準備');
-  const curFrom=FROM_LABELS[tab]?tab:'';
   const overallLink=$('#overall-progress-link');if(overallLink)overallLink.href=href('today');
-  const activeTab=tab==='map'?'plans':tab;
-  $$('[data-tab]').forEach(a=>{a.href=href(a.dataset.tab);a.classList.toggle('active',a.dataset.tab===activeTab);if(a.dataset.tab===activeTab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   const rawFrom=route().get('from')||'',validFrom=FROM_LABELS[rawFrom]&&rawFrom!==tab?rawFrom:'';
+  const mapHome=validFrom||(hasMultiPlans?'plans':'today');
+  const activeTab=tab==='map'?(mapHome==='plans'&&!plansTab?.hidden?'plans':mapHome==='schedule'||mapHome==='workspace'?mapHome:'today'):tab;
+  $$('[data-tab]').forEach(a=>{a.href=href(a.dataset.tab);a.classList.toggle('active',a.dataset.tab===activeTab);if(a.dataset.tab===activeTab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   const back=$('#subview-back');
-  if(tab==='map'){const bt=validFrom||'plans';back.hidden=false;back.href=href(bt);back.innerHTML=icon('arrow-left')+'回到'+FROM_LABELS[bt];}
+  if(tab==='map'){back.hidden=false;back.href=href(mapHome);back.innerHTML=icon('arrow-left')+'回到'+FROM_LABELS[mapHome];}
   else if(validFrom&&['workspace','schedule'].includes(tab)){back.hidden=false;back.href=href(validFrom);back.innerHTML=icon('arrow-left')+'回到'+FROM_LABELS[validFrom];}
   else{back.hidden=true;}
-  const n=next();$('#stage-select').innerHTML=stages().map(s=>'<option value="'+s.index+'" '+(n?.stage===s.index?'selected':'')+'>'+String(s.index+1).padStart(2,'0')+' · '+esc(s.title)+'</option>').join('');picker.sync();
+  const n=next(),ms=mapStages(),curMapIdx=ms.findIndex(s=>s.levels.some(l=>l.id===n?.id));
+  $('#stage-select').innerHTML=ms.map((s,idx)=>'<option value="'+idx+'" '+(idx===(curMapIdx>=0?curMapIdx:0)?'selected':'')+'>'+String(idx+1).padStart(2,'0')+' · '+esc(s.title)+'</option>').join('');picker.sync();
   $('#hub').dataset.tab=tab;$('#today-view').hidden=tab!=='today';$('#plans-view').hidden=tab!=='plans';$('#schedule-view').hidden=tab!=='schedule';$('#map-tools').hidden=tab!=='map';$('#map-view').hidden=tab!=='map';$('#progress-view').hidden=tab!=='today';
   $('#exchange-workspace-view').hidden=tab!=='workspace';
   if(tab==='level'){if(!dirty||activeId!==id)renderLevel(id);}
@@ -492,21 +503,35 @@ async function confirmChecks(){
   const g=find('checks');if(!g||saving||!view||plan().archived)return false;
   if(gateBlocked(g)){error('請先填好上方資料並儲存，系統才能判斷。');return false;}
   const run=epoch,captured=key(),id=plan().id,buttons=()=>$$('#level-form button');
+  const targets=g.children.filter(c=>!checkOk(c)).map(c=>[c.id,{...record(c.id)}]);
   saving=true;buttons().forEach(b=>b.disabled=true);
   try{
-    for(const c of g.children.filter(c=>!checkOk(c))){
-      const saved=await fetchJson(pathUrl()+'/steps/'+encodeURIComponent(c.id)+query(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({revision:view.revision,step:{value:'',confirmed:true,version_id:null,applicable:null}})});
+    for(const [cid] of targets){
+      const saved=await fetchJson(pathUrl()+'/steps/'+encodeURIComponent(cid)+query(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({revision:view.revision,step:{value:'',confirmed:true,version_id:null,applicable:null}})});
       if(run!==epoch||captured!==key()||view?.plan.id!==id)return false;
       view=saved;listing.revision=saved.revision;
     }
     const t=totals(),from=route().get('from')||'';
-    toast('已完成「申請資格」。準備進度 '+t.done+' / '+t.count);
+    toast('已完成「申請資格」。準備進度 '+t.done+' / '+t.count,false,targets.length?{label:'撤銷',run:()=>undoChecks(targets)}:null);
     activeId=null;location.hash=href(FROM_LABELS[from]?from:'today');
     return true;
   }catch(e){
     if(run===epoch&&captured===key()){buttons().forEach(b=>b.disabled=false);error(e.status===409?'其他分頁已更新這份計畫，請重新載入後再試。':e.message);}
     return false;
   }finally{if(run===epoch)saving=false;}
+}
+async function undoChecks(targets){
+  if(!view||saving||!targets?.length)return;
+  saving=true;
+  try{
+    for(const [cid,before] of targets){
+      const prior={value:before.value||'',confirmed:false,version_id:before.version_id||null,applicable:before.applicable??null};
+      const saved=await fetchJson(pathUrl()+'/steps/'+encodeURIComponent(cid)+query(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({revision:view.revision,step:prior})});
+      view=saved;listing.revision=saved.revision;
+    }
+    dirty=false;saving=false;render();toast('已撤銷，回到完成前的狀態。');
+  }catch(e){toast(e.message,true);}
+  finally{saving=false;}
 }
 function wireGate(){
   const box=$('#gate-inputs');if(!box)return;
@@ -548,11 +573,11 @@ function renderLevel(id){
   mapPosition=$('#map-scroll').scrollTop;mapPositionPlan=plan().id;
   const dependencies=missing(l),draftable=hasDraftInput(l),isNoticePanel=l.cgu_level_type==='oia_notice'||l.cgu_level_type==='partner_notice';
   const rawFrom=route().get('from')||'',backTab=FROM_LABELS[rawFrom]?rawFrom:'today';
-  const noteText=gateBlocked(l)&&l.kind!=='checks'?'補齊上方資料後，才能確認這一關':dirty?'已恢復未儲存內容':'';
+  const noteText=gateBlocked(l)?(l.kind==='checks'?'先在上方補齊資料並按「儲存並判斷」，再完成資格確認':'補齊上方資料後，才能確認這一關'):dirty?'已恢復未儲存內容':'';
   const supportInner=(l.guide_summary||l.kind==='checks'||(!urls(l).length&&l.kind!=='confirm')?'':'<details class="source-details"><summary>官方來源'+icon('chevron-down')+'</summary>'+(l.kind==='confirm'?'<p>'+esc(l.prompt)+'</p>':'')+urls(l).map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(i?'相關官方文件':'官方來源')+icon('arrow-up-right')+'</a>').join('')+'</details>')+(l.official_deadline_at?'<p class="ap-deadline">'+(confirmedDeadline(l)?'官方期限：':'參考日期（待核對）：')+esc(new Date(l.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))+'（臺灣時間）'+(new Date(l.official_deadline_at)<new Date()?'（已過期）':'')+'</p>':'')+(l.action_url&&/^https?:\/\//i.test(l.action_url)?'<a class="outline-button" href="'+esc(l.action_url)+'" target="_blank" rel="noopener noreferrer">開啟官方表格'+icon('external-link')+'</a>':'')+(l.kind==='submission'&&urls(l).length?'<a class="outline-button" href="'+esc(urls(l)[0])+'" target="_blank" rel="noopener noreferrer">校方公告與入口'+icon('external-link')+'</a>':'');
   const progressHtml=isNoticePanel?'<div class="level-progress"><div><span>通知狀態</span><strong>'+esc(r.value||(l.cgu_level_type==='oia_notice'?'待國際處更新':'待合作校通知'))+'</strong></div></div>':'<div class="level-progress" data-s="'+(isDone(l)?'done':'started')+'"'+(isDone(l)||hasContent(l)||(l.kind==='checks'&&l.progress.value)?'':' hidden')+'><strong>'+(isDone(l)?'已完成':l.kind==='checks'?l.progress.value+' / '+l.progress.total+' 項符合':'進行中')+'</strong></div>';
   $('#level-view').innerHTML='<div class="level-topline"><a class="back-link" href="'+href(backTab)+'">'+icon('arrow-left')+'回到'+FROM_LABELS[backTab]+'</a><span class="level-plan-name">'+esc(shortSchool(c.target_school)+' · '+formatContextTerm(c))+'</span></div><div class="level-layout"><div class="level-card"><div class="level-heading"><span class="square-icon">'+icon(l.icon)+'</span><h2 id="level-title" tabindex="-1">'+esc(l.title)+'</h2>'+progressHtml+'</div>'+
-    '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'||l.kind==='checks'||!l.prompt?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning&&l.warning!==l.prompt&&!(l.check_status&&CHECK_STANDARD.has(l.warning))?'<p class="ap-warning">'+esc(l.warning)+'</p>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+esc(noteText)+'</span>'+(draftable?'<button type="button" id="save-draft" class="outline-button">儲存草稿</button>':'')+(l.kind==='checks'&&gateBlocked(l)?'':l.kind==='checks'&&isDone(l)?'<a class="primary-button" href="'+href(backTab)+'">回到'+FROM_LABELS[backTab]+icon('arrow-right')+'</a>':'<button type="submit" class="primary-button" '+(plan().archived||gateBlocked(l)?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button>')+'</footer></form>'+'</div><aside class="level-support">'+(supportInner?'<section class="support-card">'+supportInner+'</section>':'')+'</aside></div>';
+    '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'||l.kind==='checks'||!l.prompt?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning&&l.warning!==l.prompt&&!(l.check_status&&CHECK_STANDARD.has(l.warning))?'<p class="ap-warning">'+esc(l.warning)+'</p>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+esc(noteText)+'</span>'+(draftable?'<button type="button" id="save-draft" class="outline-button">儲存草稿</button>':'')+(l.kind==='checks'&&isDone(l)?'<a class="primary-button" href="'+href(backTab)+'">回到'+FROM_LABELS[backTab]+icon('arrow-right')+'</a>':'<button type="submit" class="primary-button" '+(plan().archived||gateBlocked(l)?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button>')+'</footer></form>'+'</div><aside class="level-support">'+(supportInner?'<section class="support-card">'+supportInner+'</section>':'')+'</aside></div>';
   {
     $('#level-form').oninput=edit;
     $('#level-form').onsubmit=e=>{e.preventDefault();save(true);};
@@ -601,13 +626,13 @@ async function selectTarget(schoolName){
   return true;
 }
 function toolsFor(l){
-  const isCgu=Boolean(window.cguDemoStorageIsolated)||activeHomeSchool()==='長庚大學';
-  if(isCgu){
+  const isCguDemo=Boolean(window.cguDemoStorageIsolated)||Boolean(l.cgu_level_type)||l.id.startsWith('cgu-');
+  if(isCguDemo){
     if(l.id==='home')return {links:[],showSchedule:false};
     if(l.id==='term')return {links:[],showSchedule:true};
     if(l.id==='target'||l.id==='cgu-shortlist')return {links:[['advisor','sliders-horizontal','條件與推薦'],['favorites','heart','收藏與比較']],showSchedule:false};
     if(l.id==='cgu-read-guide')return {links:[['#scholarships','award','查看出國補助'],['#ask-oia','message-circle-question','問國際處']],showSchedule:true};
-    if(l.id.startsWith('check-'))return {links:[['advisor','sliders-horizontal','修改我的條件']],showSchedule:false};
+    if(l.id==='checks'||l.id.startsWith('check-'))return {links:[['advisor','sliders-horizontal','修改我的條件']],showSchedule:false};
     if(l.id==='cgu-doc-parent_consent')return {links:[['application-form=guardian-consent','file-pen-line','家長同意書整理與列印']],showSchedule:false};
     if(l.id==='cgu-doc-study_plan')return {links:[['application-form=study-plan','file-pen-line','分段欄位輔助產出列印版']],showSchedule:false};
     if(['cgu-doc-online_form','cgu-doc-language_proof','cgu-doc-transcript','cgu-internal-result','cgu-interview'].includes(l.id))return {links:[['#ask-oia','message-circle-question','問國際處']],showSchedule:false};
@@ -618,7 +643,7 @@ function toolsFor(l){
   }
   if(['home','term','target'].includes(l.id))return {links:[['advisor','sliders-horizontal','條件與推薦'],['favorites','heart','收藏與比較'],['eligibility','badge-check','資格與志願']],showSchedule:true};
   if(l.id.includes('shortlist')||(l.kind==='note'&&/選校|志願/.test(l.title)))return {links:[['advisor','sliders-horizontal','條件與推薦'],['favorites','heart','收藏與比較'],['eligibility','badge-check','核對資格與志願']],showSchedule:true};
-  if(l.id.startsWith('check-')||(l.kind==='note'&&/資格|語組/.test(l.title)))return {links:[['eligibility','badge-check','核對資格與志願'],['advisor','sliders-horizontal','修改我的條件']],showSchedule:true};
+  if(l.id==='checks'||l.id.startsWith('check-')||(l.kind==='note'&&/資格|語組/.test(l.title)))return {links:[['eligibility','badge-check','核對資格與志願'],['advisor','sliders-horizontal','修改我的條件']],showSchedule:true};
   const templates=(l.templates||[]).map(id=>['application-form='+encodeURIComponent(id),'file-pen-line',applicationTemplateById(id)?.name||'填寫相關表格']);
   return {links:[...templates,['application-center','files','填表與列印'],['document-check','scan-line','檢查文件'],['documents','folder-lock','文件庫']],showSchedule:true};
 }
@@ -743,15 +768,15 @@ async function create(e){
 }
 // The approved map renderer is shared in appearance, never in preview storage.
 function renderMap(){
-  const all=levels(),n=next();
-  $('#path-stages').innerHTML=stages().map(s=>{
+  const n=next();
+  $('#path-stages').innerHTML=mapStages().map((s,idx)=>{
     const t=totals(s.levels),h=s.levels.length*152+123;
-    return '<section class="path-stage" id="stage-'+s.index+'" aria-label="第 '+(s.index+1)+' 階段 '+esc(s.title)+'" style="height:'+h+'px"><svg class="path-svg" aria-hidden="true"></svg><div class="stage-divider"><svg class="stage-wave" viewBox="0 0 640 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 C95 -14 170 42 280 18 S470 -5 640 22 L640 80 C525 115 445 65 330 85 S110 110 0 80Z" fill="#c8eaf3"/><path d="M0 36 C100 5 185 55 290 32 S480 15 640 34 L640 80 C525 115 445 65 330 85 S110 110 0 80Z" fill="#e0f3f8"/></svg><span>'+String(s.index+1).padStart(2,'0')+'</span><h3>'+esc(s.title)+'</h3><small>'+(t.count?t.done+' / '+t.count+' 項':s.levels.every(l=>l.external)?s.levels.filter(l=>hasContent(l)).length+' / '+s.levels.length+' 筆通知':'設定與選用')+'</small></div>'+s.levels.map(l=>{
-      const level=all.find(x=>x.id===l.id),i=s.levels.indexOf(l),st=status(l),p=progress(l),isCurrent=n?.id===l.id,locked=missing(l).length>0;
+    return '<section class="path-stage" id="stage-'+idx+'" aria-label="第 '+(idx+1)+' 階段 '+esc(s.title)+'" style="height:'+h+'px"><svg class="path-svg" aria-hidden="true"></svg><div class="stage-divider"><svg class="stage-wave" viewBox="0 0 640 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 C95 -14 170 42 280 18 S470 -5 640 22 L640 80 C525 115 445 65 330 85 S110 110 0 80Z" fill="#c8eaf3"/><path d="M0 36 C100 5 185 55 290 32 S480 15 640 34 L640 80 C525 115 445 65 330 85 S110 110 0 80Z" fill="#e0f3f8"/></svg><span>'+String(idx+1).padStart(2,'0')+'</span><h3>'+esc(s.title)+'</h3><small>'+(t.count?t.done+' / '+t.count+' 項':s.levels.every(l=>l.external)?s.levels.filter(l=>hasContent(l)).length+' / '+s.levels.length+' 筆通知':'設定與選用')+'</small></div>'+s.levels.map((l,i)=>{
+      const st=status(l),p=progress(l),isCurrent=n?.id===l.id,locked=missing(l).length>0;
       // Reverse lateral direction at every step, continuing across chapter boundaries.
-      const x=[.24,.72,.38,.77,.28,.66][(level.number-1)%6]*100;
+      const x=[.24,.72,.38,.77,.28,.66][(l.number-1)%6]*100;
       const label=l.title+'，'+(locked?'可查看，完成前需先備齊內容':isCurrent?'建議下一步':st==='done'?'已完成':l.external?'外部通知':p.value?'進行中':'可提前辦理');
-      return '<div class="level-stop" data-stop="'+l.id+'" style="left:'+x+'%;bottom:'+(122+i*152)+'px"><a class="node '+st+' '+(isCurrent?'current ':'')+(locked?'locked':'')+'" href="#level/'+l.id+'" aria-label="'+esc(label)+'" '+(isCurrent?'aria-current="step"':'')+'>'+(isCurrent?'<span class="current-flag">繼續</span>':'')+icon(st==='done'?'check':locked?'lock-keyhole':l.icon)+'<span class="node-order" aria-hidden="true">'+level.number+'</span></a><span class="node-title">'+esc(l.title)+'</span><div class="node-progress">'+meter(p,l.title+(l.external?'紀錄進度':'進度'),{small:true,gold:st==='done',animate:isCurrent&&p.value>0})+'</div><span class="node-caption">'+(l.external?(l.id.startsWith('cgu-')?(p.value?'已同步狀態':'待通知'):(p.value?'自行記錄':'等待通知')):st==='skipped'?'不適用':l.conditional&&l.counted===false?'待確認適用性':p.value+' / '+p.total+' 步')+'</span></div>';
+      return '<div class="level-stop" data-stop="'+l.id+'" style="left:'+x+'%;bottom:'+(122+i*152)+'px"><a class="node '+st+' '+(isCurrent?'current ':'')+(locked?'locked':'')+'" href="#level/'+l.id+'" aria-label="'+esc(label)+'" '+(isCurrent?'aria-current="step"':'')+'>'+(isCurrent?'<span class="current-flag">繼續</span>':'')+icon(st==='done'?'check':locked?'lock-keyhole':l.icon)+'<span class="node-order" aria-hidden="true">'+l.number+'</span></a><span class="node-title">'+esc(l.title)+'</span><div class="node-progress">'+meter(p,l.title+(l.external?'紀錄進度':'進度'),{small:true,gold:st==='done',animate:isCurrent&&p.value>0})+'</div><span class="node-caption">'+(l.external?(l.id.startsWith('cgu-')?(p.value?'已同步狀態':'待通知'):(p.value?'自行記錄':'等待通知')):st==='skipped'?'不適用':l.conditional&&l.counted===false?'待確認適用性':p.value+' / '+p.total+' 步')+'</span></div>';
     }).join('')+'</section>';
   }).join('');
   icons();requestAnimationFrame(drawPaths);
@@ -857,7 +882,7 @@ async function renderPlans(){
   const entries=await Promise.all(active.map(async p=>({p,data:p.id===plan().id?view:await fetchJson('/account/application-paths/'+encodeURIComponent(p.id)+query()).catch(()=>null)})));
   if(run!==plansRun||route().get('view')!=='plans')return;
   const ok=entries.filter(x=>x.data).map(x=>({...x,s:statsFor(x.data)}));
-  const card=({p,s})=>'<article class="plan-card'+(p.id===plan().id?' current':'')+'"><h3>'+esc(planName(p))+'</h3><p class="today-hint">'+esc(planTerm(p))+' · '+esc(p.context.academic_year)+' 學年度</p><dl class="plan-nums"><div><dt>準備進度</dt><dd>'+s.done+' / '+s.total+'</dd></div><div><dt>下個期限</dt><dd>'+esc(deadlineText(s.deadline))+'</dd></div></dl><p class="today-hint">目前階段：'+esc(s.stage||'已完成已知準備事項')+'</p><a class="today-primary dark" href="'+planLink('today',p.id)+'">'+(p.id===plan().id?'回到今天':'繼續')+icon('arrow-right')+'</a></article>';
+  const card=({p,s})=>'<article class="plan-card'+(p.id===plan().id?' current':'')+'"><h3>'+esc(planName(p))+'</h3><p class="today-hint">'+esc(planTerm(p))+' · '+esc(p.context.academic_year)+' 學年度</p><dl class="plan-nums"><div><dt>準備進度</dt><dd>'+s.done+' / '+s.total+'</dd></div><div><dt>下個期限</dt><dd>'+esc(deadlineText(s.deadline))+'</dd></div></dl><p class="today-hint">目前階段：'+esc(s.stage||'已完成已知準備事項')+'</p><a class="today-primary dark" href="'+planLink('today',p.id)+'">'+(p.id===plan().id?'回到總覽':'繼續')+icon('arrow-right')+'</a></article>';
   const failed=entries.filter(x=>!x.data).map(({p})=>'<article class="plan-card"><h3>'+esc(planName(p))+'</h3><p class="today-hint">暫時讀不到這份計畫，請稍後重新載入。</p></article>');
   let compare='';
   if(ok.length>1){
@@ -870,7 +895,7 @@ async function renderPlans(){
     if(shared.length)compare+='<p class="plan-shared">'+icon('info')+'<span><b>每份計畫都需要 '+shared.length+' 份相同名稱的文件：</b>'+esc(shared.slice(0,4).join('、'))+(shared.length>4?' 等':'')+'。各計畫分開記錄，備妥後請在每份計畫都標記。</span></p>';
   }
   host.innerHTML='<div class="plans"><div class="plan-cards">'+ok.map(card).join('')+failed.join('')+'</div>'+compare+
-    '<div class="plan-links"><a class="today-link" href="'+href('progress','','plans')+'">'+icon('list-checks')+'完整準備清單</a><a class="today-link" href="'+href('map','','plans')+'">'+icon('route')+'申請路徑地圖</a><button type="button" class="today-text" data-path-new>'+icon('plus')+'新增計畫</button></div>'+
+    '<div class="plan-links"><a class="today-link" href="'+href('today')+'">'+icon('list-checks')+'開啟總覽</a><a class="today-link" href="'+href('map','','plans')+'">'+icon('route')+'申請路徑地圖</a><button type="button" class="today-text" data-path-new>'+icon('plus')+'新增計畫</button></div>'+
     (archivedPlans.length?'<details class="plan-archived"><summary>已封存的計畫（'+archivedPlans.length+'）</summary><ul>'+archivedPlans.map(p=>'<li><span>'+esc(planName(p))+' · '+esc(planTerm(p))+'</span><button type="button" class="today-text" data-restore-plan="'+esc(p.id)+'">復原</button></li>').join('')+'</ul></details>':'')+'</div>';
   icons();
 }
@@ -971,7 +996,7 @@ function workbenchRows(){
   if(!view||plan().archived)return [];
   const school=plan().context.target_school;
   const all=levels().filter(l=>required(l)&&status(l)!=='skipped'),open=all.filter(l=>!isDone(l));
-  const started=open.filter(l=>status(l)==='started'||drafts.has(draftKey(l.id)));
+  const started=open.filter(l=>(l.kind!=='checks'&&status(l)==='started')||drafts.has(draftKey(l.id)));
   const ready=open.filter(l=>!started.includes(l)&&!missing(l).length).slice(0,12);
   const dateOf=l=>confirmedDeadline(l)?new Date(l.official_deadline_at).toLocaleDateString('sv-SE',{timeZone:'Asia/Taipei'}):'';
   const order=new Map(levels().map((l,i)=>[l.id,i]));
