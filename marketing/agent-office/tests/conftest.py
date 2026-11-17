@@ -36,3 +36,23 @@ def pytest_sessionfinish(session, exitstatus):
     for thread in threading.enumerate():
         if thread is not threading.main_thread() and thread.daemon:
             thread.join(max(0.0, deadline - time.monotonic()))
+
+
+def pytest_configure(config):
+    config.addinivalue_line("markers", "product_defaults: run with the office's real defaults instead of the pinned old ones")
+
+
+@pytest.fixture(autouse=True)
+def legacy_product_defaults(request, monkeypatch):
+    """The office's own defaults changed (posts every second day, no Claude, Codex and Antigravity on set models); most
+    tests are about something else and keep building their settings on the old ones. The tests that are about the new defaults
+    are marked `product_defaults` and see the real ones."""
+    if request.node.get_closest_marker("product_defaults"):
+        return
+    from office import config
+
+    monkeypatch.setitem(config.PRODUCT_DEFAULTS, "post_every_days", 1)
+    monkeypatch.setitem(config.PRODUCT_DEFAULTS, "brains_allowed", ())
+    monkeypatch.setitem(config.PRODUCT_DEFAULTS, "codex_model", "")
+    monkeypatch.setitem(config.PRODUCT_DEFAULTS, "codex_effort", "")
+    monkeypatch.setitem(config.PRODUCT_DEFAULTS, "antigravity_model", "")
