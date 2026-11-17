@@ -13,6 +13,18 @@ PROJECT_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
+# What this office runs with when .env does not say otherwise. They live here, not only in .env.example, so that updating the
+# code and restarting is all it takes: an existing .env that never mentioned them gets them too. An .env line (or an
+# environment variable) still wins; OFFICE_BRAINS_ALLOWED= left empty switches the tool limit off.
+PRODUCT_DEFAULTS = {
+    "post_every_days": 2,                         # posts every second day
+    "brains_allowed": ("codex", "antigravity"),   # no Claude
+    "codex_model": "gpt-6.1-sol",
+    "codex_effort": "high",
+    "antigravity_model": "Gemini 4 Argon (High)",
+}
+
+
 def _load_dotenv(path: Path) -> dict[str, str]:
     if not path.is_file():
         return {}
@@ -188,16 +200,17 @@ class Settings:
             claude_code_command=get("OFFICE_CLAUDE_CODE_COMMAND") or "claude",
             claude_code_model=get("OFFICE_CLAUDE_CODE_MODEL") or "",
             codex_command=get("OFFICE_CODEX_COMMAND") or "codex",
-            codex_model=get("OFFICE_CODEX_MODEL") or "",
-            codex_effort=_word(get("OFFICE_CODEX_EFFORT")),
+            codex_model=get("OFFICE_CODEX_MODEL") or PRODUCT_DEFAULTS["codex_model"],
+            codex_effort=_word(get("OFFICE_CODEX_EFFORT")) or PRODUCT_DEFAULTS["codex_effort"],
             antigravity_command=get("OFFICE_ANTIGRAVITY_COMMAND") or "agy -p",
-            antigravity_model=(get("OFFICE_ANTIGRAVITY_MODEL") or "").strip(),
-            brains_allowed=tuple(dict.fromkeys(b.strip().lower() for b in (get("OFFICE_BRAINS_ALLOWED") or "").split(",") if b.strip())),
+            antigravity_model=(get("OFFICE_ANTIGRAVITY_MODEL") or "").strip() or PRODUCT_DEFAULTS["antigravity_model"],
+            brains_allowed=(PRODUCT_DEFAULTS["brains_allowed"] if get("OFFICE_BRAINS_ALLOWED") is None else
+                            tuple(dict.fromkeys(b.strip().lower() for b in get("OFFICE_BRAINS_ALLOWED").split(",") if b.strip()))),
             brain_timeout=int(get("OFFICE_BRAIN_TIMEOUT") or 600),
             daily_at=_time(get("OFFICE_DAILY_AT") or "07:30"),
             threads_slots=tuple(_time(t) for t in (get("OFFICE_THREADS_SLOTS") or "12:30,21:00").split(",") if t.strip()),
             threads_albums=_count(get("OFFICE_THREADS_ALBUMS"), 1),
-            post_every_days=min(30, max(1, _count(get("OFFICE_POST_EVERY_DAYS"), 1))),
+            post_every_days=min(30, max(1, _count(get("OFFICE_POST_EVERY_DAYS"), PRODUCT_DEFAULTS["post_every_days"]))),
             auto_dm=_flag(get("OFFICE_AUTO_DM"), True),
             auto_dm_limit=_count(get("OFFICE_AUTO_DM_LIMIT"), 150),
             instagram_slot=_time(get("OFFICE_INSTAGRAM_SLOT") or "19:30"),

@@ -116,12 +116,34 @@ def claude_allowed(settings: Settings) -> bool:
     return allowed(settings, "claude-code") or allowed(settings, "api")
 
 
+# Who a desk goes to when the tool .env names for it is not allowed (an .env written when Claude was still in use), and for a
+# colleague nobody assigned. Antigravity can search the web; Codex writes and checks.
+DEFAULT_TOOL = {
+    "chief": "antigravity", "research": "antigravity", "strategist": "antigravity", "community": "antigravity",
+    "publisher": "antigravity", "analyst": "antigravity",
+    "threads": "codex", "designer": "codex", "visual": "codex", "video": "codex", "reviewer": "codex",
+}
+
+
 def chain(settings: Settings, role: str) -> list[str]:
-    keys = [resolve(settings.brains, role)]
-    for key in settings.brain_fallback:
-        if key not in keys and key in LABELS:
-            keys.append(key)
-    return [key for key in keys if allowed(settings, key)] or ["offline"]
+    primary = resolve(settings.brains, role)
+    keys = [primary] + [key for key in settings.brain_fallback if key in LABELS]
+    if not settings.brains_allowed:
+        return list(dict.fromkeys(keys))
+    real = [key for key in settings.brains_allowed if key in LABELS and key != "offline"]
+    wanted = DEFAULT_TOOL.get(role, "antigravity")
+    real.sort(key=lambda key: key != wanted)  # the tool built for this desk comes first among the stand-ins too
+    if not allowed(settings, primary):
+        primary = real[0] if real else "offline"
+    keys = [primary] + [key for key in keys[1:] if allowed(settings, key)]
+    # Every allowed tool stands in for the others, ahead of the offline templates (which never fail, so nothing after them runs).
+    stand_ins = [key for key in real if key not in keys]
+    if "offline" in keys[1:]:
+        at = keys.index("offline", 1)
+        keys[at:at] = stand_ins
+    else:
+        keys += stand_ins
+    return list(dict.fromkeys(keys))
 
 
 def strict_schema(schema: type[BaseModel]) -> dict:

@@ -74,7 +74,7 @@
 
 時間都可以在 `.env` 改。沒核准的草稿不會發；核准時已經過了排定時間的，下一輪（30 秒內）就發。
 
-**不想每天都發：兩天發一次**。在 `.env` 加一行 `OFFICE_POST_EVERY_DAYS=2`（3 就是三天一次，預設 1 是每天），存檔後重啟辦公室：
+**預設就是兩天發一次**，不用設定，更新程式後重啟就生效。想改頻率才需要在 `.env` 加一行 `OFFICE_POST_EVERY_DAYS=`（1 是每天、3 是三天一次，最大 30）：
 
 - 發文日照上面的時間表做完整的一天（Threads 幾篇、IG、Shorts 都照 `.env` 的設定）；中間那一天**不開工、不寫稿、不發文**。要一個發文日只發一篇 Threads，把 `OFFICE_THREADS_SLOTS` 改成一個時間（例如 `12:30`）。
 - 從「最後一次開工的那天」算起：電腦關機或視窗被關掉幾天，開回來的第一天就是發文日，不會再等下一個「偶數日」。你在網頁按「開始今天的工作」手動開工，也從那天重新算。
@@ -302,14 +302,14 @@ App 沒有用 Google 的推播，所以是在背景每 30 秒問辦公室一次�
 - **Antigravity（Gemini 4 Argon, High）**：主腦（總管 Leo）、上網查資料、排內容（Ivy）、留言回覆（Momo）、發文前最後檢查、解讀數據。
 - **Codex（GPT-6.1 Sol, high）**：寫 Threads 和 IG 文案、影片腳本、做圖排版（阿脆、Mori、阿剪）、審稿（Kiki），和畫 IG 封面插圖（`OFFICE_IMAGES=codex`）。
 
-用到的設定（都在 `.env`）：
+**這些都是程式內建的預設值，更新程式後重啟辦公室就生效，不用改 `.env`。** 你的 `.env` 裡如果還寫著舊的分工（某些桌子用 Claude Code、備援有 Claude），辦公室會自動把那些桌子換成上面分給它們的那一家，另一家當備援，不會掉到離線範本。要改的話才需要在 `.env` 寫對應的設定（`.env` 寫的會蓋過預設值）：
 
 | 設定 | 作用 |
 |------|------|
-| `OFFICE_BRAINS_ALLOWED=codex,antigravity` | **只准用這些工具**。Claude Code 和 Claude API 在任何情況都不會被叫：備援不會換過去、Leo 用聊天也不能把哪張桌子改成它們，Claude 的模型（opus、sonnet…）也不能選，之前用聊天存下來的相關設定會被略過。留空＝不限制 |
-| `OFFICE_CODEX_MODEL=gpt-6.1-sol` | Codex 用的模型 |
-| `OFFICE_CODEX_EFFORT=high` | 每次呼叫 Codex 的思考強度；留空就各桌用自己的。Leo 明確幫某張桌子改過的，以那張桌子為準 |
-| `OFFICE_ANTIGRAVITY_MODEL="Gemini 4 Argon (High)"` | 傳給 `agy --model` 的模型名。Antigravity 的名字要照 `agy models` 列出來的寫法（括號裡是思考強度），列表和這裡不一樣就改成列表上的 |
+| `OFFICE_BRAINS_ALLOWED=codex,antigravity`（預設） | **只准用這些工具**。Claude Code 和 Claude API 在任何情況都不會被叫：備援不會換過去、Leo 用聊天也不能把哪張桌子改成它們，Claude 的模型（opus、sonnet…）也不能選，之前用聊天存下來的相關設定會被略過。留空＝不限制 |
+| `OFFICE_CODEX_MODEL=gpt-6.1-sol`（預設） | Codex 用的模型 |
+| `OFFICE_CODEX_EFFORT=high`（預設） | 每次呼叫 Codex 的思考強度；留空就各桌用自己的。Leo 明確幫某張桌子改過的，以那張桌子為準 |
+| `OFFICE_ANTIGRAVITY_MODEL="Gemini 4 Argon (High)"`（預設） | 傳給 `agy --model` 的模型名。Antigravity 的名字要照 `agy models` 列出來的寫法（括號裡是思考強度），列表和這裡不一樣就改成列表上的 |
 
 設定好以後跑 `uv run office check --ping`：每個工具會寫出它用的模型和思考強度，並實際問一句測試題，確認登入和模型名都對。
 
@@ -331,7 +331,7 @@ App 沒有用 Google 的推播，所以是在背景每 30 秒問辦公室一次�
 - **Antigravity 的 CLI 還在變動**：有人回報從程式呼叫會卡住，所以它的每次呼叫都有逾時，逾時就換下一個工具。
 - 三家官方都建議「自動化用 API 金鑰」。用訂閱跑自己的排程沒有問題，但會吃訂閱額度；如果哪天某個工具不再允許用訂閱登入跑無介面模式，把那張桌子改成 `api` 就好。
 
-想換分工，只要改 `OFFICE_BRAINS`，例如只換審稿：把 `reviewer=codex` 改成 `reviewer=antigravity`。想讓 Claude 回來：把 `OFFICE_BRAINS_ALLOWED` 留空（或加上 `claude-code`），再改 `OFFICE_BRAINS` 和 `OFFICE_BRAIN_FALLBACK`。
+想換分工，只要改 `OFFICE_BRAINS`，例如只換審稿：把 `reviewer=codex` 改成 `reviewer=antigravity`。想讓 Claude 回來：在 `.env` 寫 `OFFICE_BRAINS_ALLOWED=`（留空＝不限制；或寫 `codex,antigravity,claude-code`），再改 `OFFICE_BRAINS` 和 `OFFICE_BRAIN_FALLBACK`。
 
 ## 接上 Threads、Instagram、YouTube
 

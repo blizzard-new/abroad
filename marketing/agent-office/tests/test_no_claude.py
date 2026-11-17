@@ -52,11 +52,19 @@ def test_claude_is_left_out_of_every_chain_even_when_the_settings_name_it(tmp_pa
     for role in brains.ROLES:
         chain = brains.chain(s, role)
         assert "claude-code" not in chain and "api" not in chain, (role, chain)
-    assert brains.chain(s, "threads") == ["codex", "offline"]
+    # Claude is not just dropped: the desk goes to the tool built for it, and the other allowed tool backs it up
+    assert brains.chain(s, "threads") == ["codex", "antigravity", "offline"]
 
 
-def test_a_desk_with_only_claude_to_use_ends_on_the_offline_templates(tmp_path):
+def test_a_desk_that_only_had_claude_goes_to_the_tool_built_for_it(tmp_path):
     s = settings(tmp_path, **{**NO_CLAUDE, "OFFICE_BRAINS": "*=claude-code", "OFFICE_BRAIN_FALLBACK": "claude-code,api"})
+    assert brains.chain(s, "threads") == ["codex", "antigravity"] and brains.chain(s, "research") == ["antigravity", "codex"]
+
+
+def test_with_nothing_allowed_that_can_run_a_desk_uses_the_offline_templates(tmp_path):
+    s = settings(tmp_path, **{**NO_CLAUDE, "OFFICE_BRAINS_ALLOWED": "api", "OFFICE_BRAINS": "*=codex"})  # only the Claude API allowed
+    assert brains.chain(s, "threads")[0] == "api"
+    s = settings(tmp_path, **{**NO_CLAUDE, "OFFICE_BRAINS_ALLOWED": "offline", "OFFICE_BRAINS": "*=codex"})
     assert brains.chain(s, "threads") == ["offline"]
 
 
