@@ -371,35 +371,15 @@ html[data-skin="metro"][data-theme="dark"] .school-emblem { background: hsl(var(
 [data-skin="metro"] #application-path .today-focus::after { display: none; }
 [data-skin="metro"] #application-path .today-focus h2 { max-width: none; font-size: 24px; }
 [data-skin="metro"] #application-path .today-focus p { max-width: 60ch; }
-[data-skin="metro"] #application-path .today-panel, [data-skin="metro"] #application-path .today-stages { padding: 14px 18px 16px; border: 1px solid var(--mt-rule); border-radius: 12px; background: var(--mt-ground); }
+[data-skin="metro"] #application-path .today-panel { padding: 14px 18px 16px; border: 1px solid var(--mt-rule); border-radius: 12px; background: var(--mt-ground); }
 [data-skin="metro"] #application-path .today-date { font-size: 36px; }
 [data-skin="metro"] #application-path .today-head { margin-bottom: 8px; }
 [data-skin="metro"] #application-path .today-head h2 { font-size: 16px; font-weight: 700; }
-[data-skin="metro"] #application-path .today-stage-now { font-size: 14px; font-weight: 700; color: var(--mt-ink-2); }
-[data-skin="metro"] #application-path .today-stage-now b { color: var(--mt-ink); }
-[data-skin="metro"] #application-path .today-bottom { grid-template-columns: minmax(0, 1fr) 270px; gap: 14px; }
-[data-skin="metro"] #application-path .today-queue h2 { margin-bottom: 8px; font-size: 16px; font-weight: 700; }
-[data-skin="metro"] #application-path .today-stage { font-weight: 700; color: var(--mt-ink-2); }
-[data-skin="metro"] #application-path .today-queue ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
-[data-skin="metro"] #application-path .today-queue li { border: 1px solid var(--mt-rule); border-radius: 10px; background: var(--mt-ground); }
-[data-skin="metro"] #application-path .today-queue li a { min-height: 54px; padding: 8px 12px; }
-[data-skin="metro"] #application-path .today-queue li a:hover { background: var(--mt-concourse); border-radius: 8px; }
-[data-skin="metro"] #application-path .today-queue > .today-link { margin-top: 6px; }
-[data-skin="metro"] #application-path .today-own { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 16px; align-items: center; padding: 10px 14px; border: 1px solid var(--mt-rule); border-radius: 12px; }
-[data-skin="metro"] #application-path .today-own h3 { margin: 0; font-size: 15px; font-weight: 700; }
-[data-skin="metro"] #application-path .today-own ul { grid-column: 1 / -1; }
-[data-skin="metro"] #application-path .today-quick { margin: 0; flex-wrap: nowrap; }
-[data-skin="metro"] #application-path .today-quick .form-status:empty { display: none; }
 @media (max-width: 760px) {
-  [data-skin="metro"] #application-path .today-top, [data-skin="metro"] #application-path .today-bottom { grid-template-columns: minmax(0, 1fr); }
-  [data-skin="metro"] #application-path .today-own { grid-template-columns: minmax(0, 1fr); }
-  [data-skin="metro"] #application-path .today-quick { flex-wrap: wrap; }
+  [data-skin="metro"] #application-path .today-top { grid-template-columns: minmax(0, 1fr); }
 }
 [data-skin="metro"] #application-path .plan-strip .plan-choice { flex: 0 1 520px; max-width: 520px; }
 [data-skin="metro"] #application-path .plan-strip .plan-choice .glide-select, [data-skin="metro"] #application-path .plan-strip .plan-choice select { max-width: 100%; }
-[data-skin="metro"] #application-path .today-quick input[name=title] { flex: 1 1 260px; }
-[data-skin="metro"] #application-path .today-quick input[type=date] { flex: 0 0 170px; }
-[data-skin="metro"] #application-path .today-quick .today-add { flex: none; min-width: 72px; white-space: nowrap; }
 
 /* 19. The navigation is a top bar (it was a rail down the left edge, widening on hover). Narrow screens keep their drawer.
    The older sheets place every page 112px from the left edge to clear the rail; here they are centred, full width. */
@@ -599,7 +579,8 @@ html[data-skin="metro"] #application-path #exchange-task-dialog { width:min(760p
 html[data-skin="metro"] #application-path #exchange-task-dialog::backdrop { background:rgb(0 0 0 / .42); }
 html[data-skin="metro"] #application-path .exchange-workspace .is-error,html[data-skin="metro"] #application-path #exchange-edit-error { color:var(--ap-bad); }
 @media(max-width:700px) {
-  html[data-skin="metro"] #application-path .hub-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); width:100%; gap:4px; }
+  html[data-skin="metro"] #application-path .hub-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); width:100%; gap:4px; }
+  html[data-skin="metro"] #application-path .hub-tabs:has(> a[data-tab="plans"]:not([hidden])) { grid-template-columns:repeat(4,minmax(0,1fr)); }
   html[data-skin="metro"] #application-path .hub-tabs>a { justify-content:center; padding:10px 4px; gap:4px; }
   html[data-skin="metro"] #application-path .hub-tabs>a svg { width:18px; }
   html[data-skin="metro"] #application-path .ex-grid { grid-template-columns:minmax(0,1fr); }

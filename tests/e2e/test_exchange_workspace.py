@@ -22,7 +22,7 @@ def start(page, live_server, **changes):
     verified_login(page, live_server)
     plan=make_plan(page, live_server, **changes)
     enter_public_site(page, live_server, f'my-application?plan={plan["plan"]["id"]}&view=workspace')
-    expect(page.get_by_role('heading', name='準備工作台', exact=True)).to_be_visible()
+    expect(page.get_by_role('heading', name='我的待辦', exact=True)).to_be_visible()
     return plan
 
 
@@ -59,16 +59,16 @@ def test_notice_review_batches_today_schedule_and_reload(page, live_server):
     expect(page.locator('.ex-task').first).to_contain_text('母校國際處')
     expect(page.locator('.ex-task').first).to_contain_text('通知期限・本人核對 2027-01-10')
     page.locator('.hub-tabs [data-tab=today]').click()
-    expect(page.locator('.ex-summary:visible')).to_contain_text('回傳本人與家長簽名同意書')
+    expect(page.locator('#today-view .ex-summary')).to_have_count(0)
     page.locator('.hub-tabs [data-tab=schedule]').click()
-    expect(page.locator('.ex-summary:visible')).to_contain_text('2027-02-10')
     expect(page.locator('#schedule-view [data-tracker-row]',has_text='回傳本人與家長簽名同意書')).to_be_visible()
+    expect(page.locator('#schedule-view #tracker-body')).to_contain_text('2/10')
     page.evaluate("state.calendarMonth=new Date(2027,0,1); state.calendarSelectedDate='2027-01-10'; state.calendarAgendaMode='selected'; renderApplicationCalendar()")
     expect(page.locator('#calendar-agenda-list')).to_contain_text('通知期限・本人核對')
     expect(page.locator('#calendar-agenda-list [data-delete-calendar-event]')).to_have_count(0)
     expect(page.locator('#calendar-agenda-list')).not_to_contain_text('官方日期')
     page.reload()
-    expect(page.locator('.ex-summary:visible')).to_contain_text('2027-02-10',timeout=30_000)
+    expect(page.locator('#schedule-view #tracker-body')).to_contain_text('2/10',timeout=30_000)
     page.locator('.hub-tabs [data-tab=workspace]').click()
     capture(page,'workspace-notice-desktop.png')
 
@@ -89,8 +89,8 @@ def test_phone_personal_goal_waiting_notes_and_no_overflow(page,live_server,them
     saved(page,form)
     expect(page.locator('.ex-task')).to_contain_text('個人目標 2027-01-15')
     expect(page.locator('.ex-task')).to_contain_text('等待：宿舍管理員')
-    page.locator('.hub-tabs [data-tab=today]').click()
-    expect(page.locator('.ex-summary:visible')).to_contain_text('正在等待 1 項')
+    page.locator('.hub-tabs [data-tab=schedule]').click()
+    expect(page.locator('#schedule-view [data-tracker-row]',has_text='確認宿舍收件與用品（等待中）')).to_be_visible()
     page.locator('.hub-tabs [data-tab=workspace]').click()
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
     for field in ['#exchange-stage','#exchange-kind','#exchange-status']:
@@ -110,7 +110,7 @@ def test_courses_conflicts_and_downloaded_dates(page,live_server):
     for title,start_time,end_time in [('課程甲','09:00','11:00'),('課程乙','10:00','12:00')]:
         form=editor(page,title)
         form.locator('[name=kind]').select_option('course')
-        form.locator('[name=stage]').select_option('abroad')
+        form.locator('[name=stage]').select_option('return')
         form.locator('[name=credits]').fill('3')
         form.locator('[name=weekday]').select_option('1')
         form.locator('[name=start]').fill(start_time)

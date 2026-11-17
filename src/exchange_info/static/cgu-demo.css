@@ -1337,6 +1337,14 @@ body.cgu-print-body {
   margin:14px 0 6px; padding:14px 16px; border:1px solid var(--uw-line,#d8e0ea);
   border-radius:14px; background:var(--uw-surface-soft,#f8fafc); display:grid; gap:10px;
 }
+#application-path .level-card > :is(.cgu-level-submit-bridge, .cgu-notice-level-panel, .cgu-doc-level-bridge, .cgu-shortlist-bridge, .cgu-return-report-bridge) {
+  margin:16px 22px 20px;
+}
+@media(max-width:600px) {
+  #application-path .level-card > :is(.cgu-level-submit-bridge, .cgu-notice-level-panel, .cgu-doc-level-bridge, .cgu-shortlist-bridge, .cgu-return-report-bridge) {
+    margin:14px 16px 18px;
+  }
+}
 .cgu-doc-bridge-head, .cgu-shortlist-head { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; font-size:14px; }
 .cgu-doc-bridge-notice { margin:0; font-size:12.5px; color:var(--uw-muted,#475569); }
 .cgu-doc-bridge-feedback, .cgu-shortlist-feedback { margin:0; font-size:13px; color:#1d4ed8; font-weight:600; min-height:1em; }

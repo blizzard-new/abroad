@@ -59,20 +59,16 @@ def test_my_application_today_lays_its_boxes_side_by_side_and_says_less(page, li
     page.goto(f"{live_server.base_url}/#my-application?" + urlencode({"plan": created["plan"]["id"], "view": "today"}))
     today = page.locator("#today-view .today")
     expect(today).to_be_visible(timeout=30000)
-    cards = today.locator(".today-queue li")
-    assert cards.count() >= 2
-    first, second = cards.nth(0).bounding_box(), cards.nth(1).bounding_box()
-    assert abs(first["y"] - second["y"]) < 4, "the next tasks sit in one row"
-    assert first["width"] < 420, first
-    # The focus card and the deadline card share a row; the todo form is one row.
+    # The focus card and the deadline card share a row; the checklist follows on the same page.
     focus, deadline = today.locator(".today-focus").bounding_box(), today.locator(".today-top .today-panel").bounding_box()
     assert abs(focus["y"] - deadline["y"]) < 4
-    title, date = today.locator("[data-today-quick] input[name=title]").bounding_box(), today.locator("[data-today-quick] input[type=date]").bounding_box()
-    assert abs(title["y"] - date["y"]) < 6
+    assert page.locator("#progress-view .task-row").first.bounding_box()["y"] > focus["y"] + focus["height"]
+    for gone in (".today-queue", ".today-counts", ".today-stages", "[data-today-quick]"):
+        expect(page.locator("#application-path " + gone)).to_have_count(0)
     for gone in ("UniWay 只倒數有官方來源", "還沒有。記下", "下一項可開始的準備", "依已查核的規則比對", "個人準備進度"):
         expect(today).not_to_contain_text(gone)
     # The boundary the product must always state is still there, and "synced" no longer takes a line.
-    expect(today.locator(".today-boundary")).to_contain_text("不代表校方受理或錄取")
+    expect(page.locator("#progress-view .today-boundary")).to_contain_text("不代表校方受理或錄取")
     expect(page.locator("#sync-message")).to_be_hidden()
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
 

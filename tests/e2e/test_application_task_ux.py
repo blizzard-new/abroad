@@ -51,11 +51,11 @@ def test_completion_focus_and_unchanged_save_do_not_reset_progress(page, live_se
     _, _, url = plan(page, live_server)
     open_writing(page, url)
     page.locator('#level-input').fill('完整的測試申請動機')
-    page.get_by_role('button', name='標記準備完成', exact=True).click()
-    expect(page.locator('.success-state')).to_be_focused()
-    expect(page.locator('.success-state h3')).to_have_text('已完成這項準備')
-    page.locator('#edit-level').click()
-    expect(page.locator('#save-note')).to_contain_text('已完成')
+    page.get_by_role('button', name='完成', exact=True).click()
+    # Finishing goes straight back to the overview; reopening the step shows it done.
+    expect(page.locator('#today-view')).to_be_visible()
+    open_writing(page, url)
+    expect(page.locator('.level-progress')).to_contain_text('已完成')
     page.locator('#save-draft').click()
     expect(page.locator('#save-note')).to_have_text('已儲存')
     page.reload()
@@ -91,20 +91,19 @@ def test_phone_and_tablet_keep_action_deadline_and_large_text(page, live_server)
     _, _, url = plan(page, live_server)
     for width in [390, 834, 1440]:
         page.set_viewport_size({'width': width, 'height': 844})
-        expect(page.locator('#next-link')).to_be_visible()
-        expect(page.locator('#deadline-card')).to_be_visible()
-        assert page.locator('#next-link').bounding_box()['height'] >= 44
-        assert page.locator('#next-link').bounding_box()['y'] < 800
-        assert float(page.locator('#next-prompt').evaluate('e=>getComputedStyle(e).fontSize').replace('px', '')) >= 16
+        expect(page.locator('#today-view .today-primary')).to_be_visible()
+        expect(page.locator('#today-view .today-panel[aria-label="期限"]')).to_be_visible()
+        assert page.locator('#today-view .today-primary').bounding_box()['height'] >= 44
+        assert page.locator('#today-view .today-primary').bounding_box()['y'] < 800
+        assert float(page.locator('#today-focus-title').evaluate('e=>getComputedStyle(e).fontSize').replace('px', '')) >= 16
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
     page.emulate_media(reduced_motion='reduce')
-    expect(page.locator('#next-link')).to_have_css('animation-name', 'none')
-    page.locator('#next-link').click()
+    expect(page.locator('#today-view .today-primary')).to_have_css('animation-name', 'none')
+    page.locator('#today-view .today-primary').click()
     expect(page.locator('#level-form')).to_be_visible()
     assert 'view=level' in page.url
     for width in [390, 834, 1440]:
         page.set_viewport_size({'width': width, 'height': 844})
-        expect(page.locator('#save-note')).to_be_visible()
         assert float(page.locator('#level-form button[type=submit]').evaluate('e=>getComputedStyle(e).fontSize').replace('px', '')) >= 18
 
 
@@ -114,7 +113,9 @@ def test_existing_plan_visible_in_scheduling_without_creating_duplicate_preferen
     # 準備與時程 is the 時程 tab now and lists this plan's tasks; 計畫 keeps the plan itself.
     expect(page.locator('#schedule-view [data-tracker-row]').first).to_contain_text('林肯大學')
     expect(page.locator('#tracker-body')).not_to_contain_text('還沒有志願')
-    page.locator('.hub-tabs [data-tab=plans]').click()
+    # With one plan there is nothing to compare, so the tab is not offered; the address still works.
+    expect(page.locator('.hub-tabs [data-tab=plans]')).to_be_hidden()
+    page.evaluate('(hash) => location.hash = hash', url.split('#')[1].replace('view=progress', 'view=plans'))
     expect(page.locator('.plan-card')).to_contain_text('林肯大學')
     page.locator('.plan-card a').first.click()
     expect(page.locator('#today-view')).to_be_visible()
@@ -291,17 +292,17 @@ def test_next_action_prioritizes_confirmed_deadlines_then_saved_drafts(page, liv
     writing = next(level for level in all_levels if level['id'] == 'motivation')
     writing['progress']['value'] = 1
     data['plan']['steps']['motivation'] = {'value': '續接草稿', 'updated_at': datetime.now(timezone.utc).isoformat()}
-    deadline = next(level for level in reversed(all_levels) if level['kind'] == 'confirm' and level['id'] not in ['home', 'term', 'target'])
+    deadline = next(level for level in reversed(all_levels) if level['kind'] in ('note', 'file') and level['counted'] and not level.get('blocked_by'))
     deadline['official_deadline_at'] = (datetime.now(timezone.utc) + timedelta(days=2)).isoformat()
     deadline['deadline_confirmed'] = False
     pattern = f"**/account/application-paths/{created['plan']['id']}?*"
     page.route(pattern, lambda route: route.fulfill(json=data))
     page.reload()
-    expect(page.locator('#next-title')).to_have_text(writing['title'])
-    expect(page.locator('#next-prompt')).to_have_text('接著完成上次的草稿。')
+    expect(page.locator('#today-focus-title')).to_have_text(writing['title'])
+    expect(page.locator('#today-view .today-why')).to_have_text('接著完成上次的草稿。')
     deadline['deadline_confirmed'] = True
     page.reload()
-    expect(page.locator('#next-title')).to_have_text(deadline['title'])
-    expect(page.locator('#next-prompt')).to_have_text('官方期限將近，先處理這項。')
-    page.locator('#next-link').click()
+    expect(page.locator('#today-focus-title')).to_have_text(deadline['title'])
+    expect(page.locator('#today-view .today-why')).to_have_text('官方期限將近，先處理這項。')
+    page.locator('#today-view .today-primary').click()
     expect(page.locator('#level-title')).to_have_text(deadline['title'])

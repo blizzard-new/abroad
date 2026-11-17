@@ -608,24 +608,6 @@
       }
       panel.dataset.cguDeadlineSig = sig;
     }
-
-    const headerCard = document.querySelector('#application-path #deadline-card');
-    if (headerCard && headerCard.innerHTML.trim() && headerCard.dataset.cguDeadlineSig !== sig) {
-      headerCard.querySelectorAll('.cgu-deadline-source-link').forEach(el => el.remove());
-      const link = document.createElement('a');
-      link.className = 'cgu-deadline-inline-source cgu-deadline-source-link';
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      if (meta.isVerified1161) {
-        link.href = SELECTION_SOURCE_URL;
-        link.textContent = '116-1 校內申請截止 2026/12/21 17:00（查看官方公告 ↗）';
-      } else {
-        link.href = SELECTION_GUIDE_URL;
-        link.textContent = `${meta.termShort ? `${meta.termShort} ` : ''}校內申請期限：依國際處公告（查看申請說明 ↗）`;
-      }
-      (headerCard.querySelector('div') || headerCard).appendChild(link);
-      headerCard.dataset.cguDeadlineSig = sig;
-    }
   }
 
   // ──────────────────────────────────────────────────────────────
@@ -950,7 +932,7 @@
   function enhanceTodayOiaStatus(activePlan = simState.activePlan, planApp = simState.activePlanApp) {
     const { onMyApp, view } = parseMyAppRoute();
     const todayView = $('#application-path #today-view');
-    if (!onMyApp || view !== 'today' || !todayView || todayView.hidden || !activePlan || !planApp) return;
+    if (!onMyApp || (view !== 'today' && view !== 'progress') || !todayView || todayView.hidden || !activePlan || !planApp) return;
     const todayWrap = todayView.querySelector('.today');
     if (!todayWrap) return;
 
@@ -1047,9 +1029,9 @@
         </div>`;
     }
     if (!existingBridge) {
-      const progressBox = card.querySelector('.level-progress');
-      if (progressBox) {
-        progressBox.insertAdjacentElement('afterend', bridge);
+      const headingBox = card.querySelector('.level-heading') || card.querySelector('.level-progress');
+      if (headingBox) {
+        headingBox.insertAdjacentElement('afterend', bridge);
       } else {
         card.appendChild(bridge);
       }
@@ -1181,9 +1163,9 @@
     }
 
     if (!existing) {
-      const progressBox = card.querySelector('.level-progress');
-      if (progressBox) {
-        progressBox.insertAdjacentElement('afterend', bridge);
+      const headingBox = card.querySelector('.level-heading') || card.querySelector('.level-progress');
+      if (headingBox) {
+        headingBox.insertAdjacentElement('afterend', bridge);
       } else {
         card.appendChild(bridge);
       }
@@ -1268,9 +1250,9 @@
       </div>
       <p id="cgu-doc-bridge-feedback" class="cgu-doc-bridge-feedback" role="status" aria-live="polite"></p>`;
     if (!existing) {
-      const progressBox = card.querySelector('.level-progress');
-      if (progressBox) {
-        progressBox.insertAdjacentElement('afterend', bridge);
+      const headingBox = card.querySelector('.level-heading') || card.querySelector('.level-progress');
+      if (headingBox) {
+        headingBox.insertAdjacentElement('afterend', bridge);
       } else {
         card.appendChild(bridge);
       }
@@ -1355,9 +1337,9 @@
         <span id="cgu-shortlist-feedback" class="cgu-shortlist-feedback" role="status" aria-live="polite">${esc(feedbackMsg)}</span>
       </div>`;
     if (!existing) {
-      const progressBox = card.querySelector('.level-progress');
-      if (progressBox) {
-        progressBox.insertAdjacentElement('afterend', bridge);
+      const headingBox = card.querySelector('.level-heading') || card.querySelector('.level-progress');
+      if (headingBox) {
+        headingBox.insertAdjacentElement('afterend', bridge);
       } else {
         card.appendChild(bridge);
       }
@@ -1405,9 +1387,9 @@
         ${matched ? `<a class="cgu-pill-action" href="${esc(matched.print_url || `/demo/connector/return-reports/${matched.receipt_id}/print`)}" target="_blank" rel="noopener noreferrer">匯出列印版 ↗</a>` : ''}
       </div>`;
     if (!existing) {
-      const progressBox = card.querySelector('.level-progress');
-      if (progressBox) {
-        progressBox.insertAdjacentElement('afterend', bridge);
+      const headingBox = card.querySelector('.level-heading') || card.querySelector('.level-progress');
+      if (headingBox) {
+        headingBox.insertAdjacentElement('afterend', bridge);
       } else {
         card.appendChild(bridge);
       }
@@ -2746,6 +2728,13 @@
           simState.cachedPlans = null;
           simState.shortlistFeedback = '已保存志願順序並更新進度。';
           simState.shortlistFeedbackPlan = activePlan.id;
+          const progBox = $('#application-path #level-view .level-progress');
+          if (progBox) {
+            progBox.hidden = false;
+            progBox.dataset.s = 'done';
+            const stEl = progBox.querySelector('strong');
+            if (stEl) stEl.textContent = '已完成';
+          }
           $('#application-path #refresh-path')?.click();
         }
         const fbAfter = $('#cgu-shortlist-feedback');
