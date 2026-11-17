@@ -95,12 +95,33 @@ def resolve(spec: str, role: str) -> str:
     return key
 
 
+def allowed(settings: Settings, key: str) -> bool:
+    """Whether OFFICE_BRAINS_ALLOWED lets this tool be used (empty list: all). The offline templates are not an AI and always are."""
+    return key == "offline" or not settings.brains_allowed or key in settings.brains_allowed
+
+
+def settings_note(settings: Settings, key: str) -> str:
+    """The model and thinking level a tool runs with unless the chief tuned a desk, for the check-up."""
+    if key == "codex":
+        return f"模型 {settings.codex_model or '預設'}、思考強度 {settings.codex_effort or '各桌自己的'}"
+    if key == "antigravity":
+        return f"模型 {settings.antigravity_model or '預設'}"
+    if key == "claude-code":
+        return f"模型 {settings.claude_code_model or '預設'}"
+    return ""
+
+
+def claude_allowed(settings: Settings) -> bool:
+    """Claude's own models (opus, sonnet, ...) run on Claude Code or the Claude API, so they are off when neither is allowed."""
+    return allowed(settings, "claude-code") or allowed(settings, "api")
+
+
 def chain(settings: Settings, role: str) -> list[str]:
     keys = [resolve(settings.brains, role)]
     for key in settings.brain_fallback:
         if key not in keys and key in LABELS:
             keys.append(key)
-    return keys
+    return [key for key in keys if allowed(settings, key)] or ["offline"]
 
 
 def strict_schema(schema: type[BaseModel]) -> dict:
@@ -291,7 +312,8 @@ class CodexBrain(Brain):
         with tempfile.TemporaryDirectory(prefix="office-codex-") as folder:
             root = Path(folder)
             (root / "schema.json").write_text(json.dumps(strict_schema(schema), ensure_ascii=False), encoding="utf-8")
-            args = ["exec", "-", *self._base_args(effort, model), "--sandbox", "read-only", "--output-schema", "schema.json", "-o", "answer.json"]
+            level = effort if explicit_effort else (self.settings.codex_effort or effort)
+            args = ["exec", "-", *self._base_args(level, model), "--sandbox", "read-only", "--output-schema", "schema.json", "-o", "answer.json"]
             stdout = self.run(args, stdin=f"{voice_guide(self.settings)}\n\n{task}\n\n{context}", cwd=root)
             answer = root / "answer.json"
             text = answer.read_text(encoding="utf-8") if answer.is_file() else stdout
@@ -357,6 +379,7 @@ class AntigravityBrain(Brain):
             "最後只輸出一個符合下面 JSON Schema 的 JSON 物件，不要任何其他文字，也不要修改任何檔案：\n"
             f"{json.dumps(schema.model_json_schema(), ensure_ascii=False)}"
         )
+        model = model or self.settings.antigravity_model
         with tempfile.TemporaryDirectory(prefix="office-antigravity-") as folder:
             # The prompt stays right after `agy -p`; the model flag comes after it.
             out = self.run([prompt, *(["--model", model] if model else [])], stdin=None, cwd=Path(folder))

@@ -31,6 +31,12 @@ def _load_dotenv(path: Path) -> dict[str, str]:
     return values
 
 
+def _word(value: str | None) -> str:
+    """One short lowercase word (a thinking effort); anything else is ignored."""
+    text = (value or "").strip().lower()
+    return text if re.fullmatch(r"[a-z]{3,10}", text) else ""
+
+
 def _time(value: str) -> time:
     hours, _, minutes = value.strip().partition(":")
     return time(int(hours), int(minutes or 0))
@@ -78,7 +84,12 @@ class Settings:
     claude_code_model: str = ""
     codex_command: str = "codex"
     codex_model: str = ""
+    codex_effort: str = ""  # thinking effort for every Codex call (low, medium, high, ...); empty keeps each desk's own
     antigravity_command: str = "agy -p"
+    antigravity_model: str = ""  # passed to `agy --model`; Antigravity names carry the level, e.g. "Gemini 4 Argon (High)"
+    # The only tools any desk may use; empty allows all. Anything else is skipped in every chain, and the chief cannot switch a
+    # desk to it. Claude's models are off too unless claude-code or api is on the list.
+    brains_allowed: tuple[str, ...] = ()
     brain_timeout: int = 600
 
     daily_at: time = time(7, 30)
@@ -178,7 +189,10 @@ class Settings:
             claude_code_model=get("OFFICE_CLAUDE_CODE_MODEL") or "",
             codex_command=get("OFFICE_CODEX_COMMAND") or "codex",
             codex_model=get("OFFICE_CODEX_MODEL") or "",
+            codex_effort=_word(get("OFFICE_CODEX_EFFORT")),
             antigravity_command=get("OFFICE_ANTIGRAVITY_COMMAND") or "agy -p",
+            antigravity_model=(get("OFFICE_ANTIGRAVITY_MODEL") or "").strip(),
+            brains_allowed=tuple(dict.fromkeys(b.strip().lower() for b in (get("OFFICE_BRAINS_ALLOWED") or "").split(",") if b.strip())),
             brain_timeout=int(get("OFFICE_BRAIN_TIMEOUT") or 600),
             daily_at=_time(get("OFFICE_DAILY_AT") or "07:30"),
             threads_slots=tuple(_time(t) for t in (get("OFFICE_THREADS_SLOTS") or "12:30,21:00").split(",") if t.strip()),
