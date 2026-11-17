@@ -383,9 +383,10 @@ class PrivateConversationStatusMutationRequest(PrivateCommunityActorRequest):
     ) -> PrivateConversationStatusMutationRequest:
         if (
             self.expected_status != ConversationStatus.PENDING
-            or self.status != ConversationStatus.ACCEPTED
+            or self.status
+            not in {ConversationStatus.ACCEPTED, ConversationStatus.DECLINED}
         ):
-            raise ValueError("目前只允許收件者接受待處理邀請。")
+            raise ValueError("目前只允許收件者接受或拒絕待處理邀請。")
         return self
 
 

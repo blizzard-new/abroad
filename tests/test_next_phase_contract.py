@@ -55,6 +55,7 @@ def test_private_community_writes_expose_retry_mutation_header(tmp_path) -> None
     writes = (
         ("/community/conversations", "post"),
         ("/community/conversations/{conversation_id}/accept", "post"),
+        ("/community/conversations/{conversation_id}/decline", "post"),
         ("/community/conversations/{conversation_id}/messages", "post"),
         ("/community/blocks", "post"),
         ("/community/reports", "post"),
@@ -679,6 +680,7 @@ def test_submission_progress_contract_tracks_manual_status_and_proof_metadata(tm
     assert {
         "method",
         "status",
+        "allowed_actions",
         "responsible_unit",
         "send_by_at",
         "arrival_deadline_at",

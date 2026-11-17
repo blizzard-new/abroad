@@ -88,6 +88,9 @@ def parse_times(times: list[str], most: int = 6) -> list[str]:
 
 # The human's desk. Drafts land here unless OFFICE_APPROVAL=auto.
 BOSS = {"id": "boss", "name": "你", "title": "老闆（審核）", "duty": "看審核匣：核准、退回或直接修改草稿"}
+INTERRUPTED_PUBLISHING_ERROR = (
+    "發佈途中辦公室重新啟動，無法自動確認平台是否已收到貼文；請先檢查平台，未發出再重新核准發佈，避免重複貼文"
+)
 
 
 class Office:
@@ -106,6 +109,13 @@ class Office:
             self._seat(Hire(self, record))
         self.busy = threading.Lock()
         self._facts = None
+        recovered_ids = self.store.recover_interrupted_publishing(INTERRUPTED_PUBLISHING_ERROR)
+        if recovered_ids:
+            joined = "、".join(f"#{draft_id}" for draft_id in recovered_ids)
+            self.staff["publisher"].status(
+                "error",
+                f"啟動時將殘留發佈中（{joined}）標為失敗，請確認平台後再決定是否重發",
+            )
 
     def _brain_used(self, role: str, key: str, failures: list[str]) -> None:
         """Show on the desk which AI is thinking, and say so when a desk had to fall back to another one."""
