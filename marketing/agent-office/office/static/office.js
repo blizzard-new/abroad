@@ -699,7 +699,8 @@ async function onPassClick(e) {
   }
   const btn = e.target.closest("button[data-act]");
   if (!btn) return;
-  const pass = btn.closest(".pass");
+  const pass = btn.closest("[data-id]");
+  if (!pass) return;
   const id = Number(pass.dataset.id);
   const d = S.drafts.get(id);
   try {
@@ -751,7 +752,8 @@ function renderSchedule() {
   host.innerHTML = [...groups].map(([day, list]) => `<section class="sched-group"><h3>${esc(day)}</h3>${list.map((d) => {
     const ch = CHANNEL[d.channel];
     const link = d.remote_url && /^https?:\/\//i.test(d.remote_url) ? safeLink(d.remote_url, d.channel === "github" ? "查看 draft PR" : "查看貼文") : d.note ? `<span class="chip">${esc(d.note.slice(0, 6))}</span>` : "";
-    return `<div class="sched-item"><span class="t">${d.scheduled_at ? hhmm(d.scheduled_at) : "--:--"}</span><span class="ttl"><span class="chip"><i style="--c:${ch.color}"></i>${ch.label} ${FORMAT[d.format] || ""}</span> ${esc(d.title)}</span><span class="chip state-${d.status}">${STATUS[d.status]}</span>${link ? `<span></span><span style="grid-column:2/-1;font-size:13px">${link}</span>` : ""}${d.error ? `<span class="err">${esc(d.error)}</span>` : ""}</div>`;
+    const retry = d.status === "failed" ? `<span style="grid-column:2/-1;display:flex;gap:8px;margin-top:4px"><button class="btn" data-act="now" type="button">重新發佈</button><button class="btn danger" data-act="reject" type="button">退回</button></span>` : "";
+    return `<div class="sched-item" data-id="${d.id}"><span class="t">${d.scheduled_at ? hhmm(d.scheduled_at) : "--:--"}</span><span class="ttl"><span class="chip"><i style="--c:${ch.color}"></i>${ch.label} ${FORMAT[d.format] || ""}</span> ${esc(d.title)}</span><span class="chip state-${d.status}">${STATUS[d.status]}</span>${link ? `<span></span><span style="grid-column:2/-1;font-size:13px">${link}</span>` : ""}${d.error ? `<span class="err">${esc(d.error)}</span>` : ""}${retry}</div>`;
   }).join("")}</section>`).join("");
 }
 
@@ -801,7 +803,7 @@ function showDraft(id) {
   const d = S.drafts.get(Number(id));
   if (!d) return toast(`找不到 #${id}`);
   selectTab(PENDING.has(d.status) ? "inbox" : "schedule");
-  const pass = $(`.pass[data-id="${id}"]`);
+  const pass = $(`.pass[data-id="${id}"], .sched-item[data-id="${id}"]`);
   pass?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
   pass?.classList.add("flash");
   setTimeout(() => pass?.classList.remove("flash"), 1200);
@@ -1022,6 +1024,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   setInterval(tickClock, 15000);
   document.querySelector(".tabs").addEventListener("click", (e) => e.target.closest("button[data-tab]") && selectTab(e.target.closest("button[data-tab]").dataset.tab));
   $("#view-inbox").addEventListener("click", onPassClick);
+  $("#view-schedule").addEventListener("click", onPassClick);
   $("#chat-form").addEventListener("submit", (e) => (e.preventDefault(), sendChat($("#chat-input").value)));
   $("#chat-input").addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey && !e.isComposing) (e.preventDefault(), sendChat(e.target.value));

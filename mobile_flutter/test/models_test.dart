@@ -197,4 +197,31 @@ void main() {
     expect(resolveSupportedUniversity('政大').boardTabLabel, '政大板');
     expect(tryResolveSupportedUniversity('未知大學'), isNull);
   });
+
+  test('submission progress uses server allowed_actions and conversation handles declined', () {
+    final progress = AccountSubmissionProgress.fromJson({
+      'title': '繳交校內紙本申請',
+      'method': 'paper',
+      'status': 'submitted',
+      'allowed_actions': ['confirm_receipt', 'revert'],
+      'recorded_by': 'student',
+      'platform_submitted': false,
+    });
+    expect(progress.canPerform('confirm_receipt'), isTrue);
+    expect(progress.canPerform('complete'), isFalse);
+    expect(progress.canPerform('revert'), isTrue);
+
+    final declined = PrivateConversation.fromJson({
+      'id': 'conv-1',
+      'school_name': '長庚大學',
+      'sender_id': 'sender-1',
+      'sender_name': '匿名同學甲',
+      'recipient_id': 'recipient-1',
+      'recipient_name': '匿名同學乙',
+      'status': 'declined',
+      'updated_at': '2026-11-17T00:00:00Z',
+    });
+    expect(declined.statusLabel('recipient-1'), '已婉拒邀請');
+    expect(declined.statusLabel('sender-1'), '對方已婉拒邀請');
+  });
 }

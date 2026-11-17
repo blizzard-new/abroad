@@ -363,6 +363,20 @@ class ExchangeApi {
     return jsonMap(jsonMap(_decode(response))['workspace']);
   }
 
+  Future<AccountSubmissionProgress> updateSubmissionProgress({
+    required String accessToken,
+    required JsonMap payload,
+  }) async {
+    final response = await _client
+        .post(
+          _uri('account/submission-progress'),
+          headers: _bearer(accessToken),
+          body: jsonEncode(payload),
+        )
+        .timeout(const Duration(seconds: 15));
+    return AccountSubmissionProgress.fromJson(_decode(response));
+  }
+
   Future<JsonMap> mobileAuthConfig() async {
     final response = await _client
         .get(_uri('auth/mobile/config'))
@@ -795,6 +809,17 @@ class ExchangeApi {
   }) async {
     final response = await _client.post(
       _uri('community/conversations/$conversationId/accept'),
+      headers: _auth(identity),
+    );
+    _decode(response);
+  }
+
+  Future<void> declineConversation({
+    required AnonymousIdentity identity,
+    required String conversationId,
+  }) async {
+    final response = await _client.post(
+      _uri('community/conversations/$conversationId/decline'),
       headers: _auth(identity),
     );
     _decode(response);

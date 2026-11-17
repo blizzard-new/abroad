@@ -797,13 +797,13 @@ class _MessagesPanel extends StatelessWidget {
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           Text(
-                            conversation.status == 'accepted'
-                                ? '已接受 · 可以傳送訊息'
-                                : '等待接受邀請',
+                            conversation.statusLabel(identity.id),
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
                                   color: conversation.status == 'accepted'
                                       ? ExchangeColors.success
+                                      : conversation.status == 'declined'
+                                      ? ExchangeColors.secondaryInk
                                       : ExchangeColors.amber,
                                 ),
                           ),
@@ -875,7 +875,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   Widget build(BuildContext context) {
     final conversation = widget.conversation;
     final incomingPending =
-        conversation.status != 'accepted' &&
+        conversation.status == 'pending' &&
         conversation.recipientId == widget.identity.id;
     return ExchangePageBackground(
       child: Scaffold(
@@ -926,19 +926,40 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       children: [
                         const Text('對方邀請你開始私訊。接受後才能繼續對話。'),
                         const SizedBox(height: 8),
-                        FilledButton(
-                          onPressed: () async {
-                            await ExchangeStoreScope.of(
-                              context,
-                            ).api.acceptConversation(
-                              identity: widget.identity,
-                              conversationId: conversation.id,
-                            );
-                            if (mounted) {
-                              Navigator.of(this.context).pop();
-                            }
-                          },
-                          child: const Text('接受邀請'),
+                        Wrap(
+                          spacing: 10,
+                          runSpacing: 8,
+                          alignment: WrapAlignment.center,
+                          children: [
+                            FilledButton(
+                              onPressed: () async {
+                                await ExchangeStoreScope.of(
+                                  context,
+                                ).api.acceptConversation(
+                                  identity: widget.identity,
+                                  conversationId: conversation.id,
+                                );
+                                if (mounted) {
+                                  Navigator.of(this.context).pop();
+                                }
+                              },
+                              child: const Text('接受邀請'),
+                            ),
+                            OutlinedButton(
+                              onPressed: () async {
+                                await ExchangeStoreScope.of(
+                                  context,
+                                ).api.declineConversation(
+                                  identity: widget.identity,
+                                  conversationId: conversation.id,
+                                );
+                                if (mounted) {
+                                  Navigator.of(this.context).pop();
+                                }
+                              },
+                              child: const Text('婉拒邀請'),
+                            ),
+                          ],
                         ),
                       ],
                     ),

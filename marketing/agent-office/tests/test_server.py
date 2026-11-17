@@ -128,3 +128,43 @@ def test_cli_serve_refuses_non_loopback_without_access_token(monkeypatch, tmp_pa
 def test_media_paths_cannot_escape_the_media_folder(tmp_path):
     client, _ = client_for(tmp_path)
     assert client.get("/media/..%2Foffice.sqlite3").status_code == 404
+
+
+def test_startup_turns_leftover_publishing_drafts_into_failed_not_approved(tmp_path):
+    from office.office import INTERRUPTED_PUBLISHING_ERROR
+
+    env = {"OFFICE_HOME": str(tmp_path / "var"), "OFFICE_BRAINS": "offline", "OFFICE_RENDER_MEDIA": "0"}
+    first = Office(Settings.from_env(env=env))
+    stuck_id = first.store.add_draft(
+        run_id=None,
+        day="2026-11-17",
+        channel="threads",
+        format="text",
+        title="中斷測試貼文",
+        payload={"text": "這則發到一半斷電", "topic_tag": "交換學生", "first_reply": ""},
+        status="publishing",
+        scheduled_at="2026-11-17T02:00:00+00:00",
+    )
+    approved_id = first.store.add_draft(
+        run_id=None,
+        day="2026-11-17",
+        channel="threads",
+        format="text",
+        title="尚未發佈貼文",
+        payload={"text": "這則還沒輪到", "topic_tag": "交換學生", "first_reply": ""},
+        status="approved",
+        scheduled_at="2026-11-17T08:00:00+00:00",
+    )
+    first.store._db.close()
+
+    restarted = Office(Settings.from_env(env=env))
+    recovered = restarted.store.draft(stuck_id)
+    assert recovered["status"] == "failed"
+    assert recovered["error"] == INTERRUPTED_PUBLISHING_ERROR
+    assert restarted.store.draft(approved_id)["status"] == "approved"
+    # It must NOT auto-publish on the next tick without explicit human re-approval.
+    assert [d["id"] for d in restarted.store.due_drafts("2026-11-17T03:00:00+00:00")] == []
+    # Once a human verifies the platform, they can edit, reject, or re-approve it.
+    reapproved = restarted.approve(stuck_id, publish_now=True)
+    assert reapproved["status"] == "approved"
+    assert reapproved["error"] is None

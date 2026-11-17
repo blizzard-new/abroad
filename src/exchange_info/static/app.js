@@ -62,6 +62,7 @@ const state = {
   accountWorkspaceRetryTimer: null,
   accountWorkspaceSyncAccountId: "",
   accountWorkspaceSyncErrors: {},
+  accountWorkspaceSyncErrorStatuses: {},
   accountWorkspaceHasSynced: false,
   authSessionEpoch: 0,
   authRestoreState: "pending",
@@ -2581,65 +2582,117 @@ function stateBudgetPlan(schoolName, plan) {
   };
 }
 
-function renderAccountWorkspaceSyncStatus() {
-  const control = $("#account-workspace-sync-control");
-  const status = $("#account-workspace-sync-status");
-  if (!control || !status) return;
-  const signedIn = Boolean(state.account);
-  control.hidden = !signedIn;
-  if (!signedIn) return;
+const WORKSPACE_SYNC_STATUSES = Object.freeze([
+  "loading",
+  "saved",
+  "pending",
+  "syncing",
+  "conflict",
+  "expired",
+]);
 
-  const hasInFlight = state.accountWorkspaceLoadingCount > 0
-    || Object.keys(state.accountWorkspaceSyncLanes || {}).length > 0;
-  const hasPending = Object.keys(state.accountWorkspacePending || {}).length > 0;
-  let presentation;
-  if (navigator.onLine === false) {
-    presentation = {
-      state: "offline",
+function deriveAccountWorkspaceSyncStatus(
+  source = state,
+  { online = typeof navigator === "undefined" ? true : navigator.onLine !== false } = {},
+) {
+  const loadingCount = Number(source?.accountWorkspaceLoadingCount) || 0;
+  const laneCount = Object.keys(source?.accountWorkspaceSyncLanes || {}).length;
+  const hasInFlight = loadingCount > 0 || laneCount > 0;
+  const hasPending = Object.keys(source?.accountWorkspacePending || {}).length > 0;
+  const errorKeys = Object.keys(source?.accountWorkspaceSyncErrors || {});
+  const errorStatuses = source?.accountWorkspaceSyncErrorStatuses || {};
+  const hasExpiredError = errorKeys.some((key) => Number(errorStatuses[key]) === 401);
+  const hasConflictError = errorKeys.some((key) => Number(errorStatuses[key]) === 409);
+  const signedIn = Boolean(source?.account);
+
+  if (!signedIn) {
+    const expired = Boolean(source?.quarantinedAccountOwnerId) || hasExpiredError;
+    return {
+      signedIn: false,
+      status: expired ? "expired" : "loading",
+      uiState: expired ? "failed" : "syncing",
+      label: expired ? "登入已過期" : "正在同步",
+      message: expired ? "登入已過期，請重新登入。" : "正在載入已同步的收藏與申請進度。",
+      icon: expired ? "triangle-alert" : "loader-circle",
+    };
+  }
+  if (online === false) {
+    return {
+      signedIn: true,
+      status: hasPending || !source.accountWorkspaceHasSynced ? "pending" : "saved",
+      uiState: "offline",
       label: "離線，稍後同步",
       message: "目前離線；收藏與申請進度會在恢復連線後同步。",
       icon: "cloud-off",
     };
-  } else if (hasInFlight) {
-    presentation = {
-      state: "syncing",
+  }
+  if (hasInFlight) {
+    return {
+      signedIn: true,
+      status: laneCount > 0 ? "syncing" : "loading",
+      uiState: "syncing",
       label: "正在同步",
       message: "正在同步收藏與申請進度。",
       icon: "loader-circle",
     };
-  } else if (Object.keys(state.accountWorkspaceSyncErrors || {}).length) {
-    presentation = {
-      state: "failed",
+  }
+  if (errorKeys.length > 0) {
+    const status = hasExpiredError
+      ? "expired"
+      : hasConflictError
+        ? "conflict"
+        : "pending";
+    return {
+      signedIn: true,
+      status,
+      uiState: "failed",
       label: "同步失敗",
       message: "同步失敗；變更仍保留在此裝置。",
       icon: "triangle-alert",
     };
-  } else if (hasPending) {
-    presentation = {
-      state: "pending",
+  }
+  if (hasPending) {
+    return {
+      signedIn: true,
+      status: "pending",
+      uiState: "pending",
       label: "等待同步",
       message: "收藏與申請進度已有變更，正在等待同步。",
       icon: "cloud-upload",
     };
-  } else if (state.accountWorkspaceHasSynced) {
-    presentation = {
-      state: "synced",
+  }
+  if (source.accountWorkspaceHasSynced) {
+    return {
+      signedIn: true,
+      status: "saved",
+      uiState: "synced",
       label: "已同步",
       message: "條件、收藏與申請進度已同步。",
       icon: "circle-check",
     };
-  } else {
-    presentation = {
-      state: "syncing",
-      label: "正在同步",
-      message: "正在載入已同步的收藏與申請進度。",
-      icon: "loader-circle",
-    };
   }
+  return {
+    signedIn: true,
+    status: "loading",
+    uiState: "syncing",
+    label: "正在同步",
+    message: "正在載入已同步的收藏與申請進度。",
+    icon: "loader-circle",
+  };
+}
 
-  const changed = status.dataset.syncState !== presentation.state;
-  status.dataset.syncState = presentation.state;
-  status.setAttribute("aria-busy", String(presentation.state === "syncing"));
+function renderAccountWorkspaceSyncStatus() {
+  const control = $("#account-workspace-sync-control");
+  const status = $("#account-workspace-sync-status");
+  if (!control || !status) return;
+  const presentation = deriveAccountWorkspaceSyncStatus();
+  control.hidden = !presentation.signedIn;
+  if (!presentation.signedIn) return;
+
+  const changed = status.dataset.syncState !== presentation.uiState;
+  status.dataset.syncState = presentation.uiState;
+  status.dataset.workspaceSyncStatus = presentation.status;
+  status.setAttribute("aria-busy", String(presentation.uiState === "syncing"));
   status.title = presentation.label;
   const label = $("#account-workspace-sync-label");
   const message = $("#account-workspace-sync-message");
@@ -2651,7 +2704,7 @@ function renderAccountWorkspaceSyncStatus() {
     initIcons();
   }
   const retry = $("#account-workspace-sync-retry");
-  if (retry) retry.hidden = presentation.state !== "failed";
+  if (retry) retry.hidden = presentation.uiState !== "failed";
 }
 
 function persistAccountWorkspaceSyncMetadata() {
@@ -2690,6 +2743,7 @@ function clearAccountWorkspaceClientState() {
   state.accountWorkspaceLoadingCount = 0;
   state.accountWorkspaceSyncAccountId = "";
   state.accountWorkspaceSyncErrors = {};
+  state.accountWorkspaceSyncErrorStatuses = {};
   state.accountWorkspaceHasSynced = false;
   persistAccountWorkspaceSyncMetadata();
   renderAccountWorkspaceSyncStatus();
@@ -3042,6 +3096,7 @@ function queueAccountWorkspaceSync(payload) {
   );
   state.accountWorkspacePending[key] = safe;
   delete state.accountWorkspaceSyncErrors[key];
+  delete state.accountWorkspaceSyncErrorStatuses[key];
   persistAccountWorkspaceSyncMetadata();
   renderAccountWorkspaceSyncStatus();
   return safe;
@@ -3296,6 +3351,7 @@ async function drainAccountWorkspaceSync(key, { quiet = true, requestContext } =
       }
       state.accountWorkspaceBases[key] = savedWorkspace;
       delete state.accountWorkspaceSyncErrors[key];
+      delete state.accountWorkspaceSyncErrorStatuses[key];
       state.accountWorkspaceHasSynced = true;
       persistAccountWorkspaceSyncMetadata();
       if (
@@ -3346,6 +3402,7 @@ async function drainAccountWorkspaceSync(key, { quiet = true, requestContext } =
       }
       const errorMessage = error.message || "帳號工作區同步失敗";
       state.accountWorkspaceSyncErrors[key] = errorMessage;
+      state.accountWorkspaceSyncErrorStatuses[key] = Number(error?.status) || 0;
       renderAccountWorkspaceSyncStatus();
       if (accountWorkspaceSyncErrorIsRetryable(error)) schedulePendingWorkspaceRetry();
       if (!quiet) announce(errorMessage, "error", true);
@@ -3364,6 +3421,7 @@ function startAccountWorkspaceDrain(key, { quiet = true } = {}) {
   if (existing) return existing;
   const requestContext = captureAuthenticatedRequestContext();
   delete state.accountWorkspaceSyncErrors[key];
+  delete state.accountWorkspaceSyncErrorStatuses[key];
   let lane;
   lane = drainAccountWorkspaceSync(key, { quiet, requestContext }).finally(() => {
     if (state.accountWorkspaceSyncLanes[key] === lane) {
@@ -3458,6 +3516,7 @@ async function loadAccountWorkspace({ homeSchool = activeHomeSchool() } = {}) {
   const key = accountWorkspaceKey(homeSchool);
   state.accountWorkspaceLoadingCount += 1;
   delete state.accountWorkspaceSyncErrors[key];
+  delete state.accountWorkspaceSyncErrorStatuses[key];
   state.accountWorkspaceHasSynced = false;
   renderAccountWorkspaceSyncStatus();
   const localPayload = accountWorkspacePayload(homeSchool);
@@ -3505,12 +3564,14 @@ async function loadAccountWorkspace({ homeSchool = activeHomeSchool() } = {}) {
     }
     if (authenticatedRequestContextIsCurrent(requestContext) && !state.accountWorkspacePending[key]) {
       delete state.accountWorkspaceSyncErrors[key];
+      delete state.accountWorkspaceSyncErrorStatuses[key];
       state.accountWorkspaceHasSynced = true;
     }
   } catch (error) {
     if (error.staleSession || !authenticatedRequestContextIsCurrent(requestContext)) return;
     const errorMessage = error.message || "帳號工作區暫時無法使用";
     state.accountWorkspaceSyncErrors[key] = errorMessage;
+    state.accountWorkspaceSyncErrorStatuses[key] = Number(error?.status) || 0;
     if (accountWorkspaceSyncErrorIsRetryable(error)) schedulePendingWorkspaceRetry();
     announce(`帳號同步暫時無法使用：${errorMessage}`, "error");
   } finally {
@@ -11062,39 +11123,63 @@ function workflowSubmissionProgressKey(workflow, step) {
 }
 
 function workflowSubmissionProgressRecord(workflow, step) {
+  const method = step.submission?.method || "unknown";
   return state.submissionProgress[workflowSubmissionProgressKey(workflow, step)] || {
     title: step.title,
-    method: step.submission?.method || "unknown",
+    method,
     status: "not_started",
+    allowed_actions: method === "unknown" ? [] : ["start"],
     proof_metadata: null,
   };
 }
 
-function submissionProgressActions(progress, method) {
-  if (progress.status === "not_started") {
-    return [{ action: "start", label: "開始準備", style: "primary-button", icon: "list-checks" }];
+function submissionProgressAllowedActions(progress, method) {
+  if (Array.isArray(progress?.allowed_actions)) {
+    return progress.allowed_actions;
   }
-  if (progress.status === "preparing") {
-    const label = method === "paper"
-      ? "我已寄出／送交紙本"
-      : method === "in_person"
-        ? "我已親自送交"
-        : method === "mixed"
-          ? "我已完成所有送件部分"
-          : "我已送出";
-    return [{ action: "submit", label, style: "primary-button", icon: "send" }];
+  if (!method || method === "unknown") return [];
+  if (progress?.status === "not_started") return ["start"];
+  if (progress?.status === "preparing") return ["submit", "revert"];
+  if (progress?.status === "submitted") {
+    return method === "paper" || method === "mixed"
+      ? ["confirm_receipt", "revert"]
+      : ["confirm_receipt", "complete", "revert"];
   }
-  if (progress.status === "submitted") {
-    const actions = [{ action: "confirm_receipt", label: "記錄收件證明", style: "primary-button", icon: "badge-check" }];
-    if (method !== "paper" && method !== "mixed") {
-      actions.push({ action: "complete", label: "沒有回條，手動標記完成", style: "secondary-button", icon: "check" });
-    }
-    return actions;
-  }
-  if (progress.status === "receipt_confirmed") {
-    return [{ action: "complete", label: "確認並標記完成", style: "primary-button", icon: "check-check" }];
-  }
+  if (progress?.status === "receipt_confirmed") return ["complete", "revert"];
+  if (progress?.status === "completed") return ["revert"];
   return [];
+}
+
+function submissionProgressActions(progress, method) {
+  const allowed = submissionProgressAllowedActions(progress, method);
+  const canConfirmReceipt = allowed.includes("confirm_receipt");
+  return allowed
+    .filter((action) => action !== "revert")
+    .map((action) => {
+      if (action === "start") {
+        return { action: "start", label: "開始準備", style: "primary-button", icon: "list-checks" };
+      }
+      if (action === "submit") {
+        const label = method === "paper"
+          ? "我已寄出／送交紙本"
+          : method === "in_person"
+            ? "我已親自送交"
+            : method === "mixed"
+              ? "我已完成所有送件部分"
+              : "我已送出";
+        return { action: "submit", label, style: "primary-button", icon: "send" };
+      }
+      if (action === "confirm_receipt") {
+        return { action: "confirm_receipt", label: "記錄收件證明", style: "primary-button", icon: "badge-check" };
+      }
+      if (action === "complete") {
+        return canConfirmReceipt
+          ? { action: "complete", label: "沒有回條，手動標記完成", style: "secondary-button", icon: "check" }
+          : { action: "complete", label: "確認並標記完成", style: "primary-button", icon: "check-check" };
+      }
+      return null;
+    })
+    .filter(Boolean);
 }
 
 function submissionProgressNextStep(progress, method) {
@@ -11129,6 +11214,7 @@ function renderWorkflowSubmissionProgress(workflow, step) {
   const method = submission.method || "unknown";
   const progressKey = workflowSubmissionProgressKey(workflow, step);
   const progress = workflowSubmissionProgressRecord(workflow, step);
+  const allowedActions = submissionProgressAllowedActions(progress, method);
   const progressActions = submissionProgressActions(progress, method);
   const proof = progress.proof_metadata;
   const proofSummary = proof
@@ -11165,7 +11251,7 @@ function renderWorkflowSubmissionProgress(workflow, step) {
         <div><dt>期限</dt><dd>${deadlines.map((deadline) => `<span>${escapeHtml(deadline)}</span>`).join("")}</dd></div>
         <div><dt>收件證明</dt><dd>${escapeHtml(proofSummary)}</dd></div>
       </dl>
-      ${state.account && progress.status === "submitted" ? `
+      ${state.account && allowedActions.includes("confirm_receipt") ? `
         <div class="workflow-proof-fields">
           <label><span>證明種類</span><select data-submission-proof-kind><option value="tracking" ${proofKind === "tracking" ? "selected" : ""}>物流追蹤紀錄</option><option value="submission_receipt" ${proofKind === "submission_receipt" ? "selected" : ""}>系統送出回條</option><option value="confirmation_email" ${proofKind === "confirmation_email" ? "selected" : ""}>收件確認 電子郵件</option><option value="in_person_receipt" ${proofKind === "in_person_receipt" ? "selected" : ""}>親送收據</option><option value="other" ${proofKind === "other" ? "selected" : ""}>其他收件證明</option></select></label>
           <label><span>追蹤碼／收件編號（選填）</span><input data-submission-proof-reference maxlength="200" autocomplete="off" /></label>
@@ -11173,7 +11259,7 @@ function renderWorkflowSubmissionProgress(workflow, step) {
         </div>` : ""}
       <div class="workflow-progress-actions">
         ${!state.account ? `<button type="button" class="secondary-button" data-open-submission-auth><i data-lucide="log-in" aria-hidden="true"></i><span>登入後記錄進度</span></button>` : progressActions.map(({ action, label, style, icon }) => `<button type="button" class="${style}" data-submission-action="${action}" data-submission-progress-key="${escapeHtml(progressKey)}"><i data-lucide="${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span></button>`).join("")}
-        ${state.account && progress.status !== "not_started" ? `<button type="button" class="text-button" data-submission-action="revert" data-submission-progress-key="${escapeHtml(progressKey)}">撤銷上一個標記</button>` : ""}
+        ${state.account && allowedActions.includes("revert") ? `<button type="button" class="text-button" data-submission-action="revert" data-submission-progress-key="${escapeHtml(progressKey)}">撤銷上一個標記</button>` : ""}
       </div>
       <p><i data-lucide="shield-check" aria-hidden="true"></i><span>所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。</span></p>
     </div>`;
@@ -11730,7 +11816,18 @@ function renderPrivateConversation(conversation, messages) {
   const otherName = conversation.sender_id === me ? conversation.recipient_name : conversation.sender_name;
   const isRecipient = conversation.recipient_id === me;
   const accepted = conversation.status === "accepted";
-  return `<details class="private-conversation" ${accepted ? "" : "open"}><summary><span><strong>${escapeHtml(otherName)}</strong><small>${accepted ? "私訊中" : isRecipient ? "等待你接受邀請" : "等待對方接受"}</small></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="private-conversation-body"><div class="private-message-stream">${messages.map((message) => `<article class="${message.author_id === me ? "is-mine" : ""}"><strong>${escapeHtml(message.display_name)}</strong><p>${escapeHtml(message.body)}</p><time>${escapeHtml(formatDate(message.created_at))}</time></article>`).join("")}</div>${!accepted && isRecipient ? `<button type="button" class="primary-button" data-accept-conversation="${escapeHtml(conversation.id)}"><i data-lucide="check" aria-hidden="true"></i><span>接受私訊邀請</span></button>` : ""}${accepted ? `<form class="community-inline-composer private-message-form" data-conversation-id="${escapeHtml(conversation.id)}"><label class="sr-only">私訊內容</label><input name="body" minlength="2" maxlength="1000" required placeholder="輸入私訊…" /><button type="submit" class="primary-button" aria-label="傳送私訊"><i data-lucide="send" aria-hidden="true"></i><span>傳送</span></button><div class="form-status" role="status"></div></form>` : ""}<button type="button" class="text-action danger" data-block-identity="${escapeHtml(otherId)}"><i data-lucide="ban" aria-hidden="true"></i><span>封鎖</span></button></div></details>`;
+  const declined = conversation.status === "declined";
+  const statusLabel = accepted
+    ? "私訊中"
+    : declined
+      ? (isRecipient ? "已婉拒邀請" : "對方已婉拒邀請")
+      : isRecipient
+        ? "等待你接受邀請"
+        : "等待對方接受";
+  const inviteActions = !accepted && !declined && isRecipient
+    ? `<div class="private-invite-actions"><button type="button" class="primary-button" data-accept-conversation="${escapeHtml(conversation.id)}"><i data-lucide="check" aria-hidden="true"></i><span>接受私訊邀請</span></button><button type="button" class="secondary-button" data-decline-conversation="${escapeHtml(conversation.id)}"><i data-lucide="x" aria-hidden="true"></i><span>婉拒邀請</span></button></div>`
+    : "";
+  return `<details class="private-conversation" ${accepted || declined ? "" : "open"}><summary><span><strong>${escapeHtml(otherName)}</strong><small>${statusLabel}</small></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="private-conversation-body"><div class="private-message-stream">${messages.map((message) => `<article class="${message.author_id === me ? "is-mine" : ""}"><strong>${escapeHtml(message.display_name)}</strong><p>${escapeHtml(message.body)}</p><time>${escapeHtml(formatDate(message.created_at))}</time></article>`).join("")}</div>${inviteActions}${accepted ? `<form class="community-inline-composer private-message-form" data-conversation-id="${escapeHtml(conversation.id)}"><label class="sr-only">私訊內容</label><input name="body" minlength="2" maxlength="1000" required placeholder="輸入私訊…" /><button type="submit" class="primary-button" aria-label="傳送私訊"><i data-lucide="send" aria-hidden="true"></i><span>傳送</span></button><div class="form-status" role="status"></div></form>` : ""}<button type="button" class="text-action danger" data-block-identity="${escapeHtml(otherId)}"><i data-lucide="ban" aria-hidden="true"></i><span>封鎖</span></button></div></details>`;
 }
 
 function renderCommunityThread(thread) {
@@ -12186,6 +12283,7 @@ function communityMutationSupportsIdempotency(url, method) {
     || url === "/experience-submissions"
     || url === "/community/conversations"
     || /^\/community\/conversations\/[^/]+\/accept$/.test(url)
+    || /^\/community\/conversations\/[^/]+\/decline$/.test(url)
     || /^\/community\/conversations\/[^/]+\/messages$/.test(url)
     || url === "/community/blocks"
     || url === "/community/reports";
@@ -15564,6 +15662,18 @@ function bindEvents() {
       } catch (error) {
         announce(error.message, "error", true);
         acceptConversation.disabled = false;
+      }
+      return;
+    }
+    const declineConversation = event.target.closest("[data-decline-conversation]");
+    if (declineConversation) {
+      declineConversation.disabled = true;
+      try {
+        await submitCommunityJson(`/community/conversations/${encodeURIComponent(declineConversation.dataset.declineConversation)}/decline`, {});
+        await refreshCommunityHub("messages");
+      } catch (error) {
+        announce(error.message, "error", true);
+        declineConversation.disabled = false;
       }
       return;
     }

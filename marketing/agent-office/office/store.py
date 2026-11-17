@@ -219,6 +219,19 @@ class Store:
             (now_iso,),
         )
 
+    def recover_interrupted_publishing(self, error_message: str) -> list[int]:
+        """Turn drafts left in 'publishing' after an unclean stop into 'failed' (never 'approved') so a human decides whether to retry."""
+        with self._lock:
+            rows = self._db.execute("SELECT id FROM drafts WHERE status = 'publishing' ORDER BY id").fetchall()
+            ids = [int(row["id"]) for row in rows]
+            if ids:
+                self._db.execute(
+                    "UPDATE drafts SET status = 'failed', error = ?, updated_at = ? WHERE status = 'publishing'",
+                    (error_message, now_utc()),
+                )
+                self._db.commit()
+            return ids
+
     def published_since(self, since_iso: str) -> list[dict]:
         return self._all(
             "SELECT * FROM drafts WHERE status = 'published' AND channel != 'github' AND published_at >= ? ORDER BY published_at",

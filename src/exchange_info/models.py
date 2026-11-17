@@ -3865,16 +3865,52 @@ class SubmissionProofMetadata(BaseModel):
     recorded_at: datetime = Field(default_factory=utc_now)
 
 
+SubmissionProgressStatus = Literal[
+    "not_started",
+    "preparing",
+    "submitted",
+    "receipt_confirmed",
+    "completed",
+]
+
+SubmissionProgressAction = Literal[
+    "start",
+    "submit",
+    "confirm_receipt",
+    "complete",
+    "revert",
+]
+
+
+def submission_progress_allowed_actions(
+    status: SubmissionProgressStatus,
+    method: ApplicationSubmissionMethod,
+) -> list[SubmissionProgressAction]:
+    if method == ApplicationSubmissionMethod.UNKNOWN:
+        return []
+    if status == "not_started":
+        return ["start"]
+    if status == "preparing":
+        return ["submit", "revert"]
+    if status == "submitted":
+        if method in {
+            ApplicationSubmissionMethod.PAPER,
+            ApplicationSubmissionMethod.MIXED,
+        }:
+            return ["confirm_receipt", "revert"]
+        return ["confirm_receipt", "complete", "revert"]
+    if status == "receipt_confirmed":
+        return ["complete", "revert"]
+    if status == "completed":
+        return ["revert"]
+    return []
+
+
 class AccountSubmissionProgress(BaseModel):
     title: str = Field(min_length=1, max_length=240)
     method: ApplicationSubmissionMethod
-    status: Literal[
-        "not_started",
-        "preparing",
-        "submitted",
-        "receipt_confirmed",
-        "completed",
-    ] = "not_started"
+    status: SubmissionProgressStatus = "not_started"
+    allowed_actions: list[SubmissionProgressAction] = Field(default_factory=list)
     responsible_unit: str | None = Field(default=None, max_length=240)
     send_by_at: datetime | None = None
     arrival_deadline_at: datetime | None = None
@@ -3888,11 +3924,18 @@ class AccountSubmissionProgress(BaseModel):
     completed_at: datetime | None = None
     updated_at: datetime = Field(default_factory=utc_now)
 
+    @model_validator(mode="after")
+    def populate_allowed_actions(self) -> AccountSubmissionProgress:
+        self.allowed_actions = submission_progress_allowed_actions(
+            self.status, self.method
+        )
+        return self
+
 
 class SubmissionProgressTransitionRequest(BaseModel):
     home_school: str = Field(min_length=2, max_length=80)
     progress_key: str = Field(min_length=3, max_length=240)
-    action: Literal["start", "submit", "confirm_receipt", "complete", "revert"]
+    action: SubmissionProgressAction
     method: ApplicationSubmissionMethod
     title: str = Field(min_length=1, max_length=240)
     responsible_unit: str | None = Field(default=None, max_length=240)

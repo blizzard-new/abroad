@@ -58,6 +58,7 @@ def apply_openapi_contract_metadata(schema: dict[str, Any]) -> dict[str, Any]:
         ('/community/posts/{post_id}/comments', 'post'): (401, 403, 409),
         ('/community/conversations', 'post'): (401, 403, 409, 503),
         ('/community/conversations/{conversation_id}/accept', 'post'): (401, 403, 404, 409, 503),
+        ('/community/conversations/{conversation_id}/decline', 'post'): (401, 403, 404, 409, 503),
         ('/community/conversations/{conversation_id}/messages', 'post'): (401, 403, 404, 409, 503),
         ('/community/blocks', 'post'): (401, 403, 404, 409, 503),
     }

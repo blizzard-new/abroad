@@ -1370,6 +1370,20 @@
       },
       "AccountSubmissionProgress": {
         "properties": {
+          "allowed_actions": {
+            "items": {
+              "enum": [
+                "start",
+                "submit",
+                "confirm_receipt",
+                "complete",
+                "revert"
+              ],
+              "type": "string"
+            },
+            "title": "Allowed Actions",
+            "type": "array"
+          },
           "arrival_deadline_at": {
             "anyOf": [
               {
@@ -27205,6 +27219,110 @@
           }
         },
         "summary": "Accept Private Conversation"
+      }
+    },
+    "/community/conversations/{conversation_id}/decline": {
+      "post": {
+        "operationId": "decline_private_conversation_community_conversations__conversation_id__decline_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "conversation_id",
+            "required": true,
+            "schema": {
+              "title": "Conversation Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-Anonymous-ID",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Anonymous-Id"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-Anonymous-Token",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Anonymous-Token"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-Community-Mutation-ID",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "minLength": 16,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Community-Mutation-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivateConversation"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "404": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "409": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "503": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          }
+        },
+        "summary": "Decline Private Conversation"
       }
     },
     "/community/conversations/{conversation_id}/messages": {

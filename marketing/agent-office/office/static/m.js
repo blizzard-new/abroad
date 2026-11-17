@@ -180,7 +180,8 @@ async function onCardClick(e) {
   if (ref) return focusDraft(ref.dataset.draft);
   const btn = e.target.closest("button[data-act]");
   if (!btn) return;
-  const card = btn.closest(".card");
+  const card = btn.closest("[data-id]");
+  if (!card) return;
   const id = Number(card.dataset.id);
   const d = S.drafts.get(id);
   const editor = $(".editor", card);
@@ -262,9 +263,10 @@ function renderSched() {
   for (const d of items) groups.set(d.day, [...(groups.get(d.day) || []), d]);
   host.innerHTML = [...groups].map(([day, list]) => `<h4 class="day">${esc(day)}</h4>${list.map((d) => {
     const link = d.remote_url ? `<span class="more">${safeLink(d.remote_url, d.channel === "github" ? "查看 draft PR" : "查看貼文")}</span>` : d.note ? `<span class="more">${esc(d.note)}</span>` : "";
+    const retry = d.status === "failed" ? `<span class="more"><button class="btn" data-act="now" type="button">重新發佈</button></span>` : "";
     return `<div class="row-item" id="draft-${d.id}" data-id="${d.id}"><span class="t">${d.scheduled_at ? hhmm(d.scheduled_at) : "--:--"}</span>` +
       `<span class="ttl"><span class="chip">${esc(CHANNEL[d.channel] || d.channel)} ${esc(FORMAT[d.format] || "")}</span> ${esc(d.title)}</span>` +
-      `<span class="chip ${d.status}">${esc(STATUS[d.status] || d.status)}</span>${link}${d.error ? `<span class="err">${esc(d.error)}</span>` : ""}</div>`;
+      `<span class="chip ${d.status}">${esc(STATUS[d.status] || d.status)}</span>${link}${d.error ? `<span class="err">${esc(d.error)}</span>` : ""}${retry}</div>`;
   }).join("")}`).join("");
 }
 

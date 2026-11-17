@@ -784,7 +784,7 @@ def _calendar_feed_content(
         if event.source_url:
             event_lines.append(f"URL:{_escape_ics(event.source_url)}")
 
-        if not getattr(event, "generated_from_event_id", None) and event.status not in ("ready", "completed"):
+        if not getattr(event, "generated_from_event_id", None) and event.status != "ready":
             for days in reminder_triggers:
                 trigger = f"-P{days}D" if days > 0 else "PT0M"
                 event_lines.extend(
@@ -6702,6 +6702,24 @@ def create_app(
             PrivateConversationStatusMutationRequest(mutation_id=mutation_id or uuid4().hex,
                 **actor, conversation_id=conversation_id, expected_status=ConversationStatus.PENDING,
                 status=ConversationStatus.ACCEPTED), response, "conversation")
+
+    @app.post(
+        "/community/conversations/{conversation_id}/decline",
+        response_model=PrivateConversation,
+    )
+    def decline_private_conversation(
+        conversation_id: str,
+        request: Request,
+        response: Response,
+        identity_id: str | None = Header(default=None, alias="X-Anonymous-ID"),
+        access_token: str | None = Header(default=None, alias="X-Anonymous-Token"),
+        mutation_id: str | None = Header(default=None, alias="X-Community-Mutation-ID", min_length=16, max_length=128),
+    ) -> PrivateConversation:
+        actor, _ = private_mutation_actor(request, identity_id, access_token)
+        return commit_private_mutation(comm_repo.commit_private_conversation_status,
+            PrivateConversationStatusMutationRequest(mutation_id=mutation_id or uuid4().hex,
+                **actor, conversation_id=conversation_id, expected_status=ConversationStatus.PENDING,
+                status=ConversationStatus.DECLINED), response, "conversation")
 
     @app.get(
         "/community/conversations/{conversation_id}/messages",

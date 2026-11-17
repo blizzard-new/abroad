@@ -2079,6 +2079,14 @@ class PrivateConversation {
 
   String otherName(String identityId) =>
       senderId == identityId ? recipientName : senderName;
+
+  String statusLabel(String identityId) {
+    if (status == 'accepted') return '已接受 · 可以傳送訊息';
+    if (status == 'declined') {
+      return recipientId == identityId ? '已婉拒邀請' : '對方已婉拒邀請';
+    }
+    return '等待接受邀請';
+  }
 }
 
 class PrivateMessage {
@@ -2407,4 +2415,57 @@ class ApplicationFormCompletion {
 
   bool get ready => completed == total;
   int get percent => total == 0 ? 100 : ((completed / total) * 100).round();
+}
+
+class AccountSubmissionProgress {
+  const AccountSubmissionProgress({
+    required this.title,
+    required this.method,
+    required this.status,
+    required this.allowedActions,
+    this.responsibleUnit = '',
+    this.sendByAt = '',
+    this.arrivalDeadlineAt = '',
+    this.proofMetadata,
+    this.recordedBy = 'student',
+    this.platformSubmitted = false,
+    this.note = '',
+    this.updatedAt = '',
+  });
+
+  factory AccountSubmissionProgress.fromJson(dynamic value) {
+    final json = jsonMap(value);
+    final rawProof = json['proof_metadata'];
+    return AccountSubmissionProgress(
+      title: textValue(json['title']),
+      method: textValue(json['method'], 'unknown'),
+      status: textValue(json['status'], 'not_started'),
+      allowedActions: stringList(json['allowed_actions']),
+      responsibleUnit: textValue(json['responsible_unit']),
+      sendByAt: textValue(json['send_by_at']),
+      arrivalDeadlineAt: textValue(json['arrival_deadline_at']),
+      proofMetadata: rawProof is Map<String, dynamic>
+          ? Map<String, dynamic>.from(rawProof)
+          : null,
+      recordedBy: textValue(json['recorded_by'], 'student'),
+      platformSubmitted: json['platform_submitted'] == true,
+      note: textValue(json['note']),
+      updatedAt: textValue(json['updated_at']),
+    );
+  }
+
+  final String title;
+  final String method;
+  final String status;
+  final List<String> allowedActions;
+  final String responsibleUnit;
+  final String sendByAt;
+  final String arrivalDeadlineAt;
+  final JsonMap? proofMetadata;
+  final String recordedBy;
+  final bool platformSubmitted;
+  final String note;
+  final String updatedAt;
+
+  bool canPerform(String action) => allowedActions.contains(action);
 }

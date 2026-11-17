@@ -3,7 +3,10 @@ from __future__ import annotations
 from .models import (
     AccountSubmissionProgress,
     ApplicationSubmissionMethod,
+    SubmissionProgressAction,
+    SubmissionProgressStatus,
     SubmissionProgressTransitionRequest,
+    submission_progress_allowed_actions,
     utc_now,
 )
 
@@ -20,6 +23,13 @@ _CONTEXT_FIELDS = (
     "arrival_deadline_at",
     "note",
 )
+
+
+def allowed_actions_for_submission_progress(
+    status: SubmissionProgressStatus,
+    method: ApplicationSubmissionMethod,
+) -> list[SubmissionProgressAction]:
+    return submission_progress_allowed_actions(status, method)
 
 
 def _submission_context(
@@ -66,19 +76,29 @@ def transition_submission_progress(
         "updated_at": now,
     }
 
+    def _transition_to(
+        status: SubmissionProgressStatus, **extra: object
+    ) -> AccountSubmissionProgress:
+        return progress.model_copy(
+            update={
+                **common,
+                "status": status,
+                "allowed_actions": allowed_actions_for_submission_progress(
+                    status, progress.method
+                ),
+                **extra,
+            }
+        )
+
     if request.action == "start":
         if progress.status != "not_started":
             raise ValueError("只有尚未開始的送件步驟可以開始準備。")
-        return progress.model_copy(
-            update={**common, "status": "preparing", "started_at": now}
-        )
+        return _transition_to("preparing", started_at=now)
 
     if request.action == "submit":
         if progress.status != "preparing":
             raise ValueError("請先標記為準備中，才能記錄已送出。")
-        return progress.model_copy(
-            update={**common, "status": "submitted", "submitted_at": now}
-        )
+        return _transition_to("submitted", submitted_at=now)
 
     if request.action == "confirm_receipt":
         if progress.status != "submitted":
@@ -107,13 +127,10 @@ def transition_submission_progress(
                 "recorded_at": now,
             }
         )
-        return progress.model_copy(
-            update={
-                **common,
-                "status": "receipt_confirmed",
-                "proof_metadata": proof_metadata,
-                "receipt_confirmed_at": now,
-            }
+        return _transition_to(
+            "receipt_confirmed",
+            proof_metadata=proof_metadata,
+            receipt_confirmed_at=now,
         )
 
     if request.action == "complete":
@@ -124,52 +141,39 @@ def transition_submission_progress(
             if progress.method in _PAPER_METHODS and progress.status == "submitted":
                 raise ValueError("紙本或混合送件必須先確認已送達，不能只以寄出日標記完成。")
             raise ValueError("目前狀態還不能標記完成。")
-        return progress.model_copy(
-            update={**common, "status": "completed", "completed_at": now}
-        )
+        return _transition_to("completed", completed_at=now)
 
     if request.action == "revert":
         if progress.status == "completed":
-            previous = (
+            previous: SubmissionProgressStatus = (
                 "receipt_confirmed"
                 if progress.receipt_confirmed_at or progress.proof_metadata
                 else "submitted"
             )
-            return progress.model_copy(
-                update={**common, "status": previous, "completed_at": None}
-            )
+            return _transition_to(previous, completed_at=None)
         if progress.status == "receipt_confirmed":
-            return progress.model_copy(
-                update={
-                    **common,
-                    "status": "submitted",
-                    "proof_metadata": None,
-                    "receipt_confirmed_at": None,
-                    "completed_at": None,
-                }
+            return _transition_to(
+                "submitted",
+                proof_metadata=None,
+                receipt_confirmed_at=None,
+                completed_at=None,
             )
         if progress.status == "submitted":
-            return progress.model_copy(
-                update={
-                    **common,
-                    "status": "preparing",
-                    "submitted_at": None,
-                    "proof_metadata": None,
-                    "receipt_confirmed_at": None,
-                    "completed_at": None,
-                }
+            return _transition_to(
+                "preparing",
+                submitted_at=None,
+                proof_metadata=None,
+                receipt_confirmed_at=None,
+                completed_at=None,
             )
         if progress.status == "preparing":
-            return progress.model_copy(
-                update={
-                    **common,
-                    "status": "not_started",
-                    "started_at": None,
-                    "submitted_at": None,
-                    "proof_metadata": None,
-                    "receipt_confirmed_at": None,
-                    "completed_at": None,
-                }
+            return _transition_to(
+                "not_started",
+                started_at=None,
+                submitted_at=None,
+                proof_metadata=None,
+                receipt_confirmed_at=None,
+                completed_at=None,
             )
         raise ValueError("尚未開始的送件步驟沒有可撤銷的進度。")
 
