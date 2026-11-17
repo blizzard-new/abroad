@@ -29,8 +29,8 @@ def test_level_tools_keep_forms_and_plan_progress_across_routes_and_reload(page,
     expect(page.locator('#advisor-question')).to_have_value('關卡內尚未送出的問題')
     page.get_by_role('link',name='收合工具',exact=True).click()
     page.get_by_role('button',name='確認內容',exact=True).click()
-    expect(page.locator('.success-state')).to_be_visible()
-    page.reload()
+    expect(page.locator('#today-view')).to_be_visible()
+    page.goto(path)
     expect(page.locator('.level-progress')).to_contain_text('已完成')
     # A second term shares the same school but has no completed target step.
     registry=page.request.get(f'{live_server.base_url}/account/application-paths?home_school=長庚大學').json()

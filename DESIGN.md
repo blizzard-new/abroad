@@ -75,3 +75,14 @@ Browser tests await `appReady`, the real bootstrap promise, instead of global ne
 Keep the existing static-asset version checks: any changed versioned CSS or JavaScript needs a new `?v=` and an updated `tests/static_asset_versions.json`.
 
 The repository still loads legacy stylesheets for classic pages. This scoped refinement does not claim to have removed that legacy dependency.
+
+## 我的申請 structure (2026-11-17)
+
+One page answers "what do I do now, and what is left": **總覽** holds the single next step, the next confirmed deadline and the whole checklist. **時程** holds dates. **我的待辦** holds the student's own tasks. **計畫比較** appears only when there is more than one active plan. The old `view=progress` address opens 總覽.
+
+- One number for progress, in the plan header. Do not repeat it in cards, tabs or summaries.
+- A step asks for one action. No second confirmation for what the button already says, and no screen between finishing a step and returning to 總覽 (the toast carries "撤銷").
+- The rule checks are one step, **申請資格**: every rule and its result in one list, one form for the missing data, one confirmation. A rule the system judged as met needs no click. A rule that still lacks the student's data keeps the step open; it never counts as done.
+- Plan settings (母校、學期、目標) are shown in the plan selector, not as checklist rows.
+- Notes are optional. Marking a step done is what completes it.
+- Explanatory helper text is removed rather than shrunk and greyed. What stays is text the student needs to act (errors, warnings, official-source links) and one line stating that personal progress is not the school's decision.

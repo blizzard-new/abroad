@@ -75,8 +75,9 @@ def test_a_gate_missing_data_asks_for_it_and_the_confirm_button_waits(page, live
     page.locator('.gate-details > summary').click()
     expect(page.locator('#gate-college')).to_have_value('管理學院')
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
+    # Confirming returns straight to the overview; there is no screen in between.
     page.get_by_role('button', name='確認內容', exact=True).click()
-    expect(page.locator('.success-state')).to_be_visible()
+    expect(page.locator('#today-view')).to_be_visible()
     assert not errors
 
 
@@ -94,7 +95,6 @@ def test_values_from_my_conditions_are_offered_but_only_count_once_saved(page, l
     expect(page.locator('#level-title')).to_be_visible()
     expect(page.locator('#gate-college')).to_have_value('工學院')
     expect(page.locator('#gate-department')).to_have_value('電機工程學系')
-    expect(page.locator('.gate-offered')).to_contain_text('按下儲存後才會用來判斷')
     # Offering them judges nothing: the plan still lacks them and the confirm button still waits.
     assert gate_levels(page, live_server, plan)['check-college']['missing_inputs'] == ['college', 'department']
     expect(page.get_by_role('button', name='確認內容', exact=True)).to_be_disabled()

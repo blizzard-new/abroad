@@ -53,7 +53,7 @@ window.UniWayExchangeWorkspace = (() => {
   }
   function summary(value, schedule=false){
     const rows=(value?.workspace?.tasks||[]).filter(t=>t.effective_status!=='done');
-    if(!rows.length)return '<section class="ex-summary"><h3>從申請到交換生活</h3><a href="#my-application?'+new URLSearchParams({plan:value?.plan.id||'',view:'workspace'})+'">開啟我的任務 →</a></section>';
+    if(!rows.length)return '<section class="ex-summary"><h3>從申請到交換生活</h3><a href="#my-application?'+new URLSearchParams({plan:value?.plan.id||'',view:'workspace'})+'">開啟我的待辦 →</a></section>';
     const ready=rows.filter(t=>t.status!=='waiting'&&!t.waiting_for&&!(t.action==='submit'&&t.blocked_by?.length));
     const waiting=rows.filter(t=>!ready.includes(t));
     const listed=(schedule?rows.filter(t=>t.due_date):ready).sort((a,b)=>(a.due_date||'9999').localeCompare(b.due_date||'9999')).slice(0,schedule?12:4);
@@ -63,8 +63,8 @@ window.UniWayExchangeWorkspace = (() => {
   function render(){
     const locked=view().plan.archived;
     if(locked)tab='tasks';
-    host.innerHTML='<div class="exchange-workspace"><div class="ex-head"><div><h2>我的任務</h2></div><button class="primary-button" data-ex-new '+(locked?'disabled':'')+'>新增待辦</button></div><p id="exchange-message" role="status" tabindex="-1"></p>'+
-      '<nav class="ex-tabs" aria-label="我的任務工具">'+Object.entries({tasks:'我的任務',notice:'通知轉待辦',library:'加入準備清單',peers:'同梯交流'}).map(([key,name])=>'<button data-ex-tab="'+key+'" aria-pressed="'+(tab===key)+'" '+(locked&&key!=='tasks'?'disabled':'')+'>'+name+'</button>').join('')+'</nav>'+
+    host.innerHTML='<div class="exchange-workspace"><div class="ex-head"><div><h2>我的待辦</h2></div><button class="primary-button" data-ex-new '+(locked?'disabled':'')+'>新增待辦</button></div><p id="exchange-message" role="status" tabindex="-1"></p>'+
+      '<nav class="ex-tabs" aria-label="我的待辦工具">'+Object.entries({tasks:'我的待辦',notice:'通知轉待辦',library:'加入準備清單',peers:'同梯交流'}).map(([key,name])=>'<button data-ex-tab="'+key+'" aria-pressed="'+(tab===key)+'" '+(locked&&key!=='tasks'?'disabled':'')+'>'+name+'</button>').join('')+'</nav>'+
       (locked?'<p>這份計畫已封存，恢復後可繼續編輯。</p>':'')+'<div id="exchange-content"></div><dialog id="exchange-task-dialog" aria-labelledby="exchange-task-title"></dialog></div>';
     if(tab==='tasks')renderTasks();
     if(tab==='notice')renderNotice();
@@ -76,7 +76,8 @@ window.UniWayExchangeWorkspace = (() => {
     const all=tasks(), needed=all.filter(t=>!t.optional), optional=all.filter(t=>t.optional);
     const rows=all.filter(t=>(!kind||t.kind===kind)&&(!stage||stageKey(t.stage)===stage)&&(!status||t.effective_status===status));
     const done=xs=>xs.filter(t=>t.effective_status==='done').length;
-    $('#exchange-content').innerHTML='<div class="ex-counts"><span>準備任務 <b>'+done(needed)+' / '+needed.length+'</b></span><span>自選目標 <b>'+done(optional)+' / '+optional.length+'</b></span><span>個人紀錄，不代表校方受理或錄取</span></div>'+
+    $('#exchange-content').dataset.empty=String(!all.length);
+    $('#exchange-content').innerHTML='<div class="ex-counts"><span>準備任務 <b>'+done(needed)+' / '+needed.length+'</b></span><span>自選目標 <b>'+done(optional)+' / '+optional.length+'</b></span></div>'+
       '<div class="ex-filters"><label>階段<select id="exchange-stage"><option value="">全部階段</option>'+option(STAGES,stage)+'</select></label><label>類型<select id="exchange-kind"><option value="">全部類型</option>'+option(KINDS,kind)+'</select></label><label>狀態<select id="exchange-status"><option value="">全部狀態</option>'+option(STATUS,status)+'</select></label><div class="ex-actions"><button data-ex-export="text">下載準備筆記</button><button data-ex-export="calendar">匯出日期到行事曆</button></div></div>'+
       (kind==='course'?courseSummary():kind==='interview'?'<p class="ex-note">寫下自介、選校研究與回答，完成後可下載練習稿。練習題不代表校方考古題。<button data-ex-pack="interview">加入面試練習清單</button></p>':'')+
       '<div class="ex-task-list">'+(rows.length?rows.map(t=>'<article class="ex-task" data-ex-task="'+esc(t.id)+'"><div><div class="ex-meta">'+esc(stageLabel(t.stage))+' · '+esc(KINDS[t.kind])+(t.batch?' · '+esc(t.batch):'')+(t.optional?' · 自選':'')+'</div><h3><button data-ex-edit="'+esc(t.id)+'">'+esc(t.title)+'</button></h3><p>'+esc(dateLabel(t))+'</p>'+(t.waiting_for?'<p class="ex-wait">等待：'+esc(t.waiting_for)+'</p>':'')+(t.blocked_by?.length?'<p class="ex-wait">'+(t.action==='submit'?'送件前須完成：':'可先準備；前置事項：')+esc(t.blocked_by.map(id=>all.find(x=>x.id===id)?.title||id).join('、'))+'</p>':'')+(t.file_unavailable?'<p class="is-error">文件已過期或移除，請重新連結並核對。</p>':'')+(t.recipient||t.signers?'<p>'+esc([t.recipient&&'交給 '+t.recipient,t.signers&&'簽名 '+t.signers].filter(Boolean).join(' · '))+'</p>':'')+'</div><div class="ex-task-action"><span>'+esc(STATUS[t.effective_status])+'</span><button class="outline-button" data-ex-edit="'+esc(t.id)+'">'+(t.kind==='interview'?'寫下回答':'開啟任務')+'</button></div></article>').join(''):'<div class="ex-empty"><h3>'+ (all.length?'此分類沒有任務':'先放進你正在準備的事')+'</h3><p>可以貼上校方通知、選擇適合的清單，或自己新增一項。</p><button class="outline-button" data-ex-tab="library">查看準備清單</button></div>')+'</div>';
