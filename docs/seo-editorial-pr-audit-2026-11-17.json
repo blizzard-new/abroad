@@ -1,0 +1,93 @@
+{
+  "checked": "2026-11-17",
+  "timezone": "Asia/Taipei",
+  "initial_clock": {
+    "utc": "2026-11-16 23:55:46 UTC",
+    "taipei": "2026-11-17 07:55:46+08:00",
+    "interpretation": "EnvironmentUTCcalendarNov16didnotdeterminebatch;actualTaipeidayNov17. Prior369alreadymergedandexcluded."
+  },
+  "base_commit": "ae68380d7ac1c503100696e3aaefd8960ed69239",
+  "branch": "codex/seo-daily-20261117",
+  "same_day_before_work": {
+    "all_state_prs": [],
+    "matching_local_remote_branches": []
+  },
+  "open_pull_requests": [
+    {
+      "number": 371,
+      "title": "feat(home): 移除 app.uniway 首頁「目前支援大學」跑馬燈橫列",
+      "body": "## 變更摘要\n\n移除 `app.uniway` 首頁（`#home-landing`）Hero 下方的「目前支援 71 所大學」跑馬燈橫列（`.pr-supported` / `#home-supported-marquee` / `#home-supported-toggle`），讓首頁版面與 `demo.uniway` 一致清爽：\n\n- [`src/exchange_info/static/index.html`](src/exchange_info/static/index.html)：移除 `<section class=\"pr-supported\" aria-label=\"目前支援的學校\">` 區塊並更新靜態資源版本號。\n- [`src/exchange_info/static/platform-home.js`](src/exchange_info/static/platform-home.js)、[`home-motion.js`](src/exchange_info/static/home-motion.js)：清除跑馬燈渲染、暫停切換與寬度監聽程式碼（保留下方地圖區塊 `#home-stat-schools`／`#home-stat-partners` 統計數字更新）。\n- [`src/exchange_info/static/platform-redesign.css`](src/exchange_info/static/platform-redesign.css)、[`midnight-theme.css`](src/exchange_info/static/midnight-theme.css)：移除不再使用的 `.pr-supported` 與 `.pr-marquee` 樣式規則。\n- [`src/exchange_info/static/platform-explore.js`](src/exchange_info/static/platform-explore.js)：確保 `app.uniway` 全站出發學期選單維持通用「秋季／上學期、春季／下學期」標籤（`demo.uniway` 維持長庚 116-1／115-2 標籤）。\n- 更新對應測試斷言：[`tests/test_cgu_demo.py`](tests/test_cgu_demo.py)、[`tests/e2e/test_platform_redesign.py`](tests/e2e/test_platform_redesign.py)、[`tests/test_partner_search_template.py`](tests/test_partner_search_template.py)。\n\n## 測試驗證\n- `tests/e2e/test_platform_redesign.py`、`tests/e2e/test_home_motion.py`、`tests/test_cgu_demo.py`、`tests/test_uniway_ui_contract.py`、`tests/test_partner_search_template.py`、`tests/test_static_asset_versions.py` 全數通過。\n",
+      "head": {
+        "ref": "feat/remove-home-supported-strip",
+        "sha": "ded340cb65f5f7e295e575dafc1a015f4d516229"
+      },
+      "url": "https://github.com/blizzard-new/abroad/pull/371",
+      "draft": false,
+      "filenames": [
+        "src/exchange_info/static/home-motion.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/static/midnight-theme.css",
+        "src/exchange_info/static/platform-explore.js",
+        "src/exchange_info/static/platform-home.js",
+        "src/exchange_info/static/platform-redesign.css",
+        "tests/e2e/test_platform_redesign.py",
+        "tests/static_asset_versions.json",
+        "tests/test_cgu_demo.py",
+        "tests/test_partner_search_template.py"
+      ]
+    }
+  ],
+  "foundation": [
+    {
+      "number": 78,
+      "merged": true
+    },
+    {
+      "number": 92,
+      "merged": true
+    }
+  ],
+  "previous_batches": [
+    {
+      "number": 351,
+      "merged": true,
+      "merge_commit": "b8a5cb4b5aa54555df4feff7e078a22b99da447e",
+      "head": "6a0e591a7d512c56b0f5525ff7974631c4e5ec31",
+      "title": "content(seo): 11/14 AI 英文簡報與多益時態兩篇"
+    },
+    {
+      "number": 363,
+      "merged": true,
+      "merge_commit": "028fe8f16ed6c2d7fb1e07ebe5a675271571dc11",
+      "head": "7d326f8b27696c733ab2363267b7f60ebfb9e849",
+      "title": "content(seo): 11/15 日本防災與 AI 英文改寫兩篇"
+    },
+    {
+      "number": 369,
+      "merged": true,
+      "merge_commit": "37c242e2cbf9cbb1fa5c9181a7ff7fefde6bef9a",
+      "head": "e62f57cb43a9f6434f349fb8926367e6d64c60f2",
+      "title": "content(seo): 11/16 托福短對話與 AI 英文語調兩篇"
+    }
+  ],
+  "new_slugs": [
+    "exchange-course-syllabus-assessment",
+    "ai-english-group-discussion"
+  ],
+  "selection": "Editorialjudgmentdirections4and17;no SearchConsole/volume/rankings.",
+  "environment": "Newtaskvenv syncedfrozenfromlatestmainuv.lock,Python3.12.14,soupsieve4.1.1;sharedvenvuntouched.",
+  "precommit_recheck": {
+    "date": "2026-11-17",
+    "main": "ae68380d7ac1c503100696e3aaefd8960ed69239",
+    "main_unchanged": true,
+    "open_heads": [
+      {
+        "number": 371,
+        "sha": "ded340cb65f5f7e295e575dafc1a015f4d516229"
+      }
+    ],
+    "all_open_heads_unchanged": true,
+    "same_day": [],
+    "all_state_recent_count": 100
+  }
+}

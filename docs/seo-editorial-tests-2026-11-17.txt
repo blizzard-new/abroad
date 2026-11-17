@@ -1,0 +1,73 @@
+2026-11-17 Asia/Taipei; isolated codex/seo-daily-20261117
+Base:ae68380d7ac1c503100696e3aaefd8960ed69239
+Python:<cache>/venv/bin/python3.12.14,soupsieve4.1.1;isolatedfrozenlatestlock
+UV_PROJECT_ENVIRONMENT=<cache>/venv uv sync --frozen --extra dev
+EXCHANGE_INFO_DATA_DIR=<cache>/gate-import-data PYTHONPATH=src python scripts/check_editorial.py --base-ref origin/main
+EXCHANGE_INFO_DATA_DIR=<cache>/unit-import-data PYTHONPATH=src python -m pytest -q tests/test_seo_articles.py tests/test_seo.py tests/test_seo_content.py tests/test_seo_quality.py tests/test_seo_reporting.py tests/test_editorial_release_gate.py
+EXCHANGE_INFO_DATA_DIR=<cache>/e2e-import-data PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium PYTHONPATH=src python -m pytest -q tests/e2e/test_seo_articles.py tests/e2e/test_seo_pages.py tests/e2e/test_seo_analytics.py
+EXCHANGE_INFO_DATA_DIR=<cache>/preview-import-data PYTHONPATH=src python <cache>/qa.py preview --repo <checkout> --date 2026-11-17 --slugs exchange-course-syllabus-assessment ai-english-group-discussion
+uv build --wheel --out-dir <cache>/wheel
+python <cache>/qa.py package --repo <checkout> --date 2026-11-17 --slugs exchange-course-syllabus-assessment ai-english-group-discussion
+Onecompletepasseach;frozenproduct,notrepeatedcoverage.
+
+DEPENDENCY SYNC (tail):
+
++ typing-inspection==0.4.4
+ + urllib3==2.8.0
+ + uvicorn==0.52.4
+ + uvloop==0.22.1
+ + watchfiles==1.2.0
+ + websockets==17.0.1
+
+GATE:
+
+{
+  "ok": true,
+  "article_count": 59,
+  "errors": [],
+  "scope": "Editorial structure/assets/revision dates; not proof of factual accuracy, indexing or rankings"
+}
+
+SEO raw:
+
+CONFTEST LOADED!
+........................................................................ [ 38%]
+........................................................................ [ 77%]
+..........................................                               [100%]
+186 passed in 85.18s (0:01:25)
+
+E2E raw:
+
+CONFTEST LOADED!
+.....................................................................    [100%]
+69 passed in 201.46s (0:03:21)
+
+Browser:
+
+{
+  "passed": 6,
+  "capture_note": "Only long element captures temporarily hide fixed decorative6px stripe and fixed reading header via screenshot style to avoid stitching over text. Full-page previews and application/assertions unmodified.",
+  "visual_review": "All15finalscreens inspected:desktop1440,mobile320,3:2/2:1contactsheet,2inlinephotos,2HTMLdiagrams,8contentsections. Chinese/Englishsourcefields,weightedmath/compulsory/timeexample,weak/revisedturns,5turnexchange,Prompts/partialagreement readable. Portraitwritinghand/pen/openbooks andgroupgestures/documents retained;2:1cropschecked. Everymobiletable actualhorizontal scrollverified,notpageoverflow.",
+  "run_history": "One complete186SEO/69E2E/6noJS/wheel run. ProductJSON/photos frozenbeforetests andfinalhashesidentical;not inflated by repeated coverage."
+}
+
+Package:
+
+Successfully built /workspace/scratch/uniway-seo-20261117/wheel/taiwan_exchange_info-0.1.0-py3-none-any.whl
+
+{
+  "checked": "2026-11-17",
+  "build_command": "uv build --wheel",
+  "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+  "wheel_bytes": 2528871407,
+  "article_json_count": 59,
+  "image_count": 59,
+  "checked_files": 659,
+  "runtime_import": {
+    "module": "/workspace/scratch/uniway-seo-20261117/wheel-extracted/exchange_info/seo_articles.py",
+    "loaded_articles": 59,
+    "new_slugs_present": true
+  },
+  "outside_checkout": true,
+  "passed": true
+}
