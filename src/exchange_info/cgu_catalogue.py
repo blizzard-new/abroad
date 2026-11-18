@@ -23,7 +23,7 @@ from .models import CatalogueSourceStatus, PartnerUniversity
 from .student_view import (
     DOUBLE_DEGREE_SHEET_ID, DOUBLE_DEGREE_SOURCE_URL,
     EXCHANGE_SHEET_ID, EXCHANGE_SOURCE_URL,
-    _departmental_reference_partners, _merge_partner_universities,
+    _cgu_quota_status, _departmental_reference_partners, _merge_partner_universities,
     _parse_gviz_payload, _partner_rows_from_payload,
 )
 from .school_identity import school_identity_key
@@ -73,7 +73,7 @@ def validate_snapshot(snapshot: dict) -> tuple[PartnerUniversity, ...]:
     parsed = tuple(PartnerUniversity.model_validate(row) for row in rows)
     if any(not row.school_name.strip() or not row.source_url for row in parsed):
         raise ValueError("invalid_partner_row")
-    return parsed
+    return tuple(_cgu_quota_status(row) for row in parsed)
 
 
 def fetch_complete_snapshot(timeout_seconds: float = 8.0) -> dict:

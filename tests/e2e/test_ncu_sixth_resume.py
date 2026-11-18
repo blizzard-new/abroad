@@ -1,6 +1,7 @@
 """New source limits and stage-specific documents reach actual desktop/mobile UI."""
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .test_ncu_resume_assets import select_ncu
 
 
@@ -15,7 +16,7 @@ def test_sixth_year_programme_forms_and_life_visible(page,live_server,query,widt
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':956});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge(query))
     summary=page.locator('#partner-table .partner-card > summary').first
     if summary.is_visible():summary.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()

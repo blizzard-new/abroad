@@ -6,6 +6,7 @@ import re
 import pytest
 from playwright.sync_api import expect
 
+from .ncu_roster import roster_badge
 from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import wait_until
 
@@ -26,7 +27,7 @@ def test_ncu_new_rules_photos_and_source_limits_reach_visible_ui(page, live_serv
         page.locator("#glass-menu-toggle").click()
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill(query)
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text(roster_badge(query))
     if query == "阿利坎特":
         picture = page.locator("#partner-table .school-photo img").first
         expect(picture).to_have_attribute("src", re.compile(r"/static/assets/ncu-schools/[a-f0-9]+\.jpg$"))
@@ -128,7 +129,7 @@ def test_ncu_fourth_public_pass_initial_later_forms_year_and_life_reach_visible_
         page.locator("#glass-menu-toggle").click()
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill(query)
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text(roster_badge(query))
     summary = page.locator("#partner-table .partner-card > summary").first
     if summary.is_visible():
         summary.click()
@@ -200,7 +201,7 @@ def test_ncu_second_public_pass_documents_years_and_life_are_visible(page, live_
         page.locator("#glass-menu-toggle").click()
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill(query)
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text(roster_badge(query))
     summary = page.locator("#partner-table .partner-card > summary").first
     if summary.is_visible():
         summary.click()
@@ -263,7 +264,7 @@ def test_ncu_third_public_us_tracks_documents_and_life_reach_ui(page, live_serve
         page.locator("#glass-menu-toggle").click()
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill(query)
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text(roster_badge(query))
     summary = page.locator("#partner-table .partner-card > summary").first
     if summary.is_visible():
         summary.click()

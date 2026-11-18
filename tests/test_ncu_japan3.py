@@ -72,7 +72,7 @@ def test_japan3_pending_packets_have_separate_home_initial_and_later_documents(
     tmp_path, row, name, initial, count, stage_count, conditional_count,
 ):
     partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
-    assert partner.quota is None and partner.availability_status == 'agreement_only'
+    assert partner.field_evidence["quota"].status == "verified_current" and partner.availability_status == "open"
     client = TestClient(create_app(tmp_path))
     response = client.get('/application-workflow', params={
         'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',

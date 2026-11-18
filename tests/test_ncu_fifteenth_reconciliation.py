@@ -58,8 +58,8 @@ def test_reference_prices_campuses_and_procedures_keep_qualifiers():
     assert '不是正式ToR' in str(records['ncu-048']['fields']['courses'])
     assert 'USD4,161' in str(records['ncu-104']['fields']['housing'])
     partners=fetch_ncu_partner_universities()
-    assert len(partners)==214
-    assert all(p.quota is None and p.availability_status=='agreement_only' for p in partners)
+    assert len(partners)==222
+    assert all((p.quota is None) == (p.availability_status == "not_open") for p in partners)
 
 
 def test_changed_life_text_displays_as_chinese_without_runtime_changes():

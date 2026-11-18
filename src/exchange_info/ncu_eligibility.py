@@ -31,6 +31,9 @@ SCORE_MINIMUMS = {**dict.fromkeys(UNDERGRADUATE, 60), **dict.fromkeys(GRADUATE, 
 EXCLUDED_YEARS = ["大五", "大六", "五年級", "六年級", "5", "6"]
 
 
+NCU_ONLINE_INTAKE_CLOSED = "中央 116 學年度第一梯次的線上新申請已截止。已於期限內送出者，請依簡章所列時程辦理紙本繳交及後續作業。"
+
+
 def is_ncu(value: str | None) -> bool:
     school = resolve_university(value)
     return school is not None and school.id == NCU.id

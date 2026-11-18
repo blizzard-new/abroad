@@ -1,6 +1,7 @@
 """The three reference packets remain clear on mobile and desktop."""
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .test_ncu_resume_assets import select_ncu
 from .test_open_catalog import wait_until,sign_in_cookie,attach_session
 from .conftest import enter_public_site
@@ -22,7 +23,7 @@ def test_fourteenth_packet_life_and_confirmation(page,live_server,tmp_path,width
     select_ncu(page,live_server)
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge(query))
     trigger=f'.school-detail-trigger[data-school-name="{name}"]'
     if width<700:page.locator('#partner-table .partner-card').filter(has=page.locator(trigger)).locator(':scope > summary').click()
     page.locator(f'#partner-table {trigger}:visible').first.click()

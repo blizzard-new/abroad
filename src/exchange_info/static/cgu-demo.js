@@ -51,6 +51,7 @@
     { key: 'parent_consent', title: '家長同意書', desc: '依國際處規定格式填寫並經家長／監護人簽章' },
     { key: 'language_proof', title: '語文證明', desc: '多益 700 分（或同等檢定）及合作校要求之語文證明' },
     { key: 'transcript', title: '含排名的中文歷年成績單', desc: '含歷年學業平均與大學部班級排名百分比' },
+    { key: 'enrollment_certificate', title: '本校在學證明', desc: '至 iCGU 系統下載在學證明' },
     { key: 'study_plan', title: '一頁讀書計畫', desc: '以 1 頁為原則，說明選校動機與修課規劃' },
   ];
 
@@ -393,7 +394,7 @@
     try {
       const activePlan = await resolveActivePlan(true);
       if (!activePlan) {
-        show('請先建立申請計畫', '<p>目前尚無申請計畫。請先建立申請計畫（或點選展示工具「載入示範申請」），再帶入 5 份應備文件。</p>');
+        show('請先建立申請計畫', '<p>目前尚無申請計畫。請先建立申請計畫（或點選展示工具「載入示範申請」），再帶入 6 份應備文件。</p>');
         return;
       }
       const st = await loadConnectorStatus();
@@ -590,7 +591,7 @@
           <h3>下一個已確認的官方期限</h3>
           <p class="today-date">2026/12/21 17:00</p>
           <p><b>116-1 校內申請截止</b> ${pillHtml}</p>
-          <p>2026/11/02 開放線上表單，2026/12/21 17:00 校內截止（紙本資料須於截止前送交國際事務處）。</p>
+          <p>2026/11/02 開放線上表單，2026/12/21 17:00 校內截止（線上申請及逐項上傳 PDF 均須於截止前完成）。</p>
           <div class="cgu-deadline-links">
             ${stepLinkHtml}
             <a class="today-link cgu-deadline-source-link" href="${esc(SELECTION_SOURCE_URL)}" target="_blank" rel="noopener noreferrer">公告來源：116-1 交換及雙聯申請公告 ↗</a>
@@ -600,7 +601,7 @@
           <h3>當期官方申請期限</h3>
           <p class="today-date">依國際處公告</p>
           <p><b>${esc(meta.termShort)} 校內申請期限</b> ${pillHtml}</p>
-          <p>${esc(meta.termLabel)}之線上表單開放與紙本收件截止日尚未公告，請依國際事務處最新公告辦理。</p>
+          <p>${esc(meta.termLabel)}之申請方式與文件繳交期限尚未公告，請依國際事務處最新公告辦理。</p>
           <div class="cgu-deadline-links">
             ${stepLinkHtml}
             <a class="today-link cgu-deadline-source-link" href="${esc(SELECTION_GUIDE_URL)}" target="_blank" rel="noopener noreferrer">公告入口：${esc(meta.sourceTitle)} ↗</a>
@@ -1013,7 +1014,7 @@
     if (!planApp) {
       bridge.innerHTML = `
         <div>
-          <strong>校內送件方式：</strong>請於下方「送交國際處」完成 5 份應備文件預檢並送出；送出後本關卡會自動標記完成並更新進度。
+          <strong>校內送件方式：</strong>請於下方「送交國際處」完成 6 份應備文件預檢並送出；送出後本關卡會自動標記完成並更新進度。
         </div>
         <button type="button" class="cgu-pill-action is-solid" data-cgu-scroll="#cgu-my-application-sim">往下預檢與送件 ↓</button>`;
     } else if (planApp.status === 'supplement_requested') {
@@ -1040,19 +1041,20 @@
   }
 
   const DOC_LEVEL_NOTES = {
-    online_form: '請依當期國際處公告完成線上申請表填報與簽章；在此選取已完成表單電子檔，即可標記並同步送件預檢。',
-    parent_consent: '須由家長或監護人親筆簽章；可點選下方「家長同意書整理與列印」範本，完成後上傳掃描檔。',
-    language_proof: '須附仍在效期內且達目標姊妹校門檻之官方外語檢定成績證明（TOEFL iBT、IELTS、TOEIC、JLPT 等）。',
-    transcript: '須檢附含歷年學業成績與班／系排名百分比之正式成績單影本，以供核對申請資格與分數比對。',
+    online_form: '先填校方第一份表單，到電子信箱下載申請表，請導師或指導教授簽名後轉為 PDF。',
+    parent_consent: '使用校方隨申請表寄到信箱的同意書，請家長或監護人簽名後轉為 PDF。',
+    language_proof: '依本校與目標校規定提供語檢證明。成績未出可先上傳報考證明，註明預計取得成績日期。',
+    transcript: '須檢附含歷年學業成績與班／系排名百分比之中文歷年成績單正本的清晰 PDF，以供核對申請資格與分數比對。',
+    enrollment_certificate: '至 iCGU 系統下載本校在學證明，與其他文件分別上傳。',
     study_plan: '簡要說明出國修課規劃、學習目標與返國學分採認方向（約一頁 A4）。可直接在下方撰寫並同步至送件預檢，或直接上傳 PDF。',
   };
 
   function renderEmptyAppHintHtml(activePlan) {
     const meta = getPlanTermMeta(activePlan);
     if (meta.isVerified1161) {
-      return '<p class="cgu-empty-hint">目前尚無送件紀錄。完成上方 5 項應備文件預檢後即可送出並取得 <code>CGU-116-1-</code> 收件編號。</p>';
+      return '<p class="cgu-empty-hint">目前尚無送件紀錄。完成上方 6 項應備文件預檢後即可送出並取得 <code>CGU-116-1-</code> 收件編號。</p>';
     }
-    return '<p class="cgu-empty-hint">目前尚無送件紀錄。完成上方 5 項應備文件預檢後即可送出校內申請並取得收件編號。</p>';
+    return '<p class="cgu-empty-hint">目前尚無送件紀錄。完成上方 6 項應備文件預檢後即可送出校內申請並取得收件編號。</p>';
   }
 
   function renderDeadlineBarHtml(activePlan) {
@@ -1111,7 +1113,7 @@
             <strong>校內審查與提名結果</strong>
             <span class="cgu-status-chip">待送件</span>
           </div>
-          <p class="cgu-doc-bridge-notice">尚未送出校內申請。完成 5 份應備文件預檢並送交國際處後，國際處工作台之收件確認、補件通知與初審結果將自動同步於此，不需手動打勾。</p>
+          <p class="cgu-doc-bridge-notice">尚未送出校內申請。完成 6 份應備文件預檢並送交國際處後，國際處工作台之收件確認、補件通知與初審結果將自動同步於此，不需手動打勾。</p>
           <div class="cgu-shortlist-actions">
             <a class="cgu-pill-action is-solid" href="${esc(submitHref)}">前往送交國際處 →</a>
             <button type="button" class="cgu-pill-action" data-cgu-refresh-notice>重新整理狀態</button>
@@ -1140,7 +1142,7 @@
       }
     } else {
       bridge.setAttribute('aria-label', '合作校錄取通知與入學許可狀態');
-      let bodyText = '尚未完成校內送件。請先完成校內 5 項文件預檢並送交國際處，待國際處初審通過並對姊妹校提名後，依姊妹校來信追蹤錄取結果與入學許可（LOA）。';
+      let bodyText = '尚未完成校內送件。請先完成校內 6 項文件預檢並送交國際處，待國際處初審通過並對姊妹校提名後，依姊妹校來信追蹤錄取結果與入學許可（LOA）。';
       if (resolvedApp) {
         if (resolvedApp.status === 'passed_initial') {
           bodyText = `校內初審已通過（收件編號 ${resolvedApp.receipt_id}，第一志願：${resolvedApp.preference_1}）。請依國際處提名作業及目的姊妹校通知追蹤後續申請與入學許可（LOA）；正式錄取資訊以目的校通知為準，此頁自動同步校內狀態，不需手動打勾。`;
@@ -1187,7 +1189,7 @@
     if (levelForm && !levelForm.hidden) levelForm.hidden = true;
 
     const draftFiles = connectorStatus?.draft_files || {};
-    const precheck = connectorStatus?.precheck || { provided_count: 0, required_count: 5, complete: false };
+    const precheck = connectorStatus?.precheck || { provided_count: 0, required_count: REQUIRED_DOCS.length, complete: false };
     const uploaded = draftFiles[docKey] || null;
     const sig = `${activePlan.id}|${docKey}|${uploaded ? uploaded.filename : 'none'}|${precheck.provided_count}`;
     const existing = card.querySelector('#cgu-doc-level-bridge');
@@ -1486,7 +1488,7 @@
     host.classList.add('is-full');
     host.classList.remove('is-compact');
 
-    const precheck = st.precheck || { complete: false, missing_documents: REQUIRED_DOCS, provided_count: 0, required_count: 5 };
+    const precheck = st.precheck || { complete: false, missing_documents: REQUIRED_DOCS, provided_count: 0, required_count: REQUIRED_DOCS.length };
     const draftFiles = st.draft_files || {};
     const missingNames = (precheck.missing_documents || []).map(d => d.title);
 
@@ -1548,7 +1550,7 @@
         <header class="cgu-sim-head">
           <div>
             <h2 id="cgu-sim-submit-heading">送交國際處</h2>
-            <p class="cgu-sim-lead">依長庚大學國際事務處規定逐項檢查 5 份校內應備文件；齊全後可線上送出並取得收件編號與審核時間軸。</p>
+            <p class="cgu-sim-lead">依長庚 116-1 的六份清單檢查檔案。此處為展示預檢。正式申請須另依校方公告送件。</p>
           </div>
           <div class="cgu-sim-head-actions">
             <a class="cgu-pill-action" href="#ask-oia">問國際處</a>
@@ -1569,14 +1571,14 @@
         </div>
 
         <div class="cgu-doc-toolbar">
-          <strong>應備 5 項文件（目前已備齊 ${precheck.provided_count} / ${precheck.required_count} 項）</strong>
+          <strong>應備 ${precheck.required_count} 項文件（目前已備齊 ${precheck.provided_count} / ${precheck.required_count} 項）</strong>
         </div>
 
         <ul id="cgu-sim-doc-list" class="cgu-doc-check-list">${docRowsHtml}</ul>
 
         <div id="cgu-sim-precheck-box" class="cgu-precheck-box ${precheck.complete ? 'is-complete' : 'is-incomplete'}" role="status" aria-live="polite">
           ${precheck.complete
-            ? '<strong>文件預檢通過：</strong>5 項應備文件已備齊，可送交國際事務處。'
+            ? '<strong>文件預檢通過：</strong>6 項應備文件已備齊，可送交國際事務處。'
             : `<strong>文件尚未齊全（缺件不可送出）：</strong>尚缺 <b>${missingNames.length}</b> 項文件 — <span class="cgu-missing-names">${esc(missingNames.join('、'))}</span>`
           }
         </div>
@@ -1586,7 +1588,7 @@
         <div class="cgu-sim-submit-bar">
           <button type="button" id="cgu-sim-precheck-btn" class="cgu-pill-action">檢查文件齊備狀態</button>
           <button type="button" id="cgu-sim-submit-btn" class="cgu-pill-action is-solid" ${precheck.complete ? '' : 'disabled'}>送交國際處</button>
-          <span class="cgu-paper-side-note">註：實際申請仍須依國際處公告填線上表單並繳交紙本。</span>
+          <span class="cgu-paper-side-note">${getPlanTermMeta(activePlan).isVerified1161 ? '正式申請先填<a href="https://forms.gle/JbdGkA9i7wkNdtvX8" target="_blank" rel="noopener noreferrer">校內申請表</a>，再以<a href="https://forms.gle/VzHD2wPxQHDZvfQ37" target="_blank" rel="noopener noreferrer">文件繳交表</a>逐項上傳已簽名的表單與其他 PDF。管理學院曾修習 EMI 課程者另附修課資料。' : '請依當期國際處公告確認正式送件方式與應備文件。'}</span>
         </div>
 
         <section class="cgu-submitted-section" aria-labelledby="cgu-submitted-list-title">
@@ -1705,7 +1707,7 @@
 
         <form id="cgu-ask-form" class="cgu-ask-form">
           <label for="cgu-ask-input" class="cgu-field-label">輸入你想詢問國際事務處的問題</label>
-          <textarea id="cgu-ask-input" rows="3" maxlength="1000" required placeholder="例如：校內申請需要哪五份文件？成績單一定要有班級排名嗎？">${esc(simState.lastAskQuestion)}</textarea>
+          <textarea id="cgu-ask-input" rows="3" maxlength="1000" required placeholder="例如：校內申請需要哪六份文件？成績單一定要有班級排名嗎？">${esc(simState.lastAskQuestion)}</textarea>
           <p id="cgu-ask-error" class="cgu-sim-error" role="alert" hidden></p>
           <div class="cgu-ask-actions">
             <button type="submit" id="cgu-ask-submit-btn" class="cgu-pill-action is-solid">送出問題</button>
@@ -2891,7 +2893,7 @@
           }),
         });
         simState.lastSubmitReceiptId = res.application.receipt_id;
-        simState.lastSubmitHtml = `已送出申請，收件編號：<strong>${esc(res.application.receipt_id)}</strong>（狀態：${esc(res.application.status_label)}）。正式申請請依國際處公告完成線上表單與紙本繳交（<a href="${esc(termMeta.sourceUrl)}" target="_blank" rel="noopener noreferrer">官方公告 ↗</a>）。`;
+        simState.lastSubmitHtml = `已送出申請，收件編號：<strong>${esc(res.application.receipt_id)}</strong>（狀態：${esc(res.application.status_label)}）。正式申請請依國際處當期公告辦理（<a href="${esc(termMeta.sourceUrl)}" target="_blank" rel="noopener noreferrer">官方公告 ↗</a>）。`;
         await renderMyApplicationSim(true);
         $('#application-path #refresh-path')?.click();
         await refreshNotificationsNow();

@@ -60,7 +60,7 @@ def test_fourteenth_originals_and_partial_reading_boundaries():
 @pytest.mark.parametrize('admission,housing',[('unknown','unknown'),('accepted','on_campus')])
 def test_fourteenth_reference_packets_remain_pending(tmp_path,row,name,documents,admission,housing):
     p=next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
-    assert p.quota is None and p.availability_status=='agreement_only'
+    assert p.field_evidence["quota"].status == "verified_current" and p.availability_status == "open"
     client=TestClient(create_app(tmp_path))
     w=client.get('/application-workflow',params={'home_school':'NCU','school':p.school_name,'academic_year':'116'}).json()
     assert w['review_status']=='pending_review' and w['published_at'] is None

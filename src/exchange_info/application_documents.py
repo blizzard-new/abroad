@@ -60,8 +60,10 @@ from .models import (
     ApplicationWorkflowReviewStatus,
     UniversityApplicationWorkflow,
 )
+from .task_documents import document_requirements_for_step
 from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
+from . import cgu_1161_intake
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
 from .university_registry import CJCU, AU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, ASIA, TTU, TCU, MCUT, CYUT, require_university, resolve_university
@@ -259,6 +261,7 @@ def _template(
     print_note: str | None = None,
     attachment_field_order: Iterable[str] = (),
     version: str = "2026-07-16",
+    source_checked_at: datetime | None = None,
 ) -> ApplicationDocumentTemplate:
     file_field_ids = [
         field.id for field in fields if field.field_type == ApplicationFieldType.FILES
@@ -303,7 +306,7 @@ def _template(
         print_note=resolved_print_note,
         attachment_field_order=ordered_attachment_fields,
         source_url=source_url,
-        source_checked_at=(
+        source_checked_at=source_checked_at or (
             SHORT_TERM_SOURCE_CHECKED_AT
             if official_form_number in CGU_OFFICIAL_FORM_DOWNLOADS
             else SOURCE_CHECKED_AT
@@ -324,7 +327,7 @@ APPLICATION_TEMPLATES = [
         "校內申請資料",
         category="申請",
         stage="校內申請",
-        description="先整理線上申請會用到的個人、成績、語言與志願資料；正式送出仍在長庚公告的線上表單完成。",
+        description="整理個人、成績、語言與志願資料。長庚 116-1 須先填寫校方申請表，再由信箱下載申請表與同意書，分別完成師長及家長簽名後，透過文件繳交表上傳 PDF。",
         fields=[
             *PROFILE_FIELDS,
             _field("academic_average", "歷年學業平均", required=True, field_type=ApplicationFieldType.NUMBER),
@@ -335,7 +338,8 @@ APPLICATION_TEMPLATES = [
             _field("school_choices", "申請志願順序", required=True, field_type=ApplicationFieldType.TEXTAREA, placeholder="每行一間學校，依志願順序填寫", max_length=1500),
             _field("supporting_achievements", "其他有利審查資料", field_type=ApplicationFieldType.TEXTAREA, placeholder="獲獎、專題、社團或國際經驗，沒有可留白", max_length=2500),
         ],
-        source_url=INITIAL_SOURCE_URL,
+        source_url=cgu_1161_intake.NOTICE,
+        source_checked_at=cgu_1161_intake.CHECKED_AT,
         destinations=("學生自存備份", "長庚線上申請表填寫參考"),
     ),
     _template(
@@ -354,10 +358,11 @@ APPLICATION_TEMPLATES = [
             _field("planned_end_date", "預計返國日期", required=True, field_type=ApplicationFieldType.DATE),
             _field("overseas_institution", "海外學校／機構", required=True),
         ],
-        source_url=INITIAL_SOURCE_URL,
+        source_url=cgu_1161_intake.NOTICE,
+        source_checked_at=cgu_1161_intake.CHECKED_AT,
         destinations=("長庚大學國際事務處",),
         signatures=("家長或監護人親筆簽名", "簽署日期"),
-        conditional_note="官方版本會在完成線上申請後寄至申請信箱，送件前請核對最新版。",
+        conditional_note="116-1 請使用校方寄到信箱的正式同意書，由家長或監護人簽名並掃描為 PDF，透過第二份文件繳交表上傳。",
     ),
     _template(
         "study-plan",
@@ -804,6 +809,11 @@ def _ntpu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
         "source_checked_at": NTPU_SOURCE_CHECKED_AT,
     }
     ntpu_overrides: dict[str, dict[str, Any]] = {
+        "guardian-consent": {
+            "description": "如合作校或個別計畫要求家長同意，可先整理簽署資料。",
+            "destinations": ["學生自存備份"],
+            "conditional_note": "臺北大學 116 學年度校級甄選初審的必繳清單未列家長同意書。",
+        },
         "exchange-application-data": {
             "description": "整理臺北大學赴外交換線上申請所需的個人、成績、語言與志願資料；正式送出仍須在校方系統完成並上傳簽名申請表。",
             "destinations": ["臺北大學赴外交換生線上申請系統", "指定文件上傳表單", "學生自存備份"],
@@ -4277,7 +4287,7 @@ def build_application_document_catalog(
         "conditional_program": "合作校特定計畫文件",
     }
     for step in sorted(workflow.steps, key=lambda row: row.order):
-        for requirement in step.document_requirements:
+        for requirement in document_requirements_for_step(step):
             sequence += 1
             needs_confirmation = (
                 not workflow_is_published

@@ -61,17 +61,18 @@ def test_reference_rows_never_become_current_quotas_and_tracks_stay_distinct(tmp
     assert (
         len(partners)
         == len({school_identity_key(p.school_name) for p in partners})
-        == 214
+        == 222
     )
     assert all(
-        p.quota is None and p.availability_status == "agreement_only" for p in partners
+        (p.quota is None) == (p.availability_status == "not_open") for p in partners
     )
-    assert all(p.colleges is None and p.degree_levels is None for p in partners)
+    assert all(p.field_evidence[field].excerpt == getattr(p, field)
+               for p in partners for field in ("colleges", "degree_levels") if getattr(p, field))
     hokkaido = [p for p in partners if "Hokkaido University" in p.school_name]
     assert len(hokkaido) == 2 and hokkaido[0].school_name != hokkaido[1].school_name
     nanyang = next(p for p in partners if "Nanyang Technological" in p.school_name)
     assert len(nanyang.program_options) == 2
-    assert all(option.quota is None for option in nanyang.program_options)
+    assert [option.quota for option in nanyang.program_options] == ["6", "6"]
     workflows = [
         w
         for w in storage.load_bundled_application_workflows()
@@ -84,7 +85,7 @@ def test_reference_rows_never_become_current_quotas_and_tracks_stay_distinct(tmp
         )
         if d.home_university == NCU.school_name
     ]
-    assert len(workflows) == len(destinations) == 214
+    assert len(workflows) == len(destinations) == 222
     assert all(
         w.review_status == "pending_review" and w.published_at is None
         for w in workflows
@@ -218,7 +219,7 @@ def test_api_reads_ncu_offline_and_exposes_page_evidence_and_life(
     client = TestClient(create_app(tmp_path))
     dashboard = client.get("/student-dashboard", params={"school": "NCU"})
     assert dashboard.status_code == 200
-    assert len(dashboard.json()["partner_universities"]) == 214
+    assert len(dashboard.json()["partner_universities"]) == 222
     p = next(
         p
         for p in dashboard.json()["partner_universities"]
@@ -303,7 +304,7 @@ def test_new_mainland_scopes_and_tuaf_examples_cannot_become_current_requirement
     for name in ("Shanghai Jiao Tong", "Donghua", "Jiaotong-Liverpool"):
         partner = next(p for p in partners if name in p.school_name)
         audit = ncu_field_audit(partner.school_name)
-        assert partner.quota is None and partner.degree_levels is None
+        assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
         assert audit["fields"]["eligibility"]["status"] == "needs_confirmation"
         assert "臺灣籍" in partner.eligibility
     tuaf = next(p for p in partners if "THAI NGUYEN" in p.school_name)
@@ -311,7 +312,7 @@ def test_new_mainland_scopes_and_tuaf_examples_cannot_become_current_requirement
     assert "2026–27" in audit["fields"]["study_period"]["applicability"]
     assert "IELTS5.5" in audit["fields"]["language"]["note"]
     assert "不能拿畢業標準當exchange入學門檻" in audit["fields"]["language"]["note"]
-    assert tuaf.quota is None
+    assert tuaf.field_evidence["quota"].status == "verified_current"
     assert "$70" in audit["fields"]["tuition"]["note"]
     assert audit["fields"]["host_documents"]["status"] == "needs_confirmation"
     raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
@@ -412,7 +413,7 @@ def test_record_year_and_track_limits_override_empty_field_gaps_and_scores():
             for key, field in record["fields"].items()
             if field["status"] == "available"
         }
-        assert verified == {"home_documents", "home_deadline"}
+        assert verified == {"home_documents", "home_deadline", "quota"}
         assert {"city", "transport"} <= record["fields"].keys()
     for name, field_key in (("Pukyong", "courses"), ("Strasbourg", "arrival")):
         partner = next(
@@ -426,8 +427,8 @@ def test_record_year_and_track_limits_override_empty_field_gaps_and_scores():
         result = build_school_completeness(
             partner, None, None, home_university=NCU.school_name
         )
-        assert result.available_count == 2 and result.total_count == 17
-        assert result.score == round(2 / 17, 3)
+        assert result.available_count == 3 and result.total_count == 17
+        assert result.score == round(3 / 17, 3)
 
 
 @pytest.mark.parametrize(
@@ -984,7 +985,8 @@ def test_tongji_new_taiwan_packet_replaces_old_learning_plan_without_creating_cu
     assert "英授工商碩士在新版未列" in audit["fields"]["courses"]["note"]
     assert "不跨校區選課" in audit["fields"]["courses"]["note"]
     partner = next(p for p in fetch_ncu_partner_universities() if p.school_name == workflow.school_name)
-    assert partner.quota is None and partner.colleges is None and partner.degree_levels is None
+    assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.colleges) == ("colleges" in partner.field_evidence)
+    assert bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
     assert all(audit["fields"][key]["status"] == "needs_confirmation" for key in ("eligibility", "language", "host_documents", "host_deadline", "housing"))
 
 
@@ -1169,7 +1171,7 @@ def test_xjtu_mother_nomination_and_hust_insurance_are_real_catalog_and_task_req
 @pytest.mark.parametrize("needle,count", [("Beijing Normal University",6),("Southeast University",3),("Zhejiang University",7),("Chongqing University",9)])
 def test_four_new_packets_reach_summary_workflow_catalog_and_keep_current_year_unconfirmed(tmp_path,needle,count):
     partner = next(p for p in fetch_ncu_partner_universities() if needle in p.school_name)
-    assert partner.quota is None and partner.degree_levels is None
+    assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
     client = TestClient(create_app(tmp_path))
     params = dict(school="NCU",target_school=partner.school_name,academic_year="116")
     workflow = client.get("/application-workflow",params={"home_school":"NCU","school":partner.school_name,"academic_year":"116"})
@@ -1188,7 +1190,7 @@ def test_four_new_packets_reach_summary_workflow_catalog_and_keep_current_year_u
     audit = ncu_field_audit(partner.school_name)
     assert len(audit["fields"]) == 17
     assert all(f["unresolved"] for k,f in audit["fields"].items() if not k.startswith("home_") and k != "quota")
-    assert all(f["current_applicability_status"] == "unconfirmed" for k,f in audit["fields"].items() if not k.startswith("home_"))
+    assert all(f["current_applicability_status"] == "unconfirmed" for k,f in audit["fields"].items() if not k.startswith("home_") and k != "quota")
     if "Beijing" in needle:
         language = audit["fields"]["language"]["note"]
         assert "港澳臺籍語言要求列「無」" in language and "HSK5另軌" in language
@@ -1258,8 +1260,8 @@ def test_new_originals_keep_slide_sheet_identity_public_excerpts_and_government_
 @pytest.mark.parametrize('needle,rowid,initial_count', [('Xiamen University','ncu-192',4),('SOUTHWEST UNIVERSITY','ncu-179',6),('Central China Normal University','ncu-189',8)])
 def test_xmu_swu_ccnu_new_packets_keep_stage_scope_and_current_year_unknown(tmp_path,needle,rowid,initial_count):
     partner=next(p for p in fetch_ncu_partner_universities() if needle in p.school_name)
-    assert partner.quota is None and partner.degree_levels is None
-    assert partner.availability_status=='agreement_only'
+    assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
+    assert partner.availability_status == "open"
     client=TestClient(create_app(tmp_path))
     response=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
     assert response.status_code==200
@@ -1354,8 +1356,8 @@ def test_xmu_actual_2027_images_old_unreviewed_workbook_and_captcha_are_distinct
 ])
 def test_bupt_scut_gxu_reference_packets_keep_missing_forms_and_unknown_116(tmp_path,needle,rowid,initial_count):
     partner=next(p for p in fetch_ncu_partner_universities() if needle in p.school_name)
-    assert partner.quota is None and partner.degree_levels is None
-    assert partner.availability_status=='agreement_only'
+    assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
+    assert partner.availability_status == "open"
     client=TestClient(create_app(tmp_path))
     workflow=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'}).json()
     initial=next(s for s in workflow['steps']if s['rule_id']==rowid+'-host-apply')
@@ -1415,7 +1417,7 @@ def test_gxu_visual_photos_scut_outgoing_and_browser_excerpts_are_not_new_host_f
 
 def test_hiroshima_current_forms_do_not_expand_home_degree_scope_or_expired_round(tmp_path):
     partner=next(p for p in fetch_ncu_partner_universities() if 'Hiroshima University' in p.school_name)
-    assert partner.quota is None and partner.degree_levels is None
+    assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
     client=TestClient(create_app(tmp_path))
     workflow=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'}).json()
     steps={s['rule_id']:s for s in workflow['steps']}
@@ -1504,7 +1506,7 @@ def test_science_tokyo_tracks_precede_common_application_and_do_not_reuse_hirosh
         assert arrival<steps['ncu-133-host-'+suffix]['order']<returned
         assert not steps['ncu-133-host-'+suffix]['document_requirements']
     assert workflow['review_status']=='pending_review' and workflow['published_at']is None
-    assert partner.quota is None and not any(s['deadline_reminder_eligible']for s in workflow['steps'])
+    assert partner.field_evidence["quota"].status == "verified_current" and not any(s['deadline_reminder_eligible']for s in workflow['steps'])
     audit=ncu_field_audit(partner.school_name)
     assert '限115-2' in audit['fields']['eligibility']['note']
     assert 'JLPT N1' in audit['fields']['language']['note'] and '不能自動' in audit['fields']['language']['note']
@@ -1558,7 +1560,7 @@ def test_science_tokyo_original_forms_examples_years_and_partial_guide_read_are_
 
 def test_chiba_initial_health_language_alternatives_and_later_coe_are_separate(tmp_path):
     partner = next(p for p in fetch_ncu_partner_universities() if 'Chiba University' in p.school_name)
-    assert partner.quota is None and partner.degree_levels is None
+    assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
     client = TestClient(create_app(tmp_path))
     workflow = client.get('/application-workflow', params={'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116'}).json()
     steps = {s['rule_id']: s for s in workflow['steps']}
@@ -1642,7 +1644,7 @@ def test_chiba_native_years_partial_read_and_complete_insurance_visual_evidence(
 
 def test_omu_2027_spring_optional_documents_and_later_housing_keep_116_blocked(tmp_path):
     partner = next(p for p in fetch_ncu_partner_universities() if 'Osaka Metropolitan' in p.school_name)
-    assert partner.quota is None and partner.degree_levels is None
+    assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
     client = TestClient(create_app(tmp_path))
     workflow = client.get('/application-workflow', params={'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116'}).json()
     steps = {s['rule_id']: s for s in workflow['steps']}
@@ -1767,7 +1769,7 @@ def test_omu_originals_optional_rows_old_sheet_isolation_and_outage_provenance()
 
 def test_niigata_iec_grad_finance_and_initial_coe_reach_real_api(tmp_path):
     partner = next(p for p in fetch_ncu_partner_universities() if 'Niigata' in p.school_name)
-    assert partner.quota is None and partner.degree_levels is None
+    assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
     client = TestClient(create_app(tmp_path))
     response = client.get('/application-workflow', params={
         'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',
@@ -1846,7 +1848,7 @@ def test_niigata_original_sheet_scope_blank_forms_and_year_isolation():
 
 def test_kyutech_initial_accepted_housing_and_arrival_documents_reach_api(tmp_path):
     partner = next(p for p in fetch_ncu_partner_universities() if 'Kyushu Institute' in p.school_name)
-    assert partner.quota is None and partner.degree_levels is None
+    assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
     client = TestClient(create_app(tmp_path))
     response = client.get('/application-workflow', params={
         'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',
@@ -1972,7 +1974,7 @@ def test_ncu_runtime_preserves_all_explicit_document_unknowns_and_alternatives()
 @pytest.mark.parametrize('level,rowid,total', [('院級','ncu-116',17), ('校級','ncu-117',35)])
 def test_hokkaido_agreement_programme_and_sender_split_reaches_api(tmp_path, level, rowid, total):
     partner = next(p for p in fetch_ncu_partner_universities() if f'北海道大學({level})' in p.school_name)
-    assert partner.quota is None and partner.availability_status == 'agreement_only'
+    assert partner.field_evidence["quota"].status == "verified_current" and partner.availability_status == "open"
     client = TestClient(create_app(tmp_path))
     response = client.get('/application-workflow', params={
         'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',
@@ -2084,7 +2086,7 @@ def test_hokkaido_department_agreement_legend_is_internship_not_faculty_exchange
     assert '僅A學術交流' in field['note']
     assert '學術／學生／教員交流' not in field['note']
     assert any(s.get('page') == 7 for s in field['original_evidence'])
-    assert partner.quota is None and partner.degree_levels is None
+    assert partner.field_evidence["quota"].status == "verified_current" and bool(partner.degree_levels) == ("degree_levels" in partner.field_evidence)
 
 
 @pytest.mark.parametrize('level', ['院級', '校級'])
@@ -2133,8 +2135,8 @@ def test_ncu_116_1_official_list_and_system_upgrade_notice_are_recorded():
     assert any(r["name_en"] == "Romanian-American University" for r in rows_116)
 
     comp = json.loads((BUNDLE / "catalog-completeness.json").read_text(encoding="utf-8"))
-    assert comp["current_list_status"] == "published_2026_10_13_pending_application_open"
-    assert comp["current_list_url"] == NCU_LIST_116_URL
+    assert comp["current_list_status"] == "published_2026_11_17"
+    assert comp["current_list_url"].endswith("116exchangeschoollist-1117.pdf")
     assert comp["current_list_rows"] == 215
 
     dashboard = build_ncu_student_dashboard()

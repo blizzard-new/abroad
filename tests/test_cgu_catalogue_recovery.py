@@ -196,3 +196,13 @@ def test_quota_zero_missing_and_pending_states_survive_success_and_failure(tmp_p
     store.fetcher = fail; tick[0] = 601
     failure = store.refresh()
     assert [p.model_dump() for p in failure.partners] == [p.model_dump() for p in success.partners]
+
+
+def test_legacy_cgu_snapshot_with_missing_quota_cannot_mark_dresden_open(seed):
+    source_row = next(row for row in seed["records"] if "Dresden" in row["school_name"])
+    source_row.update(availability_status="open", availability_note=None)
+    seed["records_sha256"] = cgu.records_hash(seed["records"])
+    dresden = next(row for row in cgu.validate_snapshot(seed) if "Dresden" in row.school_name)
+    assert not dresden.quota and not dresden.application_deadline
+    assert dresden.availability_status == "quota_unconfirmed"
+    assert "國際事務處" in dresden.availability_note

@@ -82,3 +82,21 @@ def test_invalid_optional_field_is_revealed_and_draft_is_kept(page, live_server)
     assert saved.value.request.post_data_json["academic_score"] == 85
     assert saved.value.request.post_data_json["language_score"] is None
     expect(page.locator("#advisor-result-content [data-planning-target]").first).to_be_visible()
+
+
+def test_separate_submission_portal_is_clickable_once(page, live_server):
+    page.goto(f"{live_server.base_url}/", wait_until="domcontentloaded")
+    result = page.evaluate("""() => {
+      const form = "https://forms.gle/JbdGkA9i7wkNdtvX8";
+      const upload = "https://forms.gle/VzHD2wPxQHDZvfQ37";
+      function submissionLinks(portal) {
+        const section = document.createElement("section");
+        section.innerHTML = renderWorkflowSubmission({
+          action_url: form,
+          submission: {method: "online", portal_url: portal},
+        });
+        return [...section.querySelectorAll("a")].map(link => link.href);
+      }
+      return [submissionLinks(upload), submissionLinks(form), submissionLinks("about:blank")];
+    }""")
+    assert result == [["https://forms.gle/VzHD2wPxQHDZvfQ37"], [], []]

@@ -166,3 +166,67 @@ def test_116_quota_sheets_replace_the_115_lists_and_keep_every_continuing_school
     assert all("116" in row.application_deadline for row in open_partners)
     assert all(row.source_url.endswith(("116_0924_da1dafe9d0.pdf", "116_26b28374db.pdf", "116_6524fec218.pdf"))
                for row in open_partners)
+
+
+def test_every_ntpu_pdf_row_resolves_to_its_bundled_destination_and_research():
+    from exchange_info.models import DestinationProfile, PartnerResearchRecord
+    from exchange_info.ntpu_student_view import NTPU_OFFICIAL_DATA_DIR
+    from exchange_info.partner_research import apply_partner_research
+    from exchange_info.school_identity import public_catalogue_name
+    from exchange_info.storage import read_jsonl
+
+    partners = fetch_ntpu_partner_universities()
+    profiles = read_jsonl(NTPU_OFFICIAL_DATA_DIR / "destination_profiles.jsonl", DestinationProfile)
+    names = {p.school_name for p in profiles}
+    assert {public_catalogue_name(p.school_name, NTPU.school_name) for p in partners} == names
+
+    research = read_jsonl(NTPU_OFFICIAL_DATA_DIR / "partner_research.jsonl", PartnerResearchRecord)
+    enriched = apply_partner_research(partners, research, home_university=NTPU.school_name)
+    assert sum(bool(p.website) for p in enriched) == sum(bool(r.official_website) for r in research)
+
+    old_name = "漢堡商學院(HSBA Hamburg School of BusinessAdministration)"
+    expected = "漢堡商學院(HSBA Hamburg School of Business Administration)"
+    assert public_catalogue_name(old_name, NTPU.school_name) == expected
+    assert public_catalogue_name(old_name, "長庚大學") == old_name
+    other_track = old_name + "法學院"
+    assert public_catalogue_name(other_track, NTPU.school_name) == other_track
+
+
+def test_isolated_data_directory_keeps_public_partner_websites_in_dashboard(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    response = client.get("/student-dashboard", params={"school": NTPU.school_name})
+    response.raise_for_status()
+    partners = response.json()["partner_universities"]
+    assert len(partners) == 206
+    assert all(p["website"] for p in partners)
+    hamburg = next(p for p in partners if "漢堡商學院" in p["school_name"])
+    assert "hsba.de" in hamburg["website"]
+    tongji = next(p for p in partners if p["school_name"] == "同濟大學")
+    assert tongji["website"] == "https://www.tongji.edu.cn/"
+
+
+def test_local_pdf_spelling_overrides_bundled_research_and_guide(tmp_path):
+    from exchange_info.models import DestinationProfile, PartnerResearchRecord
+    from exchange_info.storage import save_destination_profiles, save_partner_research
+
+    pdf_name = "漢堡商學院(HSBA Hamburg School of BusinessAdministration)"
+    archive_name = "漢堡商學院(HSBA Hamburg School of Business Administration)"
+    local_website = "https://www.hsba.de/"
+    save_partner_research([PartnerResearchRecord(
+        home_university=NTPU.school_name, school_name=pdf_name, official_website=local_website,
+        verification_status="needs_review",
+    )], tmp_path)
+    save_destination_profiles([DestinationProfile(
+        home_university=NTPU.school_name, school_name=pdf_name, city="漢堡",
+        coverage_note="本機已覆核校區。",
+    )], tmp_path)
+    client = TestClient(create_app(tmp_path))
+    guide = client.get("/destination-profile", params={"home_school": NTPU.school_name, "school": archive_name})
+    guide.raise_for_status()
+    assert guide.json()["coverage_note"] == "本機已覆核校區。"
+
+    coverage = client.get("/coverage", params={"school": NTPU.school_name})
+    coverage.raise_for_status()
+    hamburg = next(row for row in coverage.json()["partners"] if row["school_name"] == pdf_name)
+    assert hamburg["official_website_status"] == "needs_review"
+    assert hamburg["official_website_url"] == local_website

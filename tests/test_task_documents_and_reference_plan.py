@@ -49,35 +49,54 @@ def test_stage_only_match_is_last_resort_and_labelled():
 
 
 def test_every_bundled_step_is_either_linked_listed_or_documentless():
+    import json
+    from collections import Counter, defaultdict
+    from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
+
+    # Keep every official source row and its review state through the runtime import.
+    # This also catches a missing university bundle as the registry expands.
+    source_rows = Counter()
+    for school in SUPPORTED_UNIVERSITIES:
+        path = storage.PACKAGE_DIR / "official_data" / school.id / "application_workflows.jsonl"
+        with path.open(encoding="utf-8") as stream:
+            for line in stream:
+                if line.strip():
+                    row = json.loads(line)
+                    source_rows[school.school_name, row["school_name"], row.get("review_status", "legacy")] += 1
+
     workflows = storage.load_bundled_application_workflows()
-    # CGU 77 (115) + 77 (116); NTPU 203 (115) + 206 (116); NTU 288 (116-1).
-    assert len(workflows) == 1124
-    ncu = [w for w in workflows if w.home_university == "國立中央大學"]
-    assert len(ncu) == 214 and all(w.review_status == "pending_review" for w in ncu)
-    ccu = [w for w in workflows if w.home_university == "國立中正大學"]
-    assert len(ccu) == 55 and all(w.review_status == "legacy" for w in ccu)
-    overall = audit_task_document_links(workflows)
-    assert overall["steps"] == sum(len(row.steps) for row in workflows)
-    # Keep the established schools' reviewed linkage contract separate from the
-    # new CCU legacy and NCU pending host reference steps (including later health/arrival files).
-    workflows = [w for w in workflows if w.home_university not in {"國立中央大學", "國立中正大學"}]
-    assert len(workflows) == 855
-    audit = audit_task_document_links(workflows)
-    assert audit["steps"] == sum(len(row.steps) for row in workflows)
-    assert audit["tool_linked"] + audit["requirements_only"] + audit["no_documents"] == audit["steps"]
-    # Partner-side applications and visa/insurance paperwork use the partner's or a
-    # government's own forms, so they stay list-only; every step on the home
-    # school's own path must reach a preparation tool.
-    allowed = ("依提名信", "辦理學生簽證")
-    for row in audit["requirements_only_patterns"]:
-        if row["home_university"] == "淡江大學":
-            assert row["step_title"] == "獲母校推薦後完成外校申請", row
-            # Host-specific forms and nomination conditions are catalog items,
-            # never the mother's generic application generator.
-            assert row["required_documents"]
-            continue
-        assert row["step_title"].startswith(allowed), row
-    assert audit["tool_linked"] >= 1400
+    assert Counter((w.home_university, w.school_name, w.review_status) for w in workflows) == source_rows
+    periods = defaultdict(list)
+    for workflow in workflows:
+        periods[workflow.home_university, workflow.academic_year].append(workflow)
+    assert {home for home, _ in periods} == {school.school_name for school in SUPPORTED_UNIVERSITIES}
+
+    # These releases established the contract for the home application tools.
+    # Partner nomination, visa and insurance steps can list external forms alone.
+    reviewed_periods = {
+        ("國立臺北大學", "115"), ("國立臺北大學", "116"),
+        ("長庚大學", "115"), ("長庚大學", "116"),
+        ("國立臺灣大學", "116"), ("淡江大學", "2027-2028"),
+    }
+    assert reviewed_periods <= periods.keys()
+    assert {("國立中央大學", "116"), ("國立中正大學", "115")} <= periods.keys()
+    reviewed_linked = 0
+    for period, rows in periods.items():
+        audit = audit_task_document_links(rows)
+        assert audit["steps"] == sum(len(row.steps) for row in rows) > 0, period
+        assert audit["tool_linked"] + audit["requirements_only"] + audit["no_documents"] == audit["steps"], period
+        patterns = audit["requirements_only_patterns"]
+        assert sum(pattern["step_count"] for pattern in patterns) == audit["requirements_only"], period
+        for pattern in patterns:
+            assert pattern["required_documents"], (period, pattern)
+            if period in reviewed_periods:
+                if period[0] == "淡江大學":
+                    assert pattern["step_title"] == "獲母校推薦後完成外校申請", pattern
+                else:
+                    assert pattern["step_title"].startswith(("依提名信", "辦理學生簽證")), pattern
+        if period in reviewed_periods:
+            reviewed_linked += audit["tool_linked"]
+    assert reviewed_linked >= 1400
 
 
 def test_partner_application_data_does_not_open_the_home_application_tool():
@@ -198,48 +217,67 @@ def test_student_effort_overrides_the_suggestion_and_explicit_dependencies_skip_
 
 
 def test_every_bundled_workflow_yields_a_schedulable_estimated_plan_for_an_unpublished_year():
+    from collections import defaultdict
     from exchange_info.models import PartnerUniversity
 
-    workflows = storage.load_bundled_application_workflows()
-    assert len(workflows) == 1124
-    empty, unplannable = [], []
-    for workflow in workflows:
-        if len(workflow.school_name) > 200:
-            # The plan API caps a school name at 200 characters. These two partner
-            # names carry pasted requirement text and need a data fix, not a plan.
-            unplannable.append(workflow.school_name[:20])
+    # A request is for a school pair. Supply all its source periods together.
+    periods_by_pair = defaultdict(list)
+    for workflow in storage.load_bundled_application_workflows():
+        periods_by_pair[workflow.home_university, workflow.school_name].append(workflow)
+    assert periods_by_pair
+    for (home, name), periods in periods_by_pair.items():
+        if len(name) > 200:
+            # Only these archived 115 import rows contain appended course notes
+            # beyond the API limit. New or current over-length names must fail.
+            assert home == "國立臺北大學" and {row.academic_year for row in periods} == {"115"}
+            assert name.startswith(("拉斯帕爾瑪斯大學 (", "法國計算機及創新技術學院EPITECH (")), name
             continue
+        source_years = {row.academic_year for row in periods}
+        target_year = "2031-2032" if home == "淡江大學" else "120"
+        assert target_year not in source_years, (home, name)
         partner = PartnerUniversity(
-            program_type="交換", school_name=workflow.school_name, colleges="全校", degree_levels="大學部",
-            source_url="https://example.edu/p",
+            program_type="交換", school_name=name, colleges="全校", degree_levels="大學部",
+            source_url=periods[0].sources[0].source_url,
         )
         request = PersonalApplicationPlanRequest(
-            home_school=workflow.home_university, college="工學院", degree_level="大學部", academic_score=90,
-            academic_year="2031-2032" if workflow.home_university == "淡江大學" else "120",
-            application_round="第一梯次",
-            preferences=[{"rank": 1, "school_name": workflow.school_name}],
+            home_school=home, college="工學院", degree_level="大學部", academic_score=90,
+            academic_year=target_year, application_round="第一梯次",
+            preferences=[{"rank": 1, "school_name": name}],
         )
-        plan = build_personal_application_plan(
-            request, [partner], [row for row in workflows if row.home_university == workflow.home_university],
-            academic_score_minimum=60,
-        )
-        if workflow.home_university == "國立中央大學":
-            # No NCU workflow is published. Unknown years cannot borrow a
-            # pending reference as an approved plan or scheduled deadline.
-            assert workflow.review_status == "pending_review"
-            assert not plan.tasks and not plan.choices[0].checklist
-            continue
+        plan = build_personal_application_plan(request, [partner], periods, academic_score_minimum=60)
         scheduled = schedule_application_plan(
-            plan,
-            ApplicationPlanScheduleRequest(
-                plan={"home_school": workflow.home_university,
-                      "preferences": [{"rank": 1, "school_name": workflow.school_name}]},
-                availability={"weekly_hours": 10, "weekdays": [1, 3, 5], "horizon_days": 90},
-            ),
-            as_of=date(2026, 10, 5),
+            plan, ApplicationPlanScheduleRequest(
+                plan=request, availability={"weekly_hours": 10, "weekdays": [1, 3, 5], "horizon_days": 90},
+            ), as_of=date(2026, 10, 5),
         ).schedule
-        if not plan.tasks or not scheduled.work_sessions:
-            empty.append(workflow.school_name)
-        assert all(task.official_deadline_at is None for task in plan.tasks)
-    assert empty == []
-    assert len(unplannable) <= 4  # two long names, in both NTPU rounds
+        choice = plan.choices[0]
+        check = next(item for item in choice.checks if item.code == "workflow")
+        assert check.status == "needs_confirmation", (home, name)
+        if home == "國立中央大學" and not any(row.review_status == "published" for row in periods):
+            assert choice.reference_academic_year is None and not choice.checklist, name
+            assert not plan.tasks and not scheduled.items and not scheduled.work_sessions, name
+            continue
+        assert choice.reference_academic_year in source_years and choice.checklist, (home, name)
+        assert plan.tasks and scheduled.work_sessions, (home, name)
+        for task in plan.tasks:
+            assert task.task_origin == "reference_year" and task.needs_confirmation, (home, name)
+            assert task.official_deadline_at is None and task.deadline_source_url is None, (home, name)
+        assert all(item.deadline_date is None and item.deadline_kind == "unspecified" for item in scheduled.items), (home, name)
+
+
+def test_enumerated_source_details_and_track_specific_requirements_survive_catalogue_import():
+    from exchange_info.nycu_source_review import DOCS, UST_DOCS
+    from exchange_info.task_documents import document_requirements_for_step
+
+    source = "https://example.edu/exchange/requirements"
+    legacy = step("備齊申請文件").model_copy(update={
+        "source_urls": [source], "details": ["必備表單 1：簽名申請表", "選課安排另見公告"],
+    })
+    assert document_link_for_step(legacy).requirement_names == ["簽名申請表"]
+    assert document_requirements_for_step(legacy)[0].source_urls == [source]
+    ust = legacy.model_copy(update={"rule_id": "nycu-116-home-2-001", "details": UST_DOCS})
+    requirements = document_requirements_for_step(ust)
+    assert any(item.name == "台聯大簽名申請表" for item in requirements)
+    assert next(item for item in requirements if "TOEFL" in item.name).conditional
+    unscoped = ust.model_copy(update={"details": DOCS})
+    assert document_requirements_for_step(unscoped) == []

@@ -25,7 +25,7 @@ def source_records():
 @pytest.mark.parametrize('row,name,initial,stages,conditions', CASES)
 def test_next3_home_host_and_coe_stages_remain_separate_and_pending(tmp_path, row, name, initial, stages, conditions):
     partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
-    assert partner.quota is None and partner.availability_status == 'agreement_only'
+    assert partner.field_evidence["quota"].status == "verified_current" and partner.availability_status == "open"
     client = TestClient(create_app(tmp_path))
     response = client.get('/application-workflow', params={'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116'})
     assert response.status_code == 200
@@ -89,10 +89,11 @@ def test_next3_degree_language_year_contradictions_and_budget_reach_student_view
     assert len(audit['fields']) == 17
     for key, field in audit['fields'].items():
         assert field['original_evidence'], key
-        if not key.startswith('home_'):
+        if key == 'quota':
+            assert field['status'] == 'available'
+        elif not key.startswith('home_'):
             assert field['status'] == 'needs_confirmation'
-            if key != 'quota':
-                assert field['unresolved']
+            assert field['unresolved']
         for original in field['original_evidence']:
             assert original['source_url'] and original['text'] and original['checked_at'] and original['applicability']
     client = TestClient(create_app(tmp_path))
@@ -113,7 +114,7 @@ def test_next3_degree_language_year_contradictions_and_budget_reach_student_view
             assert term in summary
         for term in ['19900', '19050', '不可退', '1340', '不給學分', '2026']:
             assert term in life_text
-        assert shown['quota'] is None
+        assert shown['quota'] == shown['field_evidence']['quota']['excerpt']
     else:
         for term in ['入學GPA至少2.30／3', 'JASSO', '不硬判所有A', 'JPT525', 'CEFR B1', '600000／1100000']:
             assert term in summary

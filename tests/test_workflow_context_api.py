@@ -1,9 +1,13 @@
+import json
+
 from cgu_catalogue_fixture import fixed_cgu_catalogue
 from fastapi.testclient import TestClient
 
 from exchange_info.api import create_app
 from exchange_info.content_governance import LocalContentGovernanceStore
-from exchange_info.models import PartnerUniversity
+from exchange_info.application_rules import select_application_workflow
+from exchange_info.models import ApplicationRuleContext, PartnerUniversity, UniversityApplicationWorkflow
+from exchange_info.storage import BUNDLED_CGU_DIR
 from test_application_rules import _workflow
 from test_notification_changes import session
 from exchange_info.models import UserAccount
@@ -37,3 +41,31 @@ def test_details_use_effective_rounds_and_department_overrides(tmp_path,monkeypa
     assert client.get('/application-workflow',params={**params,'application_round':'第三梯次'}).json()['steps']==[]
     assert client.get('/application-workflow',params={**params,'academic_year':'117'}).json()['steps']==[]
     assert [row.title for row in store.load_published_workflows()[0].steps]==[row.title for row in workflow.steps]
+
+
+def test_cgu_saved_path_period_selects_the_published_steps():
+    school = '林肯大學 Lincoln University'
+    workflows = [
+        UniversityApplicationWorkflow.model_validate(row)
+        for line in (BUNDLED_CGU_DIR / 'application_workflows.jsonl').read_text(encoding='utf-8').splitlines()
+        if (row := json.loads(line))['school_name'] == school
+    ]
+
+    def select(year, label, home='長庚大學'):
+        return select_application_workflow(workflows, ApplicationRuleContext(
+            home_university=home, partner_university=school, academic_year=year, application_round=label,
+        ))
+
+    for year, label, published_round in [
+        ('116', '116-1（2027 秋季出國）', '秋季／全學年梯次'),
+        ('116', '116-1（2027 秋季・全學年出國）', '秋季／全學年梯次'),
+        ('115', '115-2（2027 春季出國）', '春季梯次'),
+    ]:
+        selected = select(year, label)
+        published = select(year, published_round)
+        assert published and published.steps
+        assert selected == published
+    assert select('116', '116-2（2028 春季出國）') is None
+    assert select('116', '115-1（2026 秋季出國）') is None
+    assert select('116', '116-1（2030 秋季出國）') is None
+    assert select('116', '116-1（2027 秋季出國）', home='國立臺北大學') is None

@@ -41,8 +41,8 @@ def test_contradictions_and_office_scope_are_explicit_without_promoting_quotas()
     assert '不能把舊學年方案表當2027–28' in joined('ncu-018', 'courses')
     from exchange_info.ncu_student_view import fetch_ncu_partner_universities
     partners = fetch_ncu_partner_universities()
-    assert len(partners) == 214
-    assert all(p.quota is None and p.availability_status == 'agreement_only' for p in partners)
+    assert len(partners) == 222
+    assert all((p.quota is None) == (p.availability_status == "not_open") for p in partners)
 
 
 def test_updated_cards_keep_their_chinese_and_original_source(tmp_path):

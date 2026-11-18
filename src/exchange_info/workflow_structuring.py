@@ -286,25 +286,21 @@ def _structure_step(
         workflow.home_university == "國立中正大學"
         and step.phase == "合作校行前與生活"
     )
-    if infer_from_text and method == ApplicationSubmissionMethod.UNKNOWN and not ccu_host_life:
-        method = _infer_submission_method(step)
-    submission = step.submission.model_copy(
-        update={
-            "method": method,
-            "portal_url": (
-                step.submission.portal_url
-                or (
-                    step.action_url
-                    if method
-                    in {
-                        ApplicationSubmissionMethod.ONLINE,
-                        ApplicationSubmissionMethod.MIXED,
-                    }
-                    else None
-                )
-            ),
-        }
+    # A home-office roster may describe multiple receiving programmes, each
+    # with a different handoff. Its URL is guidance, not a receiving portal.
+    home_guidance_for_host = step.phase == "合作校申請" and step.action_url not in step.official_form_urls and any(
+        source.source_url == step.action_url and source.role == ApplicationSourceRole.HOME_UNIVERSITY
+        for source in workflow.sources
     )
+    if (infer_from_text and method == ApplicationSubmissionMethod.UNKNOWN and not ccu_host_life
+            and (not home_guidance_for_host or step.submission.portal_url)):
+        method = _infer_submission_method(step)
+    portal_url = step.submission.portal_url
+    if not portal_url and not home_guidance_for_host and method in {
+        ApplicationSubmissionMethod.ONLINE, ApplicationSubmissionMethod.MIXED,
+    }:
+        portal_url = step.action_url
+    submission = step.submission.model_copy(update={"method": method, "portal_url": portal_url})
     scope = step.scope.model_copy(
         update={
             "home_universities": (

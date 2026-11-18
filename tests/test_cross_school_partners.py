@@ -252,3 +252,28 @@ def test_home_agreement_preserves_long_valid_rule_text(monkeypatch) -> None:
     assert agreement.internal_online_deadline == long_text
     assert agreement.internal_paper_deadline == long_text
     assert agreement.study_plan_limit == long_text
+
+
+def test_public_partner_route_keeps_production_override_private(monkeypatch, tmp_path):
+    from exchange_info import api
+
+    client = _client(monkeypatch, tmp_path)
+    route = "/cross-school-partners/{country}/{institution}"
+    parameters = client.app.openapi()["paths"][route]["get"]["parameters"]
+    assert {(p["in"], p["name"]) for p in parameters} == {
+        ("path", "country"), ("path", "institution"), ("query", "home"), ("query", "override_plan_count"),
+    }
+    requested = {}
+
+    def capture_lookup(**kwargs):
+        requested.update(kwargs)
+        return None
+
+    monkeypatch.setenv("EXCHANGE_ENVIRONMENT", "production")
+    monkeypatch.setattr(api, "build_cross_school_partner_page_data", capture_lookup)
+    response = client.get("/cross-school-partners/japan/waseda-university?home=ntu&override_plan_count=99")
+    assert response.status_code == 404
+    assert (requested["country"], requested["institution"], requested["selected_home"]) == (
+        "japan", "waseda-university", "ntu",
+    )
+    assert requested["override_plan_count"] is None

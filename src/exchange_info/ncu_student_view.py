@@ -97,11 +97,19 @@ def _cached_ncu_partners(path: Path, sig: tuple[int, int] | None) -> tuple[Partn
         return tuple(PartnerUniversity.model_validate_json(line) for line in handle if line.strip())
 
 
-def fetch_ncu_partner_universities() -> list[PartnerUniversity]:
+def fetch_ncu_partner_universities(reference_time: datetime | None = None) -> list[PartnerUniversity]:
     # Stream the reviewed JSONL; read_text().splitlines() retains two copies of
     # the whole Unicode source while the validated models are being built.
     path = NCU_OFFICIAL_DATA_DIR / "partners.jsonl"
-    return list(_cached_ncu_partners(path, file_signature(path)))
+    partners = _cached_ncu_partners(path, file_signature(path))
+    dashboard_path = NCU_OFFICIAL_DATA_DIR / "student_dashboard.json"
+    dashboard = _cached_ncu_dashboard_shell(dashboard_path, file_signature(dashboard_path))
+    period = next(p for p in dashboard.application_periods if p.academic_year == "116" and p.scope == "home_application"
+                  and p.application_round == "第一梯次" and p.opens_at and p.deadline_at)
+    status = _application_period_status(reference_time or datetime.now(timezone.utc),
+                                        opens_at=period.opens_at, deadline_at=period.deadline_at).value
+    return [p.model_copy(update={"application_window_status": status}) if p.quota_status in {"published", "fee_paying"} else p
+            for p in partners]
 
 
 @lru_cache(maxsize=2)
@@ -109,6 +117,23 @@ def _cached_ncu_dashboard_shell(path: Path, sig: tuple[int, int] | None) -> Stud
     raw = json.loads(path.read_text(encoding="utf-8"))
     raw["partner_universities"] = []
     return StudentDashboard.model_validate(raw)
+
+
+def ncu_window_cache_boundary() -> tuple[datetime | None, int | None]:
+    """The next instant that changes any public 116-1 window, including paper handoff."""
+    path = NCU_OFFICIAL_DATA_DIR / "student_dashboard.json"
+    dashboard = _cached_ncu_dashboard_shell(path, file_signature(path))
+    now = datetime.now(timezone.utc)
+    future = []
+    for period in dashboard.application_periods:
+        if period.opens_at and now < period.opens_at:
+            future.append(period.opens_at)
+        if period.deadline_at and now <= period.deadline_at:
+            future.append(period.deadline_at)
+    if not future:
+        return None, None
+    boundary = min(future)
+    return boundary, int((boundary - now).total_seconds())
 
 
 def build_ncu_student_dashboard(
@@ -139,7 +164,7 @@ def build_ncu_student_dashboard(
             "application_periods": periods,
             "partner_universities": partner_universities
             if partner_universities is not None
-            else fetch_ncu_partner_universities(),
+            else fetch_ncu_partner_universities(now),
         }
     )
 

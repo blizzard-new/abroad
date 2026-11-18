@@ -514,8 +514,8 @@ def test_first_visit_school_choice_is_a_single_click_on_the_school_and_still_ski
     assert 'id="confirm-school"' not in html and 'id="browse-first"' not in html
     assert "school-option-name" in html and "school-emblem" in html
     assert "完整支援試點" not in html
-    assert "75 間合作校" in html
-    assert "partner_count: 75" in script
+    assert "78 間合作校" in html
+    assert "partner_count: 78" in script
     assert "partner_count: 206" in script
     assert "partner_count: 289" in script
     assert "browseWithoutSchoolSelection" in script
@@ -740,7 +740,7 @@ def test_ntpu_uses_the_same_dynamic_web_shell() -> None:
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
 
     assert 'data-home-school="國立臺北大學"' in html
-    assert "169 間合作校" in html
+    assert re.search(r'data-home-school="國立臺北大學"[^\n]+206 間合作校', html)
     assert 'id="availability-filter"' in html
     assert "合作學校" in html
     assert "refreshHomeUniversityData" in script

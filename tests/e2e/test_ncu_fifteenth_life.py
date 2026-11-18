@@ -1,6 +1,7 @@
 """Actual life cards, not only their hidden source guide, show reviewed Chinese."""
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .test_ncu_resume_assets import select_ncu
 
 CASES=[
@@ -21,7 +22,7 @@ def test_reference_life_qualifiers(page,live_server,tmp_path,width,slug,query,na
     select_ncu(page,live_server)
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge(query))
     trigger=f'.school-detail-trigger[data-school-name*="{name}"]'
     if width<700:page.locator('#partner-table .partner-card').filter(has=page.locator(trigger)).locator(':scope > summary').click()
     page.locator(f'#partner-table {trigger}:visible').first.click()

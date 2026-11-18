@@ -41,7 +41,15 @@ def test_cgu_dashboard_uses_verified_home_cycle_without_yearless_fallbacks() -> 
     assert "不能把這個日期當成申請截止日" in conditional_follow_up.status_note
 
 
-def test_cgu_fall_round_uses_verified_1161_announcement_without_guessing_paper_time() -> None:
+def test_cgu_home_groups_have_official_content_without_a_local_crawl():
+    dashboard = build_student_dashboard([], fetch_partner_sheets=False, fetch_regulation_rules=False)
+    for group in (dashboard.program_overview, dashboard.eligibility, dashboard.language_requirements,
+                  dashboard.required_documents, dashboard.scholarship_info):
+        assert group
+        assert all(item.details and item.source.source_url.startswith("https://www.cgu.edu.tw/") for item in group)
+
+
+def test_cgu_fall_round_requires_both_online_forms_before_the_verified_deadline() -> None:
     def fall(reference_time: datetime):
         return build_student_dashboard(
             [],
@@ -59,7 +67,8 @@ def test_cgu_fall_round_uses_verified_1161_announcement_without_guessing_paper_t
     assert before.date_status == ApplicationPeriodDateStatus.VERIFIED_EXACT
     assert before.reminder_eligible is False
     assert "forms.gle/JbdGkA9i7wkNdtvX8" in " ".join(before.details)
-    assert "紙本" in (before.deadline_note or "")
+    assert "forms.gle/VzHD2wPxQHDZvfQ37" in " ".join(before.details)
+    assert "免交紙本" in before.deadline_note
     assert before.source.source_url.endswith("Detail/85785?nodeId=15817")
 
     during = fall(datetime(2026, 11, 11, tzinfo=timezone.utc))
@@ -200,6 +209,7 @@ def test_partner_fetch_adds_missing_departmental_references_after_central_succes
                     program_type="交換學生 / 自費研修",
                     country="日本",
                     school_name="中央清單測試大學 Central Test University",
+                    quota="2",
                     source_url=kwargs["source_url"],
                 )
             ]
@@ -229,6 +239,7 @@ def test_central_open_row_wins_over_same_departmental_reference(monkeypatch) -> 
                     program_type="交換學生 / 自費研修",
                     country="法國",
                     school_name=rennes.school_name,
+                    quota="2",
                     source_url=kwargs["source_url"],
                 )
             ]

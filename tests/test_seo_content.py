@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from exchange_info.models import PartnerProgramOption, PartnerUniversity
+from exchange_info.seo_quality import material_content
 from exchange_info.seo import EDITORIAL_PATHS, SeoSettings, create_seo_router, partner_details, partner_id
 
 
@@ -22,6 +23,27 @@ def test_identical_program_option_is_removed_but_distinct_conditions_survive():
     assert html.count("GPA 3.5") == 1
     assert html.count("免繳合作校學費") == 1
     assert "另一方案：方案差異" in html
+
+
+def test_public_partner_keeps_sourced_steps_and_links_to_its_application_tab():
+    from urllib.parse import parse_qs, urlsplit
+    p = partner(school_name="A & B College", student_summary_zh={"application_steps": ["請先完成母校提名。"]})
+    app = FastAPI()
+    app.include_router(create_seo_router(SeoSettings("https://example.com", False), lambda _: ([p], None)))
+    with TestClient(app) as client:
+        response = client.get(f"/schools/cgu/partners/{partner_id(p)}")
+    assert response.status_code == 200
+    doc = BeautifulSoup(response.content, "html.parser")
+    section = doc.find("h3", string="申請步驟、文件與課程限制").parent
+    assert section.find("dd").get_text(strip=True) == "請先完成母校提名。"
+    url = urlsplit(section.a["href"])
+    assert parse_qs(url.query) == {"home": ["長庚大學"]}
+    assert parse_qs(url.fragment) == {"school": ["A & B College"], "tab": ["application"]}
+    assert "這筆合作校名單未列出申請步驟" in partner_details(partner())
+    assert material_content([p])[0]["application_steps"] == ["請先完成母校提名。"]
+    original = p.model_copy(update={"application_info": "依提名通知操作。"})
+    assert "請先完成母校提名" not in partner_details(original)
+    assert "application_steps" not in material_content([original])[0]
 
 
 def test_mixed_quota_is_not_promoted_to_confirmed_current_seats():

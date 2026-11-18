@@ -1146,7 +1146,7 @@ async function loadSupportedUniversities() {
         short_name: "長庚",
         english_name: "Chang Gung University",
         supported: true,
-        partner_count: 75,
+        partner_count: 78,
         coverage_note: "完整支援試點：已整理長庚大學交換、補助、文件與合作校申請流程。",
       },
       {
@@ -1164,11 +1164,11 @@ async function loadSupportedUniversities() {
         id: "ntu", school_name: "國立臺灣大學", short_name: "臺大",
         aliases: ["台大", "台灣大學", "國立台灣大學"],
         english_name: "National Taiwan University", hero_image: "/static/assets/ntu-campus.svg",
-        official_url: "https://studyabroad.ntu.edu.tw/", supported: true,
+        official_url: "https://oia.ntu.edu.tw/outgoing/school.list/semester/1", supported: true,
         partner_count: 289, coverage_note: "116-1校級甄選、文件與補助；262項名額待公布，7項零名額。",
       },
-      {id:"ncu",school_name:"國立中央大學",short_name:"中央",english_name:"National Central University",hero_image:"/static/assets/ncu-campus.svg",official_url:"https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",supported:true,partner_count:214,coverage_note:"116-1簡章已公告，名額預定2026/10/12公告；214項115目錄僅供參考。"},
-      {id:"fju",school_name:"天主教輔仁大學",short_name:"輔大",aliases:["輔仁大學","輔仁","FJU","Fu Jen"],english_name:"Fu Jen Catholic University",hero_image:"/static/assets/fju-campus.svg",official_url:"https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39",supported:true,partner_count:234,coverage_note:"116-1甄選說明會已公告；234所姊妹校專頁與115名額表已完整建檔。"},
+      {id:"ncu",school_name:"國立中央大學",short_name:"中央",english_name:"National Central University",hero_image:"/static/assets/ncu-campus.svg",official_url:"https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",supported:true,partner_count:222,coverage_note:"116-1 校內線上申請 11/16 09:00 至 12/04 12:00。11/17 版有 214 個當期方案（內含 8 個自費），另有 8 筆歷史參考。"},
+      {id:"fju",school_name:"天主教輔仁大學",short_name:"輔大",aliases:["輔仁大學","輔仁","FJU","Fu Jen"],english_name:"Fu Jen Catholic University",hero_image:"/static/assets/fju-campus.svg",official_url:"https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39",supported:true,partner_count:237,coverage_note:"116-1甄選說明會已公告；合作校資料與115名額表可供查詢。"},
       {id:"scu",school_name:"東吳大學",short_name:"東吳",aliases:["SCU","Soochow University","東吳"],english_name:"Soochow University",hero_image:"/static/assets/scu-campus.svg",official_url:"https://web-ch.scu.edu.tw/icae",supported:true,partner_count:191,coverage_note:"116學年度第1學期赴外研修生甄選名額表與簡章已公告（國際交流129案、兩岸交流62校）。"},
       {id:"ntnu",school_name:"國立臺灣師範大學",short_name:"師大",aliases:["臺灣師範大學","台灣師範大學","臺師大","台師大","師範大學","NTNU","National Taiwan Normal University"],english_name:"National Taiwan Normal University",hero_image:"/static/assets/ntnu-campus.svg",official_url:"https://bds.oia.ntnu.edu.tw/bds/web/outgoing-info",supported:true,partner_count:236,coverage_note:"116-1校級赴外交換甄選簡章與236所合作校名額條件表已公告（11/01–11/15線上申請）。"},
       {id:"cycu",school_name:"中原大學",short_name:"中原",aliases:["中原","CYCU","Chung Yuan Christian University"],english_name:"Chung Yuan Christian University",hero_image:"/static/assets/cycu-campus.svg",official_url:"https://oia.cycu.edu.tw/?page_id=2956&lang=zh",supported:true,partner_count:89,coverage_note:"115-2（2027春季出國）國際暨兩岸交換計畫與89所合作校名額、Fact Sheet及36校歷屆交換心得已完整整合。"},
@@ -4485,6 +4485,17 @@ function partnerAvailabilityMeta(item) {
     if (tku) return tku;
   }
   const status = item?.availability_status || "open";
+  if (activeHomeSchool() === "國立中央大學" && item?.academic_year === "116" && item.application_round === "第一梯次") {
+    const listed = ["published", "fee_paying"].includes(item.quota_status);
+    const period = state.dashboard?.application_periods?.find(p => p.scope === "home_application"
+      && p.academic_year === item.academic_year && p.application_round === item.application_round);
+    const windowStatus = item.application_window_status || period?.status;
+    const stage = {open:"校內收件中", upcoming:"可先備件", closed:"校內收件已截止"}[windowStatus] || "查校內收件時間";
+    const label = listed ? (item.quota_status === "fee_paying" ? "自費方案" : "中央提名名額已列") : "本期名單未列";
+    return {status, shortLabel:label, cardLabel:listed ? label + "／" + stage : label, matchLabel:label,
+      reason:item.availability_note, hint:listed ? "接待校送件依提名後通知。" : item.availability_note,
+      blocked:!listed || (windowStatus === "closed" && state.applicationContext?.target_school !== item.school_name)};
+  }
   if (["not_open", "needs_confirmation", "zero_quota", "fee_paying"].includes(status)) {
     const label = {not_open:"本季未開放（官方灰字）",needs_confirmation:"名額尚未核實",zero_quota:"零名額",fee_paying:"自費計畫"}[status];
     return {status,shortLabel:label,cardLabel:label,matchLabel:label,reason:item.availability_note || label,blocked:true};
@@ -4557,6 +4568,7 @@ function renderPartnerAvailabilityNotice(item) {
   if (!availability.blocked && !availability.pending) return "";
   const fallback = activeHomeSchool() === "淡江大學" && availability.status === "agreement_only"
     ? "姊妹校名錄列有合作關係；本期名額、院系計畫與開放狀態尚未核實，不表示官方明示尚未公告。"
+    : activeHomeSchool() === "國立中央大學" && item?.academic_year === "116" ? availability.reason
     : availability.pending ? availability.hint
     : homeSelectionRules().pending_quota_planning && /^0\s*名?$/.test(item.quota || "") ? "官方本期名單已更新為零名額，本期未開放申請。"
     : availability.status === "departmental_reference"
@@ -4833,9 +4845,12 @@ async function previewPlanningSchedule(event) {
   try {
     const workflow = await fetchJson(`/application-workflow?${workflowRequestParams(partner).toString()}`, { cache: "no-store" });
     if (requestId !== state.planningRequestId || key !== planningContextKey()) return;
+    const appliedRound = workflow.applied_context?.application_round || round;
+    const roundMatches = !round || workflow.application_round === appliedRound
+      || (workflow.effective_application_rounds || []).includes(appliedRound);
     if (partnerAvailabilityMeta(partner).pending && workflow.school_name === partner.school_name
       && workflow.home_university === activeHomeSchool() && String(workflow.academic_year || "").trim() === academicYear
-      && (!round || workflow.application_round === round || (workflow.effective_application_rounds || []).includes(round))) {
+      && roundMatches) {
       state.planningPreview = {key, days, events:[], report:{items:[]}, referenceOnly:true};
       $("#planning-schedule-preview").innerHTML = workflow.steps.map(step=>`<article class="planning-timeline-item"><span class="planning-timeline-icon"><i data-lucide="clipboard-list" aria-hidden="true"></i></span><div><strong>${escapeHtml(step.title)}</strong><p>${escapeHtml(step.details?.[0] || "此階段條件須依當期官方通知確認。")}</p>${safeSourceUrl(step.source_urls?.[0]) ? `<a href="${escapeHtml(safeSourceUrl(step.source_urls[0]))}" target="_blank" rel="noreferrer">核對官方來源</a>` : ""}</div></article>`).join("");
       $("#planning-schedule-status").textContent = "已顯示參考流程。本期名額與合作校條件尚待確認；這次預覽不會加入日曆或啟用截止提醒。";
@@ -4845,7 +4860,7 @@ async function previewPlanningSchedule(event) {
     if (workflow.school_name !== partner.school_name || workflow.home_university !== activeHomeSchool()
       || workflow.review_status !== "published" || workflow.applicability_status !== "verified"
       || String(workflow.academic_year || "").trim() !== academicYear
-      || (round && workflow.application_round !== round && !(workflow.effective_application_rounds || []).includes(round))) {
+      || !roundMatches) {
       throw new Error("這個學年度／梯次的流程尚未確認適用，請先核對官方公告；目前不會自動安排日期。");
     }
     const deadlines = workflowDeadlineEvents([workflow]).filter(item=>item.date >= localDateKey() && /^https?:\/\//i.test(item.sourceUrl));
@@ -9446,6 +9461,9 @@ function positiveScopeText(value) {
 }
 
 function academicScopeNeedsConfirmation(item, key) {
+  // These verbatim NCU notes include recommendations, excluded tracks and
+  // host faculties. Simple substring matching cannot decide student eligibility.
+  if (activeHomeSchool() === "國立中央大學" && item.academic_year === "116" && item.application_round === "第一梯次") return true;
   const status = item.field_evidence?.[key]?.status;
   if (status && status !== "verified_current") return true;
   const raw = normalize(item[key]).normalize("NFKC");
@@ -10382,12 +10400,15 @@ function renderPartnerFieldEvidence(item) {
   if (activeHomeSchool() === "淡江大學") return window.UniWayTkuDetails?.render(item, escapeHtml) || "";
   if (!item.field_evidence || !Object.keys(item.field_evidence).length) return "";
   const labels = {study_period:"交換期間", quota:"名額", eligibility:"合作校接收資格", language_requirement:"合作校語言", partner_application_prerequisite:"母校甄選／提名前提（非文件清單）", partner_documents:"合作校申請文件要求（未聲稱完整）", partner_application_deadline:"合作校申請截止", application_deadline:"中正校內截止", semester_dates:"學期日期", housing_info:"住宿資訊", tuition_info:"費用原文", course_restrictions:"課程限制", fact_sheet:"合作校簡章連結"};
-  const isNtu = activeHomeSchool() === "國立臺灣大學";
+  const home = activeHomeSchool();
+  const isNtu = home === "國立臺灣大學";
+  const isCcu = home === "國立中正大學";
+  if (!isCcu) labels.application_deadline = "母校校內截止";
   if (isNtu) Object.assign(labels, {language: "合作校語言（參考）", application_deadline: "臺大校內截止"});
   const statuses = {verified_current:"當期已核實",reference_only:"歷史參考",missing:"未載／未核實",needs_confirmation:"待確認",conflict:"來源矛盾，待確認",explicit_not_announced:"官方明示尚未公告"};
   if (isNtu) statuses.reference_only = "欄位參考，本期適用待確認";
   return `<details class="overview-more"><summary>${isNtu ? "欄位資料" : "當期資料"}與官方依據（${escapeHtml(item.application_round || (isNtu ? "本期適用待確認" : ""))}）</summary>
-    <p>${isNtu ? "合作校接收條件須與臺大校內資格分別核對；欄位原文、年份與本期適用狀態分別確認。" : "合作校接收條件須與中正校內資格分別核對；灰字歷史資料不作當期申請依據。"}</p>
+    <p>${isNtu ? "合作校接收條件須與臺大校內資格分別核對；欄位原文、年份與本期適用狀態分別確認。" : isCcu ? "合作校接收條件須與中正校內資格分別核對；灰字歷史資料不作當期申請依據。" : "合作校接收條件及母校校內甄選資格，請依各自欄位的適用年度與官方來源核對。"}</p>
     ${Object.entries(labels).map(([key,label]) => {
       const evidence = item.field_evidence[key];
       if (!evidence) return "";
@@ -10411,7 +10432,7 @@ function renderUniversityOverview(item) {
     ["名額", item.quota || (item.quota_status === "reference_only" ? (activeHomeSchool() === "淡江大學" ? "本期名額未核實" : "本季未開放") : item.quota_status === "not_published" ? "名額空白，待確認" : "依校方公告")],
     ["研修期間", localizedPartnerValue(item, "study_period", "study_period", "依校方公告")],
     [deadline.label, deadline.value],
-    ["學費", tuitionPoints.slice(0, 2).join("；") || "依校方公告"],
+    ["學費", tuitionPoints.slice(0, 2).join("；") || item.tuition_info || "依校方公告"],
     ["排名資訊", item.ranking_info || "未提供"],
   ];
   return `
@@ -10596,10 +10617,18 @@ function renderDestinationProfile(item, profile) {
     return;
   }
   if (!["official_verified", "official_partial"].includes(profile.coverage_status)) {
+    const website = safeSourceUrl(item.website);
+    const source = website || safeSourceUrl(item.source_url);
+    const references = (profile.sources || []).map(row => {
+      const url = safeSourceUrl(row.source_url);
+      return url && url !== source ? `<li><a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${escapeHtml(row.title || "查看資料來源")}</a></li>` : "";
+    }).filter(Boolean);
     container.innerHTML = `
       <div class="destination-profile-status pending">
         <i data-lucide="clock-3" aria-hidden="true"></i>
-        <div><strong>官方指南待補</strong><p>可先查看下方生活資料。</p></div>
+        <div><strong>官方生活指南待確認</strong><p>${escapeHtml(profile.coverage_note || "請向國際處確認住宿、費用及報到方式。")}</p>
+        ${references.length ? `<ul>${references.join("")}</ul>` : ""}
+        ${source ? `<a href="${escapeHtml(source)}" target="_blank" rel="noreferrer">${website ? "開啟合作校官網" : "查看母校合作資料"}</a>` : ""}</div>
       </div>`;
     initIcons();
     return;
@@ -11038,12 +11067,25 @@ function renderApplicationWorkflow(workflow) {
   state.activeWorkflow = workflow;
   content.setAttribute("aria-busy", "false");
   if (!workflow.steps?.length) {
+    const item = partnerByName(workflow.school_name);
+    const period = [state.applicationContext.academic_year && `${state.applicationContext.academic_year} 學年度`,
+      state.applicationContext.application_round].filter(Boolean).join(" · ");
+    const summary = partnerStudentSummary(item).application_steps?.filter(Boolean) || [];
+    const points = summary.length ? summary : item?.application_info ? [item.application_info] : [];
+    const homeSource = safeSourceUrl(item?.source_url);
+    const hostSource = safeSourceUrl(item?.website);
     content.innerHTML = `
-      <div class="empty-state">
-        <i data-lucide="list-checks" aria-hidden="true"></i>
-        <strong>尚未建立這所學校的官方流程</strong>
-        <span>${escapeHtml(workflow.coverage_note)}</span>
-        <small>官方資料完成查核並由管理者發布後，會自動顯示在這裡。</small>
+      <div class="workflow-warning">
+        <i data-lucide="calendar-search" aria-hidden="true"></i>
+        <div><strong>${period ? `${escapeHtml(period)} 的適用流程待確認` : "這所合作校的申請流程待確認"}</strong>
+          <span>請向${escapeHtml(activeHomeSchool())}確認這一梯是否開放、校內期限及提名方式，再依合作校通知核對文件與送件期限。</span></div>
+      </div>
+      ${points.length ? `<section class="partner-student-summary"><h3>合作校名單的申請說明</h3>
+        <p>以下是選校參考資料，當期規定以校方公告為準。</p>
+        ${renderStudentPointList(points, {limit: points.length})}</section>` : ""}
+      <div class="partner-links detail-source-links">
+        ${homeSource ? `<a href="${escapeHtml(homeSource)}" target="_blank" rel="noreferrer">查看就讀學校的合作校資料</a>` : ""}
+        ${hostSource && hostSource !== homeSource ? `<a href="${escapeHtml(hostSource)}" target="_blank" rel="noreferrer">查看合作校網站</a>` : ""}
       </div>`;
     initIcons();
     return;
@@ -11750,12 +11792,15 @@ function renderWorkflowSubmission(step) {
     arrivalPending ? "必須送達：待確認（不要只以寄出日判斷）" : "",
     submission.deadline_note ? `期限說明：${submission.deadline_note}` : "",
   ].filter(Boolean);
+  const portal = safeSourceUrl(submission.portal_url);
+  const separatePortal = portal && portal !== safeSourceUrl(step.action_url);
   const hasDocuments = Boolean(step.document_requirements?.length || step.required_documents?.length);
-  if (method === "unknown" && !details.length && !hasDocuments) return "";
+  if (method === "unknown" && !details.length && !hasDocuments && !separatePortal) return "";
   return `
     <div class="workflow-submission${method === "unknown" || arrivalPending ? " is-pending" : ""}">
       <h4>送件方式</h4>
       <strong>${escapeHtml(WORKFLOW_SUBMISSION_LABELS[method] || method)}</strong>
+      ${separatePortal ? `<a class="official-link" href="${escapeHtml(portal)}" target="_blank" rel="noopener noreferrer">開啟官方送件入口<i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}
       ${details.length ? `<ul>${details.map((detail) => `<li>${escapeHtml(detail)}</li>`).join("")}</ul>` : method === "unknown" ? "<p>官方資料尚未明確標示紙本、線上或親送方式。</p>" : ""}
     </div>`;
 }
@@ -13518,9 +13563,9 @@ async function submitPrivateVault(event) {
   }
 }
 
-async function downloadPrivateVaultVersion(versionId, button) {
-  const version = findVaultVersion(versionId);
-  if (!version) return;
+async function downloadPrivateVaultVersion(versionId, button, fileNameHint = "") {
+  const fallbackName = fileNameHint || findVaultVersion(versionId)?.file_name;
+  if (!versionId || !fallbackName) return;
   const requestContext = captureAuthenticatedRequestContext();
   button.disabled = true;
   try {
@@ -13539,7 +13584,7 @@ async function downloadPrivateVaultVersion(versionId, button) {
     assertAuthenticatedRequestCurrent(requestContext);
     const disposition = response.headers.get("Content-Disposition") || "";
     const encodedName = disposition.match(/filename\*=UTF-8''([^;]+)/i)?.[1];
-    const fileName = encodedName ? decodeURIComponent(encodedName) : version.file_name;
+    const fileName = encodedName ? decodeURIComponent(encodedName) : fallbackName;
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -15089,6 +15134,7 @@ function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
   document.body.classList.toggle("cgu-community-mode", isUniversityPosts);
   updateUniWayPublicNavigation(hash);
   window.UniWayCommunity?.syncDetail();
+  if (hash.startsWith("#school=") && restoreUniversityDetailRoute()) return;
 
   if (globalFeed) {
     showUniversityPage(null, { resetScroll: false, focusHeading: false });
@@ -15178,21 +15224,25 @@ function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
   });
 }
 
+function restoreUniversityDetailRoute() {
+  const route = window.location.hash.match(/^#school=(.+?)(&tab=application)?$/);
+  if (!route || !state.dashboard) return false;
+  document.body.classList.remove("global-home-mode", "university-board-mode", "cgu-community-mode");
+  document.body.classList.add("public-exploration-mode");
+  updateUniWayPublicNavigation(window.location.hash);
+  const item = partnerByName(decodeURIComponent(route[1]));
+  if (item) {
+    if (state.activeSchool !== item.school_name) openUniversityDetail(item, { updateHistory: false });
+    if (route[2] && $("#detail-application")?.hidden) activateDetailTab("detail-application", { scroll: true });
+  }
+  return true;
+}
+
 function handleLocationRoute() {
   const filtersChanged = window.location.search !== partnerUrlSearch ? readPartnerUrl() : false;
   const routeHome = resolveSupportedHomeSchool(new URLSearchParams(window.location.search).get("home") || new URLSearchParams(window.location.search).get("school")) || new URLSearchParams(window.location.search).get("home");
   if (routeHome && routeHome !== activeHomeSchool() && state.supportedUniversities.some((item) => item.school_name === routeHome)) setHomeSchool(routeHome);
-  const route = window.location.hash.match(/^#school=(.+)$/);
-  if (route && state.dashboard) {
-    document.body.classList.remove("global-home-mode", "university-board-mode", "cgu-community-mode");
-    document.body.classList.add("public-exploration-mode");
-    updateUniWayPublicNavigation(window.location.hash);
-    const item = partnerByName(decodeURIComponent(route[1]));
-    if (item && state.activeSchool !== item.school_name) {
-      openUniversityDetail(item, { updateHistory: false });
-    }
-    return;
-  }
+  if (restoreUniversityDetailRoute()) return;
   if (state.activeSchool) closeUniversityDetail({ updateHistory: false });
   applyAppRoute();
   if (window.location.hash === "#partners" && state.dashboard) {
@@ -16307,17 +16357,13 @@ async function boot() {
   if (sharedHome && state.supportedUniversities.some((item) => item.school_name === sharedHome)) setHomeSchool(sharedHome, { reload: false });
   aiStatusManager.start(30000);
   await loadDashboard();
+  restoreUniversityDetailRoute();
   await loadApplicationTemplates();
   applyAppRoute({ loadFeed: false, resetScroll: false });
   if (isPersonalizedRoute() && !state.homeSchool) initializeSchoolOnboarding();
   // The loading screen stays until the page is completely ready, so nothing inside it is still "loading" when it goes.
   // These four do not depend on each other, so they run together (one failing does not hold the others back).
   await Promise.allSettled([loadGlobalCommunity(), loadCoverage(), loadDestinationProfiles(), state.periodOptionsReady]);
-  const route = window.location.hash.match(/^#school=(.+)$/);
-  if (route) {
-    const item = partnerByName(decodeURIComponent(route[1]));
-    if (item) openUniversityDetail(item, { updateHistory: false });
-  }
 }
 
 // The loading screen goes when starting is over, however it ended; it can never stay in front of the page for good.

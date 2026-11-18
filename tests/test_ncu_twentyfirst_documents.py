@@ -71,4 +71,4 @@ def test_scope_and_source_ambiguities_are_not_silently_resolved():
     assert '不自行改成大於等於' in txt('ncu-204', 'language')
     assert '原件只用$未明幣別' in txt('ncu-204', 'housing')
     from exchange_info.ncu_student_view import fetch_ncu_partner_universities
-    assert all(p.quota is None and p.availability_status == 'agreement_only' for p in fetch_ncu_partner_universities())
+    assert all((p.quota is None) == (p.availability_status == "not_open") for p in fetch_ncu_partner_universities())

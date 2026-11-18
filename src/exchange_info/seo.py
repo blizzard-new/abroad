@@ -30,6 +30,7 @@ from .cross_school_partners import (
 )
 from .models import CatalogueSourceStatus, PartnerUniversity
 from .school_identity import school_identity_key
+from .ncu_student_view import ncu_window_cache_boundary
 from .seo_changes import ContentChanges
 from .seo_quality import digest, material_content
 from .seo_guides import COUNTRIES, GUIDES, country_slug
@@ -249,7 +250,7 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
         for i, (name, p) in enumerate(breadcrumbs, 1)]}
     article_head = structured_data(article_schema(article, settings.origin)) if article else ""
     if path == "/guides" or article:
-        article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261020-1">'
+        article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261119-1">'
     if extra_head:
         article_head += extra_head
     select_assets = (
@@ -318,7 +319,7 @@ DETAIL_LABELS = {"application_documents": "申請文件", "required_documents": 
                  "insurance": "保險", "housing": "住宿", "tuition_fees": "學費與費用", "courses": "課程", "academic_calendar": "學期日期"}
 
 
-def partner_details(partner: PartnerUniversity, section_id: str = "programme") -> str:
+def partner_details(partner: PartnerUniversity, section_id: str = "programme", *, application_url: str = "") -> str:
     rows = [("資料狀態", AVAILABILITY[partner.availability_status]), ("狀態說明", partner.availability_note),
             ("母校受理時窗", {"open": "受理中（依來源時窗）", "upcoming": "尚未開始受理", "closed": "已截止"}.get(partner.application_window_status, "待確認"))]
     if partner.checked_at:
@@ -327,7 +328,15 @@ def partner_details(partner: PartnerUniversity, section_id: str = "programme") -
     details = definition_list(rows) + '<h3>名額與適用年度</h3>' + definition_list(quota_rows(partner))
     for heading, fields in FIELD_SECTIONS:
         values = [(labels[key], getattr(partner, key)) for key in fields if getattr(partner, key, None)]
-        if values:
+        if "application_info" in fields:
+            steps = partner.student_summary_zh.application_steps if not partner.application_info else []
+            if steps:
+                values.insert(0, ("合作校名單的申請說明", "\n".join(steps)))
+            instructions = definition_list(values) if values else "<p>這筆合作校名單未列出申請步驟，請核對當期申請流程與校方來源。</p>"
+            if application_url:
+                instructions += f'<p><a href="{escape(application_url)}">查看這所學校的申請方式</a></p>'
+            details += f'<section><h3>{heading}</h3>{instructions}</section>'
+        elif values:
             details += f'<section><h3>{heading}</h3>{definition_list(values)}</section>'
     evidence = "".join(
         f'<li><strong>{escape(labels.get(key, "補充條件"))}</strong>：{EVIDENCE[item.status]}；{escape(item.note or "")} '
@@ -375,7 +384,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
                       changes: ContentChanges | None = None) -> APIRouter:
     router = APIRouter(include_in_schema=False)
     universities = {item.id: item for item in SUPPORTED_UNIVERSITIES}
-    snapshots: dict[str, tuple[float, list[PartnerUniversity], CatalogueSourceStatus | None, dict[str, list[PartnerUniversity]]]] = {}
+    snapshots: dict[str, tuple[float, datetime | None, list[PartnerUniversity], CatalogueSourceStatus | None, dict[str, list[PartnerUniversity]]]] = {}
     snapshot_locks = {home_id: threading.Lock() for home_id in universities}
     lastmods: dict[str, str] = {}
 
@@ -395,18 +404,19 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         # refresh at most once per minute, including time-sensitive window state.
         with snapshot_locks[u.id]:
             cached = snapshots.get(u.id)
-            if cached and monotonic() - cached[0] < 60:
-                return cached[1], cached[2], cached[3]
+            boundary = ncu_window_cache_boundary()[0] if u.id == "ncu" else None
+            if cached and cached[1] == boundary and monotonic() - cached[0] < 60:
+                return cached[2], cached[3], cached[4]
             partners, source = catalogue(u)
             if not partners:
                 raise HTTPException(503, "合作校資料暫不可用，請稍後重試。", headers={"Retry-After": "60"})
             groups = group_partners(partners)
-            hashes = {settings.origin + partner_path(u, rows[0]): digest({"layout": 2, "content": material_content(rows)})
+            hashes = {settings.origin + partner_path(u, rows[0]): digest({"layout": 3, "content": material_content(rows)})
                       for rows in groups.values()}
             for url in hashes:
                 lastmods.pop(url, None)
             lastmods.update(record_changes(hashes))
-            snapshots[u.id] = monotonic(), partners, source, groups
+            snapshots[u.id] = monotonic(), boundary, partners, source, groups
             return partners, source, groups
 
     def cached_pair_loader(u: UniversityProfile) -> tuple[list[PartnerUniversity], CatalogueSourceStatus | None]:
@@ -543,6 +553,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
     @router.api_route("/schools/{home_id}/partners/{key}", methods=["GET", "HEAD"])
     def partner_school(home_id: str, key: str):
         u = university(home_id)
+        seconds_left = ncu_window_cache_boundary()[1] if u.id == "ncu" else None
         partners, source, groups = catalogue_for(u)
         rows = groups.get(key)
         if not rows:
@@ -562,7 +573,10 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             ("可申請學制（各方案可能不同）", "；".join(dict.fromkeys(row.degree_levels for row in rows if row.degree_levels)) or "未列載，請查閱官方來源"),
             ("方案資料狀態", statuses),
             ("核對順序", "先確認母校當期甄選，再核對合作校方案；提名、錄取與名額確認是不同步驟。")]) + '</section>'
-        body += "".join(partner_details(row, f"programme-{i}") for i, row in enumerate(rows, 1))
+        body += "".join(
+            partner_details(row, f"programme-{i}", application_url=application_link(u, row) + "&tab=application")
+            for i, row in enumerate(rows, 1)
+        )
         slug = country_slug(partner.country)
         body += '<section><h2>延伸比較與申請準備</h2><ul>'
         body += f'<li><a href="{escape(cross_school_url)}">跨校比較：{escape(partner.school_name)}全台締約大學門檻、生活費與修課方向</a></li>'
@@ -579,8 +593,11 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
                 f'<li><a href="{partner_path(u, item)}">{escape(item.school_name)}的{escape(u.short_name)}適用方案</a></li>' for item in related) + '</ul>'
         body += '</section>'
         path = partner_path(u, partner)
-        return page(settings, title, description, path, body,
+        response = page(settings, title, description, path, body,
                     [("首頁", "/"), ("交換學校指南", "/schools"), (u.school_name, f"/schools/{u.id}"), (partner.school_name, path)])
+        if seconds_left is not None:
+            response.headers["Cache-Control"] = f"public, max-age={min(60, seconds_left)}"
+        return response
 
     @router.api_route("/destinations", methods=["GET", "HEAD"])
     def destinations():

@@ -58,11 +58,12 @@ def test_bundled_ntpu_catalog_is_complete(monkeypatch, tmp_path) -> None:
         == ApplicationApplicabilityStatus.NEEDS_CONFIRMATION
         for row in workflows
     )
-    # 同濟大學 is new in 116; no official site could be identified for it yet, and it
-    # stays listed as a gap instead of being filled in.
-    unverified = [row.school_name for row in research if row.verification_status != "official_verified"]
-    assert unverified == ["同濟大學"]
-    assert all(row.official_website for row in research if row.school_name != "同濟大學")
+    assert all(row.verification_status == "official_verified" and row.official_website for row in research)
+    tongji = next(row for row in destinations if row.school_name == "同濟大學")
+    assert tongji.city == "上海"
+    assert tongji.coverage_status == "official_partial"
+    assert "未提供交換生每月總生活費" in tongji.cost_summary
+    assert len(tongji.sources) == 2
     incomplete = [
         row.school_name
         for row in destinations
@@ -123,11 +124,12 @@ def test_bundled_ntpu_completeness_report_has_all_required_fields() -> None:
     assert report["partner_count"] == 206
     assert report["open_count"] == 169
     assert report["agreement_only_count"] == 37
-    assert report["verified_image_count"] == 205
+    assert report["verified_image_count"] == sum(row["image_status"] == "verified" for row in report["schools"])
+    assert report["verified_image_count"] == 121
     assert report["workflow_count"] == 206
-    assert report["destination_count"] == 204
-    # Every field is complete except the gaps of the schools new in 116 (listed, not filled).
-    assert min(report["fields"].values()) >= 204
+    assert report["destination_count"] == 206
+    # This report counts field presence, including scoped evidence and explicit caveats.
+    assert all(count == 206 for count in report["fields"].values())
     assert report["fields"]["structured_workflow"] == 206
     assert report["workflow_structure"] == {
         "workflow_count": 206,

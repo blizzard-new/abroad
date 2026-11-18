@@ -265,7 +265,7 @@ def test_frontend_matches_structured_language_and_document_statuses():
     const homeCollegeValue=value=>value,normalize=value=>String(value||''),academicMinimum=()=>70;
     const collegeMatches=()=>true,degreeMatches=()=>true,coverageForSchool=()=>null,destinationProfileForSchool=()=>null;
     const escapeHtml=value=>String(value),highlightHtml=value=>String(value);
-    for(const name of ['activeHomeSchool','academicScopeNeedsConfirmation','coupledAcademicScopeOptions','coupledAcademicScopeMatches','resolvedDegreeLevel','partnerDegreeScopeMatches','languageThresholdFromPartner','partnerAvailabilityMeta','partnerMatch','renderPartnerFieldEvidence']) {
+    for(const name of ['activeHomeSchool','positiveScopeText','academicScopeNeedsConfirmation','coupledAcademicScopeOptions','coupledAcademicScopeMatches','resolvedDegreeLevel','partnerDegreeScopeMatches','languageThresholdFromPartner','partnerAvailabilityMeta','partnerMatch','renderPartnerFieldEvidence']) {
       eval(source.match(new RegExp('^function '+name+'\\([^]*?^}','m'))[0]);
     }
     for(const test of cases) {
@@ -285,6 +285,10 @@ def test_frontend_matches_structured_language_and_document_statuses():
       assert.ok(html.includes('母校甄選／提名前提（非文件清單）'));
       assert.ok(!html.includes('合作校申請文件要求（未聲稱完整） · 當期已核實'));
     }
+    state.homeSchool='國立臺北科技大學';
+    const otherHome=renderPartnerFieldEvidence(payload.document_cases[0]);
+    assert.ok(!otherHome.includes('中正校內'));
+    assert.ok(otherHome.includes('母校校內截止'));
     """
     result = subprocess.run(
         [

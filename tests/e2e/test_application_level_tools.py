@@ -111,3 +111,50 @@ def test_public_partner_page_uses_glide_without_changing_its_switcher_behavior(p
     expect(page.locator('#partner-home-switcher')).to_have_value('ntpu')
     expect(page.locator('#cs-home-badge')).to_have_text('國立臺北大學')
     assert page.locator('select:not(.glide-select__native)').count() == 0
+
+
+def test_student_can_retrieve_the_linked_file_from_the_plan_after_reload(page, live_server):
+    from io import BytesIO
+    from reportlab.pdfgen import canvas
+
+    verified_login(page, live_server)
+    home = "長庚大學"
+    target = "林肯大學 Lincoln University"
+    response = page.request.post(f"{live_server.base_url}/account/application-paths", data={
+        "home_school": home, "target_school": target, "academic_year": "116",
+        "application_round": "116-1（2027 秋季出國）", "departure_year": "2027", "semester": "fall", "revision": 0,
+    })
+    assert response.ok, response.text()
+    plan = response.json()
+    document = next(item for stage in plan["stages"] for item in stage["levels"] if item["kind"] == "file")
+    path = urlencode({"plan": plan["plan"]["id"], "view": "level", "level": document["id"]})
+    page.goto(f"{live_server.base_url}/#my-application?{path}")
+    expect(page.locator("#level-title")).to_have_text(document["title"])
+    download = page.get_by_role("button", name="下載選取的文件")
+    expect(download).to_be_hidden()
+
+    sample = BytesIO()
+    pdf = canvas.Canvas(sample)
+    pdf.drawString(60, 700, "Synthetic exchange application document")
+    pdf.save()
+    page.locator(".ap-upload summary").click()
+    page.locator("#path-file").set_input_files({
+        "name": "sample.pdf", "mimeType": "application/pdf", "buffer": sample.getvalue(),
+    })
+    page.locator("#file-consent").check()
+
+    def verify_upload_lock(route):
+        if route.request.method == "POST":
+            expect(page.locator("#confirm-step")).to_be_disabled()
+            expect(page.locator("#save-note")).to_contain_text("正在上傳")
+        route.continue_()
+
+    page.route("**/account/vault/documents", verify_upload_lock)
+    page.locator("#upload-file").click()
+    expect(page.locator("#save-note")).to_have_text("已儲存", timeout=30000)
+    page.reload()
+    expect(page.locator("#file-version option:checked")).to_have_text("sample.pdf")
+    with page.expect_download() as exported:
+        download.click()
+    assert exported.value.suggested_filename == "sample.pdf"
+    assert Path(exported.value.path()).read_bytes() == sample.getvalue()

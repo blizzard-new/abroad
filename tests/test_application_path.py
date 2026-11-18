@@ -450,3 +450,95 @@ def test_round_consistency_validation_rejects_mismatched_year_or_semester(client
     )
     assert ok_115.status_code == 201, ok_115.text
 
+
+
+@pytest.mark.parametrize(("title", "kind"), [
+    ("確認：完成臺北大學線上申請與文件上傳", "submission"),
+    ("確認：完成合作校線上申請", "submission"),
+    ("在長庚期限內送出校內申請", "submission"),
+    ("準備申請表及成績單送達國際事務處", "submission"),
+    ("於校內系統選填志願並上傳電子備審", "submission"),
+    ("確認線上申請需要的文件", "note"),
+    ("完成線上申請前的文件準備", "note"),
+])
+def test_online_application_handoff_is_distinct_from_file_preparation(title, kind):
+    evaluated = result()
+    evaluated.choices[0].checklist[0].title = title
+    evaluated.choices[0].checklist[0].phase = "校內申請"
+    catalog = ApplicationDocumentCatalog(
+        context=ApplicationCenterContext(school_name=CONTEXT["home_school"]), contact_unit="國際處",
+    )
+    stages = build_levels(CONTEXT, evaluated, catalog)
+    task = next(item for stage in stages for item in stage["levels"] if item["id"] == "task-one")
+    assert task["kind"] == kind
+
+
+def test_unpublished_cycle_files_keep_reference_year_and_unlisted_files_stay_personal(client):
+    from exchange_info.models import TaskDocumentLink
+
+    evaluated = result()
+    prior = evaluated.choices[0].checklist[0]
+    prior.task_origin = "reference_year"
+    prior.reference_academic_year = "115"
+    prior.source_urls = ["https://example.edu/archive/115"]
+    prior.document_link = TaskDocumentLink(requirement_names=["歷年成績單", "歷年成績單"])
+    client.app.state.path_evaluate = lambda _: evaluated
+
+    def file_steps():
+        data = create(client).json()
+        return [item for stage in data["stages"] for item in stage["levels"] if item["kind"] == "file"]
+
+    reference, = file_steps()
+    assert reference["document_basis"] == "reference_year"
+    assert "115 學年度" in reference["title"] and "歷年成績單" in reference["title"]
+    assert reference["source_urls"] == prior.source_urls
+    assert reference["counted"] is False
+
+    prior.document_link = None
+    personal, = file_steps()
+    assert personal["document_basis"] == "personal" and personal["counted"] is False
+    assert personal["source_urls"] == prior.source_urls
+    assert personal["id"] != reference["id"]
+
+
+@pytest.mark.parametrize(('title', 'actor', 'expected'), [
+    ('預估：完成系主任、院長、註冊組與生輔組審查流程表核章，於收件截止前送交申請表件', '學生、所屬系所與學院、教務處註冊組、國際暨兩岸事務處', 'submission'),
+    ('於中山大學出國交換學生甄選系統完成線上填報與審查文件上傳', '學生', 'submission'),
+    ('取得導師／指導教授與系所主管核章並於出國計畫線上申請系統上傳應繳文件', '學生與系所主管', 'submission'),
+    ('完成線上報名（09/16–09/24）並於 10/05–11/02 上傳 iNCCU 全人系統登錄截圖暨語言檢定證明', '學生', 'submission'),
+    ('登入出國交換學生申請系統填報志願並送系所初審', '學生與所屬系科所辦公室', 'submission'),
+    ('於校內截止日前備妥甄選申請表與積分自評表送系所及學院初審排序', '學生與所屬系所／學院辦公室', 'submission'),
+    ('備妥交換申請表、歷年成績單及作品集送系所初審及學院複審', '學生與所屬系所／學院', 'submission'),
+    ('備妥《交換生計畫申請表》、專業作品集與應備文件送所屬系所進行第一階段書面初審', '學生與所屬系所', 'submission'),
+    ('等待校方審查已上傳的文件', '學生', 'notice'),
+    ('審查學生送交的申請文件', '系所甄選委員會', 'notice'),
+    ('由國際暨兩岸事務處提名並遞交入學文件', '國際暨兩岸事務處與學生', 'notice'),
+    ('於系統上傳簽證補件', '學生', 'note'),
+    ('核對應上傳文件的格式', '學生', 'note'),
+])
+def test_student_home_handoffs_separate_delivery_from_review(title, actor, expected):
+    from exchange_info.application_path import checklist_kind
+
+    task = result().choices[0].checklist[0].model_copy(update={
+        'title': title, 'responsible_party': actor, 'phase': '校內申請',
+    })
+    assert checklist_kind(task) == expected
+
+
+def test_ready_note_does_not_become_student_confirmed_submission(client):
+    plan = create(client).json()
+    saved = update(client, plan, 'task-one', {'value': '已備齊申請表', 'confirmed': True}).json()
+    evolved = result()
+    task = evolved.choices[0].checklist[0]
+    task.title = '備妥交換申請表與作品集送系所初審'
+    task.phase = '校內申請'
+    task.responsible_party = '學生與所屬系所'
+    client.app.state.path_evaluate = lambda _: evolved
+    current = client.get(f'/account/application-paths/{plan["plan"]["id"]}', params={'home_school': CONTEXT['home_school']}, headers={'Authorization':'alice'}).json()
+    handoff = next(x for stage in current['stages'] for x in stage['levels'] if x['id'] == 'task-one')
+    assert handoff['kind'] == 'submission' and handoff['progress']['value'] < handoff['progress']['total']
+    assert current['plan']['steps']['task-one']['value'] == '已備齊申請表'
+    assert current['plan']['steps']['task-one']['confirmed'] is False
+    confirmed = update(client, current, 'task-one', {'value':'已依校方指示送交', 'confirmed':True}, revision=saved['revision']).json()
+    handoff = next(x for stage in confirmed['stages'] for x in stage['levels'] if x['id'] == 'task-one')
+    assert handoff['progress']['value'] == handoff['progress']['total']

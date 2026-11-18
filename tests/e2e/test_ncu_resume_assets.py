@@ -4,6 +4,7 @@ import re
 import pytest
 from playwright.sync_api import expect
 
+from .ncu_roster import roster_badge
 from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import wait_until
 
@@ -35,7 +36,7 @@ def test_resume_photo_bytes_and_actual_attribution_visible(page, live_server, qu
     select_ncu(page,live_server)
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge(query))
     picture=page.locator('#partner-table .school-photo img').first
     expect(picture).to_have_attribute('src',re.compile(r'/static/assets/ncu-schools/[a-f0-9]+\.(?:jpg|png)$'))
     wait_until(page,"document.querySelector('#partner-table .school-photo img')?.naturalWidth > 0",timeout=30)

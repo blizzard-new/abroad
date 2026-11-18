@@ -7,6 +7,31 @@ from exchange_info.models import ApplicationDeadlineStatus
 from exchange_info.workflow_structuring import workflow_structure_issues
 
 
+def test_1161_home_intake_matches_notice_for_every_partner():
+    from exchange_info.cgu_1161_intake import APPLICATION_FORM, UPLOAD_FORM
+    from exchange_info.student_view import build_student_dashboard
+    from exchange_info.verified_window_deadlines import build_verified_window_deadline_catalog
+
+    dashboard = build_student_dashboard([], fetch_partner_sheets=False, fetch_regulation_rules=False)
+    main, extra = dashboard.required_documents
+    assert len(main.details) == 6 and any("iCGU" in text for text in main.details)
+    assert len(extra.details) == 3
+    card = build_verified_window_deadline_catalog(school="cgu").items[0]
+    assert card.paper_deadline.submission_mode == "signed_scan_upload"
+    workflows = [json.loads(line) for line in (storage.BUNDLED_CGU_DIR / "application_workflows.jsonl").read_text().splitlines()]
+    current = [row for row in workflows if row["academic_year"] == "116"]
+    assert len(current) == 78
+    for row in current:
+        step = next(step for step in row["steps"] if step["phase"] == "校內申請")
+        assert step["official_form_urls"] == [APPLICATION_FORM, UPLOAD_FORM]
+        assert step["submission"]["portal_url"] == UPLOAD_FORM
+        assert step["deadline_at"] == "2026-12-21T17:00:00+08:00"
+        assert [doc["name"] for doc in step["document_requirements"] if not doc["conditional"]] == main.details
+        assert [doc["name"] for doc in step["document_requirements"] if doc["conditional"]] == extra.details
+        assert step["signature_requirements"] == ["導師或指導教授", "家長或監護人"]
+    assert all(UPLOAD_FORM not in json.dumps(row) for row in workflows if row["academic_year"] == "115")
+
+
 def test_bundled_cgu_workflows_are_available_without_local_cache(
     monkeypatch, tmp_path
 ) -> None:
@@ -1297,3 +1322,32 @@ def test_backfilled_cgu_workflows_keep_current_details_reference_only() -> None:
     assert warsaw.partner_website == "https://www.wum.edu.pl/en"
     assert tue.partner_website == "https://www.tue.nl/en/"
     assert icd.partner_website == "https://www.icd-bs.com/"
+
+
+def test_missing_partner_deadlines_lead_to_the_listed_programme():
+    from exchange_info.cgu_catalogue import BUNDLED_SNAPSHOT, validate_snapshot
+    from exchange_info.models import UniversityApplicationWorkflow
+    from exchange_info.workflow_structuring import structure_application_workflow
+
+    partners = validate_snapshot(json.loads(BUNDLED_SNAPSHOT.read_text()))
+    missing_deadline = {p.school_name for p in partners if p.availability_status == 'open' and not p.application_deadline}
+    workflows = [json.loads(line) for line in (storage.BUNDLED_CGU_DIR / 'application_workflows.jsonl').read_text().splitlines()]
+    selected = [w for w in workflows if w['academic_year'] == '116' and w['school_name'] in missing_deadline]
+    assert len(selected) == 13
+    for workflow in selected:
+        host = next(step for step in workflow['steps'] if step['phase'] == '合作校申請')
+        assert host['deadline_status'] == 'needs_confirmation'
+        assert host['deadline_at'] is None and not host['deadline_reminder_eligible']
+        assert host['action_url'] in host['source_urls']
+        public = structure_application_workflow(UniversityApplicationWorkflow.model_validate(workflow))
+        public_host = next(step for step in public.steps if step.phase == '合作校申請')
+        assert public_host.submission.portal_url is None
+        assert not public_host.deadline_reminder_eligible
+        assert any('docs.google.com/spreadsheets' in u for u in host['source_urls'])
+        if 'Debrecen' in workflow['school_name']:
+            assert host['action_url'].endswith('/international-study-semester-program')
+            assert len(host['document_requirements']) == 4
+            assert host['document_requirements'][-1]['conditional']
+        if 'Queensland' in workflow['school_name']:
+            assert '2026 年 6 月 30 日' in host['timing'] and '電機另案' in host['timing']
+        assert 'vgu.edu.vn' not in json.dumps(workflow)

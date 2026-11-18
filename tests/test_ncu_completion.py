@@ -150,8 +150,9 @@ def test_api_dashboard_coverage_detail_and_life_agree_on_photos(tmp_path):
     client = TestClient(create_app(tmp_path))
     dashboard = client.get("/student-dashboard", params={"school": "NCU"}).json()
     assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 202
-    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 214
-    assert all(p["location"]["latitude"] is None for p in dashboard["partner_universities"] if p["location"]["geocode_status"] != "verified")
+    assert sum((p.get("location") or {}).get("geocode_status") == "verified" for p in dashboard["partner_universities"]) == 218
+    assert all((p["location"] or {}).get("latitude") is None for p in dashboard["partner_universities"]
+               if (p["location"] or {}).get("geocode_status") != "verified")
     coverage = client.get("/coverage", params={"school": "NCU"}).json()
     assert sum(p["image_status"] == "verified" for p in coverage["partners"]) == 202
     partner = next(p for p in dashboard["partner_universities"] if "Alicante" in p["school_name"])
@@ -176,7 +177,7 @@ def test_source_attempts_and_agreement_denominators_are_not_current_exchange_app
         assert next(s for s in sources if s["id"] == sid)["authority_kind"] == "discovery_rejected"
     all_audits = json.loads((BUNDLE / "field-audit.json").read_text())
     assert all(a["collection_attempts"] for a in all_audits)
-    assert all(p.quota is None and p.availability_status == "agreement_only" for p in build_ncu_student_dashboard().partner_universities)
+    assert all((p.quota is None) == (p.availability_status == "not_open") for p in build_ncu_student_dashboard().partner_universities)
 
 
 def test_2027_utbm_original_content_keeps_initial_and_arrival_documents_separate(tmp_path):
@@ -472,7 +473,8 @@ def test_oswego_track_fee_language_conflicts_and_download_denial_are_preserved(t
     assert len(initial["document_requirements"]) == 4
     assert not any("DS160" in d["name"] for d in initial["document_requirements"])
     assert all(d["conditional"] and d["stage"] == "post_offer" for d in later["document_requirements"])
-    assert partner.quota is None and partner.availability_status == "agreement_only"
+    assert partner.field_evidence["quota"].status == "verified_current"
+    assert partner.availability_status == ("fee_paying" if "自費" in english else "open")
     assert not any(s["deadline_reminder_eligible"] for s in workflow["steps"])
 
 

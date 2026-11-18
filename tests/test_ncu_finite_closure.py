@@ -21,8 +21,8 @@ def test_same_chinese_name_keeps_spain_and_malaysia_sources_separate():
     assert 'RM1000' not in es.tuition_info and '1cWQi5Dl' not in es.eligibility
     assert 'TOEIC' in my.eligibility and '西班牙文B2' not in my.eligibility
     assert 'RM1000-RM1200' in my.tuition_info and '1wBS543c' not in my.eligibility
-    assert es.quota is None and my.quota is None
-    assert es.availability_status == my.availability_status == 'agreement_only'
+    assert es.field_evidence["quota"].status == my.field_evidence["quota"].status == "verified_current"
+    assert es.availability_status == my.availability_status == "open"
 
 
 def test_selected_cited_pages_are_sha_bound_without_promoting_unread_remainders():

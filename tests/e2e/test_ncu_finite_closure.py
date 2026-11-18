@@ -1,6 +1,7 @@
 """Final bounded NCU review reaches actual desktop and mobile cards."""
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .test_ncu_resume_assets import select_ncu
 
 CASES = [
@@ -22,7 +23,7 @@ def test_final_source_scope_and_identity(page, live_server, tmp_path, width, slu
     select_ncu(page, live_server)
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge(query))
     if width < 700:
         page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()

@@ -62,7 +62,7 @@ def test_conflicting_years_programmes_and_unknowns_are_retained():
     assert '未註計費週期' in txt('ncu-158', 'housing')
     assert '不代表免除韓國國民健康保險' in txt('ncu-158', 'insurance')
     from exchange_info.ncu_student_view import fetch_ncu_partner_universities
-    assert all(p.quota is None and p.availability_status == 'agreement_only' for p in fetch_ncu_partner_universities())
+    assert all((p.quota is None) == (p.availability_status == "not_open") for p in fetch_ncu_partner_universities())
 
 
 def test_four_translated_addresses_keep_their_exact_source(tmp_path):

@@ -43,8 +43,8 @@ def test_funded_sdu_calls_do_not_become_ncu_eligibility():
     assert all(w['review_status']=='pending_review' for w in all_workflows)
     assert all(not s.get('deadline_reminder_eligible') for w in all_workflows for s in w['steps'] if '-host-' in s['rule_id'])
     partners=[json.loads(l) for l in (BUNDLE/'partners.jsonl').read_text().splitlines()]
-    assert len(partners)==214
-    assert all(p.get('quota') is None and p['availability_status']=='agreement_only' for p in partners)
+    assert len(partners)==222
+    assert all((p.get('quota') is None) == (p['availability_status'] == 'not_open') for p in partners)
 
 
 def test_shinshu_japanese_and_jasso_conditions_do_not_gate_entire_exchange():

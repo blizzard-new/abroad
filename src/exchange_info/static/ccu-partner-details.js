@@ -74,6 +74,7 @@
   function renderProfileLife(profile, escapeHtml) {
     const sections = profile.student_guide_sections || [];
     const visible = [
+      ...sections.filter(section => section.key === "host_life_service").map(section => [section.key, section.title]),
       ["transport", "交通與通勤"], ["campus_life", "校園生活與支援"],
       ...sections.filter(section => ["healthcare_reference", "return_preparation"].includes(section.key))
         .map(section => [section.key, section.title]),

@@ -8,7 +8,7 @@ from typing import Iterable
 
 from .ai_gateway import structured_response
 from .fit_signals import course_interest_fit, school_budget_fit, teaching_language_fit
-from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
+from .ncu_eligibility import NCU_ONLINE_INTAKE_CLOSED, is_ncu, ncu_academic_check, ncu_language_check
 from .ntnu_eligibility import is_ntnu
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
 from .qualification_scopes import (
@@ -78,6 +78,7 @@ def build_advisor_plan(
         partner
         for partner in dashboard.partner_universities
         if partner.availability_status == "open"
+        or (is_ncu(dashboard.school_name) and partner.availability_status == "fee_paying")
         or (dashboard.selection_rules.pending_quota_planning
             and partner.availability_status == "agreement_only"
             and (partner.quota is None or ntu_published_quota(partner)))
@@ -102,7 +103,7 @@ def build_advisor_plan(
     country = (profile.preferred_country or "").strip()
     in_country = [item for item in matches if country and _normal(item.country) == _normal(country)]
     country_note = ""
-    catalog_label = "候選合作校" if dashboard.selection_rules.pending_quota_planning else "開放合作校"
+    catalog_label = "候選合作校" if dashboard.selection_rules.pending_quota_planning or is_ncu(dashboard.school_name) else "開放合作校"
     candidates = matches
     if country and in_country:
         candidates = in_country
@@ -138,6 +139,8 @@ def build_advisor_plan(
         summary = "目前條件仍有缺口，先完成下方任務，再重新產生選校方案。"
     if dashboard.selection_rules.pending_quota_planning:
         summary += "名額待公告的合作校可先規劃；正式申請須等本期名額與資格確認。"
+    if is_ncu(dashboard.school_name) and any(p.application_window_status == "closed" for p in planning_partners):
+        summary += NCU_ONLINE_INTAKE_CLOSED
     if country_note:
         summary = f"{country_note}{summary}"
     mode = "ai_enhanced" if answer and answer.ai_enhanced else "source_grounded"
@@ -266,6 +269,9 @@ def _score_partner(
         detail = "校內申請尚未開始；名額已公告不代表目前可送件。"
         gaps.append(detail)
         confirmation_items.append(detail)
+    elif is_ncu(dashboard.school_name) and partner.application_window_status == "closed":
+        gaps.append(NCU_ONLINE_INTAKE_CLOSED)
+        confirmation_items.append(NCU_ONLINE_INTAKE_CLOSED)
     elif is_ntnu(dashboard.school_name) and partner.application_window_status != "open":
         detail = ("校級收件已截止，須確認已有申請或提名資格。" if partner.application_window_status == "closed"
                   else "校級系統開放時間或院系所辦理期限尚待確認。")
@@ -275,7 +281,10 @@ def _score_partner(
     degree = resolved_degree_level(profile.degree_level, profile.current_year)
     coupled_scope = coupled_academic_scope_matches(partner, profile.college, degree)
     degree_match = partner_degree_scope_matches(partner, profile.college, degree) if degree else None
-    if partner.availability_status != "open":
+    if is_ncu(dashboard.school_name) and partner.availability_status == "fee_paying":
+        confirmation_items.append("中央當期名單列為自費方案，請核對接待校收費。")
+        gaps.append(confirmation_items[-1])
+    elif partner.availability_status != "open":
         confirmation_items.append("名額與申請狀態請依逐校證據核對；參考資料不代表當期可申請")
         gaps.append(confirmation_items[-1])
 

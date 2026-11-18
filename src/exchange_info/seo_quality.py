@@ -51,7 +51,9 @@ def material_content(rows: Sequence[PartnerUniversity]) -> list[dict]:
             "partner_exchange_details": {"__all__": {"source_checks": True, "evidence": {"__all__": {"checked_at"}}}},
             "program_options": {"__all__": {"student_summary_zh"}},
         })
-        values.append(stable_value({k: data.get(k) for k in MATERIAL_FIELDS}))
+        if not row.application_info and row.student_summary_zh.application_steps:
+            data["application_steps"] = row.student_summary_zh.application_steps
+        values.append(stable_value(data))
     # Source record ordering is not a substantive edit.
     return sorted(values, key=digest)
 

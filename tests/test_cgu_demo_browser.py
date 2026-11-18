@@ -968,12 +968,12 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     expect(sim_hub).not_to_contain_text('SIM-')
     expect(sim_hub).not_to_contain_text('SHA-256')
     expect(sim_hub).to_contain_text('檔案僅用於完整性檢查，不會保存內容。')
-    expect(sim_hub).to_contain_text('實際申請仍須依國際處公告填線上表單並繳交紙本。')
+    expect(sim_hub).to_contain_text('文件繳交表')
     expect(page.locator('#cgu-sim-submit-btn')).to_be_disabled()
     expect(sim_hub.locator('[data-cgu-sim-sample]')).to_have_count(0)
     expect(sim_hub.locator('#cgu-sim-fill-all')).to_have_count(0)
 
-    # Upload 1 synthetic file via file input -> still missing 4 docs; SHA-256 stays hidden from student UI
+    # Upload 1 synthetic file via file input -> still missing 5 docs; SHA-256 stays hidden from student UI
     page.locator('input[data-cgu-sim-upload="online_form"]').set_input_files({
         'name': 'demo_online_form.pdf',
         'mimeType': 'application/pdf',
@@ -989,6 +989,7 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     expect(precheck_box).to_contain_text('語文證明')
     expect(precheck_box).to_contain_text('含排名的中文歷年成績單')
     expect(precheck_box).to_contain_text('一頁讀書計畫')
+    expect(precheck_box).to_contain_text('本校在學證明')
     expect(page.locator('#cgu-sim-submit-btn')).to_be_disabled()
 
     # Step 2: 透過展示工具補齊後送出取得 CGU-116-1-A 收件編號
@@ -997,7 +998,7 @@ def test_demo_script_end_to_end_student_and_oia_workflow(page, demo_url):
     expect(precheck_box).to_contain_text('文件預檢通過')
     expect(page.locator('#cgu-sim-submit-btn')).to_be_enabled()
     page.locator('#cgu-sim-submit-btn').click()
-    expect(page.locator('#cgu-sim-submit-feedback')).to_contain_text('正式申請請依國際處公告完成線上表單與紙本繳交')
+    expect(page.locator('#cgu-sim-submit-feedback')).to_contain_text('正式申請請依國際處當期公告辦理')
     expect(page.locator('#cgu-sim-submit-feedback a[href*="85785"]')).to_be_visible()
     expect(page.locator('#overall-caption')).to_contain_text('6 / 16')
     records = page.locator('#cgu-sim-app-records')
@@ -1239,7 +1240,7 @@ def test_formal_product_presentation_hides_demo_jargon_and_supports_present_mode
     expect(page.locator('#cgu-demo-tools-panel')).not_to_be_visible()
     expect(page.locator('.uniway-public-nav a[data-public-route="school-connector"]')).to_have_count(0)
 
-    # Seed application + fill 5 files + submit so populated records also appear in visible UI checks
+    # Seed application + fill 6 files + submit so populated records also appear in visible UI checks
     seed(page)
     open_demo_tools(page)
     page.locator('#cgu-demo-fill-files').click()
@@ -1311,7 +1312,7 @@ def test_retained_single_about_disclaimer_and_post_submission_official_notice(pa
     page.locator('#cgu-demo-fill-files').click()
     page.locator('#cgu-sim-submit-btn').click()
     confirm_box = page.locator('#cgu-sim-submit-feedback')
-    expect(confirm_box).to_contain_text('正式申請請依國際處公告完成線上表單與紙本繳交')
+    expect(confirm_box).to_contain_text('正式申請請依國際處當期公告辦理')
     expect(confirm_box.locator('a[href*="cgu.edu.tw/oia-ch/Subject/Detail/85785"]')).to_be_visible()
     assert expected_disclaimer not in page.locator('#cgu-my-application-sim').inner_text()
     assert expected_disclaimer not in page.inner_text('body')
@@ -1587,7 +1588,7 @@ def test_cgu_in_page_level_types_and_contextual_tools(browser, demo_url):
         expect(guide).to_be_visible()
         expect(guide).to_contain_text('2026/11/02')
         expect(guide).to_contain_text('2026/12/21')
-        expect(guide).to_contain_text('校內應備 5 份文件')
+        expect(guide).to_contain_text('校內應備 6 份文件')
         expect(guide.locator('a[href*="85785"]')).to_be_visible()
         expect(lvl_view.locator('.source-details')).to_have_count(0)
         expect(lvl_view.locator('#save-draft')).to_have_count(0)
@@ -1631,7 +1632,7 @@ def test_cgu_in_page_level_types_and_contextual_tools(browser, demo_url):
         expect(page.locator('#cgu-study-plan-char-count')).to_contain_text(f'目前 {len(draft_text)} 字')
         page.locator('#cgu-study-plan-sync-btn').click()
         expect(page.locator('#cgu-study-plan-writer-feedback')).to_contain_text('已保存草稿並同步至「送交國際處」預檢清單')
-        expect(page.locator('#cgu-doc-level-bridge')).to_contain_text('目前 1 / 5 項已備齊')
+        expect(page.locator('#cgu-doc-level-bridge')).to_contain_text('目前 1 / 6 項已備齊')
         expect(page.locator('#cgu-doc-level-bridge')).to_contain_text('cgu-study-plan.txt')
 
         # 4. Submit & Notice level (cgu-internal-result): no student checkoff button; syncs live OIA action

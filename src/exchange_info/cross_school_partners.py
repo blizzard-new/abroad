@@ -667,7 +667,7 @@ class AggregatedPartnerEntity:
 
 
 _ENTITY_INDEX_CACHE: dict[
-    tuple[tuple[str, int, str, str, str], ...],
+    tuple[tuple[str, int, str, str, str, str], ...],
     tuple[dict[tuple[str, str], AggregatedPartnerEntity], dict[tuple[str, str], tuple[str, str]]],
 ] = {}
 
@@ -679,7 +679,7 @@ def build_cross_school_entity_index(
 ) -> tuple[dict[tuple[str, str], AggregatedPartnerEntity], dict[tuple[str, str], tuple[str, str]]]:
     """Unify partner records across all supported Taiwanese universities into shared (country_slug, institution_slug) entities."""
     loaded_by_uni: list[tuple[UniversityProfile, list[PartnerUniversity]]] = []
-    signature_parts: list[tuple[str, int, str, str, str]] = []
+    signature_parts: list[tuple[str, int, str, str, str, str]] = []
     for uni in SUPPORTED_UNIVERSITIES:
         try:
             partners, _ = catalogue_loader(uni)
@@ -692,7 +692,12 @@ def build_cross_school_entity_index(
         first_name = partner_list[0].school_name if partner_list else ""
         last_name = partner_list[-1].school_name if partner_list else ""
         first_status = partner_list[0].availability_status if partner_list else ""
-        signature_parts.append((uni.id, len(partner_list), first_name, last_name, first_status))
+        # Retained NCU roster entries keep their quota status after online intake closes.
+        window = None
+        if uni.id == "ncu":
+            window = next((p.application_window_status for p in partner_list
+                           if p.quota_status in {"published", "fee_paying"}), None)
+        signature_parts.append((uni.id, len(partner_list), first_name, last_name, first_status, window or ""))
 
     cache_key = tuple(signature_parts)
     cached = _ENTITY_INDEX_CACHE.get(cache_key)

@@ -22,7 +22,7 @@ def test_ncu_hiroshima_fee_image_coe_and_departure_stages_reach_mobile_ui(page,l
         page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill('廣島')
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text('中央提名名額已列')
     page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()
     degree=page.locator('#detail-overview .partner-student-summary li').filter(has_text='中央115表另限大學部').first
@@ -79,7 +79,7 @@ def test_ncu_omu_optional_english_and_iwing_health_reach_mobile_program_and_life
     if page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
         page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click(); page.locator('#partner-search').fill('大阪公立')
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text('中央提名名額已列')
     page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()
     language = page.locator('#detail-overview .partner-student-summary li').filter(has_text='N2總分90–111對應B1').first
@@ -140,7 +140,7 @@ def test_ncu_nuist_versions_and_ujn_hong_kong_scope_reach_visible_mobile_content
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill(school)
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text("中央提名名額已列")
     page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     page.locator("#ncu-source-audit > summary").click()
@@ -180,7 +180,7 @@ def test_ncu_tju_application_and_arrival_files_and_conversion_note_reach_mobile_
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("天津")
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text("中央提名名額已列")
     page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     page.locator("#detail-tab-application").click()
@@ -269,28 +269,17 @@ def test_ncu_content_source_pages_home_host_and_life(page, live_server, width):
     page.emulate_media(reduced_motion="reduce")
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
-    enter_public_site(page, live_server, "partners")
-    open_navigation(page)
-    page.locator("#school-switcher").click()
-    page.locator('[data-home-school="國立中央大學"]').click()
-    if (
-        width < 700
-        and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true"
-    ):
-        page.locator("#glass-menu-toggle").click()
-    wait_until(
-        page,
-        "state.dashboard?.school_name === '國立中央大學' && state.dashboard.partner_universities.length === 214",
-    )
+    enter_public_site(page, live_server, "partners", view="list", home_school="國立中央大學")
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學' && state.dashboard.partner_universities.length === 222")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("史特拉斯堡")
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text("中央提名名額已列")
     if width < 700:
         page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     page.locator("#school-detail-view .school-data-completeness > summary").click()
     expect(page.locator("#school-data-completeness-body")).to_contain_text(
-        "2 / 17 項本期已核實"
+        "3 / 17 項本期已核實"
     )
     expect(page.locator("#school-data-completeness-body")).to_contain_text(
         "城市與校區位置"
@@ -440,19 +429,11 @@ def test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui(
     page.emulate_media(reduced_motion="reduce")
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
-    enter_public_site(page, live_server, "partners")
-    open_navigation(page)
-    page.locator("#school-switcher").click()
-    page.locator('[data-home-school="國立中央大學"]').click()
-    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
-        page.locator("#glass-menu-toggle").click()
-    wait_until(
-        page,
-        "state.dashboard?.school_name === '國立中央大學' && state.dashboard.partner_universities.length === 214",
-    )
+    enter_public_site(page, live_server, "partners", view="list", home_school="國立中央大學")
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學' && state.dashboard.partner_universities.length === 222")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill(school)
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text("中央提名名額已列")
     page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     page.locator("#ncu-source-audit > summary").click()
@@ -513,7 +494,7 @@ def test_ncu_shanghai_visual_versions_and_life_are_visible(page, live_server, sc
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill(school)
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text("中央提名名額已列")
     page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     page.locator("#ncu-source-audit > summary").click()
@@ -607,7 +588,7 @@ def test_ncu_uny_degree_history_and_empty_exchange_resources_are_visible(page, l
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("Universitas Negeri Yogyakarta")
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text("中央提名名額已列")
     page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     expect(page.locator("#school-detail-view .partner-student-summary")).to_contain_text("雙聯不是")
@@ -660,7 +641,7 @@ def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill(school)
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text("中央提名名額已列")
     page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     page.locator("#ncu-source-audit > summary").click()
@@ -723,7 +704,7 @@ def test_ncu_nuist_image_packet_documents_and_taiwan_life_reach_mobile_ui(page, 
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("南京信息工程")
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+    expect(page.locator("#partner-table")).to_contain_text("中央提名名額已列")
     page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     page.locator("#ncu-source-audit > summary").click()
@@ -940,7 +921,7 @@ def test_ncu_science_tokyo_track_coe_health_and_2027_tiec_fee_reach_mobile_conte
     wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60.0)
     if page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill('東京科學')
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text('中央提名名額已列')
     page.locator('#partner-table .partner-card > summary').first.click();page.locator('#partner-table .school-detail-trigger:visible').first.click()
     expect(page.locator('#detail-overview .partner-student-summary li').filter(has_text='限115-2').first).to_be_visible()
     page.locator('#ncu-source-audit > summary').click()
@@ -987,7 +968,7 @@ def test_ncu_chiba_initial_health_language_choices_closed_dorm_and_insurance_rea
     if page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
         page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click(); page.locator('#partner-search').fill('千葉')
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text('中央提名名額已列')
     page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()
     expect(page.locator('#detail-overview .partner-student-summary li').filter(has_text='至少二年級').first).to_be_visible()

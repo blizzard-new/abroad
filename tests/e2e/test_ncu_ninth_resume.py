@@ -3,6 +3,7 @@ from pathlib import Path
 import json
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .test_ncu_resume_assets import select_ncu
 
 def point_screenshot(target,path):
@@ -24,7 +25,7 @@ def test_ninth_year_scope_and_documents_visible(page,live_server,query,width,ove
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge(query))
     summary=page.locator('#partner-table .partner-card > summary').first
     if summary.is_visible():summary.click()
     trigger=page.locator('#partner-table .school-detail-trigger:visible')

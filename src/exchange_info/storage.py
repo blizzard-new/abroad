@@ -50,7 +50,7 @@ from .models import (
     VaultDocumentVersionRecord,
 )
 from .settings import DEFAULT_DATA_DIR
-from .school_identity import school_identity_key, school_program_identity_key
+from .school_identity import public_catalogue_name, school_identity_key, school_program_identity_key
 from .university_registry import AU, CCU, CGU, CJCU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, KNU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NUU, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TKU, TMU, TNNUA, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, NUTN, NIU, NPTU, NPU, NTUNHS, NTTU, ASIA, TTU, TCU, MCUT, CYUT
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
@@ -324,9 +324,10 @@ def _with_explicit_destination_gaps(profile: DestinationProfile) -> DestinationP
 
 
 def _destination_profile_key(profile: DestinationProfile) -> tuple[str, str]:
+    home = profile.home_university or CGU.school_name
     return (
-        school_identity_key(profile.home_university or CGU.school_name),
-        school_program_identity_key(profile.school_name),
+        school_identity_key(home),
+        school_program_identity_key(public_catalogue_name(profile.school_name, home)),
     )
 
 
@@ -981,10 +982,18 @@ def load_destination_profiles(
     return result
 
 
+def _partner_research_key(row: PartnerResearchRecord) -> tuple[str, str]:
+    return (
+        school_identity_key(row.home_university),
+        school_identity_key(public_catalogue_name(row.school_name, row.home_university)),
+    )
+
+
 def load_partner_research(
     data_dir: Path = DEFAULT_DATA_DIR,
     *,
     include_bundled_baseline: bool | None = None,
+    home_university: str | None = None,
 ) -> list[PartnerResearchRecord]:
     local_path = data_paths(data_dir)["partner_research"]
     include_bundled = (
@@ -992,15 +1001,20 @@ def load_partner_research(
         if include_bundled_baseline is None
         else include_bundled_baseline
     )
+    from .university_registry import resolve_university
+    university = resolve_university(home_university) if home_university else None
+    home_key = school_identity_key(university.school_name if university else home_university or "")
     bundled_paths = tuple(
         directory / "partner_research.jsonl"
-        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR, BUNDLED_FCU_DIR, BUNDLED_NSYSU_DIR, BUNDLED_NCHU_DIR, BUNDLED_NTUT_DIR, BUNDLED_NCCU_DIR, BUNDLED_NCKU_DIR, BUNDLED_NYCU_DIR, BUNDLED_NTHU_DIR, BUNDLED_PCCU_DIR, BUNDLED_WZU_DIR, BUNDLED_NKUST_DIR, BUNDLED_YUNTECH_DIR, BUNDLED_NTOU_DIR, BUNDLED_NCUE_DIR, BUNDLED_NKNU_DIR, BUNDLED_TMU_DIR, BUNDLED_CSMU_DIR, BUNDLED_CMU_DIR, BUNDLED_KMU_DIR, BUNDLED_MCU_DIR, BUNDLED_NTUB_DIR, BUNDLED_NCNU_DIR, BUNDLED_NDHU_DIR, BUNDLED_THU_DIR, BUNDLED_SHU_DIR, BUNDLED_PU_DIR, BUNDLED_USC_DIR, BUNDLED_NUK_DIR, BUNDLED_NCYU_DIR, BUNDLED_NUTC_DIR, BUNDLED_NFU_DIR, BUNDLED_UTAIPEI_DIR, BUNDLED_NTCU_DIR, BUNDLED_TNUA_DIR, BUNDLED_NTUA_DIR, BUNDLED_NTUE_DIR, BUNDLED_NCUT_DIR, BUNDLED_NPUST_DIR, BUNDLED_CJCU_DIR, BUNDLED_NQU_DIR, BUNDLED_ISU_DIR, BUNDLED_FGU_DIR, BUNDLED_NKUHT_DIR, BUNDLED_NUU_DIR, BUNDLED_TNNUA_DIR, BUNDLED_TPCU_DIR, BUNDLED_AU_DIR, BUNDLED_KNU_DIR, BUNDLED_NUTN_DIR, BUNDLED_NIU_DIR, BUNDLED_NPTU_DIR, BUNDLED_NPU_DIR, BUNDLED_NTUNHS_DIR, BUNDLED_NTTU_DIR, BUNDLED_ASIA_DIR, BUNDLED_TTU_DIR, BUNDLED_TCU_DIR, BUNDLED_MCUT_DIR, BUNDLED_CYUT_DIR)
+        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR, BUNDLED_FCU_DIR, BUNDLED_NSYSU_DIR, BUNDLED_NCHU_DIR, BUNDLED_NTUT_DIR, BUNDLED_NCCU_DIR, BUNDLED_NCKU_DIR, BUNDLED_NYCU_DIR, BUNDLED_NTHU_DIR, BUNDLED_PCCU_DIR, BUNDLED_WZU_DIR, BUNDLED_NKUST_DIR, BUNDLED_YUNTECH_DIR, BUNDLED_NTOU_DIR, BUNDLED_NCUE_DIR, BUNDLED_NKNU_DIR, BUNDLED_TMU_DIR, BUNDLED_CSMU_DIR, BUNDLED_CMU_DIR, BUNDLED_KMU_DIR, BUNDLED_MCU_DIR, BUNDLED_NTUB_DIR, BUNDLED_NCNU_DIR, BUNDLED_NDHU_DIR, BUNDLED_THU_DIR, BUNDLED_SHU_DIR, BUNDLED_PU_DIR, BUNDLED_USC_DIR, BUNDLED_NUK_DIR, BUNDLED_NCYU_DIR, BUNDLED_NUTC_DIR, BUNDLED_NFU_DIR, BUNDLED_UTAIPEI_DIR, BUNDLED_NTCU_DIR, BUNDLED_TNUA_DIR, BUNDLED_NTUA_DIR, BUNDLED_NTUE_DIR, BUNDLED_NCUT_DIR, BUNDLED_NPUST_DIR, BUNDLED_CJCU_DIR, BUNDLED_NQU_DIR, BUNDLED_ISU_DIR, BUNDLED_FGU_DIR, BUNDLED_NKUHT_DIR, BUNDLED_NUU_DIR, BUNDLED_TNNUA_DIR, BUNDLED_TPCU_DIR, BUNDLED_AU_DIR, BUNDLED_KNU_DIR, BUNDLED_NUTN_DIR, BUNDLED_NIU_DIR, BUNDLED_NPTU_DIR, BUNDLED_NPU_DIR, BUNDLED_NTUNHS_DIR, BUNDLED_NTTU_DIR, BUNDLED_ASIA_DIR, BUNDLED_TTU_DIR, BUNDLED_TCU_DIR, BUNDLED_MCUT_DIR, BUNDLED_CYUT_DIR)
+        if not home_key or (university is not None and directory.name == university.id)
     ) if include_bundled else ()
     use_cache = read_jsonl is _DEFAULT_READ_JSONL
     cache_key = (
         str(local_path),
         _file_signature(local_path),
         include_bundled,
+        home_key,
         tuple((str(p), _file_signature(p)) for p in bundled_paths),
     ) if use_cache else None
     if cache_key is not None:
@@ -1010,6 +1024,8 @@ def load_partner_research(
             return list(cached)
 
     local = read_jsonl(local_path, PartnerResearchRecord)
+    if home_key:
+        local = [row for row in local if school_identity_key(row.home_university) == home_key]
     if not include_bundled:
         if cache_key is not None:
             with _partner_research_cache_lock:
@@ -1022,14 +1038,7 @@ def load_partner_research(
         for path in bundled_paths
         for row in read_jsonl(path, PartnerResearchRecord)
     ]
-    result = _merge_rows(
-        bundled,
-        local,
-        key=lambda row: (
-            school_identity_key(row.home_university),
-            school_identity_key(row.school_name),
-        ),
-    )
+    result = _merge_rows(bundled, local, key=_partner_research_key)
     if cache_key is not None:
         with _partner_research_cache_lock:
             if len(_partner_research_cache) >= 16:
@@ -1047,16 +1056,11 @@ def save_partner_research(
 def upsert_partner_research(
     record: PartnerResearchRecord, data_dir: Path = DEFAULT_DATA_DIR
 ) -> list[PartnerResearchRecord]:
-    school_key = school_identity_key(record.school_name)
-    home_key = school_identity_key(record.home_university)
+    record_key = _partner_research_key(record)
     retained = [
         row
         for row in load_partner_research(data_dir)
-        if (
-            school_identity_key(row.school_name),
-            school_identity_key(row.home_university),
-        )
-        != (school_key, home_key)
+        if _partner_research_key(row) != record_key
     ]
     ordered = sorted(
         [*retained, record],

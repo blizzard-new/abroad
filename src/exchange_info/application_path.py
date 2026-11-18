@@ -238,6 +238,40 @@ def level(level_id, title, kind, prompt, stage, **extra):
                 external=kind == "notice", source_urls=[], dependency_ids=[], **extra)
 
 
+NOTICE_TITLE = re.compile(r"審查|甄選結果|提名通知|錄取結果|錄取通知")
+LEGACY_SUBMISSION_TITLE = re.compile(r"送件|提交|繳交|遞交")
+
+
+def checklist_kind(task):
+    title = re.sub(r"^(?:(?:確認|預估)[：:]\s*)+", "", task.title)
+    notice = NOTICE_TITLE.search(title)
+    if re.match(r"(?:等候|等待|查詢|查看|追蹤|收到).*(?:審查|審核|結果|通知|提名)", title):
+        return "notice"
+    if re.match(r"(?:由)?(?:國際(?:暨兩岸事務|事務)?處|學校|校方|委員會).*(?:審查|提名)", title):
+        return "notice"
+    if task.phase == "校內申請":
+        actor = task.responsible_party
+        if actor and not re.search(r"學生|申請[人者]|同學", actor):
+            return "notice" if notice else "note"
+        if re.search(r"補件|簽證", title) and not re.search(r"(?:申請表件|甄選申請表)", title):
+            return "notice" if notice else "note"
+        # Keep the office that receives the documents separate from the people
+        # who carry out the action. A signed review form can be part of handoff.
+        handoff = re.search(
+            r"送交|送達|親送|送(?:所屬)?系所|並(?:於.{1,60}?)?上傳|(?:系統|平台)上傳|"
+            r"(?:完成|填報).{0,24}(?:文件|資料)上傳|^(?:學生(?:應|須)?|請|須)?上傳", title
+        )
+        if actor and handoff:
+            return "submission"
+    if notice:
+        return "notice"
+    submission = re.search(
+        r"送件|提交|繳交|遞交|送出(?:校內|合作校|線上|交換)?申請|(?:完成|辦理).{0,12}線上申請$|"
+        r"(?:線上申請|線上報名)與(?:文件|資料)上傳", title
+    ) or (task.phase == "校內申請" and re.search(r"送交|送達|親送|並上傳", title))
+    return "submission" if submission else "note"
+
+
 def build_levels(context, evaluated, catalog, values=None):
     """Use scoped service output; never invent institution requirements or dates."""
     choice = evaluated.choices[0]
@@ -273,21 +307,53 @@ def build_levels(context, evaluated, catalog, values=None):
                     warning=doc.condition or ("此文件適用性待確認。" if doc.needs_confirmation or doc.conditional else ""),
                     required=not doc.conditional, conditional=doc.conditional, document_id=doc.id)
         levels.append(item)
+    if not catalog.items:
+        references = []
+        for task in choice.checklist:
+            if task.task_origin != "reference_year" or not task.source_urls or not task.document_link:
+                continue
+            period = f"{task.reference_academic_year} 學年度" if task.reference_academic_year else "來源未標明學年度"
+            for name in dict.fromkeys(task.document_link.requirement_names):
+                item = level("reference-file-" + identity({"task": task.id, "name": name}),
+                             f"參考文件（{period}）｜{name}", "file",
+                             f"先核對{context['home_school']}當期公告，再決定是否準備這份文件。", task.phase or "備齊申請文件",
+                             warning=f"這是{period}清單所列文件。當期是否需要、格式與份數仍待確認。",
+                             conditional=True, required=False, document_basis="reference_year")
+                item.update(source_urls=task.source_urls, source_signature=task.source_signature)
+                references.append(item)
+        levels.extend(references)
+        if not references:
+            document_steps = [task for task in choice.checklist if re.search(r"文件|申請表|送件|繳交|上傳", task.title)]
+            source_urls = list(dict.fromkeys(url for task in (document_steps or choice.checklist) for url in task.source_urls))
+            if not source_urls:
+                source_urls = list(choice.source_urls)
+            if not source_urls:
+                source_urls = list(dict.fromkeys(check.source_url for check in choice.checks if check.source_url))
+            item = level("personal-document-list", "整理自己的當期文件清單", "file",
+                         f"向{catalog.contact_unit}核對當期文件，再上傳你整理的清單或記下保存位置。",
+                         "校內準備", warning="目前沒有這個期間可逐項列出的校方應備文件。這份自備清單供個人準備使用。",
+                         conditional=True, required=False, document_basis="personal")
+            item["source_urls"] = source_urls
+            levels.append(item)
     for task in choice.checklist:
-        is_notice = bool(re.search(r"審查|甄選結果|提名通知|錄取結果|錄取通知", task.title))
-        kind = "notice" if is_notice else "submission" if re.search(r"送件|提交|繳交|遞交", task.title) else "note"
+        kind = checklist_kind(task)
+        signature = task.source_signature
+        if kind == "submission" and (NOTICE_TITLE.search(task.title) or not LEGACY_SUBMISSION_TITLE.search(task.title)):
+            # An older completion meant the note was ready. Keep its text and
+            # require the student to explicitly record that they actually sent it.
+            signature = f"{signature}:submission"
         item = level(task.id, task.title, kind, task.detail, task.phase or "申請事項")
-        item.update(source_urls=task.source_urls, dependency_ids=task.dependency_ids,
+        item.update(source_urls=task.source_urls, dependency_ids=task.dependency_ids, task_origin=task.task_origin,
                     official_deadline_at=task.official_deadline_at.isoformat() if task.official_deadline_at else None,
                     deadline_confirmed=bool(task.official_deadline_at and task.task_origin == "official" and not task.needs_confirmation),
                     deadline_source_url=task.deadline_source_url,
-                    source_signature=task.source_signature,
+                    source_signature=signature,
                     templates=task.document_link.template_ids if task.document_link else [],
                     warning="參考其他年度，需核對當期規定。" if task.task_origin == "reference_year" else "此項規定仍需確認。" if task.needs_confirmation else "")
         levels.append(item)
     # Keep the existing source phases together: departure files must not precede
     # the school's submission task just because documents came from another API.
-    phase_order = list(dict.fromkeys([t.phase for t in choice.checklist] + [d.phase for d in documents]))
+    phase_order = list(dict.fromkeys([t.phase for t in choice.checklist] + [item["stage_key"] for item in levels[preparation_count:]]))
     known_order = sorted(phase_order, key=lambda p: phase_rank(p) if phase_rank(p) is not None else 99)
     levels[preparation_count:] = sorted(levels[preparation_count:], key=lambda l: known_order.index(l["stage_key"]) if l["stage_key"] in known_order else len(known_order))
     if not choice.checklist:
@@ -402,6 +468,7 @@ def register_application_path(app, *, authenticate, university_for, evaluate, ca
             saved = plan["steps"].get(key, {})
             if saved and item.get("source_signature") and saved.get("source_signature") != item["source_signature"]:
                 saved = {**saved, "confirmed":False}
+                plan["steps"][key] = saved
                 item["warning"] = "適用規則已更新，請重新核對；你的紀錄仍保留。"
             if item.get("file_unavailable"):
                 saved = {**saved, "version_id":None, "confirmed":False}
@@ -483,7 +550,7 @@ def register_application_path(app, *, authenticate, university_for, evaluate, ca
                 for item in stage["levels"]:
                     saved = old.preparation_tasks.get(item["id"])
                     if saved and not item["external"] and saved.status in {"ready", "preparing"}:
-                        plan["steps"][item["id"]] = {"value":"從既有準備紀錄帶入", "confirmed":saved.status == "ready", "imported_from":"workspace", "imported_revision":old.revision, "source_signature":item.get("source_signature")}
+                        plan["steps"][item["id"]] = {"value":"從既有準備紀錄帶入", "confirmed":saved.status == "ready" and item["kind"] != "submission", "imported_from":"workspace", "imported_revision":old.revision, "source_signature":item.get("source_signature")}
             plan["legacy_import"] = {"workspace_revision":old.revision, "at":utc_now().isoformat()}
         registry["plans"].append(plan)
         commit(account, home, registry)

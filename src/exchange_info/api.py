@@ -42,7 +42,7 @@ import time
 import unicodedata
 from contextlib import asynccontextmanager, suppress
 from datetime import datetime, timedelta, timezone
-from functools import partial
+from functools import cache, partial
 from pathlib import Path
 from urllib.parse import quote, urlencode
 
@@ -311,7 +311,7 @@ from .ntpu_student_view import (
     ntpu_exchange_info,
     ntpu_processed_pages,
 )
-from .ncu_student_view import build_ncu_student_dashboard, fetch_ncu_partner_universities, ncu_exchange_info, ncu_processed_pages
+from .ncu_student_view import build_ncu_student_dashboard, fetch_ncu_partner_universities, ncu_exchange_info, ncu_processed_pages, ncu_window_cache_boundary
 from .ntu_student_view import (
     build_ntu_student_dashboard,
     fetch_ntu_partner_universities,
@@ -805,7 +805,7 @@ def _calendar_feed_content(
 
 
 from .settings import DEFAULT_DATA_DIR
-from .school_identity import school_identity_key, school_program_identity_key
+from .school_identity import public_catalogue_name, school_identity_key, school_program_identity_key
 from .storage import (
     append_anonymous_identity,
     append_community_answer,
@@ -1820,6 +1820,11 @@ def create_app(
         except ValueError as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
 
+    def public_partner_research(university: UniversityProfile):
+        return load_partner_research(
+            resolved_data_dir, include_bundled_baseline=True, home_university=university.school_name,
+        )
+
     def partners_for_university(school: str | UniversityProfile | None) -> list:
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
@@ -1828,12 +1833,13 @@ def create_app(
             view = cgu_catalogue_view()
             if view.source.status == "unavailable":
                 raise HTTPException(status_code=503, detail="長庚合作校來源暫不可用，尚無可用的歷次資料；請稍後重試。", headers={"Retry-After": "60"})
-            return apply_partner_research(view.partners, load_partner_research(resolved_data_dir), home_university=university.school_name, copy_nested=False)
-        if university.id == "tku":
-            # Window state is time-sensitive across dashboards, advisors and plans.
+            return apply_partner_research(view.partners, public_partner_research(university), home_university=university.school_name, copy_nested=False)
+        if university.id in {NCU.id, "tku"}:
+            # A long-running service must re-evaluate the home intake window.
+            partners = fetch_ncu_partner_universities() if university.id == NCU.id else fetch_tku_partner_universities()
             return apply_partner_research(
-                fetch_tku_partner_universities(),
-                load_partner_research(resolved_data_dir),
+                partners,
+                public_partner_research(university),
                 home_university=university.school_name,
                 copy_nested=False,
             )
@@ -1843,8 +1849,6 @@ def create_app(
                     partner_cache[university.id] = (
                         fetch_ccu_partner_universities()
                         if university.id == "ccu"
-                        else fetch_ncu_partner_universities()
-                        if university.id == NCU.id
                         else fetch_ntu_partner_universities()
                         if university.id == NTU.id
                         else fetch_ntpu_partner_universities()
@@ -1983,7 +1987,7 @@ def create_app(
                     )
         return apply_partner_research(
             partner_cache[university.id],
-            load_partner_research(resolved_data_dir),
+            public_partner_research(university),
             home_university=university.school_name,
             copy_nested=False,
         )
@@ -2370,7 +2374,7 @@ def create_app(
             return build_ncu_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == "tku":
             # Refresh window state on each request; a cached open round must close on time.
-            return build_tku_student_dashboard()
+            return build_tku_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == NTU.id:
             return build_ntu_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == FJU.id:
@@ -2525,7 +2529,7 @@ def create_app(
             base_dashboard = build_cached_dashboard(university, signature)
         view = cgu_catalogue_view()
         return base_dashboard.model_copy(deep=True, update={
-            "partner_universities": apply_partner_research(view.partners, load_partner_research(resolved_data_dir), home_university=university.school_name, copy_nested=False),
+            "partner_universities": apply_partner_research(view.partners, public_partner_research(university), home_university=university.school_name, copy_nested=False),
             "catalogue_source": view.source,
         })
 
@@ -2771,6 +2775,7 @@ def create_app(
             )
         return (
             bucket,
+            ncu_window_cache_boundary()[0] if university.id == NCU.id else None,
             file_signature(paths["processed_pages"]),
             file_signature(paths["exchange_info"]),
             file_signature(paths["partner_research"]),
@@ -2859,7 +2864,6 @@ def create_app(
         school: str,
         home_school: str | None = None,
     ) -> tuple[UniversityProfile, object]:
-        normalized = school_program_identity_key(school)
         scoped_university = university_for(home_school)
         # Without a named home school, a direct link may belong to any supported catalogue;
         # the visitor's own school is searched first.
@@ -2868,6 +2872,8 @@ def create_app(
             universities += [item for item in SUPPORTED_UNIVERSITIES if item.id != scoped_university.id]
         unavailable = None
         for university in universities:
+            catalogue_name = partial(public_catalogue_name, home=university.school_name)
+            normalized = school_program_identity_key(catalogue_name(school))
             try:
                 partners = partners_for_university(university)
             except HTTPException as error:
@@ -2876,7 +2882,7 @@ def create_app(
                 unavailable = error
                 continue
             for partner in partners:
-                if school_program_identity_key(partner.school_name) == normalized:
+                if school_program_identity_key(catalogue_name(partner.school_name)) == normalized:
                     return university, partner
         if unavailable:
             raise unavailable
@@ -2931,7 +2937,7 @@ def create_app(
                 if view.source.status == "unavailable":
                     raise HTTPException(503, "合作校資料暫不可用，請稍後重試。", headers={"Retry-After": "60"})
                 partners = apply_partner_research(
-                    view.partners, load_partner_research(resolved_data_dir),
+                    view.partners, public_partner_research(university),
                     home_university=university.school_name, copy_nested=False,
                 )
                 return partners, view.source
@@ -4463,36 +4469,37 @@ def create_app(
         workflows = workflows_for_university(university)
         destination_profiles = published_destination_profiles(university.school_name)
         audits = load_collection_audits(resolved_data_dir)
-        research = load_partner_research(resolved_data_dir, include_bundled_baseline=True)
+        research = public_partner_research(university)
         school_images = _load_school_image_manifest()
         home_key = normalize_school(university.school_name)
+        catalogue_name = partial(public_catalogue_name, home=university.school_name)
         experience_map: dict[str, list] = {}
         for source in experiences:
-            experience_map.setdefault(normalize_school(source.school_name), []).append(source)
+            experience_map.setdefault(normalize_school(catalogue_name(source.school_name)), []).append(source)
         workflow_map = {
-            school_program_identity_key(workflow.school_name): workflow for workflow in workflows
+            school_program_identity_key(catalogue_name(workflow.school_name)): workflow for workflow in workflows
         }
         destination_map = {
             (
                 normalize_school(profile.home_university or CGU.school_name),
-                school_program_identity_key(profile.school_name),
+                school_program_identity_key(catalogue_name(profile.school_name)),
             ): profile
             for profile in destination_profiles
         }
         experience_audit_map = {
-            normalize_school(audit.school_name): audit
+            normalize_school(catalogue_name(audit.school_name)): audit
             for audit in audits
             if audit.collector == "experiences"
             and normalize_school(audit.home_university or CGU.school_name) == home_key
         }
         destination_audit_map = {
-            school_program_identity_key(audit.school_name): audit
+            school_program_identity_key(catalogue_name(audit.school_name)): audit
             for audit in audits
             if audit.collector == "destinations"
             and normalize_school(audit.home_university or CGU.school_name) == home_key
         }
         research_map = {
-            normalize_school(record.school_name): record
+            normalize_school(catalogue_name(record.school_name)): record
             for record in research
             if normalize_school(record.home_university) == home_key
         }
@@ -4504,8 +4511,9 @@ def create_app(
             from .life_context import _bundled_ntnu_student_experiences
             ntnu_bundled_exps = _bundled_ntnu_student_experiences()
         for partner in partners:
-            normalized = normalize_school(partner.school_name)
-            program_key = school_program_identity_key(partner.school_name)
+            partner_name = catalogue_name(partner.school_name)
+            normalized = normalize_school(partner_name)
+            program_key = school_program_identity_key(partner_name)
             visual = school_images.get((partner.school_name, partner.country or ""))
             if university.id == CCU.id and "ccu_completion" in partner.reference_data:
                 from .ccu_campus_assets import reviewed_image_coverage
@@ -4641,6 +4649,13 @@ def create_app(
         school: str | None = Query(default=None),
     ) -> Response:
         university = university_for(school)
+        max_age = int(PUBLIC_DASHBOARD_RESPONSE_SECONDS)
+        stale_seconds = 300
+        if university.id == NCU.id:
+            _, seconds_left = ncu_window_cache_boundary()
+            if seconds_left is not None:
+                max_age = min(max_age, seconds_left)
+                stale_seconds = min(stale_seconds, seconds_left - max_age)
         raw, compressed, etag = cached_dashboard_response(
             university,
             base_url=public_base_url(request),
@@ -4648,7 +4663,7 @@ def create_app(
         public_catalogue = school is not None or request_token(request) is None
         headers = {
             "Cache-Control": (
-                f"public, max-age={int(PUBLIC_DASHBOARD_RESPONSE_SECONDS)}, stale-while-revalidate=300"
+                f"public, max-age={max_age}, stale-while-revalidate={stale_seconds}"
                 if public_catalogue
                 else "private, no-store, max-age=0"
             ),
@@ -4853,16 +4868,16 @@ def create_app(
             limit=limit,
         )
 
-    @app.get(
-        "/cross-school-partners/{country}/{institution}",
-        response_model=CrossSchoolPartnerPageData,
-    )
     def _allowed_override_plan_count(request: Request, value: int | None) -> int | None:
         if value is None or not is_production_environment():
             return value
         account = optional_account(request)
         return value if account and is_content_admin(account) else None
 
+    @app.get(
+        "/cross-school-partners/{country}/{institution}",
+        response_model=CrossSchoolPartnerPageData,
+    )
     def cross_school_partner_page(
         country: str,
         institution: str,
@@ -5112,7 +5127,7 @@ def create_app(
         return build_study_plan_workbench_payload(
             university,
             target_partner=target_partner,
-            catalogue_loader=seo_catalogue,
+            catalogue_loader=cache(seo_catalogue),
         )
 
     @app.get(
@@ -5124,7 +5139,7 @@ def create_app(
     ) -> StudyPlanWorkbenchCatalog:
         return build_study_plan_workbench_catalog(
             only_active_10_week_window=only_active_10_week_window,
-            catalogue_loader=seo_catalogue,
+            catalogue_loader=cache(seo_catalogue),
         )
 
     @app.get(
@@ -5592,13 +5607,13 @@ def create_app(
         home_school: str | None = Query(default=None),
     ) -> DestinationProfile:
         university, partner = partner_context_for_school(school, home_school)
-        normalized = school_program_identity_key(partner.school_name)
         canonical_home = university.school_name
+        normalized = school_program_identity_key(public_catalogue_name(partner.school_name, canonical_home))
         target_home = normalize_school(canonical_home)
         profiles = published_destination_profiles(canonical_home)
         for profile in profiles:
             if (
-                school_program_identity_key(profile.school_name) == normalized
+                school_program_identity_key(public_catalogue_name(profile.school_name, canonical_home)) == normalized
                 and normalize_school(profile.home_university or "") == target_home
             ):
                 return complete_destination_profile(profile, resolved_data_dir)
@@ -6099,11 +6114,24 @@ def create_app(
         ),
     ) -> list[DestinationProfile]:
         university = university_for(home_school)
-        names = {school_program_identity_key(p.school_name) for p in partners_for_university(university)}
+        home = university.school_name
+        names = {
+            school_program_identity_key(public_catalogue_name(partner.school_name, home)): partner.school_name
+            for partner in partners_for_university(university)
+        }
         locations = load_university_locations(resolved_data_dir)
-        profiles = [complete_destination_profile(row, resolved_data_dir, locations=locations) for row in published_destination_profiles(university.school_name)
-                    if school_program_identity_key(row.school_name) in names
-                    and (not row.home_university or normalize_school(row.home_university) == normalize_school(university.school_name))]
+        profiles = []
+        for row in published_destination_profiles(home):
+            if row.home_university and normalize_school(row.home_university) != normalize_school(home):
+                continue
+            key = school_program_identity_key(public_catalogue_name(row.school_name, home))
+            if key not in names:
+                continue
+            profile = complete_destination_profile(row, resolved_data_dir, locations=locations)
+            # The catalogue UI, bookmarks and comparison cache use the dashboard's literal label.
+            if university.id == NTPU.id and profile.school_name != names[key]:
+                profile = profile.model_copy(update={"school_name": names[key]})
+            profiles.append(profile)
         if not compact:
             return profiles
         # The partner list, search and budget views only read a profile's summaries, city and source titles and links;
