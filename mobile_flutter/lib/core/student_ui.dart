@@ -58,7 +58,7 @@ class StudentPage extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: MediaQuery.textScalerOf(context).scale(20) > 28
               ? 88
-              : 60,
+              : 58,
           title: Text(title, maxLines: 2, overflow: TextOverflow.ellipsis),
           leading:
               leading ??
@@ -68,6 +68,10 @@ class StudentPage extends StatelessWidget {
                 icon: const Icon(Icons.arrow_back_rounded),
               ),
           actions: actions,
+          bottom: const PreferredSize(
+            preferredSize: Size.fromHeight(3),
+            child: MetroLineBar(),
+          ),
         ),
         body: SafeArea(
           top: false,
@@ -86,8 +90,11 @@ class StudentActionBar extends StatelessWidget {
   final Widget primary;
   final Widget? secondary;
   @override
-  Widget build(BuildContext context) => Material(
-    color: Theme.of(context).colorScheme.surface,
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: const BoxDecoration(
+      color: ExchangeColors.surface,
+      border: Border(top: BorderSide(color: ExchangeColors.line)),
+    ),
     child: SafeArea(
       top: false,
       child: Padding(

@@ -36,10 +36,10 @@ class ApplicationDocumentsScreen extends StatelessWidget {
         child: ListView(
           key: const PageStorageKey('application-documents'),
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 128),
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
           children: [
             _ApplicationHeader(store: store),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             _PreparationOverview(
               store: store,
               total: total,
@@ -98,72 +98,50 @@ class _PreparationOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final progress = total == 0 ? 0.0 : (completed / total).clamp(0.0, 1.0);
     return GlassCard(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const StudentIconLabel(
-            Icons.flight_takeoff_rounded,
-            '你的文件準備進度',
-            color: ExchangeColors.teal,
+            Icons.assignment_outlined,
+            '申請文件填寫進度',
+            color: ExchangeColors.actionBlue,
           ),
-          const SizedBox(height: 20),
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final content = Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (total > 0)
-                    Text(
-                      '${(progress * 100).round()}%',
-                      style: const TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.w600,
-                        height: 1.1,
-                        letterSpacing: -2,
-                        color: ExchangeColors.teal,
-                      ),
-                    ),
-                  const SizedBox(height: 8),
-                  Text(
-                    store.isApplicationDocumentsLoading && total == 0
-                        ? '正在載入文件'
-                        : store.applicationDocumentsError != null && total == 0
-                        ? '目前無法載入文件'
-                        : total == 0
-                        ? '從你的交換目標開始'
-                        : '離出發，又近了一步',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ],
-              );
-              if (constraints.maxWidth < 270 ||
-                  MediaQuery.textScalerOf(context).scale(16) >= 24) {
-                return content;
-              }
-              return Row(
-                children: [
-                  Expanded(child: content),
-                  const SizedBox(width: 16),
-                  const UniWayMascot(size: 84),
-                ],
-              );
-            },
-          ),
+          const SizedBox(height: 14),
           if (total > 0) ...[
-            const SizedBox(height: 24),
-            UniWayProgress(value: progress, label: '文件準備進度'),
-            const SizedBox(height: 12),
-            Text(
-              '$completed / $total 份文件必填欄位已完成',
-              style: Theme.of(context).textTheme.bodySmall,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  '${(progress * 100).round()}%',
+                  style: const TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.w700,
+                    height: 1.1,
+                    color: ExchangeColors.actionBlue,
+                    fontFeatures: ExchangeColors.tabularFigures,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    '$completed / $total 份文件必填欄位已完成',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontFeatures: ExchangeColors.tabularFigures,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 14),
+            UniWayProgress(value: progress, label: '文件準備進度'),
+            const SizedBox(height: 16),
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 color: ExchangeColors.tealSoft,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,17 +150,17 @@ class _PreparationOverview extends StatelessWidget {
                     next == null
                         ? Icons.verified_outlined
                         : Icons.edit_note_rounded,
-                    color: ExchangeColors.teal,
+                    color: ExchangeColors.actionBlue,
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          next == null ? '送件前，最後確認' : '接著準備',
+                          next == null ? '送件前核對' : '接著準備',
                           style: Theme.of(context).textTheme.labelMedium
-                              ?.copyWith(color: ExchangeColors.teal),
+                              ?.copyWith(color: ExchangeColors.actionBlue),
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -199,7 +177,7 @@ class _PreparationOverview extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
             FilledButton.icon(
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
@@ -211,23 +189,38 @@ class _PreparationOverview extends StatelessWidget {
               icon: const Icon(Icons.arrow_forward_rounded),
               label: Text(next == null ? '檢查文件' : '繼續準備'),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
             Text(
               '個人準備進度，不代表校方已收件或錄取。',
               style: Theme.of(context).textTheme.bodySmall,
             ),
-          ] else if (!store.isApplicationDocumentsLoading &&
-              store.applicationDocumentsError == null) ...[
-            const SizedBox(height: 20),
-            FilledButton.icon(
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const ApplicationSetupScreen(),
-                ),
-              ),
-              icon: const Icon(Icons.add_rounded),
-              label: const Text('設定申請目標'),
+          ] else ...[
+            Text(
+              store.isApplicationDocumentsLoading
+                  ? '正在載入文件清單'
+                  : store.applicationDocumentsError != null
+                  ? '目前無法載入文件清單'
+                  : '先設定申請目標與交換學校',
+              style: Theme.of(context).textTheme.titleLarge,
             ),
+            if (!store.isApplicationDocumentsLoading &&
+                store.applicationDocumentsError == null) ...[
+              const SizedBox(height: 6),
+              Text(
+                '選定申請類型與目標校後，系統會列出適用的校內申請表單。',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              const SizedBox(height: 16),
+              FilledButton.icon(
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const ApplicationSetupScreen(),
+                  ),
+                ),
+                icon: const Icon(Icons.tune_rounded),
+                label: const Text('設定申請目標'),
+              ),
+            ],
           ],
         ],
       ),
@@ -248,6 +241,31 @@ class _ApplicationHeader extends StatelessWidget {
       subtitle: target.isEmpty
           ? _programLabel(store.applicationContext.programType)
           : target,
+      action: IconButton(
+        tooltip: '申請文件指南',
+        icon: const Icon(Icons.help_outline_rounded),
+        onPressed: () => showStudentGuide(
+          context,
+          title: '三步完成申請文件',
+          steps: const [
+            (
+              icon: Icons.tune_rounded,
+              title: '選申請目標',
+              detail: '先設定申請類型與學校，再填共用資料。',
+            ),
+            (
+              icon: Icons.edit_document,
+              title: '逐份填寫',
+              detail: '從下方清單開啟文件，儲存後會更新完成進度。',
+            ),
+            (
+              icon: Icons.print_outlined,
+              title: '檢查與列印',
+              detail: '確認文件內容與官方要求，再到列印包匯出。',
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -267,114 +285,79 @@ class _ApplicationActions extends StatelessWidget {
       (
         icon: Icons.tune_rounded,
         title: '申請設定',
-        detail: _programLabel(store.applicationContext.programType),
-        color: ExchangeColors.blue,
+        color: ExchangeColors.actionBlue,
         page: const ApplicationSetupScreen(),
       ),
       (
         icon: Icons.badge_outlined,
         title: '共用資料',
-        detail:
-            '${store.applicationProfileCompletion.completed}/${store.applicationProfileCompletion.total} 欄',
-        color: ExchangeColors.teal,
+        color: ExchangeColors.actionBlue,
         page: const ApplicationProfileScreen(),
       ),
       (
         icon: Icons.print_outlined,
         title: '列印包',
-        detail: '${store.selectedApplicationCopies} 份',
-        color: ExchangeColors.coral,
+        color: ExchangeColors.amber,
         page: const ApplicationPacketScreen(),
       ),
       (
         icon: Icons.fact_check_outlined,
         title: '文件檢查',
-        detail: '送出前確認',
         color: ExchangeColors.success,
         page: const DocumentCheckScreen(),
       ),
-      (
-        icon: Icons.auto_fix_high_rounded,
-        title: '文件改寫',
-        detail: '正式化與翻譯',
-        color: ExchangeColors.blue,
-        page: const WritingAssistantScreen(),
-      ),
     ];
-    actions.add((
-      icon: Icons.help_outline_rounded,
-      title: '使用指南',
-      detail: '',
-      color: ExchangeColors.teal,
-      page: const SizedBox(),
-    ));
     return GlassCard(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          LayoutBuilder(
-            builder: (context, constraints) => Wrap(
-              spacing: 4,
-              runSpacing: 4,
-              children: actions
-                  .map(
-                    (action) => SizedBox(
-                      width: MediaQuery.textScalerOf(context).scale(16) > 24
-                          ? (constraints.maxWidth - 4) / 2
-                          : (constraints.maxWidth - 8) / 3,
-                      child: TextButton(
-                        onPressed: () {
-                          if (action.title == '使用指南') {
-                            showStudentGuide(
-                              context,
-                              title: '三步完成申請文件',
-                              steps: const [
-                                (
-                                  icon: Icons.tune_rounded,
-                                  title: '選申請目標',
-                                  detail: '先設定申請類型與學校，再填共用資料。',
-                                ),
-                                (
-                                  icon: Icons.edit_document,
-                                  title: '逐份填寫',
-                                  detail: '從下方清單開啟文件，儲存後會更新完成進度。',
-                                ),
-                                (
-                                  icon: Icons.print_outlined,
-                                  title: '檢查與列印',
-                                  detail: '確認文件內容與官方要求，再到列印包匯出。',
-                                ),
-                              ],
-                            );
-                          } else {
-                            _open(context, action.page);
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Column(
-                            children: [
-                              ExchangeIconBadge(
-                                action.icon,
-                                color: action.color,
-                                background: action.color.withValues(alpha: .08),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                action.title,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final twoCol =
+              constraints.maxWidth < 290 ||
+              MediaQuery.textScalerOf(context).scale(16) > 22;
+          final tileWidth = twoCol
+              ? (constraints.maxWidth - 4) / 2
+              : (constraints.maxWidth - 12) / 4;
+          return Wrap(
+            spacing: 4,
+            runSpacing: 4,
+            children: actions
+                .map(
+                  (action) => SizedBox(
+                    width: tileWidth,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 8,
                         ),
                       ),
+                      onPressed: () => _open(context, action.page),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ExchangeIconBadge(
+                            action.icon,
+                            color: action.color,
+                            background: action.color.withValues(alpha: .08),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            action.title,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(
+                                  color: ExchangeColors.ink,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ],
+                      ),
                     ),
-                  )
-                  .toList(),
-            ),
-          ),
-        ],
+                  ),
+                )
+                .toList(),
+          );
+        },
       ),
     );
   }
@@ -415,7 +398,7 @@ class _TemplateCard extends StatelessWidget {
         store.applicationSelections[template.id] ??
         ApplicationDocumentSelectionState.initial(template.defaultCopies);
     return GlassCard(
-      padding: const EdgeInsets.fromLTRB(20, 20, 16, 20),
+      padding: const EdgeInsets.fromLTRB(16, 16, 14, 16),
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => ApplicationDocumentFormScreen(template: template),
@@ -429,7 +412,7 @@ class _TemplateCard extends StatelessWidget {
                 ? ExchangeColors.success
                 : ExchangeColors.blue,
             background: completion.ready
-                ? const Color(0xFFE1F3EA)
+                ? ExchangeColors.successSoft
                 : ExchangeColors.blueSoft,
           ),
           const SizedBox(width: 12),
@@ -441,7 +424,8 @@ class _TemplateCard extends StatelessWidget {
                   spacing: 6,
                   runSpacing: 4,
                   children: [
-                    _MiniBadge(label: template.category),
+                    if (template.category.trim().isNotEmpty)
+                      _MiniBadge(label: template.category),
                     if (template.officialLayout)
                       _MiniBadge(label: '官方格式', color: ExchangeColors.teal),
                     _MiniBadge(
@@ -578,6 +562,152 @@ class _ApplicationSetupScreenState extends State<ApplicationSetupScreen> {
     Navigator.of(context).pop();
   }
 
+  Future<void> _showTargetSchoolPicker(
+    ExchangeStore store,
+    List<PartnerUniversity> schools,
+  ) async {
+    final chosen = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      backgroundColor: ExchangeColors.surface,
+      builder: (sheetContext) {
+        var searchQuery = '';
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            final q = searchQuery.trim().toLowerCase();
+            final matching = schools.where((school) {
+              if (q.isEmpty) return true;
+              return school.searchableText.contains(q);
+            }).toList();
+            matching.sort((left, right) {
+              final leftSaved =
+                  store.favorites.contains(left.schoolName) ? 0 : 1;
+              final rightSaved =
+                  store.favorites.contains(right.schoolName) ? 0 : 1;
+              if (leftSaved != rightSaved) {
+                return leftSaved.compareTo(rightSaved);
+              }
+              return '${left.country}${left.schoolName}'.compareTo(
+                '${right.country}${right.schoolName}',
+              );
+            });
+            return SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.viewInsetsOf(context).bottom,
+                ),
+                child: FractionallySizedBox(
+                  heightFactor: 0.82,
+                  child: Column(
+                    key: const ValueKey('setup-target-school-sheet'),
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '選擇交換目標學校',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '已收藏學校會置頂顯示，輸入校名或國家快速篩選。',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            const SizedBox(height: 12),
+                            TextField(
+                              key: const ValueKey('setup-target-school-search'),
+                              onChanged: (value) =>
+                                  setSheetState(() => searchQuery = value),
+                              decoration: const InputDecoration(
+                                labelText: '搜尋合作學校',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
+                                hintText: '輸入國家或學校名稱',
+                                prefixIcon: Icon(Icons.search_rounded),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Divider(height: 1),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            ListTile(
+                              leading: Icon(
+                                targetSchool.isEmpty
+                                    ? Icons.radio_button_checked_rounded
+                                    : Icons.radio_button_off_rounded,
+                                color: targetSchool.isEmpty
+                                    ? ExchangeColors.actionBlue
+                                    : ExchangeColors.secondaryInk,
+                              ),
+                              title: const Text('尚未決定'),
+                              subtitle: const Text('先準備校內通用表單'),
+                              onTap: () => Navigator.of(sheetContext).pop(''),
+                            ),
+                            const Divider(height: 1),
+                            for (final school in matching) ...[
+                              ListTile(
+                                tileColor: targetSchool == school.schoolName
+                                    ? ExchangeColors.tealSoft
+                                    : null,
+                                leading: Icon(
+                                  store.favorites.contains(school.schoolName)
+                                      ? Icons.bookmark_rounded
+                                      : Icons.public_rounded,
+                                  color:
+                                      store.favorites.contains(
+                                        school.schoolName,
+                                      )
+                                      ? ExchangeColors.actionBlue
+                                      : ExchangeColors.secondaryInk,
+                                ),
+                                title: Text(
+                                  school.schoolName,
+                                  style: TextStyle(
+                                    fontWeight:
+                                        targetSchool == school.schoolName
+                                        ? FontWeight.w700
+                                        : FontWeight.w500,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  '${school.country} · ${school.availabilityLabel}'
+                                  '${store.favorites.contains(school.schoolName) ? ' · 已收藏' : ''}',
+                                ),
+                                trailing: targetSchool == school.schoolName
+                                    ? const Icon(
+                                        Icons.check_rounded,
+                                        color: ExchangeColors.actionBlue,
+                                      )
+                                    : null,
+                                onTap: () => Navigator.of(
+                                  sheetContext,
+                                ).pop(school.schoolName),
+                              ),
+                              const Divider(height: 1),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+    if (!mounted || chosen == null) return;
+    setState(() => targetSchool = chosen);
+  }
+
   @override
   Widget build(BuildContext context) {
     final store = ExchangeStoreScope.of(context);
@@ -591,6 +721,9 @@ class _ApplicationSetupScreenState extends State<ApplicationSetupScreen> {
         !schools.any((school) => school.schoolName == targetSchool)) {
       targetSchool = '';
     }
+    final selectedSchoolObj = schools
+        .where((s) => s.schoolName == targetSchool)
+        .firstOrNull;
     return FeaturePageScaffold(
       title: '申請設定',
       bottomBar: StudentActionBar(
@@ -620,26 +753,29 @@ class _ApplicationSetupScreenState extends State<ApplicationSetupScreen> {
           onChanged: (value) => setState(() => programType = value!),
         ),
         const SizedBox(height: 12),
-        DropdownButtonFormField<String>(
-          initialValue: targetSchool,
-          isExpanded: true,
-          decoration: const InputDecoration(
-            labelText: '交換學校',
-            prefixIcon: Icon(Icons.public_rounded),
-          ),
-          items: [
-            const DropdownMenuItem(value: '', child: Text('尚未決定')),
-            ...schools.map(
-              (school) => DropdownMenuItem(
-                value: school.schoolName,
-                child: Text(
-                  '${school.country} · ${school.schoolName}',
-                  overflow: TextOverflow.ellipsis,
-                ),
+        InkWell(
+          key: const ValueKey('setup-target-school-picker'),
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => _showTargetSchoolPicker(store, schools),
+          child: InputDecorator(
+            decoration: const InputDecoration(
+              labelText: '交換學校',
+              prefixIcon: Icon(Icons.public_rounded),
+              suffixIcon: Icon(Icons.search_rounded),
+            ),
+            child: Text(
+              selectedSchoolObj == null
+                  ? '尚未決定'
+                  : '${selectedSchoolObj.country} · ${selectedSchoolObj.schoolName}',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: selectedSchoolObj == null
+                    ? ExchangeColors.secondaryInk
+                    : ExchangeColors.ink,
               ),
             ),
-          ],
-          onChanged: (value) => setState(() => targetSchool = value ?? ''),
+          ),
         ),
         const SizedBox(height: 12),
         TextField(
@@ -828,7 +964,7 @@ class _ApplicationProfileScreenState extends State<ApplicationProfileScreen> {
             children: [
               SwitchListTile.adaptive(
                 minTileHeight: 64,
-                secondary: const Icon(Icons.auto_awesome_rounded),
+                secondary: const Icon(Icons.bookmark_added_outlined),
                 title: const Text('記住常用資料'),
                 subtitle: const Text('下次自動帶入，私密資料除外。'),
                 value: store.applicationProfileMemoryEnabled,

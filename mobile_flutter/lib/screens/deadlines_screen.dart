@@ -245,7 +245,7 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
       child: RefreshIndicator(
         onRefresh: store.refresh,
         child: ListView(
-          padding: EdgeInsets.fromLTRB(16, 14, 16, widget.embedded ? 122 : 24),
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 24),
           children: [
             _PlannerHero(events: upcoming),
             const SizedBox(height: 12),

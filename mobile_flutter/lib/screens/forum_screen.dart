@@ -192,7 +192,7 @@ class _ForumFeedState extends State<_ForumFeed> {
           RefreshIndicator(
             onRefresh: _load,
             child: ListView(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 200),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 96),
               physics: const AlwaysScrollableScrollPhysics(),
               children: [
                 StudentHeading(
@@ -498,7 +498,7 @@ class _ForumFeedState extends State<_ForumFeed> {
           ),
           Positioned(
             right: 20,
-            bottom: 104,
+            bottom: 16,
             child: FilledButton.icon(
               onPressed: canPost ? _compose : null,
               icon: const Icon(Icons.edit_outlined),

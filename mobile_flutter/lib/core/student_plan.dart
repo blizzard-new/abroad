@@ -10,6 +10,20 @@ extension DocumentPreparationStatusLabel on DocumentPreparationStatus {
   };
 }
 
+enum SchoolConditionStatus { preliminaryMatch, needsConfirmation, mismatch }
+
+class SchoolConditionAssessment {
+  const SchoolConditionAssessment({
+    required this.status,
+    required this.label,
+    required this.detail,
+  });
+
+  final SchoolConditionStatus status;
+  final String label;
+  final String detail;
+}
+
 const applicationDocumentLabels = [
   '學生赴境外修課申請表',
   '語言能力證明',
@@ -65,6 +79,17 @@ class StudentPlanProfile {
     targetTerm,
     preferredCountry,
   ].where((value) => value.isNotEmpty).join(' · ');
+
+  String get summaryLabel {
+    final parts = <String>[
+      if (college.isNotEmpty) college,
+      if (degreeLevel.isNotEmpty) degreeLevel,
+      if (academicScore != null) '平均 ${_scoreGap(academicScore!)}',
+      if (languageTest.isNotEmpty && languageTest != 'other')
+        '${languageTestLabel(languageTest)}${languageScore != null ? ' ${_scoreGap(languageScore!)}' : ''}',
+    ];
+    return parts.join(' · ');
+  }
 
   Map<String, dynamic> toJson() => {
     'college': college,
@@ -150,6 +175,80 @@ class ExchangeBudgetPlan {
   };
 }
 
+bool _collegeMatches(String colleges, String studentCollege) {
+  if (colleges.isEmpty || studentCollege.isEmpty) return true;
+  if (colleges.contains('全校') ||
+      colleges.contains('各院') ||
+      colleges.contains('皆可') ||
+      colleges.contains('不限')) {
+    return true;
+  }
+  return colleges.contains(studentCollege);
+}
+
+/// Evaluates known student profile against an open partner school without
+/// inventing probabilities or overriding non-open availability states.
+SchoolConditionAssessment? assessSchoolCondition(
+  PartnerUniversity school,
+  StudentPlanProfile? profile, {
+  double? academicScoreMinimum = 70,
+}) {
+  if (profile == null || !school.isOpenThisCycle) return null;
+
+  if (profile.college.isNotEmpty &&
+      school.colleges.isNotEmpty &&
+      !_collegeMatches(school.colleges, profile.college)) {
+    return SchoolConditionAssessment(
+      status: SchoolConditionStatus.mismatch,
+      label: '目前條件不符',
+      detail: '限 ${school.colleges}',
+    );
+  }
+
+  if (profile.degreeLevel.isNotEmpty &&
+      school.degreeLevels.isNotEmpty &&
+      !school.degreeLevels.contains(profile.degreeLevel)) {
+    return SchoolConditionAssessment(
+      status: SchoolConditionStatus.mismatch,
+      label: '目前條件不符',
+      detail: '限 ${school.degreeLevels}',
+    );
+  }
+
+  if (academicScoreMinimum != null &&
+      profile.academicScore != null &&
+      profile.academicScore! < academicScoreMinimum) {
+    return SchoolConditionAssessment(
+      status: SchoolConditionStatus.mismatch,
+      label: '目前條件不符',
+      detail: '未達校內平均 ${_scoreGap(academicScoreMinimum)}',
+    );
+  }
+
+  final threshold = languageThresholdFor(school, profile.languageTest);
+  if (threshold != null && profile.languageScore != null) {
+    if (profile.languageScore! < threshold) {
+      return SchoolConditionAssessment(
+        status: SchoolConditionStatus.mismatch,
+        label: '目前條件不符',
+        detail:
+            '${languageTestLabel(profile.languageTest)} 尚差 ${_scoreGap(threshold - profile.languageScore!)}',
+      );
+    }
+    return SchoolConditionAssessment(
+      status: SchoolConditionStatus.preliminaryMatch,
+      label: '已知條件初步相符',
+      detail: '${languageTestLabel(profile.languageTest)} 已達公開門檻',
+    );
+  }
+
+  return const SchoolConditionAssessment(
+    status: SchoolConditionStatus.needsConfirmation,
+    label: '資格待確認',
+    detail: '需核對簡章語檢或院系細則',
+  );
+}
+
 List<SchoolMatch> rankPartnerSchools(
   Iterable<PartnerUniversity> schools,
   StudentPlanProfile profile, {
@@ -160,13 +259,18 @@ List<SchoolMatch> rankPartnerSchools(
     final reasons = <String>[];
     final risks = <String>[];
 
-    final collegeMatch =
-        school.colleges.isEmpty ||
-        school.colleges.contains('全校') ||
-        school.colleges.contains(profile.college);
+    if (!school.isOpenThisCycle) {
+      risks.add('本期狀態：${school.availabilityLabel}');
+    }
+
+    final collegeMatch = _collegeMatches(school.colleges, profile.college);
     if (collegeMatch) {
       score += 28;
-      reasons.add(school.colleges.contains('全校') ? '全校學生可申請' : '符合所屬學院');
+      reasons.add(
+        school.colleges.contains('全校') || school.colleges.contains('皆可')
+            ? '全校學生可申請'
+            : '符合所屬學院',
+      );
     } else {
       risks.add('合作範圍可能不包含${profile.college}');
     }
@@ -229,15 +333,22 @@ List<SchoolMatch> rankPartnerSchools(
     if (school.eligibilityPoints.isNotEmpty) score += 3;
     if (profile.needsScholarship) risks.add('申請前需再確認可搭配補助');
 
+    final adjustedScore = school.isOpenThisCycle
+        ? score.clamp(0, 100)
+        : (score - 40).clamp(0, 100);
+
     return SchoolMatch(
       school: school,
-      score: score.clamp(0, 100),
+      score: adjustedScore,
       reasons: reasons,
       risks: risks,
     );
   }).toList();
 
   matches.sort((left, right) {
+    if (left.school.isOpenThisCycle != right.school.isOpenThisCycle) {
+      return left.school.isOpenThisCycle ? -1 : 1;
+    }
     final byScore = right.score.compareTo(left.score);
     return byScore != 0
         ? byScore
@@ -247,7 +358,24 @@ List<SchoolMatch> rankPartnerSchools(
 }
 
 double? languageThresholdFor(PartnerUniversity school, String test) {
-  final label = switch (test) {
+  final normalizedTest = test.trim().toLowerCase();
+  if (normalizedTest.isEmpty || normalizedTest == 'other') return null;
+
+  for (final cond in school.languageConditions) {
+    final condName = '${cond.test} ${cond.testVariant}'.toLowerCase();
+    final matches = switch (normalizedTest) {
+      'ielts' => condName.contains('ielts'),
+      'toeic' => condName.contains('toeic'),
+      'toefl' => condName.contains('toefl'),
+      'duolingo' => condName.contains('duolingo'),
+      _ => false,
+    };
+    if (matches && cond.minimumScore != null) {
+      return cond.minimumScore;
+    }
+  }
+
+  final label = switch (normalizedTest) {
     'ielts' => 'IELTS',
     'toeic' => 'TOEIC',
     'toefl' => 'TOEFL(?:\\s*iBT)?',
@@ -255,7 +383,11 @@ double? languageThresholdFor(PartnerUniversity school, String test) {
     _ => '',
   };
   if (label.isEmpty) return null;
-  final text = [school.eligibility, ...school.eligibilityPoints].join(' ');
+  final text = [
+    school.languageRequirement,
+    school.eligibility,
+    ...school.eligibilityPoints,
+  ].join(' ');
   final match = RegExp(
     '$label[^0-9]{0,24}([0-9]{1,3}(?:\\.[0-9])?)',
     caseSensitive: false,

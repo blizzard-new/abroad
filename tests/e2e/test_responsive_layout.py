@@ -14,7 +14,7 @@ async (routes) => {
     if (document.documentElement.scrollWidth > vw) problems.push(`${route}: the page scrolls sideways (${document.documentElement.scrollWidth} > ${vw})`);
     for (const el of document.body.querySelectorAll('*')) {
       const style = getComputedStyle(el);
-      if (style.display === 'none' || style.display === 'inline' || style.visibility === 'hidden' || el.closest('[hidden]')) continue;
+      if (style.display === 'none' || style.display === 'inline' || style.visibility === 'hidden' || el.closest('[hidden]') || el.matches('.sr-only, .visually-hidden, .mt-sr')) continue;
       const own = [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent.trim()).join('');
       if (!own || !el.clientWidth) continue;
       if (own.length >= 8 && el.getBoundingClientRect().width < 64) problems.push(`${route}: ${name(el)} is ${Math.round(el.getBoundingClientRect().width)}px wide for "${own.slice(0, 12)}"`);

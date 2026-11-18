@@ -14,13 +14,41 @@ class ExchangePageBackground extends StatelessWidget {
   }
 }
 
+/// Canonical 3px 5-color UniWay Metro signage rule bar.
+class MetroLineBar extends StatelessWidget {
+  const MetroLineBar({super.key, this.height = 3});
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeSemantics(
+      child: SizedBox(
+        height: height,
+        width: double.infinity,
+        child: const Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(child: ColoredBox(color: ExchangeColors.metroRed)),
+            Expanded(child: ColoredBox(color: ExchangeColors.metroYellow)),
+            Expanded(child: ColoredBox(color: ExchangeColors.metroBlue)),
+            Expanded(child: ColoredBox(color: ExchangeColors.metroGreen)),
+            Expanded(child: ColoredBox(color: ExchangeColors.metroBrown)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class GlassCard extends StatelessWidget {
   const GlassCard({
     required this.child,
     super.key,
-    this.padding = const EdgeInsets.all(24),
+    this.padding = const EdgeInsets.all(16),
     this.margin = EdgeInsets.zero,
     this.tint,
+    this.borderColor,
     this.onTap,
   });
 
@@ -28,18 +56,23 @@ class GlassCard extends StatelessWidget {
   final EdgeInsets padding;
   final EdgeInsets margin;
   final Color? tint;
+  final Color? borderColor;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(24);
+    final radius = BorderRadius.circular(12);
     return Padding(
       padding: margin,
       child: Semantics(
         button: onTap == null ? null : true,
         child: Material(
           color: tint ?? ExchangeColors.surface,
-          shape: RoundedRectangleBorder(borderRadius: radius),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: radius,
+            side: BorderSide(color: borderColor ?? ExchangeColors.line),
+          ),
           clipBehavior: Clip.antiAlias,
           child: onTap == null
               ? Padding(padding: padding, child: child)
@@ -69,25 +102,10 @@ class ExchangeSectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (eyebrow != null) ...[
-                Text(
-                  eyebrow!,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: ExchangeColors.teal,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-              ],
-              Text(title, style: Theme.of(context).textTheme.titleLarge),
-            ],
-          ),
+          child: Text(title, style: Theme.of(context).textTheme.titleLarge),
         ),
         ?action,
       ],
@@ -110,11 +128,14 @@ class ExchangeIconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 44,
-      height: 44,
+      width: 40,
+      height: 40,
       alignment: Alignment.center,
-      decoration: BoxDecoration(color: background, shape: BoxShape.circle),
-      child: Icon(icon, color: color, size: 22),
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Icon(icon, color: color, size: 20),
     );
   }
 }
@@ -184,7 +205,7 @@ class BulletPoint extends StatelessWidget {
           Container(
             width: 6,
             height: 6,
-            margin: const EdgeInsets.only(top: 9, right: 11),
+            margin: const EdgeInsets.only(top: 8, right: 10),
             decoration: const BoxDecoration(
               color: ExchangeColors.teal,
               shape: BoxShape.circle,
@@ -251,11 +272,11 @@ class LoadingCards extends StatelessWidget {
       children: List.generate(
         count,
         (index) => Container(
-          height: index == 0 ? 132 : 104,
+          height: index == 0 ? 120 : 96,
           margin: const EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
             color: ExchangeColors.surface,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(color: ExchangeColors.line),
           ),
           child: const Center(
@@ -289,7 +310,7 @@ class EmptyState extends StatelessWidget {
       child: Column(
         children: [
           ExchangeIconBadge(icon),
-          const SizedBox(height: 14),
+          const SizedBox(height: 12),
           Text(title, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 6),
           Text(
@@ -312,7 +333,8 @@ class InlineError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassCard(
-      tint: ExchangeColors.coralSoft.withValues(alpha: .78),
+      tint: ExchangeColors.coralSoft,
+      borderColor: ExchangeColors.danger.withValues(alpha: .35),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -322,7 +344,7 @@ class InlineError extends StatelessWidget {
           IconButton(
             tooltip: '重新載入',
             onPressed: onRetry,
-            constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
             icon: const Icon(Icons.refresh_rounded),
           ),
         ],

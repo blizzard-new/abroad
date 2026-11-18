@@ -242,7 +242,7 @@ class _AccountScreenState extends State<AccountScreen> {
     return SafeArea(
       bottom: false,
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 18, 20, 118),
+        padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
         children: [content, const SizedBox(height: 20), const AppUpdateTile()],
       ),
     );

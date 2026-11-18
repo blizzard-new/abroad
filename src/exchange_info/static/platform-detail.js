@@ -118,6 +118,12 @@ window.UniWayDetail = (() => {
       document.querySelector("#booking-home-deadline").textContent = homeReference.includes("校內報名") ? homeReference : "依臺大官方公告";
       document.querySelector("#booking-partner-deadline").textContent = "依提名通知及接待校當期規定；參考期限見下方各欄";
     }
+    const homeText = document.querySelector("#booking-home-deadline").textContent || "依官方公告";
+    const partnerText = document.querySelector("#booking-partner-deadline").textContent || "依官方公告";
+    const mobileDeadline = document.querySelector("#booking-mobile-deadline");
+    if (mobileDeadline) {
+      mobileDeadline.textContent = `校內截止：${truncate(homeText, 18)} · 合作校：${truncate(partnerText, 18)}`;
+    }
     const compare = document.querySelector("#detail-compare-button");
     const comparing = discoveryCompare.has(item.school_name);
     compare.dataset.schoolName = item.school_name;
@@ -174,6 +180,10 @@ window.UniWayDetail = (() => {
     if (!compare) return;
     const name = compare.dataset.schoolName;
     if (!name) return;
+    if (typeof toggleCompareSchool === "function") {
+      toggleCompareSchool(name);
+      return;
+    }
     if (discoveryCompare.has(name)) discoveryCompare.delete(name);
     else {
       if (discoveryCompare.size >= 3) { announce("一次比較最多 3 所", "info"); return; }

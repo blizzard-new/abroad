@@ -182,8 +182,8 @@ void main() {
     expect(profile.emailVerified, isTrue);
   });
 
-  test('supported university registry includes all 22 official schools', () {
-    expect(defaultSupportedUniversities, hasLength(22));
+  test('supported university registry includes all 71 official schools', () {
+    expect(defaultSupportedUniversities, hasLength(71));
     expect(defaultSupportedUniversities.first.schoolName, '長庚大學');
     expect(resolveSupportedUniversity('ntu').schoolName, '國立臺灣大學');
     expect(resolveSupportedUniversity('台大').shortName, '臺大');
@@ -193,9 +193,46 @@ void main() {
     expect(resolveSupportedUniversity('nthu').schoolName, '國立清華大學');
     expect(resolveSupportedUniversity('pccu').schoolName, '中國文化大學');
     expect(resolveSupportedUniversity('wzu').schoolName, '文藻外語大學');
+    expect(resolveSupportedUniversity('ntust').schoolName, '國立臺灣科技大學');
+    expect(resolveSupportedUniversity('ncku').schoolName, '國立成功大學');
     expect(resolveSupportedUniversity('長庚').boardTabLabel, '長庚板');
     expect(resolveSupportedUniversity('政大').boardTabLabel, '政大板');
     expect(tryResolveSupportedUniversity('未知大學'), isNull);
+  });
+
+  test('partner university parses availability status and language conditions', () {
+    final referenceOnly = PartnerUniversity.fromJson({
+      'school_name': 'Example Partner University',
+      'country': '日本',
+      'availability_status': 'agreement_only',
+      'availability_note': '僅列姐妹校協議，本期未公告交換名額',
+      'quota_status': 'not_listed',
+      'application_window_status': 'not_announced',
+      'language_requirement': 'JLPT N2 或 TOEFL iBT 79',
+      'language_conditions': [
+        {'test': 'toefl', 'minimum_score': 79},
+      ],
+    });
+
+    expect(referenceOnly.isOpenThisCycle, isFalse);
+    expect(referenceOnly.isReferenceOnly, isTrue);
+    expect(referenceOnly.availabilityLabel, '合作備查');
+    expect(referenceOnly.displayQuota, '僅列協議');
+    expect(referenceOnly.displayDeadlineSummary, '無當期梯次');
+    expect(referenceOnly.languageConditions.single.test, 'toefl');
+    expect(referenceOnly.languageConditions.single.minimumScore, 79);
+
+    final withImg = referenceOnly.withVisual(
+      SchoolVisual.fromJson({
+        'school_name': 'Example Partner University',
+        'official_page_url': 'https://example.com',
+        'image_source_url': 'https://example.com/school.jpg',
+        'status': 'verified',
+      }),
+      'https://example.com/school.jpg',
+    );
+    expect(withImg.availabilityStatus, 'agreement_only');
+    expect(withImg.languageConditions, hasLength(1));
   });
 
   test('submission progress uses server allowed_actions and conversation handles declined', () {

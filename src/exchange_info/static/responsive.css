@@ -65,3 +65,137 @@ video {
     margin-left: 66px;
   }
 }
+
+/* Mobile Web UX optimization (<= 700px): surface partner school cards above the fold and enforce >= 44px touch targets. */
+@media (max-width: 700px) {
+  html[data-skin="metro"] body.unified-shell .glass-mobile-header {
+    margin: 0;
+    padding: 4px 14px;
+    min-height: 46px;
+  }
+
+  html[data-skin="metro"] body.unified-shell:not(.school-detail-open)[data-active-university-page="partners"] #main-content .page-back-bar {
+    margin-top: 4px !important;
+    margin-bottom: 0 !important;
+    min-height: 40px;
+  }
+
+  html[data-skin="metro"] body.unified-shell:not(.school-detail-open)[data-active-university-page="partners"] .page-back-bar #school-switcher {
+    min-height: 40px;
+    padding: 4px 10px;
+  }
+
+  html[data-skin="metro"] body.unified-shell:not(.school-detail-open)[data-active-university-page="partners"] .page-back-bar #school-switcher .school-switcher-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  body.unified-shell #partners.pr-explore > .discovery-search-tools {
+    margin: 4px 0 0;
+  }
+
+  body.unified-shell #partners.pr-explore #discovery-criteria > summary,
+  body.unified-shell #partners.pr-explore #discovery-criteria:not([open]) > summary:hover {
+    min-height: 46px;
+    padding: 5px 12px;
+  }
+
+  body.unified-shell #partners #cgu-partner-filter-strip {
+    margin: 4px 0 0;
+  }
+
+  body.unified-shell #partners.pr-explore .pr-sort-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 4px;
+    margin-top: 4px;
+    padding: 2px;
+  }
+
+  body.unified-shell #partners.pr-explore .pr-sort-tabs button {
+    flex: 1 0 max-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 0 10px;
+  }
+
+  body.unified-shell #partners.pr-explore .pr-sort-tabs span {
+    font-size: 12px;
+  }
+
+  body.unified-shell #partners.pr-explore .journey-search-layout,
+  body.unified-shell #partners.pr-explore:has([data-partner-view="list"][aria-pressed="true"]) .journey-search-layout {
+    margin-top: 4px;
+    gap: 4px;
+  }
+
+  body.unified-shell #partners.pr-explore .journey-search-layout:not(:has(.pr-facets[open])) {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 6px 10px;
+  }
+
+  body.unified-shell #partners.pr-explore .journey-search-layout:not(:has(.pr-facets[open])) .pr-facets {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  body.unified-shell #partners.pr-explore .journey-search-layout:not(:has(.pr-facets[open])) .journey-search-results {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    gap: 6px;
+  }
+
+  body.unified-shell #partners.pr-explore .pr-facets > summary {
+    min-height: 40px;
+    padding: 0 12px;
+  }
+
+  body.unified-shell #partners.pr-explore .journey-search-results {
+    gap: 4px;
+  }
+
+  body.unified-shell #partners.pr-explore .pr-results-head {
+    margin: 0;
+  }
+
+  body.unified-shell #partners.pr-explore .pr-results-head .partner-result-count {
+    margin: 0;
+    line-height: 1.3;
+    font-size: 13px;
+  }
+
+  body.unified-shell #partners.pr-explore .pr-card-media > .pr-compare {
+    top: auto;
+    bottom: 8px;
+    min-height: 44px;
+    padding: 0 12px 0 8px;
+    font-size: 12px;
+  }
+
+  body.unified-shell #partners.pr-explore .pr-compare-tray {
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+
+  body.unified-shell .school-detail-view .pr-detail-actions .pr-text-button,
+  body.unified-shell .school-detail-view .detail-tabs button,
+  body.unified-shell .school-detail-view .application-plan-login-note button {
+    min-height: 44px;
+  }
+
+  #application-path a.plan-progress {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 12px;
+  }
+}
+

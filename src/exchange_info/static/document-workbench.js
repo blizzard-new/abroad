@@ -22,10 +22,20 @@ window.UniWayDocumentWorkbench = (() => {
       const tab = event.target.closest("[data-document-tab]");
       if (tab) select(tab.dataset.documentTab);
       if (event.target.closest("[data-check-generated-document]")) useGeneratedCheck();
+      if (event.target.closest("#document-return-level-confirm")) {
+        if (typeof closeApplicationDownloadDialog === "function") closeApplicationDownloadDialog();
+        window.UniWayApplicationPath?.returnToLevelConfirm?.();
+        return;
+      }
       const stage = event.target.closest("[data-flow-stage]");
       if (stage && !event.target.closest("#document-flow-skip")) runFlowStage(stage.dataset.flowStage);
       const skip = event.target.closest("#document-flow-skip");
       if (skip && skip.dataset.flowStage) { skipped.add(skip.dataset.flowStage); renderFlow(); }
+    });
+    document.addEventListener("click", event => {
+      if (!event.target.closest("[data-generated-document-return]")) return;
+      if (typeof closeApplicationDownloadDialog === "function") closeApplicationDownloadDialog();
+      window.UniWayApplicationPath?.returnToLevelConfirm?.();
     });
     root.querySelector('[role="tablist"]').addEventListener("keydown", event => {
       const tab = event.target.closest("[data-document-tab]");
@@ -63,6 +73,7 @@ window.UniWayDocumentWorkbench = (() => {
       resetPrivateVaultForm();
     }
     if (!mounted && page !== "document-check" && state.documentCheckLoading) resetDocumentCheck();
+    syncLevelReturnBanner();
   }
 
   function open(template) {
@@ -196,6 +207,15 @@ window.UniWayDocumentWorkbench = (() => {
     return candidateCurrent() ? state.generatedVaultCandidate : null;
   }
 
+  function syncLevelReturnBanner() {
+    const nested = Boolean(window.UniWayApplicationPath?.formToolActive?.());
+    const ready = nested && Boolean(currentDocumentCandidate() || state.documentCheckGeneratedCandidate);
+    const banner = root?.querySelector("#document-level-return-banner");
+    if (banner) banner.hidden = !ready;
+    const dialogBtn = document.querySelector("[data-generated-document-return]");
+    if (dialogBtn) dialogBtn.hidden = !ready;
+  }
+
   function renderGenerated() {
     if (!root) return;
     const candidate = currentDocumentCandidate();
@@ -204,6 +224,7 @@ window.UniWayDocumentWorkbench = (() => {
     root.querySelector("#document-generated-check-note").textContent = candidate
       ? `可直接使用剛下載的 ${candidate.fileName}；選擇後仍須另行同意傳送。`
       : "可選擇自己的成品；填寫並核對後下載 PDF，也能直接帶入這裡檢查。";
+    syncLevelReturnBanner();
     renderGeneratedVaultCandidate();
   }
 
@@ -216,6 +237,7 @@ window.UniWayDocumentWorkbench = (() => {
     document.querySelector("#document-upload-title").textContent = candidate.fileName;
     document.querySelector("#document-upload-meta").textContent = "使用剛下載的同一份 PDF；尚未傳送";
     document.querySelector("#document-check-status").textContent = "請閱讀並勾選本次檢查同意，再開始檢查。";
+    syncLevelReturnBanner();
     document.querySelector("#document-check-consent").focus();
   }
 

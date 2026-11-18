@@ -4,39 +4,75 @@ import 'package:flutter/services.dart';
 import 'daylight_surface.dart';
 
 abstract final class ExchangeColors {
-  static const primaryEnd = Color(0xFF17243A);
-  static const onPrimary = Colors.white;
-  static const fieldBorder = Color(0xFFB8C4D6);
-  static const background = Color(0xFFF5F7FA);
+  // Ground & Concourse surfaces (UniWay Metro Signage)
   static const surface = Color(0xFFFFFFFF);
-  static const surfaceMuted = Color(0xFFEDF1F6);
-  static const ink = Color(0xFF1D2C43);
-  static const secondaryInk = Color(0xFF58677B);
-  static const line = Color(0xFFDEE5EF);
-  static const teal = Color(0xFF23324A);
-  static const tealSoft = Color(0xFFE9EEF5);
-  static const blue = Color(0xFF315DA8);
-  static const blueSoft = Color(0xFFEAF0FC);
-  static const coral = Color(0xFFAC4934);
-  static const coralSoft = Color(0xFFFCEEE7);
-  static const amber = Color(0xFF8E620B);
-  static const amberSoft = Color(0xFFFCF2DB);
-  static const success = Color(0xFF247349);
-  static const danger = Color(0xFFB83140);
+  static const background = Color(0xFFFFFFFF);
+  static const concourse = Color(0xFFF3F4F6);
+  static const surfaceMuted = Color(0xFFF3F4F6);
+
+  // Ink hierarchy (WCAG AAA >= 7.5:1 on white and muted surfaces)
+  static const ink = Color(0xFF1A1D23);
+  static const bodyInk = Color(0xFF2B303A);
+  static const secondaryInk = Color(0xFF454C5A);
+
+  // Primary Action Blue (>= 6.5:1 with white label, >= 5.7:1 on soft fills)
+  static const actionBlue = Color(0xFF165CB4);
+  static const teal = Color(0xFF165CB4);
+  static const primaryEnd = Color(0xFF0F448A);
+  static const onPrimary = Color(0xFFFFFFFF);
+  static const blue = Color(0xFF165CB4);
+  static const tealSoft = Color(0xFFEAF1FB);
+  static const blueSoft = Color(0xFFEAF1FB);
+
+  // Rules & Input borders
+  static const line = Color(0xFFD6DAE1);
+  static const fieldBorder = Color(0xFF8D95A3);
+
+  // Semantic Status Roles
+  static const success = Color(0xFF0C7D56);
+  static const successSoft = Color(0xFFE7F4EE);
+  static const referenceAccent = Color(0xFF8C5A2E);
+  static const referenceInk = Color(0xFF5A3A1D);
+  static const referenceSoft = Color(0xFFF5EFE8);
+  static const amber = Color(0xFF9A4B00);
+  static const amberSoft = Color(0xFFFEF5E1);
+  static const coral = Color(0xFF9A4B00);
+  static const coralSoft = Color(0xFFFDECEC);
+  static const danger = Color(0xFFB81C22);
+
+  // Canonical 5-color Metro Line rule segments
+  static const metroRed = Color(0xFFD9262C);
+  static const metroYellow = Color(0xFFF2A81D);
+  static const metroBlue = Color(0xFF1F6FD1);
+  static const metroGreen = Color(0xFF0C7D56);
+  static const metroBrown = Color(0xFF8C5A2E);
+
+  static const tabularFigures = [FontFeature.tabularFigures()];
 }
 
 ThemeData buildExchangeTheme() {
-  TextStyle type(double size, {bool strong = false, bool secondary = false}) =>
-      TextStyle(
-        fontSize: size,
-        height: 1.4,
-        fontWeight: strong ? FontWeight.w600 : FontWeight.w400,
-        color: secondary ? ExchangeColors.secondaryInk : ExchangeColors.ink,
-      );
+  TextStyle type(
+    double size, {
+    bool strong = false,
+    bool bold = false,
+    bool secondary = false,
+    bool tabular = false,
+    double height = 1.42,
+  }) => TextStyle(
+    fontSize: size,
+    height: height,
+    fontWeight: bold
+        ? FontWeight.w700
+        : (strong ? FontWeight.w600 : FontWeight.w400),
+    color: secondary ? ExchangeColors.secondaryInk : ExchangeColors.ink,
+    fontFeatures: tabular ? ExchangeColors.tabularFigures : null,
+  );
+
   final scheme = ColorScheme.fromSeed(
-    seedColor: ExchangeColors.teal,
+    seedColor: ExchangeColors.actionBlue,
     brightness: Brightness.light,
-    primary: ExchangeColors.teal,
+    primary: ExchangeColors.actionBlue,
+    onPrimary: ExchangeColors.onPrimary,
     surface: ExchangeColors.surface,
     onSurface: ExchangeColors.ink,
     error: ExchangeColors.danger,
@@ -49,46 +85,55 @@ ThemeData buildExchangeTheme() {
     scaffoldBackgroundColor: Colors.transparent,
   );
 
+  final inputRadius = BorderRadius.circular(12);
+
   return base.copyWith(
     textTheme: TextTheme(
-      displayLarge: type(32, strong: true),
-      displayMedium: type(32, strong: true),
-      displaySmall: type(32, strong: true),
-      headlineLarge: type(32, strong: true),
-      headlineMedium: type(28, strong: true),
-      headlineSmall: type(28, strong: true),
-      titleLarge: type(20, strong: true),
-      titleMedium: type(16, strong: true),
-      titleSmall: type(16, strong: true),
+      displayLarge: type(30, bold: true, tabular: true, height: 1.24),
+      displayMedium: type(28, bold: true, tabular: true, height: 1.26),
+      displaySmall: type(26, bold: true, tabular: true, height: 1.28),
+      headlineLarge: type(26, bold: true, height: 1.28),
+      headlineMedium: type(22, bold: true, tabular: true, height: 1.3),
+      headlineSmall: type(22, bold: true, height: 1.3),
+      titleLarge: type(18, bold: true, height: 1.34),
+      titleMedium: type(16, strong: true, height: 1.36),
+      titleSmall: type(15, strong: true, height: 1.36),
       bodyLarge: type(16),
-      bodyMedium: type(16),
-      bodySmall: type(14, secondary: true),
-      labelLarge: type(16, strong: true),
-      labelMedium: type(12, strong: true),
-      labelSmall: type(12),
+      bodyMedium: type(15),
+      bodySmall: type(13, secondary: true, tabular: true),
+      labelLarge: type(15, strong: true, tabular: true),
+      labelMedium: type(12, strong: true, tabular: true, height: 1.3),
+      labelSmall: type(12, tabular: true, height: 1.3),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: ExchangeColors.background.withValues(alpha: .88),
+      backgroundColor: ExchangeColors.surface,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: false,
-      titleTextStyle: type(20, strong: true),
+      titleTextStyle: type(18, bold: true, height: 1.3),
+      iconTheme: const IconThemeData(color: ExchangeColors.ink),
     ),
     dialogTheme: DialogThemeData(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      backgroundColor: ExchangeColors.surface,
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: const BorderSide(color: ExchangeColors.line),
+      ),
     ),
     bottomSheetTheme: const BottomSheetThemeData(
-      backgroundColor: ExchangeColors.background,
+      backgroundColor: ExchangeColors.surface,
+      surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       shape: Border(),
       collapsedShape: Border(),
-      iconColor: ExchangeColors.teal,
+      iconColor: ExchangeColors.actionBlue,
       textColor: ExchangeColors.ink,
       collapsedTextColor: ExchangeColors.ink,
     ),
@@ -104,31 +149,49 @@ ThemeData buildExchangeTheme() {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: ExchangeColors.surfaceMuted,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      fillColor: ExchangeColors.surface,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       constraints: const BoxConstraints(minHeight: 48),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide.none,
+        borderRadius: inputRadius,
+        borderSide: const BorderSide(color: ExchangeColors.fieldBorder),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide.none,
+        borderRadius: inputRadius,
+        borderSide: const BorderSide(color: ExchangeColors.fieldBorder),
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: inputRadius,
+        borderSide: const BorderSide(color: ExchangeColors.line),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: ExchangeColors.teal, width: 1.4),
+        borderRadius: inputRadius,
+        borderSide: const BorderSide(
+          color: ExchangeColors.actionBlue,
+          width: 2,
+        ),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: inputRadius,
+        borderSide: const BorderSide(color: ExchangeColors.danger),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: inputRadius,
+        borderSide: const BorderSide(color: ExchangeColors.danger, width: 2),
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(
-      style: _liquidStyle(primary: true),
+      style: _metroButtonStyle(primary: true),
     ),
-    outlinedButtonTheme: OutlinedButtonThemeData(style: _liquidStyle()),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: _metroButtonStyle(primary: false),
+    ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         minimumSize: const Size(48, 48),
-        foregroundColor: ExchangeColors.teal,
-        textStyle: type(14, strong: true),
+        foregroundColor: ExchangeColors.actionBlue,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        textStyle: type(14, strong: true, tabular: true),
       ),
     ),
     iconButtonTheme: IconButtonThemeData(
@@ -138,74 +201,87 @@ ThemeData buildExchangeTheme() {
       ),
     ),
     chipTheme: base.chipTheme.copyWith(
-      backgroundColor: ExchangeColors.surfaceMuted,
-      selectedColor: ExchangeColors.tealSoft.withValues(alpha: .76),
-      disabledColor: ExchangeColors.surface,
-      side: BorderSide.none,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+      backgroundColor: ExchangeColors.surface,
+      selectedColor: ExchangeColors.tealSoft,
+      disabledColor: ExchangeColors.surfaceMuted,
+      checkmarkColor: ExchangeColors.actionBlue,
+      side: WidgetStateBorderSide.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const BorderSide(color: ExchangeColors.actionBlue, width: 1.2);
+        }
+        return const BorderSide(color: ExchangeColors.line);
+      }),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       labelStyle: const TextStyle(
         color: ExchangeColors.ink,
+        fontSize: 13,
         fontWeight: FontWeight.w600,
+        fontFeatures: ExchangeColors.tabularFigures,
       ),
     ),
     navigationBarTheme: NavigationBarThemeData(
-      height: 68,
-      backgroundColor: Colors.transparent,
+      height: 64,
+      backgroundColor: ExchangeColors.surface,
       indicatorColor: ExchangeColors.tealSoft,
       labelTextStyle: WidgetStateProperty.resolveWith(
         (states) => TextStyle(
           fontSize: 12,
           fontWeight: states.contains(WidgetState.selected)
-              ? FontWeight.w600
-              : FontWeight.w400,
+              ? FontWeight.w700
+              : FontWeight.w500,
           color: states.contains(WidgetState.selected)
-              ? ExchangeColors.teal
+              ? ExchangeColors.actionBlue
               : ExchangeColors.secondaryInk,
         ),
       ),
     ),
     cupertinoOverrideTheme: const CupertinoThemeData(
-      primaryColor: ExchangeColors.teal,
+      primaryColor: ExchangeColors.actionBlue,
       scaffoldBackgroundColor: ExchangeColors.background,
       barBackgroundColor: ExchangeColors.surface,
       textTheme: CupertinoTextThemeData(
-        textStyle: TextStyle(color: ExchangeColors.ink, fontSize: 16),
+        textStyle: TextStyle(color: ExchangeColors.ink, fontSize: 15),
       ),
     ),
   );
 }
 
-ButtonStyle _liquidStyle({bool primary = false, bool round = false}) =>
-    ButtonStyle(
-      minimumSize: WidgetStatePropertyAll(Size(48, 48)),
-      foregroundColor: WidgetStateProperty.resolveWith(
-        (states) => states.contains(WidgetState.disabled)
-            ? ExchangeColors.secondaryInk
-            : (primary ? ExchangeColors.onPrimary : ExchangeColors.teal),
-      ),
-      backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
-      surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
-      elevation: const WidgetStatePropertyAll(0),
-      side: const WidgetStatePropertyAll(BorderSide.none),
-      shape: WidgetStatePropertyAll(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(round ? 999 : 16),
-        ),
-      ),
-      padding: WidgetStatePropertyAll(
-        round
-            ? const EdgeInsets.all(10)
-            : const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      ),
-      textStyle: const WidgetStatePropertyAll(
-        TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-      ),
-      backgroundBuilder: (context, states, child) => LiquidControlSurface(
-        active: primary,
-        disabled: states.contains(WidgetState.disabled),
-        pressed: states.contains(WidgetState.pressed),
-        radius: round ? 999 : 16,
-        child: child ?? const SizedBox.shrink(),
-      ),
-    );
+ButtonStyle _metroButtonStyle({required bool primary}) => ButtonStyle(
+  minimumSize: const WidgetStatePropertyAll(Size(48, 48)),
+  foregroundColor: WidgetStateProperty.resolveWith(
+    (states) => states.contains(WidgetState.disabled)
+        ? ExchangeColors.secondaryInk
+        : (primary ? ExchangeColors.onPrimary : ExchangeColors.actionBlue),
+  ),
+  backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
+  surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
+  elevation: const WidgetStatePropertyAll(0),
+  side: WidgetStateProperty.resolveWith((states) {
+    if (primary) return BorderSide.none;
+    if (states.contains(WidgetState.disabled)) {
+      return const BorderSide(color: ExchangeColors.line);
+    }
+    return const BorderSide(color: ExchangeColors.line);
+  }),
+  shape: WidgetStatePropertyAll(
+    RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+  ),
+  padding: const WidgetStatePropertyAll(
+    EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+  ),
+  textStyle: const WidgetStatePropertyAll(
+    TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.w600,
+      fontFeatures: ExchangeColors.tabularFigures,
+    ),
+  ),
+  backgroundBuilder: (context, states, child) => LiquidControlSurface(
+    active: primary,
+    disabled: states.contains(WidgetState.disabled),
+    pressed: states.contains(WidgetState.pressed),
+    radius: 12,
+    child: child ?? const SizedBox.shrink(),
+  ),
+);

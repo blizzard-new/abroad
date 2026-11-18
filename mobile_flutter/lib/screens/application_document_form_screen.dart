@@ -349,7 +349,7 @@ class _ApplicationDocumentFormScreenState
             ),
             if (autofillCount > 0)
               StudentIconLabel(
-                Icons.auto_awesome_outlined,
+                Icons.assignment_turned_in_outlined,
                 '已帶入 $autofillCount 欄',
               ),
           ],

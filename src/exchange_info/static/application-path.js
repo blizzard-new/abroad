@@ -213,9 +213,35 @@ function toast(text,error=false,action=null){
   if(action){const b=document.createElement('button');b.type='button';b.className='toast-action';b.textContent=action.label;b.onclick=()=>{el.hidden=true;action.run();};el.append(b);}
   el.hidden=false;el.classList.toggle('error',error);toastTimer=setTimeout(()=>el.hidden=true,action?9000:5000);
 }
-function message(text,action=''){
+function message(text,action='',extra=''){
   $('#hub').hidden=true;$('#level-view').hidden=true;$('#schedule-view').hidden=true;$('#path-message').hidden=false;$('#archive-plan').hidden=true;
-  $('#path-message').innerHTML='<div class="ap-empty">'+icon('route')+'<p>'+esc(text)+'</p>'+action+'</div>';icons();
+  $('#path-message').innerHTML='<div id="empty-view" class="ap-empty">'+icon('route')+'<p>'+esc(text)+'</p>'+(action?'<div class="ap-empty-actions">'+action+'</div>':'')+extra+'</div>';icons();
+}
+function emptyShortlistHtml(){
+  const order=(typeof discoveryData==='function'?discoveryData()?.preference_order:[])||[];
+  const favs=typeof activeSchoolSelections==='function'?[...activeSchoolSelections()]:(state.favorites instanceof Set?[...state.favorites]:[]);
+  const names=[];
+  for(const raw of [...order,...favs]){
+    const name=String(raw||'').trim();
+    if(name&&!names.includes(name))names.push(name);
+  }
+  if(!names.length)return '';
+  const items=names.slice(0,6).map(name=>{
+    const partner=typeof partnerByName==='function'?partnerByName(name):null;
+    if(state.dashboard?.partner_universities?.length&&!partner)return null;
+    const country=partner?.country||'';
+    const deadline=partner&&typeof partnerDeadlineReference==='function'?partnerDeadlineReference(partner)?.value:'';
+    const sub=[country,deadline&&deadline!=='當期公告待確認'?deadline:''].filter(Boolean).join(' · ');
+    return '<button type="button" class="ap-shortlist-item" data-path-target="'+esc(name)+'"><span class="ap-shortlist-info"><strong>'+esc(shortSchool(name))+'</strong>'+(sub?'<small>'+esc(sub.length>42?sub.slice(0,42)+'…':sub)+'</small>':'')+'</span><span class="ap-shortlist-cta">建立計畫'+icon('arrow-right')+'</span></button>';
+  }).filter(Boolean);
+  if(!items.length)return '';
+  return '<div class="ap-shortlist-quickstart" role="region" aria-label="從已收藏的候選學校一鍵建立計畫"><strong class="ap-shortlist-heading">從已收藏的候選學校一鍵建立計畫</strong><div class="ap-shortlist-list">'+items.join('')+'</div></div>';
+}
+function refreshEmpty(){
+  if(!root||!active||view||loading||!state.account)return;
+  if(route().get('view')==='schedule')return;
+  const legacyLink=(listing?.legacy?.schools||[]).length?'<a href="#my-application?view=schedule" class="quiet-button">查看時程</a>':'';
+  message('從你的交換目標開始','<a href="#partners" class="primary-button next-action">找適合的學校</a><button id="empty-create" data-path-new class="outline-button">我已有目標</button>'+legacyLink,emptyShortlistHtml());
 }
 function clear({preserveDrafts=false}={}){
   stash();clearTimeout(autosaveTimer);
@@ -246,6 +272,8 @@ function init(){
   $('#go-current').onclick=()=>{const n=next();if(n)location.hash=href('level',n.id,'map');};
   root.addEventListener('click',e=>{
     if(e.target.closest('[data-path-login]'))openAuthDialog();
+    const targetBtn=e.target.closest('[data-path-target]');
+    if(targetBtn){openNew(targetBtn.dataset.pathTarget||'');return;}
     if(e.target.closest('[data-path-new]'))openNew();
     if(e.target.closest('[data-path-retry]'))load(true);
     if(e.target.closest('[data-open-info]'))$('#info-dialog').showModal();
@@ -265,7 +293,7 @@ function init(){
   document.addEventListener('click',e=>{const m=root&&$('.ap-menu');if(m?.open&&!m.contains(e.target))m.open=false;});
   new ResizeObserver(()=>requestAnimationFrame(drawPaths)).observe($('#map-scroll'));
 }
-function refresh(){if(!root)return;if(owner!==key()){clear({preserveDrafts:true});owner=key();if(active)load();}}
+function refresh(){if(!root)return;if(owner!==key()){clear({preserveDrafts:true});owner=key();if(active)load();}else refreshEmpty();}
 function show(page){init();stash();window.UniWayExchangeWorkspace?.snapshot();clearTimeout(autosaveTimer);active=page==='my-application';picker.close();if(owner!==key()){clear({preserveDrafts:true});owner=key();}
   if(!active)return;
   if(!state.account){message(state.authRestoreState==='pending'?'正在確認登入狀態…':'登入後，接著完成你的申請。','<button data-path-login class="primary-button">登入並繼續</button><a href="#partners" class="quiet-button">先找交換學校</a>');if(route().get('view')==='schedule')showScheduleWithoutPlan(true);return;}
@@ -300,7 +328,7 @@ async function load(force=false){
     const requested=route().get('plan');
     const selected=list.items.find(p=>p.id===requested)||list.items.filter(p=>!p.archived).sort((a,b)=>(b.updated_at||'').localeCompare(a.updated_at||''))[0]||list.items[0];
     if(!selected&&route().get('view')==='schedule'){view=null;setSync('已連接帳號');showScheduleWithoutPlan();return;}
-    if(!selected){view=null;setSync('已連接帳號');message('從你的交換目標開始','<a href="#partners" class="primary-button next-action">找適合的學校</a><button data-path-new class="outline-button">我已有目標</button>'+((listing.legacy?.schools||[]).length?'<a href="#my-application?view=schedule" class="quiet-button">查看時程</a>':''));maybeOpenTarget();return;}
+    if(!selected){view=null;setSync('已連接帳號');message('從你的交換目標開始','<a href="#partners" class="primary-button next-action">找適合的學校</a><button id="empty-create" data-path-new class="outline-button">我已有目標</button>'+((listing.legacy?.schools||[]).length?'<a href="#my-application?view=schedule" class="quiet-button">查看時程</a>':''),emptyShortlistHtml());maybeOpenTarget();return;}
     const data=await fetchJson('/account/application-paths/'+selected.id+query());
     if(run!==epoch||captured!==key())return;
     if(route().get('plan')!==requested){load();return;}
@@ -472,6 +500,27 @@ async function saveGate(){
     const saved=await fetchJson(pathUrl()+'/profile'+query(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     if(run!==epoch||captured!==key()||view?.plan.id!==id)return;
     view=saved;listing.revision=saved.revision;saving=false;
+    {
+      const nextProfile={...(state.eligibilityProfile||{})};
+      let profileChanged=false;
+      for(const k of given){
+        const gk=GLOBAL_KEY[k];
+        if(gk&&body[k]!==undefined&&body[k]!==''){
+          nextProfile[gk]=body[k];
+          profileChanged=true;
+        }
+      }
+      if(profileChanged){
+        if(body.academic_score!==undefined&&body.academic_score!=='')nextProfile.gpaScale='100';
+        else if(body.academic_gpa!==undefined&&body.academic_gpa!==''&&!nextProfile.gpaScale)nextProfile.gpaScale='4.3';
+        if(typeof selectionLanguageLabel==='function')nextProfile.languageLabel=selectionLanguageLabel(nextProfile.languageTest,nextProfile.languageScore);
+        state.eligibilityProfile=nextProfile;
+        if(typeof saveLocalState==='function')saveLocalState();
+        if(typeof scheduleAccountWorkspaceSync==='function')scheduleAccountWorkspaceSync({selectionConditions:true});
+        if(!document.querySelector('#advisor-form')?.dataset?.draftOwner&&typeof renderAdvisorForm==='function')renderAdvisorForm();
+        window.UniWayDiscoveryUI?.prefillCriteriaFormFromProfile?.();
+      }
+    }
     track('gate_input_saved',{check:l.id,result:find(l.id)?.check_status||''});
     if(!active||activeId!==l.id||route().get('view')!=='level')return;
     renderLevel(l.id);
@@ -577,7 +626,7 @@ function renderLevel(id){
   const supportInner=(l.guide_summary||l.kind==='checks'||(!urls(l).length&&l.kind!=='confirm')?'':'<details class="source-details"><summary>官方來源'+icon('chevron-down')+'</summary>'+(l.kind==='confirm'?'<p>'+esc(l.prompt)+'</p>':'')+urls(l).map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(i?'相關官方文件':'官方來源')+icon('arrow-up-right')+'</a>').join('')+'</details>')+(l.official_deadline_at?'<p class="ap-deadline">'+(confirmedDeadline(l)?'官方期限：':'參考日期（待核對）：')+esc(new Date(l.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))+'（臺灣時間）'+(new Date(l.official_deadline_at)<new Date()?'（已過期）':'')+'</p>':'')+(l.action_url&&/^https?:\/\//i.test(l.action_url)?'<a class="outline-button" href="'+esc(l.action_url)+'" target="_blank" rel="noopener noreferrer">開啟官方表格'+icon('external-link')+'</a>':'')+(l.kind==='submission'&&urls(l).length?'<a class="outline-button" href="'+esc(urls(l)[0])+'" target="_blank" rel="noopener noreferrer">校方公告與入口'+icon('external-link')+'</a>':'');
   const progressHtml=isNoticePanel?'<div class="level-progress"><div><span>通知狀態</span><strong>'+esc(r.value||(l.cgu_level_type==='oia_notice'?'待國際處更新':'待合作校通知'))+'</strong></div></div>':'<div class="level-progress" data-s="'+(isDone(l)?'done':'started')+'"'+(isDone(l)||hasContent(l)||(l.kind==='checks'&&l.progress.value)?'':' hidden')+'><strong>'+(isDone(l)?'已完成':l.kind==='checks'?l.progress.value+' / '+l.progress.total+' 項符合':'進行中')+'</strong></div>';
   $('#level-view').innerHTML='<div class="level-topline"><a class="back-link" href="'+href(backTab)+'">'+icon('arrow-left')+'回到'+FROM_LABELS[backTab]+'</a><span class="level-plan-name">'+esc(shortSchool(c.target_school)+' · '+formatContextTerm(c))+'</span></div><div class="level-layout"><div class="level-card"><div class="level-heading"><span class="square-icon">'+icon(l.icon)+'</span><h2 id="level-title" tabindex="-1">'+esc(l.title)+'</h2>'+progressHtml+'</div>'+
-    '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'||l.kind==='checks'||!l.prompt?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning&&l.warning!==l.prompt&&!(l.check_status&&CHECK_STANDARD.has(l.warning))?'<p class="ap-warning">'+esc(l.warning)+'</p>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+esc(noteText)+'</span>'+(draftable?'<button type="button" id="save-draft" class="outline-button">儲存草稿</button>':'')+(l.kind==='checks'&&isDone(l)?'<a class="primary-button" href="'+href(backTab)+'">回到'+FROM_LABELS[backTab]+icon('arrow-right')+'</a>':'<button type="submit" class="primary-button" '+(plan().archived||gateBlocked(l)?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button>')+'</footer></form>'+'</div><aside class="level-support">'+(supportInner?'<section class="support-card">'+supportInner+'</section>':'')+'</aside></div>';
+    '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'||l.kind==='checks'||!l.prompt?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning&&l.warning!==l.prompt&&!(l.check_status&&CHECK_STANDARD.has(l.warning))?'<p class="ap-warning">'+esc(l.warning)+'</p>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+esc(noteText)+'</span>'+(draftable?'<button type="button" id="save-draft" class="outline-button">儲存草稿</button>':'')+(l.kind==='checks'&&isDone(l)?'<a class="primary-button" href="'+href(backTab)+'">回到'+FROM_LABELS[backTab]+icon('arrow-right')+'</a>':'<button id="confirm-step" type="submit" class="primary-button" '+(plan().archived||gateBlocked(l)?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button>')+'</footer></form>'+'</div><aside class="level-support">'+(supportInner?'<section class="support-card">'+supportInner+'</section>':'')+'</aside></div>';
   {
     $('#level-form').oninput=edit;
     $('#level-form').onsubmit=e=>{e.preventDefault();save(true);};
@@ -620,6 +669,18 @@ function toolHref(tool){
   return href('level',route().get('level'),route().get('from')||'')+'&'+new URLSearchParams({tool});
 }
 function formToolActive(){return active&&route().get('view')==='level'&&(route().get('tool')||'').startsWith('application-form=');}
+function returnToLevelConfirm(){
+  if(!active||!view||route().get('view')!=='level'||!activeId)return false;
+  location.hash=href('level',activeId,route().get('from')||'');
+  const focusConfirm=()=>{
+    const btn=$('#confirm-step')||$('#level-form button[type=submit]');
+    if(!btn)return;
+    btn.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+    btn.focus({preventScroll:true});
+  };
+  requestAnimationFrame(()=>setTimeout(focusConfirm,40));
+  return true;
+}
 async function selectTarget(schoolName){
   if(!toolHref('advisor')||schoolName===plan().context.target_school)return false;
   await openNew(schoolName);
@@ -739,6 +800,23 @@ async function undoStep(id,before){
   }catch(e){toast(e.message,true);}
   finally{saving=false;}
 }
+function parseKnownTerm(raw){
+  const v=String(raw||'').trim();
+  if(!v)return {year:'',term:''};
+  const m=v.match(/^(\d{4})-(fall|spring|full_year)$/i);
+  if(m)return {year:m[1],term:m[2].toLowerCase()};
+  if(['fall','spring','full_year','undecided'].includes(v))return {year:'',term:v};
+  if(v==='第一學期'||/秋季|上學期/.test(v))return {year:'',term:'fall'};
+  if(v==='第二學期'||/春季|下學期/.test(v))return {year:'',term:'spring'};
+  if(v==='一學年'||/全學年/.test(v))return {year:'',term:'full_year'};
+  return {year:'',term:''};
+}
+function normalizePlanDegree(raw){
+  const v=String(raw||'').trim();
+  if(v==='undergraduate')return '大學部';
+  if(v==='graduate')return '研究所';
+  return v;
+}
 async function openNew(preferredTarget=''){
   if(typeof preferredTarget!=='string')preferredTarget='';
   if(!state.account){openAuthDialog();return;}
@@ -747,11 +825,30 @@ async function openNew(preferredTarget=''){
   try{
     const dashboard=state.dashboard?.school_name===activeHomeSchool()?state.dashboard:await fetchJson('/student-dashboard?school='+encodeURIComponent(activeHomeSchool()));
     if(captured!==key())return;
-    const old=preferredTarget?{...(view?.plan.context||{}),target_school:preferredTarget}:listing?.legacy?.context||{}, profile=state.selectionConditions?.profile||{};
+    const old=preferredTarget?{...(view?.plan.context||{}),target_school:preferredTarget}:listing?.legacy?.context||{};
+    const elig=state.eligibilityProfile||{};
+    const crit=window.UniWayDiscoveryUI?.criteria?.()||{};
+    const appCtx=state.applicationContext||{};
+    const appProf=state.applicationProfile||{};
+    const college=old.college||elig.college||state.partnerCollegeFilter||state.college||appCtx.college||appProf.college||'';
+    const department=old.department||elig.department||state.partnerDepartmentFilter||state.cguDepartment||appCtx.department||appProf.department||'';
+    const degree=normalizePlanDegree(old.degree_level||elig.degree||crit.degree||state.degree||appCtx.degree_level||appProf.degree_level||'');
+    const year=old.academic_year||elig.academicYear||appCtx.academic_year||'';
+    const round=old.application_round||elig.applicationRound||appCtx.application_round||'';
+    const parsedTerm=old.semester&&old.semester!=='undecided'?{year:String(old.departure_year||''),term:old.semester}:
+      (parseKnownTerm(elig.targetTerm).term?parseKnownTerm(elig.targetTerm):
+      (parseKnownTerm(crit.term).term?parseKnownTerm(crit.term):parseKnownTerm(appCtx.semester)));
     $('#create-home').value=activeHomeSchool();$('#create-target').innerHTML='<option value="">選擇交換學校</option>'+dashboard.partner_universities.map(p=>'<option '+(p.school_name===old.target_school?'selected':'')+'>'+esc(p.school_name)+'</option>').join('');
-    for(const [id,value] of Object.entries({'create-year':old.academic_year||'','create-round':old.application_round||'','create-college':old.college||profile.college||'','create-department':old.department||profile.department||'','create-degree':old.degree_level||profile.degree_level||''}))$('#'+id).value=value;
+    for(const [id,value] of Object.entries({'create-year':year,'create-round':round,'create-college':college,'create-department':department,'create-degree':degree}))$('#'+id).value=value;
+    const prefilledParts=[college,department,degree].filter(Boolean);
+    const detailsEl=$('.ap-academic-fields'),noteEl=$('#create-prefill-note');
+    if(detailsEl)detailsEl.open=prefilledParts.length>0;
+    if(noteEl){
+      noteEl.hidden=!prefilledParts.length;
+      noteEl.textContent=prefilledParts.length?'已自動帶入你的條件：'+prefilledParts.join(' · ')+'（可直接修改）':'';
+    }
     $('#create-round').dataset.userEdited='';
-    $('#import-existing').checked=false;buildSemesterChoices(old);
+    $('#import-existing').checked=false;buildSemesterChoices({...old,departure_year:old.departure_year||parsedTerm.year,semester:old.semester||parsedTerm.term});
     $('#plan-dialog').showModal();
   }catch(e){if(captured===key())toast(e.message,true);}
 }
@@ -823,7 +920,7 @@ function buildSemesterChoices(old){
   const fallRoc=rocYear(fall.year,'fall');
   options.push({year:fall.year,term:'full_year',label:isCgu?fall.year+' 秋季・全學年（'+fallRoc+'-1）':fall.year+' 年秋季出發・全學年'},{year:fall.year,term:'undecided',label:'還沒決定'});
   const keyOf=o=>o.term+':'+o.year;
-  const match=options.find(o=>String(o.year)===String(old.departure_year||'')&&o.term===(old.semester||''))||(isCgu?(options.find(o=>o.year===2027&&o.term==='fall')||options.find(o=>o.term==='fall')||options[0]):options[0]);
+  const match=options.find(o=>String(o.year)===String(old.departure_year||'')&&o.term===(old.semester||''))||(old.semester?options.find(o=>o.term===old.semester):null)||(isCgu?(options.find(o=>o.year===2027&&o.term==='fall')||options.find(o=>o.term==='fall')||options[0]):options[0]);
   $('#create-semesters').innerHTML=options.map(o=>'<label class="ap-semester-option"><input type="radio" name="create-semester" value="'+keyOf(o)+'" required '+(o===match?'checked':'')+'><span>'+esc(o.label)+'</span></label>').join('');
   let lastAutoRound=$('#create-round')?.value||'';
   const apply=()=>{
@@ -931,11 +1028,14 @@ async function applyPlanContext(){
   if(typeof renderPlanningWorkspace==='function')renderPlanningWorkspace();
   return true;
 }
+function schoolWindowIcsHref(){
+  return '/calendar/school-window.ics?school='+encodeURIComponent(activeHomeSchool());
+}
 function showScheduleWithoutPlan(loggedOut=false){
   $('#hub').hidden=true;$('#level-view').hidden=true;$('#path-message').hidden=!loggedOut;$('#archive-plan').hidden=true;
   $('#schedule-view').hidden=false;adoptSchedule();
   if(loggedOut){$('#schedule-dynamic').replaceChildren();icons();return;}
-  $('#schedule-dynamic').innerHTML='<section class="sched-deadlines"><div class="today-head"><h2>還沒有申請計畫</h2></div><p class="today-hint">建立計畫後，這裡會列出已確認的官方期限與每項準備的待辦。你也可以先在下面記自己的待辦。</p><button type="button" class="today-primary dark" data-path-new>建立計畫'+icon('arrow-right')+'</button><a class="today-link" href="#partners">先找適合的學校'+icon('arrow-right')+'</a></section>';
+  $('#schedule-dynamic').innerHTML='<section class="sched-deadlines"><div class="today-head"><h2>還沒有申請計畫</h2></div><p class="today-hint">建立計畫後，這裡會列出已確認的官方期限與每項準備的待辦。你也可以先在下面記自己的待辦。</p><button type="button" class="today-primary dark" data-path-new>建立計畫'+icon('arrow-right')+'</button><a class="today-link" href="#partners">先找適合的學校'+icon('arrow-right')+'</a><a class="today-link sched-ics-link" href="'+esc(schoolWindowIcsHref())+'" download>'+icon('calendar-plus')+'匯出校內時程 .ics</a></section>';
   icons();
 }
 function renderSchedule(){
@@ -949,7 +1049,7 @@ function renderSchedule(){
   if(mismatch&&!state.applicationContext.target_school)applyPlanContext().then(()=>{if(active&&route().get('view')==='schedule')renderSchedule();}).catch(()=>{});
   $('#schedule-dynamic').innerHTML=(mismatch&&state.applicationContext.target_school?'<div class="sched-context"><p>排時程的目標目前是「'+esc(state.applicationContext.target_school.split(/[（(]/)[0].trim())+'」。要改用這份計畫嗎？</p><button type="button" class="today-add" data-use-plan-context>改用「'+esc(planName(plan()))+'」排時程</button></div>':'')+'<section class="sched-deadlines" aria-labelledby="sched-deadlines-title"><div class="today-head"><h2 id="sched-deadlines-title">已確認的官方期限</h2><p>'+esc(planName(plan()))+' · '+esc(planTerm(plan()))+'</p></div>'+
     (list.length?'<ol>'+list.map(l=>{const d=new Date(l.official_deadline_at),left=Math.ceil((d-Date.now())/86400000);return '<li><a href="'+href('level',l.id,'schedule')+'"><span class="sched-date"><b>'+fmt(d,{month:'numeric',day:'numeric'})+'</b><small>'+fmt(d,{weekday:'short'})+deadlineTimePart(d)+'</small></span><span class="today-row"><b>'+esc(l.title)+'</b><small>'+esc(l.stageTitle)+'</small></span><span class="today-pill '+(d<new Date()?'late':left<=14?'soon':'')+'">'+(d<new Date()?'已過期':left<=0?'今天':'還有 '+left+' 天')+'</span></a></li>';}).join('')+'</ol>':
-      '<p class="today-empty">目前沒有已確認的期限。</p>'+(source?'<a class="today-link" href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">查看官方公告'+icon('arrow-up-right')+'</a>':''))+'</section>';
+      '<p class="today-empty">目前沒有已確認的期限。</p>'+(source?'<a class="today-link" href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">查看官方公告'+icon('arrow-up-right')+'</a>':''))+'<div class="sched-ics-bar"><a class="outline-button sched-ics-link" href="'+esc(schoolWindowIcsHref())+'" download>'+icon('calendar-plus')+'匯出校內時程 .ics</a></div></section>';
   icons();
 }
 
@@ -1056,5 +1156,5 @@ function startTarget(schoolName){
   location.hash='#my-application?'+new URLSearchParams(existing?{plan:existing.id,view:'today'}:{target:schoolName});
 }
 
-return {init,show,refresh,clear,toolHref,formToolActive,selectTarget,startTarget,resumeOAuth,workbenchRows,workbenchTotals,workspaceCalendarEvents,syncPreferences,ensureTargetPreference,hasActivePlan,addPersonalTodo,togglePersonalTodo,hasRecoverableDrafts:()=>drafts.size>0};
+return {init,show,refresh,refreshEmpty,clear,toolHref,formToolActive,returnToLevelConfirm,selectTarget,startTarget,resumeOAuth,workbenchRows,workbenchTotals,workspaceCalendarEvents,syncPreferences,ensureTargetPreference,hasActivePlan,addPersonalTodo,togglePersonalTodo,hasRecoverableDrafts:()=>drafts.size>0};
 })();

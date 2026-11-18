@@ -531,30 +531,6 @@ class ExchangeApi {
     return ApplicationWorkflow.fromJson(_decode(response));
   }
 
-  Future<AdvisorPlan> advisorPlan(AdvisorProfile profile) async {
-    final response = await _client.post(
-      _uri('advisor/plan'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode(profile.toJson()),
-    );
-    return AdvisorPlan.fromJson(_decode(response));
-  }
-
-  Future<AdvisorAnswer> advisorAsk({
-    required String question,
-    AdvisorProfile? profile,
-  }) async {
-    final response = await _client.post(
-      _uri('advisor/ask'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
-        'question': question,
-        if (profile != null) 'profile': profile.toJson(),
-      }),
-    );
-    return AdvisorAnswer.fromJson(_decode(response));
-  }
-
   Future<ExperienceDigest> experiences(
     String schoolName, {
     String? homeSchool,
@@ -616,13 +592,14 @@ class ExchangeApi {
     String documentType = 'auto',
     int? expectedWordLimit,
     bool requireSignature = false,
-    bool useAi = false,
-    bool aiConsentGranted = false,
+    bool consent = true,
+    String accessToken = '',
   }) async {
-    final request = http.MultipartRequest('POST', _uri('ai/review-document'))
+    final request = http.MultipartRequest('POST', _uri('document-check'))
       ..fields['document_type'] = documentType
       ..fields['require_signature'] = requireSignature.toString()
-      ..fields['use_ai'] = useAi.toString()
+      ..fields['consent'] = consent.toString()
+      ..fields['use_ai'] = 'false'
       ..files.add(
         http.MultipartFile.fromBytes(
           'file',
@@ -631,38 +608,16 @@ class ExchangeApi {
           contentType: _documentMediaType(fileName),
         ),
       );
+    if (accessToken.trim().isNotEmpty) {
+      request.headers['Authorization'] = 'Bearer ${accessToken.trim()}';
+    }
     if (expectedWordLimit != null) {
       request.fields['expected_word_limit'] = expectedWordLimit.toString();
     }
-    request.fields['ai_consent_granted'] = aiConsentGranted.toString();
     final response = await http.Response.fromStream(
       await _client.send(request),
     );
     return DocumentCheckResult.fromJson(_decode(response));
-  }
-
-  Future<DocumentRewriteResult> rewriteDocument({
-    required String text,
-    required String action,
-    required String documentType,
-    int? targetWordLimit,
-    String schoolContext = '',
-    bool aiConsentGranted = false,
-  }) async {
-    final response = await _client.post(
-      _uri('ai/rewrite-document'),
-      headers: const {'Content-Type': 'application/json; charset=utf-8'},
-      body: jsonEncode({
-        'text': text,
-        'action': action,
-        'document_type': documentType,
-        'target_word_limit': ?targetWordLimit,
-        'ai_consent_granted': aiConsentGranted,
-        if (schoolContext.trim().isNotEmpty)
-          'school_context': schoolContext.trim(),
-      }),
-    );
-    return DocumentRewriteResult.fromJson(_decode(response));
   }
 
   MediaType _documentMediaType(String fileName) {

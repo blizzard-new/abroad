@@ -151,6 +151,7 @@ class ExchangeStore extends ChangeNotifier {
   String? calendarSyncError;
   String schoolSearchQuery = '';
   final Set<String> favorites = {};
+  final List<String> compareSchools = [];
   final Set<int> completedSteps = {};
   final Map<String, DocumentPreparationStatus> documentStatuses = {};
   final Map<String, ExchangeBudgetPlan> budgetPlans = {};
@@ -423,6 +424,8 @@ class ExchangeStore extends ChangeNotifier {
     isAuthenticating = true;
     notifyListeners();
     try {
+      final guestProfile = account == null ? planProfile : null;
+      final guestSchool = selectedUniversity;
       final session = await action();
       _resetPrivateState();
       account = session.profile;
@@ -439,6 +442,11 @@ class ExchangeStore extends ChangeNotifier {
       await _loadLocalProgress();
       await _loadCalendarEvents();
       await _openWorkspace();
+      if (planProfile == null &&
+          guestProfile != null &&
+          selectedUniversity == guestSchool) {
+        await savePlanProfile(guestProfile);
+      }
     } finally {
       isAuthenticating = false;
       notifyListeners();
@@ -723,6 +731,45 @@ class ExchangeStore extends ChangeNotifier {
     });
     await _persistApplicationDocumentState();
     await loadApplicationTemplates();
+    unawaited(_syncStudyPlanWidget());
+  }
+
+  /// Sets [school] as the target school for application, cross-prefills blank
+  /// reusable profile fields from [planProfile], and switches to Tab 2 (申請).
+  Future<ApplicationCenterContext> selectTargetSchoolForApplication(
+    PartnerUniversity school, {
+    bool switchToApplicationTab = true,
+  }) async {
+    final previous = applicationContext;
+    final profile = planProfile;
+    if (profile != null) {
+      var changedProfile = false;
+      if (!_applicationValuePresent(applicationProfile['college']) &&
+          profile.college.isNotEmpty) {
+        applicationProfile['college'] = profile.college;
+        changedProfile = true;
+      }
+      if (!_applicationValuePresent(applicationProfile['degree_level']) &&
+          profile.degreeLevel.isNotEmpty) {
+        applicationProfile['degree_level'] = profile.degreeLevel;
+        changedProfile = true;
+      }
+      if (changedProfile) {
+        await _persistApplicationProfileMemory();
+      }
+    }
+    if (switchToApplicationTab) {
+      navigationTab = 2;
+    }
+    await updateApplicationContext(
+      applicationContext.copyWith(
+        schoolName: selectedUniversity,
+        targetSchool: school.schoolName,
+        targetCountry: school.country,
+      ),
+    );
+    notifyListeners();
+    return previous;
   }
 
   dynamic applicationValue(
@@ -943,6 +990,7 @@ class ExchangeStore extends ChangeNotifier {
     await _persistApplicationProfileMemory();
     await _persistApplicationDocumentState();
     notifyListeners();
+    unawaited(_syncStudyPlanWidget());
   }
 
   Future<void> updateApplicationSelection(
@@ -966,6 +1014,7 @@ class ExchangeStore extends ChangeNotifier {
     await _syncSelections();
     await _persistApplicationDocumentState();
     notifyListeners();
+    unawaited(_syncStudyPlanWidget());
   }
 
   dynamic _serializeApplicationValue(dynamic value) {
@@ -1069,6 +1118,20 @@ class ExchangeStore extends ChangeNotifier {
         ...officialApplicationEvents(dashboard),
         ...personalCalendarEvents,
       ]);
+
+  List<ApplicationCalendarEvent> get upcomingPriorityCalendarEvents {
+    final today = dateOnly(DateTime.now());
+    final upcoming = applicationCalendarEvents
+        .where((event) => !dateOnly(event.date).isBefore(today))
+        .toList();
+    if (upcoming.isEmpty) return const [];
+    final relevant = upcoming.where((event) {
+      if (!event.isOfficial || event.category != 'partner') return true;
+      return favorites.contains(event.title) ||
+          applicationContext.targetSchool == event.title;
+    }).toList();
+    return relevant.isNotEmpty ? relevant : upcoming;
+  }
 
   WritableCalendar? get connectedCalendar => calendarSync.connectedCalendar;
 
@@ -1217,6 +1280,38 @@ class ExchangeStore extends ChangeNotifier {
     );
     notifyListeners();
     await _syncStudyPlanWidget();
+  }
+
+  bool isInCompare(String schoolName) => compareSchools.contains(schoolName);
+
+  /// Toggles a school in the 2-4 school comparison tray. Returns false if full.
+  bool toggleCompareSchool(String schoolName) {
+    if (compareSchools.remove(schoolName)) {
+      notifyListeners();
+      return true;
+    }
+    if (compareSchools.length >= 4) {
+      return false;
+    }
+    compareSchools.add(schoolName);
+    notifyListeners();
+    return true;
+  }
+
+  void clearCompareSchools() {
+    if (compareSchools.isEmpty) return;
+    compareSchools.clear();
+    notifyListeners();
+  }
+
+  List<PartnerUniversity> get comparedPartnerSchools {
+    final all = dashboard?.partnerUniversities ?? const <PartnerUniversity>[];
+    if (all.isEmpty || compareSchools.isEmpty) return const [];
+    final byName = {for (final item in all) item.schoolName: item};
+    return [
+      for (final name in compareSchools)
+        if (byName[name] != null) byName[name]!,
+    ];
   }
 
   bool followsBoard(String boardName) =>
@@ -1426,32 +1521,52 @@ class ExchangeStore extends ChangeNotifier {
     }
     final confirmedEvents = personalCalendarEvents.toList()
       ..sort((a, b) => a.date.compareTo(b.date));
-    final upcoming = confirmedEvents
-        .where(
-          (event) => !dateOnly(event.date).isBefore(dateOnly(DateTime.now())),
-        )
-        .firstOrNull;
+    final upcoming =
+        confirmedEvents
+            .where(
+              (event) =>
+                  !dateOnly(event.date).isBefore(dateOnly(DateTime.now())),
+            )
+            .firstOrNull ??
+        upcomingPriorityCalendarEvents.firstOrNull;
     final title = upcoming?.title ?? nextPlanAction;
     final dateLabel = upcoming == null
         ? (planProfile?.goalLabel.isNotEmpty == true
               ? planProfile!.goalLabel
               : '開啟 App 開始規劃')
         : '截止 ${upcoming.date.year}/${upcoming.date.month}/${upcoming.date.day}';
+    final progressPercent = applicationTemplates.isNotEmpty
+        ? ((applicationFormReadyCount / applicationTemplates.length) * 100)
+              .round()
+        : planCompletionPercent;
+    final pendingTasks = applicationTemplates.isNotEmpty
+        ? applicationTemplates
+              .where(
+                (template) => !applicationTemplateCompletion(template).ready,
+              )
+              .map(
+                (template) => template.shortTitle.isNotEmpty
+                    ? template.shortTitle
+                    : template.title,
+              )
+              .take(3)
+              .toList()
+        : applicationDocumentLabels
+              .where(
+                (label) =>
+                    documentStatus(label) != DocumentPreparationStatus.ready,
+              )
+              .take(3)
+              .toList();
     await widgetBridge.sync(
       StudyPlanWidgetSnapshot(
         nextTitle: title,
         nextDateLabel: dateLabel,
-        progressLabel: '準備進度 $planCompletionPercent%',
+        progressLabel: '準備進度 $progressPercent%',
         deadlineIso: upcoming == null
             ? ''
             : '${upcoming.date.year.toString().padLeft(4, '0')}-${upcoming.date.month.toString().padLeft(2, '0')}-${upcoming.date.day.toString().padLeft(2, '0')}',
-        tasks: applicationDocumentLabels
-            .where(
-              (label) =>
-                  documentStatus(label) != DocumentPreparationStatus.ready,
-            )
-            .take(3)
-            .toList(),
+        tasks: pendingTasks,
         updatedLabel: workspaceSync?.lastSyncedAt == null
             ? '尚未同步'
             : '更新 ${workspaceSync!.lastSyncedAt!.month}/${workspaceSync!.lastSyncedAt!.day} ${workspaceSync!.lastSyncedAt!.hour.toString().padLeft(2, '0')}:${workspaceSync!.lastSyncedAt!.minute.toString().padLeft(2, '0')}',
@@ -1562,6 +1677,7 @@ class ExchangeStore extends ChangeNotifier {
   void _resetPrivateState() {
     _disposeDrafts();
     favorites.clear();
+    compareSchools.clear();
     completedSteps.clear();
     documentStatuses.clear();
     budgetPlans.clear();

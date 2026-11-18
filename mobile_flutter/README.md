@@ -1,113 +1,53 @@
-# 交換指南 Flutter App
+# UniWay 交換指南 Flutter App (`mobile_flutter`)
 
-這是 Android 與 iOS 共用的唯一正式 Flutter 手機專案。網頁版、FastAPI 與爬蟲仍保留在主專案；早期獨立的 Kotlin Compose 與 SwiftUI 參考實作已封存至 [`../archive/legacy_native/`](../archive/legacy_native/README.md)，不再雙線維護。
+這是 Android 與 iOS 共用的唯一正式 Flutter 行動端專案（目前版本 `2.2.0+24`）。網頁版、FastAPI 與爬蟲位於主專案；早期獨立的原生參考實作已封存於 [`../archive/legacy_native/`](../archive/legacy_native/README.md)。
 
-## 已對齊 18 所大學與公開 API
+## 核心產品與設計原則（UniWay Metro 指標系統）
 
-- 完整對齊後端 [`university_registry.py`](../src/exchange_info/university_registry.py) 的 18 所台灣大專院校（長庚、臺北大學、臺大、中正大學、中央、淡江、輔大、東吳、臺師大、中原、臺科大、元智、逢甲、中山、中興、北科大、政大、成大），支援校別切換、別名解析、各校學院清單與學業成績門檻
-- 串接公開 API：`/universities`、`/student-dashboard?school=...`、`/deadlines?school=...`、`/application-workflow`、`/student-experiences`、`/application-center/templates`、`/advisor/plan`、`/advisor/ask`、`/community/posts`、`/community/chat`
-- Apple 風格淺色 Liquid Glass 設計系統與 44 px 以上觸控區域
-- 全台學生共用的留學貼文首頁，支援全部、追蹤、公共板與 18 校討論板動態切換
-- 發文時可選擇公共留學板或 18 所大學任一校板，並可追蹤各校討論板
-- 校內交換板保留目的地探索、學生任務入口與四階段申請進度，可隨時切換目前就讀大學
-- 公共留學首頁與校內交換板採兩層獨立導覽，進入校板後才顯示計畫、找學校、申請文件、時程與討論板
-- 申請文件工作台會依交換、雙聯、實習、短期學分及補助／役男身分整理需要填寫的文件
-- 共用姓名、學號、學院、系所與聯絡資料只填一次，並帶入所有適用表單
-- 逐份表單檢查必填欄位、日期順序與附件數量；正式表單會保留表單編號與官方來源
-- 可設定每份文件列印份數及待列印、待簽名、待核章、待送件、已完成狀態
-- 產生單份或整包 PDF 後由學生自行預覽、列印、親簽與送件，不會自動送出申請
-- 官方照片導向的合作校搜尋、收藏與學校詳細資料；清單只顯示關鍵資訊，完整資格點進後查看
-- 保存學院、學制、成績、語言、目標學期、國家與預算，並依各校公開條件與門檻排序推薦合作校
-- 文件可標記為待準備、準備中或已完成，首頁顯示整體計畫進度與下一步
-- 交換預算估算，整合生活費、一次性支出與預計補助
-- 申請日曆可直接連接手機中的 Google、iCloud、Outlook 或本機日曆，新增與修改任務時同步寫入
-- Android 與 iOS 桌面 Widget；Android 同時宣告鎖定畫面類別，iOS 提供三種鎖定畫面尺寸
-- 不指定 App 專用字型，文字會使用 Android／iOS 系統字型並跟隨系統文字大小
-- 各校規定、補助要點及官方文件摘要
-- 合作校詳細申請流程
-- 生活情報、來源排序與具體重點
-- 學生文章、影片及社群心得來源
-- 截止日期與官方公告
-- Email 建立帳號、登入、公開暱稱與個人申請資料
-- 全校留學社群、結構化貼文、主題搜尋、留言與校別公開聊天室
-- 邀請制私訊、接受邀請、封鎖與檢舉
+- **完整同步全台 71 所大專院校**：離線內建並同步後端 [`university_registry.py`](../src/exchange_info/university_registry.py) 全部 **71 所**台灣大專院校，底部彈出選單支援校名、簡稱、英文縮寫與「台／臺」即時搜尋，並將目前就讀大學置頂。
+- **誠實去 AI 化（Deterministic Truth）**：遵循 [`../PRODUCT.md`](../PRODUCT.md) 與 [`../DESIGN.md`](../DESIGN.md)，移除所有失效或誤導性的雲端／本地 AI 改寫與對話端點；「格式與字數檢查」改接穩定運作的 `POST /document-check`（`consent=true`、`use_ai=false`），精確回報頁數、字數、字元數與版面規則檢查。
+- **UniWay Metro 站體指標視覺**：採用高對比白底 `#FFFFFF`、輔助灰階 `#F3F4F6`、`1px solid #D6DAE1` 俐落邊框、頂部 `3px` 五色捷運指標線（`MetroLineBar`）與固定式底部導覽列（`旅程`、`學校`、`申請`、`論壇`、`我的`），全面支援 `2x` 系統字體放大與等寬數字（`tabularFigures`）。
+- **開放狀態優先於個人配對**：合作校卡片明確區分 `本期開放`、`合作備查`、`名額未定`、`暫不開放` 與 `自費研修`；非本期開放學校絕不顯示誤導性的配對推薦標籤。
 
-Google 與 Facebook 按鈕會讀取後端 `/auth/providers` 狀態。尚未設定 OAuth 金鑰時會清楚顯示為不可用；行動 App 的正式第三方登入仍需在平台後台補上 App callback/deep link，Email 登入不受影響。
+## 省時選校與申請工作流
 
-App 會讀取與網頁共用的 `/static/assets/school-images.json` 清冊，使用合作校各自的官方網站圖片。詳細頁可開啟「官方圖片來源」；圖片缺漏或載入失敗時只顯示中性校園圖示，不會套用其他學校或地區照片。正式商業上線前仍需逐一確認圖片使用授權。
+1. **訪客與登入皆可儲存「我的選校條件」**：未登入訪客可於本機儲存學院、學制、平均成績與語檢分數，登入後自動銜接雲端工作區同步。
+2. **高資訊密度合作校卡片與「僅看本期開放」篩選**：一頁直接閱讀國家、開放狀態、交換名額、申請期限、適用學制／語言重點與個人資格初判；僅在具備已驗證官方校園照片時顯示精簡照片列。
+3. **2–4 校並排比較（Compare Tray）**：在找學校列表勾選 2 至 4 間合作校，即可拉出並排比較表對照開放狀態、名額、期限、語言門檻與費用摘要。
+4. **一鍵「設為目標」直通申請文件**：在學校卡片、並排比較表或學校詳情點選「設為目標／設為申請目標校」，自動帶入申請文件上下文、預填空白學院與學制並切換至「申請」分頁（附復原 Undo）。
+5. **真實優先截止日總覽**：首頁「下一個重要期限」合併校內官方申請期程、已收藏／目標合作校截止日與個人行事曆提醒，清楚標示 `校內官方`、`合作校` 或 `個人提醒` 來源與倒數天數。
+6. **申請文件工作台與搜尋式目標校選擇器**：共用姓名、學號、系所與聯絡資料填寫一次即可套用至各表單；「申請設定」內合作校改為可搜尋清單並將已收藏學校置頂，支援匯出列印包 PDF。
 
-## Windows 開發
+## 串接公開與帳號 API
 
-Flutter 安裝位置：
+- 公開資料：`/universities`、`/student-dashboard?school=...`、`/deadlines?school=...`、`/application-workflow`、`/student-experiences`、`/application-center/templates`、`/application-center/pdf`
+- 確定性文件檢查：`POST /document-check`（`consent=true`、`use_ai=false`，登入時附帶 `Authorization: Bearer <token>`）
+- 社群、論壇與同步：`/auth/providers`、`/forum/boards`、`/forum/feed`、`/community/posts`、`/community/chat`、`/workspace`
 
-```text
-C:\Users\User\development\flutter
+## 本機開發與驗證
+
+需要 Flutter `3.44.6`（Dart `^3.12.2`）：
+
+```bash
+cd mobile_flutter
+flutter pub get
+flutter analyze --no-pub
+flutter test --no-pub
 ```
 
-專案位於中文路徑時，Flutter 分析器可能無法解析 LSP 訊息。Release 腳本會同步到下列英文鏡像路徑後分析、測試與建置：
+建置連線至正式站的 Android 預覽 APK：
 
-```text
-C:\Users\User\development\exchange_guide_flutter_release_nav
+```bash
+flutter build apk --debug --dart-define=API_BASE_URL=https://app.uniway-tw.com/
 ```
 
-執行分析與測試：
+若連接本機 FastAPI（Android 模擬器預設透過 `10.0.2.2` 連向主機 `8000` port）：
 
-```powershell
-$env:Path='C:\Users\User\development\flutter\bin;'+$env:Path
-flutter analyze
-flutter test
-```
-
-## Android 模擬器
-
-先啟動主專案 FastAPI 的 `8000` port，再執行：
-
-```powershell
+```bash
 flutter run --dart-define=API_BASE_URL=http://10.0.2.2:8000/
 ```
 
-建立 APK：
+## CI 自動化預覽建置
 
-```powershell
-flutter build apk --debug --dart-define=API_BASE_URL=http://10.0.2.2:8000/
-```
-
-目前驗證完成的 Release APK 位於：
-
-```text
-artifacts/exchange-guide-flutter-phone.apk
-```
-
-`1.9.0+12` 的 APK 目前連向 `http://192.168.50.232:8006/`，手機需和這台電腦位於同一個 Wi-Fi，且本機 API 必須保持啟動。若電腦 IP 改變或要跨網路使用，需以新的 LAN 位址重新建置，或改接正式公開的 HTTPS API。
-
-App 內「長庚大學板 → 桌面小工具」可開啟 Android 系統的加入流程。Android 鎖定畫面是否提供小工具位置由系統版本、手機品牌與 Launcher 決定；不支援時仍可正常加入桌面。
-
-因為 Flutter 的 Windows AOT 工具無法正確處理目前專案的中文路徑，Release APK 請使用已提供的一鍵腳本。腳本會先驗證英文鏡像路徑、同步程式碼、執行分析與測試，最後把 APK 放回 `artifacts/`：
-
-```powershell
-.\tool\build_windows_release.ps1 -ApiBaseUrl http://192.168.50.232:8006/
-```
-
-實體手機測試時，手機與電腦必須使用同一個 Wi-Fi，並將網址換成電腦的區域網路 IP：
-
-```powershell
-flutter build apk --debug --dart-define=API_BASE_URL=http://192.168.50.232:8006/
-```
-
-## iOS
-
-Windows 可以維護 `lib/` 內所有共用介面與功能，也會保留完整 `ios/` 專案。最終 iOS 編譯、模擬器測試、簽署與 App Store 上架仍需要 macOS 與 Xcode：
-
-```bash
-flutter build ios --dart-define=API_BASE_URL=https://your-api.example.com/
-```
-
-iOS Widget Extension 的最低版本為 iOS 16，包含主畫面小／中尺寸及鎖定畫面的直列、圓形、矩形尺寸。第一次在 Mac 開啟時，請在 Xcode 為 `Runner` 與 `StudyPlanWidgetDefinitionHomeWidget` 選擇同一個 Team，並確認兩個 Target 都啟用下列 App Group：
-
-```text
-group.tw.edu.cgu.exchangeGuideFlutter
-```
-
-App Group 與實機簽署需要 Apple Developer 帳號。Widget 原生基礎由 `home_widget/study_plan_widget.dart` 產生；重新執行產生器可能覆寫已客製的 Android Glance 與 iOS WidgetKit 版型，更新前應先比對差異。
-
-正式版本應使用 HTTPS API，不應沿用區域網路的 HTTP 網址。
+- **Android APK Preview**：[`.github/workflows/flutter-android.yml`](../.github/workflows/flutter-android.yml) 會在 `mobile_flutter/**` 變更時自動執行 `flutter analyze --no-pub`、`flutter test --no-pub` 與 `flutter build apk --debug`，並上傳 `UniWay-Android-preview-debug.apk` 與 `.sha256` 校驗檔。
+- **iOS Simulator & Unsigned Preview**：[`.github/workflows/ios-preview.yml`](../.github/workflows/ios-preview.yml) 會在 macOS 環境驗證 iOS 與 WidgetKit Extension 建置。

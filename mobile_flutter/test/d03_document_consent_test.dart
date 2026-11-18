@@ -104,22 +104,42 @@ void main() {
     });
   });
 
-  group('D-03: AI consent added to API', () {
-    test('rewriteDocument sends ai_consent_granted in JSON', () async {
+  group('D-03: Deterministic document check consent & AI disabled', () {
+    test('reviewDocument sends consent=true and use_ai=false to /document-check', () async {
+      String? capturedBody;
+      String? capturedPath;
       final api = ExchangeApi(
         client: MockClient((req) async {
-          final body = jsonDecode(req.body) as Map<String, dynamic>;
-          expect(body['ai_consent_granted'], isTrue);
+          capturedPath = req.url.path;
+          capturedBody = req.body;
           return http.Response(
-            jsonEncode({'rewritten_text': 'polished', 'changes': []}), 200,
+            jsonEncode({
+              'file_name': 'study_plan.pdf',
+              'document_type': 'study_plan',
+              'page_count': 1,
+              'word_count': 300,
+              'char_count': 600,
+              'summary': 'ok',
+              'checks_passed': [],
+              'issues': [],
+              'suggestions': [],
+            }),
+            200,
           );
         }),
         baseUrl: 'https://test.example/',
       );
-      await api.rewriteDocument(
-        text: 'original', action: 'polish',
-        documentType: 'study_plan', aiConsentGranted: true,
+      await api.reviewDocument(
+        fileName: 'study_plan.pdf',
+        bytes: Uint8List.fromList([0x25, 0x50, 0x44, 0x46]),
+        documentType: 'study_plan',
+        consent: true,
       );
+      expect(capturedPath, '/document-check');
+      expect(capturedBody, contains('name="consent"'));
+      expect(capturedBody, contains('true'));
+      expect(capturedBody, contains('name="use_ai"'));
+      expect(capturedBody, contains('false'));
     });
   });
 }

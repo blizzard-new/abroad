@@ -463,10 +463,65 @@ def playwright_runtime() -> Playwright:
         runtime.stop()
 
 
+for _proxy_var in ("NO_PROXY", "no_proxy"):
+    _existing_no_proxy = os.environ.get(_proxy_var, "")
+    _entries = [item.strip() for item in _existing_no_proxy.split(",") if item.strip()]
+    for _host in ("127.0.0.1", "localhost"):
+        if _host not in _entries:
+            _entries.append(_host)
+    os.environ[_proxy_var] = ",".join(_entries)
+
+
+def _configure_loopback_online_state(context):
+    state = {"offline": False}
+    context.add_init_script(
+        """(() => {
+          if (typeof window.__e2eLoopbackOffline === "undefined") {
+            window.__e2eLoopbackOffline = false;
+          }
+          if (navigator.onLine === false) {
+            Object.defineProperty(Navigator.prototype, "onLine", {
+              configurable: true,
+              get() { return !window.__e2eLoopbackOffline; },
+            });
+          }
+        })();"""
+    )
+    orig_set_offline = context.set_offline
+
+    def _set_offline(offline: bool) -> None:
+        prev = state["offline"]
+        state["offline"] = bool(offline)
+        context.add_init_script(f"window.__e2eLoopbackOffline = {'true' if offline else 'false'};")
+        orig_set_offline(offline)
+        for pg in list(context.pages):
+            try:
+                pg.evaluate(
+                    """([isOffline, changed]) => {
+                      window.__e2eLoopbackOffline = isOffline;
+                      if (changed) {
+                        window.dispatchEvent(new Event(isOffline ? "offline" : "online"));
+                      }
+                    }""",
+                    [bool(offline), prev != bool(offline)],
+                )
+            except Exception:
+                pass
+
+    context.set_offline = _set_offline
+    return context
+
+
 @pytest.fixture(scope="session")
 def browser(playwright_runtime: Playwright) -> Browser:
     executable = os.environ.get("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH")
     instance = playwright_runtime.chromium.launch(headless=True, **({"executable_path": executable} if executable else {}))
+    orig_new_context = instance.new_context
+
+    def _new_context(*args, **kwargs):
+        return _configure_loopback_online_state(orig_new_context(*args, **kwargs))
+
+    instance.new_context = _new_context
     try:
         yield instance
     finally:

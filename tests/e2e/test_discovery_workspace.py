@@ -81,6 +81,8 @@ def test_cloud_selection_roundtrip_home_isolation_and_logout(page, browser, live
     login_through_web(page, live_server, email)
     expect(page.locator("#account-workspace-sync-label")).to_have_text("已同步", timeout=15000)
     page.evaluate("location.hash = '#partners'")
+    if not page.locator("#partner-table").is_visible():
+        page.locator('[data-partner-view="list"]').click()
     page.locator(f'#partner-table .favorite-toggle[data-school-name="{LINCOLN}"]').click()
     page.evaluate("location.hash = '#favorites'")
     page.locator(f'[data-interest-school="{LINCOLN}"][data-interest="4"]').click()

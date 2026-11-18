@@ -12,149 +12,85 @@ import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 
 void main() {
-  test('advisor and document AI models parse grounded API responses', () {
-    final plan = AdvisorPlan.fromJson({
-      'school_name': '長庚大學',
-      'mode': 'ai_enhanced',
-      'summary': '先補齊語言成績。',
-      'qualification': ['學業平均已填寫'],
-      'recommendations': [
-        {
-          'school_name': 'Lincoln University',
-          'country': '紐西蘭',
-          'match_score': 76,
-          'fit_label': '條件接近',
-          'reasons': ['學制符合'],
-          'gaps': ['待確認語言門檻'],
-          'source_urls': ['https://example.test/lincoln'],
-        },
-      ],
-      'tasks': [
-        {
-          'id': 'task-1',
-          'title': '準備語言成績',
-          'detail': '確認有效期限',
-          'category': 'language',
-          'priority': 'high',
-        },
-      ],
-      'answer': {
-        'question': '需要哪些文件？',
-        'answer': '目前來源只確認申請表。',
-        'key_points': ['以當期公告為準'],
-        'sources': [
-          {
-            'title': '交換公告',
-            'source_url': 'https://example.test/source',
-            'last_checked': '2026-07-19T00:00:00Z',
-          },
-        ],
-        'evidence_status': 'limited',
-      },
-      'disclaimer': '符合度不是錄取機率。',
-    });
+  test('deterministic document check model parses rule-based counts and issues', () {
     final review = DocumentCheckResult.fromJson({
       'file_name': 'plan.pdf',
       'document_type': 'study_plan',
-      'summary': '缺少簽名。',
-      'completeness_score': 72,
+      'page_count': 2,
+      'word_count': 680,
+      'character_count': 1420,
+      'summary': '字數與頁數符合建議範圍，請於列印後親筆簽名。',
+      'checks_passed': ['文字可正常擷取', '頁數在 2 頁以內'],
       'issues': [
         {
           'severity': 'warning',
           'code': 'signature',
           'title': '簽名待確認',
-          'detail': '列印後簽名',
+          'detail': '列印後請於申請人欄位簽名',
         },
       ],
+      'extracted_preview': '交換學生讀書計畫摘要',
     });
 
-    expect(plan.recommendations.single.matchScore, 76);
-    expect(plan.answer?.sources.single.title, '交換公告');
-    expect(plan.tasks.single.priority, 'high');
-    expect(review.completenessScore, 72);
+    expect(review.fileName, 'plan.pdf');
+    expect(review.pageCount, 2);
+    expect(review.wordCount, 680);
+    expect(review.characterCount, 1420);
+    expect(review.checksPassed, contains('文字可正常擷取'));
     expect(review.issues.single.title, '簽名待確認');
+    expect(review.extractedPreview, '交換學生讀書計畫摘要');
   });
 
   test(
-    'API sends advisor, review, and rewrite requests to AI endpoints',
+    'reviewDocument posts deterministic /document-check with consent=true, use_ai=false and bearer token',
     () async {
       final requests = <http.BaseRequest>[];
+      String? bodyText;
       final client = MockClient((request) async {
         requests.add(request);
-        final path = request.url.path;
-        if (path.endsWith('/advisor/plan')) {
-          return _jsonResponse({
-            'school_name': '長庚大學',
-            'mode': 'source_grounded',
-            'summary': '完成條件整理。',
-            'qualification': [],
-            'recommendations': [],
-            'tasks': [],
-            'disclaimer': '符合度不是錄取機率。',
-          });
-        }
-        if (path.endsWith('/ai/review-document')) {
+        bodyText = request.body;
+        if (request.url.path.endsWith('/document-check')) {
           return _jsonResponse({
             'file_name': 'plan.txt',
             'document_type': 'study_plan',
-            'summary': '基本檢查完成。',
-            'completeness_score': 90,
+            'page_count': 1,
+            'word_count': 120,
+            'character_count': 360,
+            'summary': '格式與字數檢查完成。',
             'checks_passed': ['文字可讀取'],
             'issues': [],
             'suggestions': [],
-          });
-        }
-        if (path.endsWith('/ai/rewrite-document')) {
-          return _jsonResponse({
-            'action': 'formalize',
-            'draft': '我期望透過交換學習拓展專業視野。',
-            'changes': ['調整正式語氣'],
-            'warnings': [],
-            'ai_enhanced': true,
-            'disclaimer': '送出前請自行確認。',
           });
         }
         return http.Response('not found', 404);
       });
       final api = ExchangeApi(client: client, baseUrl: 'https://example.test/');
 
-      final plan = await api.advisorPlan(
-        const AdvisorProfile(
-          academicScore: 82,
-          preferredCountry: '日本',
-          question: '我該先做什麼？',
-        ),
-      );
       final review = await api.reviewDocument(
         fileName: 'plan.txt',
         bytes: Uint8List.fromList(utf8.encode('交換讀書計畫內容')),
-      );
-      final rewrite = await api.rewriteDocument(
-        text: '我希望申請交換，並在不同文化環境中學習專業課程及提升溝通能力。',
-        action: 'formalize',
         documentType: 'study_plan',
+        accessToken: 'student-jwt-token',
       );
 
-      expect(plan.summary, '完成條件整理。');
-      expect(review.completenessScore, 90);
-      expect(rewrite.aiEnhanced, isTrue);
+      expect(review.summary, '格式與字數檢查完成。');
+      expect(review.wordCount, 120);
+      expect(requests, hasLength(1));
+      expect(requests.single.url.path, '/document-check');
       expect(
-        requests.map((request) => request.url.path),
-        contains('/advisor/plan'),
+        requests.single.headers['authorization'] ??
+            requests.single.headers['Authorization'],
+        'Bearer student-jwt-token',
       );
-      expect(
-        requests.map((request) => request.url.path),
-        contains('/ai/review-document'),
-      );
-      expect(
-        requests.map((request) => request.url.path),
-        contains('/ai/rewrite-document'),
-      );
+      expect(bodyText, contains('name="consent"'));
+      expect(bodyText, contains('true'));
+      expect(bodyText, contains('name="use_ai"'));
+      expect(bodyText, contains('false'));
     },
   );
 
   testWidgets(
-    'AI tools are independent pages and support system text scaling',
+    'DocumentCheckScreen presents honest deterministic copy and supports text scaling',
     (tester) async {
       tester.view.physicalSize = const Size(390, 844);
       tester.view.devicePixelRatio = 1;
@@ -174,36 +110,29 @@ void main() {
           partnerUniversities: [],
           sources: [],
         );
+      addTearDown(store.dispose);
 
-      Future<void> pump(Widget page) async {
-        await tester.pumpWidget(
-          ExchangeStoreScope(
-            store: store,
-            child: MaterialApp(
-              theme: buildExchangeTheme(),
-              builder: (context, child) => MediaQuery(
-                data: MediaQuery.of(
-                  context,
-                ).copyWith(textScaler: const TextScaler.linear(1.3)),
-                child: child!,
-              ),
-              home: page,
+      await tester.pumpWidget(
+        ExchangeStoreScope(
+          store: store,
+          child: MaterialApp(
+            theme: buildExchangeTheme(),
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(1.4)),
+              child: child!,
             ),
+            home: const DocumentCheckScreen(),
           ),
-        );
-        await tester.pumpAndSettle();
-      }
+        ),
+      );
+      await tester.pumpAndSettle();
 
-      await pump(const AdvisorScreen());
-      expect(find.text('產生申請方案'), findsOneWidget);
-      expect(tester.takeException(), isNull);
-
-      await pump(const DocumentCheckScreen());
+      expect(find.text('格式與字數檢查'), findsWidgets);
       expect(find.text('開始檢查'), findsOneWidget);
-      expect(tester.takeException(), isNull);
-
-      await pump(const WritingAssistantScreen());
-      expect(find.text('產生建議稿'), findsOneWidget);
+      expect(find.textContaining('AI 深度檢查'), findsNothing);
+      expect(find.textContaining('AI 建議稿'), findsNothing);
       expect(tester.takeException(), isNull);
     },
   );
