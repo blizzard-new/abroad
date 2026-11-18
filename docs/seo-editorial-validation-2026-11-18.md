@@ -50,4 +50,6 @@ Welcome Centre 頁面標示 2026-01-06，預約指引與預約確認用途按柏
 - [完整 gate](seo-editorial-checks-2026-11-18.json)、[命令與前後輸出](seo-editorial-tests-2026-11-18.txt)、[套件逐檔](seo-editorial-package-2026-11-18.json)
 - [瀏覽器／15 圖雜湊](seo-editorial-browser-2026-11-18.json)、[桌面](seo-previews-2026-11-18/desktop-1440.jpg)、[手機](seo-previews-2026-11-18/mobile-320.jpg)、[裁切](seo-previews-2026-11-18/photography-crops.jpg)
 
-PR、遠端 CI 及任務附件建立後回填；未發布。
+[PR #398](https://github.com/blizzard-new/abroad/pull/398) 已建立，OPEN、非 draft、MERGEABLE。完整內容 head `22975fd3a70c68e53794c9df043dad3f1b41fed9`；建立後只回填這份驗收、PR audit 與 backlog，文章／圖片／CSS 雜湊不變。此內容 head 的兩個 TLS trust regression image 檢查仍進行中，Supabase Preview skipped，遠端 CI 未宣稱全部通過，以 PR 最新狀態為準。
+
+任務附加 `codex_app.attach_artifact` 等待 40 秒無回覆，`list_artifacts` 等待 10 秒也無回覆，因此附加狀態未確認；實際 PR URL、head 與待審狀態已另行驗證。不要求使用者重複批准，也不宣稱附件成功。未合併、部署或要求索引。
