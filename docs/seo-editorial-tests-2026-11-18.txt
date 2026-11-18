@@ -1,0 +1,105 @@
+2026-11-18 Asia/Taipei, isolated codex/seo-daily-20261118
+Base cf3d5e6b8423c9cae171603c37525a7b8d9110fb
+<cache>=/workspace/scratch/uniway-seo-20261118; <checkout>=/workspace/abroad-seo-daily-20261118; python=<cache>/venv/bin/python
+UV_PROJECT_ENVIRONMENT=<cache>/venv uv sync --frozen --extra dev
+EXCHANGE_INFO_DATA_DIR=<cache>/gate-import-data PYTHONPATH=src python scripts/check_editorial.py --base-ref origin/main
+EXCHANGE_INFO_DATA_DIR=<cache>/unit-import-data PYTHONPATH=src python -m pytest -q tests/test_seo_articles.py tests/test_seo.py tests/test_seo_content.py tests/test_seo_quality.py tests/test_seo_reporting.py tests/test_editorial_release_gate.py
+EXCHANGE_INFO_DATA_DIR=<cache>/e2e-import-data PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium PYTHONPATH=src python -m pytest -q tests/e2e/test_seo_articles.py tests/e2e/test_seo_pages.py tests/e2e/test_seo_analytics.py
+EXCHANGE_INFO_DATA_DIR=<cache>/preview-import-data PYTHONPATH=src python <cache>/qa.py preview --repo <checkout> --date 2026-11-18 --slugs germany-residence-registration toeic-part-five-pronouns
+uv build --wheel --out-dir <cache>/wheel
+python <cache>/qa.py package --repo <checkout> --date 2026-11-18 --slugs germany-residence-registration toeic-part-five-pronouns
+Initialunit/e2epassed;extra320previewfailed;2diagnostics;scopedCSSfix;fullgate/unit/e2e/preview/wheelrepeatedandpassed. Not independentextra coverage.
+
+DEPENDENCIES:
+
++ typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+ + urllib3==2.8.0
+ + uvicorn==0.52.4
+ + uvloop==0.22.1
+ + watchfiles==1.2.0
+ + websockets==17.0.1
+
+INITIAL SEO:
+
+CONFTEST LOADED!
+........................................................................ [ 38%]
+........................................................................ [ 76%]
+............................................                             [100%]
+188 passed in 85.70s (0:01:25)
+
+INITIAL E2E:
+
+CONFTEST LOADED!
+.......................................................................  [100%]
+71 passed in 213.20s (0:03:33)
+
+INITIAL NOJS FAILURE:
+
+Traceback (most recent call last):
+  File "/workspace/scratch/uniway-seo-20261118/qa.py", line 63, in <module>
+    assert page.evaluate('document.documentElement.scrollWidth<=window.innerWidth')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+DIAGNOSTIC:
+
+OVERFLOW_DIAG germany-residence-registration 320 {'root': 327, 'inner': 320, 'elements': [{'tag': 'MAIN', 'cls': '', 'txt': '首頁申請指南德國交換生住址登記怎麼辦？柏林 Anmeldung、房東確認書與文件清單\n交換指南 / 目的地生活德國交換生住址登記怎麼辦？柏林 Anmeldung、房東確認書與文件清單\n以柏林官方流程釐清德國交換生 Anmeldung：14 ', 'client': 320, 'scroll': 327, 'overflow': 'visible', 'wrap': 'normal', 'l': 0, 'r': 320}, {'tag': 'ARTICLE', 'cls': 'editorial', 'txt': '\n交換指南 / 目的地生活德國交換生住址登記怎麼辦？柏林 Anmeldung、房東確認書與文件清單\n以柏林官方流程釐清德國交換生 Anmeldung：14 日原則與短期例外、Wohnungsgeberbestätigung、護照及表格、預約', 'client': 288, 'scroll': 311, 'overflow': 'visible', 'wrap': 'normal', 'l': 16, 'r': 304}, {'tag': 'P', 'cls': 'lead', 'txt': '以柏林官方流程釐清德國交換生 Anmeldung：14 日原則與短期例外、Wohnungsgeberbestätigung、護照及表格、預約限制與搬家後續，附可填寫詢問範本。', 'client': 246, 'scroll': 259, 'overflow': 'visible', 'wrap': 'normal', 'l': 37, 'r': 283}, {'tag': 'DIV', 'cls': 'article-layout', 'txt': '這篇會帶你了解先判斷是否要登記：14 日原則與短期例外一起看房東確認書怎麼準備？租約不能直接代替柏林怎麼預約？首次從臺灣移入先看臨櫃資格約不到或確認書缺件怎麼辦？把問題與證據交對窗口假設住五個月：怎麼安排，搬走後又要看什麼？常見問題官方來源', 'client': 288, 'scroll': 311, 'overflow': 'visible', 'wrap': 'normal', 'l': 16, 'r': 304}, {'tag': 'DIV', 'cls': 'article-body', 'txt': '先讀重點先核對實際入住日、預計停留及是否已在德國登記；柏林官方列 14 日原則，也列明最長三個月等例外。租約不能取代 Wohnungsgeberbestätigung；確認實際提供住宿者、入住日、地址及入住者姓名，缺件時及早聯絡主管機關。從', 'client': 286, 'scroll': 310, 'overflow': 'visible', 'wrap': 'normal', 'l': 16, 'r': 304}, {'tag': 'ASIDE', 'cls': 'article-takeaways', 'txt': '先讀重點先核對實際入住日、預計停留及是否已在德國登記；柏林官方列 14 日原則，也列明最長三個月等例外。租約不能取代 Wohnungsgeberbestätigung；確認實際提供住宿者、入住日、地址及入住者姓名，缺件時及早聯絡主管機關。從', 'client': 250, 'scroll': 290, 'overflow': 'visible', 'wrap': 'normal', 'l': 33, 'r': 287}, {'tag': 'UL', 'cls': '', 'txt': '先核對實際入住日、預計停留及是否已在德國登記；柏林官方列 14 日原則，也列明最長三個月等例外。租約不能取代 Wohnungsgeberbestätigung；確認實際提供住宿者、入住日、地址及入住者姓名，缺件時及早聯絡主管機關。從臺灣首次', 'client': 212, 'scroll': 271, 'overflow': 'visible', 'wrap': 'normal', 'l': 56.1875, 'r': 267.8125}, {'tag': 'LI', 'cls': '', 'txt': '租約不能取代 Wohnungsgeberbestätigung；確認實際提供住宿者、入住日、地址及入住者姓名，缺件時及早聯絡主管機關。', 'client': 192, 'scroll': 252, 'overflow': 'visible', 'wrap': 'normal', 'l': 75.375, 'r': 267.8125}]}
+Traceback (most recent call last):
+  File "/workspace/scratch/uniway-seo-20261118/qa-diagnostic-two.py", line 63, in <module>
+    print('OVERFLOW_DIAG',slug,width,page.evaluate('''() => ({root:document.documentElement.scrollWidth,inner:window.innerWidth,elements:[...document.querySelectorAll('body *')].filter(e=>!e.closest('.article-table')).map(e=>({tag:e.tagName,cls:e.className,txt:e.textContent.slice(0,120),client:e.clientWidth,scroll:e.scrollWidth,overflow:getComputedStyle(e).overflow,wrap:getComputedStyle(e).overflowWrap,l:e.getBoundingClientRect().left,r:e.getBoundingClientRect().right})).filter(e=>e.r>window.innerWidth+1||e.l< -1||(e.scroll>e.client+2&&e.overflow==='visible')).slice(-35)})'''),flush=True);assert page.evaluate('document.documentElement.scrollWidth<=window.innerWidth')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+FINAL GATE:
+
+{
+  "ok": true,
+  "article_count": 61,
+  "errors": [],
+  "scope": "Editorial structure/assets/revision dates; not proof of factual accuracy, indexing or rankings"
+}
+
+FINAL SEO:
+
+CONFTEST LOADED!
+........................................................................ [ 38%]
+........................................................................ [ 76%]
+............................................                             [100%]
+188 passed in 89.12s (0:01:29)
+
+FINAL E2E:
+
+CONFTEST LOADED!
+.......................................................................  [100%]
+71 passed in 220.84s (0:03:40)
+
+FINAL BROWSER:
+
+{
+  "passed": 6,
+  "capture_note": "Only long element captures temporarily hide fixed decorative6px stripe and fixed reading header via screenshot style to avoid stitching over text. Full-page previews and application/assertions unmodified.",
+  "visual_review": "All 15 final images actually inspected: desktop1440 and mobile320 contact sheets; 2 inline photographs; 2 original five-step HTML diagrams; 8 content-section captures; photography 3:2/2:1 crop sheet. German exceptions/provider/online requirements and inquiry readable; pronoun role table, all six answer explanations and ambiguity/transfer checklist readable. Building facade/windows/balconies and pencil/writinghand/notebook retained. Tables intentionally crop within horizontally scrollable containers; actual scrolling checked separately; page does not overflow after scoped wrap fix. Full page/assertions unmodified; long element screenshots only hide fixed decorative stripe/header to avoid stitching.",
+  "run_history": "Initial188SEO/71E2Epassed. Extra320pxnoJS preview failed root327>320: long officialWohnungsgeberbestaetigung in lead/takeaways lacked wrapping. Two diagnostic captures located cause. ScopedCSS overflow-wrap:anywhere added to .article-heading .lead and .article-takeaways, no content truncation/hiddenoverflow. After fix full188SEO/71E2E/6noJS and rebuiltwheel passed. JSON/photos unchanged across runs; finalCSS/product hashes stable."
+}
+
+FINAL PACKAGE:
+
+Successfully built /workspace/scratch/uniway-seo-20261118/wheel/taiwan_exchange_info-0.1.0-py3-none-any.whl
+
+{
+  "checked": "2026-11-18",
+  "build_command": "uv build --wheel",
+  "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+  "wheel_bytes": 2529142221,
+  "article_json_count": 61,
+  "image_count": 61,
+  "checked_files": 663,
+  "runtime_import": {
+    "module": "/workspace/scratch/uniway-seo-20261118/wheel-extracted/exchange_info/seo_articles.py",
+    "loaded_articles": 61,
+    "new_slugs_present": true
+  },
+  "outside_checkout": true,
+  "passed": true
+}

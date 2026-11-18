@@ -1,5 +1,20 @@
 # Editorial intentions and next topics
 
+## 2026-11-18 每日批次：柏林住址登記／多益代名詞兩篇（驗收完成，待開 PR）
+
+Asia/Taipei 11/18，開始為 UTC 11/17 23:58:01。隔離分支 `codex/seo-daily-20261118`，base main `cf3d5e6b8423c9cae171603c37525a7b8d9110fb`。讀最新 workflow／backlog、59 篇庫存與相關正文；唯一 open #397 完整說明與 53 檔已查，無 editorial／閱讀 renderer 重疊。開始前無同日分支或 PR；提交前 main／open heads 未變，最近 100 全狀態 PR 無本日批次。
+
+昨日 #372 已合併，`exchange-course-syllabus-assessment` 與 `ai-english-group-discussion` 已在 main 並排除；merge 祖先驗證。#78／#92 已合併，無基礎相依；歷史待審描述以本次查核優先。10/30 study-plan `97de3fda` 未重做，沒有三工具實測不製造比較。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 6：德國交換生住址登記怎麼辦？柏林 Anmeldung、房東確認書與文件清單 | `germany-residence-registration` | 全文／圖片／驗收完成，待本日唯一 PR；後續排除 |
+| 20：多益 Part 5 代名詞怎麼選？主受格、所有格與反身代名詞原創題解析 | `toeic-part-five-pronouns` | 同批全文／圖片／驗收完成，待同一 PR；後續排除 |
+
+編輯判斷，無 Search Console、搜尋量或排名。柏林篇依 BMG 及柏林一手資料處理短住例外、提供者確認、線上資格及臨櫃文件，與抵達總覽／德國費用／日本住址規則分工；不以三個月當所有人寬限期，不混同預約、正式證明與居留。多益篇處理子句角色、指涉、歸屬與反身，與既有詞性／時態分工；六題 24 選項、歧義示例及換句皆原創，不估分。11 個引用官方／原編教材頁實讀；三個探索 404 排除，版本與限制揭露。
+
+原 59 篇 JSON／URL／刊載日／lastmod 不變，共 61 篇；兩張有授權的新真實攝影與 HTML 圖解完成。額外 320px 初驗發現長德文字在摘要／重點不換行，已補兩處 CSS；修正後 gate61、188 SEO、71 E2E、六組無 JavaScript、15 張目視及 wheel 663 檔核對通過。保留前後跑次，不宣稱初驗全過；詳見[本批驗收](seo-editorial-validation-2026-11-18.md)。本批未合併或部署。
+
 ## 2026-11-17 每日批次：課綱評量／AI 小組討論兩篇（PR #372 待審）
 
 依實際時鐘採 Asia/Taipei 11/17（開始為 UTC 11/16 23:55），非 11/16 重試。隔離分支 `codex/seo-daily-20261117`，base main `ae68380d7ac1c503100696e3aaefd8960ed69239`。讀取最新 workflow／backlog、57 篇庫存與相關全文；僅 open #371 首頁調整，說明及 10 檔案完整清單已查，無 editorial 重疊。開始前無同日分支／PR，提交前 main／#371 head 未變、最近 100 個全狀態 PR 無同日批次。

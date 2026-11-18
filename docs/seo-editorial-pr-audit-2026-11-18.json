@@ -1,0 +1,126 @@
+{
+  "checked": "2026-11-18",
+  "timezone": "Asia/Taipei",
+  "initial_clock": {
+    "utc": "2026-11-17 23:58:01 UTC",
+    "taipei": "2026-11-18 07:58:01+08:00",
+    "interpretation": "NewTaipeidayNov18;372previousNov17merged,notretry."
+  },
+  "base_commit": "cf3d5e6b8423c9cae171603c37525a7b8d9110fb",
+  "branch": "codex/seo-daily-20261118",
+  "same_day_before_work": {
+    "all_state_prs": [],
+    "matching_local_remote_branches": []
+  },
+  "open_pull_requests": [
+    {
+      "number": 397,
+      "title": "feat: 縮減選校與申請操作時間、優化手機版 UI/UX 並完成 Flutter App 去 AI 化與 Metro 重設計 (v2.2.0)",
+      "body": "## 摘要\n\n本 PR 針對學生從**查資料、比對資格、選校比較，到進入申請計畫與準備文件**的完整流程進行端到端時間縮減重構，同時依據 `ui-ux-pro-max` 與 `impeccable` 規範完成**手機版網頁（Mobile Web）首屏壓縮與體驗優化**，以及 **Flutter 手機 App（`mobile_flutter` v2.2.0+24）徹底去 AI 化與 UniWay Metro 捷運指標設計系統統一**，並補上 Android 預覽 APK 的 GitHub Actions CI 工作流程。\n\n---\n\n## 一、縮減使用者超過一半操作時間的核心流程改進（Web + Mobile App）\n\n1. **打通全站與 App 個人選校條件記憶，消除 3～4 次重複填寫（`TS-01`）**\n   - **Web**：修復 `application-path.js` 建立申請計畫時讀取不存在之 `state.selectionConditions?.profile` 與清空 `#create-semesters` 的問題，改為自動帶入 `state.eligibilityProfile`、`#discovery-criteria-form` 與學院／系所篩選條件（含目標出發學期預選）；新增 `#discovery-criteria`「套用已儲存條件」一鍵同步與 `saveGate()` 雙向回寫；文件共用基本資料補齊百分制成績（`percentage_average`）自動帶入。\n   - **Mobile App**：解除「未登入訪客無法填寫條件」與「填完一次後首頁入口消失」的限制，於 `SchoolsScreen` 頂部常駐**「我的選校條件」快篩列**（支援本機持久化與登入同步），讓搜尋結果即時標示個人條件初判。\n2. **將「候選比較表」升級為決策矩陣，打通收藏清單一鍵轉申請計畫（`TS-02`）**\n   - **Web**：升級 `#discovery-comparison` 為決策比較表，補齊「本期開放／合作備查」標籤、個人條件初步比對（`已知條件初步相符`／`資格待確認`／`目前條件不符`）、申請期限、官方簡章連結，以及每校獨立的 **「開始準備申請」** 與「移出比較」按鈕；在 `#my-application` 空狀態新增**「從已收藏的候選學校一鍵建立計畫」**清單。\n   - **Mobile App**：補齊 `PartnerUniversity` 對 `availability_status`、`quota_status`、`application_window_status`、`language_conditions` 的解析（嚴格區分 `本期開放` 與 `合作備查`）；新增 `僅看本期開放` 快速篩選、底部常駐 **2～4 校並排比較列（Compare Tray）**，以及學校卡片／詳情頁／比較表 **一鍵「設為申請目標校」直達申請文件工作台**（取代原本無搜尋功能的長下拉選單）。\n3. **展開學校詳情關鍵決策資訊，告別多層摺疊翻找（`TS-03`）**\n   - **Web**：將 `#school-detail-view` 頂部重複佔版面的雙卡通用說明濃縮為單行提示，預設展開 `#quick-decision-fit`（資格初步比對）與 `方案資料`（名額、學院、期限、費用），並在手機版底部常駐列補回截止日摘要與「加入比較」按鈕。\n   - **Mobile App**：將原本僅顯示巨幅照片的低資訊密度卡片，重構為**高密度捷運指標學校卡**，一眼看清開放狀態、名額、申請期限、語言門檻與個人條件相符度；全站大學切換器同步後端完整 **71 所台灣大專院校**並支援即時關鍵字／英文縮寫搜尋。\n4. **文件工作台返回橋接、智慧預算帶入與官方截止日串接（`TS-04`）**\n   - **Web**：於申請關卡內產生 PDF 後提供一鍵「回到申請關卡並確認完成」按鈕；`#budget` 依目標學期自動帶入月數（5／10 個月）並提供校內官方獎學金參考上限快填晶片；`#my-application` 時程分頁新增 `.ics` 行事曆匯出連結。\n   - **Mobile App**：修復首頁 `JourneyScreen` 僅讀取手動個人事項的問題，改為優先串接校內官方申請期程與收藏／目標校截止日（等寬數字倒數）；桌面小工具同步真實表單模板完成進度。\n\n---\n\n## 二、手機版 Web 優化（`ui-ux-pro-max` + `impeccable`）\n\n- 修正 `index.html` 樣式載入順序，確保 `/static/responsive.css` 為最後載入的樣式表，消除 `metro.css` 覆蓋手機版單行搜尋列的衝突。\n- 壓縮 `390×844` 手機版 `#partners` 首屏上方堆疊高度：第一張合作校卡片頂部座標由 **`y = 1032px`（首屏 0 張卡片）提升至 `y = 493px`（縮減 52.3% 上方高度，首屏直接呈現合作校卡片）**。\n- 統一 `>= 44px` 觸控目標與 `>= 16px` 表單字級（防止 iOS 自動縮放），移除 Metro 頁面的立體玩具陰影（`0 4px 0`）、毛玻璃殘留與多餘 eyebrow 標籤。\n\n---\n\n## 三、Flutter 手機 App 去 AI 化與 UniWay Metro 重設計（`v2.2.0+24`）\n\n- **徹底去 AI 化**：\n  - 移除線上已停用／會回傳 HTTP 422/503 的 `WritingAssistantScreen`（「文件改寫」／`/ai/rewrite-document`）與重複且含虛構百分比的 `AdvisorScreen`。\n  - 將 `DocumentCheckScreen` 重構為純規則判讀之**「格式與字數檢查」**，改接正式運作的 `POST /document-check`（`use_ai=false`、移除「AI 深度檢查」開關與虛構圓形完整度分數環）。\n  - 全面移除 `auto_awesome`／`auto_fix_high` 魔法棒圖示、空泛行銷標語與未使用的舊版模糊導覽殼層（`CguBoardShell`、`HomeScreen`、`GlobalCommunityScreen`）。\n- **對齊 UniWay Metro 捷運指標設計系統**：\n  - 統一 `#FFFFFF` 紙面底色、`#F3F4F6` 穿堂層、`#1A1D23` 主文字、`#165CB4` 行動藍、頂部 `3px` 五色捷運線條（`MetroLineBar`）、`1px #D6DAE1` 扁平邊框面板、白底強邊框輸入框、等寬數字（`tabularFigures`），並以**底部固定式五分頁導覽列**取代原本遮擋內容的懸浮膠囊列。\n- **新增 `.github/workflows/flutter-android.yml`**：每次變更 `mobile_flutter/**` 時自動執行 `flutter analyze`、`flutter test` 並建置上傳 Android 預覽 APK 產物。\n\n---\n\n## 驗證紀錄\n\n- **Web 單元／合約／版型與 Playwright E2E 測試**：`67 / 67 passed`（含新增 `tests/e2e/test_time_saving_bridges.py`、50 組手機／平板視窗響應式零橫向溢位檢查、靜態資源版本碼與 OpenAPI 契約檢查）。\n- **Impeccable 偵測器**：`metro.css` 0 項問題，`high/error: 0`。\n- **Flutter 靜態分析與測試**：`flutter analyze --no-pub` **0 issues**；`flutter test --no-pub` **126 / 126 passed**（含 WCAG 對比度與 `320px @ 2x` 字體縮放無溢位測試）。",
+      "head": "59ef134ca560a68551729c3a89cc21c3977b698a",
+      "base": "main",
+      "files": [
+        ".github/workflows/flutter-android.yml",
+        "design-system/uniway-daylight/MASTER.md",
+        "mobile_flutter/README.md",
+        "mobile_flutter/lib/core/daylight_surface.dart",
+        "mobile_flutter/lib/core/exchange_theme.dart",
+        "mobile_flutter/lib/core/exchange_widgets.dart",
+        "mobile_flutter/lib/core/remote_push.dart",
+        "mobile_flutter/lib/core/student_plan.dart",
+        "mobile_flutter/lib/core/student_ui.dart",
+        "mobile_flutter/lib/core/uniway_brand.dart",
+        "mobile_flutter/lib/data/exchange_api.dart",
+        "mobile_flutter/lib/data/models.dart",
+        "mobile_flutter/lib/screens/account_screen.dart",
+        "mobile_flutter/lib/screens/ai_tools_screens.dart",
+        "mobile_flutter/lib/screens/application_document_form_screen.dart",
+        "mobile_flutter/lib/screens/application_documents_screen.dart",
+        "mobile_flutter/lib/screens/community_screen.dart",
+        "mobile_flutter/lib/screens/deadlines_screen.dart",
+        "mobile_flutter/lib/screens/feature_screens.dart",
+        "mobile_flutter/lib/screens/forum_screen.dart",
+        "mobile_flutter/lib/screens/global_community_screen.dart",
+        "mobile_flutter/lib/screens/home_screen.dart",
+        "mobile_flutter/lib/screens/journey_screen.dart",
+        "mobile_flutter/lib/screens/root_shell.dart",
+        "mobile_flutter/lib/screens/school_detail_screen.dart",
+        "mobile_flutter/lib/screens/schools_screen.dart",
+        "mobile_flutter/lib/screens/widget_style_preview.dart",
+        "mobile_flutter/lib/state/application_draft_sync.dart",
+        "mobile_flutter/lib/state/exchange_store.dart",
+        "mobile_flutter/pubspec.yaml",
+        "mobile_flutter/test/ai_tools_test.dart",
+        "mobile_flutter/test/d03_document_consent_test.dart",
+        "mobile_flutter/test/deep_student_ui_test.dart",
+        "mobile_flutter/test/feature_page_navigation_test.dart",
+        "mobile_flutter/test/models_test.dart",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/application-path-template.js",
+        "src/exchange_info/static/application-path.js",
+        "src/exchange_info/static/discovery-ui.js",
+        "src/exchange_info/static/document-workbench.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/static/metro.css",
+        "src/exchange_info/static/partner-search-template.css",
+        "src/exchange_info/static/platform-detail.js",
+        "src/exchange_info/static/platform-explore.js",
+        "src/exchange_info/static/platform-redesign.css",
+        "src/exchange_info/static/responsive.css",
+        "tests/e2e/conftest.py",
+        "tests/e2e/test_discovery_workspace.py",
+        "tests/e2e/test_responsive_layout.py",
+        "tests/e2e/test_shared_conditions.py",
+        "tests/e2e/test_time_saving_bridges.py",
+        "tests/static_asset_versions.json"
+      ],
+      "complete_file_count": 53,
+      "editorial_overlap": []
+    }
+  ],
+  "foundation": [
+    {
+      "number": 78,
+      "merged": true
+    },
+    {
+      "number": 92,
+      "merged": true
+    }
+  ],
+  "previous_batch": {
+    "number": 372,
+    "merged": true,
+    "head": "87d1130e507eacf093a0ccec82cb81ea59706d10",
+    "merge_commit": "65a08b9cd3ee4ab77570223bf1f50134c5772a5b",
+    "slugs": [
+      "exchange-course-syllabus-assessment",
+      "ai-english-group-discussion"
+    ],
+    "present_main_excluded": true
+  },
+  "new_slugs": [
+    "germany-residence-registration",
+    "toeic-part-five-pronouns"
+  ],
+  "selection": "Editorialjudgmentdirections6/20;noSearchConsole/volume/rankings.",
+  "environment": "Taskisolatedvenv syncedfrozenlatestmainlock;sharedvenvuntouched.",
+  "precommit_recheck": {
+    "checked_utc": "2026-11-18 00:23:17 UTC",
+    "main_commit": "cf3d5e6b8423c9cae171603c37525a7b8d9110fb",
+    "main_unchanged": true,
+    "open_heads": [
+      {
+        "number": 397,
+        "head": "59ef134ca560a68551729c3a89cc21c3977b698a"
+      }
+    ],
+    "all_open_heads_unchanged": true,
+    "recent_all_state_pr_count": 100,
+    "same_day": []
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "soupsieve": "4.1.1"
+  }
+}
