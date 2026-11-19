@@ -1,5 +1,22 @@
 # Editorial intentions and next topics
 
+## 2026-11-19 每日批次：AI 英文追蹤信／托福學術短講兩篇（PR #400 待審）
+
+Asia/Taipei 11/19，開始為 UTC 11/19 00:00:56（台北 08:00:56）。隔離分支 `codex/seo-daily-20261119`，base main `af32b61d2868923ce66496246def0a4ed6027b7b`。讀最新 workflow／backlog、61 篇庫存與相關正文；唯一 open #399 的完整說明與 202 檔已查，另讀 SEO 共用檔 patch：申請資料／連結／快取與閱讀樣式版本網址，無新增文章，未複製其修改。開始前無同日分支／PR；提交前 main／open heads 未變，最近 100 全狀態 PR 無本日 SEO 批次。
+
+昨日 #398 已合併，柏林住址登記與多益代名詞已在 main 並排除，merge 祖先核對。#78／#92 已合併，無基礎相依；歷史待審文字以本次查核優先。10/30 study-plan `97de3fda` 未重做，無三品牌實測不造比較。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 17：英文催信怎麼寫才有禮貌？用 AI 練追蹤信、明確請求與回覆 Prompt | `ai-english-follow-up-email` | 全文／圖片／驗收完成，[PR #400](https://github.com/blizzard-new/abroad/pull/400) 待審；後續排除 |
+| 19：托福 Listen to an Academic Talk 怎麼練？主旨、例子與推論的原創短講解析 | `toefl-listen-to-academic-talk` | 同批全文／圖片／驗收完成，同一 PR #400 待審；後續排除 |
+
+編輯判斷，無 Search Console、搜尋量或排名。追蹤信處理前信／單一請求與未定回覆，有三輪可填 Prompt、前後修改、完整信、回覆與換題，和作文文法／托福回信分工。公告候選因與多益獨白方法重疊未產出；改用學術短講的主張／機制／例子／尺度與推論邊界，兩段八題／32 選項全原創，科學機制另讀 EPA／USGS，未冒稱實驗、錄音或官方題目。11 個引用一手來源實讀，ETS 導語／具名任務數差異與 PDF 定稿註記、USGS 2018 原年及 OpenAI 相對更新均揭露。
+
+原 61 篇 JSON／URL／刊載日／lastmod 不變，共 63 篇。兩張新授權真實攝影與 HTML 圖解完成。gate63、190 SEO、73 E2E、六組無 JavaScript、15 張目視及 wheel 667 檔核對皆一次通過，詳見[本批驗收](seo-editorial-validation-2026-11-19.md)。本批未合併或部署。
+
+PR #400 已建立（OPEN、非 draft），內容 head `4fba144e41af4c41523ef778630abe7246b66564`，GitHub 顯示 MERGEABLE。此 head 兩個 TLS trust regression image 檢查仍進行中，Supabase Preview skipped，以 PR 最新狀態為準。任務附加工具 40 秒與附件查詢 10 秒均無回覆，附件未確認；實際 PR 已另行驗證，未宣稱附加成功。未合併或部署。
+
 ## 2026-11-18 每日批次：柏林住址登記／多益代名詞兩篇（PR #398 待審）
 
 Asia/Taipei 11/18，開始為 UTC 11/17 23:58:01。隔離分支 `codex/seo-daily-20261118`，base main `cf3d5e6b8423c9cae171603c37525a7b8d9110fb`。讀最新 workflow／backlog、59 篇庫存與相關正文；唯一 open #397 完整說明與 53 檔已查，無 editorial／閱讀 renderer 重疊。開始前無同日分支或 PR；提交前 main／open heads 未變，最近 100 全狀態 PR 無本日批次。

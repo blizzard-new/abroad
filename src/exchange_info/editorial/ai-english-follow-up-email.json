@@ -1,0 +1,267 @@
+{
+  "slug": "ai-english-follow-up-email",
+  "title": "英文催信怎麼寫才有禮貌？用 AI 練追蹤信、明確請求與回覆 Prompt",
+  "description": "英文 follow-up email 先交代前信、已確認資訊與一個可回答的請求。附三輪可填 Prompt、催信前後修改、完整人工示範、未定回覆練習及寄出前檢查表。",
+  "category": "申請準備",
+  "published": "2026-11-19",
+  "modified": "2026-11-19",
+  "checked": "2026-11-19",
+  "image": "follow-up-email-photo",
+  "image_alt": "穿米色長袖上衣的人雙手放在銀色筆記型電腦的鍵盤上，電腦置於淺色桌面。",
+  "image_caption": "電腦打字素材照片，用於英文追蹤信練習；不是實際交換申請者、校方回信、AI 操作截圖或寄件紀錄。",
+  "image_credit": {
+    "photographer": "ANTONI SHKRABA production",
+    "source_url": "https://www.pexels.com/photo/a-person-typing-on-a-laptop-8374259/"
+  },
+  "summary": [
+    "追蹤信先提供前信線索、需要確認的事項與一個明確請求；不把自己安排上的急迫寫成對方已承諾的期限。",
+    "讓 AI 先整理事實與缺口，再協助語氣和段落；沒有收到答覆、收到但未核准、已核准是不同狀態。",
+    "三輪 Prompt、壞稿／修改稿與回覆練習均為原創教學，不是模型實測或真實校方來信；寄送與事實核對由本人完成。"
+  ],
+  "intro": [
+    "英文催信或 follow-up email，可以先說明你在追蹤哪一封信，再簡短補充背景，最後提出一個對方能回答的請求。例如詢問「能否確認入住前是否可寄放行李」，比要求「立刻核准我提早入住」更能對應原本的問題。用 AI 練習時，先給它已確認的事實與未知事項，請它分步整理、協助改寫，再由你對回原始信件。",
+    "本文練習交換生活中的追蹤與回應，不是托福 Write an Email 題型教學，也不只處理作文文法。2026 年 11 月 19 日實讀 British Council 電郵組織、禮節及開頭結尾教材，以及 OpenAI 官方提示與準確性說明。以下所有人物、日期、信件與預期回饋都由 UniWay 自寫，沒有聲稱某工具真實產出、校方收到信或學生取得核准。"
+  ],
+  "sections": [
+    {
+      "id": "facts-and-thread",
+      "title": "動筆前先整理前信：你要追蹤的究竟是哪件事？",
+      "paragraphs": [
+        "先找出原始寄件紀錄、正確收件對象，以及目前停在哪個狀態。已寄出但尚未答覆，不代表對方拒絕；對方說正在確認，也不是已同意。若官方已有指定表單、案件編號或聯絡方式，先依當期說明處理，再決定是否用 email 追蹤。本文不替任何學校訂回信期限。",
+        "以下以虛構學生 Lin 為例：Lin 收到住宿確認，信中有一般入住安排，但沒有說入住前能否寄放行李。Lin 在 11 月 10 日寄信詢問，尚未收到答覆，還沒有決定抵達車次。沒有提早入住核准、沒有行李保管保證，也沒有已訂交通。這個日期是練習素材，不能推論成催信應固定等幾天。",
+        "實際提供給工具時，先以「住宿單位」「本人」等代稱取代個資，只摘錄自己有權提供且與問題相關的內容。完整申請編號、證件、他人通訊與附件，不因為想請 AI 改英文就全部貼入。對方的姓名或職稱若不確定，先核對，不請工具猜。"
+      ],
+      "table": {
+        "caption": "追蹤信的事實備忘；本表是虛構案例，不是校規",
+        "headers": [
+          "欄位",
+          "Lin 的練習輸入",
+          "不能自行增加"
+        ],
+        "rows": [
+          [
+            "前信線索",
+            "11 月 10 日詢問入住前寄放行李",
+            "對方已讀或故意不回"
+          ],
+          [
+            "已確認",
+            "已有住宿確認及一般入住資訊",
+            "已核准提早入住"
+          ],
+          [
+            "仍未知",
+            "入住前能否寄放行李",
+            "一定提供保管且免費"
+          ],
+          [
+            "寫信目的",
+            "方便決定抵達車次",
+            "已買車票或有賠償責任"
+          ],
+          [
+            "本次請求",
+            "請確認寄放是否可行，或指引正確窗口",
+            "要求對方承擔未曾約定的期限"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-one",
+      "title": "第一輪 Prompt：先抓事實缺口，不立刻產生漂亮成稿",
+      "paragraphs": [
+        "OpenAI 官方提示建議包括清楚的任務、背景及逐輪修訂。應用到追蹤信，就是先整理資料狀態，再談措辭。工具即使回覆得肯定，仍可能補出不正確的日期、承諾或背景；因此先要求它把已知、未知及需要你確認的地方分開。這是編輯設計的練法，不是各品牌功能或付費方案比較。",
+        "可複製 Prompt：「我要練英文追蹤信。讀者與關係：[讀者／是否認識]；用途：[交換或生活情境]；前信日期與問題：[真實紀錄]；已收到的回覆：[沒有／自己有權提供的去識別摘要]；已確認事實：[條列]；未知事項：[條列]；我希望對方回答的一件事：[請求]；實際需要回覆的原因或日期：[有來源才填，沒有寫無]。先列『可寫的事實／不能推定的事／最多兩個澄清問題』，暫不寫完整信，不新增核准、附件、費用、行程或對方承諾。」",
+        "對 Lin 的輸入，合理的整理應保留尚未收到答覆、寄放行李仍待確認、車次尚未決定。若出現「住宿單位已允許提早入住」或「Lin 已購票」，就回到原始資料刪掉。這是人工預期檢核，不是某模型的一次真實回覆，也不保證工具一定遵守格式。"
+      ],
+      "refs": [
+        "openai-prompt",
+        "openai-accuracy"
+      ]
+    },
+    {
+      "id": "weak-draft",
+      "title": "催信初稿怎麼改？把責備與無根據的要求拿掉",
+      "paragraphs": [
+        "先自己寫一小段。以下壞稿刻意設計來比較語氣與事實，不是實際寄出的郵件：「You have not answered my email. Approve my early arrival immediately. I have already booked an extra room, so you must reply today.」讀起來的問題不只是少一個 please，而是把原問題換成核准提早入住，並新增了訂房與今日必回。",
+        "若原本只想確認寄放行李，不能靠增加 please 把這些錯誤變合理。把問題拆成三層：前信線索是否清楚、請求是否仍是原問題、理由是否有資料支持。British Council 的組織教材強調寫信目的與分段；禮節教材提醒簡短但禮貌、避免大寫式催促及寄前查核。這些原則不代表每封追蹤信都必須採同一個客套句。",
+        "原創局部修改：「I am following up on my message of 10 November about storing luggage before check-in. Could you let me know whether this would be possible?」第一句提供對應線索，第二句只問可否寄放，沒有暗示已批准。這是 Lin 虛構案例的人工修改，不是可直接套用的校方允許。"
+      ],
+      "refs": [
+        "bc-email-organise",
+        "bc-email-etiquette"
+      ],
+      "table": {
+        "caption": "先改訊息，再修語氣",
+        "headers": [
+          "壞稿問題",
+          "本例怎麼處理",
+          "保留的溝通功能"
+        ],
+        "rows": [
+          [
+            "You have not answered…",
+            "改用前信日期與主題定位",
+            "讓讀者找到前文，不判斷動機"
+          ],
+          [
+            "Approve my early arrival",
+            "回到能否寄放行李",
+            "一次問一件具體事情"
+          ],
+          [
+            "already booked an extra room",
+            "刪除，案例沒有此事實",
+            "不編造損失或壓力"
+          ],
+          [
+            "must reply today",
+            "無已確認期限就移除",
+            "可說明安排需要，不替對方立承諾"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-two",
+      "title": "第二輪 Prompt：保留原意，練成可回答的一封信",
+      "paragraphs": [
+        "可複製 Prompt：「已核對事實：[備忘]；我的初稿：[文字]；收件對象與合適稱呼：[已核對資訊]。請協助我寫英文追蹤信：給一個清楚主旨、簡短前信線索、必要背景、一個明確請求及結尾。先列最小修改與理由，再給一版示範。保留未知狀態，不增加行程、費用、附件、個資或對方承諾；若我沒有確定回覆期限，不捏造今日或幾天內必回。把可選語氣建議與事實修正分開。」",
+        "收稿後，不要只問是否夠正式。先自己回答：對方看得出是哪一件事嗎？要確認的是寄放行李還是提早入住？能否用一個清楚答案或指引回應？有沒有一句話把自己的需要寫成對方的責任？若工具只是把原壞稿寫得更強硬，就要求回到已確認的請求。",
+        "British Council 說明，對不熟悉或需禮貌溝通的對象，通常採較正式寫法，開頭與結尾要配合關係。本篇示範用 Programme Team 是已設定的虛構窗口；真實使用時依官方名稱與往來慣例改，不由 AI 想像對方頭銜或性別。"
+      ],
+      "refs": [
+        "openai-prompt",
+        "bc-email-start"
+      ]
+    },
+    {
+      "id": "revised-email",
+      "title": "完整人工示範：前信、目的與請求分段呈現",
+      "paragraphs": [
+        "以下是虛構 Lin 的完整練習稿；不是模型實測、真實校方信件或可提交的申請文件。段落可依收件單位慣例調整，先保留正確訊息，再考慮自己平常會用的語氣。",
+        "Subject: Follow-up on luggage storage before check-in",
+        "Dear Programme Team,",
+        "I am following up on my message of 10 November about luggage storage before check-in. I have received my accommodation confirmation, but it does not mention whether I can leave my bags before checking in.",
+        "Could you let me know whether this would be possible, or direct me to the appropriate contact? The information would help me decide which train to take on my arrival day.",
+        "Thank you for your help.",
+        "Best wishes, Lin",
+        "這裡問是否可行、或請對方指引窗口，是同一項寄放問題的替代回覆方式，不是另外要求核准提早入住。車次仍在決定中，沒有把它寫成已訂票。寄出前仍要將日期、收件者、確認信內容與簽名換成自己的真實資料；如果原先安排不同，就不能保留這段理由。"
+      ],
+      "diagram": {
+        "title": "追蹤信從原始紀錄到本人檢查",
+        "steps": [
+          [
+            "找前信",
+            "核對日期、對象與原問題"
+          ],
+          [
+            "分狀態",
+            "已確認、待回覆與未知分開"
+          ],
+          [
+            "寫請求",
+            "讓對方知道要回答什麼"
+          ],
+          [
+            "檢改稿",
+            "比對事實、語氣與段落"
+          ],
+          [
+            "本人決定",
+            "依官方管道與實際情況處理"
+          ]
+        ],
+        "caption": "UniWay 原創流程。AI 可協助練習措辭，不能替你證明寄件、收件、核准或校方處理時限。"
+      }
+    },
+    {
+      "id": "prompt-three-transfer",
+      "title": "第三輪 Prompt：對方還在查，怎麼回才不誤認已核准？",
+      "paragraphs": [
+        "可複製 Prompt：「我要練追蹤信收到回覆後的判讀。情境：[真實去識別摘要或明示虛構情境]；原請求：[問題]。請扮演回信者，一次只給一封短的自編回覆，清楚標示為模擬；不要冒充真實學校、寄信或查案件。先讓我用中文整理『已確認／仍未知／我下一步』並自己寫英文回覆，再逐項回饋。若我把可能、查核中或條件誤讀成已核准，指出原句依據；不給官方程度、分數或保證進步。」",
+        "自編回覆：「We are checking whether storage is available. Please do not leave any bags before we confirm.」本例已確認的是單位正在查，而非已可寄放。仍未知能否提供保管；下一步應等待確認並按原指示處理，不自行放下行李。這是語言情境，不是真實安全或住宿服務指引。",
+        "可自行嘗試回覆後，再比對人工示範：「Thank you for checking. I will wait for your confirmation before making arrangements to leave my bags.」若工具回饋「現在可以先寄放」，就拿 before we confirm 與原句查核，不能因回饋語氣肯定就採用。",
+        "換情境時，可改練「詢問選課候補狀態，但對方仍在確認名額」。先重新填事實表，不沿用住宿的核准狀態、日期或車次理由。起步先完成前信與一個請求，較熟後再練回覆中的保留條件；最後換新問題獨立寫。這是自訂練習分層，不是正式程度判定。"
+      ],
+      "refs": [
+        "openai-accuracy"
+      ]
+    },
+    {
+      "id": "human-checklist",
+      "title": "寄出前檢查：短、清楚，並讓每個事實找得到紀錄",
+      "paragraphs": [
+        "實際隔多久追蹤，先看官方是否公布處理時間、休假、指定窗口或原信已約定的安排。本文沒有通用的三天、五天或一週規則，也不能保證更有禮貌就會更快收到答覆。若有真實期限，清楚說明它與自己的事情有何關係，不把未曾約定的日期說成對方必須遵守。",
+        "British Council 的禮節教材提醒核對收件者、必要收件範圍、附件與文字。若本文練習沒有附件，就不要在信裡聲稱已附；若真有需要，先自己確認正確版本及權限。AI 文字回覆也不能證明檔案已附上或信已寄出。",
+        "整理到交換申請時，仍回到 UniWay 母校資訊、目的地及選校工具核對正式管道與當期條件。練習稿、個人備件與校方收件是不同狀態；本篇不替第三方寄信，不把學習完成等同申請完成。若你卡在一般文法，可接作文訂正；若要正式考試寫信，另讀托福題型指南。"
+      ],
+      "refs": [
+        "bc-email-etiquette"
+      ],
+      "bullets": [
+        "前信線索、收件者與稱呼是否正確？沒有猜測姓名、身分或對方動機。",
+        "一個主要請求是否清楚？寄放、提早入住、核准或候補不能互相替代。",
+        "日期、行程、附件、費用與核准是否都有本人可查的依據？未知仍保留未知。",
+        "文字是否簡短分段，沒有全大寫催促、無依據責備或虛構期限？",
+        "收起範例後，能否用另一個情境自己寫出並解釋修改？留下初稿、理由與換題表現。"
+      ]
+    }
+  ],
+  "faq": [
+    [
+      "英文催信一定要說 Just checking in 嗎？",
+      "不必。先讓收件者找得到前信與問題，並提出可回答的請求。用何種短語依關係與往來慣例調整，不能靠一句客套語取代背景或事實核對。"
+    ],
+    [
+      "寄出幾天後應該再寫一次？",
+      "沒有本篇可保證適用的固定天數。先看官方處理時間、原信安排、假日與真實期限；沒有來源就不要讓 AI 編造幾天必回的規則。"
+    ],
+    [
+      "AI 能幫我把「正在確認」改成「已同意」嗎？",
+      "不能為求流暢而改變狀態。正在確認、可能可以與已核准各不相同，應對照原信文字；AI 回饋也不能取代校方確認。"
+    ],
+    [
+      "本文的信能直接當成我的真實申請信嗎？",
+      "先改成自己的真實經歷與需求，核對官方管道、規定格式及 AI 使用要求。本文全部例子是原創虛構教學，沒有替任何人寄信、驗證附件或取得核准。"
+    ]
+  ],
+  "sources": [
+    {
+      "id": "bc-email-organise",
+      "title": "British Council：Unit 7 — Organising your writing",
+      "url": "https://learnenglish.britishcouncil.org/free-resources/business/english-emails/unit-7-organising-your-writing",
+      "note": "2026-11-19 實讀正文的寫信目的與分段原則；不複製教材的人物、故事或完整信件，沒有通用回信期限。"
+    },
+    {
+      "id": "bc-email-etiquette",
+      "title": "British Council：Unit 9 — Email etiquette",
+      "url": "https://learnenglish.britishcouncil.org/free-resources/business/english-emails/unit-9-email-etiquette",
+      "note": "2026-11-19 實讀正文：收件者／reply all、附件、避免全大寫、簡短禮貌及寄前查核。不把教材規則當特定學校受理規定。"
+    },
+    {
+      "id": "bc-email-start",
+      "title": "British Council：Unit 4 — Starting and finishing emails",
+      "url": "https://learnenglish.britishcouncil.org/free-resources/business/english-emails/unit-4-starting-finishing-emails",
+      "note": "2026-11-19 實讀正式／非正式關係、稱呼與結尾。無單獨絕對更新日可核對，不使用留言日期作版本。"
+    },
+    {
+      "id": "openai-prompt",
+      "title": "OpenAI：Prompt engineering best practices for ChatGPT",
+      "url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "note": "2026-11-19 實讀背景明確、逐輪修訂與語氣要求；頁面顯示 Updated: last month，保留相對日期。不宣稱工具、模型、方案或地區比較。"
+    },
+    {
+      "id": "openai-accuracy",
+      "title": "OpenAI：Does ChatGPT tell the truth?",
+      "url": "https://help.openai.com/en/articles/8313428-does-chatgpt-tell-the-truth",
+      "note": "2026-11-19 實讀自信誤答、捏造日期／事實與可靠來源查核限制；顯示 Updated: 27 days ago，不推定絕對發布日。本文未使用搜尋、上傳或自動寄件功能。"
+    }
+  ],
+  "related": [
+    "ai-english-writing-feedback",
+    "toefl-write-an-email",
+    "exchange-arrival-week"
+  ]
+}
