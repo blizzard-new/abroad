@@ -46,4 +46,6 @@ EPA 頁尾更新 2026-08-18，核對材料吸放熱、遮蔭／水分與地表�
 - [完整 gate](seo-editorial-checks-2026-11-19.json)、[命令／輸出](seo-editorial-tests-2026-11-19.txt)、[套件逐檔](seo-editorial-package-2026-11-19.json)
 - [瀏覽器／15 圖雜湊](seo-editorial-browser-2026-11-19.json)、[桌面](seo-previews-2026-11-19/desktop-1440.jpg)、[手機](seo-previews-2026-11-19/mobile-320.jpg)、[裁切](seo-previews-2026-11-19/photography-crops.jpg)
 
-PR、遠端 CI 及任務附件建立後回填；未發布。
+[PR #400](https://github.com/blizzard-new/abroad/pull/400) 已建立，OPEN、非 draft、MERGEABLE。完整內容 head `4fba144e41af4c41523ef778630abe7246b66564`；後續只回填本驗收、PR audit 與 backlog，產品雜湊不變。此內容 head 兩個 TLS trust regression image 檢查仍進行中，Supabase Preview skipped；不宣稱遠端 CI 全通過，以 PR 最新狀態為準。
+
+任務附加 `codex_app.attach_artifact` 等待 40 秒無回覆，`list_artifacts` 等待 10 秒也無回覆，因此附件未確認；實際 PR URL、head 與待審狀態已另行核對。未宣稱附加成功，未合併、部署或要求索引。
