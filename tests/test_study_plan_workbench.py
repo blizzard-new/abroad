@@ -83,6 +83,22 @@ def test_study_plan_workbench_partner_course_lookup_links_to_cross_school_partne
     assert any("慕尼黑工業大學" in line or "TUM" in line for line in partner["suggested_course_plan_lines"])
 
 
+def test_schools_without_custom_writing_tips_get_their_own_official_rules():
+    from exchange_info.study_plan_workbench import SCHOOL_PITFALL_SPECS, build_study_plan_workbench_payload
+    from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
+    from exchange_info.verified_window_deadlines import get_verified_school_window_card
+
+    for uni in SUPPORTED_UNIVERSITIES:
+        if uni.id in SCHOOL_PITFALL_SPECS:
+            continue
+        payload = build_study_plan_workbench_payload(uni)
+        rule = get_verified_school_window_card(uni.id).study_plan_limit
+        assert payload.pitfalls[0].detail_zh == rule.value_text
+        assert payload.pitfalls[0].source_url == rule.source_url
+        assert uni.short_name in payload.dcard_launch_draft.dcard_board_name
+        assert "長庚" not in payload.dcard_launch_draft.post_title
+
+
 def test_study_plan_workbench_catalog_tracks_10_week_window_and_all_supported_universities() -> None:
     from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
 

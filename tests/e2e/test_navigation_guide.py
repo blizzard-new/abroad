@@ -32,7 +32,7 @@ def test_home_is_the_guide_and_the_forum_is_one_click_away(page, live_server):
     expect(page.locator(".pr-stages > li")).to_have_count(4)
     expect(page.locator("#community-hub")).to_be_hidden()
     expect(nav.locator('[data-public-route="home"]')).to_have_attribute("aria-current", "page")
-    expect(page).to_have_title("首頁 | UniWay")
+    expect(page).to_have_title("UniWay｜交換學生申請、合作學校與選校資訊")
     nav.get_by_role("link", name="論壇", exact=True).click()
     expect(page).to_have_url(f"{live_server.base_url}/#forum")
     expect(page.locator("#community-hub")).to_be_visible()
@@ -50,12 +50,15 @@ def test_home_is_the_guide_and_the_forum_is_one_click_away(page, live_server):
     assert not errors
 
 
-def test_the_guide_link_opens_the_guide_not_the_home_page(page, live_server):
-    start(page, live_server, "guide")
-    expect(page).to_have_url(f"{live_server.base_url}/#guide")
-    expect(page.locator("#guide")).to_be_visible()
-    expect(page.locator("#home-landing")).to_be_hidden()
-    expect(page).to_have_title("申請指南 | UniWay")
+def test_public_guide_navigation_opens_the_article_directory(page, live_server):
+    start(page, live_server)
+    open_navigation(page)
+    page.locator('.uniway-public-nav a[data-public-route="guides"]').click()
+    expect(page).to_have_url(f"{live_server.base_url}/guides")
+    article = page.locator('main a[href^="/guides/"]').first
+    expect(article).to_be_visible()
+    article.click()
+    expect(page.locator("main h1")).to_be_visible()
 
 
 def test_an_old_community_link_opens_the_forum(page, live_server):
@@ -95,22 +98,15 @@ def test_direct_entry_back_stays_inside_site(page, live_server, route):
     expect(page.locator("#school-detail-view")).to_be_hidden()
 
 
-def test_every_tool_has_shared_navigation_and_return(page, live_server):
+def test_bookmarked_tools_have_shared_navigation_and_return(page, live_server):
     start(page, live_server, "home")
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     routes = ["favorites", "advisor", "application-center", "calendar", "eligibility", "document-check", "documents", "deadlines", "scholarships", "budget"]
     for route in routes:
-        page.locator("#application-tools .application-nav-chevron").click()
-        if route in ["favorites", "calendar", "eligibility", "document-check", "documents", "deadlines", "scholarships", "budget"] and not page.locator(".application-extra-tools").get_attribute("open") == "":
-            page.locator(".application-extra-tools > summary").click()
-        page.locator(f'.application-tools-panel a[href="#{route}"]').click()
-        expect(page).to_have_url(re.compile(rf"#{route}$"))
+        page.evaluate("route => { location.hash = route; }", route)
+        expect(page.locator(f'section[data-university-page="{route}"]')).to_be_visible()
         expect(page.locator(".uniway-public-nav")).to_be_visible()
-        expect(page.locator("#page-back")).to_be_visible()
-        expect(page.locator("#application-tools")).not_to_have_attribute("open", "")
-        if route != "university-posts":
-            expect(page.locator(f'section[data-university-page="{route}"]')).to_be_visible()
         page.locator("#page-back").click()
         expect(page.locator("#home-landing")).to_be_visible()
     assert not errors
@@ -176,16 +172,21 @@ def test_guide_responsive_menu_keyboard_and_theme(page, live_server, width):
     expect(page.locator("#main-content")).to_be_focused()
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     open_navigation(page)
-    page.locator("#application-tools > summary").focus()
-    page.keyboard.press("Enter")
-    expect(page.locator(".application-tools-panel")).to_be_visible()
-    bounds = page.locator(".application-tools-panel").bounding_box()
+    navigation = page.locator("#glass-navigation")
+    forum = navigation.get_by_role("link", name="論壇", exact=True)
+    expect(forum).to_be_visible()
+    bounds = forum.bounding_box()
     assert bounds["x"] >= 0 and bounds["x"] + bounds["width"] <= width + 1
-    page.keyboard.press("Escape")
-    expect(page.locator(".application-tools-panel")).to_be_hidden()
-    expect(page.locator("#application-tools > summary")).to_be_focused()
+    forum.focus()
     if page.locator("#glass-menu-close").is_visible():
-        page.locator("#glass-menu-close").click()
+        page.keyboard.press("Escape")
+        expect(page.locator("#glass-menu-toggle")).to_be_focused()
+        expect(page.locator("#glass-menu-toggle")).to_have_attribute("aria-expanded", "false")
+    else:
+        page.keyboard.press("Enter")
+        expect(page.locator("#community-hub")).to_be_visible()
+        navigation.get_by_role("link", name="首頁", exact=True).click()
+        expect(page.locator("#home-landing")).to_be_visible()
     artifacts = Path("output/navigation-guide")
     artifacts.mkdir(parents=True, exist_ok=True)
     page.evaluate("scrollTo({top: 0, behavior: 'instant'})")

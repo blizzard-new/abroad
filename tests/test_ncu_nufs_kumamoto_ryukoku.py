@@ -25,8 +25,8 @@ def sources():
 @pytest.mark.parametrize('admission,housing', [('unknown','unknown'), ('accepted','on_campus'), ('accepted','off_campus')])
 def test_home_host_coe_visa_tickets_arrival_and_conditional_downloads(tmp_path,row,name,documents,stages,admission,housing):
     partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
-    assert partner.quota is None and partner.availability_status == 'agreement_only'
-    assert partner.degree_levels is None and partner.colleges is None
+    assert partner.field_evidence["quota"].status == "verified_current" and partner.availability_status == "open"
+    assert all(partner.field_evidence[k].excerpt == getattr(partner, k) for k in ("degree_levels", "colleges") if getattr(partner, k))
     client=TestClient(create_app(tmp_path))
     response=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
     assert response.status_code == 200
@@ -74,9 +74,11 @@ def test_full_field_originals_student_summary_and_life_preserve_scope(tmp_path,r
     assert len(a['fields'])==17 and a['checked_at'].startswith('2026-10-09')
     for key,field in a['fields'].items():
         assert field['original_evidence'],key
-        if not key.startswith('home_'):
-            assert field['status']=='needs_confirmation'
-            if key!='quota':assert field['unresolved']
+        if key == 'quota':
+            assert field['status'] == 'available'
+        elif not key.startswith('home_'):
+            assert field['status'] == 'needs_confirmation'
+            assert field['unresolved']
         for e in field['original_evidence']:
             assert e['source_url'] and e['text'] and e['checked_at'] and e['applicability']
             if e.get('source_id')in by:assert e['checked_at']==by[e['source_id']]['checked_at']

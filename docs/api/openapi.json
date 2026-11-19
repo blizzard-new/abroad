@@ -4604,6 +4604,17 @@
             ],
             "title": "Reference Academic Year"
           },
+          "responsible_party": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Party"
+          },
           "responsible_unit": {
             "title": "Responsible Unit",
             "type": "string"
@@ -19469,6 +19480,17 @@
             ],
             "title": "Reference Academic Year"
           },
+          "responsible_party": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Party"
+          },
           "responsible_unit": {
             "title": "Responsible Unit",
             "type": "string"
@@ -28664,22 +28686,58 @@
     },
     "/cross-school-partners/{country}/{institution}": {
       "get": {
-        "operationId": "_allowed_override_plan_count_cross_school_partners__country___institution__get",
+        "operationId": "cross_school_partner_page_cross_school_partners__country___institution__get",
         "parameters": [
           {
-            "in": "query",
-            "name": "value",
+            "in": "path",
+            "name": "country",
             "required": true,
+            "schema": {
+              "title": "Country",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "institution",
+            "required": true,
+            "schema": {
+              "title": "Institution",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home",
+            "required": false,
             "schema": {
               "anyOf": [
                 {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Home"
+            }
+          },
+          {
+            "in": "query",
+            "name": "override_plan_count",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 5000,
+                  "minimum": 0,
                   "type": "integer"
                 },
                 {
                   "type": "null"
                 }
               ],
-              "title": "Value"
+              "title": "Override Plan Count"
             }
           }
         ],
@@ -28705,7 +28763,7 @@
             "description": "Validation Error"
           }
         },
-        "summary": " Allowed Override Plan Count"
+        "summary": "Cross School Partner Page"
       }
     },
     "/deadlines": {

@@ -371,3 +371,57 @@ def apply_ccu_semantic_review(row: PartnerUniversity):
                 )
     review_language(row)
     review_documents(row)
+
+
+# The 2027 spring roster describes some restrictions in prose without listing
+# the complete set of eligible home faculties or degrees. These excerpts are
+# for the student's review and cannot determine eligibility on their own.
+ROSTER_SCOPE_NOTES = {
+    'colleges': {
+        23: ('eligibility', '須選擇與原專業相應的專業，廈門大學原則上不受理變更。'),
+        26: ('eligibility', '限同科系間申請，不可跨院。'),
+        27: ('eligibility', '申請科系須與原專業相關。'),
+        37: ('eligibility', 'HUSTEP 不可跨系申請；SA 與 SRS 另依各自計畫。'),
+        42: ('eligibility', '法律、醫學與護理領域不開放申請。'),
+        43: ('eligibility', '交換生不得修讀牙醫、醫學、韓醫、護理及法律系所課程。'),
+        48: ('eligibility', '不可跨系申請；藝術與設計學院限相同專業學生。'),
+        49: ('eligibility', '僅可修讀與原專業相關的科系。'),
+        53: ('eligibility', '醫學、護理、藥學及法律系所不開放申請。'),
+        54: ('eligibility', '英文授課方案開在 Global College，請依選定主修核對。'),
+        58: ('eligibility', '不開放的學院包括社會學與人類學院、科學與技術學院；完整名單見該頁。'),
+        61: ('eligibility', '須符合接待學院條件；部分科系要求選課者有相關學術背景。'),
+        65: ('course_restrictions', '交換生不可跨系選課。'),
+        68: ('eligibility', '名單明列可跨系申請，請核對擬申請科系是否收件。'),
+        73: ('eligibility', '不可跨系申請，Marine Sciences 不接收交換生。'),
+        74: ('eligibility', '僅能申請與原專業相關的系所。'),
+        87: ('eligibility', '部分領域不開放交換生修課，另有特別協議者除外；完整名單見該頁。'),
+        95: ('eligibility', '可跨系選課，多數課程仍須與原專業相關。'),
+        99: ('eligibility', '可填三個不同系所，其中一個須為原科系；醫、藥、牙學系不開放。'),
+        108: ('eligibility', '物流管理、危機管理學院不接收交換生；申請系所須與原專業相同或類似。'),
+        109: ('course_restrictions', '課程須選自同一學院，並對應母校學院。'),
+    },
+    'degree_levels': {
+        10: ('eligibility', '學士生最晚在大三下申請、大四上交換；名單也明列研究生可申請。'),
+        27: ('eligibility', '大一、大四學生不得申請。'),
+        53: ('notes', '碩士生每學期最多可修九學分。'),
+        73: ('eligibility', '大二或以上，須在中正修畢至少兩學期。'),
+        86: ('eligibility', '須在母校至少修畢兩學年（大三或以上）。'),
+        100: ('course_restrictions', '學士班與碩士班均不可跨學制選課。'),
+        106: ('notes', '研究生能選修的大學部課程數可能受限。'),
+    },
+}
+
+
+def roster_scope_note(partner: PartnerUniversity, field: str) -> tuple[str, str] | None:
+    if (partner.source_url != PARTNERS_URL or not partner.source_pages
+            or partner.availability_status != 'open' or partner.academic_year != YEAR
+            or partner.application_round != ROUND):
+        return None
+    page = partner.source_pages[0]
+    note = ROSTER_SCOPE_NOTES[field].get(page)
+    if note:
+        key, wording = note
+        evidence = partner.field_evidence.get(key)
+        if evidence and evidence.status == 'verified_current' and evidence.source_url == PARTNERS_URL:
+            return f'中正 2027 春季名單第 {page} 頁載明：{wording}', f'{PARTNERS_URL}#page={page}'
+    return None

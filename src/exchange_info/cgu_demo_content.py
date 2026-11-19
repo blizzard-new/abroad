@@ -12,10 +12,11 @@ CONTENT = Path(__file__).parent / 'demo_data/content.json'
 
 CGU_SELECTION_GUIDE_URL = 'https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656'
 CGU_REQUIRED_DOCUMENTS: list[dict[str, str]] = [
-    {'key': 'online_form', 'title': '線上申請表', 'description': '填妥校內交換／雙聯線上申請表（最多 2 個志願）'},
-    {'key': 'parent_consent', 'title': '家長同意書', 'description': '依國際處規定格式填寫並經家長／監護人簽章'},
-    {'key': 'language_proof', 'title': '語文證明', 'description': '多益 700 分（或同等外語檢定）及合作校規定語文證明'},
+    {'key': 'online_form', 'title': '線上申請表', 'description': '填第一份線上表單（最多 2 個志願），從電子信箱下載申請表，請導師或指導教授簽名'},
+    {'key': 'parent_consent', 'title': '家長同意書', 'description': '從校方電子郵件下載同意書，由家長或監護人簽名'},
+    {'key': 'language_proof', 'title': '語文證明', 'description': '依本校與合作校要求準備語文證明，成績未出可先附報考證明並註明預計取得日期'},
     {'key': 'transcript', 'title': '含排名的中文歷年成績單', 'description': '含歷年學業平均與大學部班級排名百分比'},
+    {'key': 'enrollment_certificate', 'title': '本校在學證明', 'description': '至 iCGU 系統下載在學證明，於第二份表單上傳 PDF'},
     {'key': 'study_plan', 'title': '一頁讀書計畫', 'description': '以 1 頁為原則，說明選校動機、修課規劃與預期成果'},
 ]
 CGU_SUBSIDY_PAGE_URL = 'https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15724'
@@ -127,9 +128,9 @@ def _cgu_level_config(task: dict, context: dict, detail: str, source: str | None
     if tid == 'read-guide':
         data = json.loads(CONTENT.read_text(encoding='utf-8'))
         guide_detail = (
-            '閱讀 116-1 校內申請重點摘要（申請期間 2026/11/02–2026/12/21 17:00、應備 5 份文件與基本門檻），讀完後按下方確認。'
+            '閱讀 116-1 校內申請重點摘要（申請期間 2026/11/02–2026/12/21 17:00、應備 6 份文件與基本門檻），讀完後按下方確認。'
             if is_verified_116_1
-            else f'閱讀 {term_code} 校內申請重點摘要（申請期間與截止日：依國際處公告；應備 5 份文件與基本門檻），讀完後按下方確認。'
+            else f'閱讀 {term_code} 校內申請重點摘要（申請期間與截止日：依國際處公告；可先參考前一期的文件，當期項目以新公告為準），讀完後按下方確認。'
         )
         return {
             'kind': 'confirm',
@@ -147,9 +148,10 @@ def _cgu_level_config(task: dict, context: dict, detail: str, source: str | None
                 'term_code': term_code,
                 'term_label': term_info['term_label'],
                 'application_period': '2026/11/02 – 2026/12/21 17:00' if is_verified_116_1 else '依國際處公告',
-                'deadline': '2026/12/21（週一）17:00（線上表單與紙本同步截止）' if is_verified_116_1 else '依國際處公告',
+                'deadline': '2026/12/21（週一）17:00（線上申請與文件逐項上傳同步截止）' if is_verified_116_1 else '依國際處公告',
                 'eligibility_summary': '大學部大二以上或碩博在學；前一學年平均 70 分（GPA 2.44）或班排前 50%；多益 700／托福 iBT 72／雅思 5.5（依姊妹校要求）',
                 'preference_limit': '每人至多填寫 2 個志願合作校',
+                'documents_label': f'校內應備 {len(CGU_REQUIRED_DOCUMENTS)} 份文件' if is_verified_116_1 else '前一期文件參考（當期項目依新公告）',
                 'required_documents': [
                     {'num': idx + 1, 'key': doc['key'], 'title': doc['title'], 'desc': doc['description']}
                     for idx, doc in enumerate(CGU_REQUIRED_DOCUMENTS)
@@ -181,9 +183,7 @@ def _cgu_level_config(task: dict, context: dict, detail: str, source: str | None
     if tid.startswith('doc-'):
         doc_key = tid.removeprefix('doc-')
         templates = []
-        if doc_key == 'parent_consent':
-            templates = ['guardian-consent']
-        elif doc_key == 'study_plan':
+        if doc_key == 'study_plan':
             templates = ['study-plan']
         return {
             'kind': 'file',
@@ -205,7 +205,7 @@ def _cgu_level_config(task: dict, context: dict, detail: str, source: str | None
                 'no_draft_input': True,
                 'icon': 'send',
                 'title': '送出校內申請（12/21 17:00 截止）',
-                'detail': '備齊 116-1 校內 5 份應備文件後完成預檢與送交國際處（截止日：2026/12/21 17:00）；正式申請請依國際處公告完成線上表單與紙本繳交。',
+                'detail': '備齊 116-1 校內 6 份應備文件後完成預檢與送交國際處（截止日：2026/12/21 17:00）；正式申請須填校方第一份表單，從信箱下載簽名文件，再用第二份表單逐項上傳 PDF。',
                 'warning': '',
                 'official_deadline_at': '2026-12-21T17:00:00+08:00',
                 'deadline_confirmed': True,
@@ -218,7 +218,7 @@ def _cgu_level_config(task: dict, context: dict, detail: str, source: str | None
             'no_draft_input': True,
             'icon': 'send',
             'title': '送出校內申請',
-            'detail': f'備齊 {term_code} 校內 5 份應備文件後完成預檢與送交國際處（申請期限：依國際處公告）；正式申請請依國際處公告完成線上表單與紙本繳交。',
+            'detail': f'可先依前一期清單練習預檢，{term_code} 的正式文件、送件方式與期限依國際處公告確認。',
             'warning': '',
             'official_deadline_at': None,
             'deadline_confirmed': False,
@@ -379,7 +379,7 @@ def source_dashboard(dashboard):
         title='長庚國際事務處｜校內申請選送須知',
         source_url=CGU_SELECTION_GUIDE_URL,
         category=PageCategory.EXCHANGE_APPLICATION,
-        summary='116-1 校內基本門檻與 5 份應備文件清單；查核日期：2026-11-12',
+        summary='116-1 校內基本門檻與 6 份應備文件清單；查核日期：2026-11-18',
     )
     for extra_src in (navigator_source, xizhu_source, short_term_source, zhumeng_source, oia_subsidy_source):
         if extra_src.source_url and extra_src.source_url not in existing_urls:
@@ -483,13 +483,9 @@ def source_dashboard(dashboard):
     if not any(group.details for group in dashboard.required_documents):
         dashboard.required_documents = [
             StudentInfoItem(
-                title='116-1 校內申請應備 5 份文件',
+                title='116-1 校內申請應備 6 份文件',
                 details=[
-                    '線上申請表：於 2026/11/02–12/21 17:00 間填妥 Google 線上申請表（交換與雙聯共用，最多填 2 個志願）。',
-                    '家長同意書：依國際事務處規定格式填寫並經家長／監護人簽章之正本。',
-                    '外國語文能力證明：多益 700 分（或同等外語檢定）及目標合作校規定之語文成績證明影本。',
-                    '中文歷年成績單證明文件：含歷年學業平均正本（大學部申請者須含班級排名百分比）。',
-                    '讀書計畫申請文件：以 1 頁為原則，說明選校動機、修課規劃與預期學習成果。',
+                    f"{doc['title']}：{doc['description']}" for doc in CGU_REQUIRED_DOCUMENTS
                 ],
                 source=selection_guide_source,
             )

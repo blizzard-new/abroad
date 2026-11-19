@@ -5,6 +5,7 @@ import re
 import unicodedata
 from collections.abc import Iterable
 
+from .application_periods import matching_workflow_round
 from .application_task_identity import preparation_identity
 from .plan_defaults import suggest_effort_hours
 from .school_identity import same_school_program
@@ -73,7 +74,7 @@ from .ttu_eligibility import is_ttu, ttu_academic_check, ttu_degree_check, ttu_l
 from .tcu_eligibility import is_tcu, tcu_academic_check, tcu_degree_check, tcu_language_check
 from .mcut_eligibility import is_mcut, mcut_academic_check, mcut_degree_check, mcut_language_check
 from .cyut_eligibility import is_cyut, cyut_academic_check, cyut_degree_check, cyut_language_check
-from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
+from .ncu_eligibility import NCU_ONLINE_INTAKE_CLOSED, is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
 from .task_documents import document_link_for_step
@@ -181,10 +182,7 @@ def select_application_workflow(
             [workflow.academic_year] if workflow.academic_year else [],
             context.academic_year,
         )
-        and _matches_optional_filter(
-            list(dict.fromkeys([*workflow.effective_application_rounds, *([workflow.application_round] if workflow.application_round else [])])),
-            context.application_round,
-        )
+        and _round_scope_matches(_published_rounds(workflow), context)
     ]
     if not candidates:
         return None
@@ -206,8 +204,7 @@ def select_application_workflow(
             int(
                 bool(context.application_round)
                 and bool(workflow.application_round)
-                and _normalize(workflow.application_round or "")
-                == _normalize(context.application_round or "")
+                and _round_scope_matches([workflow.application_round], context)
             ),
             # With no year chosen, the newest academic year wins.
             _year_number(workflow.academic_year),
@@ -221,6 +218,11 @@ def select_application_workflow(
             ),
         ),
     )
+    matched_round = matching_workflow_round(
+        context.home_university, context.academic_year, context.application_round, _published_rounds(selected)
+    )
+    if context.home_university == "長庚大學" and matched_round and matched_round != context.application_round:
+        context = context.model_copy(update={"application_round": matched_round})
     return compose_application_workflow(selected, context)
 
 
@@ -339,6 +341,16 @@ def build_personal_application_plan(
     )
 
 
+def _published_rounds(workflow: UniversityApplicationWorkflow) -> list[str]:
+    return [*workflow.effective_application_rounds, *([workflow.application_round] if workflow.application_round else [])]
+
+
+def _round_scope_matches(rounds: list[str], context: ApplicationRuleContext) -> bool:
+    return not rounds or not context.application_round or matching_workflow_round(
+        context.home_university, context.academic_year, context.application_round, rounds
+    ) is not None
+
+
 def scope_matches(
     scope: ApplicationRuleScope,
     context: ApplicationRuleContext,
@@ -353,9 +365,7 @@ def scope_matches(
         return False
     if not _matches_optional_filter(scope.academic_years, context.academic_year):
         return False
-    if not _matches_optional_filter(
-        scope.application_rounds, context.application_round
-    ):
+    if not _round_scope_matches(scope.application_rounds, context):
         return False
     return True
 
@@ -446,6 +456,7 @@ def _eligibility_checks(
     partner_source = partner.source_url
     from .university_registry import resolve_university
     home = resolve_university(request.home_school)
+    ccu_scope_notes = {}
     ncku_current_rules = False
     ncku_cycle_note = "已核實的成大母校簡章僅適用116-1；本筆合作方案或所選年度／梯次尚未具備相符證據，不能沿用該期資格門檻。"
     if is_ncku(request.home_school):
@@ -457,6 +468,9 @@ def _eligibility_checks(
                                  ncku_cycle_note, source_url=GUIDE_URL, contact_unit=contact_unit))
     if home and home.id == "ccu":
         from .ccu_sources import GUIDELINES_URL
+        from .ccu_partner_semantics import roster_scope_note
+        ccu_scope_notes = {field: note for field in ("colleges", "degree_levels")
+                           if (note := roster_scope_note(partner, field))}
         gpa = request.academic_gpa
         checks.append(_check("academic_gpa", "needs_confirmation" if gpa is None else "pass" if gpa >= 3 else "fail",
             "中正歷年GPA門檻", "尚未提供GPA；歷年GPA至少3.0且平均至少70分，兩項均須符合。" if gpa is None else f"歷年GPA {gpa:g}，門檻3.0（簡章第1頁）。",
@@ -480,7 +494,24 @@ def _eligibility_checks(
             "校級收件已截止；須確認已有申請或提名資格。" if partner.application_window_status == "closed"
             else "校級系統開放時間或院系所辦理期限尚待確認，不能視為目前可送件。",
             source_url=partner_source, contact_unit=contact_unit))
-    if partner.availability_status != "open":
+    if is_ncu(request.home_school) and "quota" in partner.field_evidence:
+        different_cycle = (
+            (request.academic_year and _year_number(request.academic_year) != _year_number(partner.academic_year))
+            or (request.application_round and request.application_round not in {partner.application_round, "第1梯次", "第一梯", "第1梯"})
+        )
+        if different_cycle:
+            status, note = "needs_confirmation", "中央已查核 116 學年度第一梯次，所選年度或梯次須另查該期名單。"
+        elif partner.availability_status == "not_open":
+            status, note = "fail", partner.availability_note
+        else:
+            status, note = "pass", partner.availability_note
+            if partner.application_window_status == "closed":
+                from .ncu_student_view import NCU_GUIDELINES_URL
+                checks.append(_check("home_deadline", "needs_confirmation", "中央第一梯次校內線上收件",
+                                     NCU_ONLINE_INTAKE_CLOSED, source_url=NCU_GUIDELINES_URL, contact_unit=contact_unit))
+        checks.append(_check("availability", status, "當期中央校內提名名額", note or "",
+                             source_url=partner_source, contact_unit=contact_unit))
+    elif partner.availability_status != "open":
         checks.append(
             _check(
                 "availability",
@@ -505,7 +536,8 @@ def _eligibility_checks(
 
     if is_ntu(request.home_school) or is_ncu(request.home_school) or is_fju(request.home_school):
         checks.append(_check("college", "needs_confirmation", "學院／學系範圍",
-                             "合作校本期學院與系所範圍尚未全面確認；詳情頁的既有條件僅供參考。",
+                             f"中央本期名單備註：{partner.colleges}" if is_ncu(request.home_school) and partner.colleges
+                             else "合作校本期學院與系所範圍尚未全面確認；詳情頁的既有條件僅供參考。",
                              source_url=partner_source, contact_unit=contact_unit))
     elif not request.college and not request.department:
         checks.append(
@@ -519,13 +551,14 @@ def _eligibility_checks(
             )
         )
     elif partner_scope_needs_confirmation(partner, "colleges"):
+        note, scope_source = ccu_scope_notes.get("colleges", ("", partner_source))
         checks.append(
             _check(
                 "college",
                 "needs_confirmation",
                 "學院／學系範圍",
-                f"公開資料沒有明確學院範圍，請向{contact_unit}確認。",
-                source_url=partner_source,
+                f"{note}請向{contact_unit}確認你的學院是否符合擬申請梯次。" if note else f"公開資料沒有明確學院範圍，請向{contact_unit}確認。",
+                source_url=scope_source,
                 contact_unit=contact_unit,
             )
         )
@@ -551,6 +584,7 @@ def _eligibility_checks(
 
     if is_ncu(request.home_school):
         checks.append(_check("degree_level", "needs_confirmation", "學制與學籍",
+                             (f"中央本期名單備註：{partner.degree_levels}。" if partner.degree_levels else "") +
                              "中央校內在职專班可申請；大學部需有至少一學年在學成績，碩一可附大學歷年成績。須以甄選身分出國且保有學籍。外校當期學制與track另查。",
                              source_url=academic_source_url, contact_unit=contact_unit))
     elif is_ntu(request.home_school):
@@ -913,13 +947,14 @@ def _eligibility_checks(
             )
         )
     elif partner_scope_needs_confirmation(partner, "degree_levels"):
+        note, scope_source = ccu_scope_notes.get("degree_levels", ("", partner_source))
         checks.append(
             _check(
                 "degree_level",
                 "needs_confirmation",
                 "學制",
-                f"公開資料沒有明確學制範圍，請向{contact_unit}確認。",
-                source_url=partner_source,
+                f"{note}請向{contact_unit}確認你的學制是否符合擬申請梯次。" if note else f"公開資料沒有明確學制範圍，請向{contact_unit}確認。",
+                source_url=scope_source,
                 contact_unit=contact_unit,
             )
         )
@@ -1662,10 +1697,9 @@ def _workflow_context_checks(
     reference: UniversityApplicationWorkflow | None = None,
 ) -> list[ApplicationPlanEligibilityCheck]:
     source_url = workflow.sources[0].source_url if workflow and workflow.sources else None
-    matching_round = None
-    if workflow and request.application_round:
-        matching_round = next((value for value in [*workflow.effective_application_rounds, workflow.application_round or ""]
-            if _normalize(value) == _normalize(request.application_round)), None)
+    matching_round = matching_workflow_round(
+        request.home_school, request.academic_year, request.application_round, _published_rounds(workflow)
+    ) if workflow else None
     checks: list[ApplicationPlanEligibilityCheck] = []
     for code, title, requested, actual in (
         ("academic_year", "學年度", request.academic_year, workflow.academic_year if workflow else None),
@@ -1682,7 +1716,7 @@ def _workflow_context_checks(
                     contact_unit=contact_unit,
                 )
             )
-        elif actual and _normalize(actual) == _normalize(requested):
+        elif actual and (code == "application_round" or _normalize(actual) == _normalize(requested)):
             checks.append(
                 _check(
                     code,
@@ -1748,8 +1782,7 @@ def _workflow_checklist(
         context and context.academic_year and workflow.academic_year
         and _normalize(context.academic_year) == _normalize(workflow.academic_year)
         and context.application_round
-        and any(_normalize(value) == _normalize(context.application_round)
-            for value in [*workflow.effective_application_rounds, workflow.application_round or ""] if value)
+        and matching_workflow_round(context.home_university, context.academic_year, context.application_round, _published_rounds(workflow))
     )
     workflow_sources = [source.source_url for source in workflow.sources]
     checklist: list[ApplicationPlanChecklistItem] = []
@@ -1798,6 +1831,7 @@ def _workflow_checklist(
                     if confirmed
                     else f"{step.summary} 尚有未確認欄位，請先向{confirmation_contact}核對後再執行。"
                 ),
+                responsible_party=step.responsible_party,
                 responsible_unit=(
                     step.responsible_unit or step.responsible_party or contact_unit
                 ),
@@ -1904,6 +1938,7 @@ def _reference_checklist(
                     f"{target} 的官方流程尚未發布，這項依 {year}流程推估；沒有官方期限。"
                     f"請待{contact}公告後確認文件、期限與送件方式。"
                 ),
+                responsible_party=step.responsible_party,
                 responsible_unit=step.responsible_unit or step.responsible_party or contact_unit,
                 support_status=ApplicationSupportStatus.NEEDS_CONFIRMATION,
                 needs_confirmation=True,

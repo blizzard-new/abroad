@@ -41,8 +41,8 @@ def test_mother_is_taiwan_ncu_and_namesakes_are_not_borrowed(tmp_path):
     assert ncu['location']['source_url'].endswith('/Q714891')
     assert ncu['location']['latitude']==24.968280555556
     partners=client.get('/student-dashboard',params={'school':'NCU'}).json()['partner_universities']
-    assert len(partners)==214
-    assert all(x.get('quota') is None and x['availability_status']=='agreement_only' for x in partners)
+    assert len(partners)==222
+    assert all((x.get('quota') is None) == (x['availability_status'] == 'not_open') for x in partners)
     can_tho=next(x for x in partners if 'Can Tho' in x['school_name'])
     assert can_tho.get('image_url')
     can_photo=next(x for x in json.loads((ROOT/'src/exchange_info/official_data/ncu/campus-assets.json').read_text())['photos'] if x['school_name']==can_tho['school_name'])

@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
@@ -76,9 +77,21 @@ def test_flutter_is_the_shared_android_ios_app() -> None:
         assert marker in community
 
 
-def test_flutter_aligns_with_18_universities_and_public_api() -> None:
+def test_flutter_offline_catalogue_matches_the_public_university_registry() -> None:
     flutter_root = ROOT / "mobile_flutter"
     models = (flutter_root / "lib/data/models.dart").read_text(encoding="utf-8")
+    defaults = models.split("defaultSupportedUniversities = [", 1)[1].split("\n];", 1)[0]
+    entries = re.findall(r"SupportedUniversity\(\s*id: '([^']+)',(.*?)\n  \),", defaults, re.S)
+    assert [school_id for school_id, _ in entries] == [u.id for u in SUPPORTED_UNIVERSITIES]
+    for (_, entry), university in zip(entries, SUPPORTED_UNIVERSITIES, strict=True):
+        assert f"schoolName: '{university.school_name}'" in entry
+        assert f"shortName: '{university.short_name}'" in entry
+        assert f"officialUrl: '{university.official_url}'" in entry
+        assert f"partnerCount: {university.partner_count_hint}," in entry
+
+
+def test_flutter_uses_the_public_api() -> None:
+    flutter_root = ROOT / "mobile_flutter"
     api = (flutter_root / "lib/data/exchange_api.dart").read_text(
         encoding="utf-8"
     )
@@ -88,13 +101,6 @@ def test_flutter_aligns_with_18_universities_and_public_api() -> None:
     root_shell = (flutter_root / "lib/screens/root_shell.dart").read_text(
         encoding="utf-8"
     )
-
-    assert len(SUPPORTED_UNIVERSITIES) == 22
-    for university in SUPPORTED_UNIVERSITIES:
-        assert f"id: '{university.id}'" in models
-        assert f"schoolName: '{university.school_name}'" in models
-        assert f"shortName: '{university.short_name}'" in models
-        assert f"'{university.official_url}'" in models
 
     for endpoint in (
         "_uri('universities')",

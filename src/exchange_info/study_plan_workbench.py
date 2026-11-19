@@ -225,8 +225,8 @@ SCHOOL_PITFALL_SPECS: dict[str, dict[str, object]] = {
         "dcard_board": "Dcard 臺灣大學板 ＋ 留學板",
         "max_a4_pages_hint": 2.0,
         "scoring_weight_headline": "出國交換計畫書（A4 兩面、至少 500 字）＋ 履歷表（A4 兩面）為書面審查核心項目",
-        "recommended_publish_window": "116 年度第 1 學期甄選截止（11/24 16:00）前 2～3 週（11/03～11/15）",
-        "post_title": "#分享 台大 116-1 校級交換 11/24 下午 4 點截止！出國交換計畫書「至少 500 字、限 A4 兩面」防雷與姊妹校修課對照工具",
+        "recommended_publish_window": "116-1 校內甄選截止前 2～3 週",
+        "post_title": "#分享 台大 116-1 校級交換申請：出國交換計畫書「至少 500 字、限 A4 兩面」防雷與姊妹校修課對照工具",
         "pitfalls": [
             {
                 "rule_id": "ntu-study-plan-two-sides-500-chars",
@@ -246,8 +246,8 @@ SCHOOL_PITFALL_SPECS: dict[str, dict[str, object]] = {
         "dcard_board": "Dcard 臺灣師範大學板 ＋ 留學板",
         "max_a4_pages_hint": 4.0,
         "scoring_weight_headline": "自傳及出國學習計畫占甄選總分 20%（中英文合計須介於 500～5,000 字）",
-        "recommended_publish_window": "2027 秋季班甄選截止（12/04 17:00）前 2～3 週（11/13～11/25）",
-        "post_title": "#分享 師大出國交換 12/4 截止！「自傳＋學習計畫占 20%、限 500～5,000 字」防雷整理＆線上字數計數工作台",
+        "recommended_publish_window": "116-1 校級甄選截止前 2～3 週",
+        "post_title": "#分享 師大 116-1 出國交換申請：「自傳＋學習計畫占 20%、限 500～5,000 字」防雷整理＆線上字數計數工作台",
         "pitfalls": [
             {
                 "rule_id": "ntnu-500-to-5000-chars-and-stamp",
@@ -256,7 +256,7 @@ SCHOOL_PITFALL_SPECS: dict[str, dict[str, object]] = {
                 "pitfall_title": "自傳＋出國學習計畫占總分 20%，中英文合計須介於 500～5,000 字之間（建議另附外文版 500～2,500 字）",
                 "detail_zh": (
                     "台師大赴外交換簡章規定：自傳與出國學習計畫合計須介於 500 至 5,000 字之間，占甄選評分 20%；"
-                    "且線上填報完成後列印之紙本申請表須經系所核章，連同報名費收據於截止日 17:00 前送達國際處。"
+                    "校內申請表須依簡章簽名後掃描上傳，並上傳報名費繳費證明。校內線上申請至 2026/11/15 23:59:59。"
                 ),
                 "scoring_weight": "自傳及出國學習計畫占甄選總分 20%",
                 "format_and_limit": "中英文合計 500～5,000 字（建議另附外文版 500～2,500 字）",
@@ -267,8 +267,8 @@ SCHOOL_PITFALL_SPECS: dict[str, dict[str, object]] = {
         "dcard_board": "Dcard 臺北大學板 ＋ 留學板",
         "max_a4_pages_hint": 4.0,
         "scoring_weight_headline": "計畫書合計 5,000 字以內，須依申請語組（英／中／日）語言撰寫",
-        "recommended_publish_window": "116 學年度第 1 梯次截止（12/29）前 2～3 週（12/08～12/18）",
-        "post_title": "#分享 北大 116 出國交換 12/29 截止！計畫書「5,000 字上限＋依語組語言撰寫＋隔日紙本核章」防雷包＆文件工作台",
+        "recommended_publish_window": "116 學年度校內甄選截止（2026/10/23 17:00）前 2～3 週",
+        "post_title": "北大 116 學年度交換申請：10/23 17:00 前上傳簽名申請表，計畫書依語組撰寫、上限 5,000 字",
         "pitfalls": [
             {
                 "rule_id": "ntpu-5000-char-cap-and-language-group",
@@ -277,7 +277,7 @@ SCHOOL_PITFALL_SPECS: dict[str, dict[str, object]] = {
                 "pitfall_title": "計畫書以 A4 直式橫書合計 5,000 字以內，英文組繳英文、中文組繳中文、日文組繳日文！",
                 "detail_zh": (
                     "台北大赴外交換簡章規定：計畫書合計 5,000 字以內，內容須含個人學經歷、申請動機、未來學習計畫與發展，"
-                    "並嚴格依申請語組語言撰寫；線上截止隔日 17:00 前紙本核章須送達國際處。"
+                    "請依申請語組選用語言。線上申請送出後，列印申請表並簽名，於 2026/10/23 17:00 前上傳國際處公告指定的 Google 表單，檔名須含中文姓名。"
                 ),
                 "scoring_weight": "書面計畫書與歷年成績、語言能力及面試綜合評比",
                 "format_and_limit": "A4 直式橫書、整份計畫書合計 5,000 字以內、依申請語組語言撰寫",
@@ -389,27 +389,6 @@ SCHOOL_PITFALL_SPECS: dict[str, dict[str, object]] = {
             },
         ],
     },
-    "ncu": {
-        "dcard_board": "Dcard 中央大學板 ＋ 留學板",
-        "max_a4_pages_hint": 2.0,
-        "scoring_weight_headline": "線上上傳讀書計畫與備審 PDF，且紙本申請表須經系所核章於截止日中午 12:00 前送達",
-        "recommended_publish_window": "申請截止前 2～3 週重點發布",
-        "post_title": "#分享 中央大學出國交換「中午 12:00 截止」別記錯！讀書計畫 6 段式工作台＆姊妹校修課對照整理",
-        "pitfalls": [
-            {
-                "rule_id": "ncu-noon-deadline-and-return-report",
-                "severity": "critical",
-                "badge_label": "⚠️ 中午 12:00 截止＋系所核章",
-                "pitfall_title": "線上報名與紙本核章皆為截止日中午 12:00 整截止（非 23:59）！返國心得報告須達 800–1,500 字並附 4 張照片",
-                "detail_zh": (
-                    "中央大學交換簡章規定：線上系統填報與系所核章紙本送件皆在截止日中午 12:00 截止；"
-                    "讀書計畫未公布硬性字數上限，但建議控制在 1,000–2,000 字（約 1–2 頁 A4）並明確列出目標姊妹校修課計畫。"
-                ),
-                "scoring_weight": "校內書面審查（讀書計畫、成績單、語言能力證明）",
-                "format_and_limit": "未訂硬性字數上限（系統提供 6 段式架構與 A4 頁數換算）；返國報告至少 800–1,500 字",
-            },
-        ],
-    },
     "ccu": {
         "dcard_board": "Dcard 中正大學板 ＋ 留學板",
         "max_a4_pages_hint": 3.0,
@@ -430,43 +409,23 @@ SCHOOL_PITFALL_SPECS: dict[str, dict[str, object]] = {
     },
     "cgu": {
         "dcard_board": "Dcard 長庚大學板 ＋ 留學板",
-        "max_a4_pages_hint": 2.0,
-        "scoring_weight_headline": "校內書審重視目標姊妹校修課對照與語檢門檻，紙本申請表須經系主任與院長雙重核章",
+        "max_a4_pages_hint": 1.0,
+        "scoring_weight_headline": "校內選送須知接受一頁中文讀書計畫，格式不限",
         "recommended_publish_window": "秋季／春季甄選窗口開放前 2～3 週重點發布",
-        "post_title": "#分享 長庚大學出國交換讀書計畫怎麼寫？對照台政成學長姐跨校修課情報＋6 段式文件工作台整理",
+        "post_title": "長庚大學交換申請：一頁讀書計畫與 116-1 線上繳件方式",
         "pitfalls": [
             {
-                "rule_id": "cgu-department-dean-stamps-and-course-match",
+                "rule_id": "cgu-1161-signed-upload-and-study-plan",
                 "severity": "high",
-                "badge_label": "⚠️ 系主任＋院長雙重核章",
-                "pitfall_title": "紙本申請表須預留系主任與院長雙重核章時間；讀書計畫建議對照跨校姊妹校開課方向撰寫",
+                "badge_label": "兩份文件分別簽名",
+                "pitfall_title": "116-1 請將完成簽名的申請表、同意書與讀書計畫上傳文件繳交表",
                 "detail_zh": (
-                    "長庚大學出國交換申請須將線上填報文件列印後送請系主任與院長核章；"
-                    "雖然官方未公布讀書計畫硬性字數上限，但透過 UniWay /partners 跨校頁參考台大、政大、成大赴同一姊妹校的修課方向寫進計畫書，能大幅提升書審說服力。"
+                    "第一份線上申請表送出後，國際處會寄出申請表與同意書。"
+                    "申請表須由導師或指導教授簽名，同意書須由家長或監護人簽名。"
+                    "簽名後掃描或拍成清晰 PDF，連同其他應備資料逐項上傳第二份文件繳交表。"
                 ),
-                "scoring_weight": "校內書面審查與面試綜合評比",
-                "format_and_limit": "未訂硬性字數上限（建議 1,000–2,000 字、約 1–2 頁 A4），紙本須經系主任與院長核章",
-            },
-        ],
-    },
-    "fju": {
-        "dcard_board": "Dcard 輔仁大學板 ＋ 留學板",
-        "max_a4_pages_hint": 4.0,
-        "scoring_weight_headline": "讀書計畫及自傳以 A4 雙面列印，不超過 2 頁（4 面），依申請語組語言撰寫",
-        "recommended_publish_window": "116-1 校級交換（11–12 月收件）截止前 2～3 週",
-        "post_title": "#分享 輔大出國交換讀書計畫＆自傳「A4 雙面列印不超過 2 頁（4 面）」防雷整理＋6 段式寫作工作台",
-        "pitfalls": [
-            {
-                "rule_id": "fju-two-sheets-four-sides-language-group",
-                "severity": "critical",
-                "badge_label": "⚠️ 限 2 頁（4 面）＋語組語言",
-                "pitfall_title": "讀書計畫（Study Plan）及自傳：A4 雙面列印，不超過 2 頁（4 面），須依語組語言撰寫！",
-                "detail_zh": (
-                    "輔仁大學交換簡章規定：讀書計畫及自傳以 A4 雙面列印，不超過 2 頁（4 面）；"
-                    "外語組以英文或交換國語言撰寫、日語組以日文或英文撰寫、中語組以中文撰寫。返國後 1 個月內另須繳交 2,000 字以上心得報告。"
-                ),
-                "scoring_weight": "校內書審（讀書計畫及自傳、歷年成績、語檢證明）與面試",
-                "format_and_limit": "A4 雙面列印不超過 2 頁（4 面）；返國報告 2,000 字以上",
+                "scoring_weight": "校級甄選由校級審查會議審查，院級交換由各學院審查",
+                "format_and_limit": "讀書計畫可用中文，格式不限，一頁即可",
             },
         ],
     },
@@ -868,7 +827,7 @@ def build_study_plan_workbench_payload(
         or src_meta[1]
     )
 
-    spec = SCHOOL_PITFALL_SPECS.get(uni.id, SCHOOL_PITFALL_SPECS["cgu"])
+    spec = SCHOOL_PITFALL_SPECS.get(uni.id, {})
     raw_pitfalls = list(spec.get("pitfalls", []))
     pitfalls = [
         StudyPlanPitfallRule(
@@ -884,6 +843,20 @@ def build_study_plan_workbench_payload(
         )
         for item in raw_pitfalls
     ]
+
+    if not pitfalls:
+        rule = window_card.study_plan_limit
+        pitfalls.append(StudyPlanPitfallRule(
+            rule_id=f"{uni.id}-study-plan-guidelines",
+            severity="info",
+            badge_label="母校讀書計畫規定",
+            pitfall_title=f"依{uni.short_name}當期簡章核對讀書計畫",
+            detail_zh=rule.value_text,
+            scoring_weight="依當期甄選簡章核對評分項目及占比",
+            format_and_limit=rule.value_text,
+            source_url=rule.source_url,
+            last_checked_at=rule.last_checked_at,
+        ))
 
     selected_lookup = None
     featured_lookups: list[StudyPlanPartnerCourseLookup] = []

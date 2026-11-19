@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING, Iterable, Mapping, Protocol
 from urllib.parse import urlparse, urlencode, quote
 from zoneinfo import ZoneInfo
 
+from .application_periods import matching_workflow_round
 from .entitlements import product_feature_enabled
 from .models import (
     AccountApplicationWorkspace,
@@ -290,7 +291,9 @@ def _scope_matches_workspace(
         return False
     if not _matches_allowed(context.academic_year, scope.academic_years):
         return False
-    if not _matches_allowed(context.application_round or context.semester, scope.application_rounds):
+    if scope.application_rounds and not matching_workflow_round(
+        workspace.home_school, context.academic_year, context.application_round or context.semester, scope.application_rounds
+    ):
         return False
     # Content-change notices follow the established application plan. Student
     # verification controls community permissions, but it is not a prerequisite
@@ -327,9 +330,9 @@ def matching_workspaces(
         allowed_rounds = set(workflow.effective_application_rounds)
         if workflow.application_round:
             allowed_rounds.add(workflow.application_round)
-        if allowed_rounds and _normal(context.application_round or context.semester) not in {
-            _normal(value) for value in allowed_rounds
-        }:
+        if allowed_rounds and not matching_workflow_round(
+            workspace.home_school, context.academic_year, context.application_round or context.semester, allowed_rounds
+        ):
             continue
         if scopes is not None and not any(
             _scope_matches_workspace(account, workspace, scope) for scope in scopes

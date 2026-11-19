@@ -20,6 +20,7 @@ try:
 except ImportError:  # pragma: no cover - dependency is declared, fallback keeps API usable.
     PdfReader = None  # type: ignore[assignment]
 
+from . import cgu_1161_intake
 from .models import (
     ApplicationPeriodAudience,
     ApplicationPeriodDateStatus,
@@ -52,11 +53,9 @@ CGU_1152_SELECTION_RESULT_URL = (
 )
 CGU_APPLICATION_PERIOD_CHECKED_AT = datetime(2026, 7, 29, tzinfo=timezone.utc)
 CGU_SELECTION_GUIDE_URL = "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656"
-CGU_1161_APPLICATION_NOTICE_URL = (
-    "https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817"
-)
-CGU_1161_ONLINE_FORM_URL = "https://forms.gle/JbdGkA9i7wkNdtvX8"
-CGU_FALL_ANNOUNCEMENT_CHECKED_AT = datetime(2026, 11, 11, tzinfo=timezone.utc)
+CGU_1161_APPLICATION_NOTICE_URL = cgu_1161_intake.NOTICE
+CGU_1161_ONLINE_FORM_URL = cgu_1161_intake.APPLICATION_FORM
+CGU_FALL_ANNOUNCEMENT_CHECKED_AT = cgu_1161_intake.CHECKED_AT
 TAIPEI_TIMEZONE = timezone(timedelta(hours=8))
 CGU_MANAGEMENT_2026_REFERENCE_URL = (
     "https://www.cgu.edu.tw/Uploads/upload/"
@@ -409,7 +408,16 @@ def _merge_partner_universities(
                 ),
             )
         )
-    return merged
+    return [_cgu_quota_status(row) for row in merged]
+
+
+def _cgu_quota_status(row: PartnerUniversity) -> PartnerUniversity:
+    if row.availability_status == "open" and not (row.quota or "").strip():
+        return row.model_copy(update={
+            "availability_status": "quota_unconfirmed",
+            "availability_note": "長庚合作校名單未列名額。請向所屬系所或國際事務處確認本期是否受理及提名時程。",
+        })
+    return row
 
 
 def _join_partner_values(rows: list[PartnerUniversity], field: str) -> str | None:
@@ -1072,15 +1080,16 @@ def _application_periods(
     )
     fall_status_note = {
         ApplicationPeriodStatus.UPCOMING: "本梯次尚未開放；請先準備校內文件，不要提前送件。",
-        ApplicationPeriodStatus.OPEN: "本梯次正在受理；線上申請表單與紙本申請資料都必須在校方期限內完成。",
+        ApplicationPeriodStatus.OPEN: "本梯次正在受理，請在期限內完成線上申請與文件上傳。",
         ApplicationPeriodStatus.CLOSED: "本梯次已截止；請留意國際事務處後續初審公告與下一梯次申請時程。",
     }[fall_status]
     items.append(
         ApplicationPeriodItem(
             title="116學年度第1學期交換／雙聯校內申請（秋季班）",
             details=[
-                f"線上申請表單（{CGU_1161_ONLINE_FORM_URL}，出國交換及雙聯學位共用）自 2026/11/02（一）開放，至 2026/12/21（一）17:00 截止。",
-                "紙本申請資料亦須於截止日前繳交國際事務處；公告未另列獨立紙本收件時刻，不能直接把線上 17:00 當成紙本收件時間。",
+                "116-1 校內線上申請自 2026/11/02 開放。",
+                *cgu_1161_intake.STEPS,
+                cgu_1161_intake.DEADLINE,
                 "本梯次預計於 2027 年 8–9 月出國研修一學期或一學年；實際報到與開課時間依合作校行事曆。",
                 "補助提醒（國際處公告，出國研修補助說明頁同樣載明）：同一學制期間已領取本校短期學分課程補助（例：金澤暑期課程）或其他出國研修／實習補助者，已領金額會自本補助額度中扣除。",
             ],
@@ -1099,10 +1108,7 @@ def _application_periods(
             date_status=ApplicationPeriodDateStatus.VERIFIED_EXACT,
             status=fall_status,
             status_note=fall_status_note,
-            deadline_note=(
-                "線上截止時間（2026/12/21 17:00）已由官方公告確認；紙本只寫明須於截止日前繳交國際事務處，"
-                "未提供可安全建立提醒的獨立收件時刻。"
-            ),
+            deadline_note=cgu_1161_intake.DEADLINE,
             reminder_eligible=False,
             checked_at=CGU_FALL_ANNOUNCEMENT_CHECKED_AT,
         )
@@ -1148,32 +1154,44 @@ def _application_period_status(
     return ApplicationPeriodStatus.CLOSED
 
 
+def _cgu_sourced_item(
+    title: str, page: ProcessedPage | None, details: list[str],
+    fallback: list[str], source: SourceReference,
+) -> StudentInfoItem:
+    return StudentInfoItem(
+        title=title,
+        details=details or fallback,
+        source=_source_ref(page) if details else source,
+    )
+
+
+def _selection_guide_source() -> SourceReference:
+    return SourceReference(
+        title="長庚大學校內申請選送須知",
+        source_url=CGU_SELECTION_GUIDE_URL,
+        category=PageCategory.EXCHANGE_APPLICATION,
+    )
+
+
 def _program_overview(
     preparation: ProcessedPage | None,
     short_courses: ProcessedPage | None,
     teep: ProcessedPage | None,
 ) -> list[StudentInfoItem]:
+    overview = SourceReference(
+        title="長庚國際事務處：出國研修準備方向與說明",
+        source_url="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=18380",
+        category=PageCategory.EXCHANGE_APPLICATION,
+    )
     items = [
-        StudentInfoItem(
-            title="雙學位",
-            details=_slice_details(preparation, 1, 6),
-            source=_source_ref(preparation),
-        ),
-        StudentInfoItem(
-            title="學年/學期交換",
-            details=_slice_details(preparation, 10, 13),
-            source=_source_ref(preparation),
-        ),
-        StudentInfoItem(
-            title="海外實習",
-            details=_slice_details(preparation, 13, 20),
-            source=_source_ref(preparation),
-        ),
-        StudentInfoItem(
-            title="短期學分課程",
-            details=_slice_details(short_courses, 4, 13),
-            source=_source_ref(short_courses),
-        ),
+        _cgu_sourced_item("雙學位", preparation, _slice_details(preparation, 1, 6),
+                          ["分別在長庚與合作校修讀，達成兩校畢業要求後取得兩校學位。"], overview),
+        _cgu_sourced_item("學年/學期交換", preparation, _slice_details(preparation, 10, 13),
+                          ["在合作校研修一學期或一學年。返校後可申請採認修習的課程學分。"], overview),
+        _cgu_sourced_item("海外實習", preparation, _slice_details(preparation, 13, 20),
+                          ["國外職場實習計畫與申請方式依系所辦理，先向所屬系所查詢。"], overview),
+        _cgu_sourced_item("短期學分課程", short_courses, _slice_details(short_courses, 4, 13),
+                          ["寒暑假赴海外大學修讀短期學分課程。合作校可由國際處報名，其他課程由學生向開課學校申請。"], overview),
     ]
     if teep is not None:
         items.append(
@@ -1192,7 +1210,10 @@ def _eligibility(selection: ProcessedPage | None) -> list[StudentInfoItem]:
         ["歷年學業成績平均以70以上", "語文能力證明", "請勿提出申請", "外國學生得申請非原國籍"],
         limit=8,
     )
-    return [StudentInfoItem(title="校內申請資格", details=details, source=_source_ref(selection))]
+    return [_cgu_sourced_item("校內申請資格", selection, details, [
+        "歷年學業平均原則上須達 70 分，另須符合申請校的學制、院系及語文規定。",
+        "同一學制已受本校推薦並完成交換計畫者不得再次申請。外國學生須選擇原國籍以外的國家。",
+    ], _selection_guide_source())]
 
 
 def _language_requirements(selection: ProcessedPage | None) -> list[StudentInfoItem]:
@@ -1211,7 +1232,10 @@ def _language_requirements(selection: ProcessedPage | None) -> list[StudentInfoI
         ],
         limit=12,
     )
-    return [StudentInfoItem(title="語言門檻", details=details, source=_source_ref(selection))]
+    return [_cgu_sourced_item("語言門檻", selection, details, [
+        "依研修國語言備證。英文檢定選項包括 TOEIC 聽讀 700、IELTS 5.5、TOEFL iBT 72 或 Duolingo 105。",
+        "日語能力試驗 JLPT 申請大學部為 N3、研究所為 N2。其他檢定、語種及合作校額外要求見選送須知。",
+    ], _selection_guide_source())]
 
 
 def _required_documents(workflow: ProcessedPage | None) -> list[StudentInfoItem]:
@@ -1232,21 +1256,24 @@ def _required_documents(workflow: ProcessedPage | None) -> list[StudentInfoItem]
         ],
         limit=14,
     )
-    return [StudentInfoItem(title="出國前後需處理文件", details=details, source=_source_ref(workflow))]
+    guide = _selection_guide_source()
+    documents = [
+        StudentInfoItem(title="116-1 校內申請必備文件", details=list(cgu_1161_intake.REQUIRED_DOCUMENTS), source=guide),
+        StudentInfoItem(title="116-1 依身分或個人情況加附", details=list(cgu_1161_intake.CONDITIONAL_DOCUMENTS), source=guide),
+    ]
+    if details:
+        documents.append(StudentInfoItem(title="出國前後需處理文件", details=details, source=_source_ref(workflow)))
+    return documents
 
 
 def _scholarship_info(preparation: ProcessedPage | None, teep: ProcessedPage | None) -> list[StudentInfoItem]:
-    items = [
-        StudentInfoItem(
-            title="出國補助",
-            details=_extract_matching_lines(
-                preparation,
-                ["國際處同步為學生申請教育部補助", "實際補助名額與額度", "符合本校補助規定者"],
-                limit=4,
-            ),
-            source=_source_ref(preparation),
-        )
-    ]
+    details = _extract_matching_lines(
+        preparation, ["國際處同步為學生申請教育部補助", "實際補助名額與額度", "符合本校補助規定者"], limit=4,
+    )
+    items = [_cgu_sourced_item("出國補助", preparation, details, [
+        "通過校內初審並獲合作校錄取後，國際處會將符合補助資格的學生送審，學生無須另外申請。",
+        "實際補助名額與額度由教育部核定經費、校方年度預算及申請人數決定。",
+    ], _selection_guide_source())]
     if teep:
         items.append(
             StudentInfoItem(

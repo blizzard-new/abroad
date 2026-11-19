@@ -1,6 +1,7 @@
 from pathlib import Path
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .test_ncu_resume_assets import select_ncu
 from .test_open_catalog import wait_until
 
@@ -13,7 +14,7 @@ def test_seventh_real_photo_and_licence_visible(page,live_server,query,width,aut
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge(query))
     wait_until(page,"document.querySelector('#partner-table .school-photo img')?.naturalWidth > 0",timeout=30)
     s=page.locator('#partner-table .partner-card > summary').first
     if s.is_visible():s.click()
@@ -39,7 +40,7 @@ def test_seventh_nine_named_campus_previews_on_globe(page,live_server, tmp_path)
         name=row['school_name'];page.locator('#map-school-select').select_option(value=name)
         expect(page.locator('#partner-map-preview')).to_contain_text(name)
         expect(page.locator('#partner-map-preview .map-preview-place')).to_contain_text(row['published_record']['city'])
-        expect(page.locator('#partner-map-preview')).to_contain_text('本期名額待核實')
+        expect(page.locator('#partner-map-preview')).to_contain_text(roster_badge(row['school_name']))
         OUTPUT.mkdir(parents=True,exist_ok=True)
         page.screenshot(path=str(OUTPUT/f"{row['capture_row_id']}-map-preview.png"))
         note=page.locator('#partner-map-preview .map-location-note')

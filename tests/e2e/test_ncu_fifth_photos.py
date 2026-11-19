@@ -2,6 +2,7 @@
 import re
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .test_ncu_resume_assets import select_ncu
 from .test_open_catalog import wait_until
 
@@ -21,7 +22,7 @@ def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,aut
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server)
     page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge(query))
     wait_until(page,"document.querySelector('#partner-table .school-photo img')?.naturalWidth > 0",timeout=30)
     s=page.locator('#partner-table .partner-card > summary').first
     if s.is_visible():s.click()

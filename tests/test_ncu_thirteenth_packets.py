@@ -51,7 +51,7 @@ def test_raw_documents_and_all_66_reviewed_pdf_pages_are_sha_bound():
 @pytest.mark.parametrize('admission,housing', [('unknown','unknown'), ('accepted','on_campus')])
 def test_packets_do_not_activate_current_quota_deadlines_or_downloads(tmp_path,row,name,documents,stages,admission,housing):
     partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
-    assert partner.quota is None and partner.availability_status == 'agreement_only'
+    assert partner.field_evidence["quota"].status == "verified_current" and partner.availability_status == "open"
     client = TestClient(create_app(tmp_path))
     response = client.get('/application-workflow', params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
     assert response.status_code == 200

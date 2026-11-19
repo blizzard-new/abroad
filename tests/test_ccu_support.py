@@ -349,3 +349,17 @@ def test_ccu_frontend_preferences_gpa_and_legacy_restoration():
         text=True,
     )
     assert result.returncode == 0, result.stderr
+
+
+def test_missing_machine_scope_shows_qualification_text_and_pdf_page():
+    partner = at(27)
+    request = PersonalApplicationPlanRequest(
+        home_school=HOME, academic_year='116', college='工學院', degree_level='大學部',
+        preferences=[{'rank': 1, 'school_name': partner.school_name}],
+    )
+    choice = build_personal_application_plan(request, [partner], [], academic_score_minimum=70).choices[0]
+    checks = {check.code: check for check in choice.checks}
+    for field, restriction in [('degree_level', '大一、大四'), ('college', '原專業相關')]:
+        assert checks[field].status == 'needs_confirmation'
+        assert restriction in checks[field].detail and '2027 春季' in checks[field].detail
+        assert checks[field].source_url == partner.source_url + '#page=27'

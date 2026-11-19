@@ -1,6 +1,7 @@
 """Reviewed course, calendar and insurance nuances remain visible in the browser."""
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .test_ncu_resume_assets import select_ncu
 
 
@@ -14,7 +15,7 @@ def test_em_normandie_full_documents(page, live_server, tmp_path, width):
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill('諾曼第')
     trigger = '.school-detail-trigger[data-school-name$="Ecole of Management de Normandie"]'
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge('諾曼第'))
     if width < 700:
         page.locator('#partner-table .partner-card').filter(has=page.locator(trigger)).first.locator(':scope > summary').click()
     page.locator(f'#partner-table {trigger}:visible').first.click()

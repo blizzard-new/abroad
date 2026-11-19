@@ -1,8 +1,27 @@
 from __future__ import annotations
 
+import json
 import re
 import unicodedata
 from functools import lru_cache
+from pathlib import Path
+
+
+@lru_cache(maxsize=1)
+def _ntpu_roster_spellings() -> dict[str, str]:
+    """PDF extraction can drop spaces. Only a unique, full roster label may match."""
+    manifest = Path(__file__).parent / "official_data/ntpu/catalog-completeness.json"
+    names: dict[str, set[str]] = {}
+    for row in json.loads(manifest.read_text(encoding="utf-8"))["schools"]:
+        name = row["school_name"]
+        names.setdefault("".join(name.split()), set()).add(name)
+    return {key: nameset.pop() for key, nameset in names.items() if len(nameset) == 1}
+
+
+def public_catalogue_name(name: str, home: str) -> str:
+    if home == "國立臺北大學":
+        return _ntpu_roster_spellings().get("".join(name.split()), name)
+    return name
 
 
 # Merging the workflow catalogue asks for the key of the same few hundred names over a million times per request, which

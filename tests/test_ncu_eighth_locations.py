@@ -41,14 +41,14 @@ def test_eighth_specific_markers_do_not_promote_viewports_or_conflicting_buildin
 
 def test_eighth_points_reach_api_and_mons_hold_still_wins(tmp_path):
     ps=TestClient(create_app(tmp_path)).get('/student-dashboard',params={'school':'NCU'}).json()['partner_universities']
-    assert len(ps)==214
-    assert sum(p['location']['geocode_status']=='verified' for p in ps)==214
+    assert len(ps)==222
+    assert sum((p.get('location') or {}).get('geocode_status')=='verified' for p in ps)==218
     assert sum(p['image_status']=='verified' for p in ps)==202
     by={p['school_name']:p for p in ps}
     for d in records():
         p=by[d['school_name']];r=d['published_record']
         assert p['location']['latitude']==r['latitude'] and p['location']['longitude']==r['longitude']
         assert r['note']==p['location']['note']
-    assert all(p.get('quota') is None and p['availability_status']=='agreement_only' for p in ps)
+    assert all((p.get('quota') is None) == (p['availability_status'] == 'not_open') for p in ps)
     mons=next(p for p in ps if 'De Mons' in p['school_name'])
     assert mons['location']['geocode_status']=='verified' and mons['location']['latitude']==50.459072565

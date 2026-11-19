@@ -1,8 +1,10 @@
 """Add the 116 academic-year (fall 2027 departure) workflows to the bundled CGU catalogue.
 
-Idempotent. It rebuilds the 116 rows from the 115 rows each run and never changes a
-115 row, so saved 115 plans keep working. What changes in the clones comes from the
-official pages re-read on 2026-10-03:
+Use --refresh-home-intake to update the verified home intake step of published
+116-1 rows. Older years and partner-specific instructions remain intact.
+
+For a legacy catalogue without published rows, bootstrap draft rows from the
+115 rows and the official pages re-read on 2026-10-03:
 
 * the selection guide's current schedule (fall: apply 11/01-12/20; the page names no
   year or cut-off time for this round, so no exact deadline is stored);
@@ -22,12 +24,13 @@ import argparse
 import json
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from exchange_info import cgu_1161_intake as intake  # noqa: E402
 from exchange_info.models import (  # noqa: E402
     ApplicationDocumentRequirement,
     ApplicationSourceRole,
@@ -181,20 +184,85 @@ def to_116(old: UniversityApplicationWorkflow, partner: PartnerUniversity) -> Un
     return structure_application_workflow(clone)
 
 
+def refresh_published_intake(path: Path, *, dry_run: bool) -> int:
+    # Keep the byte representation of historical rows, including older schemas.
+    updated_lines = []
+    changed = 0
+    checked_at = intake.CHECKED_AT.astimezone(timezone(timedelta(hours=8))).isoformat()
+    for line in path.read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        if (row["academic_year"], row["application_round"], row["review_status"]) != ("116", ROUND, "published"):
+            updated_lines.append(line)
+            continue
+        step = next(item for item in row["steps"] if item["phase"] == "校內申請")
+        if step.get("checked_at") and datetime.fromisoformat(step["checked_at"]) > intake.CHECKED_AT:
+            updated_lines.append(line)
+            continue
+        sources = [intake.NOTICE, intake.GUIDE]
+        documents = [*intake.REQUIRED_DOCUMENTS, *intake.CONDITIONAL_DOCUMENTS]
+        signers = ["導師或指導教授", "家長或監護人"]
+        requirements = [
+            ApplicationDocumentRequirement(
+                name=name, copy_type="digital",
+                signatures=[signers[i]] if i < 2 else [],
+                official_form_url=intake.APPLICATION_FORM if i < 2 else None,
+                source_urls=sources, needs_confirmation=False,
+                conditional=i >= len(intake.REQUIRED_DOCUMENTS),
+                condition=name if i >= len(intake.REQUIRED_DOCUMENTS) else None,
+            ).model_dump(mode="json")
+            for i, name in enumerate(documents)
+        ]
+        previous = dict(step)
+        step.update(
+            summary="先向長庚填寫線上申請表，再將簽名後的文件與其他 PDF 上傳至文件繳交表。",
+            details=list(intake.STEPS), timing=intake.DEADLINE, required_documents=documents,
+            document_requirements=requirements, signature_requirements=signers,
+            official_form_urls=[intake.APPLICATION_FORM, intake.UPLOAD_FORM],
+            action_url=intake.APPLICATION_FORM, source_urls=sources,
+            submission={**step["submission"], "portal_url": intake.UPLOAD_FORM, "deadline_note": intake.DEADLINE},
+        )
+        if previous == step:
+            updated_lines.append(line)
+            continue
+        step["checked_at"] = step["deadline_checked_at"] = checked_at
+        row["last_checked"] = checked_at
+        row["supersedes_version"] = row["version"]
+        row["version"] += 1
+        row["published_at"] = checked_at
+        for src in row["sources"]:
+            if src["source_url"] in sources:
+                src["checked_at"] = checked_at
+        UniversityApplicationWorkflow.model_validate(row)
+        updated_lines.append(json.dumps(row, ensure_ascii=False, separators=(",", ":")))
+        changed += 1
+    if not dry_run and changed:
+        path.write_text("\n".join(updated_lines) + "\n", encoding="utf-8")
+    print(f"116-1 home intake corrections: {changed}")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--partners-json", type=Path, help="Use a saved live partner list instead of fetching.")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--refresh-home-intake", action="store_true",
+                        help="Apply the dated 116-1 home submission correction to existing published workflows.")
     args = parser.parse_args()
 
+    path = BUNDLE / "application_workflows.jsonl"
+    if args.refresh_home_intake:
+        return refresh_published_intake(path, dry_run=args.dry_run)
+    rows = read_jsonl(path, UniversityApplicationWorkflow)
     if args.partners_json:
         live = [PartnerUniversity.model_validate(r) for r in json.loads(args.partners_json.read_text(encoding="utf-8"))]
     else:
         live = fetch_partner_universities(timeout_seconds=20)
-    rows = read_jsonl(BUNDLE / "application_workflows.jsonl", UniversityApplicationWorkflow)
     old = [w for w in rows if w.academic_year != "116"]
-    built, missing = [], []
+    published = [w for w in rows if w.academic_year == "116" and w.review_status == ApplicationWorkflowReviewStatus.PUBLISHED]
+    built, missing = list(published), []
     for partner in live:
+        if any(same_school(w.school_name, partner.school_name) for w in published):
+            continue
         match = next((w for w in old if same_school(w.school_name, partner.school_name)), None)
         if match is None:
             missing.append(partner.school_name)

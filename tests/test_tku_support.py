@@ -282,6 +282,10 @@ def test_offline_api_registry_documents_search_and_life_profile(tmp_path,monkeyp
     assert response.status_code==200,response.text
     dashboard=response.json()
     assert dashboard["school_name"]=="淡江大學" and len(dashboard["partner_universities"])==287
+    bundled_sites = [json.loads(line) for line in (BUNDLE / "partner_research.jsonl").read_text().splitlines()]
+    sites = {row["school_name"]: row["website"] for row in dashboard["partner_universities"]}
+    assert len(bundled_sites) == 22
+    assert all(sites[row["school_name"]] == row["official_website"] for row in bundled_sites)
     assert all(p["availability_status"]=="closed" for p in dashboard["partner_universities"][:4])
     assert all(p["availability_status"] in {"agreement_only","reference_only"} and p['quota'] is None for p in dashboard['partner_universities'][4:])
     assert "JST" in dashboard["partner_universities"][0]["application_deadline"]

@@ -41,8 +41,8 @@ def test_fourth_pass_actual_interfaces_keep_year_quota_and_documents_unconfirmed
     p = partner(needle)
     workflow = get(client, "/application-workflow", needle)
     assert len(initial(workflow, rid)["document_requirements"]) == count
-    assert workflow["review_status"] == "pending_review" and p.quota is None
-    assert p.availability_status == "agreement_only"
+    assert workflow["review_status"] == "pending_review" and p.field_evidence["quota"].status == "verified_current"
+    assert p.availability_status == ("not_open" if "Douglas" in p.school_name else "open")
     assert all(not s["deadline_reminder_eligible"] for s in workflow["steps"])
     assert all(d["stage"] == "student_application" for d in initial(workflow, rid)["document_requirements"])
     catalog = client.get("/application-center/catalog", params={"school": "NCU", "target_school": p.school_name, "academic_year": "116"}).json()

@@ -1,9 +1,37 @@
-"""Expose the exact periods present in published workflow data, without aliases."""
+"""Published workflow periods and the application path labels used to select them."""
+import unicodedata
 from collections import defaultdict
+from collections.abc import Iterable
 
 from pydantic import BaseModel, Field
 
 from .models import UniversityApplicationWorkflow
+
+
+def _round_key(home: str | None, year: str | None, label: str) -> str:
+    """Resolve the labels the CGU application path generates for a saved term."""
+    label = " ".join(unicodedata.normalize("NFKC", label).strip().casefold().split())
+    if home != "長庚大學" or not year or not year.isascii() or not year.isdigit() or len(year) > 3:
+        return label
+    fall = int(year) + 1911
+    if label in (f"{year}-1", f"{year}-1({fall} 秋季出國)", f"{year}-1({fall} 秋季・全學年出國)"):
+        return "秋季/全學年梯次"
+    if label in (f"{year}-2", f"{year}-2({fall + 1} 春季出國)"):
+        return "春季梯次"
+    return label
+
+
+def matching_workflow_round(
+    home: str | None,
+    year: str | None,
+    requested: str | None,
+    published: Iterable[str],
+) -> str | None:
+    """Return the original published label so clients can display and use its exact scope."""
+    if not requested:
+        return None
+    key = _round_key(home, year, requested)
+    return next((label for label in published if label and _round_key(home, year, label) == key), None)
 
 
 class ApplicationPeriodOption(BaseModel):

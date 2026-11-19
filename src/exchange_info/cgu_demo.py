@@ -35,7 +35,7 @@ CONTENT = Path(__file__).parent / "demo_data/content.json"
 # allowlist, so no request value is used to build a file path.
 PREVIEW_DIR = Path(__file__).parent / "demo_data/preview"
 PREVIEW_PAGES = {"office": "office.html", "inquiry": "inquiry.html", "report": "report.html"}
-ASSET_VERSION = "20261117-app-overview-2"
+ASSET_VERSION = "20261118-cgu-online-intake"
 COOKIE = "uniway_cgu_demo_session"
 HOME = "長庚大學"
 UPLOAD_NOTICE = "檔案僅用於完整性檢查，不會保存內容。"
@@ -497,7 +497,7 @@ class MockCguConnector(SchoolConnector):
                 "submitted_at": now_iso,
                 "documents": [merged_files[d["key"]] for d in OFFICIAL_REQUIRED_DOCS],
                 "timeline": [
-                    {"step": "submitted", "label": "已送出", "state": "done", "at": now_iso, "note": "已完成 5 項應備文件完整性檢查並送出申請"},
+                    {"step": "submitted", "label": "已送出", "state": "done", "at": now_iso, "note": "已完成 6 項應備文件完整性檢查並送出申請"},
                     {"step": "received", "label": "已收件", "state": "pending", "at": None, "note": "待國際處承辦確認收件"},
                     {"step": "review_result", "label": "要求補件／初審通過", "state": "pending", "at": None, "note": "待國際處承辦初審檢核"},
                 ],
@@ -927,7 +927,7 @@ HOME_REMINDERS_HTML = """
   <div class="cgu-home-reminders-head">
     <span class="cgu-home-reminders-kicker">長庚大學 116-1（2027 秋季出國）重要提醒</span>
     <h2 id="cgu-home-reminders-title">長庚 116-1 申請一頁看完</h2>
-    <p>交換與雙學位校內甄選期限、基本門檻與應備 5 份文件一次核對。</p>
+    <p>交換與雙學位校內甄選期限、基本門檻與應備 6 份文件一次核對。</p>
   </div>
   <div id="cgu-home-deadline-banner" class="cgu-home-deadline-banner" hidden=""></div>
   <div id="cgu-hero-onepager" class="cgu-hero-onepager" aria-label="長庚 116-1 校內申請重點總覽">
@@ -935,7 +935,7 @@ HOME_REMINDERS_HTML = """
       <article class="cgu-onepager-card is-highlight">
         <span class="cgu-onepager-kicker">校內申請期間</span>
         <strong>11/02–12/21 17:00</strong>
-        <p>2026/11/02 開放線上表單，12/21 17:00 截止；紙本資料須於截止日前繳交國際事務處（預計 2027 秋季出國）。</p>
+        <p>2026/11/02 開放線上表單，12/21 17:00 截止；填校方第一份表單後，從信箱下載申請表及同意書，完成簽名，再由第二份表單逐項上傳 PDF（預計 2027 秋季出國）。</p>
       </article>
       <article class="cgu-onepager-card">
         <span class="cgu-onepager-kicker">校內基本門檻</span>
@@ -950,13 +950,14 @@ HOME_REMINDERS_HTML = """
         </div>
       </article>
       <article class="cgu-onepager-card is-wide">
-        <span class="cgu-onepager-kicker">校內應備 5 份文件</span>
+        <span class="cgu-onepager-kicker">校內應備 6 份文件</span>
         <ol class="cgu-doc-pills">
           <li><b>1</b>線上申請表</li>
           <li><b>2</b>家長同意書</li>
           <li><b>3</b>語文證明</li>
           <li><b>4</b>含班級排名的中文成績單</li>
-          <li><b>5</b>1 頁讀書計畫</li>
+          <li><b>5</b>本校在學證明（iCGU）</li>
+          <li><b>6</b>1 頁讀書計畫</li>
         </ol>
       </article>
     </div>
@@ -966,7 +967,7 @@ HOME_REMINDERS_HTML = """
         <a href="https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817" target="_blank" rel="noopener noreferrer">116-1 交換及雙聯申請公告 ↗</a>
         <span aria-hidden="true">·</span>
         <a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656" target="_blank" rel="noopener noreferrer">校內申請選送須知 ↗</a>
-        <small>查核日期：2026-11-11</small>
+        <small>查核日期：2026-11-18</small>
       </div>
       <div class="cgu-onepager-actions">
         <a class="cgu-hero-cta is-primary" href="#partners">搜尋 78 所合作校</a>
@@ -1334,7 +1335,7 @@ def _seed_demo_forum(runtime_root: Path) -> None:
             title="長庚生醫系申請德國慕尼黑工業大學（TUM）校內甄選與一頁讀書計畫準備",
             body=(
                 "我是工學院生物醫學工程學系學生，剛完成長庚大學出國交換校內甄選並獲提名前往德國慕尼黑工業大學（TUM）。"
-                "準備校內初審時，最重要的五項必備文件分別是：線上申請表（最多填列 2 個志願）、家長同意書、外語能力證明（多益 700 分以上或合作校指定托福／雅思門檻）、"
+                "準備校內初審時，我當時準備的文件包括：線上申請表（最多填列 2 個志願）、家長同意書、外語能力證明（多益 700 分以上或合作校指定托福／雅思門檻）、"
                 "含班級排名百分比的中文歷年成績單，以及一頁讀書計畫。\n\n"
                 "撰寫「一頁讀書計畫」時，我將版面濃縮成三個段落：第一段說明為何選擇 TUM 生醫感測與醫工實驗室課程；"
                 "第二段直接列出預計選修的 3 門全英文專業課名與學分數，對應返國後每學期至少採認 3 學分的規定；"

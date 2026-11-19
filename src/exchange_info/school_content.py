@@ -7,7 +7,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from .models import DestinationProfile, PageCategory, SourceReference
-from .school_identity import school_identity_key, school_program_identity_key
+from .school_identity import public_catalogue_name, school_identity_key, school_program_identity_key
 from .university_locations import load_university_locations, public_location
 
 SUPPLEMENTS = Path(__file__).parent / "official_data" / "school_content_supplements.json"
@@ -26,25 +26,31 @@ def _city_chinese(value: str) -> str:
     return re.sub(pattern, lambda match: names[match[0]], value)
 
 
+def _supplement_key(home: str | None, school: str, country: str | None):
+    home = home or ""
+    return school_identity_key(home), school_program_identity_key(public_catalogue_name(school, home)), country
+
+
 @lru_cache(maxsize=1)
 def _supplements() -> dict:
     if not SUPPLEMENTS.exists():
         return {}
     rows = json.loads(SUPPLEMENTS.read_text(encoding="utf-8"))
-    return {(school_identity_key(r["home_university"]), school_program_identity_key(r["school_name"]),
-        r["country"]): r for r in rows}
+    return {_supplement_key(r["home_university"], r["school_name"], r["country"]): r for r in rows}
 
 
 def school_field_addition(profile: DestinationProfile, field: str) -> dict | None:
     """Attribute an applied addition to its own evidence, not other profile URLs."""
-    key = (school_identity_key(profile.home_university or ""),
-        school_program_identity_key(profile.school_name), profile.country)
+    key = _supplement_key(profile.home_university, profile.school_name, profile.country)
     return next((item for item in _supplements().get(key, {}).get("fields", [])
         if item.get("field") == field and getattr(profile, field, None) == item.get("summary_zh")), None)
 
 
 def complete_destination_profile(profile: DestinationProfile, data_dir: Path, *, locations: dict | None = None) -> DestinationProfile:
     """Only fill the exact gaps researched; never overwrite later operator edits."""
+    if profile.home_university == "國立中正大學":
+        from .ccu_host_life import with_host_life_service
+        profile = with_host_life_service(profile)
     if profile.home_university == "國立中央大學":
         from .ncu_completion import attach_profile_campus_photo
         profile = attach_profile_campus_photo(profile)
@@ -52,8 +58,7 @@ def complete_destination_profile(profile: DestinationProfile, data_dir: Path, *,
         from .tku_assets import complete_profile
         # TKU campus identity and licensed photos have their own reviewed ledger.
         return complete_profile(profile)
-    key = (school_identity_key(profile.home_university or ""),
-        school_program_identity_key(profile.school_name), profile.country)
+    key = _supplement_key(profile.home_university, profile.school_name, profile.country)
     supplement = _supplements().get(key, {})
     updates = {}
     additions = []

@@ -2,6 +2,7 @@
 
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import wait_until, sign_in_cookie, attach_session
 
@@ -28,7 +29,7 @@ def test_thirteenth_public_packet_and_life(page,live_server,width,slug,query,nam
         page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge(query))
     trigger=f'.school-detail-trigger[data-school-name="{name}"]'
     if width<700:
         card=page.locator('#partner-table .partner-card').filter(has=page.locator(trigger))

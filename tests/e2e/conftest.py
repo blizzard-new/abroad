@@ -9,6 +9,7 @@ import threading
 import time
 from dataclasses import dataclass
 from pathlib import Path
+from urllib.parse import urlencode
 
 import pytest
 import requests
@@ -545,24 +546,28 @@ def expand_details(page: Page, selector: str) -> None:
         panel.locator(":scope > summary").click()
 
 
-def enter_public_site(page: Page, live_server: LiveServer, route: str = "home", *, view: str | None = None) -> None:
+def enter_public_site(page: Page, live_server: LiveServer, route: str = "home", *, view: str | None = None, home_school: str | None = None) -> None:
     page.add_init_script(
         "window.sessionStorage.setItem('exchange-guide-browse-first', '1')"
     )
-    query = f"?view={view}" if view else ""
+    options = {key: value for key, value in (("view", view), ("home", home_school)) if value}
+    query = f"?{urlencode(options)}" if options else ""
     page.goto(f"{live_server.base_url}/{query}#{route}", wait_until="domcontentloaded")
     page.locator("#school-onboarding").wait_for(state="hidden")
     # Campus images, map tiles and polling are not application readiness. Await
     # the real bootstrap (including its catalogue/coverage requests) instead of
     # waiting for every network request on the page to stop. The promise also
     # works when goto only changes the hash of an already initialized document.
-    page.wait_for_function("() => typeof appReady !== 'undefined'", timeout=60_000)
-    page.evaluate("""() => {
-      appReady.then(() => { window.__testAppReady = true; },
-                    error => { window.__testBootError = String(error); });
+    page.evaluate("""async () => {
+      let timer;
+      try {
+        await Promise.race([appReady, new Promise((_, reject) => {
+          timer = setTimeout(() => reject(new Error("Application bootstrap timed out")), 60000);
+        })]);
+      } finally {
+        clearTimeout(timer);
+      }
     }""")
-    page.wait_for_function("() => window.__testAppReady || window.__testBootError", timeout=60_000)
-    assert page.evaluate("window.__testBootError || null") is None, "Application bootstrap failed"
     page.locator("#boot-splash").wait_for(state="hidden", timeout=60_000)
 
 

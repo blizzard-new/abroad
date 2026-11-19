@@ -2,6 +2,7 @@ from pathlib import Path
 import json
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .test_ncu_resume_assets import select_ncu
 
 @pytest.mark.parametrize('width',[390,1280])
@@ -17,7 +18,7 @@ def test_eighth_twelve_campus_previews_and_sources_visible(page,live_server,widt
         page.locator('#map-school-select').select_option(value=row['school_name'])
         expect(page.locator('#partner-map-preview')).to_contain_text(row['school_name'])
         expect(page.locator('#partner-map-preview .map-preview-place')).to_contain_text(row['published_record']['city'])
-        expect(page.locator('#partner-map-preview')).to_contain_text('本期名額待核實')
+        expect(page.locator('#partner-map-preview')).to_contain_text(roster_badge(row['school_name']))
         note=page.locator('#partner-map-preview .map-location-note');note.locator('summary').click()
         expect(note.locator('p')).to_contain_text(row['published_record']['note'])
         OUTPUT.mkdir(parents=True,exist_ok=True);note.screenshot(path=str(OUTPUT/f"{row['capture_row_id']}-{width}-campus-note.png"))

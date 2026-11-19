@@ -58,7 +58,7 @@ def test_programme_restrictions_overlaps_and_budget_scope_remain_explicit():
     assert 'year=2025' in txt('ncu-087', 'courses')
     assert 'B2或C1' in txt('ncu-025', 'language')
     from exchange_info.ncu_student_view import fetch_ncu_partner_universities
-    assert all(p.quota is None and p.availability_status == 'agreement_only' for p in fetch_ncu_partner_universities())
+    assert all((p.quota is None) == (p.availability_status == "not_open") for p in fetch_ncu_partner_universities())
 
 
 def test_two_chinese_cards_keep_the_exact_source(tmp_path):

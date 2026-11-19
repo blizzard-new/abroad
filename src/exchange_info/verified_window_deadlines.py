@@ -17,6 +17,7 @@ from datetime import date, datetime, timedelta, timezone
 from typing import Any
 from urllib.parse import quote, urlencode
 
+from . import cgu_1161_intake
 from .models import (
     VerifiedRuleFact,
     VerifiedSchoolWindowCard,
@@ -748,22 +749,22 @@ _RAW_SPECS: list[dict[str, Any]] = [
     {
         "school_id": "ncu",
         "in_ten_week_window": True,
-        "window_status": "upcoming",
-        "window_badge": "10 週窗口即將開放 · 線上 12/04 12:00・紙本 12/11 17:00",
-        "cycle_label": "116 學年度第 1 梯次（赴 116-1／116-2）校級出國交換學生甄選（10/22 更新版姐妹校列表已公告）",
+        "window_status": "open",
+        "window_badge": "校內線上 12/04 12:00・紙本 12/11 17:00",
+        "cycle_label": "116 學年度第 1 梯次（赴 116-1／116-2）校級出國交換學生甄選（11/17 更新版姐妹校列表已公告）",
         "primary_deadline_date": "2026-12-04",
         "primary_deadline_at": _dt(2026, 12, 4, 12, 0),
         "anchor_date": date(2026, 12, 4),
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline",
             label="校內線上報名截止日",
-            value_text="依 2026-09-05 簡章第 2 頁：2026/11/16 09:00 至 12/04 12:00（中午）於新版系統完成線上報名；官網已更新 2026/10/22 姐妹校列表（116exchangeschoollist-1022.pdf，較 10/13 版移除 EDHEC 後共 214 列；青年圓夢成果展非交換甄選變更）",
+            value_text="中央簡章第 2 頁載明校內線上申請為 2026/11/16 09:00 至 12/04 中午 12:00（臺灣時間）。11/17 姐妹校名單列出 215 個具名列項，接待校另行通知送件。",
             verification_status="verified_current",
             exact_deadline_at=_dt(2026, 12, 4, 12, 0),
             submission_mode="online",
-            source_title="國立中央大學 116 學年度第 1 梯次交換學生甄選簡章與 2026-10-22 姐妹校列表 PDF",
+            source_title="國立中央大學 116 學年度第 1 梯次交換學生甄選簡章第 2 頁",
             source_url="https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf",
-            last_checked_at="2026-10-27",
+            last_checked_at="2026-11-19",
         ),
         "paper_deadline": VerifiedRuleFact(
             rule_key="paper_deadline",
@@ -911,7 +912,7 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "school_id": "cgu",
         "in_ten_week_window": True,
         "window_status": "open",
-        "window_badge": "申請中 · 12/21 17:00 截止（線上表單與紙本皆須完成）",
+        "window_badge": "申請中 · 12/21 17:00 截止（線上申請與 PDF 上傳）",
         "cycle_label": "116-1（2027 秋季班）出國交換及雙聯學位校內甄選（2026/11/02–12/21 17:00）",
         "primary_deadline_date": "2026-12-21",
         "primary_deadline_at": _dt(2026, 12, 21, 17, 0),
@@ -919,24 +920,24 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline",
             label="校內線上報名截止日",
-            value_text="2026/11/02（一）至 2026/12/21（一）17:00 止（填寫線上申請表單 https://forms.gle/JbdGkA9i7wkNdtvX8，出國交換及雙聯學位共用）",
+            value_text="2026/11/02 開放。" + " ".join(cgu_1161_intake.STEPS) + cgu_1161_intake.DEADLINE,
             exact_deadline_at=_dt(2026, 12, 21, 17, 0),
             submission_mode="online",
             verification_status="verified_current",
             source_title="長庚大學國際事務處—本校116學年度第1學期出國交換及雙聯學位計畫申請公告（2026/11/06）",
             source_url="https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817",
-            last_checked_at="2026-11-11",
+            last_checked_at="2026-11-18",
         ),
         "paper_deadline": VerifiedRuleFact(
             rule_key="paper_deadline",
             label="紙本繳件截止日／送件規定",
-            value_text="2026/12/21（一）截止日前將紙本申請資料（含家長／監護人同意書、外國語文能力證明、中文歷年成績單、讀書計畫等）繳交至國際事務處；公告未另列獨立紙本收件時刻，請於國際處上班時間內完成繳件",
+            value_text=cgu_1161_intake.DEADLINE,
             exact_deadline_at=None,
-            submission_mode="paper_required",
+            submission_mode="signed_scan_upload",
             verification_status="verified_current",
             source_title="長庚大學國際事務處—本校116學年度第1學期出國交換及雙聯學位計畫申請公告（2026/11/06）",
             source_url="https://www.cgu.edu.tw/oia-ch/Subject/Detail/85785?nodeId=15817",
-            last_checked_at="2026-11-11",
+            last_checked_at="2026-11-18",
         ),
         "study_plan_limit": VerifiedRuleFact(
             rule_key="study_plan_limit",
@@ -944,7 +945,7 @@ _RAW_SPECS: list[dict[str, Any]] = [
             value_text="國際處校內申請選送須知說明讀書計畫可用中文、格式不限，1 頁即可；這是準備指引，不能改寫為禁止超過 1 頁的硬性上限。合作校另有要求時須分別確認。",
             source_title="長庚大學學生赴境外學校進修交流作業要點與甄選說明",
             source_url="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656",
-            last_checked_at="2026-10-21",
+            last_checked_at="2026-11-18",
         ),
     },
     {

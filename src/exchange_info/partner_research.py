@@ -22,7 +22,7 @@ from .models import (
     StudentGuidePhoto,
     StudentGuideSection,
 )
-from .school_identity import school_identity_key
+from .school_identity import public_catalogue_name, school_identity_key
 from .student_survival import apply_shared_student_survival_guide
 from .web_search import search_text
 
@@ -3177,8 +3177,11 @@ def apply_partner_research(
     Read-only API consumers may share nested provenance with the cached bundle.
     Collectors retain independent nested objects by default.
     """
+    def name_key(name: str) -> str:
+        return school_identity_key(public_catalogue_name(name, home_university))
+
     record_map = {
-        school_identity_key(record.school_name): record
+        name_key(record.school_name): record
         for record in records
         if school_identity_key(record.home_university) == school_identity_key(home_university)
         and record.official_website
@@ -3188,12 +3191,12 @@ def apply_partner_research(
         partner.model_copy(
             deep=copy_nested,
             update={
-                "website": record_map[school_identity_key(partner.school_name)].official_website,
-                "ranking_info": record_map[school_identity_key(partner.school_name)].ranking_info,
-                "ranking_source_url": record_map[school_identity_key(partner.school_name)].ranking_source_url,
+                "website": record_map[name_key(partner.school_name)].official_website,
+                "ranking_info": record_map[name_key(partner.school_name)].ranking_info,
+                "ranking_source_url": record_map[name_key(partner.school_name)].ranking_source_url,
             },
         )
-        if school_identity_key(partner.school_name) in record_map
+        if name_key(partner.school_name) in record_map
         else partner.model_copy(deep=copy_nested)
         for partner in partners
     ]

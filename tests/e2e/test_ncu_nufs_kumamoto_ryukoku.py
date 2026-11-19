@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 from playwright.sync_api import expect
+from .ncu_roster import roster_badge
 from .conftest import enter_public_site, open_navigation, expand_details
 from .test_open_catalog import wait_until, sign_in_cookie, attach_session
 
@@ -24,7 +25,7 @@ def test_next3_reference_packets_and_living_content(page,live_server,width,slug,
     wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
     if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(name)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge(name))
     trigger=f'.school-detail-trigger[data-school-name="{full_name}"]'
     card_term={'nufs':'GJP不強制JLPT','kumamoto':'非英語母語者須交','ryukoku':'建議300小時或N4'}[slug]
     card=page.locator('#partner-table .pr-school-card').filter(has=page.locator(trigger))

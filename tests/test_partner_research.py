@@ -26,6 +26,7 @@ from exchange_info.partner_research import (
 from exchange_info.storage import (
     ensure_data_dirs,
     load_application_workflows,
+    load_partner_research,
     replace_application_workflow,
     upsert_collection_audit,
     upsert_destination_profile,
@@ -40,6 +41,23 @@ def _partner(*, website: str | None = None) -> PartnerUniversity:
         website=website,
         source_url="https://cms-carrier.ntpu.edu.tw/uploads/partners.pdf",
     )
+
+
+def test_verified_institution_links_keep_the_home_programme_status(tmp_path):
+    cases = [
+        ("淡江大學", "薩蒂亞巴馬大學 Sathyabama Institute of Science and Technology", "sathyabama.ac.in"),
+        ("國立中央大學", "西安交通大學 Xian Jiaotong University", "xjtu.edu.cn"),
+        ("國立中央大學", "西交利物浦大學 Xi'an Jiaotong-Liverpool University", "xjtlu.edu.cn"),
+    ]
+    for home, school, domain in cases:
+        records = load_partner_research(tmp_path, include_bundled_baseline=True, home_university=home)
+        record = next(item for item in records if item.school_name == school)
+        assert record.official_domain == domain
+        assert record.discovery_source_url.startswith("https://ror.org/")
+        partner = _partner().model_copy(update={"school_name": school, "availability_status": "reference_only"})
+        enriched, = apply_partner_research([partner], records, home_university=home)
+        assert enriched.website == record.official_website
+        assert enriched.availability_status == "reference_only"
 
 
 def _workflow(home: str) -> UniversityApplicationWorkflow:
@@ -934,9 +952,10 @@ def test_ntpu_coverage_does_not_claim_shared_cgu_data_as_researched(
     tmp_path,
     monkeypatch,
 ) -> None:
-    partner = _partner()
+    # Use a fictitious partner so the bundled NTPU catalogue cannot supply a real workflow.
+    partner = _partner().model_copy(update={"school_name": "測試合作校 Coverage Test University"})
     ensure_data_dirs(tmp_path)
-    replace_application_workflow(_workflow("長庚大學"), tmp_path)
+    replace_application_workflow(_workflow("長庚大學").model_copy(update={"school_name": partner.school_name}), tmp_path)
     upsert_destination_profile(
         DestinationProfile(
             school_name=partner.school_name,
@@ -956,7 +975,7 @@ def test_ntpu_coverage_does_not_claim_shared_cgu_data_as_researched(
     assert initial["workflow_school_count"] == 0
     assert initial["destination_profile_count"] == 0
 
-    replace_application_workflow(_workflow("國立臺北大學"), tmp_path)
+    replace_application_workflow(_workflow("國立臺北大學").model_copy(update={"school_name": partner.school_name}), tmp_path)
     upsert_collection_audit(
         CollectionAudit(
             home_university="國立臺北大學",

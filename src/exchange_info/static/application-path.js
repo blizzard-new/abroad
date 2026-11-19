@@ -377,9 +377,16 @@ function render(){
 }
 function error(text){const el=$('#level-error');if(el){el.hidden=false;el.textContent=text;el.tabIndex=-1;el.focus();}else toast(text,true);}
 function readStep(){return {value:$('#level-input')?.value||'',confirmed:$('#self-confirm')?$('#self-confirm').checked:!!record(activeId).confirmed,version_id:$('#file-version')?.value||null,applicable:$('#file-applicable')?($('#file-applicable').value===''?null:$('#file-applicable').value==='yes'):null};}
+function syncStepButtons(){
+  const busy=saving||!!$('#upload-file')?.dataset.pending;
+  $$('#save-draft,#level-form button[type=submit],#conflict-reload,#upload-file,#load-files').forEach(button=>{
+    button.disabled=busy||plan().archived||(button.type==='submit'&&gateBlocked(find(activeId)));
+  });
+}
 async function save(complete=false,{quiet=false}={}){
   clearTimeout(autosaveTimer);
-  if(saving||!view||plan().archived)return false;
+  const uploadState=$('#upload-file')?.dataset.pending;
+  if(saving||!view||plan().archived||uploadState==='uploading'||(complete&&uploadState))return false;
   const l=find(activeId);if(!l||!$('#level-form'))return false;
   if(quiet&&drafts.get(draftKey())?.conflict)return false;
   const data=readStep(), run=epoch,captured=key(),id=plan().id,cacheKey=draftKey(),version=editVersion;
@@ -388,7 +395,7 @@ async function save(complete=false,{quiet=false}={}){
   if(complete&&!l.external)data.confirmed=true;
   else data.confirmed=!!record(l.id).confirmed&&stepContent(data)===stepContent(record(l.id));
   const wasDone=isDone(l),before={...record(l.id)};
-  stash();saving=true;$$('#save-draft,#level-form button[type=submit],#conflict-reload').forEach(b=>b.disabled=true);if($('#save-note'))$('#save-note').textContent='正在儲存…';
+  stash();saving=true;syncStepButtons();if($('#save-note'))$('#save-note').textContent='正在儲存…';
   try{
     const saved=await fetchJson(pathUrl()+'/steps/'+encodeURIComponent(l.id)+query(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({revision:view.revision,step:data})});
     if(run!==epoch||captured!==key()||view?.plan.id!==id)return false;
@@ -419,7 +426,7 @@ async function save(complete=false,{quiet=false}={}){
       if(!quiet)error(msg);else {$('#level-error').hidden=false;$('#level-error').textContent=msg;}
       if($('#save-note'))$('#save-note').textContent='尚未儲存，請重試';if(e.status===409)$('#conflict-reload').hidden=false;
     }return false;
-  }finally{if(run===epoch){saving=false;$$('#save-draft,#level-form button[type=submit],#conflict-reload').forEach(b=>b.disabled=plan().archived||(b.type==='submit'&&gateBlocked(find(activeId))));}}
+  }finally{if(run===epoch){saving=false;syncStepButtons();}}
 }
 const CHECK_TEXT={pass:['符合','pass','規則比對通過，仍以校方審核為準。'],
   fail:['不符合','fail','目前條件不符合這項規則。你仍可以記下「已看過」，但這不會改變資格判斷。'],
@@ -439,7 +446,7 @@ const GATE_FIELDS={
   language_test:{label:'語言測驗',type:'select',options:[['toeic','TOEIC'],['ielts','IELTS Academic'],['toefl','TOEFL iBT（舊制 120 分）'],['toefl_new','TOEFL iBT（新制 6 分）'],['duolingo','Duolingo'],['other','其他']]},
   language_score:{label:'語言分數',type:'number',min:0,max:1000,hint:'尚未考請留空'},
   jlpt_level:{label:'JLPT 級別',type:'select',options:['N1','N2','N3','N4','N5'].map(n=>[n])},
-  application_round:{label:'申請梯次',type:'select',options:[['第一梯次'],['第二梯次'],['其他／尚未公告']]}
+  application_round:{label:'申請梯次',type:'select',options:[],hint:'依本校當期公告填寫'}
 };
 // Where the same condition already lives in 我的條件, so it can be offered instead of typed again.
 const GLOBAL_KEY={college:'college',department:'department',degree_level:'degree',current_year:'currentYear',academic_score:'academicScore',academic_gpa:'academicGpa',class_rank_percent:'classRankPercent',language_test:'languageTest',language_score:'languageScore',jlpt_level:'jlptLevel',application_round:'applicationRound'};
@@ -455,8 +462,18 @@ function gateControl(l,key){
   const d=GATE_FIELDS[key],{value}=gateValue(l,key),id='gate-'+key,lacking=(l.missing_inputs||[]).includes(key);
   const attrs=' id="'+id+'" name="'+key+'"'+(lacking?' data-missing="true" aria-required="true"':'');
   let control;
-  if(d.type==='select'){
-    const options=d.options.slice();
+  let options=d.options;
+  if(key==='application_round'){
+    const context=plan().context;
+    const periods=state.applicationPeriodOptions;
+    const choices=periods?.home_university===context.home_school
+      ? periods.periods.filter(row=>row.academic_year===context.academic_year
+        && (context.home_school!=='長庚大學'||!roundConflictsWithContext(row.application_round,context.academic_year,context.semester)))
+      : [];
+    options=choices.map(row=>[row.application_round]);
+  }
+  if(d.type==='select'&&options.length){
+    options=options.slice();
     if(value!==''&&!options.some(o=>o[0]===String(value)))options.unshift([String(value)]);
     control='<select'+attrs+'><option value="">尚未提供</option>'+options.map(o=>'<option value="'+esc(o[0])+'"'+(String(value)===o[0]?' selected':'')+'>'+esc(o[1]||o[0])+'</option>').join('')+'</select>';
   }else if(d.type==='number'){
@@ -601,7 +618,7 @@ function renderGuideSummary(l){
       '<div><dt>志願數上限</dt><dd>'+esc(g.preference_limit||'')+'</dd></div>'+
       '<div><dt>基本申請門檻</dt><dd>'+esc(g.eligibility_summary||'')+'</dd></div>'+
     '</dl>'+
-    (docs?'<div class="cgu-guide-docs"><h4>校內應備 5 份文件</h4><ol class="cgu-guide-doc-list">'+docs+'</ol></div>':'')+
+    (docs?'<div class="cgu-guide-docs"><h4>'+esc(g.documents_label || ('校內應備 '+g.required_documents.length+' 份文件'))+'</h4><ol class="cgu-guide-doc-list">'+docs+'</ol></div>':'')+
     (links?'<div class="cgu-guide-links">'+links+'</div>':'')+
   '</section>';
 }
@@ -610,9 +627,9 @@ function field(l,r){
     return '<li class="'+k[1]+'" data-check="'+esc(c.id)+'"><b>'+k[0]+'</b><div><strong>'+esc(c.title)+'</strong><p>'+esc(c.prompt)+'</p></div>'+(urls(c)[0]?'<a href="'+esc(urls(c)[0])+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc(c.title)+'的官方來源">官方來源'+icon('arrow-up-right')+'</a>':'')+'</li>';}).join('')+'</ul>'+gateInputs(l);
   if(l.kind==='confirm')return checkStatus(l)+gateInputs(l)+renderGuideSummary(l)+'<div class="choice-box">'+icon(l.icon)+'<strong>'+esc(l.prompt)+'</strong></div>';
   if(l.kind==='assemble')return '<div class="document-preview">'+levels().filter(x=>x.kind==='write').map(x=>'<section><h3>'+esc(x.title)+'</h3><p>'+esc(record(x.id).value||'尚未填寫')+'</p><a href="'+href('level',x.id)+'">編輯這一段</a></section>').join('')+'</div><button type="button" id="download-writing" class="outline-button">'+icon('download')+'下載文字草稿</button><a class="outline-button" href="'+pathUrl()+'/writing.docx'+query()+'">'+icon('file-down')+'下載 Word 草稿</a>';
-  return (l.conditional?'<label for="file-applicable">這份條件式文件適用於你嗎？</label><select id="file-applicable"><option value="">待確認（暫不計入進度）</option><option value="yes" '+(r.applicable===true?'selected':'')+'>適用</option><option value="no" '+(r.applicable===false?'selected':'')+'>不適用</option></select>':'')+(l.external?'<div class="external-notice">學生自行記錄，不代表校方確認。</div>':'')+
-    (l.kind==='submission'?'<p class="small-warning">請在官方系統送件；UniWay 不代送申請。</p>':'')+
-    (l.kind==='file'?'<label for="file-version">連結私人文件</label><select id="file-version"><option value="">自行保管（在下方記錄位置）</option>'+(r.version_id?'<option selected value="'+esc(r.version_id)+'">'+esc(r.file_name||'已連結文件')+'</option>':'')+'</select><button type="button" id="load-files" class="quiet-button">'+icon('folder-open')+'選擇我的文件</button><details class="ap-upload"><summary>上傳到私人文件庫</summary><label for="path-file">選擇檔案</label><input type="file" id="path-file"><label class="check-row"><input type="checkbox" id="file-consent"><span>同意加密保存 30 天，用於申請準備；可在私人文件庫撤回。</span></label><button type="button" id="upload-file" class="outline-button">上傳並連結</button></details>':'')+
+  return (l.conditional?'<label for="file-applicable">'+(l.document_basis==='personal'?'要將自備清單加入準備進度嗎？':l.document_basis==='reference_year'?'校方當期公告也需要這份文件嗎？':'這份條件式文件適用於你嗎？')+'</label><select id="file-applicable"><option value="">待確認（暫不計入進度）</option><option value="yes" '+(r.applicable===true?'selected':'')+'>適用</option><option value="no" '+(r.applicable===false?'selected':'')+'>不適用</option></select>':'')+(l.external?'<div class="external-notice">學生自行記錄，不代表校方確認。</div>':'')+
+    (l.kind==='submission'?'<p class="small-warning">請依校方當期公告送件。完成官方送件後，再回來記錄。</p>':'')+
+    (l.kind==='file'?'<label for="file-version">連結私人文件</label><select id="file-version"><option value="">自行保管（在下方記錄位置）</option>'+(r.version_id?'<option selected value="'+esc(r.version_id)+'">'+esc(r.file_name||'已連結文件')+'</option>':'')+'</select><button type="button" id="load-files" class="quiet-button">'+icon('folder-open')+'選擇我的文件</button><button type="button" id="download-path-file" class="outline-button" hidden>'+icon('download')+'下載選取的文件</button><details class="ap-upload"><summary>上傳到私人文件庫</summary><label for="path-file">選擇檔案</label><input type="file" id="path-file"><label class="check-row"><input type="checkbox" id="file-consent"><span>同意加密保存 30 天，用於申請準備；可在私人文件庫撤回。</span></label><button type="button" id="upload-file" class="outline-button">上傳並連結</button></details>':'')+
     '<label for="level-input">'+(l.kind==='write'?'你的想法':l.external?'通知內容':'備註（選填）')+'</label><textarea id="level-input" maxlength="20000">'+esc(r.value||'')+'</textarea>';
 }
 function renderLevel(id){
@@ -623,7 +640,7 @@ function renderLevel(id){
   const dependencies=missing(l),draftable=hasDraftInput(l),isNoticePanel=l.cgu_level_type==='oia_notice'||l.cgu_level_type==='partner_notice';
   const rawFrom=route().get('from')||'',backTab=FROM_LABELS[rawFrom]?rawFrom:'today';
   const noteText=gateBlocked(l)?(l.kind==='checks'?'先在上方補齊資料並按「儲存並判斷」，再完成資格確認':'補齊上方資料後，才能確認這一關'):dirty?'已恢復未儲存內容':'';
-  const supportInner=(l.guide_summary||l.kind==='checks'||(!urls(l).length&&l.kind!=='confirm')?'':'<details class="source-details"><summary>官方來源'+icon('chevron-down')+'</summary>'+(l.kind==='confirm'?'<p>'+esc(l.prompt)+'</p>':'')+urls(l).map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(i?'相關官方文件':'官方來源')+icon('arrow-up-right')+'</a>').join('')+'</details>')+(l.official_deadline_at?'<p class="ap-deadline">'+(confirmedDeadline(l)?'官方期限：':'參考日期（待核對）：')+esc(new Date(l.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))+'（臺灣時間）'+(new Date(l.official_deadline_at)<new Date()?'（已過期）':'')+'</p>':'')+(l.action_url&&/^https?:\/\//i.test(l.action_url)?'<a class="outline-button" href="'+esc(l.action_url)+'" target="_blank" rel="noopener noreferrer">開啟官方表格'+icon('external-link')+'</a>':'')+(l.kind==='submission'&&urls(l).length?'<a class="outline-button" href="'+esc(urls(l)[0])+'" target="_blank" rel="noopener noreferrer">校方公告與入口'+icon('external-link')+'</a>':'');
+  const supportInner=(l.guide_summary||l.kind==='checks'||(!urls(l).length&&l.kind!=='confirm')?'':'<details class="source-details"><summary>官方來源'+icon('chevron-down')+'</summary>'+(l.kind==='confirm'?'<p>'+esc(l.prompt)+'</p>':'')+urls(l).map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(i?'相關官方文件':'官方來源')+icon('arrow-up-right')+'</a>').join('')+'</details>')+(l.official_deadline_at?'<p class="ap-deadline">'+(confirmedDeadline(l)?'官方期限：':'參考日期（待核對）：')+esc(new Date(l.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))+'（臺灣時間）'+(new Date(l.official_deadline_at)<new Date()?'（已過期）':'')+'</p>':'')+(l.action_url&&/^https?:\/\//i.test(l.action_url)?'<a class="outline-button" href="'+esc(l.action_url)+'" target="_blank" rel="noopener noreferrer">開啟官方表格'+icon('external-link')+'</a>':'')+(l.kind==='submission'&&urls(l).length?'<a class="outline-button" href="'+esc(urls(l)[0])+'" target="_blank" rel="noopener noreferrer">'+(l.task_origin==='reference_year'?'查看參考年度公告':'校方公告與入口')+icon('external-link')+'</a>':'');
   const progressHtml=isNoticePanel?'<div class="level-progress"><div><span>通知狀態</span><strong>'+esc(r.value||(l.cgu_level_type==='oia_notice'?'待國際處更新':'待合作校通知'))+'</strong></div></div>':'<div class="level-progress" data-s="'+(isDone(l)?'done':'started')+'"'+(isDone(l)||hasContent(l)||(l.kind==='checks'&&l.progress.value)?'':' hidden')+'><strong>'+(isDone(l)?'已完成':l.kind==='checks'?l.progress.value+' / '+l.progress.total+' 項符合':'進行中')+'</strong></div>';
   $('#level-view').innerHTML='<div class="level-topline"><a class="back-link" href="'+href(backTab)+'">'+icon('arrow-left')+'回到'+FROM_LABELS[backTab]+'</a><span class="level-plan-name">'+esc(shortSchool(c.target_school)+' · '+formatContextTerm(c))+'</span></div><div class="level-layout"><div class="level-card"><div class="level-heading"><span class="square-icon">'+icon(l.icon)+'</span><h2 id="level-title" tabindex="-1">'+esc(l.title)+'</h2>'+progressHtml+'</div>'+
     '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'||l.kind==='checks'||!l.prompt?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning&&l.warning!==l.prompt&&!(l.check_status&&CHECK_STANDARD.has(l.warning))?'<p class="ap-warning">'+esc(l.warning)+'</p>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+esc(noteText)+'</span>'+(draftable?'<button type="button" id="save-draft" class="outline-button">儲存草稿</button>':'')+(l.kind==='checks'&&isDone(l)?'<a class="primary-button" href="'+href(backTab)+'">回到'+FROM_LABELS[backTab]+icon('arrow-right')+'</a>':'<button id="confirm-step" type="submit" class="primary-button" '+(plan().archived||gateBlocked(l)?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button>')+'</footer></form>'+'</div><aside class="level-support">'+(supportInner?'<section class="support-card">'+supportInner+'</section>':'')+'</aside></div>';
@@ -649,6 +666,12 @@ function renderLevel(id){
     };
     if(cached?.conflict){$('#conflict-reload').hidden=false;$('#level-error').hidden=false;$('#level-error').textContent='其他分頁已更新。先載入最新進度，再確認要保存的內容。';}
     if(plan().archived){$$('#level-form input,#level-form textarea,#level-form select,#level-form button').forEach(el=>el.disabled=true);$('#save-note').textContent='已封存，恢復計畫後可繼續';}
+    if($('#file-version')){
+      const select=$('#file-version'), download=$('#download-path-file');
+      select.onchange=syncFileDownload;
+      download.onclick=()=>downloadPrivateVaultVersion(select.value,download,select.selectedOptions[0]?.textContent);
+      syncFileDownload();
+    }
     if($('#load-files'))$('#load-files').onclick=loadFiles;
     if($('#upload-file'))$('#upload-file').onclick=uploadFile;
     if($('#download-writing'))$('#download-writing').onclick=()=>{
@@ -751,17 +774,41 @@ function mountTool(tool){
   window.UniWayApplicationWorkspace?.mount(tool,host);
   icons();
 }
-async function loadFiles(){const captured=key(),id=activeId,run=epoch;try{
-  const data=await fetchJson('/account/vault/documents');if(captured!==key()||id!==activeId||run!==epoch)return;
+function syncFileDownload(){
+  const select=$('#file-version'),button=$('#download-path-file');
+  if(!select||!button)return;
+  const expired=find(activeId)?.file_unavailable&&select.value===record(activeId).version_id;
+  button.hidden=!select.value||!!expired;
+}
+async function loadFiles(){const captured=key(),id=activeId,run=epoch,initial=$('#file-version').value;try{
+  const data=await fetchJson('/account/vault/documents');if(captured!==key()||id!==activeId||run!==epoch||$('#file-version').value!==initial||$('#upload-file').dataset.pending)return;
   const selected=$('#file-version').value;$('#file-version').innerHTML='<option value="">自行保管（在下方記錄位置）</option>'+data.items.flatMap(d=>d.versions.map(v=>'<option value="'+esc(v.id)+'" '+(v.id===selected?'selected':'')+'>'+esc(v.file_name)+'</option>')).join('');
+  syncFileDownload();
 }catch(e){if(captured===key()&&id===activeId)error(e.message);}}
 async function uploadFile(){
   const file=$('#path-file').files[0];if(!file||!$('#file-consent').checked){error('請選擇檔案並確認保存同意。');return;}
-  const captured=key(),id=activeId,run=epoch,b=$('#upload-file');b.disabled=true;
-  const data=new FormData();Object.entries({label:find(id).title,category:'other',purpose:'application_preparation',retention_days:'30',consent:'true'}).forEach(([k,v])=>data.append(k,v));data.append('file',file);
+  const captured=key(),id=activeId,run=epoch,b=$('#upload-file');
+  if(saving||b.dataset.pending)return;
+  b.dataset.pending='uploading';syncStepButtons();
+  $('#save-note').textContent='正在上傳並連結文件…';
+  const data=new FormData();Object.entries({label:Array.from(find(id).title).slice(0,100).join(''),category:'other',purpose:'application_preparation',retention_days:'30',consent:'true'}).forEach(([k,v])=>data.append(k,v));data.append('file',file);
   try{const saved=await fetchJson('/account/vault/documents',{method:'POST',body:data});if(captured!==key()||id!==activeId||run!==epoch)return;
-    const v=saved.versions.at(-1);await loadFiles();if(captured!==key()||id!==activeId||run!==epoch)return;$('#file-version').value=v.id;edit();$('#save-note').textContent=drafts.get(draftKey())?.conflict?'檔案已上傳，請比對版本後儲存連結':'檔案已上傳，正在保存連結';await save(false,{quiet:true});
-  }catch(e){if(captured===key()&&id===activeId)error(e.message);}finally{if(b.isConnected)b.disabled=false;}
+    const version=saved.versions.at(-1),select=$('#file-version');
+    select.add(new Option(version.file_name,version.id,false,true));
+    b.dataset.pending='linking';syncFileDownload();edit();
+    $('#save-note').textContent=drafts.get(draftKey())?.conflict?'檔案已上傳，請比對版本後儲存連結':'檔案已上傳，正在保存連結';
+    await save(false,{quiet:true});
+  }catch(e){
+    if(captured===key()&&id===activeId){
+      error(e.message);$('#save-note').textContent='上傳未完成，請重試';
+      if(dirty&&!drafts.get(draftKey())?.conflict){
+        clearTimeout(autosaveTimer);autosaveTimer=setTimeout(()=>save(false,{quiet:true}),900);
+      }
+    }
+  }finally{
+    delete b.dataset.pending;
+    if(b.isConnected)syncStepButtons();
+  }
 }
 async function archive(){
   if(!view||saving)return;

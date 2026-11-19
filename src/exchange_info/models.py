@@ -1548,6 +1548,7 @@ class ApplicationPlanChecklistItem(BaseModel):
     title: str
     detail: str
     responsible_unit: str
+    responsible_party: str | None = None
     support_status: ApplicationSupportStatus
     needs_confirmation: bool = False
     confirmation_contact: str | None = None

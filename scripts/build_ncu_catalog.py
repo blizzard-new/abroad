@@ -311,6 +311,7 @@ def build(output):
     validate_reviewed_host_documents(reviewed)
     corrections_path = COMPLETION_SOURCES / "website-corrections.json"
     website_corrections = load_json(corrections_path) if corrections_path.exists() else {}
+    website_corrections.update(load_json(ROOT / "sources/ncu/2026-11-18/website-corrections.json"))
     completion_reviews = COMPLETION_SOURCES / "reviewed-host-records.json"
     if completion_reviews.exists():
         supplements = load_json(completion_reviews)
@@ -473,6 +474,14 @@ def build(output):
                 raise ValueError("NCU更正網址國家與原目錄不符，須重新核對身份。")
             website = website_correction["website"]
             research[-1]["note"] = website_correction["note"]
+            if website_correction.get("verification_status") == "official_verified":
+                research[-1].update(
+                    official_domain=website_correction["official_domain"],
+                    candidate_title=website_correction["candidate_title"],
+                    checked_at=website_correction["checked_at"],
+                    discovery_source_url=website_correction["identity_source_url"],
+                    verification_status="official_verified",
+                )
         research[-1]["official_website"] = website
         period = "116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。"
         deadline = "中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。"
@@ -1644,6 +1653,8 @@ def build(output):
     from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
     apply_vilnius_akita_review(ROOT, "ncu", bundle=output)
     apply_ncu_20261022_overlay(output)
+    from scripts.refresh_ncu_116_roster import apply_roster
+    apply_roster(output)
     for item in output.iterdir():
         if item.is_file() and item.suffix in {".json", ".jsonl", ".csv"}:
             raw_bytes = item.read_bytes()

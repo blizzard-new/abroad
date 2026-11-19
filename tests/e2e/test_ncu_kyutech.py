@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 from playwright.sync_api import expect
 
+from .ncu_roster import roster_badge
 from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import wait_until
 
@@ -21,7 +22,7 @@ def test_ncu_kyutech_support_levels_arrival_split_and_reading_scope(page, live_s
     if width < 700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
         page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click(); page.locator('#partner-search').fill('九州工業')
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
+    expect(page.locator('#partner-table')).to_contain_text(roster_badge('九州工業'))
     if width < 700:
         page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()

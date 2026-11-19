@@ -1714,8 +1714,8 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
-    "cgu": ("https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656", "2026-10-03"),
-    "ntpu": ("https://cms-carrier.ntpu.edu.tw/uploads/116_16e535159d.pdf", "2026-10-03"),
+    "cgu": ("https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656", "2026-11-18"),
+    "ntpu": ("https://cms-carrier.ntpu.edu.tw/uploads/116_16e535159d.pdf", "2026-11-18"),
     "ntu": ("https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/07/116-1-Selection-Guidelines_CH.pdf", "2026-10-07"),
     "ccu": ("https://oia.ccu.edu.tw/var/file/8/1008/attach/78/pta_54384_797227_45763.pdf", "2026-10-08"),
     "ncu": ("https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf", "2026-10-15"),

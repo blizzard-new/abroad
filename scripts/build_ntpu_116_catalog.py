@@ -38,7 +38,7 @@ from exchange_info.models import (  # noqa: E402
     PartnerUniversity,
     UniversityApplicationWorkflow,
 )
-from exchange_info.school_identity import same_school, school_identity_key  # noqa: E402
+from exchange_info.school_identity import VisualRecordIndex, public_catalogue_name, same_school, school_identity_key  # noqa: E402
 from exchange_info.storage import read_jsonl, write_jsonl  # noqa: E402
 from exchange_info.workflow_structuring import (  # noqa: E402
     structure_application_workflow,
@@ -181,7 +181,10 @@ def completeness(partners, workflows, destinations, research, images):
     from exchange_info.partner_research import apply_partner_research
 
     partners = apply_partner_research(partners, research, home_university=NTPU_NAME)
-    image_map = {school_identity_key(str(r.get("school_name") or "")): r for r in images}
+    image_map = VisualRecordIndex({
+        (school_identity_key(str(row.get("school_name") or "")), str(row.get("country") or "")): row
+        for row in images if row.get("school_name")
+    })
     wf_map = {school_identity_key(w.school_name): w for w in workflows}
     dest_map = {school_identity_key(d.school_name): d for d in destinations}
     rows = []
@@ -191,7 +194,7 @@ def completeness(partners, workflows, destinations, research, images):
         rows.append({
             "school_name": p.school_name, "availability_status": p.availability_status,
             "official_website": bool(p.website),
-            "image_status": str((image_map.get(key) or {}).get("status") or "not_collected"),
+            "image_status": str((image_map.get((p.school_name, p.country or "")) or {}).get("status") or "not_collected"),
             "language_and_eligibility": bool(p.eligibility),
             "academic_restrictions": bool(p.colleges and p.degree_levels), "quota": bool(p.quota),
             "study_period": bool(p.study_period), "ranking": bool(p.ranking_info and p.ranking_source_url),
@@ -210,7 +213,8 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    partners = nv.fetch_ntpu_partner_universities()
+    partners = [p.model_copy(update={"school_name": public_catalogue_name(p.school_name, NTPU_NAME)})
+                for p in nv.fetch_ntpu_partner_universities()]
     research = read_jsonl(BUNDLE / "partner_research.jsonl", PartnerResearchRecord)
     destinations = read_jsonl(BUNDLE / "destination_profiles.jsonl", DestinationProfile)
     workflows = read_jsonl(BUNDLE / "application_workflows.jsonl", UniversityApplicationWorkflow)

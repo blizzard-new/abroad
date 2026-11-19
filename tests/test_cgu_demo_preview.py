@@ -198,10 +198,10 @@ def test_office_has_five_fictional_applications_with_simulated_receipt_numbers()
     assert {row['status'] for row in rows} <= STATUSES
     for row in rows:
         assert len(row['prefs']) == 2 and len(set(row['prefs'])) == 2  # school limit is two preferences
-        assert row['docs'] == 5  # the five documents CGU requires
+        assert row['docs'] == 6  # CGU 116-1 required uploads
         assert row['dept_year'].endswith(('大二', '大三', '大四'))
-        done = 5 - len(row['missing'])
-        assert row['summary'].startswith(f'{done}／5')
+        done = 6 - len(row['missing'])
+        assert row['summary'].startswith(f'{done}／6')
         assert (row['status'] == '待補件') == bool(row['missing']), row  # incomplete files are exactly the 待補件 ones
     assert {row['status'] for row in rows} == STATUSES  # all three states are demonstrated
 

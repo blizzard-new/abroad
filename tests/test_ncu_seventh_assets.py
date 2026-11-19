@@ -49,8 +49,8 @@ def test_seventh_campus_photos_have_original_author_grants_and_visible_identity(
 def test_seventh_new_markers_and_photos_reach_ncu_api_without_changing_quota(tmp_path):
     c=TestClient(create_app(tmp_path))
     ps=c.get('/student-dashboard',params={'school':'NCU'}).json()['partner_universities']
-    assert len(ps)==214 and all(p.get('quota') is None and p['availability_status']=='agreement_only' for p in ps)
-    assert sum(p['location']['geocode_status']=='verified' for p in ps)==214
+    assert len(ps)==222 and all((p.get('quota') is None) == (p['availability_status'] == 'not_open') for p in ps)
+    assert sum((p.get('location') or {}).get('geocode_status')=='verified' for p in ps)==218
     assert sum(p['image_status']=='verified' for p in ps)==202
     mons=next(p for p in ps if 'De Mons' in p['school_name'])
     assert mons['location']['geocode_status']=='verified'

@@ -13,6 +13,7 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 
 from .models import (
+    ApplicationDocumentRequirement,
     ApplicationStep,
     TaskDocumentLink,
     UniversityApplicationWorkflow,
@@ -92,12 +93,51 @@ _RULES: tuple[_Rule, ...] = (
 _TEMPLATE_ORDER = {rule.template_id: index for index, rule in enumerate(_RULES)}
 
 
+def document_requirements_for_step(step: ApplicationStep) -> list[ApplicationDocumentRequirement]:
+    """Read structured requirements or the explicitly enumerated rows in older catalogues."""
+    if step.document_requirements or not step.source_urls:
+        return step.document_requirements
+    conditions = {}
+    names = [
+        match.group(1) for detail in step.details
+        if (match := re.fullmatch(r"必備表單\s*\d+\s*[：:]\s*(.{1,240})", detail.strip()))
+    ]
+    if not names and (step.rule_id or "").startswith("nycu-116-home-2-"):
+        # UST has its own packet. The 115 university-wide checklist embedded in
+        # other NYCU rows is expressly historical and belongs to a different track.
+        from .nycu_source_review import DOCS, UST_DOCS
+        if UST_DOCS[1] in step.details:
+            names = ["台聯大簽名申請表", "身分證及學生證正反面", "護照照片頁",
+                     "研修計畫", "CV", "一封教授英文推薦函", "英文歷年成績單",
+                     "TOEFL／IELTS（香港中文大學暑期依簡章免英檢）", "其他有利資料（選附）"]
+            conditions[names[-2]] = "香港中文大學暑期依簡章免英檢；請核對所選計畫。"
+            conditions[names[-1]] = "可依個人情況選附。"
+        elif step.scope.academic_years == ["115"] and DOCS[0] in step.details:
+            names = ["中文歷年等第成績單（大學部含排名）", "中文在學證明", "中文研修計畫（含擬修課列表）",
+                     "中文自傳", "語文檢定證明", "其他有利資料（選附）"]
+            conditions[names[-1]] = "可依個人情況選附。"
+    if not names and (step.rule_id or "").startswith("pccu-116-home-2-"):
+        from .pccu_source_review import DOCS
+        if step.scope.academic_years == ["115"] and DOCS["mainland"][0] in step.details:
+            names = ["赴陸線上申請系統產生的紙本申請表（系主任簽名，研究生另需指導教授簽名）",
+                     "中文自傳（格式自由）", "學習計畫（300 字以內）", "歷年成績單（含班排名百分比）"]
+        elif step.scope.academic_years == ["115"] and DOCS["jp"][0] in step.details:
+            names = ["日文系線上及紙本申請表", "成績單（學生專區列印可）", "學習計畫", "學習服務表", "JLPT 證明"]
+            conditions[names[-1]] = "歷史初審公告列明，未取得 JLPT 者可免繳。"
+        elif step.scope.academic_years == ["115"] and DOCS["kr"][0] in step.details:
+            names = ["韓文系申請表、114-2 成績單、書審資料（依序合併為一個 PDF）"]
+    return [ApplicationDocumentRequirement(name=name, source_urls=step.source_urls,
+                                          conditional=name in conditions, condition=conditions.get(name),
+                                          needs_confirmation=step.needs_confirmation)
+            for name in dict.fromkeys(names)]
+
+
 def document_link_for_step(step: ApplicationStep) -> TaskDocumentLink | None:
     """Return the tool and required-document summary for one official step."""
 
     names = [
         requirement.name.strip()
-        for requirement in step.document_requirements
+        for requirement in document_requirements_for_step(step)
         if requirement.name.strip()
     ]
     positions: dict[str, tuple[int, int]] = {}

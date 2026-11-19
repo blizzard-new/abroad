@@ -276,7 +276,7 @@ def test_demo_student_profile_and_navigator_subsidy_sources(demo_url):
     assert 'e3b68a9a-e820-4614-a799-e88023a40161' in navigator['document_url']
     assert len(dashboard['scholarship_info']) >= 1
     req_docs = ' '.join(detail for group in dashboard['required_documents'] for detail in group['details'])
-    for doc_name in ('線上申請表', '家長同意書', '外國語文能力證明', '中文歷年成績單', '讀書計畫'):
+    for doc_name in ('出國研修申請表', '家長或監護人同意書', '外國語文能力證明', '中文歷年成績單', '在學證明', '讀書計畫'):
         assert doc_name in req_docs
 
 
@@ -306,7 +306,7 @@ def test_school_connector_interface_and_swappability(tmp_path):
         IncompleteConnector()
 
     # Verify swapping SchoolConnector implementation requires only replacing the connector class,
-    # including UI 5-document precheck uploads, rule-based FAQ lookup, report print, and reset.
+    # including UI 6-document precheck uploads, rule-based FAQ lookup, report print, and reset.
     script = """
 import os, sys
 from fastapi.testclient import TestClient
@@ -349,7 +349,7 @@ app = create_demo_app(connector_factory=StubSchoolConnector)
 with TestClient(app, base_url='http://testserver') as client:
     headers = {'Origin': 'http://testserver'}
     assert client.get('/').status_code == 200
-    for key in ('online_form', 'parent_consent', 'language_proof', 'transcript', 'study_plan'):
+    for key in ('online_form', 'parent_consent', 'language_proof', 'transcript', 'enrollment_certificate', 'study_plan'):
         up = client.post('/demo/connector/files', data={'doc_key': key},
                          files={'file': (f'{key}.pdf', f'stub-{key}'.encode(), 'application/pdf')}, headers=headers)
         assert up.status_code == 200, up.text
@@ -395,7 +395,7 @@ with TestClient(app, base_url='http://testserver') as client:
     assert pr.status_code == 200 and 'CGU-116-1-R9001' in pr.text
 
     st = client.get('/demo/connector/status').json()
-    assert st['stub'] is True and st['calls'] == 3 and st['doc_count'] == 5
+    assert st['stub'] is True and st['calls'] == 3 and st['doc_count'] == 6
     assert client.post('/demo/reset', headers=headers).status_code == 200
     assert client.get('/demo/connector/status').json()['precheck']['complete'] is False
 """
@@ -601,7 +601,7 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     # 3. Precheck blocks missing documents (0 of 5, then 3 of 5)
     initial_status = alice.get(demo_url + '/demo/connector/status').json()
     assert initial_status['precheck']['complete'] is False
-    assert len(initial_status['precheck']['missing_documents']) == 5
+    assert len(initial_status['precheck']['missing_documents']) == 6
 
     no_plan = alice.post(demo_url + '/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'})
     assert no_plan.status_code == 422
@@ -612,7 +612,7 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
 
     blocked = alice.post(demo_url + '/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'})
     assert blocked.status_code == 422
-    assert len(blocked.json()['missing_documents']) == 5
+    assert len(blocked.json()['missing_documents']) == 6
 
     # Empty upload & unknown doc_key rejected
     assert alice.post(demo_url + '/demo/connector/files', data={'doc_key': 'online_form'},
@@ -620,16 +620,16 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     assert alice.post(demo_url + '/demo/connector/files', data={'doc_key': 'unknown_doc'},
                       files={'file': ('x.pdf', b'abc', 'application/pdf')}).status_code == 422
 
-    doc_keys = ['online_form', 'parent_consent', 'language_proof', 'transcript', 'study_plan']
+    doc_keys = ['online_form', 'parent_consent', 'language_proof', 'transcript', 'enrollment_certificate', 'study_plan']
     for key in doc_keys[:3]:
         r = alice.post(demo_url + '/demo/connector/files', data={'doc_key': key},
                        files={'file': (f'{key}.pdf', f'sample-{key}'.encode(), 'application/pdf')})
         assert r.status_code == 200
     still_blocked = alice.post(demo_url + '/demo/connector/applications', json={'preference_1': '林肯大學 Lincoln University'})
     assert still_blocked.status_code == 422
-    assert {d['key'] for d in still_blocked.json()['missing_documents']} == {'transcript', 'study_plan'}
+    assert {d['key'] for d in still_blocked.json()['missing_documents']} == {'transcript', 'enrollment_certificate', 'study_plan'}
 
-    # Upload remaining 2 documents and submit
+    # Upload remaining 3 documents and submit
     for key in doc_keys[3:]:
         r = alice.post(demo_url + '/demo/connector/files', data={'doc_key': key},
                        files={'file': (f'{key}.pdf', f'sample-{key}'.encode(), 'application/pdf')})
@@ -651,7 +651,7 @@ def test_connector_spec_precheck_submission_ask_report_oia_and_reset(demo_url):
     assert synced_plan['plan']['steps']['cgu-internal-submit']['confirmed'] is True
     for key in doc_keys:
         assert synced_plan['plan']['steps'][f'cgu-doc-{key}']['confirmed'] is True
-    assert synced_plan['progress']['value'] == 12
+    assert synced_plan['progress']['value'] == 14
 
     # 4. OIA Dashboard preloads 5 fictional records & reflects actions to student + notifications
     oia = alice.get(demo_url + '/demo/connector/oia/dashboard').json()
@@ -883,9 +883,9 @@ def test_phase2_stage_order_and_bidirectional_doc_step_sync(demo_url):
     assert stage1_ids == [
         'cgu-doc-online_form', 'cgu-doc-parent_consent',
         'cgu-doc-language_proof', 'cgu-doc-transcript',
-        'cgu-doc-study_plan', 'cgu-internal-submit',
+        'cgu-doc-enrollment_certificate', 'cgu-doc-study_plan', 'cgu-internal-submit',
     ]
-    assert plan['progress'] == {'value': 0, 'total': 32}
+    assert plan['progress'] == {'value': 0, 'total': 34}
 
     up = alice.post(
         f'{demo_url}/demo/connector/files',
@@ -895,13 +895,13 @@ def test_phase2_stage_order_and_bidirectional_doc_step_sync(demo_url):
     assert up.status_code == 200, up.text
     after_up = alice.get(f'{demo_url}/account/application-paths/{plan_id}?home_school=長庚大學').json()
     assert after_up['plan']['steps']['cgu-doc-online_form']['confirmed'] is True
-    assert after_up['progress'] == {'value': 2, 'total': 32}
+    assert after_up['progress'] == {'value': 2, 'total': 34}
 
     rm = alice.delete(f'{demo_url}/demo/connector/files/online_form')
     assert rm.status_code == 200, rm.text
     after_rm = alice.get(f'{demo_url}/account/application-paths/{plan_id}?home_school=長庚大學').json()
     assert after_rm['plan']['steps']['cgu-doc-online_form']['confirmed'] is False
-    assert after_rm['progress'] == {'value': 0, 'total': 32}
+    assert after_rm['progress'] == {'value': 0, 'total': 34}
 
 
 def test_cgu_level_types_non_116_1_deadlines_and_oia_notice_sync(demo_url):
@@ -915,19 +915,19 @@ def test_cgu_level_types_non_116_1_deadlines_and_oia_notice_sync(demo_url):
     guide_sum = lvl116['cgu-read-guide']['guide_summary']
     assert '2026/11/02' in guide_sum['application_period']
     assert '2026/12/21' in guide_sum['deadline']
-    assert len(guide_sum['required_documents']) == 5
+    assert len(guide_sum['required_documents']) == 6
 
     assert lvl116['cgu-shortlist']['kind'] == 'note'
     assert lvl116['cgu-shortlist']['cgu_level_type'] == 'select'
     assert lvl116['cgu-shortlist']['no_draft_input'] is True
 
-    for key in ('online_form', 'parent_consent', 'language_proof', 'transcript', 'study_plan'):
+    for key in ('online_form', 'parent_consent', 'language_proof', 'transcript', 'enrollment_certificate', 'study_plan'):
         doc_lvl = lvl116[f'cgu-doc-{key}']
         assert doc_lvl['kind'] == 'file'
         assert doc_lvl['cgu_level_type'] == 'document'
         assert doc_lvl['no_draft_input'] is (key != 'study_plan')
     assert lvl116['cgu-doc-study_plan'].get('templates') == ['study-plan']
-    assert lvl116['cgu-doc-parent_consent'].get('templates') == ['guardian-consent']
+    assert not lvl116['cgu-doc-parent_consent'].get('templates')
 
     sub116 = lvl116['cgu-internal-submit']
     assert sub116['kind'] == 'submission'
@@ -994,7 +994,7 @@ def test_cgu_level_types_non_116_1_deadlines_and_oia_notice_sync(demo_url):
     assert after_rm_sp['plan']['steps']['cgu-doc-study_plan']['confirmed'] is False
 
     # OIA workbench actions sync cgu-internal-result without marking confirmed=True
-    for k in ('online_form', 'parent_consent', 'language_proof', 'transcript', 'study_plan'):
+    for k in ('online_form', 'parent_consent', 'language_proof', 'transcript', 'enrollment_certificate', 'study_plan'):
         assert alice.post(
             demo_url + '/demo/connector/files',
             data={'doc_key': k},

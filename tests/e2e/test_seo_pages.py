@@ -57,3 +57,12 @@ def test_editorial_navigation_and_country_comparison_without_javascript(browser,
         expect(page.get_by_role("heading", level=1)).to_contain_text("全台大學")
     finally:
         context.close()
+
+
+def test_public_partner_link_opens_its_application_tab(page, live_server):
+    page.goto(live_server.base_url + "/schools/cgu", wait_until="domcontentloaded")
+    page.locator(".cards a").filter(has_text="Lincoln University").click()
+    page.get_by_role("link", name="查看這所學校的申請方式").first.click()
+    expect(page.locator("#school-detail-title")).to_contain_text("Lincoln University", timeout=120000)
+    expect(page.locator("#detail-tab-application")).to_have_attribute("aria-selected", "true", timeout=60000)
+    expect(page.locator("#detail-application")).to_be_visible(timeout=120000)

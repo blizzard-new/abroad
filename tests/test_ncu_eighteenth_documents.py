@@ -40,8 +40,8 @@ def test_course_seasons_internal_errors_and_degree_scope_do_not_become_eligibili
     assert '6000AED' in text('visa') and '4500AED' in text('visa')
     from exchange_info.ncu_student_view import fetch_ncu_partner_universities
     partners = fetch_ncu_partner_universities()
-    assert len(partners) == 214
-    assert all(p.quota is None and p.availability_status == 'agreement_only' for p in partners)
+    assert len(partners) == 222
+    assert all((p.quota is None) == (p.availability_status == "not_open") for p in partners)
 
 
 def test_updated_chinese_cards_keep_exact_source_boundaries(tmp_path):
