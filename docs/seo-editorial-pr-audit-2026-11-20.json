@@ -57,5 +57,55 @@
     "all_open_heads_unchanged": true,
     "recent_all_state_pr_count": 100,
     "same_day": []
+  },
+  "delivery": {
+    "number": 401,
+    "url": "https://github.com/blizzard-new/abroad/pull/401",
+    "state": "OPEN",
+    "draft": false,
+    "mergeable": "MERGEABLE",
+    "content_head": "5f68aa04fdb7e1eba1e4891fb1b043308898af17",
+    "ci_observed_on_content_head": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/44644753641/job/135984374179",
+        "name": "image",
+        "startedAt": "2026-11-20T00:18:11Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/44644668729/job/135984090443",
+        "name": "image",
+        "startedAt": "2026-11-20T00:17:33Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-20T00:18:07Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://supabase.com/dashboard/project/wozrsrnkvbokzbbitkxf/settings/integrations",
+        "name": "Supabase Preview",
+        "startedAt": "2026-11-20T00:18:07Z",
+        "status": "COMPLETED",
+        "workflowName": ""
+      }
+    ],
+    "attachment": {
+      "status": "unconfirmed",
+      "attach_tool": "codex_app.attach_artifact",
+      "attach_wait_seconds": 40,
+      "attach_result": "No reply before timeout",
+      "list_wait_seconds": 10,
+      "list_result": "No reply before timeout",
+      "claim": "Actual GitHub PR created and verified separately; not claiming attached."
+    },
+    "boundary": "Review PR only. No merge,productiondeployment,emailorindexrequest."
   }
 }

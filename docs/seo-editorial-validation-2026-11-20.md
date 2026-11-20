@@ -46,4 +46,6 @@ George Pak／Pexels 文件整理（7972276）與 cottonbro studio／Pexels 紅�
 - [完整 gate](seo-editorial-checks-2026-11-20.json)、[命令／輸出](seo-editorial-tests-2026-11-20.txt)、[套件逐檔](seo-editorial-package-2026-11-20.json)
 - [瀏覽器／15 圖雜湊](seo-editorial-browser-2026-11-20.json)、[桌面](seo-previews-2026-11-20/desktop-1440.jpg)、[手機](seo-previews-2026-11-20/mobile-320.jpg)、[裁切](seo-previews-2026-11-20/photography-crops.jpg)
 
-PR、遠端 CI 及任務附件建立後回填；未發布。
+[PR #401](https://github.com/blizzard-new/abroad/pull/401) 已建立，OPEN、非 draft、MERGEABLE。完整內容 head `5f68aa04fdb7e1eba1e4891fb1b043308898af17`；後續只回填本驗收、PR audit 與 backlog，產品雜湊不變。此內容 head 兩個 TLS trust regression image 檢查仍進行中，Supabase Preview skipped；不宣稱遠端 CI 全通過，以 PR 最新狀態為準。
+
+任務附加 `codex_app.attach_artifact` 等待 40 秒無回覆，`list_artifacts` 等待 10 秒也無回覆，因此附件未確認；實際 PR URL、head 與待審狀態已另行核對。未宣稱附加成功，未合併、部署或要求索引。
