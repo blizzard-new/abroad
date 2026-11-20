@@ -1,0 +1,75 @@
+2026-11-20 Asia/Taipei isolated codex/seo-daily-20261120
+Base21c9dde902506e79ac2da99b3d33d0838ae3cd0b
+<cache>=/workspace/scratch/uniway-seo-20261120;<checkout>=/workspace/abroad-seo-daily-20261120;python=<cache>/venv/bin/python
+UV_PROJECT_ENVIRONMENT=<cache>/venv uv sync --frozen --extra dev
+EXCHANGE_INFO_DATA_DIR=<cache>/gate-import-data PYTHONPATH=src python scripts/check_editorial.py --base-ref origin/main
+EXCHANGE_INFO_DATA_DIR=<cache>/unit-import-data PYTHONPATH=src python -m pytest -q tests/test_seo_articles.py tests/test_seo.py tests/test_seo_content.py tests/test_seo_quality.py tests/test_seo_reporting.py tests/test_editorial_release_gate.py
+EXCHANGE_INFO_DATA_DIR=<cache>/e2e-import-data PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium PYTHONPATH=src python -m pytest -q tests/e2e/test_seo_articles.py tests/e2e/test_seo_pages.py tests/e2e/test_seo_analytics.py
+EXCHANGE_INFO_DATA_DIR=<cache>/preview-import-data PYTHONPATH=src python <cache>/qa.py preview --repo <checkout> --date 2026-11-20 --slugs exchange-transcript-of-records toeic-part-five-prepositions-conjunctions
+uv build --wheel --out-dir <cache>/wheel
+python <cache>/qa.py package --repo <checkout> --date 2026-11-20 --slugs exchange-transcript-of-records toeic-part-five-prepositions-conjunctions
+Onecompletepasseach;frozenproducthashesunchanged.
+
+DEPENDENCIES:
+
++ typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+ + urllib3==2.8.0
+ + uvicorn==0.52.4
+ + uvloop==0.22.1
+ + watchfiles==1.2.0
+ + websockets==17.0.1
+
+GATE:
+
+{
+  "ok": true,
+  "article_count": 65,
+  "errors": [],
+  "scope": "Editorial structure/assets/revision dates; not proof of factual accuracy, indexing or rankings"
+}
+
+SEO:
+
+CONFTEST LOADED!
+........................................................................ [ 37%]
+........................................................................ [ 74%]
+.................................................                        [100%]
+193 passed in 101.36s (0:01:41)
+
+E2E:
+
+CONFTEST LOADED!
+........................................................................ [ 94%]
+....                                                                     [100%]
+76 passed in 224.53s (0:03:44)
+
+BROWSER:
+
+{
+  "passed": 6,
+  "capture_note": "Only long element captures temporarily hide fixed decorative6px stripe and fixed reading header via screenshot style to avoid stitching over text. Full-page previews and application/assertions unmodified.",
+  "visual_review": "All15 final images actually inspected: desktop1440/mobile320 sheets,2inlinephotos,2five-stepHTMLdiagrams,8keycontentsections and3:2/2:1photocrop sheet. Four Ladokdocumenttypes,downloadmenus,verificationversusreceipt/credit,matrixandrouting/inquiry readable;grammarphrase/clause chart,all6answerexplanations,ambiguityandrewrite readable. Hands/note/pen/documents/laptop and redmarkedmanuscript retained. Table content intentionally scrollswithincontainers;actualhorizontal scroll verified separately,nopageoverflow. Long-element captures onlyhidefixedheader/stripe forstitching;fullpages/product/assertions unchanged.",
+  "run_history": "Onecomplete193SEO/76E2E/6noJS/wheelrun,allpassed. ProductJSON/photosfinalbeforetests,finalhashesunchanged;not repeatedcoverage."
+}
+
+PACKAGE:
+
+Successfully built /workspace/scratch/uniway-seo-20261120/wheel/taiwan_exchange_info-0.1.0-py3-none-any.whl
+
+{
+  "checked": "2026-11-20",
+  "build_command": "uv build --wheel",
+  "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+  "wheel_bytes": 2529767488,
+  "article_json_count": 65,
+  "image_count": 65,
+  "checked_files": 671,
+  "runtime_import": {
+    "module": "/workspace/scratch/uniway-seo-20261120/wheel-extracted/exchange_info/seo_articles.py",
+    "loaded_articles": 65,
+    "new_slugs_present": true
+  },
+  "outside_checkout": true,
+  "passed": true
+}

@@ -1,5 +1,20 @@
 # Editorial intentions and next topics
 
+## 2026-11-20 每日批次：交換成績單／多益連接結構兩篇（驗收完成，待開 PR）
+
+Asia/Taipei 11/20，開始為 UTC 11/20 00:00:04（台北 08:00:04）。隔離分支 `codex/seo-daily-20261120`，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新 workflow／backlog、63 篇庫存與相關全文；open PR 為空，無同日分支／PR。提交前 main 未變、open 仍空，最近 100 全狀態 PR 無本日 SEO 批次。
+
+昨日 #400 已合併，AI 追蹤信與托福學術短講已在 main 並排除；#78／#92／#399 合併祖先均核對，無未合併基礎相依。歷史待審文字以本次實查優先。10/30 study-plan `97de3fda` 未重做，無三品牌實測不造比較。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 12：交換成績單怎麼拿？以 Lund Ladok 為例，確認下載、驗證與收件方式 | `exchange-transcript-of-records` | 全文／圖片／驗收完成，待本日唯一 PR；後續排除 |
+| 20：多益 Part 5 介系詞與連接詞怎麼分？because、although、despite 與原創題解析 | `toeic-part-five-prepositions-conjunctions` | 同批全文／圖片／驗收完成，待同一 PR；後續排除 |
+
+編輯判斷，無 Search Console、搜尋量或排名。成績單篇深讀文件類型、官方產製／驗證與收件、缺成績／簽名分流，與返國總表、課程對照／抵免分工；未登入或驗證任何人紀錄。文法篇處理整組片語／子句、原因／讓步與內部 that 子句，和字族、時態、代名詞分工；六題 24 選項與換句／歧義皆原創，不估分。九個引用一手來源實讀，Cambridge 兩頁403排除，改用 British Council 與明示 ©2007 的 BBC 官方存檔，未造引用或沿用過期考制。
+
+原 63 篇 JSON／URL／刊載日／lastmod 不變，共 65 篇。兩張專用授權真實攝影與 HTML 圖解完成；gate65、193 SEO、76 E2E、六組無 JavaScript、15 張目視及 wheel 671 檔核對均一次完整通過。詳見[本批驗收](seo-editorial-validation-2026-11-20.md)。本批未合併或部署。
+
 ## 2026-11-19 每日批次：AI 英文追蹤信／托福學術短講兩篇（PR #400 待審）
 
 Asia/Taipei 11/19，開始為 UTC 11/19 00:00:56（台北 08:00:56）。隔離分支 `codex/seo-daily-20261119`，base main `af32b61d2868923ce66496246def0a4ed6027b7b`。讀最新 workflow／backlog、61 篇庫存與相關正文；唯一 open #399 的完整說明與 202 檔已查，另讀 SEO 共用檔 patch：申請資料／連結／快取與閱讀樣式版本網址，無新增文章，未複製其修改。開始前無同日分支／PR；提交前 main／open heads 未變，最近 100 全狀態 PR 無本日 SEO 批次。
