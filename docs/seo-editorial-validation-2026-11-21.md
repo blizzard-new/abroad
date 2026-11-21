@@ -1,6 +1,6 @@
 # 2026-11-21 每日雙篇驗收
 
-台北日期 2026-11-21，隔離分支 `codex/seo-daily-20261121`，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。兩篇完整原創繁體中文文章與攝影、HTML 圖解及驗收完成，待本日同一個新 PR 審閱。未合併、部署、寄信、致電或要求索引。
+台北日期 2026-11-21，隔離分支 `codex/seo-daily-20261121`，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。兩篇完整原創繁體中文文章與攝影、HTML 圖解及驗收完成，已建立同一個待審 [PR #402](https://github.com/blizzard-new/abroad/pull/402)。未合併、部署、寄信、致電或要求索引。
 
 | 文章／候選方向 | slug | 獨立用途 |
 | --- | --- | --- |
@@ -46,4 +46,4 @@ TUM 的交換申請頁完整語言證據段落核對依修課語言／院系、�
 - [Gate](seo-editorial-checks-2026-11-21.json)、[測試命令／輸出](seo-editorial-tests-2026-11-21.txt)、[套件逐檔](seo-editorial-package-2026-11-21.json)
 - [瀏覽器／15 圖雜湊](seo-editorial-browser-2026-11-21.json)、[桌面](seo-previews-2026-11-21/desktop-1440.jpg)、[手機](seo-previews-2026-11-21/mobile-320.jpg)、[裁切](seo-previews-2026-11-21/photography-crops.jpg)
 
-PR、遠端 CI 與任務附件建立後回填；尚未發布。
+[PR #402](https://github.com/blizzard-new/abroad/pull/402) 已建立（OPEN、非 draft），初始內容 head `73dfd3437971546ba381ad96186b646761721e45`、30 檔，GitHub 顯示 MERGEABLE。此 head 兩個 TLS trust regression image 檢查進行中、Supabase Preview skipped；以 PR 最新狀態為準。任務附加工具呼叫 40 秒未回覆，附件查詢另 10 秒也未回覆，附加狀態未確認；PR 建立與連結已獨立核對，不假稱附加成功。後續只回填三份紀錄，文章／圖片／CSS 雜湊仍與測前相同，不重複跑相同測試。未合併或部署。
