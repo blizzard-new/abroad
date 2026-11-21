@@ -417,3 +417,16 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261115`，base main `aa2d14
 原 51 篇 JSON、URL、刊載日期與 lastmod 不變，本分支共 53 篇，未計入待審 #351。新增兩張專用授權攝影與兩個原創 HTML 圖解。53 篇 gate、180 項 SEO、63 項 E2E、六組無 JavaScript 閱讀、15 張目視及 wheel 646 檔逐檔核對全部通過。來源、教材、攝影及驗收見[本批紀錄](seo-editorial-validation-2026-11-15.md)。本批未合併或部署。
 
 PR #363 已建立（OPEN、非 draft，初始 head `47cf30a94e75acdbba989341862aad072b7303d4`），可合併狀態但未合併。初始遠端 image CI 兩項進行中、Supabase Preview skipped；請以目前 PR 狀態為準。任務附加工具 40 秒及附件查詢 10 秒均未回覆，附件狀態未確認；PR 建立及連結另已驗證，未宣稱附加成功。
+
+## 2026-11-21 每日批次：英語授課證明／AI 英文電話兩篇（驗收完成，待開 PR）
+
+Asia/Taipei 11/21，開始 UTC 00:02:04＝台北 08:02:04。隔離分支 `codex/seo-daily-20261121`，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新 workflow／backlog、63 篇庫存及相關全文。唯一待審 [PR #401](https://github.com/blizzard-new/abroad/pull/401) 的完整說明與 30 檔已查；11/20 `exchange-transcript-of-records`／`toeic-part-five-prepositions-conjunctions` 兩題已選並排除，未匯入本分支。#401 的 API test merge 不算已合併。#78／#92 已合併，無基礎相依；開始前無同日分支或 PR，提交前 main 與 #401 head 未變，最近 100 個全狀態 PR 無同日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 4：交換申請的英語授課證明怎麼辦？MOI、EMI 與語言資格核對表 | `exchange-medium-of-instruction` | 全文／圖片／驗收完成，待本日唯一 PR；後續排除 |
+| 17：用 AI 練英文電話怎麼做？轉接、留言與回電資訊的 Prompt | `ai-english-phone-messages` | 同批全文／圖片／驗收完成，待同一 PR；後續排除 |
+
+編輯判斷，無 Search Console、搜尋量或排名。文件篇處理授課語言／修課／能力證據、開立與接受條件，和英語選課、資格總覽及待審成績單分工；電話篇處理分支接線與第三人轉交，和澄清／書面催信分工。七個引用一手來源實讀；清大公告費用版本差異揭露且不轉載早期金額／天數，TUM 表單與申請頁核對；BC 讀文字未播放聲音，不造品牌／學生測試。兩個文件假設案例、兩張來電卡、三輪可填 Prompt 與前後改稿原創。10/30 study-plan `97de3fda` 未重做。
+
+原 63 篇 JSON／網址／刊載日／lastmod 不變，共 65 篇。兩張新授權攝影、原創 HTML 圖解完成；gate65、193 SEO、76 E2E、六組無 JavaScript、15 張目視及 wheel 671 檔核對均一次完整通過。詳見[本批驗收](seo-editorial-validation-2026-11-21.md)。本段附於清單末尾，保留 #401 在文件開頭的待審新增。未合併或部署。
