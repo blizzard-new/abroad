@@ -1,0 +1,274 @@
+{
+  "slug": "ai-english-phone-messages",
+  "title": "用 AI 練英文電話怎麼做？轉接、留言與回電資訊的 Prompt",
+  "description": "打英文電話找不到人怎麼說？用角色卡練開場、轉接、給第三人的留言與重述確認，附三輪可填 Prompt、原創對話、修改示例及分級複習表。",
+  "category": "申請準備",
+  "published": "2026-11-21",
+  "modified": "2026-11-21",
+  "checked": "2026-11-21",
+  "image": "telephone-message-notes-photo",
+  "image_alt": "木桌上放著旋轉撥號電話、打字機與多份文件，一人手持白色聽筒並在紙上寫字。",
+  "image_caption": "復古電話與筆記的素材攝影，示意通話時記下訊息；不是實際學生致電、校方辦公室或 AI 通話功能畫面。",
+  "image_credit": {
+    "photographer": "MART PRODUCTION",
+    "source_url": "https://www.pexels.com/photo/a-person-holding-a-handset-while-writing-on-a-piece-of-paper-8872649/"
+  },
+  "summary": [
+    "先決定找誰、為什麼打，以及對方不在時要留下什麼；轉接成功、已代收留言與對方承諾回覆是不同狀態。",
+    "用 AI 一次演一個話輪，自己先說；將留言改寫成第三人也能轉述的訊息，再逐項對照角色卡。",
+    "文字練習能檢查內容與互動，發音和聽辨要另留聲音證據；分級換情境複習，不把 AI 評語當官方成績。"
+  ],
+  "intro": [
+    "用 AI 練英文電話，可以先做一張虛構角色卡，再分別練「請求轉接」與「對方不在時留言」。每次只走一個話輪，說清楚自己的姓名、要找的人、來電目的及希望對方怎麼回覆，最後確認訊息有沒有被正確記下。重點是第三人能把話轉交，而不只是背一句 Can I speak to ...?。",
+    "本篇提供三輪可填 Prompt、兩條原創對話路徑與留言改稿。可在自己已能使用的文字聊天工具練習，再自行錄音或和語伴對話；不需要工具真的打電話，也沒有測試品牌、語音方案、地區功能或任何學生的學習成效。教學來源查核於 2026 年 11 月 21 日，示例人物、活動和回覆均為編輯自寫假設。"
+  ],
+  "sections": [
+    {
+      "id": "prepare-call-card",
+      "title": "先寫來電卡：對方不在，也能留下完整請求",
+      "paragraphs": [
+        "把「我要打去問一件事」改成可轉交的內容：我叫什麼、要找誰、事情是什麼、希望對方回覆哪個問題，以及可以用哪種方式聯絡。活動名稱或既有編號有助定位，但只提供必要資訊；練習時使用虛構資料與 example.com 信箱，不貼真實證件、電話、私人信件或帳號。",
+        "原創角色卡 A：來電者 Kai-Wen Lin；要找虛構 Willow Arts Studio 的工作坊協調人 Mira Cole；問題是參加週三 drawing workshop 是否要自備 sketchbook；希望對方把答案寄到 kai.lin@example.com。角色卡沒有活動時間、費用、回覆期限或核准結果。不要讓 AI 為了讓對話順暢就補出這些事實。",
+        "British Council 的 Leaving a message 教材文字包含找人、對方不在、代收訊息、聯絡資料及讀回核對，頁面標為 A2。這提供可觀察的通話任務例子；本文情境、人物、留言與練習分層另行編寫，沒有重製官方完整對話。教材分類不是對讀者或本文任務的程度認證。"
+      ],
+      "refs": [
+        "bc-message"
+      ],
+      "table": {
+        "caption": "可複製的來電卡：練習用虛構資料，真實用途另向官方確認",
+        "headers": [
+          "欄位",
+          "A 卡的假設資料",
+          "自己練習時填"
+        ],
+        "rows": [
+          [
+            "來電者／目標對象",
+            "Kai-Wen Lin／Mira Cole",
+            "[我的虛構姓名／要找的人或職務]"
+          ],
+          [
+            "事情與問題",
+            "週三 drawing workshop；要自備 sketchbook 嗎？",
+            "[事情／一個明確問題]"
+          ],
+          [
+            "希望的後續",
+            "把答案回覆到 kai.lin@example.com",
+            "[請轉告的行動／虛構聯絡方式]"
+          ],
+          [
+            "未提供資料",
+            "活動時間、費用、回覆期限",
+            "[哪些資訊不能自行補]"
+          ],
+          [
+            "接線情境",
+            "能轉接／不在且可收留言，二選一",
+            "[這輪要練哪一條路徑]"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "prompt-roleplay",
+      "title": "第一輪 Prompt：讓接線者回應，自己先完成開場",
+      "paragraphs": [
+        "可複製 Prompt：「我要練英文電話的 [請求轉接／對方不在時留言]。你演 [接線角色]，我是 [來電者]，要找 [目標對象]，事情是 [背景]，希望對方 [一個後續行動]，練習聯絡方式為 [虛構資料]。只有這些是可用事實：[角色卡]；未知為 [未提供內容]。每次只回一個接線話輪，等我說完再繼續，不先給我完整講稿或標準答案。只演我選的路徑，不能在轉接後又突然回到留言。不要替目標對象答覆專業問題、承諾回覆時間或虛構規定。等我結束通話再檢查訊息。這是文字角色扮演，不評發音、聽力、CEFR 或官方分數。」",
+        "貼上 A 卡後，可先讓接線者說 Hello, Willow Arts Studio. How can I help?，自己再嘗試開場。假如只說 I have a question，接線者可追問找誰；不要立刻請 AI 重寫一整段代讀稿。先留下自己的第一次答案，才能知道缺的是對象、問題還是後續行動。",
+        "OpenAI 的一般提示原則建議提供清楚背景並迭代修改。本篇把這個原則用在限制角色和一輪一答，這是編輯設計的練習流程，不是已完成 ChatGPT、Claude、Gemini 的同任務比較，也不表示每個模型都會穩定遵守。若工具一口氣寫完整通話，重申一次一輪，並從自己的回應重來。"
+      ],
+      "refs": [
+        "openai-prompt"
+      ],
+      "diagram": {
+        "title": "一通練習電話的五步",
+        "steps": [
+          [
+            "準備角色卡",
+            "對象、問題、希望後續與未知"
+          ],
+          [
+            "自己先開場",
+            "說姓名與找誰，不先看成稿"
+          ],
+          [
+            "依回覆走分支",
+            "能轉接就等候；不在才問留言"
+          ],
+          [
+            "確認轉交內容",
+            "讀回對象、問題與聯絡方式"
+          ],
+          [
+            "換角色重做",
+            "比較自己的留言與接收者筆記"
+          ]
+        ],
+        "caption": "原創文字與口說練習流程；角色扮演沒有聯絡任何真實第三人。"
+      }
+    },
+    {
+      "id": "two-call-paths",
+      "title": "兩條原創路徑：能轉接，和只能留下訊息",
+      "paragraphs": [
+        "路徑一只練轉接。來電者：Hello, this is Kai-Wen Lin. Could I speak to Mira Cole, the workshop coordinator, please? 接線者：Certainly. May I ask what it's about? 來電者：It's about materials for Wednesday's drawing workshop. 接線者：I'll put you through. Please hold. 來電者：Thank you. 這輪在等待轉接處結束；沒有演出接通、得到答案或對方允諾，不把 I'll put you through 寫成事情已解決。",
+        "路徑二改成對方不在，接線者可代收留言。接線者：Mira isn't available just now. Would you like to leave a message? 來電者：Yes, please. This is Kai-Wen Lin. Could you ask Mira whether I need to bring a sketchbook to Wednesday's drawing workshop? Please ask her to email the answer to kai.lin@example.com. 訊息包含身分、對象、可回答問題與希望的聯絡方式，不要求接線者替協調人決定材料規定。",
+        "接線者確認：So the message is for Mira Cole. Kai-Wen Lin wants to know whether to bring a sketchbook to Wednesday's drawing workshop, and would like an email reply. Is that right? 來電者：Yes, that's right. Could you also confirm the email address you've written down? 假設接線者依卡讀回正確信箱，來電者可答 Yes, that's correct. Thank you for taking the message. Goodbye. 這個例子只是訊息已被代收，不代表 Mira 已讀、已回覆或答應何時回覆。",
+        "若對方說不能代收留言，就問是否有適用的官方聯絡方式，按實際回覆處理；角色卡沒有提供就保留未知。不要要求 AI 假冒真實窗口給聯絡地址。實際通話也應使用自己核對過的官方管道，教材中的虛構工作室與信箱不是可用聯絡窗口。"
+      ],
+      "table": {
+        "caption": "相近句子代表的狀態不同；兩條路徑是替代演練，不是同一通話紀錄",
+        "headers": [
+          "對話內容",
+          "目前狀態",
+          "還不能說"
+        ],
+        "rows": [
+          [
+            "I'll put you through. Please hold.",
+            "接線者說將轉接，來電者等候",
+            "目標對象已接聽或已解答"
+          ],
+          [
+            "I'll pass on your message.",
+            "接線者表示會轉交訊息",
+            "目標對象已收到或承諾回覆"
+          ],
+          [
+            "Please ask her to email me.",
+            "來電者提出回覆請求",
+            "對方已接受此請求與期限"
+          ],
+          [
+            "The address you've written down",
+            "正在核對記錄內容",
+            "聯絡方式已完成實際測試"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "message-before-after",
+      "title": "留言怎麼改？讓沒有參與通話的人也看得懂",
+      "paragraphs": [
+        "假設初稿是 Please tell her I called about that thing. She needs to answer me today。其中 her 和 that thing 離開通話現場就難辨認，還加入 A 卡沒有的當天期限。問題不只在禮貌；就算改成非常客氣的長句，缺少姓名、具體問題和聯絡方式，收件者仍不知道要處理什麼。",
+        "可改成：Please tell Mira Cole that Kai-Wen Lin called. I'd like to know whether I need to bring a sketchbook to Wednesday's drawing workshop. Could she email the answer to kai.lin@example.com? 這是人工撰寫的參考改稿，把人、事、請求說完整，沒有增加活動時刻、費用或必須當天回覆。自然表達可以有多種版本，不必逐字照讀。",
+        "再反向扮演代收者，寫一張第三人留言單：「To: Mira Cole. From: Kai-Wen Lin. Question: Does Kai-Wen need to bring a sketchbook to Wednesday's drawing workshop? Requested reply: email kai.lin@example.com. Reply deadline: not specified.」這張單能脫離通話單獨閱讀，才比較容易發現漏訊息；not specified 表示卡片未提供，不能改成沒有期限規定。",
+        "若工具把訊息記成「已要求帶 sketchbook，工作室會在今天回電」，應拒絕：原卡是詢問是否要帶，聯絡請求為 email，期限沒有提供。逐欄指出方向與狀態錯誤，比只問英文是否流暢更有用。這是編輯自寫的錯誤回饋示例，不是聲稱某品牌模型實際犯過這個錯。"
+      ]
+    },
+    {
+      "id": "prompt-review",
+      "title": "第二輪 Prompt：把回饋對到說過的話與留言單",
+      "paragraphs": [
+        "可複製 Prompt：「以下是 [角色卡]、我的逐輪文字 [對話]，以及接線者的留言單 [筆記]。請逐項核對：給誰、誰來電、具體問題、希望的後續、聯絡方式、未提供事項。每項引用短語作依據，分成完整／遺漏／與卡片不符／仍未知。先讓我自己補缺漏，再給最小修改建議；不要替我增加期限、答案、校規或回覆保證。分開必要意思修正與可選語氣。只分析所提供文字，不說已聽過錄音，也不評發音、官方程度或分數。」",
+        "可用上一節初稿當輸入。人工預期回饋應指出缺來電者姓名、目標對象不明、問題不具體、未留聯絡方式及 today 無來源；不應僅把 needs 改成 would appreciate 就宣布完成。補寫後再看留言單，確認問題還是疑問、希望的聯絡方式仍是 email。",
+        "OpenAI 的準確性說明提醒，模型可能以自信語氣給錯誤資訊，重要內容要查可靠來源。練習時也一樣：AI 說「這樣對方一定會馬上回」，沒有角色卡或實際回覆支持，就刪掉。這一輪查的是訊息內容與轉交狀態，未提供聲音時，不會產生聽力或口說流暢度的證據。"
+      ],
+      "refs": [
+        "openai-accuracy"
+      ],
+      "bullets": [
+        "[ ] 開場有姓名與目標對象，接線者知道要找誰。",
+        "[ ] 留言可以由第三人獨立轉述，不依賴那個、她或剛剛的事情。",
+        "[ ] 請求與結果分開：詢問要不要帶，不寫成已要求攜帶。",
+        "[ ] 聯絡方式逐項核對，沒有自行新增期限或回覆保證。",
+        "[ ] 回饋有文字依據；必要修正與可選語氣分開。"
+      ]
+    },
+    {
+      "id": "prompt-transfer",
+      "title": "第三輪 Prompt：換成代收者，練記下來再讀回",
+      "paragraphs": [
+        "可複製 Prompt：「這次由我演 [代收者]，你演 [來電者]。新卡的對象是 [姓名／職務]，事情是 [新活動]，唯一問題為 [問題]，希望的後續是 [聯絡方式／行動]，沒有提供 [未知]。每次只給一個話輪，不先展示完整留言單；我問哪項，就按卡補哪項，不額外編校規。等我用英文讀回，再把我的留言單與卡逐欄比對，讓我先修正。只做虛構文字互動，不聯絡第三人，也不給官方分數。」",
+        "換題 B 卡：來電者 Alex Tan，要找 Sam Patel；問週五的 student exhibition 是否接受 digital portfolio 作為展示材料；希望回覆 alex.tan@example.com；沒有提供展覽時刻、提交規定或答覆期限。人工參考留言可寫：Alex Tan called for Sam Patel to ask whether a digital portfolio can be used for Friday's student exhibition. Alex would like a reply at alex.tan@example.com. The reply deadline was not specified. 不要沿用 A 卡的 sketchbook，也不能把 can be used 的詢問寫成已獲允許。",
+        "可以先只練「姓名＋找人」；接著練一個問題與聯絡方式；再交換角色，由自己讀回並寫第三人留言單。這些是編輯的任務分層，不是 CEFR 測驗。真正加入聲音時，用自己的錄音或有權使用的聲音材料，分開記第一次聽到的理解與看稿後重做；本次沒有播放或評估讀者錄音，也沒有宣稱聽過官方音訊。",
+        "延後複習時換一張卡、不看舊答案重新打開場，再比對留言有沒有傳對。若文字內容已穩定，可與語伴分角色錄音，回聽姓名、問題和聯絡方式是否清楚；必要時請有適當能力的老師協助。生活練習紀錄不能當正式語言資格，真實交換需求仍可透過 UniWay 母校、目的地與選校工具整理，再核對校方規定。"
+      ],
+      "table": {
+        "caption": "分層複習表：留下第一次證據，不承諾固定天數或進步幅度",
+        "headers": [
+          "任務",
+          "保留什麼",
+          "下一次檢查"
+        ],
+        "rows": [
+          [
+            "開場與找人",
+            "[自己首次說的姓名／對象句]",
+            "換人名和職務仍能說清楚嗎？"
+          ],
+          [
+            "不在時留言",
+            "[問題／希望後續／聯絡方式]",
+            "第三人能否照單轉交？"
+          ],
+          [
+            "代收與讀回",
+            "[自己的留言單／對方更正]",
+            "是否把請求誤寫成決定？"
+          ],
+          [
+            "聲音練習",
+            "[錄音／首次聽辨／看稿後重做]",
+            "只有文字正確，還是有實際聲音證據？"
+          ],
+          [
+            "延後換題",
+            "[日期／新卡／漏項與修正]",
+            "是否仍把前題人名或材料搬進新題？"
+          ]
+        ]
+      }
+    }
+  ],
+  "faq": [
+    [
+      "英文電話一定要先把整份講稿背起來嗎？",
+      "可以先用來電卡記關鍵內容，再自己練一輪。整份講稿無法涵蓋對方是否在場、能否轉接等分支；練完要看自己有沒有回應實際話輪。"
+    ],
+    [
+      "Could you take a message? 和 I'll put you through 是同一件事嗎？",
+      "前者請對方代收訊息；後者是接線者表示要轉接。轉接尚未證明接通，代收也沒有證明目標對象已讀或答應回覆。"
+    ],
+    [
+      "只用文字 AI 練完，就代表能聽懂英文電話嗎？",
+      "文字可檢查內容與話輪安排。聽辨、發音與口說流暢度需要另有實際聲音材料或錄音；看過文字後重做也要與第一次聽辨分開記。"
+    ],
+    [
+      "可以直接放真實手機號碼請 AI 角色扮演嗎？",
+      "這份練習用虛構資料即可完成，信箱可用 example.com。實際聯絡要依必要性處理資料，並核對官方窗口；本篇不會替讀者打電話、寄信或取得校方答覆。"
+    ],
+    [
+      "哪個 AI 的電話語音功能最好？",
+      "本篇沒有品牌、模型、方案或地區可用性的比較實測，因此不做排名。先用自己已能使用的文字方式練習，若要用特定語音功能，再查當日官方說明與實際可用性。"
+    ]
+  ],
+  "sources": [
+    {
+      "id": "bc-message",
+      "title": "British Council LearnEnglish：Leaving a message",
+      "url": "https://learnenglish.britishcouncil.org/free-resources/listening/a2/leaving-message",
+      "note": "2026-11-21 實讀文章教學說明、完整 Transcript、A2 標示及練習入口，不採用留言、投票或留言日期作修訂日。支持找人、代收、聯絡資料與讀回核對的功能；未播放官方音訊，不轉載原腳本、人物、電話號碼或故事。本文兩卡、分支對話及 Prompt 為編輯原創。"
+    },
+    {
+      "id": "openai-prompt",
+      "title": "OpenAI：Prompt engineering best practices for ChatGPT",
+      "url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "note": "2026-11-21 實讀明確背景、具體指示、迭代修改與語氣段落，當日顯示 Updated: last month，不倒推絕對修訂日。支持一般提示原則；本篇任務設計不是模型、付費語音或地區功能實測。"
+    },
+    {
+      "id": "openai-accuracy",
+      "title": "OpenAI：Does ChatGPT tell the truth?",
+      "url": "https://help.openai.com/en/articles/8313428-does-chatgpt-tell-the-truth",
+      "note": "2026-11-21 實讀錯誤／自信回覆、查核重要資訊與 first draft 限制，當日顯示 Updated: 29 days ago，保留相對日期。僅採用回饋查核原則，不外推工具清單的方案功能或本文學習成效。"
+    }
+  ],
+  "related": [
+    "ai-english-learning",
+    "ai-english-clarification",
+    "ai-english-follow-up-email",
+    "exchange-arrival-week"
+  ]
+}
