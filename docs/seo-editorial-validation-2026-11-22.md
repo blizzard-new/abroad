@@ -1,6 +1,6 @@
 # 2026-11-22 每日雙篇驗收
 
-Asia/Taipei 2026-11-22，隔離分支 `codex/seo-daily-20261122`，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。兩篇完整原創繁體中文圖文文章與驗收完成，待本日同一個新 PR 審閱；未合併、部署、寄信或要求索引。
+Asia/Taipei 2026-11-22，隔離分支 `codex/seo-daily-20261122`，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。兩篇完整原創繁體中文圖文文章與驗收完成，已建立同一個待審 [PR #403](https://github.com/blizzard-new/abroad/pull/403)；未合併、部署、寄信或要求索引。
 
 | 文章／候選方向 | slug | 獨立用途 |
 | --- | --- | --- |
@@ -44,4 +44,4 @@ Edge Training／Pexels（17668838，月曆日期規劃）及 Tiger Lily／Pexels
 - [Gate](seo-editorial-checks-2026-11-22.json)、[命令／輸出](seo-editorial-tests-2026-11-22.txt)、[套件逐檔](seo-editorial-package-2026-11-22.json)
 - [瀏覽器／15圖雜湊](seo-editorial-browser-2026-11-22.json)、[桌面](seo-previews-2026-11-22/desktop-1440.jpg)、[手機](seo-previews-2026-11-22/mobile-320.jpg)、[裁切](seo-previews-2026-11-22/photography-crops.jpg)
 
-PR、遠端CI及任務附件建立後回填；尚未發布。
+PR #403 已建立（OPEN、非 draft），初始內容 head `c90d7a4a27620f448a8f66b846241ef074a7686b`，GitHub 顯示 MERGEABLE。此 head 兩個 TLS trust regression image 檢查進行中，Supabase Preview skipped，請以目前 PR 狀態為準。任務附加工具 40 秒與附件查詢 10 秒均無回覆，附件狀態未確認；PR 建立及 URL 已獨立核對，未宣稱附加成功。未合併或部署。 後續只回填三份紀錄，文章／圖片／CSS 與測前雜湊一致，未重跑相同測試。

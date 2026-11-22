@@ -316,18 +316,20 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261114`，base main `aa2d14
 
 來源、圖片與驗證見 [本批驗收紀錄](seo-editorial-five-validation-2026-10-20.md)。每日排程與全部 20 個候選的整理由 [PR #92](https://github.com/blizzard-new/abroad/pull/92) 維護；本批只記錄已處理的五個方向，不重建或覆蓋其規劃。
 
-## 2026-11-22 每日批次：研修期間證明／多益主動被動兩篇（驗收完成，待開 PR）
+## 2026-11-22 每日批次：研修期間證明／多益主動被動兩篇（PR #403 待審）
 
 Asia/Taipei11/22，開始UTC00:02:04＝台北08:02:04。隔離分支 `codex/seo-daily-20261122`，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新workflow／backlog、63篇庫存與相關全文。全部open #401／#402完整說明及各30檔已查；成績單／多益連接結構／英語授課證明／AI電話四題已選且排除，未匯入本批。待審test merge不算已合併。#78／#92已合併，無基礎相依；無同日分支／PR，提交前main與兩個open head未變、最近100個全狀態PR無當日批次。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 7／12：交換研修期間證明怎麼辦？Confirmation of Stay 日期與簽署核對 | `exchange-confirmation-of-stay` | 全文／圖片／驗收完成，待本日唯一PR；後續排除 |
-| 20：多益 Part 5 主動被動怎麼分？主詞角色、完整動詞組與原創題解析 | `toeic-part-five-active-passive` | 同批全文／圖片／驗收完成，待同一PR；後續排除 |
+| 7／12：交換研修期間證明怎麼辦？Confirmation of Stay 日期與簽署核對 | `exchange-confirmation-of-stay` | 全文／圖片／驗收完成，[PR #403](https://github.com/blizzard-new/abroad/pull/403) 待審；後續排除 |
+| 20：多益 Part 5 主動被動怎麼分？主詞角色、完整動詞組與原創題解析 | `toeic-part-five-active-passive` | 同批全文／圖片／驗收完成，同一 PR #403 待審；後續排除 |
 
 編輯判斷，無Search Console、搜尋量或排名。期間證明篇處理首末活動、簽署權／時間與核定邊界，和返國總表、在外義務、待審成績／MOI分工；主被動篇處理施受方向與完整動詞鏈，和詞性、時態、代名詞、待審連接結構分工。七個引用一手來源實讀；TUM／CIT和Lund出國Erasmus+規則分別限定，不套用成所有交換生規則。六日期假設卡、未寄送詢問、六題24選項與換句／歧義全原創，不造學生／官方分數或補助試算。10/30study-plan `97de3fda` 未重做，無品牌比較實測不製造比較。
 
 原63篇JSON／網址／刊載日／lastmod不變，本分支共65篇，不含四篇待審。兩張新授權攝影、HTML圖解完成；gate65、193SEO、76E2E、六組無JavaScript、15張目視及wheel671檔核對均一次完整通過。詳見[本批驗收](seo-editorial-validation-2026-11-22.md)。本段置於Initial batch前，保留待審#401在開頭、#402在末尾的新增位置。未合併或部署。
+
+PR #403 已建立（OPEN、非 draft），初始內容 head `c90d7a4a27620f448a8f66b846241ef074a7686b`，GitHub 顯示 MERGEABLE。此 head 兩個 TLS trust regression image 檢查進行中，Supabase Preview skipped，請以目前 PR 狀態為準。任務附加工具 40 秒與附件查詢 10 秒均無回覆，附件狀態未確認；PR 建立及 URL 已獨立核對，未宣稱附加成功。未合併或部署。
 
 ## Initial batch: ten complete articles
 
