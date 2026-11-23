@@ -356,6 +356,19 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261116`，base main `cc5760
 
 PR #369 已建立（OPEN、非 draft），初始內容 head `b136116c75e3b265cceb46c0cfd1fbc594f0c7dc`，GitHub 顯示 MERGEABLE，未合併。初始 image CI 兩項進行中、Supabase Preview skipped；以目前 PR 狀態為準。任務附加工具 40 秒及附件查詢 10 秒均無回覆，附件未確認；PR 建立與連結已獨立驗證，未宣稱附加成功。
 
+## 2026-11-23 每日批次：交換考試登記／多益關係子句兩篇（驗收完成，待開 PR）
+
+Asia/Taipei11/23，開始UTC00:05:06＝台北08:05:06；環境ready後於隔離分支 `codex/seo-daily-20261123` 工作，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新workflow／backlog、63篇庫存與相關全文，三個open #401／#402／#403完整說明及各30檔。成績單／多益連接結構／英語授課證明／AI電話／期間證明／多益主被動六題已選且排除，未匯入本分支。#78／#92已合併，無基礎相依；無同日分支／PR，提交前main與三個open head未變，最近100個全狀態PR無當日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 8：交換考試要另外報名嗎？以 TUM 為例，核對報考、取消與完成紀錄 | `exchange-exam-registration` | 全文／圖／驗收完成，待本日唯一PR；後續排除 |
+| 20：多益 Part 5 關係子句怎麼選？who、which、whose、where 與原創題解析 | `toeic-part-five-relative-clauses` | 同批全文／圖／驗收完成，待同一PR；後續排除 |
+
+編輯判斷，無Search Console、搜尋量或排名。報考篇聚焦特定考試登記、手動／自動單位例外及取消狀態，和換課／課綱評量／返國／待審文件分工；關係子句聚焦先行詞與子句缺口、所有／地點、逗號與省略，和人稱代名詞、詞性、時態、連接結構及主被動分工。十個一手來源實讀，TUM／CIT／LanguageCenter範圍清楚；三課假設、詢問稿與六題24選項／改寫原創，不造登入實測、學生經歷或官方分數。10/30study-plan `97de3fda` 未重做，不捏造品牌比較。
+
+原63篇JSON／網址／刊載日／lastmod不變，本分支共65篇，不含六篇待審內容。兩張新授權攝影與HTML圖解完成；gate65、193SEO、76E2E、六組無JavaScript、15張目視及wheel671檔核對通過。詳見[本批驗收](seo-editorial-validation-2026-11-23.md)。本段放在Candidate intentions前，保留待審#401開頭、#402末尾、#403在Initial batch前的插入位置。未合併或部署。
+
 ## Candidate intentions for later batches
 
 Prioritize two distinct questions after checking existing/open PR content and current official sources. These are candidates, not prewritten or scheduled-to-publish pages. Update an existing guide if a topic is too close to it.
