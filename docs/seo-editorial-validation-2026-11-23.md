@@ -48,4 +48,4 @@ Yan Krukau／Pexels8199167（教室使用筆電）與 Gül Işık／Pexels674774
 - [Gate](seo-editorial-checks-2026-11-23.json)、[命令與輸出](seo-editorial-tests-2026-11-23.txt)、[套件逐檔](seo-editorial-package-2026-11-23.json)
 - [瀏覽器與15圖雜湊](seo-editorial-browser-2026-11-23.json)、[桌面](seo-previews-2026-11-23/desktop-1440.jpg)、[手機](seo-previews-2026-11-23/mobile-320.jpg)、[裁切](seo-previews-2026-11-23/photography-crops.jpg)
 
-PR、遠端CI及任務附件建立後回填；尚未發布。
+待審 PR：[ #404 ](https://github.com/blizzard-new/abroad/pull/404)，OPEN／非draft／未合併，GitHub確認mergeable。建立時head `429247ef5a9613ce9330a071369a1ddfa1cbfcad`，30檔包括兩篇JSON、兩張WebP及15張驗收圖。兩個image CI仍in_progress，Supabase Preview skipped；不宣稱遠端全部通過。已呼叫任務attach_artifact但40秒未回傳，list_artifacts亦10秒未回傳，故附件狀態未確認，PR建立本身已核對成功。此後僅回填本段、PR audit及本日選題紀錄，產品與測前固定雜湊一致，未重新產文或發布。
