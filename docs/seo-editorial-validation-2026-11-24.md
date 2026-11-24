@@ -54,4 +54,4 @@ SHVETS production／Pexels8036579（手持鑰匙、門邊）及Mizuno K／Pexels
 - [Gate](seo-editorial-checks-2026-11-24.json)、[命令與輸出](seo-editorial-tests-2026-11-24.txt)、[套件逐檔](seo-editorial-package-2026-11-24.json)
 - [瀏覽器與15圖](seo-editorial-browser-2026-11-24.json)、[桌面](seo-previews-2026-11-24/desktop-1440.jpg)、[手機](seo-previews-2026-11-24/mobile-320.jpg)、[裁切](seo-previews-2026-11-24/photography-crops.jpg)
 
-PR、遠端CI及任務附件建立後回填；尚未發布。
+待審PR：[ #405 ](https://github.com/blizzard-new/abroad/pull/405)，OPEN／非draft／未合併，GitHub確認mergeable。建立時head `e28610e0bb39b4a2f4e1df51ef14d62cbd6c29c5`，30檔包括兩篇JSON、兩張WebP及15張驗收圖。兩個image CI仍in_progress，Supabase Preview skipped，不宣稱遠端全部通過。已呼叫attach_artifact但40秒未回傳，list_artifacts亦10秒未回傳，因此任務附件未確認；PR建立與內容另已核對成功。之後僅回填本段、PR audit與本日選題紀錄，產品與測前固定雜湊一致，未重新產文或發布。
