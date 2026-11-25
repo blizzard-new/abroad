@@ -375,6 +375,19 @@ Prioritize two distinct questions after checking existing/open PR content and cu
 
 Do not launch near-duplicate country articles that repeat the three cost guides. More destinations need actual country-specific official sources and relevant UniWay partner options. Avoid unsupported “best school” rankings, fabricated student stories and generic city lists with no decision value.
 
+## 2026-11-25 每日批次：柏林垃圾分類／AI英文圖表描述兩篇（驗收完成，待開 PR）
+
+Asia/Taipei11/25，UTC00:00:44＝台北08:00:44。隔離分支 `codex/seo-daily-20261125`，main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新workflow／backlog、63篇及相關全文；五個open #401–#405完整說明、各30檔與十篇分工。成績單／連接結構／MOI／AI電話／期間證明／主被動／考試登記／關係子句／廣播費／比較句十題已選排除，未匯入。#78／#92已合併，無基礎相依；提交前main與五個heads未變，最近100個全狀態PR無本日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 6：德國交換生垃圾分類怎麼做？柏林垃圾桶、玻璃與退瓶指南 | `germany-berlin-waste-sorting` | 全文／圖／驗收完成，待本日唯一PR；後續排除 |
+| 17：用 AI 練英文圖表描述：趨勢、百分比與數據核對 Prompt | `ai-english-chart-description` | 同批全文／圖／驗收完成，待同一PR；後續排除 |
+
+編輯判斷，無Search Console／搜尋量／排名。柏林分類／退瓶與住房契約、抵達行政、廣播費分工；圖表證據／數量／單位／趨勢與講稿、散文改寫、文法訂正分工。十一一手來源實讀，六件物品卡、三輪可填Prompt、兩組原創資料、前後稿／錯誤回饋與八筆Decimal算式；無真實學生／模型試驗／官方評分或個案規定保證。10/30study-plan `97de3fda`未重做，未造品牌比較。
+
+原63篇JSON／URL／刊載日／lastmod不變，共65篇，不含十篇待審。兩張新授權攝影、HTML圖解、gate65、193SEO、76E2E、六組無JavaScript、15張目視及Wheel671檔比對通過。[本批驗收](seo-editorial-validation-2026-11-25.md)。本段置於「AI新增候選方向」前，保留#401–#405各自待審位置；未合併或部署。
+
 ## AI 輔助申請與英文準備：新增候選方向（2026-10-20）
 
 使用者新增五個構想：用 Claude／ChatGPT／Gemini 做出好看的讀書計畫或自我介紹、用 Prompt 寫出沒有「AI 味」的文章、用 AI 學英文、托福滿分目標、多益準備建議。以下依學生任務統整為四個方向、八個候選題目。這是使用者構想與編輯規劃，不是搜尋量、排名或成效證據；也不是已寫好或已排定發布日期的文章。

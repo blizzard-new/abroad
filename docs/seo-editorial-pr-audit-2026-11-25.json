@@ -1,0 +1,357 @@
+{
+  "checked": "2026-11-25",
+  "timezone": "Asia/Taipei",
+  "initial_clock": {
+    "utc": "2026-11-25 00:00:44 UTC",
+    "taipei": "2026-11-25 08:00:44+08:00"
+  },
+  "base_commit": "21c9dde902506e79ac2da99b3d33d0838ae3cd0b",
+  "branch": "codex/seo-daily-20261125",
+  "same_day_before_work": {
+    "all_state_prs": [],
+    "matching_local_remote_branches": []
+  },
+  "open_pull_requests": [
+    {
+      "number": 405,
+      "title": "2026-11-24 SEO 雙篇：德國廣播費與多益比較句",
+      "body": "德國交換生容易把宿舍共用設施當成同一計費住所，也容易把廣播費月費率當成每月付款；多益比較句則需要分清比較範圍、方向與詞的功能。本批為 **Asia/Taipei 2026-11-24** 的兩篇完整原創繁體中文圖文文章，同屬此 PR：\n\n- **德國交換生廣播費要繳嗎？Rundfunkbeitrag、宿舍與 WG 分攤指南**（`germany-broadcasting-fee`）：同戶 WG／公共走廊宿舍分流、帳號來信、月費率與付款週期、減免查核、四筆假設分攤試算與離境交接。直接核對 Beitragsservice，不操作個人帳號或認定資格。\n- **多益 Part 5 比較級與最高級怎麼選？than、as…as 與原創題解析**（`toeic-part-five-comparisons`）：六題24選項逐項解析，含原級／比較級／最高級、much、形容詞／副詞與not as…as反向改寫；不是官方題庫、產品實測或估分。\n\n基於 main `21c9dde9`；#78／#92 已合併。已核對63篇庫存及四個待審 #401–#404 完整說明、各30檔及八篇分工，八個已選題全部排除重做，未匯入本分支。原63篇JSON、URL、刊載日與lastmod不變；本分支65篇。選題是候選6／10及20的編輯判斷，沒有Search Console、搜尋量或排名資料。本日backlog放在每日批次規則前，保留其他待審批次的插入位置。\n\n十個引用一手來源均HTTP200且實際讀取，記錄版本／查核日／SHA256及限制。廣播費每月18.36歐元為查核日費率，私人均攤與付款週期分開；四筆試算以Decimal驗算。註銷互動表單另行載入，僅讀公開說明，未提交或測試私人流程。未引用逾時的TU Dortmund探索頁，所有實際主張回到可讀官方來源；未捏造費用、期限、學生、專家審核或成績。\n\n兩張新增Pexels授權真實攝影，**1536×1024 WebP，45,402／62,202 bytes**，有alt／圖說／作者來源；兩個原創HTML圖解。沿用renderer、canonical、Article／Breadcrumb JSON-LD、社群標記、Sitemap、原生FAQ、手機橫捲及無JavaScript閱讀，無CSS／JS變更。\n\n驗收已通過：\n\n- editorial gate：**65篇，0 errors**。\n- 六模組SEO單元／整合／release gate：**193 passed**。\n- 三模組桌面／手機E2E：**76 passed**。\n- 兩篇×320／390／1440無JavaScript：**六組通過**；15張最終畫面逐張目視，含3:2／2:1裁切。\n- 重建Wheel：65 JSON／65 WebP、59 CSS、全部字型及閱讀資產，共**671唯一檔**位元一致；checkout外匯入65篇及新slug成功。\n\n產品檔案測前固定，最終雜湊不變。首次環境安裝遇checkout尚未就緒的缺lock，完成checkout後frozen同步成功；產品檢查各一次完整通過。\n\n[完整來源／攝影／驗收](https://github.com/blizzard-new/abroad/blob/acefe901b8e591e8e5b5275e84e3b21e1ac35049/docs/seo-editorial-validation-2026-11-24.md) · [桌面](https://github.com/blizzard-new/abroad/blob/acefe901b8e591e8e5b5275e84e3b21e1ac35049/docs/seo-previews-2026-11-24/desktop-1440.jpg) · [手機](https://github.com/blizzard-new/abroad/blob/acefe901b8e591e8e5b5275e84e3b21e1ac35049/docs/seo-previews-2026-11-24/mobile-320.jpg)\n\n待人工審閱；未合併、部署、寄信、操作私人帳號或要求Google索引，產文不等於已上線／已收錄。遠端image CI尚待完成，Supabase Preview已跳過。attach_artifact等待40秒、list_artifacts查詢10秒均未回傳，故任務附加未確認；實際PR與30檔已另外核對。PR編號與交付狀態已回填選題及驗收文件，產品維持測試時雜湊。",
+      "head": "acefe901b8e591e8e5b5275e84e3b21e1ac35049",
+      "files": [
+        "docs/seo-editorial-backlog.md",
+        "docs/seo-editorial-browser-2026-11-24.json",
+        "docs/seo-editorial-checks-2026-11-24.json",
+        "docs/seo-editorial-exercises-2026-11-24.json",
+        "docs/seo-editorial-inventory-2026-11-24.json",
+        "docs/seo-editorial-package-2026-11-24.json",
+        "docs/seo-editorial-photography-2026-11-24.json",
+        "docs/seo-editorial-pr-audit-2026-11-24.json",
+        "docs/seo-editorial-sources-2026-11-24.json",
+        "docs/seo-editorial-tests-2026-11-24.txt",
+        "docs/seo-editorial-validation-2026-11-24.md",
+        "docs/seo-previews-2026-11-24/broadcasting-housing-keys-photo-390.jpg",
+        "docs/seo-previews-2026-11-24/comparison-documents-photo-390.jpg",
+        "docs/seo-previews-2026-11-24/desktop-1440.jpg",
+        "docs/seo-previews-2026-11-24/germany-broadcasting-fee-classify-dwelling-390.jpg",
+        "docs/seo-previews-2026-11-24/germany-broadcasting-fee-diagram-390.jpg",
+        "docs/seo-previews-2026-11-24/germany-broadcasting-fee-letter-and-account-390.jpg",
+        "docs/seo-previews-2026-11-24/germany-broadcasting-fee-move-and-handover-390.jpg",
+        "docs/seo-previews-2026-11-24/germany-broadcasting-fee-worked-allocation-390.jpg",
+        "docs/seo-previews-2026-11-24/mobile-320.jpg",
+        "docs/seo-previews-2026-11-24/photography-crops.jpg",
+        "docs/seo-previews-2026-11-24/toeic-part-five-comparisons-answers-four-six-390.jpg",
+        "docs/seo-previews-2026-11-24/toeic-part-five-comparisons-answers-one-three-390.jpg",
+        "docs/seo-previews-2026-11-24/toeic-part-five-comparisons-diagram-390.jpg",
+        "docs/seo-previews-2026-11-24/toeic-part-five-comparisons-map-comparison-390.jpg",
+        "docs/seo-previews-2026-11-24/toeic-part-five-comparisons-meaning-and-limits-390.jpg",
+        "src/exchange_info/editorial/germany-broadcasting-fee.json",
+        "src/exchange_info/editorial/toeic-part-five-comparisons.json",
+        "src/exchange_info/static/assets/editorial/broadcasting-housing-keys-photo.webp",
+        "src/exchange_info/static/assets/editorial/comparison-documents-photo.webp"
+      ]
+    },
+    {
+      "number": 404,
+      "title": "2026-11-23 SEO 雙篇：交換考試登記與多益關係子句",
+      "body": "學生選上交換課程後，仍可能漏掉獨立的考試登記；多益文法也容易只依「人／地點」字義選關係詞。本批以 Asia/Taipei **2026-11-23** 新增兩篇完整繁體中文圖文指南：\n\n- **交換考試要另外報名嗎？以 TUM 為例，核對報考、取消與完成紀錄** — `exchange-exam-registration`。區分課位、報考與取消；明確保留 CIT 與語言中心自動登記例外，附三課假設案例及填空詢問。\n- **多益 Part 5 關係子句怎麼選？who、which、whose、where 與原創題解析** — `toeic-part-five-relative-clauses`。六道原創四選一題／24 選項逐項解析，練習子句角色、所有／地點、逗號及省略。\n\n直接基於 main `21c9dde9`；#78／#92 已合併。已核對 63 篇既有文章，以及待審 #401／#402／#403 的完整說明、各30檔及六個已選題，全部排除重做，未匯入待審文章。原63篇 JSON、URL、刊載日與 lastmod 不變；本分支共65篇。選題為候選8／20的編輯判斷，沒有 Search Console、搜尋量或排名資料。\n\n十個引用官方／一手來源均實際讀取並記錄 HTTP、版本範圍、查核日與 SHA256；未登入校務帳號，沒有捏造期限、費用、資格、學生經歷、官方考題或成績。兩張新 Pexels 授權攝影，1536×1024 WebP（114,280／262,504 bytes），附 alt／圖說／credit；另有原創HTML圖解。沿用既有 renderer 與 SEO／無 JavaScript 版型。\n\n驗收完成：editorial gate65篇0errors、**193 SEO tests passed**、**76 E2E tests passed**、兩篇×320／390／1440六組無JavaScript、15張逐張目視。重新建置 wheel，65 JSON／65 WebP、59 CSS、字型及閱讀資產共671唯一檔位元一致，checkout外匯入65篇及新slug成功。\n\n[完整來源／攝影／驗收證據](https://github.com/blizzard-new/abroad/blob/40759bc03a0c046d302836ba3d453020173254a3/docs/seo-editorial-validation-2026-11-23.md) · [桌面](https://github.com/blizzard-new/abroad/blob/40759bc03a0c046d302836ba3d453020173254a3/docs/seo-previews-2026-11-23/desktop-1440.jpg) · [手機](https://github.com/blizzard-new/abroad/blob/40759bc03a0c046d302836ba3d453020173254a3/docs/seo-previews-2026-11-23/mobile-320.jpg)\n\n本 PR 待人工審閱；未合併、部署、寄信或要求 Google 索引。本地驗收不表示正式上線或已收錄。遠端 image CI 尚待完成，Supabase Preview 已跳過。任務 attach_artifact 呼叫40秒、list_artifacts查詢10秒均未回傳，因此附件狀態未確認；PR建立及30個變更檔案已另外核對成功。PR編號及交付狀態已回填選題與驗收文件，產品雜湊維持測試時版本。",
+      "head": "40759bc03a0c046d302836ba3d453020173254a3",
+      "files": [
+        "docs/seo-editorial-backlog.md",
+        "docs/seo-editorial-browser-2026-11-23.json",
+        "docs/seo-editorial-checks-2026-11-23.json",
+        "docs/seo-editorial-exercises-2026-11-23.json",
+        "docs/seo-editorial-inventory-2026-11-23.json",
+        "docs/seo-editorial-package-2026-11-23.json",
+        "docs/seo-editorial-photography-2026-11-23.json",
+        "docs/seo-editorial-pr-audit-2026-11-23.json",
+        "docs/seo-editorial-sources-2026-11-23.json",
+        "docs/seo-editorial-tests-2026-11-23.txt",
+        "docs/seo-editorial-validation-2026-11-23.md",
+        "docs/seo-previews-2026-11-23/desktop-1440.jpg",
+        "docs/seo-previews-2026-11-23/exam-registration-laptop-photo-390.jpg",
+        "docs/seo-previews-2026-11-23/exchange-exam-registration-cancel-and-record-390.jpg",
+        "docs/seo-previews-2026-11-23/exchange-exam-registration-diagram-390.jpg",
+        "docs/seo-previews-2026-11-23/exchange-exam-registration-separate-course-and-exam-390.jpg",
+        "docs/seo-previews-2026-11-23/exchange-exam-registration-verify-registration-390.jpg",
+        "docs/seo-previews-2026-11-23/exchange-exam-registration-worked-course-card-390.jpg",
+        "docs/seo-previews-2026-11-23/mobile-320.jpg",
+        "docs/seo-previews-2026-11-23/photography-crops.jpg",
+        "docs/seo-previews-2026-11-23/relative-clause-reading-photo-390.jpg",
+        "docs/seo-previews-2026-11-23/toeic-part-five-relative-clauses-answers-four-six-390.jpg",
+        "docs/seo-previews-2026-11-23/toeic-part-five-relative-clauses-answers-one-three-390.jpg",
+        "docs/seo-previews-2026-11-23/toeic-part-five-relative-clauses-diagram-390.jpg",
+        "docs/seo-previews-2026-11-23/toeic-part-five-relative-clauses-find-clause-role-390.jpg",
+        "docs/seo-previews-2026-11-23/toeic-part-five-relative-clauses-omission-and-meaning-390.jpg",
+        "src/exchange_info/editorial/exchange-exam-registration.json",
+        "src/exchange_info/editorial/toeic-part-five-relative-clauses.json",
+        "src/exchange_info/static/assets/editorial/exam-registration-laptop-photo.webp",
+        "src/exchange_info/static/assets/editorial/relative-clause-reading-photo.webp"
+      ]
+    },
+    {
+      "number": 403,
+      "title": "2026-11-22 SEO 雙篇：研修期間證明、多益主動被動",
+      "body": "補上交換研修期間證明的日期／簽署核對，以及 TOEIC Listening & Reading Part 5 的主動被動判斷。**Asia/Taipei 2026-11-22 兩篇完整原創繁體中文圖文文章，同屬此 PR。**\n\n- **交換研修期間證明怎麼辦？Confirmation of Stay 日期與簽署核對**（`exchange-confirmation-of-stay`）：區分旅行、學術活動、認定、簽署與提交日期；核對 TUM 中央／CIT Informatics 窗口，以及 Lund 出國 Erasmus+ 的核定邊界。附六日期假設卡、未寄送詢問稿與檢查表，不代填認定日或試算補助。\n- **多益 Part 5 主動被動怎麼分？主詞角色、完整動詞組與原創題解析**（`toeic-part-five-active-passive`）：施受方向、be／been／being、情態／完成／進行及不及物 arrive；六題 24 選項逐項解析、兩組改寫與歧義討論，非官方題庫或估分。\n\n本批直接基於 main `21c9dde9`；#78／#92 已合併，無基礎相依。所有待審 #401／#402 的四題均視為已選並排除，未匯入此 PR。原 63 篇 JSON、URL、刊載／修改日期不變；本分支 65 篇不含四篇待審內容。選題為編輯判斷，沒有 Search Console、搜尋量或排名資料。Backlog 本日紀錄置於 Initial batch 前，保留 #401 開頭與 #402 末尾的待審新增位置。\n\n七個引用一手來源全部 HTTP200 且實讀。Lund 更新 2026-11-13，僅作該校出國 Erasmus+ 案例，不套用赴 Lund 的臺灣學生；TUM／CIT 的簽署時間及重考規則各限定範圍。未登入、提交或測試私人表單。多益 directions 與 British Council 教學正文核對，全部題目／選項／例句／解析為編輯自寫，未翻寫官方題庫或承諾成績。\n\n新增兩張 Pexels 授權真實攝影，1536×1024 WebP，**54,304／231,904 bytes**；有 alt、圖說與署名。舊月曆明示為素材，倉庫不是官方題照。兩個原創 HTML 五步圖沿用 renderer，保留 FAQ、canonical、Article／Breadcrumb JSON-LD、社群標記及 Sitemap。\n\n驗證已通過：\n\n- `scripts/check_editorial.py --base-ref origin/main`：65 篇，0 errors。\n- 六模組 SEO 單元／整合／release gate：**193 passed**。\n- 三模組桌面／手機 E2E：**76 passed**。\n- 兩篇 × 320／390／1440、無 JavaScript：**六組通過**；目錄、FAQ、圖片、實際手機表格橫捲、相關／母校／目的地／工具及 metadata。**15 張最終畫面逐張目視**。\n- 重建 wheel：65 JSON／65 WebP、全部 CSS／字型與閱讀資產，共 **671 唯一檔**位元一致；checkout 外匯入 65 篇及新 slug。\n\n各檢查一次完整通過，產品檔案測前固定、最終雜湊一致。\n\n[完整驗收／來源與授權](https://github.com/blizzard-new/abroad/blob/9290f5d7e33d6e8e9efc933d9794af0d0a383337/docs/seo-editorial-validation-2026-11-22.md) · [桌面](https://github.com/blizzard-new/abroad/blob/9290f5d7e33d6e8e9efc933d9794af0d0a383337/docs/seo-previews-2026-11-22/desktop-1440.jpg) · [手機](https://github.com/blizzard-new/abroad/blob/9290f5d7e33d6e8e9efc933d9794af0d0a383337/docs/seo-previews-2026-11-22/mobile-320.jpg)\n\n待人工審閱；未合併、部署、寄信或要求 Google 建立索引，產文不等於已上線／已收錄。遠端 CI 仍以 PR 最新狀態為準。任務附加工具 40 秒與附件查詢 10 秒均未回覆，附加狀態未確認；PR 建立及 URL 已獨立核對。",
+      "head": "9290f5d7e33d6e8e9efc933d9794af0d0a383337",
+      "files": [
+        "docs/seo-editorial-backlog.md",
+        "docs/seo-editorial-browser-2026-11-22.json",
+        "docs/seo-editorial-checks-2026-11-22.json",
+        "docs/seo-editorial-exercises-2026-11-22.json",
+        "docs/seo-editorial-inventory-2026-11-22.json",
+        "docs/seo-editorial-package-2026-11-22.json",
+        "docs/seo-editorial-photography-2026-11-22.json",
+        "docs/seo-editorial-pr-audit-2026-11-22.json",
+        "docs/seo-editorial-sources-2026-11-22.json",
+        "docs/seo-editorial-tests-2026-11-22.txt",
+        "docs/seo-editorial-validation-2026-11-22.md",
+        "docs/seo-previews-2026-11-22/active-passive-warehouse-photo-390.jpg",
+        "docs/seo-previews-2026-11-22/desktop-1440.jpg",
+        "docs/seo-previews-2026-11-22/exchange-confirmation-of-stay-diagram-390.jpg",
+        "docs/seo-previews-2026-11-22/exchange-confirmation-of-stay-request-and-review-390.jpg",
+        "docs/seo-previews-2026-11-22/exchange-confirmation-of-stay-separate-dates-390.jpg",
+        "docs/seo-previews-2026-11-22/exchange-confirmation-of-stay-signing-window-390.jpg",
+        "docs/seo-previews-2026-11-22/exchange-confirmation-of-stay-worked-date-card-390.jpg",
+        "docs/seo-previews-2026-11-22/mobile-320.jpg",
+        "docs/seo-previews-2026-11-22/photography-crops.jpg",
+        "docs/seo-previews-2026-11-22/study-period-calendar-photo-390.jpg",
+        "docs/seo-previews-2026-11-22/toeic-part-five-active-passive-answers-four-six-390.jpg",
+        "docs/seo-previews-2026-11-22/toeic-part-five-active-passive-answers-one-three-390.jpg",
+        "docs/seo-previews-2026-11-22/toeic-part-five-active-passive-diagram-390.jpg",
+        "docs/seo-previews-2026-11-22/toeic-part-five-active-passive-limits-and-transfer-390.jpg",
+        "docs/seo-previews-2026-11-22/toeic-part-five-active-passive-read-verb-chain-390.jpg",
+        "src/exchange_info/editorial/exchange-confirmation-of-stay.json",
+        "src/exchange_info/editorial/toeic-part-five-active-passive.json",
+        "src/exchange_info/static/assets/editorial/active-passive-warehouse-photo.webp",
+        "src/exchange_info/static/assets/editorial/study-period-calendar-photo.webp"
+      ]
+    },
+    {
+      "number": 402,
+      "title": "2026-11-21 SEO 雙篇：英語授課證明、AI 英文電話",
+      "body": "交換生容易把「修過 EMI 課程」誤認為完整學程的 MOI 或已獲語言豁免，也常在英文電話中漏掉第三人轉交訊息所需的對象、問題與後續。本批以兩篇完整原創繁體中文圖文指南，分別提供文件核對流程及電話角色練習。\n\n- **交換申請的英語授課證明怎麼辦？MOI、EMI 與語言資格核對表**（`exchange-medium-of-instruction`）：清大文件範圍、TUM 接受條件與官方表單，附兩個假設案例及兩封可填詢問稿。\n- **用 AI 練英文電話怎麼做？轉接、留言與回電資訊的 Prompt**（`ai-english-phone-messages`）：兩張角色卡、轉接／留言分支、三輪 Prompt、前後改稿與人工複習表。\n\n台北 **2026-11-21** 每日雙篇；基於 main `21c9dde9`。#78／#92 已合併，無基礎相依。昨日待審 #401 的成績單／多益兩篇已視為已選並排除，未匯入本 PR。原 63 篇 JSON、網址與刊載／修改日期不變；選題是編輯判斷，沒有 Search Console 或搜尋量／排名資料。\n\n實讀七個官方一手來源；清大公告費用版本差異已揭露，不轉載早期金額或核發天數。TUM 當日申請頁連結的 PDF 與引用表單位元相同；不宣稱個人豁免。英文教材讀 Transcript，未播放音訊；示例與 Prompt 是編輯自寫，沒有品牌／語音／學生成效實測。兩張新增 Pexels 授權攝影為 1536×1024 WebP（58,986／145,200 bytes），有 alt、圖說與署名；兩個原創 HTML 圖解沿用既有 renderer。\n\n驗證已通過：\n\n- `scripts/check_editorial.py --base-ref origin/main`：65 篇，0 errors。\n- 六模組 SEO 單元／整合／release gate：**193 passed**。\n- 三模組桌面／手機 E2E：**76 passed**。\n- 兩篇 × 320／390／1440、無 JavaScript：**六組通過**；15 張最終畫面逐張目視，含實際手機表格橫捲、圖片、FAQ、導航及 metadata。\n- 重建 wheel：65 JSON／65 WebP、全部 CSS／字型與閱讀資產，**671 唯一檔**逐位元一致；checkout 外匯入 65 篇及新 slug。\n\n[來源、攝影、測試與驗收](https://github.com/blizzard-new/abroad/blob/2d1c9a4aa2eecc0c048166568fc69f2d1392c866/docs/seo-editorial-validation-2026-11-21.md) · [桌面](https://github.com/blizzard-new/abroad/blob/2d1c9a4aa2eecc0c048166568fc69f2d1392c866/docs/seo-previews-2026-11-21/desktop-1440.jpg) · [手機](https://github.com/blizzard-new/abroad/blob/2d1c9a4aa2eecc0c048166568fc69f2d1392c866/docs/seo-previews-2026-11-21/mobile-320.jpg)\n\n本批待人工審閱；未合併、部署、寄信、致電或要求 Google 索引。本地驗收不等於已上線／收錄。\n\n任務附件工具與附件查詢均未回覆，附加狀態未確認；PR URL 已獨立核對。遠端 CI 仍以 PR 當前狀態為準。",
+      "head": "2d1c9a4aa2eecc0c048166568fc69f2d1392c866",
+      "files": [
+        "docs/seo-editorial-backlog.md",
+        "docs/seo-editorial-browser-2026-11-21.json",
+        "docs/seo-editorial-checks-2026-11-21.json",
+        "docs/seo-editorial-exercises-2026-11-21.json",
+        "docs/seo-editorial-inventory-2026-11-21.json",
+        "docs/seo-editorial-package-2026-11-21.json",
+        "docs/seo-editorial-photography-2026-11-21.json",
+        "docs/seo-editorial-pr-audit-2026-11-21.json",
+        "docs/seo-editorial-sources-2026-11-21.json",
+        "docs/seo-editorial-tests-2026-11-21.txt",
+        "docs/seo-editorial-validation-2026-11-21.md",
+        "docs/seo-previews-2026-11-21/ai-english-phone-messages-diagram-390.jpg",
+        "docs/seo-previews-2026-11-21/ai-english-phone-messages-message-before-after-390.jpg",
+        "docs/seo-previews-2026-11-21/ai-english-phone-messages-prompt-roleplay-390.jpg",
+        "docs/seo-previews-2026-11-21/ai-english-phone-messages-prompt-transfer-390.jpg",
+        "docs/seo-previews-2026-11-21/ai-english-phone-messages-two-call-paths-390.jpg",
+        "docs/seo-previews-2026-11-21/desktop-1440.jpg",
+        "docs/seo-previews-2026-11-21/exchange-medium-of-instruction-ask-home-institution-390.jpg",
+        "docs/seo-previews-2026-11-21/exchange-medium-of-instruction-diagram-390.jpg",
+        "docs/seo-previews-2026-11-21/exchange-medium-of-instruction-identify-evidence-390.jpg",
+        "docs/seo-previews-2026-11-21/exchange-medium-of-instruction-inquiry-and-check-390.jpg",
+        "docs/seo-previews-2026-11-21/exchange-medium-of-instruction-worked-cases-390.jpg",
+        "docs/seo-previews-2026-11-21/mobile-320.jpg",
+        "docs/seo-previews-2026-11-21/moi-document-review-photo-390.jpg",
+        "docs/seo-previews-2026-11-21/photography-crops.jpg",
+        "docs/seo-previews-2026-11-21/telephone-message-notes-photo-390.jpg",
+        "src/exchange_info/editorial/ai-english-phone-messages.json",
+        "src/exchange_info/editorial/exchange-medium-of-instruction.json",
+        "src/exchange_info/static/assets/editorial/moi-document-review-photo.webp",
+        "src/exchange_info/static/assets/editorial/telephone-message-notes-photo.webp"
+      ]
+    },
+    {
+      "number": 401,
+      "title": "2026-11-20 SEO 雙篇：交換成績單、多益 Part 5 連接結構",
+      "body": "補上交換成績單的取得、數位驗證與收件流程，以及多益 Part 5 片語／子句與原因／讓步的判斷練習。**Asia/Taipei 2026-11-20 兩篇完整原創繁體中文圖文文章，同屬此 PR。**\n\n- **交換成績單怎麼拿？以 Lund Ladok 為例，確認下載、驗證與收件方式**（`exchange-transcript-of-records`）：分清四種文件、公開產製步驟、數位驗證、缺成績／簽名／非現有學生窗口與母校缺件，附原創流程及未寄送詢問範本。不將可驗證等同已收件／已抵免，未登入或驗證個人紀錄。\n- **多益 Part 5 介系詞與連接詞怎麼分？because、although、despite 與原創題解析**（`toeic-part-five-prepositions-conjunctions`）：TOEIC Listening & Reading 範圍，六題／24選項、逐項解析、the fact that、名詞內部子句、改寫及語意不足示例；非官方題庫或估分。\n\n新增兩張有可核對授權的真實 Pexels 攝影（1536×1024 WebP，84,486／120,940 bytes）、各自 HTML 五步圖、FAQ、來源／日期、相關與選校連結。九個引用一手來源全為200且實讀：Lund中央頁更新2026-09-02、交換頁2026-10-22、離校頁2026-05-29；另核對臺北市大、多益與British Council。兩個Cambridge探索頁Cloudflare403已排除，改用可核對且明示©2007的BBC官方文法表存檔，全文與頁1目視完成；不是把舊教材說成2026考制。\n\nbase main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`；#78／#92與昨日#400已合併，無基礎相依。開始及提交前open PR皆空，無同日批次；已讀63篇庫存與相關全文。成績單操作與返國總表／抵免對照分工，連接結構與字族／時態／代名詞分工。選題為編輯判斷，沒有Search Console／搜尋量／排名資料。原63篇JSON、網址、刊載日與lastmod不變，更新backlog；renderer／CSS／JS未改。\n\n驗證：\n\n- `scripts/check_editorial.py --base-ref origin/main`：65篇、0 errors。\n- 六模組SEO單元／整合／release gate：**193 passed**。\n- 三模組桌面／手機E2E：**76 passed**。\n- 兩篇 × 320／390／1440、JavaScript關閉：六組通過，含目錄、原生FAQ、圖片／credit、實際橫捲、相關／母校／目的地／工具、canonical／JSON-LD。\n- **15張最終畫面目視完成**，含3:2／2:1配圖裁切。\n- Wheel核對 **65 JSON、65 WebP及671個唯一閱讀資產檔案**，checkout外成功載入65篇及新slug。\n\n各檢查一次完整通過，產品檔案測前固定、最終雜湊不變。\n\n[完整驗收](https://github.com/blizzard-new/abroad/blob/26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9/docs/seo-editorial-validation-2026-11-20.md) · [來源與限制](https://github.com/blizzard-new/abroad/blob/26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9/docs/seo-editorial-sources-2026-11-20.json) · [攝影授權](https://github.com/blizzard-new/abroad/blob/26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9/docs/seo-editorial-photography-2026-11-20.json) · [桌面](https://github.com/blizzard-new/abroad/blob/26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9/docs/seo-previews-2026-11-20/desktop-1440.jpg) · [手機](https://github.com/blizzard-new/abroad/blob/26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9/docs/seo-previews-2026-11-20/mobile-320.jpg)\n\n遠端 TLS trust regression 的 image 檢查仍進行中，Supabase Preview skipped；以本 PR 最新狀態為準，未宣稱遠端 CI 全過。任務附加工具等候 40 秒、附件查詢等候 10 秒皆無回覆，**附件未確認**；實際 PR 與 head 已另行核對。\n\n此 PR 待審；未合併、部署或要求 Google 建立索引，產文不等於已上線／已收錄。",
+      "head": "26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9",
+      "files": [
+        "docs/seo-editorial-backlog.md",
+        "docs/seo-editorial-browser-2026-11-20.json",
+        "docs/seo-editorial-checks-2026-11-20.json",
+        "docs/seo-editorial-exercises-2026-11-20.json",
+        "docs/seo-editorial-inventory-2026-11-20.json",
+        "docs/seo-editorial-package-2026-11-20.json",
+        "docs/seo-editorial-photography-2026-11-20.json",
+        "docs/seo-editorial-pr-audit-2026-11-20.json",
+        "docs/seo-editorial-sources-2026-11-20.json",
+        "docs/seo-editorial-tests-2026-11-20.txt",
+        "docs/seo-editorial-validation-2026-11-20.md",
+        "docs/seo-previews-2026-11-20/connector-practice-photo-390.jpg",
+        "docs/seo-previews-2026-11-20/desktop-1440.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-of-records-choose-document-390.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-of-records-diagram-390.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-of-records-download-ladok-390.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-of-records-missing-or-signed-390.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-of-records-verify-and-send-390.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-photo-390.jpg",
+        "docs/seo-previews-2026-11-20/mobile-320.jpg",
+        "docs/seo-previews-2026-11-20/photography-crops.jpg",
+        "docs/seo-previews-2026-11-20/toeic-part-five-prepositions-conjunctions-answers-four-six-390.jpg",
+        "docs/seo-previews-2026-11-20/toeic-part-five-prepositions-conjunctions-answers-one-three-390.jpg",
+        "docs/seo-previews-2026-11-20/toeic-part-five-prepositions-conjunctions-diagram-390.jpg",
+        "docs/seo-previews-2026-11-20/toeic-part-five-prepositions-conjunctions-meaning-and-transfer-390.jpg",
+        "docs/seo-previews-2026-11-20/toeic-part-five-prepositions-conjunctions-phrase-or-clause-390.jpg",
+        "src/exchange_info/editorial/exchange-transcript-of-records.json",
+        "src/exchange_info/editorial/toeic-part-five-prepositions-conjunctions.json",
+        "src/exchange_info/static/assets/editorial/connector-practice-photo.webp",
+        "src/exchange_info/static/assets/editorial/exchange-transcript-photo.webp"
+      ]
+    }
+  ],
+  "pending_batches": [
+    {
+      "number": 405,
+      "url": "https://github.com/blizzard-new/abroad/pull/405",
+      "state": "open",
+      "merged": false,
+      "head": "acefe901b8e591e8e5b5275e84e3b21e1ac35049",
+      "branch": "codex/seo-daily-20261124",
+      "slugs": [
+        "germany-broadcasting-fee",
+        "toeic-part-five-comparisons"
+      ],
+      "selected_excluded": true,
+      "not_imported": true
+    },
+    {
+      "number": 404,
+      "url": "https://github.com/blizzard-new/abroad/pull/404",
+      "state": "open",
+      "merged": false,
+      "head": "40759bc03a0c046d302836ba3d453020173254a3",
+      "branch": "codex/seo-daily-20261123",
+      "slugs": [
+        "exchange-exam-registration",
+        "toeic-part-five-relative-clauses"
+      ],
+      "selected_excluded": true,
+      "not_imported": true
+    },
+    {
+      "number": 403,
+      "url": "https://github.com/blizzard-new/abroad/pull/403",
+      "state": "open",
+      "merged": false,
+      "head": "9290f5d7e33d6e8e9efc933d9794af0d0a383337",
+      "branch": "codex/seo-daily-20261122",
+      "slugs": [
+        "exchange-confirmation-of-stay",
+        "toeic-part-five-active-passive"
+      ],
+      "selected_excluded": true,
+      "not_imported": true
+    },
+    {
+      "number": 402,
+      "url": "https://github.com/blizzard-new/abroad/pull/402",
+      "state": "open",
+      "merged": false,
+      "head": "2d1c9a4aa2eecc0c048166568fc69f2d1392c866",
+      "branch": "codex/seo-daily-20261121",
+      "slugs": [
+        "ai-english-phone-messages",
+        "exchange-medium-of-instruction"
+      ],
+      "selected_excluded": true,
+      "not_imported": true
+    },
+    {
+      "number": 401,
+      "url": "https://github.com/blizzard-new/abroad/pull/401",
+      "state": "open",
+      "merged": false,
+      "head": "26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9",
+      "branch": "codex/seo-daily-20261120",
+      "slugs": [
+        "exchange-transcript-of-records",
+        "toeic-part-five-prepositions-conjunctions"
+      ],
+      "selected_excluded": true,
+      "not_imported": true
+    }
+  ],
+  "foundation": [
+    {
+      "number": 78,
+      "merged": true,
+      "merge_ancestor": "8f6e67e459bf957f5aed192b7a505a5a6a84b9ff"
+    },
+    {
+      "number": 92,
+      "merged": true,
+      "merge_ancestor": "c42f355ec55903b44d06f8e61bf2dff6d44d7659"
+    }
+  ],
+  "new_slugs": [
+    "germany-berlin-waste-sorting",
+    "ai-english-chart-description"
+  ],
+  "selection": "Editorial judgment6and17;no supplied SearchConsole/rankings.",
+  "merge_note": "All5pending open/unmerged; test merge SHA is not completed merge. No pending article imported.",
+  "environment": {
+    "startup": "Initiallystarting;waited same wait_for_environment call toready while independent connector research;no shell before ready.",
+    "cleanup": {
+      "removed_own_clean_fully_pushed_worktree": "/workspace/abroad-seo-daily-20261120",
+      "branch": "codex/seo-daily-20261120",
+      "head": "26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9",
+      "merged": false,
+      "pr": 401,
+      "remote_head_matches": true,
+      "uncommitted_changes": false,
+      "ignored_only_own_python_test_caches": true,
+      "preserved": "Git branch/history/remote PR/committed evidence/task source cache;all other worktrees untouched",
+      "removed_rebuildable_wheel_cache_bytes": 2529670756
+    },
+    "cleanup_checks": "OwnNov20checkout clean fullypushed;remoteHEAD matched;ignored only ownPython/test/egginfo caches;removed withoutforce,PR401 remainsOPEN/unmerged. Preserve branch/history/remotePR/committed evidence/sourcecache;other4pending checkouts,root and sharedvenv untouched. Removed only ownNov24rebuildable wheelcache2529670756bytes.",
+    "setup_note": "New isolated checkout from current main;frozen uv sync completed once aftercheckoutready beforeproducttests. Reflink probe unsupported;temporaryprobe files removed,not used. Oversized shell argument attempt rejected beforearticle mutation;twoJSONs subsequently written via apply_patch.",
+    "runtime": {
+      "python": "3.12.14"
+    }
+  },
+  "precommit_recheck": {
+    "checked": "2026-11-25",
+    "timezone": "Asia/Taipei",
+    "main_sha": "21c9dde902506e79ac2da99b3d33d0838ae3cd0b",
+    "main_unchanged": true,
+    "open": [
+      {
+        "number": 405,
+        "head": "acefe901b8e591e8e5b5275e84e3b21e1ac35049",
+        "branch": "codex/seo-daily-20261124",
+        "state": "open"
+      },
+      {
+        "number": 404,
+        "head": "40759bc03a0c046d302836ba3d453020173254a3",
+        "branch": "codex/seo-daily-20261123",
+        "state": "open"
+      },
+      {
+        "number": 403,
+        "head": "9290f5d7e33d6e8e9efc933d9794af0d0a383337",
+        "branch": "codex/seo-daily-20261122",
+        "state": "open"
+      },
+      {
+        "number": 402,
+        "head": "2d1c9a4aa2eecc0c048166568fc69f2d1392c866",
+        "branch": "codex/seo-daily-20261121",
+        "state": "open"
+      },
+      {
+        "number": 401,
+        "head": "26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9",
+        "branch": "codex/seo-daily-20261120",
+        "state": "open"
+      }
+    ],
+    "same_day": [],
+    "recent_all_state_count": 100,
+    "all_open_heads_unchanged": true
+  }
+}
