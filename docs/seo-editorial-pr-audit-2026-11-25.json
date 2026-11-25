@@ -353,5 +353,47 @@
     "same_day": [],
     "recent_all_state_count": 100,
     "all_open_heads_unchanged": true
+  },
+  "delivery": {
+    "url": "https://github.com/blizzard-new/abroad/pull/406",
+    "number": 406,
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "mergeable": true,
+    "created_head": "5386fd03622e5d5964299319f00c48a6da41b1b0",
+    "changed_files": 30,
+    "checks": [
+      {
+        "name": "image",
+        "status": "in_progress",
+        "conclusion": null,
+        "url": "https://github.com/blizzard-new/abroad/actions/runs/45517745431/job/138881462159"
+      },
+      {
+        "name": "Supabase Preview",
+        "status": "completed",
+        "conclusion": "skipped",
+        "url": "https://github.com/blizzard-new/abroad/runs/138881456428"
+      },
+      {
+        "name": "image",
+        "status": "in_progress",
+        "conclusion": null,
+        "url": "https://github.com/blizzard-new/abroad/actions/runs/45517674948/job/138881218747"
+      }
+    ],
+    "attachment": {
+      "attach_call": {
+        "returned": false,
+        "timeout_seconds": 40
+      },
+      "list_call": {
+        "returned": false,
+        "timeout_seconds": 10
+      },
+      "confirmed": false
+    },
+    "final_metadata_note": "Only backlog, PR audit and validation delivery metadata updated after product verification; product hashes unchanged."
   }
 }

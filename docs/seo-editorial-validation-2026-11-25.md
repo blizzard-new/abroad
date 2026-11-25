@@ -54,4 +54,4 @@ Polina Tankilevitch／Pexels3735218（玻璃瓶布袋）及Yan Krukau／Pexels76
 - [命令與結果](seo-editorial-tests-2026-11-25.txt)、[套件逐檔](seo-editorial-package-2026-11-25.json)、[瀏覽器與15圖](seo-editorial-browser-2026-11-25.json)
 - [桌面](seo-previews-2026-11-25/desktop-1440.jpg)、[手機](seo-previews-2026-11-25/mobile-320.jpg)、[裁切](seo-previews-2026-11-25/photography-crops.jpg)
 
-PR、遠端CI與任務附件建立後回填；尚未發布。
+待審PR：[ #406 ](https://github.com/blizzard-new/abroad/pull/406)，OPEN／非draft／未合併，GitHub確認mergeable。建立時head `5386fd03622e5d5964299319f00c48a6da41b1b0`，30檔包含兩篇JSON、兩張WebP與15張驗收圖。兩個image CI仍in_progress，Supabase Preview skipped，不宣稱遠端全部通過。已呼叫attach_artifact但40秒未回傳，list_artifacts亦10秒未回傳，故任務附件未確認；PR建立與內容另外查核成功。建立後只回填本段、PR audit及本日選題紀錄，產品與測前雜湊一致，未重新產文或發布。
