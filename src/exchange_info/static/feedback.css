@@ -9,7 +9,7 @@
   padding: 26px 24px 12px;
 }
 
-.feedback-intro h1 {
+.feedback-intro :is(h1, h2:where(.shell-section-title)) {
   margin: 8px 0 12px;
   font-size: clamp(28px, 3.4vw, 42px);
   line-height: 1.3;

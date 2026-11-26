@@ -31,7 +31,7 @@ body.unified-shell #dashboard-view > #partners.pr-explore:has([data-partner-view
   width: calc(100% - 144px); max-width: 1800px; margin: 0 32px 0 112px; padding: 24px 0 60px;
   border: 0; background: transparent; box-shadow: none;
 }
-body.unified-shell #partners.pr-explore h1 { font-size: clamp(32px, 3.2vw, 48px); }
+body.unified-shell #partners.pr-explore :is(h1, h2:where(.shell-section-title)) { font-size: clamp(32px, 3.2vw, 48px); }
 body.unified-shell #partners.pr-explore :is(.pr-search, .pr-field, .pr-view-toggle, .pr-facets, .pr-facets .filter-panel, .discovery-criteria, .discovery-recents, .discovery-open-workspace, .partner-map-panel, .partner-map-stage, .partner-map-heading, .partner-map-actions, .partner-map-access, .partner-map-footer, .partner-map-legend, .pr-school-card) {
   border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;
 }

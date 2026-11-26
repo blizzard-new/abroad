@@ -63,7 +63,8 @@ details li { margin: 1rem 0; }
 .cs-home-switcher-bar select { padding: .5rem .8rem; border: 1px solid var(--uw-line); border-radius: .5rem; font-size: .95rem; color: var(--uw-text); background: var(--glass-surface); }
 .cs-switcher-hint { font-size: .85rem; color: var(--uw-muted); }
 .cs-home-pills { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1.25rem; }
-.cs-home-pill { display: inline-block; padding: .3rem .7rem; border-radius: 999px; border: 1px solid var(--uw-line); background: var(--uw-surface-soft); color: var(--uw-text); text-decoration: none; font-size: .86rem; }
+.cs-home-pill { font-family: inherit; cursor: pointer; display: inline-block; padding: .3rem .7rem; border-radius: 999px; border: 1px solid var(--uw-line); background: var(--uw-surface-soft); color: var(--uw-text); text-decoration: none; font-size: .86rem; }
+.cs-table-home { padding: 0; border: 0; background: none; color: var(--uw-blue-strong); font: inherit; text-align: start; cursor: pointer; text-decoration: underline; }
 .cs-home-pill.is-uncontracted { opacity: .68; border-style: dashed; }
 .cs-home-pill.is-active { background: var(--uw-blue-strong); color: var(--glass-surface); border-color: var(--uw-blue-strong); font-weight: 700; opacity: 1; }
 .cs-selected-home-card { background: var(--uw-surface-soft); border: 1px solid var(--uw-line); border-radius: .75rem; padding: 1.25rem; }

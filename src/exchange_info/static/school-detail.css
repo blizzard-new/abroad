@@ -101,7 +101,7 @@ body.school-detail-open .workspace {
   letter-spacing: .04em;
 }
 
-.school-detail-view .school-detail-copy h1 {
+.school-detail-view .school-detail-copy :is(h1, h2:where(.shell-section-title)) {
   max-width: 1000px;
   margin: 16px 0 12px;
   color: #fff;
@@ -405,7 +405,7 @@ html[data-theme="dark"] .school-detail-view {
   .school-detail-view .detail-save-actions { gap: 6px; }
   .school-detail-view .school-detail-header { border-radius: 22px; }
   .school-detail-view .school-detail-copy { padding: 104px 22px 26px; }
-  .school-detail-view .school-detail-copy h1 { font-size: 28px; }
+  .school-detail-view .school-detail-copy :is(h1, h2:where(.shell-section-title)) { font-size: 28px; }
   .school-detail-view .school-detail-copy p { font-size: 13px; }
   .school-detail-view .detail-primary-facts { gap: 16px; margin: 0 8px 8px; padding: 18px 14px; border-radius: 16px; }
   .school-detail-view .detail-primary-facts > div { grid-template-columns: 18px minmax(0, 1fr); gap: 5px; }

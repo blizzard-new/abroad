@@ -65,7 +65,7 @@ body.onboarding-open {
   align-items: start;
 }
 
-.onboarding-heading h1 {
+.onboarding-heading :is(h1, h2:where(.shell-section-title)) {
   max-width: 620px;
   margin: 5px 0 8px;
   font-size: clamp(28px, 4vw, 42px);
@@ -264,7 +264,7 @@ body.onboarding-open {
   max-width: 760px;
 }
 
-.overview-copy h1 {
+.overview-copy :is(h1, h2:where(.shell-section-title)) {
   max-width: 720px;
 }
 
@@ -707,7 +707,7 @@ body.onboarding-open {
   border-bottom: 1px solid var(--line);
 }
 
-.school-detail-header h1 {
+.school-detail-header :is(h1, h2:where(.shell-section-title)) {
   max-width: 820px;
   margin: 8px 0 12px;
   font-size: clamp(34px, 5vw, 58px);
@@ -2466,7 +2466,7 @@ body.onboarding-open {
     border-radius: 20px 20px 0 0;
   }
 
-  .onboarding-heading h1 {
+  .onboarding-heading :is(h1, h2:where(.shell-section-title)) {
     font-size: 29px;
   }
 
@@ -2616,7 +2616,7 @@ body.onboarding-open {
     padding: 24px 0;
   }
 
-  .school-detail-header h1 {
+  .school-detail-header :is(h1, h2:where(.shell-section-title)) {
     font-size: clamp(32px, 10vw, 44px);
   }
 
@@ -2703,7 +2703,7 @@ body.onboarding-open {
     height: 44px;
   }
 
-  .school-detail-header h1 {
+  .school-detail-header :is(h1, h2:where(.shell-section-title)) {
     overflow-wrap: anywhere;
   }
 

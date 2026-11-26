@@ -175,7 +175,7 @@ body.unified-shell #overview .decision-brief-card a { display: flex; }
 body.unified-shell #overview .decision-workspace { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub { display: grid; grid-template-columns: minmax(0, 1fr) 280px; grid-template-areas: "heading heading" "feed boards"; gap: 22px; align-items: start; }
 body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .community-feed-header { grid-area: heading; padding: 22px 26px; }
-body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .community-home-heading h1 { font-size: 28px; }
+body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .community-home-heading :is(h1, h2:where(.shell-section-title)) { font-size: 28px; }
 body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .discussion-workspace { grid-area: feed; margin: 0; padding: 24px; }
 body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .global-community-toolbar { grid-template-columns: minmax(0, 1fr); }
 body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .discussion-discovery-heading { display: none; }
@@ -221,13 +221,13 @@ body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .boar
   body.unified-shell .page-back-bar #school-switcher strong { font-size: 13px; }
   body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub { gap: 16px; }
   body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .community-feed-header { padding: 18px; }
-  body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .community-home-heading h1 { font-size: 23px; }
+  body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .community-home-heading :is(h1, h2:where(.shell-section-title)) { font-size: 23px; }
   body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .discussion-workspace { padding: 18px; }
   body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .featured-board-grid { grid-template-columns: minmax(0, 1fr); }
   body.unified-shell .school-detail-main { padding: 18px; }
   body.unified-shell .school-detail-view .school-detail-copy { padding: 22px 20px 24px; }
   body.unified-shell .travel-destination-stamp { position: static; min-height: 0; max-width: 130px; padding: 8px 12px; }
-  body.unified-shell .school-detail-view .school-detail-copy h1 { max-width: 100%; }
+  body.unified-shell .school-detail-view .school-detail-copy :is(h1, h2:where(.shell-section-title)) { max-width: 100%; }
   body.unified-shell :is(#discussion-reader, #discussion-moderation) { border-radius: 0; }
 }
 @media (prefers-reduced-transparency: reduce) { body.unified-shell { --glass-surface: var(--uw-surface); --glass-strong: var(--uw-surface); } }

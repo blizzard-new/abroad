@@ -642,7 +642,7 @@ body.cgu-community-mode .featured-board-grid {
   padding: 22px 0 18px;
 }
 
-.community-home-heading h1 {
+.community-home-heading :is(h1, h2:where(.shell-section-title)) {
   margin: 3px 0 5px;
   font-size: clamp(30px, 4vw, 44px);
   line-height: 1.08;
@@ -941,8 +941,8 @@ body.cgu-community-mode .featured-board-grid {
   padding-right: 44px;
 }
 
-.account-dialog-intro h1,
-.profile-heading h1 {
+.account-dialog-intro :is(h1, h2:where(.shell-section-title)),
+.profile-heading :is(h1, h2:where(.shell-section-title)) {
   margin: 3px 0 4px;
   font-size: 26px;
   line-height: 1.25;
@@ -1623,7 +1623,7 @@ body.cgu-community-mode .featured-board-grid {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.visual-hero h1 {
+.visual-hero :is(h1, h2:where(.shell-section-title)) {
   max-width: 620px;
   margin: 6px 0 20px;
   color: #fff;
@@ -2166,7 +2166,7 @@ body.cgu-community-mode .featured-board-grid {
     padding: 12px 0 14px;
   }
 
-  .community-home-heading h1 {
+  .community-home-heading :is(h1, h2:where(.shell-section-title)) {
     font-size: 30px;
   }
 
@@ -2288,7 +2288,7 @@ body.cgu-community-mode .featured-board-grid {
     padding: 22px;
   }
 
-  .visual-hero h1 {
+  .visual-hero :is(h1, h2:where(.shell-section-title)) {
     font-size: 38px;
   }
 
@@ -2548,7 +2548,7 @@ button:not(:disabled):hover,
   padding: 34px 0 22px;
 }
 
-.community-home-heading h1 {
+.community-home-heading :is(h1, h2:where(.shell-section-title)) {
   margin-top: 5px;
   font-size: clamp(40px, 4.5vw, 54px);
   font-weight: 780;
@@ -2780,7 +2780,7 @@ button:not(:disabled):hover,
     padding-top: 24px;
   }
 
-  .community-home-heading h1 {
+  .community-home-heading :is(h1, h2:where(.shell-section-title)) {
     font-size: 38px;
   }
 
@@ -3453,7 +3453,7 @@ button:disabled,
   font-weight: 800;
 }
 
-.school-detail-header h1 {
+.school-detail-header :is(h1, h2:where(.shell-section-title)) {
   max-width: 820px;
   margin: 8px 0 14px;
   color: var(--ink);
@@ -3586,7 +3586,7 @@ button:disabled,
     width: 100%;
   }
 
-  .school-detail-header h1 {
+  .school-detail-header :is(h1, h2:where(.shell-section-title)) {
     font-size: 44px;
   }
 }
@@ -3614,7 +3614,7 @@ button:disabled,
     padding: 20px;
   }
 
-  .school-detail-header h1 {
+  .school-detail-header :is(h1, h2:where(.shell-section-title)) {
     font-size: 36px;
     line-height: 1.08;
   }
@@ -6664,24 +6664,24 @@ body {
 }
 
 /* Final responsive polish for independently routed student-plan pages. */
-.visual-hero h1 {
+.visual-hero :is(h1, h2:where(.shell-section-title)) {
   max-width: 760px;
   font-size: 50px;
 }
 
-h1[tabindex="-1"]:focus,
+:is(h1, h2:where(.shell-section-title))[tabindex="-1"]:focus,
 h2[tabindex="-1"]:focus {
   outline: none;
 }
 
 @media (max-width: 1180px) {
-  .visual-hero h1 {
+  .visual-hero :is(h1, h2:where(.shell-section-title)) {
     font-size: 44px;
   }
 }
 
 @media (max-width: 700px) {
-  .visual-hero h1 {
+  .visual-hero :is(h1, h2:where(.shell-section-title)) {
     font-size: 32px;
   }
 }
@@ -10345,7 +10345,7 @@ h2[tabindex="-1"]:focus {
   border-bottom: 1px solid var(--line);
 }
 
-.notification-dialog-heading h1 {
+.notification-dialog-heading :is(h1, h2:where(.shell-section-title)) {
   margin: 3px 0 5px;
   font-size: clamp(24px, 4vw, 30px);
   letter-spacing: -0.02em;

@@ -31,8 +31,8 @@
 #application-path .header-title{display:flex;align-items:center;gap:10px}
 #application-path .header-title>img{display:none}
 #application-path .eyebrow{font-size:11px;letter-spacing:1.8px;font-weight:700;color:var(--uw-muted);margin-bottom:3px}
-#application-path .app-header h1{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1.3}
-#application-path .app-header h1 span{color:var(--uw-accent)}
+#application-path .app-header :is(h1, h2:where(.shell-section-title)){font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1.3}
+#application-path .app-header :is(h1, h2:where(.shell-section-title)) span{color:var(--uw-accent)}
 #application-path .outline-button,#application-path .primary-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:11px 18px;border-radius:15px;font-size:14px;font-weight:700;min-height:48px;transition:transform .16s,box-shadow .16s}
 #application-path .outline-button{background:white;border:1px solid var(--uw-line);box-shadow:0 3px 0 var(--uw-surface-soft)}
 #application-path .primary-button{color:white;background:var(--blue);box-shadow:0 4px 0 var(--deep)}
@@ -330,7 +330,7 @@
 #application-path .app-header{padding:12px 0 16px}
 #application-path .header-title>img{display:block}
 #application-path .app-header .eyebrow{display:none}
-#application-path .app-header h1{font-size:24px}
+#application-path .app-header :is(h1, h2:where(.shell-section-title)){font-size:24px}
 #application-path .app-header .outline-button{font-size:12px;padding:8px 11px;min-height:44px;box-shadow:none}
 #application-path .app-header .outline-button svg{width:17px}
 #application-path .plan-strip{padding:12px 14px;gap:13px;display:block;border-radius:18px}
@@ -526,7 +526,7 @@
 #application-path .overall-stat .meter-fill::after { background: linear-gradient(105deg,transparent,#23324a66,transparent); }
 #application-path .primary-button { background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge); }
 #application-path .primary-button:hover { background: var(--uw-accent-hover); }
-#application-path :is(.kicker, .app-header h1 span, .ap-empty > svg, .stage-card header > span:last-child) { color: var(--uw-accent); }
+#application-path :is(.kicker, .app-header :is(h1, h2:where(.shell-section-title)) span, .ap-empty > svg, .stage-card header > span:last-child) { color: var(--uw-accent); }
 #application-path .meter-fill { background: var(--uw-accent); }
 #application-path .meter.gold .meter-fill { background: linear-gradient(90deg,#d9ac39,#f6d572); }
 #application-path .path-line.partial { stroke: var(--uw-accent); }

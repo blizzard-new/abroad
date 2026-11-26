@@ -189,7 +189,7 @@ window.UniWayGuide = (() => {
     root().querySelector("#guide-article").innerHTML = `
       <button id="guide-toc-toggle" type="button" class="pr-toc-toggle" aria-expanded="false" aria-controls="guide-toc-panel"><i data-lucide="book-open" aria-hidden="true"></i><span>目錄 · ${html(article.title)}</span><i data-lucide="chevron-down" aria-hidden="true"></i></button>
       <nav class="pr-crumbs" aria-label="路徑"><a href="#guide">申請指南</a><span aria-hidden="true">/</span><span>${html(article.group)}</span></nav>
-      <h1 id="guide-title">${html(article.title)}</h1>
+      <h2 class="shell-section-title" id="guide-title">${html(article.title)}</h2>
       <p class="pr-guide-meta"><span>更新於 ${UPDATED}</span><span>${html(schoolLine())}</span></p>
       <p class="pr-guide-lead">${html(article.lead)}</p>
       ${callout}

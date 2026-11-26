@@ -572,7 +572,7 @@ body.unified-shell #partners.pr-explore .journey-search-results > .pr-results-he
     align-items: baseline;
     gap: 4px 8px;
   }
-  html[data-skin="metro"] body.unified-shell #partners.pr-explore h1 {
+  html[data-skin="metro"] body.unified-shell #partners.pr-explore :is(h1, h2:where(.shell-section-title)) {
     margin: 0;
     font-size: 20px;
     line-height: 1.25;

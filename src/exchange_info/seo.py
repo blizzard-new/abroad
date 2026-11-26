@@ -17,8 +17,8 @@ from time import monotonic
 from xml.etree.ElementTree import Element, SubElement, tostring
 from zoneinfo import ZoneInfo
 
-from fastapi import APIRouter, HTTPException, Query
-from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse, Response
+from fastapi import APIRouter, HTTPException, Query, Request
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, Response
 
 from .cross_school_partners import (
     build_cross_school_partner_directory,
@@ -28,13 +28,14 @@ from .cross_school_partners import (
     resolve_country_slug_and_zh,
     resolve_partner_cross_school_path,
 )
+from .indexnow import valid_indexnow_key
 from .models import CatalogueSourceStatus, PartnerUniversity
 from .school_identity import school_identity_key
 from .ncu_student_view import ncu_window_cache_boundary
 from .seo_changes import ContentChanges
 from .seo_quality import digest, material_content
 from .seo_guides import COUNTRIES, GUIDES, country_slug
-from .seo_articles import ARTICLES, Article, article_schema, guide_index, render_article
+from .seo_articles import ARTICLES, Article, article_schema, faq_schema, guide_index, render_article
 from .seo_analytics import analytics_markup
 from .university_registry import SUPPORTED_UNIVERSITIES, UniversityProfile
 
@@ -81,6 +82,7 @@ class SeoSettings:
     indexable: bool
     verification: str = ""
     ai_crawlers: str = "allow"
+    indexnow_key: str | None = None
 
     @classmethod
     def from_environment(cls, env: Mapping[str, str] | None = None) -> "SeoSettings":
@@ -99,7 +101,10 @@ class SeoSettings:
             # A typo in a crawler preference must not stop the site from starting; fall back to the default.
             logging.getLogger(__name__).warning("Ignoring unknown EXCHANGE_AI_CRAWLERS value; using 'allow'")
             policy = "allow"
-        return cls(origin, indexable, env.get("EXCHANGE_GOOGLE_SITE_VERIFICATION", "").strip(), policy)
+        return cls(
+            origin, indexable, env.get("EXCHANGE_GOOGLE_SITE_VERIFICATION", "").strip(), policy,
+            valid_indexnow_key(env.get("INDEXNOW_KEY", "").strip()),
+        )
 
 
 def structured_data(value: dict) -> str:
@@ -165,7 +170,7 @@ def one_line(value: str) -> str:
     return " ".join(value.split())
 
 
-def llms_txt(settings: SeoSettings, universities: Sequence[UniversityProfile]) -> str:
+def llms_txt(settings: SeoSettings, universities: Sequence[UniversityProfile], *, full: bool = False) -> str:
     """Plain-text map of the public pages for AI assistants; built from the same registries as the sitemap."""
     o = settings.origin
     lines = ["# UniWay", "",
@@ -177,7 +182,7 @@ def llms_txt(settings: SeoSettings, universities: Sequence[UniversityProfile]) -
              f"- 資料來源與更正方式見 [資料編輯與更正政策]({o}/editorial-policy)。", "",
              "## 主要頁面", "",
              f"- [首頁]({o}/): 互動式選校與申請規劃工具",
-             f"- [學校總覽]({o}/schools): 全部支援的母校，各校頁面列出可申請的合作校與官方來源",
+             f"- [學校總覽]({o}/schools): 全部支援的母校，各校頁面列出合作校、方案狀態與官方來源",
              f"- [國家專區]({o}/destinations): 依目的地比較語言、學期、預算與官方規劃資料",
              f"- [跨校外國大學]({o}/partners): 同一所外國大學在全台各校的合作與門檻整理",
              f"- [交換指南]({o}/guides): 資格、費用、補助與文件準備的來源導向指南", "",
@@ -186,9 +191,30 @@ def llms_txt(settings: SeoSettings, universities: Sequence[UniversityProfile]) -
     lines += ["", "## 國家專區", ""]
     lines += [f"- [{data['name']}交換學生指南]({o}/destinations/{slug})" for slug, data in COUNTRIES.items()]
     lines += ["", "## 母校交換指南", ""]
-    lines += [f"- [{u.school_name}（{u.english_name}）]({o}/schools/{u.id})" for u in universities]
+    if full:
+        lines += ["以下摘要取自各校頁的整理紀錄。年度、截止日與開放狀態只適用於該紀錄的範圍。引用前請到母校頁核對最新來源。", ""]
+        coverage_labels = {
+            "full": "收錄較完整的母校申請與合作校資料，細項依校方公告確認。",
+            "basic": "提供母校公開來源與基本交換資料，細項依校方公告確認。",
+            "pending": "母校資料待補，請查指定的校方來源。",
+        }
+        for u in universities:
+            first_note = re.split(r"[。；]", one_line(u.coverage_note), maxsplit=1)[0]
+            note = first_note + "。" if 0 < len(first_note) <= 160 else coverage_labels[u.support_level]
+            lines.append(f"- [{u.school_name}（{u.english_name}）]({o}/schools/{u.id})：{note} [校方來源]({u.official_url})")
+        lines += ["", "## 交換準備重點", ""]
+        for slug in ("exchange-application", "exchange-eligibility", "exchange-budget", "exchange-study-plan"):
+            article = ARTICLES[slug]
+            lines.extend([f"### [{one_line(article.title)}]({o}/guides/{slug})", "", one_line(article.description), ""])
+            lines.extend(f"- {one_line(point)}" for point in article.summary)
+            lines.append("")
+    else:
+        lines += [f"- [{u.school_name}（{u.english_name}）]({o}/schools/{u.id})" for u in universities]
     lines += ["", "## Optional", "",
-              f"- [Sitemap]({o}/sitemap.xml): 含各母校的合作校頁面網址，數量較多", ""]
+              f"- [Sitemap]({o}/sitemap.xml): 含各母校的合作校頁面網址，數量較多"]
+    if not full:
+        lines.append(f"- [母校與交換指南擴充摘要]({o}/llms-full.txt)")
+    lines.append("")
     return "\n".join(lines)
 
 
@@ -234,6 +260,26 @@ def source_notice(source: CatalogueSourceStatus | None) -> str:
     return f'<aside class="notice">合作校資料擷取時間：{escape(checked)}。這是來源擷取時間，不代表本期名額或資格已完成查核。</aside>'
 
 
+def partner_page_schema(
+    settings: SeoSettings, path: str, description: str, name: str, website: str | None,
+    *, alternate_name: str | None = None, modified: str | None = None,
+) -> str:
+    url = settings.origin + path
+    school = {"@type": "CollegeOrUniversity", "name": name}
+    if alternate_name and alternate_name != name:
+        school["alternateName"] = alternate_name
+    if website and website.startswith(("https://", "http://")):
+        school["url"] = website
+    result = {
+        "@context": "https://schema.org", "@type": "WebPage", "@id": url + "#webpage",
+        "url": url, "inLanguage": "zh-Hant", "description": f"{description} {NOTICE}",
+        "mainEntity": school,
+    }
+    if modified:
+        result["dateModified"] = modified
+    return structured_data(result)
+
+
 def page(settings: SeoSettings, title: str, description: str, path: str, body: str,
          breadcrumbs: list[tuple[str, str]], *, article: Article | None = None, extra_head: str = "") -> HTMLResponse:
     navigation = '<ol>' + ''.join(
@@ -248,7 +294,10 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
     schema = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i, "name": name, "item": settings.origin + p}
         for i, (name, p) in enumerate(breadcrumbs, 1)]}
-    article_head = structured_data(article_schema(article, settings.origin)) if article else ""
+    article_head = ""
+    if article:
+        article_head = structured_data(article_schema(article, settings.origin))
+        article_head += structured_data(faq_schema(article, settings.origin))
     if path == "/guides" or article:
         article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261119-1">'
     if extra_head:
@@ -263,7 +312,7 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
 {metadata(settings, title, description, path, article)}{structured_data(schema)}
 <link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/static/brand-tokens.css?v=20261029-midnight-1">
 <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2">
-<link rel="stylesheet" href="/static/seo.css?v=20261020-1">{article_head}
+<link rel="stylesheet" href="/static/seo.css?v=20261126-home-selection">{article_head}
 <link rel="stylesheet" href="/static/midnight-theme.css?v=20261029-1">
 {select_assets}
 <script src="/static/reading-theme.js?v=20261020-1"></script></head>
@@ -432,12 +481,22 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
     def robots():
         return PlainTextResponse(robots_txt(settings), headers={"Cache-Control": "public, max-age=300"})
 
+    if settings.indexable and settings.indexnow_key:
+        def indexnow_verification():
+            return PlainTextResponse(settings.indexnow_key, headers={"Cache-Control": "public, max-age=300"})
+
+        router.add_api_route(f"/{settings.indexnow_key}.txt", indexnow_verification, methods=["GET", "HEAD"])
+
     @router.api_route("/llms.txt", methods=["GET", "HEAD"])
-    def llms():
+    @router.api_route("/llms-full.txt", methods=["GET", "HEAD"])
+    def llms(request: Request):
         # Staging and preview builds must not advertise themselves to assistants.
         if not settings.indexable:
             raise HTTPException(404, "找不到頁面")
-        return PlainTextResponse(llms_txt(settings, tuple(universities.values())), headers={"Cache-Control": "public, max-age=300"})
+        return PlainTextResponse(
+            llms_txt(settings, tuple(universities.values()), full=request.url.path.endswith("/llms-full.txt")),
+            headers={"Cache-Control": "public, max-age=300"},
+        )
 
     @router.api_route("/partners", methods=["GET", "HEAD"])
     def partners_directory():
@@ -477,6 +536,29 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             [("首頁", "/"), ("跨校外國大學", "/partners"), (c_name, canonical_country_path)],
         )
 
+    @router.get("/partners/{country}/{institution}/home-selection")
+    def cross_school_home_selection(country: str, institution: str, home: str):
+        if home not in universities:
+            raise HTTPException(404, "找不到這所母校")
+        data = build_cross_school_partner_page_data(
+            country=country,
+            institution=institution,
+            selected_home=home,
+            catalogue_loader=cached_pair_loader,
+            require_complete=True,
+        )
+        if data is None:
+            raise HTTPException(404, "找不到這所外國合作大學")
+        seconds_left = ncu_window_cache_boundary()[1] if home == "ncu" else None
+        max_age = min(30, seconds_left) if seconds_left is not None else 30
+        return JSONResponse({
+            "agreement": data.selected_home_agreement.model_dump(mode="json"),
+            "status": data.selected_home_network_status.model_dump(mode="json"),
+            "heat": data.selected_home_partner_heat.model_dump(mode="json"),
+            "compare_url": data.conversion_hooks.compare_action_url,
+            "draft_url": data.conversion_hooks.study_plan_action_url,
+        }, headers={"Cache-Control": f"public, max-age={max_age}", "X-Robots-Tag": "noindex"})
+
     @router.api_route("/partners/{country}/{institution}", methods=["GET", "HEAD"])
     def cross_school_partner_page(
         country: str,
@@ -508,7 +590,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             f"並瀏覽全台 {data.contracted_home_count} 所締約大學聚合之生活費參考、住宿提醒與修課方向結構化摘要。"
         )
         body = render_cross_school_partner_page_body(data)
-        extra_script = '<script src="/static/partner-page.js?v=20261020-1" defer></script>'
+        extra_script = '<script src="/static/partner-page.js?v=20261126-home-selection-2" defer></script>'
         return page(
             settings,
             title,
@@ -521,7 +603,11 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
                 (data.country_name_zh, f"/partners/{data.country_slug}"),
                 (data.school_name_zh, data.canonical_path),
             ],
-            extra_head=extra_script,
+            extra_head=extra_script + partner_page_schema(
+                settings, data.canonical_path, description, data.school_name_zh, data.official_website,
+                alternate_name=data.school_name_en,
+                modified=data.source_record_date.isoformat() if data.source_record_date else None,
+            ),
         )
 
     @router.api_route("/schools", methods=["GET", "HEAD"])
@@ -541,8 +627,11 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         cards = "".join(f'<li><a href="{partner_path(u, rows[0])}"><strong>{escape(rows[0].school_name)}</strong>'
                         f'<span>{escape(rows[0].country or "國家待確認")}</span></a><p>{escape("、".join(dict.fromkeys(AVAILABILITY[p.availability_status] for p in rows)))}</p></li>'
                         for rows in groups.values())
-        title = f"{u.school_name}交換學生申請與合作學校｜UniWay"
-        description = f"查詢{u.school_name}海外交換合作校、申請資格、名額與來源。依各方案顯示本期、參考或待確認狀態，申請以校方最新公告為準。"
+        title = f"{u.school_name}交換學生｜合作校名單、申請門檻與時程｜UniWay"
+        description = (
+            f"從{u.school_name}交換合作校名單查找目的地、語言門檻、名額狀態與申請時程。"
+            "各方案分列本期、參考與待確認資料，申請前請核對校方最新官方公告。"
+        )
         body = f'<p class="eyebrow">{escape(u.english_name)}</p><h1>{escape(u.school_name)}交換學生申請與合作學校</h1><p class="lead">{escape(u.coverage_note)}</p>'
         body += f'<p>{source_link(u.official_url, "母校國際處官方資訊")}</p><a class="button" href="{escape(application_link(u))}">開啟{escape(u.short_name)}選校與申請工具</a>'
         body += source_notice(source) + f'<h2>合作校與方案資料</h2><p>共 {len(groups)} 個合作校頁面、{len(partners)} 筆方案資料；此數量不是本期可申請名額。</p><ul class="cards">{cards}</ul>'
@@ -593,8 +682,17 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
                 f'<li><a href="{partner_path(u, item)}">{escape(item.school_name)}的{escape(u.short_name)}適用方案</a></li>' for item in related) + '</ul>'
         body += '</section>'
         path = partner_path(u, partner)
-        response = page(settings, title, description, path, body,
-                    [("首頁", "/"), ("交換學校指南", "/schools"), (u.school_name, f"/schools/{u.id}"), (partner.school_name, path)])
+        record_date = max((row.checked_at.date() for row in rows if row.checked_at), default=None)
+        modified = lastmods.get(settings.origin + path)
+        if not modified and record_date:
+            modified = record_date.isoformat()
+        if not modified and source and source.last_success_at:
+            modified = source.last_success_at.isoformat()
+        response = page(
+            settings, title, description, path, body,
+            [("首頁", "/"), ("交換學校指南", "/schools"), (u.school_name, f"/schools/{u.id}"), (partner.school_name, path)],
+            extra_head=partner_page_schema(settings, path, description, partner.school_name, partner.website, modified=modified),
+        )
         if seconds_left is not None:
             response.headers["Cache-Control"] = f"public, max-age={min(60, seconds_left)}"
         return response

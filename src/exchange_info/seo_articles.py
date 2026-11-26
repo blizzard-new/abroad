@@ -168,6 +168,19 @@ def article_schema(article: Article, origin: str) -> dict:
             "citation": [source.url for source in article.sources]}
 
 
+def faq_schema(article: Article, origin: str) -> dict:
+    return {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": origin + "/guides/" + article.slug + "#faq",
+        "inLanguage": "zh-Hant",
+        "mainEntity": [
+            {"@type": "Question", "name": question, "acceptedAnswer": {"@type": "Answer", "text": answer}}
+            for question, answer in article.faq
+        ],
+    }
+
+
 def render_article(article: Article) -> str:
     a = article
     body = f'''<article class="editorial" id="article-top"><div class="article-heading">

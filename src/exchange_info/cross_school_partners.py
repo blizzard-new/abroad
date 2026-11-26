@@ -21,7 +21,6 @@ Implements Action 2 (【築護城河】打造跨校外國大學頁):
 from __future__ import annotations
 
 import hashlib
-import json
 import re
 import unicodedata
 from collections.abc import Callable
@@ -1286,6 +1285,10 @@ def build_cross_school_partner_page_data(
         school_name_en=entity.school_name_en,
         display_title=entity.display_title,
         official_website=entity.official_website,
+        source_record_date=max(
+            (row.checked_at.date() for rows in entity.home_rows.values() for row in rows if row.checked_at),
+            default=None,
+        ),
         selected_home_id=selected_home_id,
         selected_home_agreement=selected_agreement,
         contracted_home_count=len(contracted_agreements),
@@ -1501,12 +1504,11 @@ def render_cross_school_partner_page_body(data: CrossSchoolPartnerPageData) -> s
     """Render the two-layer HTML body for /partners/{country}/{institution}."""
     sel = data.selected_home_agreement
     switcher_pills = "".join(
-        f'<a class="cs-home-pill{" is-active" if a.home_id == sel.home_id else ""}{" is-contracted" if a.has_agreement else " is-uncontracted"}" '
-        f'href="{escape(data.canonical_path)}?home={escape(a.home_id)}" '
-        f'data-home-switch="{escape(a.home_id)}">'
+        f'<button type="submit" name="home" value="{escape(a.home_id)}" class="cs-home-pill{" is-active" if a.home_id == sel.home_id else ""}{" is-contracted" if a.has_agreement else " is-uncontracted"}" '
+        f'data-home-switch="{escape(a.home_id)}" aria-pressed="{str(a.home_id == sel.home_id).lower()}">'
         f"{escape(a.home_short_name)}"
         f'{" ✓" if a.has_agreement else ""}'
-        f"</a>"
+        f"</button>"
         for a in data.all_home_agreements
     )
 
@@ -1519,7 +1521,8 @@ def render_cross_school_partner_page_body(data: CrossSchoolPartnerPageData) -> s
 
     contracted_rows_html = "".join(
         f'<tr class="{"is-selected-home" if a.home_id == sel.home_id else ""}">'
-        f'<td><strong><a href="{escape(data.canonical_path)}?home={escape(a.home_id)}">{escape(a.home_school_name)}</a></strong></td>'
+        f'<td><strong><button class="cs-table-home" type="submit" form="cs-quick-home-switch" name="home" '
+        f'value="{escape(a.home_id)}">{escape(a.home_school_name)}</button></strong></td>'
         f"<td>{escape(a.availability_label)}</td>"
         f"<td>{escape(a.quota_summary)}</td>"
         f"<td>{escape(a.language_requirement_summary)}</td>"
@@ -1532,38 +1535,6 @@ def render_cross_school_partner_page_body(data: CrossSchoolPartnerPageData) -> s
         )
         + "</td></tr>"
         for a in data.contracted_home_schools
-    )
-
-    agreements_json = (
-        json.dumps(
-            {a.home_id: a.model_dump(mode="json") for a in data.all_home_agreements},
-            ensure_ascii=False,
-        )
-        .replace("<", "\\u003c")
-        .replace(">", "\\u003e")
-        .replace("&", "\\u0026")
-    )
-
-    network_heat_map: dict[str, Any] = {}
-    for a in data.all_home_agreements:
-        st, ht = build_partner_specific_preference_heat(
-            home_school=a.home_id,
-            country_slug=data.country_slug,
-            institution_slug=data.institution_slug,
-            partner_name_zh=data.school_name_zh,
-            partner_name_en=data.school_name_en,
-            country_name_zh=data.country_name_zh,
-            quota_hint=a.quota_summary,
-        )
-        network_heat_map[a.home_id] = {
-            "status": st.model_dump(mode="json"),
-            "heat": ht.model_dump(mode="json"),
-        }
-    network_heat_json = (
-        json.dumps(network_heat_map, ensure_ascii=False)
-        .replace("<", "\\u003c")
-        .replace(">", "\\u003e")
-        .replace("&", "\\u0026")
     )
 
     upper_network_html = (
@@ -1608,14 +1579,17 @@ def render_cross_school_partner_page_body(data: CrossSchoolPartnerPageData) -> s
     <h2 id="upper-layer-heading">切換你的母校：查看對「{escape(data.school_name_zh)}」的當期名額、語檢門檻與校內截止日</h2>
   </div>
 
-  <div class="cs-home-switcher-bar">
+  <form class="cs-home-switcher-bar" action="{escape(data.canonical_path)}" method="get">
     <label for="partner-home-switcher"><strong>選擇你的就讀母校：</strong></label>
-    <select id="partner-home-switcher" aria-label="選擇你的就讀母校">
+    <select id="partner-home-switcher" name="home" aria-label="選擇你的就讀母校">
       {options_html}
     </select>
+    <noscript><button type="submit">查看所選母校</button></noscript>
     <span class="cs-switcher-hint">點擊下方母校標籤亦可直接切換：</span>
-  </div>
-  <nav class="cs-home-pills" aria-label="母校快速切換">{switcher_pills}</nav>
+  </form>
+  <form class="cs-home-pills" id="cs-quick-home-switch" aria-label="母校快速切換" action="{escape(data.canonical_path)}" method="get">
+    {switcher_pills}
+  </form>
 
   <div class="cs-selected-home-card" id="selected-home-rule-card" data-selected-home="{escape(sel.home_id)}">
     <div class="cs-selected-home-head">
@@ -1747,8 +1721,6 @@ def render_cross_school_partner_page_body(data: CrossSchoolPartnerPageData) -> s
   <a href="/partners">返回跨校外國大學總覽</a> ·
   <a href="/schools">依台灣母校瀏覽交換指南</a>
 </p>
-<script type="application/json" id="cs-home-agreements-data">{agreements_json}</script>
-<script type="application/json" id="cs-home-network-heat-data">{network_heat_json}</script>
 """
 
 

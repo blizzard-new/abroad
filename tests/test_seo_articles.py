@@ -53,6 +53,10 @@ def test_article_is_complete_crawlable_and_has_consistent_metadata(client, slug)
     assert graph["mainEntityOfPage"] == "https://example.com/guides/" + slug
     assert graph["citation"] == [s.url for s in a.sources]
     assert any(s["@type"] == "BreadcrumbList" for s in schemas)
+    faq = next(s for s in schemas if s["@type"] == "FAQPage")
+    assert [(q["name"], q["acceptedAnswer"]["text"]) for q in faq["mainEntity"]] == [
+        (details.summary.get_text(), details.p.get_text()) for details in soup.select("#faq details")
+    ]
     assert len(soup.select(".article-faq")) >= 2
     assert len(soup.select(".article-diagram")) >= 1
     assert len(soup.select(".article-table table")) >= 1

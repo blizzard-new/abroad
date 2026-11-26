@@ -4478,6 +4478,7 @@ class StagedNetworkEffectsCatalog(BaseModel):
 
 
 class CrossSchoolPartnerPageData(BaseModel):
+    source_record_date: date | None = Field(default=None, exclude=True)
     country_slug: str = Field(min_length=2, max_length=80)
     country_name_zh: str = Field(min_length=1, max_length=60)
     institution_slug: str = Field(min_length=2, max_length=140)

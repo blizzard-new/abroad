@@ -1,4 +1,5 @@
 """Real account map saves, nested tools and native form semantics of Glide Select."""
+import re
 from pathlib import Path
 from urllib.parse import urlencode
 
@@ -107,9 +108,12 @@ def test_public_partner_page_uses_glide_without_changing_its_switcher_behavior(p
     page.goto(f'{live_server.base_url}/partners/germany/technical-university-of-munich?home=cgu')
     switcher = page.get_by_role('combobox', name='選擇你的就讀母校', exact=True)
     switcher.click()
-    page.get_by_role('listbox', name='選擇你的就讀母校').get_by_role('option', name='國立臺北大學', exact=False).click()
+    with page.expect_response(lambda response: "/home-selection?home=ntpu" in response.url) as requested:
+        page.get_by_role('listbox', name='選擇你的就讀母校').get_by_role('option', name='國立臺北大學', exact=False).click()
+    assert requested.value.ok
     expect(page.locator('#partner-home-switcher')).to_have_value('ntpu')
     expect(page.locator('#cs-home-badge')).to_have_text('國立臺北大學')
+    expect(page).to_have_url(re.compile(r"#home=ntpu$"))
     assert page.locator('select:not(.glide-select__native)').count() == 0
 
 
