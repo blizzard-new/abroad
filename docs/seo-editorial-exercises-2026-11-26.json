@@ -1,0 +1,81 @@
+{
+  "checked": "2026-11-26",
+  "mobile": {
+    "authorship": "Original functional worksheet,whole-stay hypothetical cost comparison,five-stepHTMLdiagram,arrival checks and unsent support inquiry. Not carrier quote/student/device/network test.",
+    "assumptions": "6whole billingmonths;hypothetical A opening3000 monthly1800 vsB opening0 monthly2300;both transition1000;Aassumedtermination2000 B0. Same period/requiredfunctions must be compared first. JPY nominal arithmetic only;no180day equivalence.",
+    "calculations": [
+      {
+        "expression": "1800*6",
+        "result": "10800",
+        "expected": "10800",
+        "decimal_verified": true
+      },
+      {
+        "expression": "3000+1800*6",
+        "result": "13800",
+        "expected": "13800",
+        "decimal_verified": true
+      },
+      {
+        "expression": "2300*6",
+        "result": "13800",
+        "expected": "13800",
+        "decimal_verified": true
+      },
+      {
+        "expression": "13800+1000+2000",
+        "result": "16800",
+        "expected": "16800",
+        "decimal_verified": true
+      },
+      {
+        "expression": "13800+1000",
+        "result": "14800",
+        "expected": "14800",
+        "decimal_verified": true
+      },
+      {
+        "expression": "16800-14800",
+        "result": "2000",
+        "expected": "2000",
+        "decimal_verified": true
+      }
+    ],
+    "excluded_costs": "Voice/extra data/home number/partial month/refund/exchange rates/other fees excluded and tobechecked,not assumedfree. Actual minimumterm/expiry/cancellation mustreplace assumptions.",
+    "functional_scope": "SIM form separate from data/voice/SMS;device compatibility separate from plan activation;home line roaming separate from designateddata;deleting eSIM separate from contract cancellation. No test call to emergency services."
+  },
+  "grammar": {
+    "authorship": "Six wholly original four-choice items24options;own invitationbot/booking/courier/samples/archive/scanner/coordinator/storage/vendor contexts,negation rewrite,mixed-time cable/projector and insufficient-room fragment. Fiction only,not actual deadlines or experiments.",
+    "questions": [
+      "第1題：The invitation bot will send a reminder if the booking ____ active tomorrow. (A) remain (B) remains (C) will remaining (D) to remain",
+      "第2題：If the courier arrives before noon, we ____ the samples this afternoon. (A) dispatches (B) dispatched (C) will dispatch (D) dispatching",
+      "第3題：The archive has no spare scanner. If it ____ one, it would process these records locally. (A) has (B) had (C) will have (D) have",
+      "第4題：The coordinator missed yesterday's cutoff. If she had submitted the form earlier, the system ____ the request before the deadline. (A) accepts (B) will accept (C) accepting (D) would have accepted",
+      "第5題先給規則意思：只有主管陪同才能進入儲藏室。You cannot enter the storage room ____ a supervisor accompanies you. (A) unless (B) because (C) although (D) when",
+      "第6題：I wonder ____ the vendor will extend the trial next month. (A) despite (B) unless (C) if (D) during"
+    ],
+    "answer_key": [
+      "B remains",
+      "C will dispatch",
+      "B had",
+      "D would have accepted",
+      "A unless",
+      "C if"
+    ],
+    "logic": [
+      "1 Ordinary future condition with single booking:remains agrees;remain wrong agreement;willremaining malformed modal chain;toremain cannot finite clause. Tomorrow not rule to usewill everywhere.",
+      "2 Main-clause future consequence:willdispatch;dispatches wrongwe agreement;dispatched mismatches intended future;dispatching lacksauxiliary.",
+      "3 Explicit no spare scanner now->hypothetical current had/wouldprocess;has/willhave mismatched givenhypothesis;have wrongit agreement.",
+      "4 Missed yesterday cutoff;hadsubmitted contrarypast->wouldhaveaccepted past result;accepts present/willaccept future/accepting nonfinite wrong.",
+      "5 Explicit only accompaniedrule;cannotenter unless accompanied;because/although/when change logicalrelation. Chinesecontext is part ofthisoriginalitem,not addedfacts forofficialtest.",
+      "6 Iwonder asks whether futuretrialextended;indirectif,notcondition. Despite/during cannot directlytakeclause;unless doesnotcomplete intendedyesno content.Willextend permitted here."
+    ],
+    "rewrites": [
+      "Unlesslabellegible,clerkrejects -> Iflabelnotlegible,clerkrejects;preserve conditionandresultnegation,not unrestrictedallunlesssubstitution.",
+      "Hadorderedsparecablelastweek -> wouldhaveonenow(mainverbhave,currentresult),versuswouldhaveconnectedprojectoryesterday(auxiliaryhave+participle,pastresult).",
+      "Ifroomwerelarger incomplete,insufficient tochooseonly ending;could/would/might not mechanically interchangeable;was/were not uniquelytested withoutcontext."
+    ],
+    "count": "6*4=24originaloptions;official30 independent. No frequency,difficultycalibration,scoreconversion,gain orCEFR."
+  },
+  "review_scope": "Editorial Decimal/syntax/meaning/context review against primary sources;not expertcertification,official exam marking,actualstudentresult or private operations."
+}

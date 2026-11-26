@@ -308,6 +308,19 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261114`，base main `aa2d14
 
 多益篇處理考試診斷與練習安排，與既有一般 AI 英文學習指南分工；抵達篇處理落地後執行、校內程序與聯絡分流，連到既有住宿、Fact Sheet 與抵免指南。沒有新增重複版本或改動既有十七篇的網址、出版日與 lastmod。[來源、圖片及驗收紀錄](seo-editorial-validation-2026-10-22.md) 隨本批保存。
 
+## 2026-11-26 每日批次：日本手機／多益條件句兩篇（[PR #408](https://github.com/blizzard-new/abroad/pull/408) 待審）
+
+Asia/Taipei11/26，UTC00:01:11＝台北08:01:11。隔離分支 `codex/seo-daily-20261126`，main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新workflow／backlog、63篇及相關全文，七個open完整說明與6×30＋1檔名；十二篇SEO分工核對且已選排除，未匯入。#401成績單／連接結構、#402MOI／AI電話、#403期間證明／主被動、#404考試登記／關係子句、#405廣播費／比較句、#406柏林分類／AI圖表仍待審；#407僅marketing手動設定文件。#78／#92已合併，無基礎相依；提交前main與七個heads未變，最近100個全狀態PR無同日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 6：日本交換生手機怎麼辦？eSIM、電話號碼與整期通訊費檢查表 | `japan-exchange-mobile-plan` | 全文／圖／驗收完成，[PR #408](https://github.com/blizzard-new/abroad/pull/408) 待審；後續排除 |
+| 20：多益 Part 5 條件句怎麼判斷？if、unless 與原創題解析 | `toeic-part-five-conditionals` | 同批全文／圖／驗收完成，同一 [PR #408](https://github.com/blizzard-new/abroad/pull/408) 待審；後續排除 |
+
+編輯判斷，無Search Console／搜尋量／排名。日本手機深入服務／相容性／分線／契約，與抵達總表及日本總預算分工；條件句處理條件—結果語氣／時間、unless否定與間接if，與事件時態、詞性及其他待審文法分工。十二一手來源實讀且最終200；Apple預設User-Agent初429、一般瀏覽器User-Agent重試200，保留前後紀錄。手機六期成本全假設、六筆Decimal；六題24選項及改寫全原創，無實際SIM／費率／學生／官方評分保證。10/30study-plan `97de3fda`未重做，未造品牌比較。
+
+原63篇JSON／URL／刊載日／lastmod不變，共65篇，不含十二篇待審。兩張新授權攝影與HTML圖解完成，gate65、193SEO、76E2E、六組無JavaScript、15張目視及Wheel671檔比對通過。[本批驗收](seo-editorial-validation-2026-11-26.md)。本段放歷史10/21段落前，保留#401–#406既有待審插入位置；未合併或部署。
+
 ## 2026-10-21 每日批次：兩篇（已合併）
 
 台灣日期 2026-10-21 的批次，分支 `codex/seo-daily-20261021`、[PR #109](https://github.com/blizzard-new/abroad/pull/109) 已合併（2026-10-22 查核）。當時核對最新 main 的十五篇文章、全部相關待審 PR，以及當日已建批次；沒有重做既有文章或其他進行中的產文。選題來自使用者確認的候選方向，依編輯判斷，沒有搜尋量或排名資料。
