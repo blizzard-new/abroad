@@ -37,12 +37,14 @@ from .seo_guides import COUNTRIES, GUIDES, country_slug
 from .seo_articles import ARTICLES, Article, article_schema, guide_index, render_article
 from .seo_analytics import analytics_markup
 from .university_registry import SUPPORTED_UNIVERSITIES, UniversityProfile
+from .tools_and_data import WAVE1_PATHS, append_tools_and_data_llms, register_tools_and_data_routes
 
 DEFAULT_ORIGIN = "https://app.uniway-tw.com"
 HOME_TITLE = "UniWay｜交換學生申請、合作學校與選校資訊"
 HOME_DESCRIPTION = "UniWay 整理全台大學交換學生申請與海外合作校資訊，協助比較學校、查詢資格與名額、準備申請文件及規劃時程。公開資料免登入，申請規定以各校最新官方公告為準。"
 NOTICE = "UniWay 是獨立資訊整理平台，並非校方。合作關係不等於當期開放申請；資格、名額、期限與文件請以母校國際處及合作校最新公告為準。"
-EDITORIAL_PATHS = ("/partners", "/destinations", "/guides", "/editorial-policy", *("/destinations/" + slug for slug in COUNTRIES), *("/guides/" + slug for slug in GUIDES))
+EDITORIAL_PATHS = ("/partners", "/destinations", "/guides", "/editorial-policy", *("/destinations/" + slug for slug in COUNTRIES), *("/guides/" + slug for slug in GUIDES), *WAVE1_PATHS)
+TOOLS_DATA_ASSETS_HEAD = '<link rel="stylesheet" href="/static/tools-data.css?v=20261126-wave1"><script src="/static/tools-data.js?v=20261126-wave1" defer></script>'
 AVAILABILITY = {
     "open": "名單列載（請另確認本期受理時窗）", "agreement_only": "合作協議參考，非本期名額",
     "departmental_reference": "院系合作參考", "not_open": "未開放", "needs_confirmation": "待確認",
@@ -180,11 +182,14 @@ def llms_txt(settings: SeoSettings, universities: Sequence[UniversityProfile]) -
              f"- [學校總覽]({o}/schools): 全部支援的母校，各校頁面列出可申請的合作校與官方來源",
              f"- [國家專區]({o}/destinations): 依目的地比較語言、學期、預算與官方規劃資料",
              f"- [跨校外國大學]({o}/partners): 同一所外國大學在全台各校的合作與門檻整理",
+             f"- [交換免費工具]({o}/tools): 免登入換算 ECTS 學分、GPA、語言檢定、預算與申請倒推時程",
+             f"- [年度公開數據]({o}/data): 全台 {len(universities)} 所大學交換資源規模與校內截止日總表",
              f"- [交換指南]({o}/guides): 資格、費用、補助與文件準備的來源導向指南", "",
              "## 交換指南", ""]
     lines += [f"- [{one_line(a.title)}]({o}/guides/{slug}): {one_line(a.description)}" for slug, a in ARTICLES.items()]
     lines += ["", "## 國家專區", ""]
     lines += [f"- [{data['name']}交換學生指南]({o}/destinations/{slug})" for slug, data in COUNTRIES.items()]
+    lines += append_tools_and_data_llms(o)
     lines += ["", "## 母校交換指南", ""]
     lines += [f"- [{u.school_name}（{u.english_name}）]({o}/schools/{u.id})" for u in universities]
     lines += ["", "## Optional", "",
@@ -244,7 +249,8 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
         f'<a href="{p}"' + (' aria-current="page"' if path == p or path.startswith(p + '/') else '')
         + f'>{label}</a>'
         for p, label in (("/guides", "交換指南"), ("/schools", "學校總覽"),
-                         ("/destinations", "國家專區"), ("/partners", "跨校大學")))
+                         ("/destinations", "國家專區"), ("/partners", "跨校大學"),
+                         ("/tools", "免費工具"), ("/data", "公開數據")))
     schema = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i, "name": name, "item": settings.origin + p}
         for i, (name, p) in enumerate(breadcrumbs, 1)]}
@@ -272,7 +278,7 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
 <nav aria-label="主導覽">{nav_links}</nav><div class="reading-actions"><button class="reading-theme-toggle" type="button" hidden aria-label="切換為深色模式">深色</button><a class="reading-planner" href="/#partners">開啟選校工具 <span aria-hidden="true">↗</span></a></div></header>
 <main id="content"><nav class="breadcrumbs" aria-label="麵包屑">{navigation}</nav>{body}
 <aside class="notice">{NOTICE}</aside></main><footer class="reading-footer"><a href="/#home">返回 UniWay 首頁</a>
-<a href="/guides">交換指南</a><a href="/schools">學校指南</a><a href="/partners">跨校外國大學</a><a href="/editorial-policy">資料編輯政策</a><a href="/privacy">隱私權政策</a><a href="/terms">使用條款</a></footer></body></html>'''
+<a href="/guides">交換指南</a><a href="/schools">學校指南</a><a href="/partners">跨校外國大學</a><a href="/tools">交換免費工具</a><a href="/data">年度公開數據</a><a href="/editorial-policy">資料編輯政策</a><a href="/privacy">隱私權政策</a><a href="/terms">使用條款</a></footer></body></html>'''
     return HTMLResponse(html, headers={"Cache-Control": "public, max-age=60"})
 
 
@@ -686,6 +692,16 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         u = university(home_id)
         _, _, groups = catalogue_for(u)
         return xml_response("urlset", [settings.origin + partner_path(u, rows[0]) for rows in groups.values()], lastmods)
+
+    register_tools_and_data_routes(
+        router,
+        settings=settings,
+        catalogue_loader=cached_pair_loader,
+        page_renderer=page,
+        structured_data_fn=structured_data,
+        availability_labels=AVAILABILITY,
+        assets_head=TOOLS_DATA_ASSETS_HEAD,
+    )
 
     return router
 
