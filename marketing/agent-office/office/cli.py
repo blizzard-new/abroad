@@ -11,6 +11,7 @@
     uv run office token                 # make a new access password for the phone app
     uv run office voice                 # start (or look at) voice.md, the voice notes every colleague reads
     uv run office audit                 # last week's posts, ranked against what each kind usually gets
+    uv run office tool status           # the office's hands for the OpenBot assistants (see tools.py)
 """
 
 from __future__ import annotations
@@ -81,7 +82,14 @@ def main(argv: list[str] | None = None) -> int:
     auth.add_argument("platform", choices=["youtube", "threads", "instagram", "github", "telegram"])
     auth.add_argument("--token", "--short-token", dest="token", help="Meta 開發者後台產生的權杖（Threads／Instagram），或 GitHub 的 fine-grained 權杖")
 
+    tool = sub.add_parser("tool", help="給 OpenBot 助理用的工具：每個指令印一份 JSON（uv run office tool status）", add_help=False)
+    tool.add_argument("tool_args", nargs=argparse.REMAINDER)
     args = parser.parse_args(argv)
+
+    if args.command == "tool":
+        from .tools import main as tools_main
+
+        return tools_main(args.tool_args)
 
     if args.command == "serve":
         import uvicorn
