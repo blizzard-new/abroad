@@ -1,0 +1,164 @@
+{
+  "checked": "2026-11-21",
+  "timezone": "Asia/Taipei",
+  "initial_clock": {
+    "utc": "2026-11-21 00:02:04 UTC",
+    "taipei": "2026-11-21 08:02:04+08:00"
+  },
+  "base_commit": "21c9dde902506e79ac2da99b3d33d0838ae3cd0b",
+  "branch": "codex/seo-daily-20261121",
+  "same_day_before_work": {
+    "all_state_prs": [],
+    "matching_local_remote_branches": []
+  },
+  "open_pull_requests": [
+    {
+      "number": 401,
+      "title": "2026-11-20 SEO 雙篇：交換成績單、多益 Part 5 連接結構",
+      "body": "補上交換成績單的取得、數位驗證與收件流程，以及多益 Part 5 片語／子句與原因／讓步的判斷練習。**Asia/Taipei 2026-11-20 兩篇完整原創繁體中文圖文文章，同屬此 PR。**\n\n- **交換成績單怎麼拿？以 Lund Ladok 為例，確認下載、驗證與收件方式**（`exchange-transcript-of-records`）：分清四種文件、公開產製步驟、數位驗證、缺成績／簽名／非現有學生窗口與母校缺件，附原創流程及未寄送詢問範本。不將可驗證等同已收件／已抵免，未登入或驗證個人紀錄。\n- **多益 Part 5 介系詞與連接詞怎麼分？because、although、despite 與原創題解析**（`toeic-part-five-prepositions-conjunctions`）：TOEIC Listening & Reading 範圍，六題／24選項、逐項解析、the fact that、名詞內部子句、改寫及語意不足示例；非官方題庫或估分。\n\n新增兩張有可核對授權的真實 Pexels 攝影（1536×1024 WebP，84,486／120,940 bytes）、各自 HTML 五步圖、FAQ、來源／日期、相關與選校連結。九個引用一手來源全為200且實讀：Lund中央頁更新2026-09-02、交換頁2026-10-22、離校頁2026-05-29；另核對臺北市大、多益與British Council。兩個Cambridge探索頁Cloudflare403已排除，改用可核對且明示©2007的BBC官方文法表存檔，全文與頁1目視完成；不是把舊教材說成2026考制。\n\nbase main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`；#78／#92與昨日#400已合併，無基礎相依。開始及提交前open PR皆空，無同日批次；已讀63篇庫存與相關全文。成績單操作與返國總表／抵免對照分工，連接結構與字族／時態／代名詞分工。選題為編輯判斷，沒有Search Console／搜尋量／排名資料。原63篇JSON、網址、刊載日與lastmod不變，更新backlog；renderer／CSS／JS未改。\n\n驗證：\n\n- `scripts/check_editorial.py --base-ref origin/main`：65篇、0 errors。\n- 六模組SEO單元／整合／release gate：**193 passed**。\n- 三模組桌面／手機E2E：**76 passed**。\n- 兩篇 × 320／390／1440、JavaScript關閉：六組通過，含目錄、原生FAQ、圖片／credit、實際橫捲、相關／母校／目的地／工具、canonical／JSON-LD。\n- **15張最終畫面目視完成**，含3:2／2:1配圖裁切。\n- Wheel核對 **65 JSON、65 WebP及671個唯一閱讀資產檔案**，checkout外成功載入65篇及新slug。\n\n各檢查一次完整通過，產品檔案測前固定、最終雜湊不變。\n\n[完整驗收](https://github.com/blizzard-new/abroad/blob/26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9/docs/seo-editorial-validation-2026-11-20.md) · [來源與限制](https://github.com/blizzard-new/abroad/blob/26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9/docs/seo-editorial-sources-2026-11-20.json) · [攝影授權](https://github.com/blizzard-new/abroad/blob/26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9/docs/seo-editorial-photography-2026-11-20.json) · [桌面](https://github.com/blizzard-new/abroad/blob/26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9/docs/seo-previews-2026-11-20/desktop-1440.jpg) · [手機](https://github.com/blizzard-new/abroad/blob/26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9/docs/seo-previews-2026-11-20/mobile-320.jpg)\n\n遠端 TLS trust regression 的 image 檢查仍進行中，Supabase Preview skipped；以本 PR 最新狀態為準，未宣稱遠端 CI 全過。任務附加工具等候 40 秒、附件查詢等候 10 秒皆無回覆，**附件未確認**；實際 PR 與 head 已另行核對。\n\n此 PR 待審；未合併、部署或要求 Google 建立索引，產文不等於已上線／已收錄。",
+      "head": "26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9",
+      "branch": "codex/seo-daily-20261120",
+      "files": [
+        "docs/seo-editorial-backlog.md",
+        "docs/seo-editorial-browser-2026-11-20.json",
+        "docs/seo-editorial-checks-2026-11-20.json",
+        "docs/seo-editorial-exercises-2026-11-20.json",
+        "docs/seo-editorial-inventory-2026-11-20.json",
+        "docs/seo-editorial-package-2026-11-20.json",
+        "docs/seo-editorial-photography-2026-11-20.json",
+        "docs/seo-editorial-pr-audit-2026-11-20.json",
+        "docs/seo-editorial-sources-2026-11-20.json",
+        "docs/seo-editorial-tests-2026-11-20.txt",
+        "docs/seo-editorial-validation-2026-11-20.md",
+        "docs/seo-previews-2026-11-20/connector-practice-photo-390.jpg",
+        "docs/seo-previews-2026-11-20/desktop-1440.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-of-records-choose-document-390.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-of-records-diagram-390.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-of-records-download-ladok-390.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-of-records-missing-or-signed-390.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-of-records-verify-and-send-390.jpg",
+        "docs/seo-previews-2026-11-20/exchange-transcript-photo-390.jpg",
+        "docs/seo-previews-2026-11-20/mobile-320.jpg",
+        "docs/seo-previews-2026-11-20/photography-crops.jpg",
+        "docs/seo-previews-2026-11-20/toeic-part-five-prepositions-conjunctions-answers-four-six-390.jpg",
+        "docs/seo-previews-2026-11-20/toeic-part-five-prepositions-conjunctions-answers-one-three-390.jpg",
+        "docs/seo-previews-2026-11-20/toeic-part-five-prepositions-conjunctions-diagram-390.jpg",
+        "docs/seo-previews-2026-11-20/toeic-part-five-prepositions-conjunctions-meaning-and-transfer-390.jpg",
+        "docs/seo-previews-2026-11-20/toeic-part-five-prepositions-conjunctions-phrase-or-clause-390.jpg",
+        "src/exchange_info/editorial/exchange-transcript-of-records.json",
+        "src/exchange_info/editorial/toeic-part-five-prepositions-conjunctions.json",
+        "src/exchange_info/static/assets/editorial/connector-practice-photo.webp",
+        "src/exchange_info/static/assets/editorial/exchange-transcript-photo.webp"
+      ]
+    }
+  ],
+  "foundation": [
+    {
+      "number": 78,
+      "merged": true
+    },
+    {
+      "number": 92,
+      "merged": true
+    }
+  ],
+  "pending_batch": {
+    "number": 401,
+    "url": "https://github.com/blizzard-new/abroad/pull/401",
+    "date": "2026-11-20",
+    "state": "open",
+    "merged": false,
+    "head": "26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9",
+    "branch": "codex/seo-daily-20261120",
+    "slugs": [
+      "exchange-transcript-of-records",
+      "toeic-part-five-prepositions-conjunctions"
+    ],
+    "selected_excluded": true,
+    "not_imported": true,
+    "merge_commit_sha_note": "GitHub merge_commit_sha is a test merge when merged=false, not evidence of a completed merge."
+  },
+  "new_slugs": [
+    "exchange-medium-of-instruction",
+    "ai-english-phone-messages"
+  ],
+  "selection": "Editorial judgment approved directions4/17, no Search Console or ranking evidence.",
+  "environment": "Environment ready before shell. Isolated worktree from origin/main and frozen task-specific venv; unrelated original worktree and shared venv retained.",
+  "runtime": {
+    "python": "3.12.14",
+    "soupsieve": "4.1.1"
+  },
+  "precommit_recheck": {
+    "checked": "2026-11-21",
+    "base": "21c9dde902506e79ac2da99b3d33d0838ae3cd0b",
+    "main_unchanged": true,
+    "all_open_heads_unchanged": true,
+    "open": [
+      {
+        "number": 401,
+        "title": "2026-11-20 SEO 雙篇：交換成績單、多益 Part 5 連接結構",
+        "head": "26bbdb21387b554ab2b42c5bbd48f66f8ef4f0f9"
+      }
+    ],
+    "same_day": [],
+    "recent_all_states": 100
+  },
+  "created_pull_request": {
+    "number": 402,
+    "url": "https://github.com/blizzard-new/abroad/pull/402",
+    "created_at": "2026-11-21T00:19:32Z",
+    "content_head": "73dfd3437971546ba381ad96186b646761721e45",
+    "state": "open",
+    "draft": false,
+    "changed_files": 30,
+    "attachment": {
+      "status": "unconfirmed",
+      "reason": "attach_artifact did not return within 40 seconds",
+      "url": "https://github.com/blizzard-new/abroad/pull/402"
+    },
+    "attachment_query": {
+      "status": "unconfirmed",
+      "reason": "list_artifacts did not return within 10 seconds"
+    }
+  },
+  "remote_checks_at_content_head": {
+    "headRefOid": "73dfd3437971546ba381ad96186b646761721e45",
+    "isDraft": false,
+    "mergeable": "MERGEABLE",
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/44843059632/job/136655978744",
+        "name": "image",
+        "startedAt": "2026-11-21T00:19:38Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/44843009160/job/136655809825",
+        "name": "image",
+        "startedAt": "2026-11-21T00:19:11Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-21T00:19:35Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://supabase.com/dashboard/project/wozrsrnkvbokzbbitkxf/settings/integrations",
+        "name": "Supabase Preview",
+        "startedAt": "2026-11-21T00:19:35Z",
+        "status": "COMPLETED",
+        "workflowName": ""
+      }
+    ],
+    "url": "https://github.com/blizzard-new/abroad/pull/402"
+  },
+  "post_validation_change": "Only backlog, PR audit and validation record updated with created PR and attachment/CI status; product JSON/photos/CSS unchanged."
+}
