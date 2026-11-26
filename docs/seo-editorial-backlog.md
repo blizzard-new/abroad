@@ -363,6 +363,21 @@ PR #403 已建立（OPEN、非 draft），初始內容 head `c90d7a4a27620f448a8
 | exchange-credit-transfer | What evidence and approvals do I prepare for recognition? | New |
 | exchange-housing-checklist | How do I compare housing and document move-in/out? | New |
 
+## 2026-11-24 每日批次：德國廣播費／多益比較句兩篇（PR #405 待審）
+
+Asia/Taipei11/24，UTC00:00:13＝台北08:00:13；環境ready後在隔離分支 `codex/seo-daily-20261124` 工作，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新workflow／backlog、63篇庫存與相關全文，四個open #401–#404完整說明、各30檔及八篇分工。成績單／連接結構／MOI／AI電話／期間證明／主被動／考試登記／關係子句八題已選且排除，未匯入本分支。#78／#92已合併，無基礎相依；同日分支／PR原不存在，提交前main與四個heads未變，最近100個全狀態PR無本日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 6／10：德國交換生廣播費要繳嗎？Rundfunkbeitrag、宿舍與 WG 分攤指南 | `germany-broadcasting-fee` | 全文／圖／驗收完成，[PR #405](https://github.com/blizzard-new/abroad/pull/405)待審；後續排除 |
+| 20：多益 Part 5 比較級與最高級怎麼選？than、as…as 與原創題解析 | `toeic-part-five-comparisons` | 同批全文／圖／驗收完成，[同一PR #405](https://github.com/blizzard-new/abroad/pull/405)待審；後續排除 |
+
+編輯判斷，無Search Console、搜尋量或排名。廣播費獨立處理德國計費住所／帳號／付款／異動，和費用總覽、住房契約、Bürgeramt住址登記分工；比較句處理範圍／方向／程度與形容詞副詞，和既有詞性／時態／代名詞及待審文法主題分工。十個一手來源實讀，互動註銷表未操作；四筆Decimal假設試算、六題24選項及換句原創，無真實產品測試／學生／官方分數或個案資格認定。10/30study-plan `97de3fda`未重做，未造品牌比較。
+
+原63篇JSON／URL／刊載日／lastmod不變，共65篇，不含八篇待審。兩張新授權攝影及HTML圖解完成；gate65、193SEO、76E2E、六組無JavaScript、15張目視及Wheel671檔比對通過。[本批驗收](seo-editorial-validation-2026-11-24.md)。本段置於「每日批次規則」前，保留#401開頭、#402末尾、#403在Initial batch前及#404在Candidate intentions前的待審位置。未合併或部署。
+
+本日唯一PR #405已建立（OPEN、非draft、mergeable、未合併）；遠端image CI仍執行，Supabase Preview skipped。任務附加工具40秒／附件查詢10秒均未回傳，附加未確認；實際PR與30檔已核對。這次僅回填文件，產品雜湊不變。
+
 ## 每日批次規則（2026-10-20 更新）
 
 - 從 2026-10-21 起，每天 08:00（Asia/Taipei，含週末）啟動一批，完成兩篇完整繁體中文 SEO 圖文文章，並將當日兩篇一起放入一個新的待審 PR。這取代每週一三篇的舊規則。
