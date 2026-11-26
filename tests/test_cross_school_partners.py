@@ -111,7 +111,7 @@ def test_cross_school_partner_html_two_layer_structure_and_seo(monkeypatch, tmp_
     upper = soup.find(id="home-rule-layer")
     assert upper is not None
     assert "上半部 · 母校規則層" in upper.get_text()
-    active_pill = upper.find("a", attrs={"data-home-switch": "ntu"})
+    active_pill = upper.find("button", attrs={"data-home-switch": "ntu"})
     assert active_pill is not None
     assert "is-active" in active_pill.get("class", [])
     assert upper.find(id="cs-quota-summary") is not None
@@ -149,13 +149,31 @@ def test_cross_school_partner_html_two_layer_structure_and_seo(monkeypatch, tmp_
     for source_link in source_links:
         assert source_link["href"].startswith(("https://", "http://"))
 
-    # Embedded JSON for client-side home switcher and external CSP-safe script
-    data_script = soup.find("script", id="cs-home-agreements-data")
-    assert data_script is not None
-    payload = json.loads(data_script.string)
-    assert "ntu" in payload
-    assert "nccu" in payload
+    # The first page contains readable HTML and no all-school interactive payload.
+    assert soup.find("script", type="application/json") is None
+    assert not soup.select('a[href^="/partners/"][href*="?home="]')
+    assert active_pill["aria-pressed"] == "true"
+    assert len(tum_res.content) < 175_000
     assert soup.find("script", src=lambda s: s and s.startswith("/static/partner-page.js")) is not None
+    schemas = [json.loads(script.string) for script in soup.select('script[type="application/ld+json"]')]
+    schema = next(item for item in schemas if item["@type"] == "WebPage")
+    assert schema["mainEntity"]["@type"] == "CollegeOrUniversity"
+    assert schema["url"] == canonical["href"]
+
+    # Each interaction requests only the selected school's public data.
+    selection = client.get("/partners/germany/technical-university-of-munich/home-selection?home=nccu")
+    assert selection.status_code == 200
+    assert selection.headers["x-robots-tag"] == "noindex"
+    assert "max-age=" in selection.headers["cache-control"]
+    payload = selection.json()
+    assert payload["agreement"]["home_id"] == "nccu"
+    assert payload["status"] and payload["heat"]
+    assert "政治大學" in client.get("/partners/germany/technical-university-of-munich?home=nccu").text
+    monkeypatch.setattr("exchange_info.seo.ncu_window_cache_boundary", lambda: (None, None))
+    ncu = client.get("/partners/germany/technical-university-of-munich/home-selection?home=ncu")
+    assert ncu.status_code == 200
+    assert ncu.headers["cache-control"] == "public, max-age=30"
+    assert client.get("/partners/germany/technical-university-of-munich/home-selection?home=missing-school").status_code == 404
 
     # Chinese path resolves to the same canonical entity
     zh_res = client.get("/partners/日本/早稻田大學?home=nccu")

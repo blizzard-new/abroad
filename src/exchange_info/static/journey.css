@@ -102,7 +102,7 @@ html[data-theme="dark"] .unified-shell .primary-button { color: #172333; }
   border: 0; box-shadow: none; background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
 }
 .unified-shell .global-community-section { background: transparent; border: 0; box-shadow: none; backdrop-filter: none; }
-.unified-shell .section-heading :is(h1, h2) { color: var(--uw-navy); }
+.unified-shell .section-heading :is(:is(h1, h2:where(.shell-section-title)), h2) { color: var(--uw-navy); }
 .unified-shell .count-badge { color: var(--uw-blue-strong); background: var(--uw-blue-soft); border: 1px solid var(--uw-line); border-radius: 999px; }
 
 /* Home illustration. The removed boarding-pass form stays removed. */
@@ -120,7 +120,7 @@ body.global-home-mode[data-global-feed="all"] .journey-home-intro {
 .journey-explore { display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 12px 22px; }
 .journey-explore .lucide { width: 19px; height: 19px; }
 .unified-shell .community-home-heading { padding-top: 0; margin-top: 0; border: 0; align-items: center; }
-.unified-shell .community-home-heading h1 { font-size: 24px; }
+.unified-shell .community-home-heading :is(h1, h2:where(.shell-section-title)) { font-size: 24px; }
 .unified-shell .community-feed-tabs { padding: 0; border: 0; border-bottom: 1px solid var(--uw-line-strong); border-radius: 0; background: transparent; box-shadow: none; gap: 18px; }
 .unified-shell .community-feed-tabs a { min-height: 48px; border: 0; border-bottom: 3px solid transparent; border-radius: 0; background: transparent; color: var(--uw-muted); }
 .unified-shell .community-feed-tabs a[aria-current="page"] { color: var(--journal-coral); border-bottom-color: var(--journal-coral); background: transparent; }
@@ -173,7 +173,7 @@ body.global-home-mode[data-global-feed="all"] .journey-home-intro {
 .unified-shell .map-home-marker { background: #fff0d5; border-color: #b98b42; color: #6d512b; }
 .unified-shell :is(.partner-card, .favorite-card, .discovery-candidate) { background: var(--uw-surface); border-color: var(--uw-line); border-radius: 16px; box-shadow: var(--uw-shadow-soft); }
 .unified-shell .guide-intro { position: relative; min-height: 270px; padding: 26px 24px 36px; }
-.unified-shell .guide-intro h1 { font-family: var(--uw-font-ui); font-size: clamp(34px, 4vw, 50px); font-weight: 700; }
+.unified-shell .guide-intro :is(h1, h2:where(.shell-section-title)) { font-family: var(--uw-font-ui); font-size: clamp(34px, 4vw, 50px); font-weight: 700; }
 /* The mascot stands where the traveller drawing used to be on the home page. */
 .guide-mascot { --uw-mascot-size: 190px; flex-shrink: 0; margin-right: 28px; }
 .unified-shell .guide-stage { background: var(--uw-surface); box-shadow: none; border-radius: 16px; border-color: var(--uw-line); border-top: 3px solid var(--stage-tint); }
@@ -190,7 +190,7 @@ body.global-home-mode[data-global-feed="all"] .journey-home-intro {
 .unified-shell .school-detail-view .school-detail-photo { position: relative; height: 290px; min-height: 0; inset: auto; opacity: 1; transform: none; filter: none; background: var(--uw-cyan-soft); }
 .unified-shell .school-detail-view .school-detail-copy { padding: 28px 34px 20px; background: var(--uw-surface); border-radius: 0; }
 .unified-shell .school-detail-view .school-detail-copy .eyebrow { border: 0; padding: 0; background: transparent; color: var(--journal-coral); font-size: 14px; }
-.unified-shell .school-detail-view .school-detail-copy h1 { color: var(--uw-navy); text-shadow: none; font-size: clamp(26px, 3.1vw, 38px); max-width: calc(100% - 130px); margin: 8px 0 0; line-height: 1.4; text-wrap: pretty; }
+.unified-shell .school-detail-view .school-detail-copy :is(h1, h2:where(.shell-section-title)) { color: var(--uw-navy); text-shadow: none; font-size: clamp(26px, 3.1vw, 38px); max-width: calc(100% - 130px); margin: 8px 0 0; line-height: 1.4; text-wrap: pretty; }
 .unified-shell .school-detail-view .school-detail-copy p { color: var(--uw-muted); }
 .unified-shell .travel-destination-stamp { position: absolute; right: 32px; top: -44px; width: 106px; min-height: 106px; background: var(--uw-surface); color: var(--journal-coral); border-color: currentColor; outline-color: currentColor; box-shadow: 0 4px 12px #1434520a; }
 .unified-shell .school-detail-view .detail-primary-facts { margin: 0 34px; padding: 20px 0 26px; background: transparent; border: 0; border-top: 1px solid var(--uw-line); border-radius: 0; box-shadow: none; backdrop-filter: none; }
@@ -258,18 +258,18 @@ html[data-theme="dark"] .unified-shell .partner-view-switch button[aria-pressed=
   .unified-shell .partner-map-heading { display: none; }
   .unified-shell .partner-map-actions { grid-column: 1 / -1; justify-content: center; }
   .unified-shell .community-feed-tabs { gap: 8px; margin: 12px 0; }
-  .unified-shell .community-home-heading h1 { font-size: 21px; }
+  .unified-shell .community-home-heading :is(h1, h2:where(.shell-section-title)) { font-size: 21px; }
   .unified-shell .featured-board-card { grid-template-columns: 100px minmax(0, 1fr); }
   .unified-shell .featured-board-card > img { width: 100px; }
   .unified-shell .featured-board-card > div { padding: 14px; }
   .unified-shell .guide-intro { min-height: 210px; align-items: flex-start; }
   .unified-shell .guide-intro > div:first-child { max-width: 76%; z-index: 1; }
-  .unified-shell .guide-intro h1 { font-size: 30px; }
+  .unified-shell .guide-intro :is(h1, h2:where(.shell-section-title)) { font-size: 30px; }
   .unified-shell .guide-intro p { max-width: 220px; }
   .guide-mascot { position: absolute; --uw-mascot-size: 120px; right: 10px; bottom: 8px; margin: 0; }
   .unified-shell .school-detail-view .school-detail-photo { height: 210px; }
   .unified-shell .school-detail-view .school-detail-copy { padding: 22px 20px; }
-  .unified-shell .school-detail-view .school-detail-copy h1 { max-width: calc(100% - 72px); font-size: 25px; }
+  .unified-shell .school-detail-view .school-detail-copy :is(h1, h2:where(.shell-section-title)) { max-width: calc(100% - 72px); font-size: 25px; }
   .unified-shell .travel-destination-stamp { width: 82px; min-height: 82px; padding: 10px; right: 16px; top: -28px; }
   .unified-shell .travel-destination-stamp strong { font-size: 13px; }
   .unified-shell .school-detail-view .detail-primary-facts { margin: 0 20px; gap: 16px; grid-template-columns: minmax(0, 1fr); }

@@ -397,7 +397,7 @@ textarea:focus {
 }
 
 .uniway-section-heading h2,
-.community-home-heading h1,
+.community-home-heading :is(h1, h2:where(.shell-section-title)),
 .section-heading h2,
 .concise-heading h2 {
   color: var(--uw-navy);
@@ -817,7 +817,7 @@ form label > span:first-child {
   width: 100%;
 }
 
-.school-detail-copy h1 {
+.school-detail-copy :is(h1, h2:where(.shell-section-title)) {
   color: var(--uw-navy);
   letter-spacing: -0.035em;
 }
@@ -1072,7 +1072,7 @@ dialog > section {
   }
 
   .uniway-section-heading h2,
-  .community-home-heading h1,
+  .community-home-heading :is(h1, h2:where(.shell-section-title)),
   .section-heading h2,
   .document-check-hero h2,
   .application-form-header h2 {

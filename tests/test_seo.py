@@ -57,7 +57,8 @@ def test_home_metadata_is_absolute_and_does_not_trust_request_host(client):
     assert organization["@id"] == "https://app.uniway-tw.com/#organization"
     assert organization["logo"]["url"] == "https://app.uniway-tw.com/static/assets/brand/apple-touch-icon.png"
     assert website["publisher"] == {"@id": organization["@id"]}
-    assert all(url.startswith("https://") for url in organization["sameAs"])
+    assert set(organization["sameAs"]) == {link["href"] for link in soup.select(".pr-social-pill")}
+    assert [heading.get("id") for heading in soup.find_all("h1")] == ["home-landing-title"]
     assert soup.select_one('a[href="/schools"]')
     assert "seo-head" not in response.text and "attacker.example" not in response.text
     assert client.head("/").status_code == 200
@@ -190,6 +191,20 @@ def test_llms_txt_is_unavailable_on_preview_builds(tmp_path, monkeypatch):
     monkeypatch.setenv("EXCHANGE_ENVIRONMENT", "development")
     with TestClient(create_app(tmp_path)) as preview:
         assert preview.get("/llms.txt").status_code == 404
+        assert preview.get("/llms-full.txt").status_code == 404
+
+def test_llms_full_lists_each_supported_university_and_selected_guide_summaries(client):
+    response = client.get("/llms-full.txt")
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "text/plain; charset=utf-8"
+    assert "x-robots-tag" not in response.headers
+    assert len(response.content) < 100_000
+    for university in SUPPORTED_UNIVERSITIES:
+        assert university.official_url in response.text
+        assert f"/schools/{university.id})" in response.text
+    assert "## 交換準備重點" in response.text
+    assert "資料擷取時間是系統抓取時間" in response.text
+    assert client.head("/llms-full.txt").status_code == 200
 
 
 def test_preview_defaults_to_noindex_without_affecting_public_content(tmp_path, monkeypatch):
@@ -222,7 +237,9 @@ def test_partner_status_evidence_and_untrusted_text_are_preserved(tmp_path, monk
         assert not soup.select('a[href^="javascript:"]')
         # Inline content stays inert; the only executable script is our local theme control.
         assert [s.get("src", "").split("?")[0] for s in soup.select('script:not([type="application/ld+json"])')] == ["/static/reading-theme.js"]
-        assert len(soup.select('script:not([src])')) == 1
+        assert [tag.get("type") for tag in soup.select('script:not([src])')] == [
+        "application/ld+json", "application/ld+json",
+    ]
         json.loads(soup.select_one('script[type="application/ld+json"]').string)
 
 

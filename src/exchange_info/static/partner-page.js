@@ -1,16 +1,6 @@
 (function () {
   "use strict";
 
-  function parseJsonScript(id) {
-    var node = document.getElementById(id);
-    if (!node || !node.textContent) return null;
-    try {
-      return JSON.parse(node.textContent);
-    } catch (_err) {
-      return null;
-    }
-  }
-
   function setText(id, text) {
     var el = document.getElementById(id);
     if (el) el.textContent = text || "";
@@ -121,9 +111,8 @@
     );
   }
 
-  function applyHomeSelection(homeId, agreements, networkHeatMap) {
-    if (!agreements || !agreements[homeId]) return;
-    var row = agreements[homeId];
+  function applyHomeSelection(selection) {
+    var row = selection.agreement;
 
     var card = document.getElementById("selected-home-rule-card");
     if (card) card.setAttribute("data-selected-home", row.home_id);
@@ -181,15 +170,18 @@
     var pills = document.querySelectorAll(".cs-home-pill[data-home-switch]");
     for (var i = 0; i < pills.length; i++) {
       var pill = pills[i];
-      if (pill.getAttribute("data-home-switch") === row.home_id) {
-        pill.classList.add("is-active");
-      } else {
-        pill.classList.remove("is-active");
-      }
+      var active = pill.value === row.home_id;
+      pill.classList.toggle("is-active", active);
+      pill.setAttribute("aria-pressed", String(active));
     }
 
-    if (networkHeatMap && networkHeatMap[homeId]) {
-      var entry = networkHeatMap[homeId];
+    var compareLink = document.getElementById("cs-btn-save-compare");
+    var draftLink = document.getElementById("cs-btn-save-draft");
+    if (compareLink) compareLink.setAttribute("href", selection.compare_url);
+    if (draftLink) draftLink.setAttribute("href", selection.draft_url);
+
+    if (selection.status && selection.heat) {
+      var entry = selection;
       var netWrap = document.getElementById("preference-heat");
       if (netWrap && entry.status && entry.heat) {
         netWrap.setAttribute("data-school-stage", entry.status.stage);
@@ -230,36 +222,54 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    var agreements = parseJsonScript("cs-home-agreements-data");
-    var networkHeatMap = parseJsonScript("cs-home-network-heat-data") || {};
-    if (!agreements) return;
-
     var selectEl = document.getElementById("partner-home-switcher");
-    if (selectEl) {
-      selectEl.addEventListener("change", function () {
-        var nextHome = selectEl.value;
-        applyHomeSelection(nextHome, agreements, networkHeatMap);
-        if (window.history && window.history.replaceState) {
-          var url = new URL(window.location.href);
-          url.searchParams.set("home", nextHome);
-          window.history.replaceState({}, "", url.toString());
+    var fallbackForm = selectEl && selectEl.form;
+    var quickForm = document.getElementById("cs-quick-home-switch");
+    var selectionRequest = 0;
+
+    async function selectHome(home) {
+      var request = ++selectionRequest;
+      var pageUrl = new URL(fallbackForm.action);
+      pageUrl.hash = new URLSearchParams({ home: home }).toString();
+      var endpoint = new URL(pageUrl.pathname + "/home-selection", pageUrl.origin);
+      endpoint.searchParams.set("home", home);
+      try {
+        var response = await fetch(endpoint, { headers: { Accept: "application/json" } });
+        if (!response.ok) throw new Error("School selection unavailable");
+        var selection = await response.json();
+        if (request !== selectionRequest) return;
+        if (selection.agreement.home_id !== home) throw new Error("Unexpected school selection");
+        applyHomeSelection(selection);
+        window.history.replaceState(window.history.state, "", pageUrl);
+      } catch (_err) {
+        if (request === selectionRequest) {
+          pageUrl.hash = "";
+          pageUrl.searchParams.set("home", home);
+          window.location.assign(pageUrl);
         }
-      });
+      }
     }
 
-    var pills = document.querySelectorAll(".cs-home-pill[data-home-switch]");
-    for (var i = 0; i < pills.length; i++) {
-      pills[i].addEventListener("click", function (ev) {
-        var nextHome = this.getAttribute("data-home-switch");
-        if (!nextHome || !agreements[nextHome]) return;
-        ev.preventDefault();
-        applyHomeSelection(nextHome, agreements, networkHeatMap);
-        if (window.history && window.history.replaceState) {
-          var url = new URL(window.location.href);
-          url.searchParams.set("home", nextHome);
-          window.history.replaceState({}, "", url.toString());
-        }
+    if (fallbackForm) {
+      selectEl.addEventListener("change", function () {
+        selectHome(selectEl.value);
       });
+      fallbackForm.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        selectHome(selectEl.value);
+      });
+      if (quickForm) {
+        quickForm.addEventListener("submit", function (ev) {
+          if (!ev.submitter || !ev.submitter.value) return;
+          ev.preventDefault();
+          selectHome(ev.submitter.value);
+        });
+      }
+      var sharedHome = new URLSearchParams(window.location.hash.slice(1)).get("home");
+      if (sharedHome && sharedHome !== selectEl.value &&
+          Array.from(selectEl.options).some(function (option) { return option.value === sharedHome; })) {
+        selectHome(sharedHome);
+      }
     }
 
     var compareBtn = document.getElementById("cs-btn-save-compare");

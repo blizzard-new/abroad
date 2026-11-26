@@ -16,6 +16,34 @@ def test_home_keeps_its_search_title_after_javascript_boots(page, live_server):
         expect(page.locator(f'{container} a[href="https://www.threads.com/@uniway.tw"]')).to_be_visible()
 
 
+@pytest.mark.parametrize("width", [390, 1440])
+def test_homepage_heading_and_partner_switcher_visuals(browser, live_server, width, tmp_path):
+    context = browser.new_context(viewport={"width": width, "height": 900})
+    try:
+        page = context.new_page()
+        enter_public_site(page, live_server, "home")
+        expect(page.locator("#home-landing-title")).to_be_visible()
+        assert page.locator("h1").all_text_contents() == [page.locator("#home-landing-title").text_content()]
+        page.screenshot(path=str(tmp_path / f"homepage-{width}.png"), animations="disabled")
+    finally:
+        context.close()
+
+    context = browser.new_context(java_script_enabled=False, viewport={"width": width, "height": 900})
+    try:
+        page = context.new_page()
+        response = page.goto(live_server.base_url + "/partners/japan/waseda-university?home=ntu", timeout=120000)
+        assert response.ok
+        expect(page.get_by_role("heading", level=1)).to_contain_text("早稻田大學")
+        expect(page.locator("#cs-home-badge")).to_have_text("國立臺灣大學")
+        page.locator("#partner-home-switcher").select_option("nccu")
+        page.get_by_role("button", name="查看所選母校").click()
+        expect(page.locator("#cs-home-badge")).to_have_text("國立政治大學")
+        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
+        page.screenshot(path=str(tmp_path / f"waseda-{width}.png"), animations="disabled")
+    finally:
+        context.close()
+
+
 @pytest.mark.parametrize("width", [390, 1280])
 def test_catalogue_navigation_without_javascript(browser, live_server, width, tmp_path):
     context = browser.new_context(java_script_enabled=False, viewport={"width": width, "height": 900})

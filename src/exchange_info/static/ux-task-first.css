@@ -2,7 +2,7 @@
 body.unified-shell #application-path {font-size:18px;line-height:1.65}
 #application-path :is(p,small,label,summary,.eyebrow,.ap-status,.plan-choice small,.plan-choice label,.plan-meta,.context-card,.source-button,.side-note h3,.side-note p,.next-card>p:not(.kicker),.preview-hint,.small-warning,.ap-warning,.error-box,.node-caption,.stage-divider small,.map-caption,.overview-filter button,.hub-tabs>a,.level-topline,.level-actions,#save-note,.glide-select__trigger,.glide-select__option){font-size:16px;letter-spacing:normal;line-height:1.6}
 #application-path :is(button,input,select,textarea,.primary-button,.outline-button,.quiet-button){font-size:18px;min-height:48px}
-#application-path h1{font-size:clamp(28px,3vw,36px)}
+#application-path :is(h1, h2:where(.shell-section-title)){font-size:clamp(28px,3vw,36px)}
 #application-path h2,#application-path .next-card h2{font-size:26px;line-height:1.4}
 #application-path h3{font-size:20px;line-height:1.45}
 #application-path .app-header{padding-block:12px 18px;align-items:center}
@@ -100,7 +100,7 @@ body.unified-shell .site-data-note{font-size:16px;line-height:1.6}
  #application-path .app-header{gap:12px;align-items:flex-start}
  #application-path .header-actions{flex-wrap:wrap;justify-content:flex-end}
  #application-path .header-actions button{font-size:16px;padding:8px 12px}
- #application-path .header-title h1{font-size:28px}
+ #application-path .header-title :is(h1, h2:where(.shell-section-title)){font-size:28px}
  #application-path .plan-strip{gap:10px;padding-bottom:12px}
  #application-path .plan-choice label{display:none}
  #application-path .plan-choice small{margin-top:8px}

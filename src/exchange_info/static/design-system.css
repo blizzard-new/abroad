@@ -320,7 +320,7 @@ select:disabled,
   letter-spacing: 0;
 }
 
-.overview-copy h1 {
+.overview-copy :is(h1, h2:where(.shell-section-title)) {
   margin: 8px 0 10px;
   font-size: 40px;
   font-weight: 720;
@@ -895,7 +895,7 @@ html[data-theme="light"] .chip-button.active {
     grid-column: 1 / -1;
   }
 
-  .overview-copy h1 {
+  .overview-copy :is(h1, h2:where(.shell-section-title)) {
     font-size: 34px;
   }
 

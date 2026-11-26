@@ -141,7 +141,7 @@ body.unified-shell #dashboard-view > #application-path {
   box-shadow: none;
 }
 #application-path .ap-status { border-bottom: 0; }
-#application-path .app-header h1 { font-size: clamp(32px, 2.5vw, 42px); }
+#application-path .app-header :is(h1, h2:where(.shell-section-title)) { font-size: clamp(32px, 2.5vw, 42px); }
 #application-path .plan-strip { padding: 14px 0 20px; }
 #application-path .plan-choice label, #application-path .plan-choice small { font-size: 14px; }
 #application-path .plan-choice select { font-size: 20px; max-width: 560px; }

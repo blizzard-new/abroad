@@ -138,7 +138,7 @@ body.unified-shell #community-hub .community-feed-header .community-home-heading
   border: 0; border-radius: 0; overflow: visible;
 }
 body.unified-shell #community-hub .community-home-heading::before { display: none; }
-body.unified-shell #community-hub .community-home-heading h1 {
+body.unified-shell #community-hub .community-home-heading :is(h1, h2:where(.shell-section-title)) {
   margin: 0; padding: 2px 0; font-size: clamp(22px, 2vw, 28px); line-height: 1.5;
 }
 body.unified-shell #global-community-compose {
