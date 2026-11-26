@@ -535,6 +535,8 @@ Dora 巡查發現落差 → 驗證員（例如小公主）重新打開官網驗�
 | `office/platforms/` | Threads、Instagram、YouTube、媒體網址、GitHub（只開 draft PR 的用戶端，`github.py` 裡寫死了能動的檔案與分支） |
 | `office/proposals.py` | 資料更新提案：巡查發現（經驗證員確認）→ 審核匣卡片 → PR 要放的檔案與說明（含修改清單、網頁文字的清理、官網網域檢查、重複檢查） |
 | `office/autodm.py` | IG 留言關鍵字自動私訊：規則、關鍵字比對、Meta 錯誤分類、防重複與暫停（掃描在 `office/agents/community.py`） |
+| `office/tools.py` | `office tool ...`：辦公室的「手」，一個功能一個指令、印 JSON，給 OpenBot 的助理用（出圖、出影片、規則檢查、審核匣、發文、看留言、自動私訊、抓成效、巡查提案）；預設只模擬，要 `office tool live on` 才會真的發 |
+| `openbot/` | 把辦公室手動搬進 OpenBot 的手冊（`SETUP_ZH_TW.md`）、共同規則、工具說明，以及每位助理要貼的指令（`agents/`） |
 | `office/accounts.py`、`office/checkup.py` | 連帳號（`office auth`）與開工前檢查（`office check`） |
 | `office/telegram.py` | 手機：Telegram 機器人跟 Leo 對話、通知、核准按鈕 |
 | `office/server.py`、`office/static/` | 辦公室網頁與即時事件；通行碼（網址、cookie 或 `Authorization: Bearer`）與錯誤太多次的鎖定 |
