@@ -1,5 +1,22 @@
 # Editorial intentions and next topics
 
+## 2026-11-20 每日批次：交換成績單／多益連接結構兩篇（PR #401 待審）
+
+Asia/Taipei 11/20，開始為 UTC 11/20 00:00:04（台北 08:00:04）。隔離分支 `codex/seo-daily-20261120`，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新 workflow／backlog、63 篇庫存與相關全文；open PR 為空，無同日分支／PR。提交前 main 未變、open 仍空，最近 100 全狀態 PR 無本日 SEO 批次。
+
+昨日 #400 已合併，AI 追蹤信與托福學術短講已在 main 並排除；#78／#92／#399 合併祖先均核對，無未合併基礎相依。歷史待審文字以本次實查優先。10/30 study-plan `97de3fda` 未重做，無三品牌實測不造比較。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 12：交換成績單怎麼拿？以 Lund Ladok 為例，確認下載、驗證與收件方式 | `exchange-transcript-of-records` | 全文／圖片／驗收完成，[PR #401](https://github.com/blizzard-new/abroad/pull/401) 待審；後續排除 |
+| 20：多益 Part 5 介系詞與連接詞怎麼分？because、although、despite 與原創題解析 | `toeic-part-five-prepositions-conjunctions` | 同批全文／圖片／驗收完成，同一 PR #401 待審；後續排除 |
+
+編輯判斷，無 Search Console、搜尋量或排名。成績單篇深讀文件類型、官方產製／驗證與收件、缺成績／簽名分流，與返國總表、課程對照／抵免分工；未登入或驗證任何人紀錄。文法篇處理整組片語／子句、原因／讓步與內部 that 子句，和字族、時態、代名詞分工；六題 24 選項與換句／歧義皆原創，不估分。九個引用一手來源實讀，Cambridge 兩頁403排除，改用 British Council 與明示 ©2007 的 BBC 官方存檔，未造引用或沿用過期考制。
+
+原 63 篇 JSON／URL／刊載日／lastmod 不變，共 65 篇。兩張專用授權真實攝影與 HTML 圖解完成；gate65、193 SEO、76 E2E、六組無 JavaScript、15 張目視及 wheel 671 檔核對均一次完整通過。詳見[本批驗收](seo-editorial-validation-2026-11-20.md)。本批未合併或部署。
+
+PR #401 已建立（OPEN、非 draft），內容 head `5f68aa04fdb7e1eba1e4891fb1b043308898af17`，GitHub 顯示 MERGEABLE。此 head 的兩個 TLS trust regression image 檢查仍進行中，Supabase Preview skipped，以 PR 最新狀態為準。任務附加工具 40 秒與附件查詢 10 秒均無回覆，附件未確認；實際 PR 已另行驗證，未宣稱附加成功。未合併或部署。
+
 ## 2026-11-19 每日批次：AI 英文追蹤信／托福學術短講兩篇（PR #400 待審）
 
 Asia/Taipei 11/19，開始為 UTC 11/19 00:00:56（台北 08:00:56）。隔離分支 `codex/seo-daily-20261119`，base main `af32b61d2868923ce66496246def0a4ed6027b7b`。讀最新 workflow／backlog、61 篇庫存與相關正文；唯一 open #399 的完整說明與 202 檔已查，另讀 SEO 共用檔 patch：申請資料／連結／快取與閱讀樣式版本網址，無新增文章，未複製其修改。開始前無同日分支／PR；提交前 main／open heads 未變，最近 100 全狀態 PR 無本日 SEO 批次。
@@ -291,6 +308,19 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261114`，base main `aa2d14
 
 多益篇處理考試診斷與練習安排，與既有一般 AI 英文學習指南分工；抵達篇處理落地後執行、校內程序與聯絡分流，連到既有住宿、Fact Sheet 與抵免指南。沒有新增重複版本或改動既有十七篇的網址、出版日與 lastmod。[來源、圖片及驗收紀錄](seo-editorial-validation-2026-10-22.md) 隨本批保存。
 
+## 2026-11-26 每日批次：日本手機／多益條件句兩篇（[PR #408](https://github.com/blizzard-new/abroad/pull/408) 待審）
+
+Asia/Taipei11/26，UTC00:01:11＝台北08:01:11。隔離分支 `codex/seo-daily-20261126`，main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新workflow／backlog、63篇及相關全文，七個open完整說明與6×30＋1檔名；十二篇SEO分工核對且已選排除，未匯入。#401成績單／連接結構、#402MOI／AI電話、#403期間證明／主被動、#404考試登記／關係子句、#405廣播費／比較句、#406柏林分類／AI圖表仍待審；#407僅marketing手動設定文件。#78／#92已合併，無基礎相依；提交前main與七個heads未變，最近100個全狀態PR無同日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 6：日本交換生手機怎麼辦？eSIM、電話號碼與整期通訊費檢查表 | `japan-exchange-mobile-plan` | 全文／圖／驗收完成，[PR #408](https://github.com/blizzard-new/abroad/pull/408) 待審；後續排除 |
+| 20：多益 Part 5 條件句怎麼判斷？if、unless 與原創題解析 | `toeic-part-five-conditionals` | 同批全文／圖／驗收完成，同一 [PR #408](https://github.com/blizzard-new/abroad/pull/408) 待審；後續排除 |
+
+編輯判斷，無Search Console／搜尋量／排名。日本手機深入服務／相容性／分線／契約，與抵達總表及日本總預算分工；條件句處理條件—結果語氣／時間、unless否定與間接if，與事件時態、詞性及其他待審文法分工。十二一手來源實讀且最終200；Apple預設User-Agent初429、一般瀏覽器User-Agent重試200，保留前後紀錄。手機六期成本全假設、六筆Decimal；六題24選項及改寫全原創，無實際SIM／費率／學生／官方評分保證。10/30study-plan `97de3fda`未重做，未造品牌比較。
+
+原63篇JSON／URL／刊載日／lastmod不變，共65篇，不含十二篇待審。兩張新授權攝影與HTML圖解完成，gate65、193SEO、76E2E、六組無JavaScript、15張目視及Wheel671檔比對通過。[本批驗收](seo-editorial-validation-2026-11-26.md)。本段放歷史10/21段落前，保留#401–#406既有待審插入位置；未合併或部署。
+
 ## 2026-10-21 每日批次：兩篇（已合併）
 
 台灣日期 2026-10-21 的批次，分支 `codex/seo-daily-20261021`、[PR #109](https://github.com/blizzard-new/abroad/pull/109) 已合併（2026-10-22 查核）。當時核對最新 main 的十五篇文章、全部相關待審 PR，以及當日已建批次；沒有重做既有文章或其他進行中的產文。選題來自使用者確認的候選方向，依編輯判斷，沒有搜尋量或排名資料。
@@ -316,6 +346,21 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261114`，base main `aa2d14
 
 來源、圖片與驗證見 [本批驗收紀錄](seo-editorial-five-validation-2026-10-20.md)。每日排程與全部 20 個候選的整理由 [PR #92](https://github.com/blizzard-new/abroad/pull/92) 維護；本批只記錄已處理的五個方向，不重建或覆蓋其規劃。
 
+## 2026-11-22 每日批次：研修期間證明／多益主動被動兩篇（PR #403 待審）
+
+Asia/Taipei11/22，開始UTC00:02:04＝台北08:02:04。隔離分支 `codex/seo-daily-20261122`，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新workflow／backlog、63篇庫存與相關全文。全部open #401／#402完整說明及各30檔已查；成績單／多益連接結構／英語授課證明／AI電話四題已選且排除，未匯入本批。待審test merge不算已合併。#78／#92已合併，無基礎相依；無同日分支／PR，提交前main與兩個open head未變、最近100個全狀態PR無當日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 7／12：交換研修期間證明怎麼辦？Confirmation of Stay 日期與簽署核對 | `exchange-confirmation-of-stay` | 全文／圖片／驗收完成，[PR #403](https://github.com/blizzard-new/abroad/pull/403) 待審；後續排除 |
+| 20：多益 Part 5 主動被動怎麼分？主詞角色、完整動詞組與原創題解析 | `toeic-part-five-active-passive` | 同批全文／圖片／驗收完成，同一 PR #403 待審；後續排除 |
+
+編輯判斷，無Search Console、搜尋量或排名。期間證明篇處理首末活動、簽署權／時間與核定邊界，和返國總表、在外義務、待審成績／MOI分工；主被動篇處理施受方向與完整動詞鏈，和詞性、時態、代名詞、待審連接結構分工。七個引用一手來源實讀；TUM／CIT和Lund出國Erasmus+規則分別限定，不套用成所有交換生規則。六日期假設卡、未寄送詢問、六題24選項與換句／歧義全原創，不造學生／官方分數或補助試算。10/30study-plan `97de3fda` 未重做，無品牌比較實測不製造比較。
+
+原63篇JSON／網址／刊載日／lastmod不變，本分支共65篇，不含四篇待審。兩張新授權攝影、HTML圖解完成；gate65、193SEO、76E2E、六組無JavaScript、15張目視及wheel671檔核對均一次完整通過。詳見[本批驗收](seo-editorial-validation-2026-11-22.md)。本段置於Initial batch前，保留待審#401在開頭、#402在末尾的新增位置。未合併或部署。
+
+PR #403 已建立（OPEN、非 draft），初始內容 head `c90d7a4a27620f448a8f66b846241ef074a7686b`，GitHub 顯示 MERGEABLE。此 head 兩個 TLS trust regression image 檢查進行中，Supabase Preview skipped，請以目前 PR 狀態為準。任務附加工具 40 秒與附件查詢 10 秒均無回覆，附件狀態未確認；PR 建立及 URL 已獨立核對，未宣稱附加成功。未合併或部署。
+
 ## Initial batch: ten complete articles
 
 | URL slug | Student question | Action |
@@ -330,6 +375,21 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261114`，base main `aa2d14
 | exchange-study-plan | How do I write a specific, truthful study plan? | New |
 | exchange-credit-transfer | What evidence and approvals do I prepare for recognition? | New |
 | exchange-housing-checklist | How do I compare housing and document move-in/out? | New |
+
+## 2026-11-24 每日批次：德國廣播費／多益比較句兩篇（PR #405 待審）
+
+Asia/Taipei11/24，UTC00:00:13＝台北08:00:13；環境ready後在隔離分支 `codex/seo-daily-20261124` 工作，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新workflow／backlog、63篇庫存與相關全文，四個open #401–#404完整說明、各30檔及八篇分工。成績單／連接結構／MOI／AI電話／期間證明／主被動／考試登記／關係子句八題已選且排除，未匯入本分支。#78／#92已合併，無基礎相依；同日分支／PR原不存在，提交前main與四個heads未變，最近100個全狀態PR無本日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 6／10：德國交換生廣播費要繳嗎？Rundfunkbeitrag、宿舍與 WG 分攤指南 | `germany-broadcasting-fee` | 全文／圖／驗收完成，[PR #405](https://github.com/blizzard-new/abroad/pull/405)待審；後續排除 |
+| 20：多益 Part 5 比較級與最高級怎麼選？than、as…as 與原創題解析 | `toeic-part-five-comparisons` | 同批全文／圖／驗收完成，[同一PR #405](https://github.com/blizzard-new/abroad/pull/405)待審；後續排除 |
+
+編輯判斷，無Search Console、搜尋量或排名。廣播費獨立處理德國計費住所／帳號／付款／異動，和費用總覽、住房契約、Bürgeramt住址登記分工；比較句處理範圍／方向／程度與形容詞副詞，和既有詞性／時態／代名詞及待審文法主題分工。十個一手來源實讀，互動註銷表未操作；四筆Decimal假設試算、六題24選項及換句原創，無真實產品測試／學生／官方分數或個案資格認定。10/30study-plan `97de3fda`未重做，未造品牌比較。
+
+原63篇JSON／URL／刊載日／lastmod不變，共65篇，不含八篇待審。兩張新授權攝影及HTML圖解完成；gate65、193SEO、76E2E、六組無JavaScript、15張目視及Wheel671檔比對通過。[本批驗收](seo-editorial-validation-2026-11-24.md)。本段置於「每日批次規則」前，保留#401開頭、#402末尾、#403在Initial batch前及#404在Candidate intentions前的待審位置。未合併或部署。
+
+本日唯一PR #405已建立（OPEN、非draft、mergeable、未合併）；遠端image CI仍執行，Supabase Preview skipped。任務附加工具40秒／附件查詢10秒均未回傳，附加未確認；實際PR與30檔已核對。這次僅回填文件，產品雜湊不變。
 
 ## 每日批次規則（2026-10-20 更新）
 
@@ -355,6 +415,21 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261116`，base main `cc5760
 原 51 篇 JSON、網址、published／lastmod 不變，本分支共 53 篇，不計入四篇待審內容。新增兩張專用授權攝影及兩個 HTML 圖解。最終 53 篇 gate、180 SEO、63 E2E、六組無 JavaScript、15 張目視及 wheel 646 檔核對均通過；首輪通過後精確化 alt，再完整重驗，保留兩輪。來源、教材、圖片與驗收見[本批紀錄](seo-editorial-validation-2026-11-16.md)。未合併或部署。
 
 PR #369 已建立（OPEN、非 draft），初始內容 head `b136116c75e3b265cceb46c0cfd1fbc594f0c7dc`，GitHub 顯示 MERGEABLE，未合併。初始 image CI 兩項進行中、Supabase Preview skipped；以目前 PR 狀態為準。任務附加工具 40 秒及附件查詢 10 秒均無回覆，附件未確認；PR 建立與連結已獨立驗證，未宣稱附加成功。
+
+## 2026-11-23 每日批次：交換考試登記／多益關係子句兩篇（PR #404 待審）
+
+Asia/Taipei11/23，開始UTC00:05:06＝台北08:05:06；環境ready後於隔離分支 `codex/seo-daily-20261123` 工作，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新workflow／backlog、63篇庫存與相關全文，三個open #401／#402／#403完整說明及各30檔。成績單／多益連接結構／英語授課證明／AI電話／期間證明／多益主被動六題已選且排除，未匯入本分支。#78／#92已合併，無基礎相依；無同日分支／PR，提交前main與三個open head未變，最近100個全狀態PR無當日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 8：交換考試要另外報名嗎？以 TUM 為例，核對報考、取消與完成紀錄 | `exchange-exam-registration` | 全文／圖／驗收完成，[PR #404](https://github.com/blizzard-new/abroad/pull/404)待審；後續排除 |
+| 20：多益 Part 5 關係子句怎麼選？who、which、whose、where 與原創題解析 | `toeic-part-five-relative-clauses` | 同批全文／圖／驗收完成，[同一PR #404](https://github.com/blizzard-new/abroad/pull/404)待審；後續排除 |
+
+編輯判斷，無Search Console、搜尋量或排名。報考篇聚焦特定考試登記、手動／自動單位例外及取消狀態，和換課／課綱評量／返國／待審文件分工；關係子句聚焦先行詞與子句缺口、所有／地點、逗號與省略，和人稱代名詞、詞性、時態、連接結構及主被動分工。十個一手來源實讀，TUM／CIT／LanguageCenter範圍清楚；三課假設、詢問稿與六題24選項／改寫原創，不造登入實測、學生經歷或官方分數。10/30study-plan `97de3fda` 未重做，不捏造品牌比較。
+
+原63篇JSON／網址／刊載日／lastmod不變，本分支共65篇，不含六篇待審內容。兩張新授權攝影與HTML圖解完成；gate65、193SEO、76E2E、六組無JavaScript、15張目視及wheel671檔核對通過。詳見[本批驗收](seo-editorial-validation-2026-11-23.md)。本段放在Candidate intentions前，保留待審#401開頭、#402末尾、#403在Initial batch前的插入位置。未合併或部署。
+
+本日唯一PR #404已建立（OPEN、非draft、mergeable，未合併）；遠端image CI仍執行、Supabase Preview skipped。任務附件工具40秒／清單10秒未回傳，附件未確認。PR實體與30檔已核對；此回填僅改文件，產品雜湊不變。
 
 ## 後續每日選題優先序（2026-11-26）
 
@@ -389,6 +464,19 @@ Prioritize two distinct questions after checking existing/open PR content and cu
 - Returning from exchange: document handover, portfolio and next-semester planning.
 
 Do not launch near-duplicate country articles that repeat the three cost guides. More destinations need actual country-specific official sources and relevant UniWay partner options. Avoid unsupported “best school” rankings, fabricated student stories and generic city lists with no decision value.
+
+## 2026-11-25 每日批次：柏林垃圾分類／AI英文圖表描述兩篇（[PR #406](https://github.com/blizzard-new/abroad/pull/406) 待審）
+
+Asia/Taipei11/25，UTC00:00:44＝台北08:00:44。隔離分支 `codex/seo-daily-20261125`，main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新workflow／backlog、63篇及相關全文；五個open #401–#405完整說明、各30檔與十篇分工。成績單／連接結構／MOI／AI電話／期間證明／主被動／考試登記／關係子句／廣播費／比較句十題已選排除，未匯入。#78／#92已合併，無基礎相依；提交前main與五個heads未變，最近100個全狀態PR無本日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 6：德國交換生垃圾分類怎麼做？柏林垃圾桶、玻璃與退瓶指南 | `germany-berlin-waste-sorting` | 全文／圖／驗收完成，[PR #406](https://github.com/blizzard-new/abroad/pull/406) 待審；後續排除 |
+| 17：用 AI 練英文圖表描述：趨勢、百分比與數據核對 Prompt | `ai-english-chart-description` | 同批全文／圖／驗收完成，同一 [PR #406](https://github.com/blizzard-new/abroad/pull/406) 待審；後續排除 |
+
+編輯判斷，無Search Console／搜尋量／排名。柏林分類／退瓶與住房契約、抵達行政、廣播費分工；圖表證據／數量／單位／趨勢與講稿、散文改寫、文法訂正分工。十一一手來源實讀，六件物品卡、三輪可填Prompt、兩組原創資料、前後稿／錯誤回饋與八筆Decimal算式；無真實學生／模型試驗／官方評分或個案規定保證。10/30study-plan `97de3fda`未重做，未造品牌比較。
+
+原63篇JSON／URL／刊載日／lastmod不變，共65篇，不含十篇待審。兩張新授權攝影、HTML圖解、gate65、193SEO、76E2E、六組無JavaScript、15張目視及Wheel671檔比對通過。[本批驗收](seo-editorial-validation-2026-11-25.md)。本段置於「AI新增候選方向」前，保留#401–#405各自待審位置；未合併或部署。
 
 ## AI 輔助申請與英文準備：新增候選方向（2026-10-20）
 
@@ -432,3 +520,18 @@ Asia/Taipei 批次，隔離分支 `codex/seo-daily-20261115`，base main `aa2d14
 原 51 篇 JSON、URL、刊載日期與 lastmod 不變，本分支共 53 篇，未計入待審 #351。新增兩張專用授權攝影與兩個原創 HTML 圖解。53 篇 gate、180 項 SEO、63 項 E2E、六組無 JavaScript 閱讀、15 張目視及 wheel 646 檔逐檔核對全部通過。來源、教材、攝影及驗收見[本批紀錄](seo-editorial-validation-2026-11-15.md)。本批未合併或部署。
 
 PR #363 已建立（OPEN、非 draft，初始 head `47cf30a94e75acdbba989341862aad072b7303d4`），可合併狀態但未合併。初始遠端 image CI 兩項進行中、Supabase Preview skipped；請以目前 PR 狀態為準。任務附加工具 40 秒及附件查詢 10 秒均未回覆，附件狀態未確認；PR 建立及連結另已驗證，未宣稱附加成功。
+
+## 2026-11-21 每日批次：英語授課證明／AI 英文電話兩篇（PR #402 待審）
+
+Asia/Taipei 11/21，開始 UTC 00:02:04＝台北 08:02:04。隔離分支 `codex/seo-daily-20261121`，base main `21c9dde902506e79ac2da99b3d33d0838ae3cd0b`。讀最新 workflow／backlog、63 篇庫存及相關全文。唯一待審 [PR #401](https://github.com/blizzard-new/abroad/pull/401) 的完整說明與 30 檔已查；11/20 `exchange-transcript-of-records`／`toeic-part-five-prepositions-conjunctions` 兩題已選並排除，未匯入本分支。#401 的 API test merge 不算已合併。#78／#92 已合併，無基礎相依；開始前無同日分支或 PR，提交前 main 與 #401 head 未變，最近 100 個全狀態 PR 無同日批次。
+
+| 候選方向／獨立問題 | slug | 狀態／PR |
+| --- | --- | --- |
+| 4：交換申請的英語授課證明怎麼辦？MOI、EMI 與語言資格核對表 | `exchange-medium-of-instruction` | 全文／圖片／驗收完成，[PR #402](https://github.com/blizzard-new/abroad/pull/402) 待審；後續排除 |
+| 17：用 AI 練英文電話怎麼做？轉接、留言與回電資訊的 Prompt | `ai-english-phone-messages` | 同批全文／圖片／驗收完成，同一 PR #402 待審；後續排除 |
+
+編輯判斷，無 Search Console、搜尋量或排名。文件篇處理授課語言／修課／能力證據、開立與接受條件，和英語選課、資格總覽及待審成績單分工；電話篇處理分支接線與第三人轉交，和澄清／書面催信分工。七個引用一手來源實讀；清大公告費用版本差異揭露且不轉載早期金額／天數，TUM 表單與申請頁核對；BC 讀文字未播放聲音，不造品牌／學生測試。兩個文件假設案例、兩張來電卡、三輪可填 Prompt 與前後改稿原創。10/30 study-plan `97de3fda` 未重做。
+
+原 63 篇 JSON／網址／刊載日／lastmod 不變，共 65 篇。兩張新授權攝影、原創 HTML 圖解完成；gate65、193 SEO、76 E2E、六組無 JavaScript、15 張目視及 wheel 671 檔核對均一次完整通過。詳見[本批驗收](seo-editorial-validation-2026-11-21.md)。本段附於清單末尾，保留 #401 在文件開頭的待審新增。未合併或部署。
+
+PR #402 已建立（OPEN、非 draft），初始內容 head `73dfd3437971546ba381ad96186b646761721e45`，GitHub 顯示 MERGEABLE。此 head 兩個 TLS trust regression image 檢查進行中，Supabase Preview skipped，請以目前 PR 狀態為準。任務附加工具 40 秒與附件查詢 10 秒皆無回覆，附件狀態未確認；PR 建立與 URL 已另行驗證，未宣稱附加成功。未合併或部署。

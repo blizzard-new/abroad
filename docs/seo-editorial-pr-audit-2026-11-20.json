@@ -1,0 +1,111 @@
+{
+  "checked": "2026-11-20",
+  "timezone": "Asia/Taipei",
+  "initial_clock": {
+    "utc": "2026-11-20 00:00:04 UTC",
+    "taipei": "2026-11-20 08:00:04+08:00",
+    "interpretation": "EnvironmentinitialUTCcalendarNov19wasstale;actualTaipeidayNov20 determinesnewbatch."
+  },
+  "base_commit": "21c9dde902506e79ac2da99b3d33d0838ae3cd0b",
+  "branch": "codex/seo-daily-20261120",
+  "same_day_before_work": {
+    "all_state_prs": [],
+    "matching_local_remote_branches": []
+  },
+  "open_pull_requests": [],
+  "foundation": [
+    {
+      "number": 78,
+      "merged": true
+    },
+    {
+      "number": 92,
+      "merged": true
+    }
+  ],
+  "previous_batch": {
+    "number": 400,
+    "merged": true,
+    "head": "5e3ba11866f4ec79a9ce9d5fae9fbab4947c23c2",
+    "merge_commit": "21c9dde902506e79ac2da99b3d33d0838ae3cd0b",
+    "slugs": [
+      "ai-english-follow-up-email",
+      "toefl-listen-to-academic-talk"
+    ],
+    "present_main_excluded": true
+  },
+  "new_slugs": [
+    "exchange-transcript-of-records",
+    "toeic-part-five-prepositions-conjunctions"
+  ],
+  "selection": "Editorialjudgment directions12/20,noSearchConsole,volumeorrankings.",
+  "environment": "Initialexec no usableexecutionenvironment. wait_for_environment returnedready;thenread-onlystatus/fetch and isolatedcheckout worked. Newtaskvenv withfrozenlatestlock;sharedvenvuntouched.",
+  "runtime": {
+    "python": "3.12.14",
+    "soupsieve": "4.1.1"
+  },
+  "other_current_main_merge": {
+    "number": 399,
+    "merged": true,
+    "merge": "a0efa2565d5f56b8c5dd71f45f8962791d486703"
+  },
+  "precommit_recheck": {
+    "checked_utc": "2026-11-20 00:17:23 UTC",
+    "main_commit": "21c9dde902506e79ac2da99b3d33d0838ae3cd0b",
+    "main_unchanged": true,
+    "open_heads": [],
+    "all_open_heads_unchanged": true,
+    "recent_all_state_pr_count": 100,
+    "same_day": []
+  },
+  "delivery": {
+    "number": 401,
+    "url": "https://github.com/blizzard-new/abroad/pull/401",
+    "state": "OPEN",
+    "draft": false,
+    "mergeable": "MERGEABLE",
+    "content_head": "5f68aa04fdb7e1eba1e4891fb1b043308898af17",
+    "ci_observed_on_content_head": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/44644753641/job/135984374179",
+        "name": "image",
+        "startedAt": "2026-11-20T00:18:11Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/blizzard-new/abroad/actions/runs/44644668729/job/135984090443",
+        "name": "image",
+        "startedAt": "2026-11-20T00:17:33Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "TLS trust regression"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-20T00:18:07Z",
+        "conclusion": "SKIPPED",
+        "detailsUrl": "https://supabase.com/dashboard/project/wozrsrnkvbokzbbitkxf/settings/integrations",
+        "name": "Supabase Preview",
+        "startedAt": "2026-11-20T00:18:07Z",
+        "status": "COMPLETED",
+        "workflowName": ""
+      }
+    ],
+    "attachment": {
+      "status": "unconfirmed",
+      "attach_tool": "codex_app.attach_artifact",
+      "attach_wait_seconds": 40,
+      "attach_result": "No reply before timeout",
+      "list_wait_seconds": 10,
+      "list_result": "No reply before timeout",
+      "claim": "Actual GitHub PR created and verified separately; not claiming attached."
+    },
+    "boundary": "Review PR only. No merge,productiondeployment,emailorindexrequest."
+  }
+}

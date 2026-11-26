@@ -1,0 +1,65 @@
+2026-11-22 Asia/Taipei; codex/seo-daily-20261122
+Base21c9dde902506e79ac2da99b3d33d0838ae3cd0b
+<cache>=/workspace/scratch/uniway-seo-20261122; <checkout>=/workspace/abroad-seo-daily-20261122; python=<cache>/venv/bin/python
+UV_PROJECT_ENVIRONMENT=<cache>/venv uv sync --frozen --extra dev --project <checkout>
+EXCHANGE_INFO_DATA_DIR=<cache>/gate-import-data PYTHONPATH=src python scripts/check_editorial.py --base-ref origin/main
+EXCHANGE_INFO_DATA_DIR=<cache>/unit-import-data PYTHONPATH=src python -m pytest -q tests/test_seo_articles.py tests/test_seo.py tests/test_seo_content.py tests/test_seo_quality.py tests/test_seo_reporting.py tests/test_editorial_release_gate.py
+EXCHANGE_INFO_DATA_DIR=<cache>/e2e-import-data PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium PYTHONPATH=src python -m pytest -q tests/e2e/test_seo_articles.py tests/e2e/test_seo_pages.py tests/e2e/test_seo_analytics.py
+EXCHANGE_INFO_DATA_DIR=<cache>/preview-import-data PYTHONPATH=src python <cache>/qa.py preview --repo <checkout> --date 2026-11-22 --slugs exchange-confirmation-of-stay toeic-part-five-active-passive
+uv build --wheel --out-dir <cache>/wheel
+python <cache>/qa.py package --repo <checkout> --date 2026-11-22 --slugs exchange-confirmation-of-stay toeic-part-five-active-passive
+Onecompletepasseach;producthashesunchanged.
+
+GATE:
+
+{
+  "ok": true,
+  "article_count": 65,
+  "errors": [],
+  "scope": "Editorial structure/assets/revision dates; not proof of factual accuracy, indexing or rankings"
+}
+
+SEO:
+
+CONFTEST LOADED!
+........................................................................ [ 37%]
+........................................................................ [ 74%]
+.................................................                        [100%]
+193 passed in 84.78s (0:01:24)
+
+E2E:
+
+CONFTEST LOADED!
+........................................................................ [ 94%]
+....                                                                     [100%]
+76 passed in 204.95s (0:03:24)
+
+BROWSER:
+
+{
+  "passed": 6,
+  "capture_note": "Only long element captures temporarily hide fixed decorative6px stripe and fixed reading header via screenshot style to avoid stitching over text. Full-page previews and application/assertions unmodified.",
+  "visual_review": "All15final images actually viewed: desktop1440/mobile320,2inlinephotos,2HTMLdiagrams,4period-document sections,4passive sections and3:2/2:1crops. Chinese/English explanations,completeverbchains,dates,prompts and checklists readable. Tables intentionally scroll on phones,no pageoverflow. Calendar hand/date and warehouse carriers/box/tablet retained,caption/credit visible. OldMay2022calendar disclosed,not current exchange date; warehouse not official TOEICphoto.",
+  "run_history": "One complete run each: 193SEO,76E2E,6noJS andwheel,allpassed. ProductJSON/photosfrozenbeforetests,finalhashesunchanged."
+}
+
+PACKAGE:
+
+Successfully built /workspace/scratch/uniway-seo-20261122/wheel/taiwan_exchange_info-0.1.0-py3-none-any.whl
+
+{
+  "checked": "2026-11-22",
+  "build_command": "uv build --wheel",
+  "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+  "wheel_bytes": 2529848505,
+  "article_json_count": 65,
+  "image_count": 65,
+  "checked_files": 671,
+  "runtime_import": {
+    "module": "/workspace/scratch/uniway-seo-20261122/wheel-extracted/exchange_info/seo_articles.py",
+    "loaded_articles": 65,
+    "new_slugs_present": true
+  },
+  "outside_checkout": true,
+  "passed": true
+}

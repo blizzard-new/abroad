@@ -1,0 +1,68 @@
+{
+  "checked": "2026-11-24",
+  "broadcasting": {
+    "official": "Checkedcurrent18.36EUR permonth/dwelling;statutorymid-three-month55.08 distinct actualpaymentcycle. No futureyearprice promise.",
+    "assumptions": "Fouradults,sameconfirmedWG,wholeunchangedmonth(s),noexemption,privateequalallocation. Countercasefourseparateconfirmedpublichallwaydwellings,noexemption. Not schoolquote or individualbill;no partialmonth,retroactive,daterange,refund calculation.",
+    "calculations": [
+      {
+        "expression": "18.36 / 4",
+        "result": "4.59",
+        "expected": "4.59",
+        "decimal_verified": true
+      },
+      {
+        "expression": "18.36 * 4",
+        "result": "73.44",
+        "expected": "73.44",
+        "decimal_verified": true
+      },
+      {
+        "expression": "18.36 * 3",
+        "result": "55.08",
+        "expected": "55.08",
+        "decimal_verified": true
+      },
+      {
+        "expression": "55.08 / 4",
+        "result": "13.77",
+        "expected": "13.77",
+        "decimal_verified": true
+      }
+    ],
+    "limits": "4.59EUR is privateallocation,not officialstudentdiscount;13.77 is allocationof55.08,not addednewcost. Officialrates andhypotheticalallocation not mixed. Fillingmessage unsent;deregistration not automaticdeparture."
+  },
+  "grammar": {
+    "authorship": "6newfourchoiceitems24options,ownchecklist/printer/battery/sorter/route/materialscenes,5stepdiagram,not-as reversal and context-insufficient example. Not real producttest/routeexperiment/studentdata.",
+    "questions": [
+      "第1題：The revised checklist is ____ than the version used last month. (A) short (B) shortest (C) shorter (D) shortly",
+      "第2題：Of all five routes reviewed by the team, Route C has the ____ travel time. (A) short (B) shorter (C) shortly (D) shortest",
+      "第3題：The replacement battery is as ____ as the original one. (A) durable (B) more durable (C) most durable (D) durably",
+      "第4題：The new label printer is much ____ than the old one. (A) quiet (B) quietest (C) quieter (D) quietly",
+      "第5題：During the trial, the sorter processed the labels ____ than the operator did. (A) accurate (B) accuracy (C) more accurately (D) most accurately",
+      "第6題：The corrected instructions are ____ confusing than the earlier draft. (A) least (B) less (C) as (D) so"
+    ],
+    "answer_key": [
+      "C shorter",
+      "D shortest",
+      "A durable",
+      "C quieter",
+      "C more accurately",
+      "B less"
+    ],
+    "logic": [
+      "1 revised checklist vs previousversion length,than requires comparative shorter;shortbase,shortestsuperlative,shortlyadverb not intendedrelation.",
+      "2 allfive routes sets group,maximal shortness fortravel time,the shortest;shortbase doesnot express intendedextreme,shorter comparative not group extreme,shortlywrongfunction. Given best-answer task not universalthe rule.",
+      "3 as durable as,equalproperty,baseadjective. more/mostwrongdegree,durablywrongfunction.",
+      "4 much modifies comparison,than oldprinter,quieter adjective. quietbase,quietestsuperlative,quietlyadverb. No rigidalltwo-syllable-er rule.",
+      "5 processed labels comparative manner,than operator did,more accurately. accurateadjective/accuracynounwrongfunction,mostaccuratelysuperlative not givenrelation.",
+      "6 less confusing than lowerproperty,not proofaccuracy/perfectclarity.leastwrongdegree,asrequiresasnotthan,so notgivencomparison."
+    ],
+    "rewrites": [
+      "eveningsession not as long as morningsession -> morningsession longerthan eveningsession;preserveidentities/property/direction,not eveninglongerorbetter.",
+      "The revisedoneisshorter in contextof twochecklists:thanphrase can remainimplicit,no allcomparatives must showthan.",
+      "the revisedchecklist is notsuperlative;knowing3plansfeasible not enoughranking them."
+    ],
+    "arithmetic": "6*4=24newoptions;official30 is independenttestsectioncount.No calibratedscore/difficulty/frequency/gain."
+  },
+  "review_scope": "Editorial Decimal/syntax/context review from primarysources;no official grading,expertcertification,actualstudentperformance or privateaccount operations."
+}

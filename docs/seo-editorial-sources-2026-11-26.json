@@ -1,0 +1,337 @@
+{
+  "checked": "2026-11-26",
+  "timezone": "Asia/Taipei",
+  "base_commit": "21c9dde902506e79ac2da99b3d33d0838ae3cd0b",
+  "selection_basis": "Editorial judgment within approved directions6(arrival communications) and20(TOEIC Listening&Reading preparation);no supplied SearchConsole/volume/rankings/traffic.",
+  "articles": [
+    {
+      "slug": "japan-exchange-mobile-plan",
+      "title": "日本交換生手機怎麼辦？eSIM、電話號碼與整期通訊費檢查表",
+      "source_claims": [
+        {
+          "id": "utokyo-phone",
+          "title": "東京大學：Phones & Postal Services",
+          "url": "https://www.u-tokyo.ac.jp/adm/inbound/en/life-daily-pp.html",
+          "note": "2026-11-26實讀電話段落；簽約前核對方案、純數據SIM一般無電話／緊急電話功能，須確認。未見獨立修訂日；不引用郵件轉寄規則，不推定所有學校要求日本門號。",
+          "retrieval": {
+            "key": "utokyo-phone",
+            "requested_url": "https://www.u-tokyo.ac.jp/adm/inbound/en/life-daily-pp.html",
+            "resolved_url": "https://www.u-tokyo.ac.jp/adm/inbound/en/life-daily-pp.html",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "2c74a9f34177f0087544df8f0adf8fb4da79516757fb3f55985e7a875e0f31ab",
+            "bytes": 14285,
+            "content_type": "text/html",
+            "title": "Phones & Postal Services | Website for International Students"
+          },
+          "retrieval_history": [],
+          "actual_reading": "Read actual phone section: check plan before contract; data-only generally no telephone/emergency calling, confirm at contract. No generalized Japanese-number requirement. Postal forwarding/address sections not used. No actual emergency call.",
+          "version": "Live public body checked2026-11-26;no independent revision date asserted."
+        },
+        {
+          "id": "utokyo-leaving",
+          "title": "東京大學：Before Leaving Japan",
+          "url": "https://www.u-tokyo.ac.jp/adm/inbound/en/life-daily-leaving.html",
+          "note": "2026-11-26實讀離日前公開清單，限引用取消手機及最後帳單所需付款安排；未見獨立修訂日。不引用居留、稅務、保險、證件或關戶期限，未操作私人程序。",
+          "retrieval": {
+            "key": "utokyo-leaving",
+            "requested_url": "https://www.u-tokyo.ac.jp/adm/inbound/en/life-daily-leaving.html",
+            "resolved_url": "https://www.u-tokyo.ac.jp/adm/inbound/en/life-daily-leaving.html",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "07db3ecf03979f8537457c0c003c425d4481fdc19453669fb79e3ef3d00a39d5",
+            "bytes": 22186,
+            "content_type": "text/html",
+            "title": "Before Leaving Japan | Website for International Students"
+          },
+          "retrieval_history": [],
+          "actual_reading": "Read departure checklist, specifically mobile-contract cancellation and final bills/payment-account caution. No immigration, residence, tax, insurance, card-return, banking qualification/deadline or individualized cancellation/refund decision used. No private process.",
+          "version": "Live public body checked2026-11-26;no independent revision date asserted."
+        },
+        {
+          "id": "apple-travel",
+          "title": "Apple：Use eSIM while traveling internationally with your iPhone",
+          "url": "https://support.apple.com/en-us/118227",
+          "note": "頁面Published Date為2026-10-22，2026-11-26實讀完整公開說明；引用原門號漫遊／旅行方案分流、鎖機查法、裝置與供應商條件及原門號可能漫遊費。不列型號大全、國家例外、iOS26自動切換或實測相容性；Android另查。",
+          "retrieval": {
+            "key": "apple-travel",
+            "requested_url": "https://support.apple.com/en-us/118227",
+            "resolved_url": "https://support.apple.com/en-us/118227",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "c371bc93878ba4d5414b98b1b825e5b4faa7fd3fa751bb0eeb89eb3567f623e9",
+            "bytes": 129713,
+            "content_type": "text/html;charset=utf-8",
+            "title": "Use eSIM while traveling internationally with your iPhone - Apple Support",
+            "request_note": "Initial default requests UA429; repeat with standard browser User-Agent succeeded. Initial error HTML/meta preserved; connected web reader also actually read body/version."
+          },
+          "retrieval_history": [
+            {
+              "key": "apple-travel",
+              "requested_url": "https://support.apple.com/en-us/118227",
+              "resolved_url": "https://support.apple.com/en-us/118227",
+              "status": 429,
+              "checked": "2026-11-26",
+              "sha256": "6aad50a827d4a831b5f79b778fd88b327698429b05deb57c7dd50b3fca2833b9",
+              "bytes": 162,
+              "content_type": "text/html",
+              "title": "429 Too Many Requests"
+            },
+            {
+              "key": "apple-travel",
+              "requested_url": "https://support.apple.com/en-us/118227",
+              "resolved_url": "https://support.apple.com/en-us/118227",
+              "status": 200,
+              "checked": "2026-11-26",
+              "sha256": "c371bc93878ba4d5414b98b1b825e5b4faa7fd3fa751bb0eeb89eb3567f623e9",
+              "bytes": 129713,
+              "content_type": "text/html;charset=utf-8",
+              "title": "Use eSIM while traveling internationally with your iPhone - Apple Support",
+              "request_note": "Initial default requests UA429; repeat with standard browser User-Agent succeeded. Initial error HTML/meta preserved; connected web reader also actually read body/version."
+            }
+          ],
+          "actual_reading": "Read official body and footer, 2026-10-22. Original carrier roaming vs local/prepaid/postpaid/global data eSIM; carrier lock check Settings/General/About/CarrierLock/No SIM Restrictions; device/carrier/region compatibility and activation-network conditions; keeping home line can incur roaming fees. No all-model/region promises, iOS26 automatic-return operation, actual device trial or Android menu extrapolation.",
+          "version": "Published2026-10-22"
+        },
+        {
+          "id": "apple-dual",
+          "title": "Apple：Using Dual SIM with an eSIM",
+          "url": "https://support.apple.com/en-us/109317",
+          "note": "頁面Published Date為2026-10-22，2026-11-26實讀；引用方案標籤、預設號碼、數據線路及電信／設定限制。不宣稱任何data-only方案具SMS／電話，未驗證私人帳號或全部通話組合。",
+          "retrieval": {
+            "key": "apple-dual",
+            "requested_url": "https://support.apple.com/en-us/109317",
+            "resolved_url": "https://support.apple.com/en-us/109317",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "c0cafafe0cb787361686ccf2f6f876501a7a87963bc2fd314313e096a0b47dba",
+            "bytes": 138359,
+            "content_type": "text/html;charset=utf-8",
+            "title": "Using Dual SIM with an eSIM - Apple Support",
+            "request_note": "Initial default requests UA429; repeat with standard browser User-Agent succeeded. Initial error HTML/meta preserved; connected web reader also actually read body/version."
+          },
+          "retrieval_history": [
+            {
+              "key": "apple-dual",
+              "requested_url": "https://support.apple.com/en-us/109317",
+              "resolved_url": "https://support.apple.com/en-us/109317",
+              "status": 429,
+              "checked": "2026-11-26",
+              "sha256": "6aad50a827d4a831b5f79b778fd88b327698429b05deb57c7dd50b3fca2833b9",
+              "bytes": 162,
+              "content_type": "text/html",
+              "title": "429 Too Many Requests"
+            },
+            {
+              "key": "apple-dual",
+              "requested_url": "https://support.apple.com/en-us/109317",
+              "resolved_url": "https://support.apple.com/en-us/109317",
+              "status": 200,
+              "checked": "2026-11-26",
+              "sha256": "c0cafafe0cb787361686ccf2f6f876501a7a87963bc2fd314313e096a0b47dba",
+              "bytes": 138359,
+              "content_type": "text/html;charset=utf-8",
+              "title": "Using Dual SIM with an eSIM - Apple Support",
+              "request_note": "Initial default requests UA429; repeat with standard browser User-Agent succeeded. Initial error HTML/meta preserved; connected web reader also actually read body/version."
+            }
+          ],
+          "actual_reading": "Read applicable official body and footer, 2026-10-22: plan labels/default calling or messaging number/data line separated; carrier and device constraints. Not every data-only plan has a phone/SMS just because phone supports dualSIM. No claim every concurrent-call/WiFiCalling/data-switch case tested or free.",
+          "version": "Published2026-10-22"
+        },
+        {
+          "id": "softbank-data",
+          "title": "SoftBank：Prepaid SIM for Travel",
+          "url": "https://www.softbank.jp/en/mobile/special/prepaid-sim-for-travel/en/",
+          "note": "2026-11-26實讀Overview／FAQ／Important及加購停止公告；僅作data-only且無語音的服務範例，不保證目前可購或推薦。2025-02-18停止500MB加購公告優先，不沿用殘留舊價、31日、容量、2018促銷、舊APN畫面、30分鐘或文件／年齡作全日本規定。",
+          "retrieval": {
+            "key": "softbank-data",
+            "requested_url": "https://www.softbank.jp/en/mobile/special/prepaid-sim-for-travel/en/",
+            "resolved_url": "https://www.softbank.jp/en/mobile/special/prepaid-sim-for-travel/en/",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "55067f8f7486cf88861a79725fa9ef307cad619782c23d290a152b31510ce4a3",
+            "bytes": 20476,
+            "content_type": "text/html; charset=utf-8",
+            "title": "Prepaid SIM for Travel | Mobile | SoftBank"
+          },
+          "retrieval_history": [],
+          "actual_reading": "Read overview, setup, Important, whole FAQ and discontinuation notices. Cite ONLY service is data-only/no voice and historical2025-02-18 stop of500MBadditional subscriptions. Old price/duration/capacity/2018promotion/3Gbands/APN screenshots/30min/eligibility/documents not used as current plan or allJapan rules. Not recommendation/current sales guarantee.",
+          "version": "Live public body checked2026-11-26;no independent revision date asserted."
+        },
+        {
+          "id": "apple-erase",
+          "title": "Apple：How to erase an eSIM on your iPhone or iPad",
+          "url": "https://support.apple.com/en-us/102421",
+          "note": "頁面Published Date為2026-09-17，2026-11-26實讀完整公開正文，核對刪除eSIM與取消方案分開、終止服務需聯絡電信商；不以移除作一般故障排除。未操作移除／取消，未把裝置步驟當契約結果。",
+          "retrieval": {
+            "key": "apple-erase",
+            "requested_url": "https://support.apple.com/en-us/102421",
+            "resolved_url": "https://support.apple.com/en-us/102421",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "53782aca272a5334983e081a3a6af19266eb653a5705d8a47a3f532f9c0ce5e9",
+            "bytes": 117759,
+            "content_type": "text/html;charset=utf-8",
+            "title": "How to erase an eSIM on your iPhone or iPad - Apple Support",
+            "request_note": "Initial default requests UA429; repeat with standard browser User-Agent succeeded. Initial error HTML/meta preserved; connected web reader also actually read body/version."
+          },
+          "retrieval_history": [
+            {
+              "key": "apple-erase",
+              "requested_url": "https://support.apple.com/en-us/102421",
+              "resolved_url": "https://support.apple.com/en-us/102421",
+              "status": 429,
+              "checked": "2026-11-26",
+              "sha256": "6aad50a827d4a831b5f79b778fd88b327698429b05deb57c7dd50b3fca2833b9",
+              "bytes": 162,
+              "content_type": "text/html",
+              "title": "429 Too Many Requests"
+            },
+            {
+              "key": "apple-erase",
+              "requested_url": "https://support.apple.com/en-us/102421",
+              "resolved_url": "https://support.apple.com/en-us/102421",
+              "status": 200,
+              "checked": "2026-11-26",
+              "sha256": "53782aca272a5334983e081a3a6af19266eb653a5705d8a47a3f532f9c0ce5e9",
+              "bytes": 117759,
+              "content_type": "text/html;charset=utf-8",
+              "title": "How to erase an eSIM on your iPhone or iPad - Apple Support",
+              "request_note": "Initial default requests UA429; repeat with standard browser User-Agent succeeded. Initial error HTML/meta preserved; connected web reader also actually read body/version."
+            }
+          ],
+          "actual_reading": "Read entire public body and footer, 2026-09-17: erase/remove eSIM is separate from contacting carrier to cancel plan; do not erase as generic troubleshooting unless carrier directs. No personal deletion/cancellation submitted. Device-specific Handoff details not generalized.",
+          "version": "Published2026-09-17"
+        }
+      ]
+    },
+    {
+      "slug": "toeic-part-five-conditionals",
+      "title": "多益 Part 5 條件句怎麼判斷？if、unless 與原創題解析",
+      "source_claims": [
+        {
+          "id": "toeic-content",
+          "title": "TOEIC臺灣：Listening and Reading測驗內容",
+          "url": "https://www.toeic.com.tw/toeic/listening-reading/about/content/",
+          "note": "2026-11-26實讀測驗內容／閱讀表，核對TOEIC Listening & Reading與Part5句子填空30題；不推測條件句出題頻率、費用、報名或分數。未見獨立修訂日。",
+          "retrieval": {
+            "key": "toeic-content",
+            "requested_url": "https://www.toeic.com.tw/toeic/listening-reading/about/content/",
+            "resolved_url": "https://www.toeic.com.tw/toeic/listening-reading/about/content/",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "838b7eef723ee384c4f97d9aa24d38d5ae0f0d2e8b405563ff17b202bae4f1ca",
+            "bytes": 88769,
+            "content_type": "text/html; charset=utf-8",
+            "title": "TOEIC Listening and Reading Test 測驗內容"
+          },
+          "retrieval_history": [],
+          "actual_reading": "Read current content/read table: TOEIC Listening&Reading distinctSpeaking&Writing;Part5incomplete sentences30. No conditional frequency/score/fee/registration claims.",
+          "version": "Live public body checked2026-11-26;no independent revision date asserted."
+        },
+        {
+          "id": "toeic-sample",
+          "title": "TOEIC臺灣：Part5句子填空題型範例",
+          "url": "https://www.toeic.com.tw/sample-test/toeic-listening-reading/sample05.html",
+          "note": "2026-11-26實讀READING／PART5 directions，核對缺字或片語、四選一最佳答案。未轉載、翻寫或改編官方題目／選項／人名；本文六題全自寫。未見獨立修訂日。",
+          "retrieval": {
+            "key": "toeic-sample",
+            "requested_url": "https://www.toeic.com.tw/sample-test/toeic-listening-reading/sample05.html",
+            "resolved_url": "https://www.toeic.com.tw/sample-test/toeic-listening-reading/sample05.html",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "919c727695443324caa38ab43598a9cd0a4c65e272bc16eccc3f422929ae1014",
+            "bytes": 21010,
+            "content_type": "text/html",
+            "title": "TOEIC Listening and Reading Test Part5句子填空 ── 題型範例"
+          },
+          "retrieval_history": [],
+          "actual_reading": "Read actual Reading/Part5 directions: missing word/phrase,four choices,best answer. No official items/options/people copied or adapted;all6items24choices original.",
+          "version": "Live public body checked2026-11-26;no independent revision date asserted."
+        },
+        {
+          "id": "bc-basic",
+          "title": "British Council：Conditionals: zero, first and second",
+          "url": "https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/conditionals-zero-first-second",
+          "note": "2026-11-26實讀Grammar explanation全文，核對條件／結果、一般規則、未來可能、現況假設與were／was限制。沒有使用來源例句、互動測驗、留言或促銷；頁面等級不是本文題目或讀者評級。未見獨立修訂日。",
+          "retrieval": {
+            "key": "bc-basic",
+            "requested_url": "https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/conditionals-zero-first-second",
+            "resolved_url": "https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/conditionals-zero-first-second",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "bf29f988186b10eca4b8f69273438469c7ce15e838a1f9fb273d695d87a0ba73",
+            "bytes": 114454,
+            "content_type": "text/html; charset=UTF-8",
+            "title": "Conditionals: zero, first and second | LearnEnglish"
+          },
+          "retrieval_history": [],
+          "actual_reading": "Read full Grammar explanation before quiz/comments: condition/result,zero/first/second typical relationships and forms,were/was qualification. No source water/weather/coffee/garden/cinema/lottery/prime-minister examples,interactive items/comments/promotion copied. Source CEFR category not our reader/item grading.",
+          "version": "Live public body checked2026-11-26;no independent revision date asserted."
+        },
+        {
+          "id": "bc-third-mixed",
+          "title": "British Council：Conditionals: third and mixed",
+          "url": "https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/conditionals-third-mixed",
+          "note": "2026-11-26實讀Grammar explanation全文，核對過去反事實及條件／結果時間可不同。未使用原頁登山、蘇格蘭、東京工作等例子、題庫或留言日期作版本。未見獨立修訂日。",
+          "retrieval": {
+            "key": "bc-third-mixed",
+            "requested_url": "https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/conditionals-third-mixed",
+            "resolved_url": "https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/conditionals-third-mixed",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "8a90577afd805585f6e1c7f57f3fa22ceb097df7c8ed8dc70418aaa80e741348",
+            "bytes": 113936,
+            "content_type": "text/html; charset=UTF-8",
+            "title": "Conditionals: third and mixed | LearnEnglish"
+          },
+          "retrieval_history": [],
+          "actual_reading": "Read full Grammar explanation before quiz/comments: contrary past and mixed past/present or present/past,condition/result separately timed. No mountain/Scotland/illness/party/Tokyojob/partner/friend examples copied. Own cable/projector and request scenarios.",
+          "version": "Live public body checked2026-11-26;no independent revision date asserted."
+        },
+        {
+          "id": "bc-time-if",
+          "title": "British Council：Verbs in time clauses and if clauses",
+          "url": "https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/verbs-time-clauses-if-clauses",
+          "note": "2026-11-26實讀Talking about the future／Making hypotheses正文，核對常見現在形式、will意願例外、過去形式及modal／modal＋have的結果時間。不將『通常』改為永遠，未用留言、原頁例句或測驗。未見獨立修訂日。",
+          "retrieval": {
+            "key": "bc-time-if",
+            "requested_url": "https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/verbs-time-clauses-if-clauses",
+            "resolved_url": "https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/verbs-time-clauses-if-clauses",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "2497c13874d44beb9323531f7c426b3d02abfa46cd680913da6eb4d231b20835",
+            "bytes": 216517,
+            "content_type": "text/html; charset=UTF-8",
+            "title": "Verbs in time clauses and 'if' clauses | LearnEnglish"
+          },
+          "retrieval_history": [],
+          "actual_reading": "Read Talking about future and Making hypotheses instructional body through modal+have ending. Present forms usual in future conditional/time clauses,will can mean willingness,past forms for hypothetical present/future,pastperfect for unfulfilledpast,modal vsmodal+have depends result time. Do not turn normally into never. No original examples or comment claims copied.",
+          "version": "Live public body checked2026-11-26;no independent revision date asserted."
+        },
+        {
+          "id": "bc-indirect",
+          "title": "British Council：Questions and negatives",
+          "url": "https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/questions-negatives",
+          "note": "2026-11-26實讀Other ways of asking questions正文，核對if引入間接是非問句及主詞／動詞順序，含未來will用例；本文vendor例句獨立撰寫，不用原頁人名／房屋／同意例句或留言。未見獨立修訂日。",
+          "retrieval": {
+            "key": "bc-indirect",
+            "requested_url": "https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/questions-negatives",
+            "resolved_url": "https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/questions-negatives",
+            "status": 200,
+            "checked": "2026-11-26",
+            "sha256": "1c941f565140055001cae00becde7d5a2a44beaf261b8063b1d6d9fd4247cda2",
+            "bytes": 204594,
+            "content_type": "text/html; charset=UTF-8",
+            "title": "Questions and negatives | LearnEnglish"
+          },
+          "retrieval_history": [],
+          "actual_reading": "Read Other ways of asking questions: if introduces indirect yes/no and declarative word order,with future will example. Own Iwonder vendor trial example. Not every if is a condition;no sourcehouse/people/agreement example or comments copied.",
+          "version": "Live public body checked2026-11-26;no independent revision date asserted."
+        }
+      ]
+    }
+  ],
+  "access_limitations": "All12cited sources finally HTTP200 and relevant public bodies actually read. Initial workspace default-UA Apple3 requests429;connected official web reader readable;sequential requests with standard browser UA returned200 and same footer dates. Initial429HTML/meta and reader text snapshots preserved in taskcache,not described as official archive. No inaccessible claim retained.",
+  "limits": "No current plan/fees/coverage/eligibility guarantees,actual SIM/device/network/private account/emergency call operation. No student/expert/model trial,official grading or copied test items."
+}
