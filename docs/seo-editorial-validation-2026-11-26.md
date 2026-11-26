@@ -54,4 +54,4 @@ Ketut Subiyanto／Pexels4881138（背包旅人查看手機），cottonbro studio
 - [命令與結果](seo-editorial-tests-2026-11-26.txt)、[套件逐檔](seo-editorial-package-2026-11-26.json)、[瀏覽器與15圖](seo-editorial-browser-2026-11-26.json)
 - [桌面](seo-previews-2026-11-26/desktop-1440.jpg)、[手機](seo-previews-2026-11-26/mobile-320.jpg)、[裁切](seo-previews-2026-11-26/photography-crops.jpg)
 
-PR、遠端CI與任務附件建立後回填；尚未發布。
+待審PR：[ #408 ](https://github.com/blizzard-new/abroad/pull/408)，OPEN／非draft／未合併，GitHub確認mergeable。建立時head `0e06416d5101ea9d650f1045ba367ee6da46553b`，30檔包括兩篇JSON、兩張WebP及15張驗收圖。兩個image CI仍in_progress，Supabase Preview skipped，不宣稱遠端全部通過。已呼叫attach_artifact但40秒未回傳，list_artifacts亦10秒未回傳，因此任務附件未確認；PR建立、狀態及內容另外查核成功。此後只回填本段、PR audit與本日選題紀錄，產品與測前固定雜湊一致，未重新產文或發布。
