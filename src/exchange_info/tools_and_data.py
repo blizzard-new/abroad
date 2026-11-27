@@ -40,6 +40,7 @@ from .tools_and_data_core import (
     summarize_71_schools_overview,
     web_application_schema,
 )
+from .tools_and_data_wave2 import register_wave2_routes
 from .university_registry import SUPPORTED_UNIVERSITIES, UniversityProfile, resolve_university
 
 
@@ -64,10 +65,15 @@ _TOOL_SWITCHER_ITEMS: tuple[tuple[str, str], ...] = (
     ("/tools/ects-credit-converter", "ECTS 學分"),
     ("/tools/gpa-converter", "GPA 換算"),
     ("/tools/language-score-converter", "語言選校"),
+    ("/tools/partner-compare", "姊妹校 PK"),
     ("/tools/exchange-budget-calculator", "交換預算"),
+    ("/tools/scholarship-finder", "獎學金篩選"),
     ("/tools/timeline-generator", "倒推時程"),
+    ("/tools/military-service-exit-checker", "役男出境"),
     ("/data/taiwan-exchange-overview", "71 校資源表"),
     ("/data/deadlines", "71 校截止日"),
+    ("/data/language-requirements", "語言門檻統計"),
+    ("/data/top-partner-universities", "熱門名校 Top 50"),
 )
 
 
@@ -89,13 +95,22 @@ def append_tools_and_data_llms(origin: str) -> list[str]:
         "/tools/ects-credit-converter",
         "/tools/gpa-converter",
         "/tools/language-score-converter",
+        "/tools/partner-compare",
         "/tools/exchange-budget-calculator",
+        "/tools/scholarship-finder",
         "/tools/timeline-generator",
+        "/tools/military-service-exit-checker",
     ):
         spec = WAVE1_SPECS[path]
         lines.append(f"- [{spec.h1}]({origin}{spec.path}): {spec.description}")
     lines += ["", "## 年度公開交換數據", ""]
-    for path in ("/data", "/data/taiwan-exchange-overview", "/data/deadlines"):
+    for path in (
+        "/data",
+        "/data/taiwan-exchange-overview",
+        "/data/deadlines",
+        "/data/language-requirements",
+        "/data/top-partner-universities",
+    ):
         spec = WAVE1_SPECS[path]
         lines.append(f"- [{spec.h1}]({origin}{spec.path}): {spec.description}")
     return lines
@@ -349,9 +364,12 @@ def register_tools_and_data_routes(
             ("/tools/ects-credit-converter", "學分折抵", "ECTS 學分換算器", "歐洲・台灣・美加・日韓學分即時換算"),
             ("/tools/gpa-converter", "成績對照", "台灣大學 GPA 換算器", "百分制・4.3・4.0・德國巴伐利亞公式"),
             ("/tools/language-score-converter", "71 校比對", "語言檢定換算與選校查詢", "輸入托福・雅思・多益・日檢查達標合作校"),
+            ("/tools/partner-compare", "選校對決", "海外姊妹校並排 PK 比較器", "2～3 校並排比較門檻・名額・預算並匯出圖卡"),
             ("/tools/exchange-budget-calculator", "12 國模板", "交換學生預算試算器", "月生活費・機票簽證・±10% 匯率波動試算"),
+            ("/tools/scholarship-finder", "官方獎助", "交換獎學金與補助資格篩選器", "依身分與地區篩選學海飛颺・惜珠・JASSO 等補助"),
             ("/tools/timeline-generator", ".ics 行事曆", "交換申請倒推時程產生器", "依母校與出發學期自動排定 8 個準備節點"),
-            ("/data", "71 校資料庫", "台灣交換公開數據總覽", "全台 71 校姊妹校規模排行與申請截止日總表"),
+            ("/tools/military-service-exit-checker", "役政檢核", "役男出境交換時程與文件檢查器", "區分 4 個月短期出境與學校推薦專案核准程序"),
+            ("/data", "71 校資料庫", "台灣交換公開數據總覽", "合作規模・截止日・語檢分布與熱門姊妹校 Top 50"),
         )
         cards_html = "".join(
             f"""<li class="uw-hub-card">
@@ -371,11 +389,11 @@ def register_tools_and_data_routes(
 
 <div class="uw-drawers-stack">
   <details class="uw-drawer">
-    <summary>5 款工具功能與輸出格式一覽表</summary>
+    <summary>8 款免登入工具功能與輸出格式一覽表</summary>
     <div class="uw-drawer-body">
       <div class="uw-table-wrap" tabindex="0" role="region" aria-label="交換免費工具對照表">
         <table class="uw-data-table">
-          <caption class="uw-sr-only">UniWay 交換學生五大免登入工具功能一覽</caption>
+          <caption class="uw-sr-only">UniWay 交換學生八大免登入工具功能一覽</caption>
           <thead>
             <tr>
               <th scope="col">工具名稱</th>
@@ -387,8 +405,11 @@ def register_tools_and_data_routes(
             <tr><th scope="row"><a href="/tools/ects-credit-converter">ECTS 學分換算器</a></th><td>ECTS／台／美／日學分</td><td>跨制學分折算、學習時數與最低選課門檻</td></tr>
             <tr><th scope="row"><a href="/tools/gpa-converter">GPA 換算器</a></th><td>百分制、4.3、4.0 或逐科學分成績</td><td>4.0／4.3 對照、德國巴伐利亞分數、加權試算</td></tr>
             <tr><th scope="row"><a href="/tools/language-score-converter">語言檢定選校查詢</a></th><td>IELTS / TOEFL / TOEIC / CEFR / JLPT＋母校</td><td>跨檢定級距＋母校達標合作校清單</td></tr>
+            <tr><th scope="row"><a href="/tools/partner-compare">姊妹校並排 PK 比較器</a></th><td>就讀母校＋2 至 3 所目標合作校</td><td>語言門檻、名額狀態、學期預算對照表與 PNG 圖卡</td></tr>
             <tr><th scope="row"><a href="/tools/exchange-budget-calculator">交換預算試算器</a></th><td>12 國模板、停留月數、匯率、補助</td><td>淨自備款與 ±10% 匯率情境表</td></tr>
+            <tr><th scope="row"><a href="/tools/scholarship-finder">獎學金資格篩選器</a></th><td>母校、目的地地區、學籍身分、交換期程</td><td>學海系列、外國政府與校內獎助申請管道清單</td></tr>
             <tr><th scope="row"><a href="/tools/timeline-generator">倒推時程產生器</a></th><td>台灣母校、出發學期、截止基準日</td><td>8 大準備節點與 <code>.ics</code> 行事曆下載</td></tr>
+            <tr><th scope="row"><a href="/tools/military-service-exit-checker">役男出境交換檢查器</a></th><td>役齡身分、預計出境日、返國日、母校</td><td>專案核准 vs 短期出境判定、公文時程與 <code>.ics</code> 下載</td></tr>
           </tbody>
         </table>
       </div>
@@ -1386,6 +1407,22 @@ def register_tools_and_data_routes(
     </div>
     <a class="uw-card-cta" href="/data/deadlines">開啟截止日表 <span aria-hidden="true">→</span></a>
   </li>
+  <li class="uw-hub-card">
+    <div>
+      <span class="uw-card-tag">分數段分布</span>
+      <h2><a href="/data/language-requirements">交換語言門檻各分數段統計</a></h2>
+      <p>統計多益 750/800/860、雅思 6.0/6.5、托福 79/88 與日檢 N2/N1 明確達標校數。</p>
+    </div>
+    <a class="uw-card-cta" href="/data/language-requirements">開啟門檻調查 <span aria-hidden="true">→</span></a>
+  </li>
+  <li class="uw-hub-card">
+    <div>
+      <span class="uw-card-tag">跨校排行</span>
+      <h2><a href="/data/top-partner-universities">全台締約最多海外姊妹校 Top 50</a></h2>
+      <p>依跨校締約數統計最受台灣各大學青睞的海外名校排行與各母校直達連結。</p>
+    </div>
+    <a class="uw-card-cta" href="/data/top-partner-universities">開啟 Top 50 <span aria-hidden="true">→</span></a>
+  </li>
 </ul>
 
 <div class="uw-drawers-stack">
@@ -1774,3 +1811,15 @@ def register_tools_and_data_routes(
             keywords=("大學交換申請截止日", "出國交換行事曆", "全台71校交換簡章時間", "交換生報名期限"),
             date_modified=latest_checked,
         )
+
+    register_wave2_routes(
+        router,
+        settings=settings,
+        catalogue_loader=catalogue_loader,
+        render_tool_page=render_tool_page,
+        render_data_page=render_data_page,
+        render_switcher=_render_switcher,
+        safe_json_block=_safe_json_block,
+        official_link=_official_link,
+        availability_labels=availability_labels,
+    )

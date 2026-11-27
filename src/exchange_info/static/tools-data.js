@@ -672,6 +672,472 @@
         if (el) el.addEventListener("change", filterDeadlines);
       });
     }
+
+    var lsForm = document.querySelector('form[data-data-filter="lang-survey"]');
+    if (lsForm) {
+      var lsTest = document.getElementById("ls-test");
+      var lsHome = document.getElementById("ls-home");
+      var lsTbody = document.getElementById("lang-survey-tbody");
+      if (lsTest && lsTbody) {
+        lsTest.addEventListener("change", function () {
+          var t = lsTest.value;
+          lsTbody.querySelectorAll("tr[data-lang-tier-test]").forEach(function (tr) {
+            tr.hidden = t !== "all" && tr.getAttribute("data-lang-tier-test") !== t;
+          });
+        });
+      }
+      if (lsHome) {
+        lsHome.addEventListener("change", function () {
+          lsForm.submit();
+        });
+      }
+    }
+
+    var tpForm = document.querySelector('form[data-data-filter="top-partners"]');
+    if (tpForm) {
+      var tpCountry = document.getElementById("tp-country");
+      var tpQ = document.getElementById("tp-q");
+      var tpTbody = document.getElementById("top-partners-tbody");
+      var tpCount = document.getElementById("top-visible-count");
+      if (tpCountry) {
+        tpCountry.addEventListener("change", function () {
+          tpForm.submit();
+        });
+      }
+      if (tpQ && tpTbody) {
+        tpQ.addEventListener("input", function () {
+          var q = (tpQ.value || "").trim().toLowerCase();
+          var visible = 0;
+          tpTbody.querySelectorAll("tr[data-top-name]").forEach(function (tr) {
+            var match = !q || (tr.getAttribute("data-top-name") || "").toLowerCase().indexOf(q) !== -1;
+            tr.hidden = !match;
+            if (match) visible += 1;
+          });
+          if (tpCount) tpCount.textContent = String(visible);
+        });
+      }
+    }
+  }
+
+  /* 7. Partner Side-by-Side PK Comparator + PNG Card Export */
+  function escHtml(s) {
+    return String(s || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function initPartnerCompareTool() {
+    var form = document.querySelector('form[data-tool-form="partner-compare"]');
+    var initNode = document.getElementById("uw-pk-initial");
+    if (!form || !initNode) return;
+    var currentData = null;
+    try {
+      currentData = JSON.parse(initNode.textContent);
+    } catch (_e) {
+      currentData = { home_name: "", selected: [] };
+    }
+
+    var homeEl = document.getElementById("pk-home");
+    var p1El = document.getElementById("pk-p1");
+    var p2El = document.getElementById("pk-p2");
+    var p3El = document.getElementById("pk-p3");
+    var thead = document.getElementById("pk-compare-thead");
+    var tbody = document.getElementById("pk-compare-tbody");
+    var copyPre = document.getElementById("pk-summary-copy");
+    var dlBtn = document.getElementById("pk-download-card");
+
+    function rebuildSelect(selectEl, options, selectedPid, allowEmpty) {
+      if (!selectEl) return;
+      selectEl.innerHTML = "";
+      if (allowEmpty) {
+        selectEl.add(new Option("不選第 3 所（僅比較 2 校）", ""));
+      }
+      options.forEach(function (o) {
+        var opt = new Option(o.label, o.pid);
+        if (o.pid === selectedPid) opt.selected = true;
+        selectEl.add(opt);
+      });
+      if (!selectedPid && allowEmpty) selectEl.value = "";
+    }
+
+    function renderComparison(data, refreshOptions) {
+      currentData = { home_name: data.home_name, selected: data.selected || [] };
+      setText('[data-pk-out="option-count"]', String(data.total_options || 0));
+      if (refreshOptions && data.options) {
+        rebuildSelect(p1El, data.options, data.p1, false);
+        rebuildSelect(p2El, data.options, data.p2, false);
+        rebuildSelect(p3El, data.options, data.p3, true);
+      }
+      var sel = data.selected || [];
+      if (thead) {
+        thead.innerHTML =
+          '<tr><th scope="col">比較維度</th>' +
+          sel
+            .map(function (c) {
+              return (
+                '<th scope="col"><a href="' +
+                escHtml(c.partner_url) +
+                '">' +
+                escHtml(c.school_name) +
+                '</a><span class="uw-inline-badge">' +
+                escHtml(c.country) +
+                "</span></th>"
+              );
+            })
+            .join("") +
+          "</tr>";
+      }
+      if (tbody) {
+        var rowsSpec = [
+          ["國家／地區", function (c) { return escHtml(c.country); }],
+          ["當期資料狀態", function (c) { return escHtml(c.availability); }],
+          ["來源列載名額", function (c) { return escHtml(c.quota); }],
+          ["明確語檢門檻", function (c) { return escHtml(c.language_badges); }],
+          ["語言條件摘錄", function (c) { return escHtml(c.language_snippet); }],
+          ["可申請學制", function (c) { return escHtml(c.degree_levels); }],
+          ["研修期間／學期", function (c) { return escHtml(c.study_period); }],
+          ["當地月生活費參考", function (c) { return escHtml(c.budget_ref); }],
+          ["學費與住宿摘要", function (c) { return escHtml(c.tuition_info + " ／ " + c.housing_info); }],
+          [
+            "深入核對連結",
+            function (c) {
+              var srcHtml = c.source_url
+                ? '<a href="' + escHtml(c.source_url) + '" rel="noopener noreferrer" data-official-source>官方來源</a>'
+                : "<span>官方來源（待確認）</span>";
+              return (
+                '<a href="' + escHtml(c.partner_url) + '">母校方案頁</a> · ' +
+                '<a href="' + escHtml(c.cross_school_url) + '">跨校專頁</a> · ' +
+                '<a href="/tools/exchange-budget-calculator?country=' + escHtml(c.country_slug) + '">預算細算</a> · ' +
+                srcHtml
+              );
+            }
+          ]
+        ];
+        tbody.innerHTML = rowsSpec
+          .map(function (spec) {
+            return (
+              '<tr><th scope="row">' +
+              escHtml(spec[0]) +
+              "</th>" +
+              sel.map(function (c) { return "<td>" + spec[1](c) + "</td>"; }).join("") +
+              "</tr>"
+            );
+          })
+          .join("");
+      }
+      if (copyPre) {
+        var lines = ["【UniWay 海外姊妹校並排比較】母校：" + data.home_name];
+        sel.forEach(function (c, idx) {
+          lines.push(
+            (idx + 1) + ". " + c.school_name + "（" + c.country + "）｜狀態：" + c.availability +
+            "｜名額：" + c.quota + "｜語檢：" + c.language_badges + "｜預算參考：" + c.budget_ref
+          );
+        });
+        var u = new URL(window.location.href);
+        u.search = "";
+        u.searchParams.set("home", data.home_id);
+        if (data.p1) u.searchParams.set("p1", data.p1);
+        if (data.p2) u.searchParams.set("p2", data.p2);
+        if (data.p3) u.searchParams.set("p3", data.p3);
+        window.history.replaceState(null, "", u.toString());
+        lines.push("並排比較網址：" + u.toString() + "（實際資格、名額與期限以各校最新官方公告為準。）");
+        copyPre.textContent = lines.join("\n");
+      }
+    }
+
+    function fetchCompare(homeChanged) {
+      var params = new URLSearchParams({ home: homeEl.value });
+      if (!homeChanged) {
+        if (p1El && p1El.value) params.set("p1", p1El.value);
+        if (p2El && p2El.value) params.set("p2", p2El.value);
+        if (p3El && p3El.value) params.set("p3", p3El.value);
+      }
+      fetch("/tools/partner-compare.json?" + params.toString(), { headers: { Accept: "application/json" } })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { if (d) renderComparison(d, homeChanged); })
+        .catch(function () {});
+    }
+
+    if (homeEl) homeEl.addEventListener("change", function () { fetchCompare(true); });
+    [p1El, p2El, p3El].forEach(function (el) {
+      if (el) el.addEventListener("change", function () { fetchCompare(false); });
+    });
+
+    if (dlBtn) {
+      dlBtn.addEventListener("click", function () {
+        var cols = (currentData && currentData.selected) || [];
+        if (!cols.length) return;
+        var width = 1200;
+        var height = 700;
+        var canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        var ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        ctx.fillStyle = "#f4f8fc";
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = "#102837";
+        ctx.fillRect(0, 0, width, 108);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 30px sans-serif";
+        ctx.fillText("UniWay 海外姊妹校並排比較卡", 44, 52);
+        ctx.fillStyle = "#b8d4ea";
+        ctx.font = "600 18px sans-serif";
+        ctx.fillText("適用母校：" + (currentData.home_name || "") + "  ｜  app.uniway-tw.com/tools/partner-compare", 44, 84);
+
+        var gap = 24;
+        var padX = 44;
+        var colW = Math.floor((width - padX * 2 - gap * (cols.length - 1)) / cols.length);
+
+        function drawClipped(text, x, y, maxW) {
+          var str = String(text || "—");
+          if (str.length > 34) str = str.slice(0, 33) + "…";
+          ctx.fillText(str, x, y, maxW);
+        }
+
+        cols.forEach(function (c, i) {
+          var x = padX + i * (colW + gap);
+          var y = 134;
+          var cardH = 496;
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(x, y, colW, cardH);
+          ctx.strokeStyle = "#d5e2ee";
+          ctx.lineWidth = 2;
+          ctx.strokeRect(x, y, colW, cardH);
+
+          ctx.fillStyle = "#e6f1fb";
+          ctx.fillRect(x, y, colW, 76);
+          ctx.fillStyle = "#102837";
+          ctx.font = "bold 21px sans-serif";
+          drawClipped(c.school_name, x + 20, y + 34, colW - 40);
+          ctx.fillStyle = "#1d5b8c";
+          ctx.font = "bold 15px sans-serif";
+          drawClipped("國家：" + c.country + "  ｜  " + c.availability, x + 20, y + 60, colW - 40);
+
+          var items = [
+            ["來源列載名額", c.quota],
+            ["明確語檢門檻", c.language_badges],
+            ["可申請學制", c.degree_levels],
+            ["研修期間", c.study_period],
+            ["當地月生活費", c.budget_ref]
+          ];
+          items.forEach(function (pair, idx) {
+            var ry = y + 112 + idx * 74;
+            ctx.fillStyle = "#536b7a";
+            ctx.font = "bold 14px sans-serif";
+            ctx.fillText(pair[0], x + 20, ry);
+            ctx.fillStyle = "#102837";
+            ctx.font = "600 17px sans-serif";
+            drawClipped(pair[1], x + 20, ry + 26, colW - 40);
+          });
+        });
+
+        ctx.fillStyle = "#4c6270";
+        ctx.font = "600 15px sans-serif";
+        ctx.fillText("實際資格、名額與期限以各校最新官方公告為準。UniWay 為獨立交換資訊整理平台，非校方單位。", 44, 666);
+
+        var a = document.createElement("a");
+        a.href = canvas.toDataURL("image/png");
+        a.download = "uniway-partner-compare.png";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+    }
+  }
+
+  /* 8. Military Service Exit Checker */
+  function initMilitaryExitTool() {
+    var form = document.querySelector('form[data-tool-form="military-exit"]');
+    var schoolNode = document.getElementById("uw-mil-schools");
+    if (!form || !schoolNode) return;
+    var schools = {};
+    try {
+      schools = JSON.parse(schoolNode.textContent);
+    } catch (_e) {
+      return;
+    }
+
+    var statusEl = document.getElementById("mil-status");
+    var depEl = document.getElementById("mil-depart");
+    var retEl = document.getElementById("mil-return");
+    var schEl = document.getElementById("mil-school");
+    var icsLink = document.getElementById("mil-ics-link");
+    var schLink = document.getElementById("mil-school-link");
+    var listEl = document.getElementById("mil-timeline-list");
+
+    function updateMil() {
+      var st = statusEl.value || "draft_male";
+      var dep = depEl.value || "2027-08-25";
+      var ret = retEl.value || "2028-01-20";
+      if (ret <= dep) {
+        ret = addDaysIso(dep, 148);
+        retEl.value = ret;
+      }
+      var d1 = new Date(dep + "T00:00:00Z");
+      var d2 = new Date(ret + "T00:00:00Z");
+      var stayDays = Math.max(1, Math.round((d2 - d1) / 86400000));
+      var stayMonths = (stayDays / 30.44).toFixed(1);
+      var overCap = stayDays > 120;
+      var sInfo = schools[schEl.value] || { short_name: "母校", official_url: "/schools" };
+
+      setText('[data-mil-out="stay-days"]', stayDays + " 天");
+      setText('[data-mil-out="stay-months"]', "約 " + stayMonths + " 個月");
+      setText('[data-mil-out="short-cap"]', overCap ? "超過 4 個月" : "4 個月內");
+      setText('[data-mil-out="submit-by"]', addDaysIso(dep, -45));
+      setText('[data-mil-out="short-name"]', sInfo.short_name);
+
+      var badge = "";
+      var summary = "";
+      if (st === "exempt_or_done") {
+        badge = "一般護照與簽證出境（免辦在學役男專案核准）";
+        summary = "已完成兵役義務、免役或無役男身分者，無須辦理在學役男出國研修核准；後備軍人或備役役男請依規定確認備查事項。";
+      } else if (st === "pre_19") {
+        badge = "尚未屆役齡（確認返國日未跨入 19 歲當年 1/1）";
+        summary = "男子年滿 19 歲之年 1 月 1 日起具役男身分。若全程均在滿 19 歲之年前則免辦；一旦跨入 19 歲當年 1 月 1 日即受役男出境規範。";
+      } else if (st === "turning_19") {
+        badge = "跨入役齡年度提醒：須辦理學校推薦出國研修專案核准";
+        summary = "自年滿 19 歲當年 1 月 1 日起即具法定役男身分，務必由國內母校辦理推薦出國研究進修專案核准。";
+      } else if (overCap) {
+        badge = "必辦「學校推薦出國交換／研修專案核准」（不可用短期出境替代）";
+        summary = "預估停留 " + stayDays + " 天（約 " + stayMonths + " 個月），超過線上短期出境最長 4 個月上限，須持國外入學許可（LoA）由母校造冊函報縣市政府核准。";
+      } else {
+        badge = "停留 4 個月內：仍建議優先向母校確認「推薦出國研修專案造冊」";
+        summary = "預估停留 " + stayDays + " 天（約 " + stayMonths + " 個月），正式校際交換生多數大學仍規定辦理推薦出國研修公文核准，請洽母校兵役承辦確認。";
+      }
+      setText('[data-mil-out="route-badge"]', badge);
+      setText('[data-mil-out="route-summary"]', summary);
+
+      if (schLink && sInfo.official_url) schLink.href = sInfo.official_url;
+      if (icsLink) {
+        var qp = new URLSearchParams({ status: st, depart: dep, return_date: ret, school: schEl.value });
+        icsLink.href = "/tools/military-service-exit-checker.ics?" + qp.toString();
+      }
+      if (listEl) {
+        var steps = [
+          ["出發前 60 天", addDaysIso(dep, -60), "取得海外接待校正式入學許可（LoA）並確認姓名與研修起迄日"],
+          ["出發前 45 天", addDaysIso(dep, -45), "向 " + sInfo.short_name + " 國際處與學務處生輔組（兵役承辦）遞交校內申請文件"],
+          ["出發前 21 天", addDaysIso(dep, -21), "確認縣市政府核准公文文號與內政部役男出境核准通知單"],
+          ["出發前 7 天", addDaysIso(dep, -7), "備妥有效護照（效期逾 6 個月）、簽證、入學許可與役男出境核准單備查"],
+          ["預計出境日", dep, "依核准期限出境赴海外姊妹校報到"],
+          ["預計返國日", ret, "於核准期限屆滿前返國，並向母校辦理返國報到與學分採認"]
+        ];
+        listEl.innerHTML = "";
+        steps.forEach(function (s) {
+          var li = document.createElement("li");
+          li.className = "uw-timeline-step";
+          li.innerHTML =
+            '<div class="uw-timeline-date"><span class="uw-timeline-offset">' + escHtml(s[0]) +
+            '</span><time datetime="' + escHtml(s[1]) + '">' + escHtml(s[1]) + '</time></div>' +
+            '<div class="uw-timeline-content"><h4>' + escHtml(s[2]) + "</h4></div>";
+          listEl.appendChild(li);
+        });
+      }
+    }
+
+    [statusEl, depEl, retEl, schEl].forEach(function (el) {
+      if (el) el.addEventListener("change", updateMil);
+    });
+  }
+
+  /* 9. Scholarship & Grant Finder */
+  function initScholarshipTool() {
+    var form = document.querySelector('form[data-tool-form="scholarship"]');
+    var dataNode = document.getElementById("uw-scholarship-data");
+    if (!form || !dataNode) return;
+    var payload = null;
+    try {
+      payload = JSON.parse(dataNode.textContent);
+    } catch (_e) {
+      return;
+    }
+
+    var homeEl = document.getElementById("schol-home");
+    var regEl = document.getElementById("schol-region");
+    var idEl = document.getElementById("schol-identity");
+    var durEl = document.getElementById("schol-duration");
+    var matchCountEl = document.getElementById("schol-match-count");
+    var matchTbody = document.getElementById("schol-matched-tbody");
+    var exDrawer = document.getElementById("schol-excluded-drawer");
+    var exCountEl = document.getElementById("schol-excluded-count");
+    var exTbody = document.getElementById("schol-excluded-tbody");
+
+    function updateScholarships() {
+      var uInfo = payload.schools[homeEl.value] || { school_name: "母校", short_name: "母校", official_url: "https://www.studyabroad.moe.gov.tw/" };
+      var reg = regEl.value || "all";
+      var ident = idEl.value || "roc_general";
+      var dur = durEl.value || "semester";
+
+      var matched = [];
+      var excluded = [];
+
+      payload.catalog.forEach(function (raw) {
+        var item = Object.assign({}, raw);
+        if (item.id === "home-university-grant") {
+          item.name = uInfo.short_name + "校內出國交換獎助學金／國際交流補助";
+          item.sponsor = uInfo.school_name + "（國際處／校內自籌獎助）";
+          item.official_url = uInfo.official_url;
+          item.official_label = uInfo.short_name + "國際處官方網站";
+        }
+        var reasons = [];
+        if (reg !== "all" && item.regions.indexOf(reg) === -1) {
+          reasons.push("不適用「" + (payload.regions[reg] || reg) + "」地區");
+        }
+        if (item.identities.indexOf(ident) === -1) {
+          reasons.push("不適用「" + (payload.identities[ident] || ident) + "」身分");
+        }
+        if (item.durations.indexOf(dur) === -1) {
+          reasons.push("不適用「" + (payload.durations[dur] || dur) + "」期程");
+        }
+        if (!reasons.length) matched.push(item);
+        else {
+          item.exclude_reason = reasons.join("；");
+          excluded.push(item);
+        }
+      });
+
+      if (matchCountEl) matchCountEl.textContent = String(matched.length);
+      if (matchTbody) {
+        matchTbody.innerHTML = matched
+          .map(function (it) {
+            return (
+              "<tr>" +
+              '<th scope="row"><strong>' + escHtml(it.name) + '</strong><div class="uw-cell-sub">' + escHtml(it.sponsor) + "</div></th>" +
+              "<td>" + escHtml(it.channel) + "</td>" +
+              "<td>" + escHtml(it.eligibility_note) + "</td>" +
+              "<td>" + escHtml(it.funding_note) + "</td>" +
+              '<td><a href="' + escHtml(it.official_url) + '" rel="noopener noreferrer" data-official-source>' + escHtml(it.official_label) + "</a></td>" +
+              "</tr>"
+            );
+          })
+          .join("");
+      }
+      if (exDrawer) exDrawer.hidden = excluded.length === 0;
+      if (exCountEl) exCountEl.textContent = String(excluded.length);
+      if (exTbody) {
+        exTbody.innerHTML = excluded.length
+          ? excluded
+              .map(function (it) {
+                return (
+                  "<tr>" +
+                  '<th scope="row">' + escHtml(it.name) + "</th>" +
+                  '<td><span class="uw-inline-badge">' + escHtml(it.exclude_reason) + "</span></td>" +
+                  '<td><a href="' + escHtml(it.official_url) + '" rel="noopener noreferrer" data-official-source>' + escHtml(it.official_label) + "</a></td>" +
+                  "</tr>"
+                );
+              })
+              .join("")
+          : "<tr><td>無</td><td>目前篩選涵蓋全部收錄計畫</td><td>—</td></tr>";
+      }
+    }
+
+    [homeEl, regEl, idEl, durEl].forEach(function (el) {
+      if (el) el.addEventListener("change", updateScholarships);
+    });
   }
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -679,12 +1145,19 @@
     if (activeNav && activeNav.parentElement && activeNav.parentElement.scrollWidth > activeNav.parentElement.clientWidth) {
       activeNav.parentElement.scrollLeft = Math.max(0, activeNav.offsetLeft - 24);
     }
+    var activeToolTab = document.querySelector('.uw-tool-tabs .uw-tool-tab[aria-current="page"]');
+    if (activeToolTab && activeToolTab.parentElement && activeToolTab.parentElement.scrollWidth > activeToolTab.parentElement.clientWidth) {
+      activeToolTab.parentElement.scrollLeft = Math.max(0, activeToolTab.offsetLeft - 24);
+    }
     bindCopyButtons();
     initEctsTool();
     initGpaTool();
     initLanguageTool();
     initBudgetTool();
     initTimelineTool();
+    initPartnerCompareTool();
+    initMilitaryExitTool();
+    initScholarshipTool();
     initDataFilters();
   });
 })();

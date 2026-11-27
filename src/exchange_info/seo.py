@@ -45,7 +45,7 @@ HOME_TITLE = "UniWay｜交換學生申請、合作學校與選校資訊"
 HOME_DESCRIPTION = "UniWay 整理全台大學交換學生申請與海外合作校資訊，協助比較學校、查詢資格與名額、準備申請文件及規劃時程。公開資料免登入，申請規定以各校最新官方公告為準。"
 NOTICE = "UniWay 是獨立資訊整理平台，並非校方。合作關係不等於當期開放申請；資格、名額、期限與文件請以母校國際處及合作校最新公告為準。"
 EDITORIAL_PATHS = ("/partners", "/destinations", "/guides", "/editorial-policy", *("/destinations/" + slug for slug in COUNTRIES), *("/guides/" + slug for slug in GUIDES), *WAVE1_PATHS)
-TOOLS_DATA_ASSETS_HEAD = '<link rel="stylesheet" href="/static/tools-data.css?v=20261127-clean-ux-2"><script src="/static/tools-data.js?v=20261127-clean-ux-1" defer></script>'
+TOOLS_DATA_ASSETS_HEAD = '<link rel="stylesheet" href="/static/tools-data.css?v=20261127-wave2-2"><script src="/static/tools-data.js?v=20261127-wave2-1" defer></script>'
 AVAILABILITY = {
     "open": "名單列載（請另確認本期受理時窗）", "agreement_only": "合作協議參考，非本期名額",
     "departmental_reference": "院系合作參考", "not_open": "未開放", "needs_confirmation": "待確認",
@@ -115,23 +115,23 @@ def structured_data(value: dict) -> str:
 
 
 def metadata(settings: SeoSettings, title: str, description: str, path: str, article: Article | None = None) -> str:
-    url, image = settings.origin + path, settings.origin + "/static/assets/brand/apple-touch-icon.png"
-    if article:
-        image = settings.origin + article.image_path
+    url = settings.origin + path
+    image = settings.origin + (article.image_path if article else "/static/assets/brand/og-image.png")
+    img_w, img_h = ("1536", "1024") if article else ("1200", "630")
+    img_alt = article.image_alt if article else "UniWay 台灣大學生出國交換選校、免費工具與公開數據平台"
     tags = [f'<meta name="description" content="{escape(description)}">',
             f'<link rel="canonical" href="{escape(url)}">',
             f'<meta name="robots" content="{"index, follow, max-image-preview:large" if settings.indexable else "noindex, nofollow"}">']
     for prop, value in (("og:type", "article" if article else "website"), ("og:site_name", "UniWay"), ("og:locale", "zh_TW"),
                         ("og:title", title), ("og:description", description), ("og:url", url),
-                        ("og:image", image), ("og:image:alt", article.image_alt if article else "UniWay 標誌")):
+                        ("og:image", image), ("og:image:width", img_w), ("og:image:height", img_h), ("og:image:alt", img_alt)):
         tags.append(f'<meta property="{prop}" content="{escape(value)}">')
-    for name, value in (("twitter:card", "summary_large_image" if article else "summary"), ("twitter:title", title),
+    for name, value in (("twitter:card", "summary_large_image"), ("twitter:title", title),
                         ("twitter:description", description), ("twitter:image", image)):
         tags.append(f'<meta name="{name}" content="{escape(value)}">')
     if article:
         for prop, value in (("article:published_time", article.published.isoformat()),
-                            ("article:modified_time", article.modified.isoformat()),
-                            ("og:image:width", "1536"), ("og:image:height", "1024")):
+                            ("article:modified_time", article.modified.isoformat())):
             tags.append(f'<meta property="{prop}" content="{value}">')
     if path == "/" and settings.verification:
         tags.append(f'<meta name="google-site-verification" content="{escape(settings.verification)}">')
@@ -705,11 +705,12 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
 
     @router.api_route("/destinations", methods=["GET", "HEAD"])
     def destinations():
+        country_names = "、".join(data["name"] for data in COUNTRIES.values())
         body = '<h1>交換學生國家專區</h1><p class="lead">先比較目的地的語言、學期與預算，再回到母校確認適用的交換方案。</p><ul class="cards">'
         for slug, data in COUNTRIES.items():
             body += f'<li><a href="/destinations/{slug}"><strong>{data["name"]}交換學生指南</strong></a><p>{data["intro"]}</p></li>'
-        body += '</ul><p><a href="/schools">查看全部母校及其他國家的合作校</a></p>'
-        return page(settings, "日本、韓國、德國交換學生指南｜UniWay", "比較國家、母校方案與交換生活預算，確認語言、學期、費用及官方來源。", "/destinations", body, [("首頁", "/"), ("國家專區", "/destinations")])
+        body += '</ul><p><a href="/tools/exchange-budget-calculator">12 國一學期生活費與匯率預算試算器</a> · <a href="/partners">跨校外國合作大學總覽</a> · <a href="/schools">查看全部母校合作校</a></p>'
+        return page(settings, f"{country_names}交換學生指南｜UniWay", "比較日本、韓國、德國、法國、英國、美國、荷蘭、捷克等熱門交換國家的母校方案、語言門檻、生活預算與官方來源。", "/destinations", body, [("首頁", "/"), ("國家專區", "/destinations")])
 
     @router.api_route("/destinations/{slug}", methods=["GET", "HEAD"])
     def destination(slug: str):
@@ -730,9 +731,13 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         for heading, text in data["checks"]:
             body += f'<section><h2>{heading}</h2><p>{text}</p></section>'
         body += '<h2>官方規劃參考</h2><ul>' + ''.join(f'<li>{source_link(url, label)}</li>' for label, url in data["sources"]) + '</ul>'
-        body += '<p><a href="/guides/exchange-budget">建立費用與補助清單</a> · <a href="/guides/exchange-eligibility">核對語言及資格</a></p>'
-        cost_guide = {"japan": "japan-exchange-cost", "south-korea": "korea-exchange-cost", "germany": "germany-exchange-cost"}[slug]
-        body += f'<p><a href="/guides/{cost_guide}">閱讀{name}一學期生活費、住宿與預算完整指南</a></p><h2>依母校比較方案</h2>'
+        body += f'<p><a href="/tools/exchange-budget-calculator?country={escape(slug)}">試算{name}一學期交換預算</a> · <a href="/partners/{escape(slug)}">查看{name}跨校合作大學總覽</a> · <a href="/guides/exchange-eligibility">核對語言及資格</a></p>'
+        cost_guide = {"japan": "japan-exchange-cost", "south-korea": "korea-exchange-cost", "germany": "germany-exchange-cost"}.get(slug)
+        if cost_guide:
+            body += f'<p><a href="/guides/{cost_guide}">閱讀{name}一學期生活費、住宿與預算完整指南</a> · <a href="/guides/exchange-budget">建立費用與補助清單</a></p>'
+        else:
+            body += '<p><a href="/guides/exchange-budget">閱讀交換費用與補助規劃完整指南</a> · <a href="/tools/scholarship-finder">篩選適用交換獎學金</a></p>'
+        body += '<h2>依母校比較方案</h2>'
         body += '<nav class="jump-links" aria-label="母校快速連結">' + ' · '.join(f'<a href="#home-{u.id}">{escape(u.short_name)}</a>' for u, _ in matches) + '</nav>'
         for u, groups in matches:
             body += f'<section id="home-{u.id}"><h3><a href="/schools/{u.id}">{escape(u.school_name)}</a> · {len(groups)} 個合作校頁面</h3><ul class="cards">'
