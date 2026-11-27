@@ -198,3 +198,34 @@ def test_tools_and_data_do_not_access_private_sessions(client, monkeypatch):
     anon = client.get("/tools/gpa-converter").content
     with_cookie = client.get("/tools/gpa-converter", headers={"Cookie": "exchange_session=fake-token"})
     assert with_cookie.content == anon
+
+
+def test_main_page_exposes_prominent_tools_and_data_entries(client):
+    home = client.get("/")
+    assert home.status_code == 200
+    soup = BeautifulSoup(home.text, "html.parser")
+
+    nav_routes = [a.get("data-public-route") for a in soup.select(".uniway-public-nav a[data-public-route]")]
+    assert "tools" in nav_routes and "data" in nav_routes
+    assert soup.select_one('.uniway-public-nav a[href="/tools"]') is not None
+    assert soup.select_one('.uniway-public-nav a[href="/data"]') is not None
+
+    hero_hrefs = {a.get("href") for a in soup.select(".pr-hero-tools a[href]")}
+    assert {"/tools", "/data"} <= hero_hrefs
+
+    section = soup.select_one("#home-free-tools")
+    assert section is not None
+    section_hrefs = {a.get("href") for a in section.select("a[href]")}
+    expected_paths = {
+        "/tools",
+        "/tools/ects-credit-converter",
+        "/tools/gpa-converter",
+        "/tools/language-score-converter",
+        "/tools/exchange-budget-calculator",
+        "/tools/timeline-generator",
+        "/data",
+        "/data/taiwan-exchange-overview",
+        "/data/deadlines",
+    }
+    assert expected_paths <= section_hrefs
+

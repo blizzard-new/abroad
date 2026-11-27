@@ -95,7 +95,7 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         kind="tool_hub",
         short_title="交換免費工具總覽",
         title="交換學生免費實用工具箱｜ECTS學分、GPA、語言門檻、預算與時程試算｜UniWay",
-        h1="UniWay 交換學生免費實用工具總覽",
+        h1="交換學生免費工具箱",
         description="免登入線上換算歐洲 ECTS 學分、台灣大學 GPA 與德國巴伐利亞公式、IELTS/TOEFL/TOEIC/JLPT 語言門檻、交換預算匯率敏感度及申請倒推時程行事曆。",
         core_conclusion="免登入交換工具箱整合學分、GPA、語言門檻、預算與倒推時程五大試算功能，實際資格與期限以各校最新官方公告為準。",
     ),
@@ -105,7 +105,7 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         kind="tool",
         short_title="ECTS 學分換算器",
         title="歐洲 ECTS 學分換算器｜台灣、美國、日本學分對照與最低修課試算｜UniWay",
-        h1="歐洲 ECTS ↔ 台灣／美國／日本學分換算器",
+        h1="歐洲 ECTS 學分換算器",
         description="即時換算歐洲 ECTS 與台灣學分、美國學期學分及日本単位，試算交換期間母校與姊妹校最低修課門檻及建議選課門數。",
         core_conclusion="歐洲全日制一學期標準為 30 ECTS，台灣與美國多以 2 ECTS 折算 1 學分，實際抵免以各校最新官方公告為準。",
     ),
@@ -115,7 +115,7 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         kind="tool",
         short_title="台灣大學 GPA 換算器",
         title="台灣大學 GPA 換算器｜百分制 ↔ 4.0 ↔ 4.3 與德國巴伐利亞公式試算｜UniWay",
-        h1="台灣大學 GPA 換算器（百分制 ↔ 4.0 ↔ 4.3 ＋ 德國巴伐利亞公式）",
+        h1="台灣大學 GPA 換算器",
         description="支援台灣各大學百分制成績、4.3 制與 4.0 制 GPA 雙向對照、德國交換必備巴伐利亞公式計算，以及多科目學分加權精算。",
         core_conclusion="出國交換常需將台灣百分制或 4.3 制換算為 4.0 制與德國巴伐利亞公式分數，實際採計標準以各校最新官方公告為準。",
     ),
@@ -125,7 +125,7 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         kind="tool",
         short_title="語言檢定換算與選校查詢",
         title="語言檢定分數換算器｜IELTS・TOEFL・TOEIC・CEFR・JLPT 對照與合作校查詢｜UniWay",
-        h1="語言檢定分數換算器（連動母校合作校門檻資料庫）",
+        h1="語言檢定換算與選校查詢",
         description="對照 IELTS、TOEFL iBT、TOEIC、CEFR 與日檢 JLPT 級距，選擇就讀母校即可即時統計資料庫中列載達標的海外合作校數量與清單。",
         core_conclusion="提供雅思、托福、多益、CEFR 與日檢分數對照，並連動母校資料庫篩選合作校門檻，實際申請資格以各校最新官方公告為準。",
     ),
@@ -135,7 +135,7 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         kind="tool",
         short_title="交換學生預算試算器",
         title="交換學生一學期預算試算器｜12 國費用模板與 ±10% 匯率波動情境｜UniWay",
-        h1="交換學生預算試算器（多國模板＋±10% 匯率波動試算）",
+        h1="交換學生預算試算器",
         description="依交換國家與月數估算住宿、飲食、交通、機票簽證保險及獎學金折抵，內建正負 10% 匯率敏感度情境表並支援一鍵分享預算明細。",
         core_conclusion="交換學生預算應分列月生活費、機票簽證保險與正負 10% 匯率波動緩衝並扣除補助，實際收費標準以各校最新官方公告為準。",
     ),
@@ -145,7 +145,7 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         kind="tool",
         short_title="交換申請倒推時程產生器",
         title="交換學生申請倒推時程表產生器｜全台 71 校截止日連動與 .ics 行事曆下載｜UniWay",
-        h1="交換申請倒推時程表產生器（支援下載 .ics 行事曆）",
+        h1="交換申請倒推時程產生器",
         description="選擇台灣母校與預計出發學期，自動倒推語檢報考、推薦信邀約、讀書計畫定稿與校內送件節點，一鍵匯出標準 iCalendar 行事曆檔。",
         core_conclusion="選定母校與出發學期即可自動倒推語檢、推薦信、讀書計畫與校內送件節點並匯出行事曆，實際截止期限以各校最新官方公告為準。",
     ),
@@ -155,7 +155,7 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         kind="data_hub",
         short_title="台灣交換公開數據總覽",
         title="台灣大學生出國交換公開數據中心｜全台 71 校合作規模與截止日統計｜UniWay",
-        h1="UniWay 台灣交換學生公開數據總覽",
+        h1="台灣交換公開數據總覽",
         description="由全台 71 所大專校院國際處公開資料自動彙整之年度交換數據庫，提供各校海外姊妹校規模、國家分布與校內申請截止日總表。",
         core_conclusion="公開數據頁自動彙整全台 71 所大學海外合作校規模、國家分布與校內截止日，實際資格、名額與期限以各校最新官方公告為準。",
     ),
@@ -165,7 +165,7 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         kind="data",
         short_title="全台 71 校交換資源總覽表",
         title="全台 71 所大學交換資源總覽表｜各校海外姊妹校數、國家數與語檢門檻統計｜UniWay",
-        h1="全台 71 所大學交換資源總覽表",
+        h1="全台 71 所大學交換資源總覽",
         description="直接由 UniWay 資料庫計算全台 71 所公私立大學之海外合作校頁面數、涵蓋國家地區數、語言門檻列載分布與國際處官方來源連結。",
         core_conclusion="由資料庫自動統計全台 71 所大學海外合作校數、涵蓋國家與語檢門檻分布，實際資格、名額與期限以各校最新官方公告為準。",
     ),
@@ -175,7 +175,7 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         kind="data",
         short_title="全台 71 校交換截止日總表",
         title="全台 71 校交換學生校內申請截止日行事曆總表｜依月份與學校查詢｜UniWay",
-        h1="全台 71 校交換校內申請截止日行事曆總表",
+        h1="全台 71 校交換申請截止日總表",
         description="彙整全台 71 所大學出國交換校內甄選期限、受理狀態、核對日期與官方簡章連結，支援依申請月份、學校屬性與關鍵字快速篩選。",
         core_conclusion="彙整全台 71 所大學校級交換線上申請期限、送件狀態與國際處官方簡章連結，實際資格、名額與期限以各校最新官方公告為準。",
     ),
@@ -302,37 +302,44 @@ def render_core_summary_and_citation_box(origin: str, spec: PageMetaSpec, *, che
         f"UniWay（2026）。《{spec.h1}》。取自 {full_url}"
         f"（資料檢索日期：{today_str}；{MANDATORY_DISCLAIMER}）"
     )
-    return f"""<section class="uw-summary-cite-card" aria-label="核心結論與引用格式">
-  <div class="uw-core-conclusion">
-    <span class="uw-badge-pill">本頁核心結論</span>
-    <p data-core-conclusion>{escape(spec.core_conclusion)}</p>
-  </div>
-  <div class="uw-citation-box" data-citation-box>
-    <div class="uw-citation-head">
-      <strong>一鍵引用本頁資料（媒體／部落格／Dcard／報告適用）</strong>
-      <button type="button" class="uw-btn uw-btn-sm uw-btn-outline" data-copy-target="uw-citation-code">複製引用文字</button>
+    return f"""<details class="uw-drawer uw-cite-drawer">
+  <summary>重點摘要與引用格式</summary>
+  <div class="uw-drawer-body">
+    <p class="uw-core-text" data-core-conclusion>{escape(spec.core_conclusion)}</p>
+    <div class="uw-citation-box" data-citation-box>
+      <div class="uw-citation-head">
+        <strong>引用格式</strong>
+        <button type="button" class="uw-btn uw-btn-sm uw-btn-outline" data-copy-target="uw-citation-code">複製引用文字</button>
+      </div>
+      <code id="uw-citation-code" class="uw-citation-code">{escape(citation_text)}</code>
     </div>
-    <code id="uw-citation-code" class="uw-citation-code">{escape(citation_text)}</code>
   </div>
-</section>"""
+</details>"""
 
 
-def render_faq_section(faqs: Sequence[tuple[str, str]], heading: str = "常見問題（FAQ）") -> str:
+def render_faq_section(faqs: Sequence[tuple[str, str]], heading: str = "常見問題") -> str:
     items_html = "".join(
         f'<details class="uw-faq-item"><summary>{escape(q)}</summary><div class="uw-faq-answer"><p>{escape(a)}</p></div></details>'
         for q, a in faqs
     )
-    return f'<section class="uw-section" id="faq"><h2>{escape(heading)}</h2><div class="uw-faq-list">{items_html}</div></section>'
+    return (
+        f'<details class="uw-drawer" id="faq">'
+        f'<summary>{escape(heading)}（{len(faqs)} 題）</summary>'
+        f'<div class="uw-drawer-body"><div class="uw-faq-list">{items_html}</div></div>'
+        f"</details>"
+    )
 
 
 def render_compliance_strip(extra_note: str = "") -> str:
     note = f" {extra_note.strip()}" if extra_note.strip() else ""
     return (
-        '<aside class="uw-compliance-banner" role="note">'
-        f"<strong>資料合規提醒：</strong>{escape(MANDATORY_DISCLAIMER)}"
-        "本頁由 UniWay 根據公開簡章與官方頁面整理，並非校方單位，不代辦申請、亦不承諾錄取結果；"
-        f"未公告或尚未核實之欄位一律標示「待確認」或「依校方公告」。{escape(note)}"
-        "</aside>"
+        '<details class="uw-drawer uw-compliance-drawer">'
+        "<summary>資料來源與注意事項</summary>"
+        '<div class="uw-drawer-body">'
+        f"<p>{escape(MANDATORY_DISCLAIMER)}"
+        "本頁根據公開簡章與官方頁面整理，並非校方單位，不代辦申請、亦不承諾錄取結果；"
+        f"未公告或尚未核實之欄位一律標示「待確認」或「依校方公告」。{escape(note)}</p>"
+        "</div></details>"
     )
 
 
