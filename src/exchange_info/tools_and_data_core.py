@@ -149,6 +149,36 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         description="選擇台灣母校與預計出發學期，自動倒推語檢報考、推薦信邀約、讀書計畫定稿與校內送件節點，一鍵匯出標準 iCalendar 行事曆檔。",
         core_conclusion="選定母校與出發學期即可自動倒推語檢、推薦信、讀書計畫與校內送件節點並匯出行事曆，實際截止期限以各校最新官方公告為準。",
     ),
+    "/tools/partner-compare": PageMetaSpec(
+        path="/tools/partner-compare",
+        slug="partner-compare",
+        kind="tool",
+        short_title="姊妹校並排 PK 比較器",
+        title="海外姊妹校並排 PK 比較器｜語言門檻、名額狀態、學期與生活費對照｜UniWay",
+        h1="海外姊妹校並排 PK 比較器",
+        description="免登入挑選 2 至 3 所海外交換合作校並排比對語言檢定門檻、當期名額狀態、可申請學制、學期制與當地生活費參考，支援一鍵分享網址與下載比較圖卡。",
+        core_conclusion="免登入並排比較二至三所海外姊妹校之語言門檻、名額狀態、學期與生活費參考，實際資格與名額以各校最新官方公告為準。",
+    ),
+    "/tools/military-service-exit-checker": PageMetaSpec(
+        path="/tools/military-service-exit-checker",
+        slug="military-service-exit-checker",
+        kind="tool",
+        short_title="役男出境交換檢查器",
+        title="台灣男生役男出境交換時程與文件檢查器｜專案核准 vs 短期出境對照｜UniWay",
+        h1="役男出境交換時程與文件檢查器",
+        description="依出境與返國日期自動核算停留天數，釐清 4 個月短期出境與學校推薦出國交換專案核准差異，排定校內送件倒推節點並支援下載 .ics 行事曆。",
+        core_conclusion="依出返國日期區分四個月內短期出境與學校推薦交換專案核准程序及必備文件，實際規定以內政部役政司與各校最新官方公告為準。",
+    ),
+    "/tools/scholarship-finder": PageMetaSpec(
+        path="/tools/scholarship-finder",
+        slug="scholarship-finder",
+        kind="tool",
+        short_title="交換獎學金快速篩選器",
+        title="交換學生獎學金與補助資格篩選器｜學海飛颺、學海惜珠、JASSO 與各國補助｜UniWay",
+        h1="交換獎學金與補助資格篩選器",
+        description="依學籍國籍身分、交換目的地與研修期程快速篩選教育部學海飛颺、學海惜珠、日本 JASSO、交流協會、韓國 GKS、歐盟 Erasmus+ 與母校校內補助管道。",
+        core_conclusion="依學籍身分、交換地區與期程快速篩選教育部學海系列、外國政府與校內補助方案，實際資格與金額以各校最新官方公告為準。",
+    ),
     "/data": PageMetaSpec(
         path="/data",
         slug="data",
@@ -156,7 +186,7 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         short_title="台灣交換公開數據總覽",
         title="台灣大學生出國交換公開數據中心｜全台 71 校合作規模與截止日統計｜UniWay",
         h1="台灣交換公開數據總覽",
-        description="由全台 71 所大專校院國際處公開資料自動彙整之年度交換數據庫，提供各校海外姊妹校規模、國家分布與校內申請截止日總表。",
+        description="由全台 71 所大專校院國際處公開資料自動彙整之年度交換數據庫，提供各校海外姊妹校規模、國家分布、語言門檻、熱門姊妹校排行與校內申請截止日總表。",
         core_conclusion="公開數據頁自動彙整全台 71 所大學海外合作校規模、國家分布與校內截止日，實際資格、名額與期限以各校最新官方公告為準。",
     ),
     "/data/taiwan-exchange-overview": PageMetaSpec(
@@ -179,7 +209,35 @@ WAVE1_SPECS: dict[str, PageMetaSpec] = {
         description="彙整全台 71 所大學出國交換校內甄選期限、受理狀態、核對日期與官方簡章連結，支援依申請月份、學校屬性與關鍵字快速篩選。",
         core_conclusion="彙整全台 71 所大學校級交換線上申請期限、送件狀態與國際處官方簡章連結，實際資格、名額與期限以各校最新官方公告為準。",
     ),
+    "/data/language-requirements": PageMetaSpec(
+        path="/data/language-requirements",
+        slug="language-requirements",
+        kind="data",
+        short_title="交換語言門檻大調查",
+        title="台灣交換學生語言門檻大調查｜多益・雅思・托福・日檢各分數段可申請校數｜UniWay",
+        h1="交換語言門檻各分數段統計",
+        description="讀取全台 71 所大學海外合作校真實紀錄，統計多益 750/800/860、雅思 6.0/6.5、托福 79/88 與日檢 N2/N1 各分數段明確列載可達標之合作校規模與國家分布。",
+        core_conclusion="統計全台 71 所大學海外合作校於多益、雅思、托福、CEFR 與日檢各分數段列載校數，實際資格以各校最新官方公告為準。",
+    ),
+    "/data/top-partner-universities": PageMetaSpec(
+        path="/data/top-partner-universities",
+        slug="top-partner-universities",
+        kind="data",
+        short_title="全台締約海外名校 Top 50",
+        title="全台最多台灣大學簽約的海外名校 Top 50｜跨校合作排行與母校連結｜UniWay",
+        h1="全台締約最多海外姊妹校 Top 50",
+        description="依全台 71 所公私立大學公開交換合作名單自動歸併統計，揭曉最多台灣大學締約之海外姊妹校前 50 名排行、國家分布與各台灣母校直達連結。",
+        core_conclusion="依全台 71 所大學公開名單統計締約校數最多之海外大學 Top 50 排行，實際資格與名額以各校最新官方公告為準。",
+    ),
 }
+
+WAVE2_PATHS: tuple[str, ...] = (
+    "/tools/partner-compare",
+    "/tools/military-service-exit-checker",
+    "/tools/scholarship-finder",
+    "/data/language-requirements",
+    "/data/top-partner-universities",
+)
 
 WAVE1_PATHS: tuple[str, ...] = tuple(WAVE1_SPECS.keys())
 

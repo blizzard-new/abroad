@@ -49,7 +49,11 @@ def test_home_metadata_is_absolute_and_does_not_trust_request_host(client):
     assert len(soup.select('meta[name="description"]')) == 1
     assert soup.select_one('meta[name="google-site-verification"]')["content"] == "test-verification-token"
     assert soup.select_one('meta[property="og:url"]')["content"] == "https://app.uniway-tw.com/"
-    assert soup.select_one('meta[name="twitter:card"]')["content"] == "summary"
+    assert soup.select_one('meta[property="og:image"]')["content"] == "https://app.uniway-tw.com/static/assets/brand/og-image.png"
+    assert soup.select_one('meta[property="og:image:width"]')["content"] == "1200"
+    assert soup.select_one('meta[property="og:image:height"]')["content"] == "630"
+    assert soup.select_one('meta[name="twitter:card"]')["content"] == "summary_large_image"
+    assert soup.select_one('meta[name="twitter:image"]')["content"] == "https://app.uniway-tw.com/static/assets/brand/og-image.png"
     graph = json.loads(soup.select_one('script[type="application/ld+json"]').string)["@graph"]
     assert {node["@type"] for node in graph} == {"Organization", "WebSite"}
     organization = next(node for node in graph if node["@type"] == "Organization")

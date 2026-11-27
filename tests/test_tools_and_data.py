@@ -221,11 +221,94 @@ def test_main_page_exposes_prominent_tools_and_data_entries(client):
         "/tools/ects-credit-converter",
         "/tools/gpa-converter",
         "/tools/language-score-converter",
+        "/tools/partner-compare",
         "/tools/exchange-budget-calculator",
+        "/tools/scholarship-finder",
         "/tools/timeline-generator",
+        "/tools/military-service-exit-checker",
         "/data",
         "/data/taiwan-exchange-overview",
         "/data/deadlines",
+        "/data/language-requirements",
+        "/data/top-partner-universities",
     }
     assert expected_paths <= section_hrefs
+
+
+def test_wave2_tools_data_destinations_and_og_image(client):
+    from pathlib import Path
+    from PIL import Image
+    from exchange_info.seo_guides import COUNTRIES
+
+    # 1. Verify 1200x630 og:image static asset and Open Graph / Twitter tags on /, /tools, /data
+    og_file = Path("src/exchange_info/static/assets/brand/og-image.png")
+    assert og_file.is_file()
+    with Image.open(og_file) as img:
+        assert img.size == (1200, 630)
+    assert client.get("/static/assets/brand/og-image.png").status_code == 200
+    for check_path in ("/", "/tools", "/data", "/tools/partner-compare", "/data/top-partner-universities"):
+        doc = BeautifulSoup(client.get(check_path).text, "html.parser")
+        assert doc.select_one('meta[property="og:image"]')["content"] == "https://app.uniway-tw.com/static/assets/brand/og-image.png"
+        assert doc.select_one('meta[property="og:image:width"]')["content"] == "1200"
+        assert doc.select_one('meta[property="og:image:height"]')["content"] == "630"
+        assert doc.select_one('meta[name="twitter:card"]')["content"] == "summary_large_image"
+
+    # 2. Verify /tools/partner-compare SSR + .json live endpoint
+    pk = client.get("/tools/partner-compare?home=ntu")
+    assert pk.status_code == 200
+    pk_soup = BeautifulSoup(pk.text, "html.parser")
+    assert len(pk_soup.select("#pk-compare-thead th")) == 3  # 比較維度 + 2 default partner columns
+    pk_json = client.get("/tools/partner-compare.json?home=nccu")
+    assert pk_json.status_code == 200
+    assert "noindex" in pk_json.headers.get("X-Robots-Tag", "")
+    pk_data = pk_json.json()
+    assert pk_data["home_id"] == "nccu" and pk_data["total_options"] > 50 and len(pk_data["selected"]) == 2
+
+    # 3. Verify /tools/military-service-exit-checker SSR + .ics export
+    mil_long = client.get("/tools/military-service-exit-checker?status=draft_male&depart=2027-08-25&return_date=2028-01-20&school=ntu")
+    assert mil_long.status_code == 200
+    assert "超過 4 個月" in mil_long.text
+    assert "學校推薦出國交換" in mil_long.text
+    mil_ics = client.get("/tools/military-service-exit-checker.ics?status=draft_male&depart=2027-08-25&return_date=2028-01-20&school=ntu")
+    assert mil_ics.status_code == 200
+    assert mil_ics.headers["content-type"].startswith("text/calendar")
+    assert "BEGIN:VCALENDAR\r\n" in mil_ics.text and mil_ics.text.count("BEGIN:VEVENT") == 6
+
+    # 4. Verify /tools/scholarship-finder accurate eligibility filtering
+    schol_intl = client.get("/tools/scholarship-finder?home=nthu&region=japan&identity=international_student&duration=semester")
+    assert schol_intl.status_code == 200
+    schol_soup = BeautifulSoup(schol_intl.text, "html.parser")
+    matched_ids = {r["data-schol-id"] for r in schol_soup.select("#schol-matched-tbody tr[data-schol-id]")}
+    assert "jasso" in matched_ids
+    assert "moe-feiyang" not in matched_ids and "moe-xizhu" not in matched_ids  # Excluded for non-ROC household registration
+    excluded_text = schol_soup.select_one("#schol-excluded-tbody").get_text()
+    assert "學海飛颺" in excluded_text
+
+    # 5. Verify /data/language-requirements & /data/top-partner-universities real DB stats
+    lang_survey = client.get("/data/language-requirements?test=toeic")
+    assert lang_survey.status_code == 200
+    ls_rows = BeautifulSoup(lang_survey.text, "html.parser").select("#lang-survey-tbody tr")
+    assert len(ls_rows) == 4 and all(r["data-lang-tier-test"] == "toeic" for r in ls_rows)
+
+    top50 = client.get("/data/top-partner-universities")
+    assert top50.status_code == 200
+    top_rows = BeautifulSoup(top50.text, "html.parser").select("#top-partners-tbody tr[data-top-name]")
+    assert len(top_rows) == 50
+
+    # 6. Verify all 8 /destinations pages (existing 3 + new 5: France, UK, US, Netherlands, Czechia)
+    expected_dest_slugs = {"japan", "south-korea", "germany", "france", "united-kingdom", "united-states", "netherlands", "czechia"}
+    assert set(COUNTRIES.keys()) == expected_dest_slugs
+    dest_index = client.get("/destinations")
+    assert dest_index.status_code == 200
+    for slug in ("france", "united-kingdom", "united-states", "netherlands", "czechia"):
+        assert f'/destinations/{slug}' in dest_index.text
+        d_resp = client.get(f"/destinations/{slug}")
+        assert d_resp.status_code == 200
+        d_soup = BeautifulSoup(d_resp.text, "html.parser")
+        assert len(d_soup.select("h1")) == 1
+        assert d_soup.select_one('a[href^="/schools/"]') is not None
+        d_text = d_soup.get_text(" ", strip=True)
+        for forbidden in FORBIDDEN_TERMS:
+            assert forbidden not in d_text
+
 
