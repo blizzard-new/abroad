@@ -37,6 +37,7 @@ from .seo_quality import digest, material_content
 from .seo_guides import COUNTRIES, GUIDES, country_slug
 from .seo_articles import ARTICLES, Article, article_schema, faq_schema, guide_index, render_article
 from .seo_analytics import analytics_markup
+from .public_ai_api import register_public_ai_api_routes
 from .university_registry import SUPPORTED_UNIVERSITIES, UniversityProfile
 from .tools_and_data import WAVE1_PATHS, append_tools_and_data_llms, register_tools_and_data_routes
 
@@ -216,7 +217,9 @@ def llms_txt(settings: SeoSettings, universities: Sequence[UniversityProfile], *
     else:
         lines += [f"- [{u.school_name}（{u.english_name}）]({o}/schools/{u.id})" for u in universities]
     lines += ["", "## Optional", "",
-              f"- [Sitemap]({o}/sitemap.xml): 含各母校的合作校頁面網址，數量較多"]
+              f"- [Sitemap]({o}/sitemap.xml): 含各母校的合作校頁面網址，數量較多",
+              f"- 公開唯讀 OpenAPI 3.1 規格（供 ChatGPT Actions 匯入）：`{o}/api/public/openapi.json`",
+              "- 開源 Claude MCP Server 套件：儲存庫內 `integrations/uniway-mcp/`（支援 `search_schools`、`filter_partners`、`reverse_lookup_partner`、`get_school_deadlines`、`get_exchange_overview`）"]
     if not full:
         lines.append(f"- [母校與交換指南擴充摘要]({o}/llms-full.txt)")
     lines.append("")
@@ -804,6 +807,12 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         structured_data_fn=structured_data,
         availability_labels=AVAILABILITY,
         assets_head=TOOLS_DATA_ASSETS_HEAD,
+    )
+    register_public_ai_api_routes(
+        router,
+        settings=settings,
+        catalogue_loader=cached_pair_loader,
+        availability_labels=AVAILABILITY,
     )
 
     return router
