@@ -540,7 +540,7 @@ PR #402 已建立（OPEN、非 draft），初始內容 head `73dfd3437971546ba38
 
 | 題目 | slug | 狀態 |
 | --- | --- | --- |
-| 臺大校級交換兩階段志願怎麼選填、如何讀名額和何時報到 | `ntu-exchange-preference-rounds` | 已選，11/27 批次 |
-| 歐洲交換 ECTS 如何估每週工作量及排備用課 | `ects-exchange-course-load` | 已選，11/27 同批 |
+| 臺大校級交換兩階段志願怎麼選填、如何讀名額和何時報到 | `ntu-exchange-preference-rounds` | 已選，[PR #411](https://github.com/blizzard-new/abroad/pull/411) 待審 |
+| 歐洲交換 ECTS 如何估每週工作量及排備用課 | `ects-exchange-course-load` | 已選，同一 PR #411 待審 |
 
 臺大篇依編輯判斷，ECTS 篇參考行銷主管提供的 Search Console 查詢摘要。原有申請總覽與抵免指南繼續承接各自意圖。兩篇全文、來源、攝影、原創步驟圖與測試見[本批驗收](seo-editorial-validation-2026-11-27.md)。
