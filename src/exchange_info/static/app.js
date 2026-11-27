@@ -781,35 +781,73 @@ function homeAcademicPass(profile) {
 }
 
 function renderAcademicFields() {
-  const ntu = homeSelectionRules().academic_policy === "gpa_or_rank";
-  const scoreOrRank = homeSelectionRules().academic_policy === "score_or_rank";
+  const rules = homeSelectionRules();
+  const gpaOrRank = rules.academic_policy === "gpa_or_rank";
+  const ntu = activeHomeSchool() === "國立臺灣大學";
+  const scoreOrRank = rules.academic_policy === "score_or_rank";
+  const ccu = state.dashboard?.academic_gpa_minimum != null;
+  const showGpa = Boolean(gpaOrRank || ntu || ccu || rules.accepts_academic_gpa);
+  const showRank = Boolean(gpaOrRank || ntu || scoreOrRank || rules.accepts_class_rank);
   const ncu = activeHomeSchool() === "國立中央大學";
   for (const [selector, values] of [["#advisor-degree", ["在職碩士班"]], ["#advisor-current-year", ["大五", "大六"]]]) {
     const select = $(selector);
     if (ncu) {
-      for (const value of values) if (!Array.from(select.options).some(option => option.value === value)) {
+      for (const value of values) if (!Array.from(select.options || []).some(option => option.value === value)) {
         const option = new Option(value, value);
         option.dataset.ncuOption = "true";
         select.add(option);
       }
-    } else select.querySelectorAll("[data-ncu-option]").forEach(option => option.remove());
+    } else select.querySelectorAll?.("[data-ncu-option]")?.forEach(option => option.remove());
   }
-  $("#advisor-percent-field").hidden = ntu;
-  $("#advisor-academic-score").disabled = ntu;
+  $("#advisor-percent-field").hidden = gpaOrRank;
+  $("#advisor-academic-score").disabled = gpaOrRank;
   document.querySelectorAll("[data-ntu-academic-field]").forEach((label) => {
-    label.hidden = !(ntu || scoreOrRank);
-    label.querySelector("input").disabled = !(ntu || scoreOrRank);
+    if (label.id === "advisor-gpa-field") return;
+    label.hidden = !showRank;
+    const input = label.querySelector?.("input");
+    if (input) input.disabled = !showRank;
   });
-  const ccu = state.dashboard?.academic_gpa_minimum != null;
+  const rankField = $("#advisor-rank-field");
+  const rankInput = $("#advisor-class-rank");
+  if (rankField) rankField.hidden = !showRank;
+  if (rankInput) rankInput.disabled = !showRank;
   const gpa = $("#advisor-academic-gpa");
-  $("#advisor-gpa-field").hidden = !(ntu || ccu);
-  gpa.disabled = !(ntu || ccu);
-  gpa.max = "4.3";
-  gpa.placeholder = ccu ? "中正須至少 3.0" : "例如 2.44；與排名擇一";
-  $("#advisor-gpa-label").textContent = ccu ? "歷年 GPA" : "適用學年GPA（4.3制）";
-  $("#advisor-rank-label").textContent = scoreOrRank ? "前一學期班／系排名（前幾%）" : "適用學年班排名（前幾%）";
+  $("#advisor-gpa-field").hidden = !showGpa;
+  gpa.disabled = !showGpa;
+  const scaleField = $("#advisor-gpa-scale-field");
+  const scaleSelect = $("#advisor-gpa-scale");
+  if (scaleField && scaleSelect) {
+    scaleField.hidden = !showGpa || ntu;
+    scaleSelect.disabled = !showGpa || ntu;
+    if (ntu) scaleSelect.value = "4.3";
+    else if (!["4", "4.3"].includes(scaleSelect.value)) {
+      scaleSelect.value = (state.eligibilityProfile?.gpaScale === "4" || state.eligibilityProfile?.gpaScale === "4.0") ? "4" : "4.3";
+    }
+  }
+  const is40 = !ntu && scaleSelect?.value === "4";
+  gpa.max = is40 ? "4.0" : "4.3";
+  gpa.placeholder = ntu
+    ? "例如 2.44；與排名擇一"
+    : ccu
+      ? `門檻 3.0（滿分 ${is40 ? "4.0" : "4.3"}）`
+      : gpaOrRank
+        ? `依成績單原值（滿分 ${is40 ? "4.0" : "4.3"}）`
+        : `選填（滿分 ${is40 ? "4.0" : "4.3"}）`;
+  $("#advisor-gpa-label").textContent = ntu
+    ? "適用學年GPA（4.3制）"
+    : ccu
+      ? "歷年 GPA（依成績單）"
+      : "歷年／學年 GPA（依成績單）";
+  $("#advisor-rank-label").textContent = gpaOrRank
+    ? "適用學年／歷年排名（前幾%）"
+    : scoreOrRank
+      ? "前一學期班／系排名（前幾%）"
+      : "班／系排名（前幾%）";
+  if (ntu) $("#advisor-rank-label").textContent = "適用學年班排名（前幾%）";
   $("#advisor-academic-rule").hidden = !state.dashboard?.academic_score_rule;
   if (state.dashboard?.academic_score_rule) $("#advisor-academic-rule").textContent = state.dashboard.academic_score_rule;
+  const converterRow = $("#advisor-gpa-converter-row");
+  if (converterRow) converterRow.hidden = !showGpa;
 }
 
 function homeCollegeOptions() {
@@ -823,39 +861,91 @@ function homeCollegeValue(value) {
 }
 
 function departmentField(prefix) {
-  return $(`#${prefix}-department-text`)?.hidden === false ? $(`#${prefix}-department-text`) : $(`#${prefix}-department`);
+  const text = $(`#${prefix}-department-text`);
+  const select = $(`#${prefix}-department`);
+  return text?.hidden === false ? text : select;
 }
 
-function renderDepartmentOptions(prefix, selected = "") {
+function renderDepartmentOptions(prefix, selected = "", { allowCustom = false } = {}) {
+  const CUSTOM_VALUE = "__custom__";
+  const CUSTOM_LABEL = "其他系所／學位學程（自行填寫）";
   const college = $(`#${prefix}-college`)?.value || "";
   const select = $(`#${prefix}-department`);
   const input = $(`#${prefix}-department-text`);
   if (!select) return;
   const directory = window.UniWayAcademicUnits?.[activeHomeSchool()];
   // A student may enter the exact registered unit when a directory is unavailable.
-  select.hidden = !directory;
-  if (input) { input.hidden = Boolean(directory); input.disabled = Boolean(directory) || !college; }
   if (!directory) {
+    select.hidden = true;
     select.disabled = true;
-    if (input) input.value = selected;
+    if (input) {
+      input.hidden = false;
+      input.disabled = !college;
+      input.value = selected === CUSTOM_VALUE ? "" : selected;
+    }
     const note = $(`#${prefix}-department-note`);
     if (note) note.textContent = "請依學籍填寫系所或學位學程；可申請範圍仍須核對合作校規定。";
     const link = $(`#${prefix}-department-source`);
     if (link) link.hidden = true;
     return;
   }
-  const options = directory?.colleges?.[college] || [];
-  // Recognize saved shorthand only when it resolves to an entry in the directory.
-  const canonical = options.find((option) => option === selected || option.replace(/學系$/, "系") === selected) || "";
-  fillSelect(`#${prefix}-department`, options, college ? "請選擇系所／學位學程" : "請先選擇學院", canonical);
-  select.disabled = !options.length;
-  const note = $(`#${prefix}-department-note`);
-  if (note) {
-    note.textContent = !college ? "選擇學院後顯示所屬系所。" : options.length ? "依官方系所名單；沒有你的系所可查看來源。" : "此學院系所名單尚待確認，請查看官方來源。";
+  const collegesMap = directory?.colleges || {};
+  const aliasCollege = {
+    "外語學院": "外國語文學院",
+    "外國語文學院": "外語學院",
+    "海洋科學學院": "海洋科學院",
+    "海洋科學院": "海洋科學學院",
+    "醫學工程學院": "生醫工程學院",
+    "生醫工程學院": "醫學工程學院",
+  }[college];
+  const options = collegesMap[college] || (aliasCollege && collegesMap[aliasCollege]) || [];
+  if (college && !options.length) {
+    select.hidden = true;
+    select.disabled = true;
+    if (input) {
+      input.hidden = false;
+      input.disabled = false;
+      input.value = selected === CUSTOM_VALUE ? "" : selected;
+    }
+    const note = $(`#${prefix}-department-note`);
+    if (note) note.textContent = "請直接填寫學籍上的系所或學位學程名稱。";
     const link = $(`#${prefix}-department-source`);
     if (link) {
-      link.hidden = !directory;
-      link.href = directory?.sourceUrl || "#";
+      link.hidden = !directory?.sourceUrl;
+      if (directory?.sourceUrl) link.href = directory.sourceUrl;
+    }
+    return;
+  }
+  select.hidden = false;
+  // Recognize saved shorthand only when it resolves to an entry in the directory.
+  const canonical = options.find((option) => (
+    option === selected
+    || option.replace(/學系$/, "系") === selected
+    || option.replace(/系$/, "學系") === selected
+  )) || "";
+  const isCustom = Boolean(college && (selected === CUSTOM_VALUE || (allowCustom && selected && !canonical)));
+  fillSelect(`#${prefix}-department`, options, college ? "請選擇系所／學位學程" : "請先選擇學院", canonical);
+  if (college && options.length && typeof Option === "function" && typeof select.add === "function") {
+    select.add(new Option(CUSTOM_LABEL, CUSTOM_VALUE));
+    if (isCustom) select.value = CUSTOM_VALUE;
+  }
+  select.disabled = !options.length;
+  if (input) {
+    input.hidden = !isCustom;
+    input.disabled = !isCustom;
+    input.value = isCustom && selected !== CUSTOM_VALUE ? selected : "";
+  }
+  const note = $(`#${prefix}-department-note`);
+  if (note) {
+    note.textContent = !college
+      ? "選擇學院後顯示所屬系所。"
+      : isCustom
+        ? "請填寫學籍上的系所或學位學程名稱。"
+        : "找不到系所可選「其他系所／學位學程（自行填寫）」。";
+    const link = $(`#${prefix}-department-source`);
+    if (link) {
+      link.hidden = !directory?.sourceUrl;
+      if (directory?.sourceUrl) link.href = directory.sourceUrl;
     }
   }
 }
@@ -13841,14 +13931,19 @@ async function checkEligibility(event) {
   event.preventDefault();
   if (state.advisorLoading) return;
   const college = $("#advisor-college").value;
-  const department = departmentField("advisor").value.trim();
+  const rawDepartment = departmentField("advisor").value.trim();
+  const department = rawDepartment === "__custom__" ? "" : rawDepartment;
   const degree = $("#advisor-degree").value;
   const academicYear = $("#eligibility-academic-year").value;
   const applicationRound = $("#eligibility-application-round").value;
   const academicScore = optionalNumber($("#advisor-academic-score").value);
   const ntu = activeHomeSchool() === "國立臺灣大學";
-  const academicGpa = (ntu || state.dashboard?.academic_gpa_minimum != null) ? optionalNumber($("#advisor-academic-gpa").value) : null;
-  const classRankPercent = ntu ? optionalNumber($("#advisor-class-rank").value) : null;
+  const gpaVisible = !$("#advisor-gpa-field").hidden;
+  const rankVisible = !$("#advisor-class-rank").disabled;
+  const academicGpa = gpaVisible ? optionalNumber($("#advisor-academic-gpa").value) : null;
+  const classRankPercent = rankVisible ? optionalNumber($("#advisor-class-rank").value) : null;
+  const gpaScale = ntu ? "4.3" : ($("#advisor-gpa-scale")?.value === "4" ? "4" : "4.3");
+  const gpaMax = gpaScale === "4" ? 4.0 : 4.3;
   const languageTest = $("#advisor-language-test").value;
   const languageScore = Number($("#advisor-language-score").value);
   const jlptLevel = activeHomeSchool() === '淡江大學' ? $('#advisor-jlpt-level').value : '';
@@ -13864,8 +13959,19 @@ async function checkEligibility(event) {
     .filter((item) => item.school_name)
     .map((item, index) => ({ ...item, rank: index + 1, ...(activeHomeSchool() === "國立中央大學" ? {document_preparation_state:ncuDocumentState(item.school_name, academicYear, applicationRound)} : {}) }));
 
-  if (!college || !department || !degree || !academicYear || !applicationRound || (!ntu && (academicScore === null || !Number.isFinite(academicScore))) || (!languageTest && !jlptLevel) || !preferences.length) {
+  const requiresPercentScore = !ntu && (
+    (state.dashboard?.academic_gpa_minimum != null && state.dashboard?.academic_score_minimum != null)
+    || (!gpaVisible && !rankVisible)
+  );
+  const missingAcademic = requiresPercentScore
+    ? (academicScore === null || !Number.isFinite(academicScore))
+    : (!ntu && academicScore === null && academicGpa === null && classRankPercent === null);
+  if (!college || !department || !degree || !academicYear || !applicationRound || missingAcademic || (!languageTest && !jlptLevel) || !preferences.length) {
     announce("請完成所有必填欄位", "error");
+    return;
+  }
+  if (academicGpa !== null && (academicGpa < 0 || academicGpa > gpaMax)) {
+    announce(`GPA 需介於 0 到 ${gpaMax.toFixed(1)} 之間，請確認 GPA 制度`, "error");
     return;
   }
   if (new Set(preferences.map((item) => item.school_name)).size !== preferences.length) {
@@ -13896,6 +14002,7 @@ async function checkEligibility(event) {
     degree,
     academicScore,
     academicGpa,
+    gpaScale,
     classRankPercent,
     languageTest,
     languageScore,
@@ -14084,12 +14191,15 @@ function renderAdvisorForm() {
   const colleges = homeCollegeOptions();
   const countries = unique(partners.map((item) => item.country).filter(Boolean));
   fillSelect("#advisor-college", colleges, "尚未設定", homeCollegeValue(profile.college));
-  renderDepartmentOptions("advisor", profile.department || "");
+  renderDepartmentOptions("advisor", profile.department || "", { allowCustom: true });
   fillSelect("#advisor-country", countries, "不限國家", profile.preferredCountry || "");
   $("#advisor-degree").value = profile.degree || "";
   $("#advisor-current-year").value = profile.currentYear || "";
   $("#advisor-academic-score").value = profile.academicScore ?? "";
   $("#advisor-academic-gpa").value = profile.academicGpa ?? "";
+  if ($("#advisor-gpa-scale")) {
+    $("#advisor-gpa-scale").value = (profile.gpaScale === "4" || profile.gpaScale === "4.0") ? "4" : "4.3";
+  }
   $("#advisor-class-rank").value = profile.classRankPercent ?? "";
   renderAcademicFields();
   $("#advisor-language-test").value = profile.languageTest || "";
@@ -14348,11 +14458,22 @@ async function submitAdvisorPlan(event) {
   }
   const form = event.currentTarget;
   const formData = new FormData(form);
+  const rawDepartment = departmentField("advisor").value.trim();
+  const resolvedDepartment = rawDepartment && rawDepartment !== "__custom__" ? rawDepartment : null;
+  const gpaScale = activeHomeSchool() === "國立臺灣大學"
+    ? "4.3"
+    : ($("#advisor-gpa-scale")?.value === "4" ? "4" : "4.3");
+  const gpaMax = gpaScale === "4" ? 4.0 : 4.3;
+  const submittedGpa = optionalNumber(formData.get("academic_gpa"));
+  if (submittedGpa !== null && (submittedGpa < 0 || submittedGpa > gpaMax)) {
+    announce(`GPA 需介於 0 到 ${gpaMax.toFixed(1)} 之間，請確認 GPA 制度`, "error");
+    return;
+  }
   const payload = {
     school_name: activeHomeSchool(),
     target_school: state.applicationContext.target_school || null,
     college: formData.get("college") || null,
-    department: formData.get("department") || null,
+    department: resolvedDepartment,
     current_year: formData.get("current_year") || null,
     degree_level: formData.get("degree_level") || null,
     academic_score: optionalNumber(formData.get("academic_score")),
@@ -14398,7 +14519,7 @@ async function submitAdvisorPlan(event) {
     }
     state.advisorPlan = plan;
     delete form.dataset.draftOwner;
-    if (payload.college || payload.degree_level || payload.academic_score !== null || payload.language_test || payload.jlpt_level) {
+    if (payload.college || payload.degree_level || payload.academic_score !== null || payload.academic_gpa !== null || payload.class_rank_percent !== null || payload.language_test || payload.jlpt_level) {
       const threshold = languageThreshold(payload.language_test);
       state.eligibilityProfile = {
         academicYear,
@@ -14409,6 +14530,7 @@ async function submitAdvisorPlan(event) {
         degree: payload.degree_level,
         academicScore: payload.academic_score,
         academicGpa: payload.academic_gpa,
+        gpaScale,
         classRankPercent: payload.class_rank_percent,
         languageTest: payload.language_test,
         languageScore: payload.language_score,
@@ -15260,8 +15382,31 @@ function bindEvents() {
     });
   });
   ["advisor"].forEach((prefix) => {
-    $(`#${prefix}-college`).addEventListener("change", () => renderDepartmentOptions(prefix, departmentField(prefix).value));
+    $(`#${prefix}-college`).addEventListener("change", () => {
+      const select = $(`#${prefix}-department`);
+      const input = $(`#${prefix}-department-text`);
+      const wasCustom = select?.value === "__custom__" || Boolean(select?.hidden && input && !input.hidden);
+      const previous = wasCustom ? (input?.value || "__custom__") : (select?.value || "");
+      renderDepartmentOptions(prefix, previous, { allowCustom: wasCustom });
+    });
+    $(`#${prefix}-department`)?.addEventListener("change", () => {
+      const select = $(`#${prefix}-department`);
+      const input = $(`#${prefix}-department-text`);
+      if (!select || !input) return;
+      const custom = select.value === "__custom__";
+      input.hidden = !custom;
+      input.disabled = !custom;
+      if (custom) window.requestAnimationFrame(() => input.focus());
+      else input.value = "";
+      const note = $(`#${prefix}-department-note`);
+      if (note) {
+        note.textContent = custom
+          ? "請填寫學籍上的系所或學位學程名稱。"
+          : "找不到系所可選「其他系所／學位學程（自行填寫）」。";
+      }
+    });
   });
+  $("#advisor-gpa-scale")?.addEventListener("change", () => renderAcademicFields());
   document.querySelectorAll("[data-calendar-panel]").forEach((button) => {
     button.addEventListener("click", () => {
       const panel = $(button.dataset.calendarPanel);

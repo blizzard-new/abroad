@@ -458,8 +458,28 @@ function gateValue(l,key){
   const global=state.eligibilityProfile?.[GLOBAL_KEY[key]];
   return global===null||global===undefined||global===''?{value:'',offered:false}:{value:global,offered:true};
 }
+function gateFieldSpec(key){
+  const base=GATE_FIELDS[key];
+  if(!base)return base;
+  const home=view?.plan?.context?.home_school||'';
+  if(key==='academic_gpa'){
+    const isNtu=home==='國立臺灣大學',isCcu=home==='國立中正大學';
+    const is40=!isNtu&&state.eligibilityProfile?.gpaScale==='4';
+    const max=is40?4.0:4.3;
+    return {
+      ...base,
+      max,
+      label:isNtu?'適用學年 GPA（4.3 制）':isCcu?'歷年 GPA（依成績單 4.3／4.0 制）':'歷年／學年 GPA（依成績單 4.3／4.0 制）',
+      hint:isNtu?'例如 2.44；與排名擇一':isCcu?'門檻 3.0，依教務處成績單原值':'依成績單原值填寫',
+    };
+  }
+  if(key==='class_rank_percent'&&home&&home!=='國立臺灣大學'){
+    return {...base,label:'班／系排名（前幾 %）'};
+  }
+  return base;
+}
 function gateControl(l,key){
-  const d=GATE_FIELDS[key],{value}=gateValue(l,key),id='gate-'+key,lacking=(l.missing_inputs||[]).includes(key);
+  const d=gateFieldSpec(key),{value}=gateValue(l,key),id='gate-'+key,lacking=(l.missing_inputs||[]).includes(key);
   const attrs=' id="'+id+'" name="'+key+'"'+(lacking?' data-missing="true" aria-required="true"':'');
   let control;
   let options=d.options;
@@ -501,7 +521,7 @@ async function saveGate(){
   const l=find(activeId);if(!l||!view||saving||plan().archived||!$('#gate-inputs'))return;
   const body={revision:view.revision};
   for(const key of l.input_fields||[]){
-    const input=$('#gate-'+key),d=GATE_FIELDS[key];if(!input)continue;
+    const input=$('#gate-'+key),d=gateFieldSpec(key);if(!input)continue;
     const raw=input.value.trim();
     if(d.type==='number'&&raw!==''){
       const n=Number(raw);

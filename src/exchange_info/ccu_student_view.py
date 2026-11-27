@@ -150,7 +150,7 @@ def build_ccu_student_dashboard(*, partner_universities=None, reference_time=Non
         academic_score_minimum=70,
         academic_gpa_minimum=3.0,
         maximum_preferences=3,
-        academic_score_rule="歷年在校GPA至少3.0，且歷年總平均至少70分；兩項均須符合（簡章第1頁）。",
+        academic_score_rule="歷年在校GPA至少3.0，且歷年總平均至少70分；兩項均須符合（簡章第1頁；GPA請依教務處歷年成績單所載 4.3 或 4.0 制原值填寫，勿自行跨制換算）。",
         language_score_minimums={},
         application_periods=periods,
         program_overview=[

@@ -359,6 +359,31 @@ def _score_partner(
                 blocked = True
             else:
                 confirmation_items.append(detail)
+    elif (
+        dashboard.selection_rules.academic_policy == "score_or_rank"
+        and profile.academic_score is None
+        and profile.class_rank_percent is not None
+        and dashboard.selection_rules.undergraduate_rank_maximum is not None
+    ):
+        if profile.class_rank_percent <= dashboard.selection_rules.undergraduate_rank_maximum:
+            score += 15
+            reasons.append(f"班／系排名前 {profile.class_rank_percent:g}% 達{dashboard.school_name}擇一門檻")
+        else:
+            gaps.append(f"班／系排名前 {profile.class_rank_percent:g}% 未達{dashboard.school_name}前 {dashboard.selection_rules.undergraduate_rank_maximum:g}% 門檻")
+            confirmation_items.append(gaps[-1])
+    elif profile.academic_score is None and (profile.academic_gpa is not None or profile.class_rank_percent is not None):
+        standing_parts: list[str] = []
+        if profile.academic_gpa is not None:
+            standing_parts.append(f"GPA {profile.academic_gpa:g}")
+        if profile.class_rank_percent is not None:
+            standing_parts.append(f"排名前 {profile.class_rank_percent:g}%")
+        if academic_minimum is None:
+            score += 10
+            reasons.append(f"已填報{'、'.join(standing_parts)}")
+            confirmation_items.append("已填報 GPA／排名；請依本校當期簡章與接待校門檻核對")
+        else:
+            gaps.append(f"已填報{'、'.join(standing_parts)}；{dashboard.school_name}另有百分制平均 {academic_minimum:g} 分規定需核對")
+            confirmation_items.append(gaps[-1])
     elif profile.academic_score is None:
         gaps.append("尚未填學業平均")
         confirmation_items.append(gaps[-1])
@@ -522,6 +547,13 @@ def _qualification_summary(
         rows.append(ncu_academic_check(profile.degree_level, profile.academic_score, profile.current_year)[1])
     elif is_ntu(dashboard.school_name):
         rows.append(ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)[1])
+    elif profile.academic_score is None and (profile.academic_gpa is not None or profile.class_rank_percent is not None):
+        parts = []
+        if profile.academic_gpa is not None:
+            parts.append(f"GPA {profile.academic_gpa:g}")
+        if profile.class_rank_percent is not None:
+            parts.append(f"班／系排名前 {profile.class_rank_percent:g}%")
+        rows.append(f"已填報{'、'.join(parts)}；請對照本校簡章與合作校成績門檻")
     elif profile.academic_score is None:
         rows.append("學業平均尚未填寫")
     elif academic_minimum is None:
