@@ -3,6 +3,8 @@
 (function () {
   "use strict";
 
+  document.documentElement.classList.add("js-tools");
+
   function copyText(text, button) {
     if (!text) return;
     var orig = button.textContent;
@@ -94,22 +96,19 @@
       var reqEcts = minTw * ratio;
 
       setText('[data-out="ects"]', fmtNum(ects, 2) + " ECTS");
-      setText('[data-out="workload"]', "預估總學習時數：" + Math.round(ects * 25) + "–" + Math.round(ects * 30) + " 小時");
+      setText('[data-out="workload"]', Math.round(ects * 25) + "–" + Math.round(ects * 30) + " 小時");
       setText('[data-out="tw"]', fmtNum(tw, 2) + " 學分");
-      setText('[data-out="ratio-note"]', "依 " + fmtNum(ratio, 2) + " ECTS = 1 台灣學分計算");
-      setText('[data-out="us"]', fmtNum(us, 2) + " 學期學分");
-      setText('[data-out="us-q"]', "約對應學季制（Quarter）" + fmtNum(usQ, 2) + " 學分");
+      setText('[data-out="ratio-note"]', fmtNum(ratio, 2) + " ECTS = 1 學分");
+      setText('[data-out="us"]', fmtNum(us, 2) + " 學分");
+      setText('[data-out="us-q"]', "學季制 " + fmtNum(usQ, 2) + " 學分");
       setText('[data-out="jp"]', fmtNum(jp, 2) + " 単位");
-      setText('[data-out="min-tw-val"]', fmtNum(minTw, 1));
-      setText('[data-out="req-ects"]', fmtNum(reqEcts, 1));
-      setText('[data-out="c5"]', String(reqEcts > 0 ? Math.ceil(reqEcts / 5) : 0));
-      setText('[data-out="c6"]', String(reqEcts > 0 ? Math.ceil(reqEcts / 6) : 0));
-      setText('[data-out="buf-ects"]', fmtNum(reqEcts + 5, 1));
+      setText('[data-out="req-ects"]', fmtNum(reqEcts, 1) + " ECTS");
+      setText('[data-out="buf-ects"]', fmtNum(reqEcts + 5, 1) + " ECTS");
       setText(
         '[data-out="min-status"]',
         ects >= reqEcts
-          ? "目前已換算學分（" + fmtNum(ects, 2) + " ECTS）已達你設定的母校最低門檻（" + fmtNum(reqEcts, 1) + " ECTS）。"
-          : "注意：目前已換算學分（" + fmtNum(ects, 2) + " ECTS）低於母校最低門檻（需至少 " + fmtNum(reqEcts, 1) + " ECTS）。"
+          ? "已達母校最低門檻（至少 " + fmtNum(reqEcts, 1) + " ECTS）"
+          : "尚未達母校最低門檻（需至少 " + fmtNum(reqEcts, 1) + " ECTS）"
       );
     }
 
@@ -177,10 +176,10 @@
       }
 
       setText('[data-gpa-out="gpa40pm"]', g40pm.toFixed(2) + " / 4.0");
-      setText('[data-gpa-out="gpa40std"]', "傳統四等第（80/70/60）參考：" + g40std.toFixed(2));
+      setText('[data-gpa-out="gpa40std"]', "四等第 " + g40std.toFixed(2));
       setText('[data-gpa-out="gpa43"]', g43.toFixed(2) + " / 4.3");
-      setText('[data-gpa-out="pct"]', "對應百分制參考區間中位：約 " + pct.toFixed(1) + " 分");
-      setText('[data-gpa-out="bavarian"]', bav !== null ? bav : "不及格（低於最低及格門檻）");
+      setText('[data-gpa-out="pct"]', "約 " + pct.toFixed(1) + " 分");
+      setText('[data-gpa-out="bavarian"]', bav !== null ? bav : "不及格");
     }
 
     [scaleEl, valEl, maxEl, minEl].forEach(function (el) {
@@ -191,6 +190,12 @@
     var tbody = document.getElementById("gpa-course-tbody");
     var addBtn = document.getElementById("gpa-add-row");
     var weightedSummary = document.getElementById("gpa-weighted-summary");
+
+    function strongNode(txt) {
+      var s = document.createElement("strong");
+      s.textContent = txt;
+      return s;
+    }
 
     function recalcCourses() {
       if (!tbody || !weightedSummary) return;
@@ -224,29 +229,20 @@
       var bav = bavarian(avgPct, 100, 60) || "不及格";
       weightedSummary.innerHTML = "";
       weightedSummary.append(
-        "加權試算結果：總學分 ",
+        "總學分 ",
         strongNode(totalCr.toFixed(1)),
-        "｜加權百分制平均 ",
+        " ｜ 平均 ",
         strongNode(avgPct.toFixed(2)),
-        "｜逐科加權 4.3 制 GPA ",
+        " ｜ 4.3 制 ",
         strongNode(avg43.toFixed(2)),
-        "｜逐科加權 4.0 制 GPA ",
+        " ｜ 4.0 制 ",
         strongNode(avg40.toFixed(2)),
-        "（德制巴伐利亞分數：",
-        strongNode(bav),
-        "）"
+        " ｜ 德制 ",
+        strongNode(bav)
       );
     }
 
-    function strongNode(txt) {
-      var s = document.createElement("strong");
-      s.textContent = txt;
-      return s;
-    }
-
-    if (tbody) {
-      tbody.addEventListener("input", recalcCourses);
-    }
+    if (tbody) tbody.addEventListener("input", recalcCourses);
     if (addBtn && tbody) {
       addBtn.addEventListener("click", function () {
         var idx = tbody.querySelectorAll("tr").length + 1;
@@ -287,7 +283,6 @@
       container.innerHTML = "";
       if (!items || !items.length) {
         var p = document.createElement("p");
-        p.className = "uw-muted-text";
         p.textContent = emptyText;
         container.appendChild(p);
         return;
@@ -316,15 +311,10 @@
         tag.className = "uw-tag-ok";
         tag.textContent = item.matched_rule;
         pRule.appendChild(tag);
-        pRule.append(" · 狀態：" + item.availability);
-
-        var pSnip = document.createElement("p");
-        pSnip.className = "uw-mini-snippet";
-        pSnip.textContent = "來源記載：" + item.snippet;
+        pRule.append(" · " + item.availability);
 
         li.appendChild(top);
         li.appendChild(pRule);
-        li.appendChild(pSnip);
         ul.appendChild(li);
       });
       container.appendChild(ul);
@@ -345,10 +335,10 @@
             var conv = data.conversion;
             var m = data.match;
             setText('[data-lang-out="cefr"]', conv.cefr);
-            setText('[data-lang-out="input-display"]', "輸入基準：" + conv.input_display);
+            setText('[data-lang-out="input-display"]', conv.input_display);
             setText('[data-lang-out="ielts"]', conv.ielts_range);
             setText('[data-lang-out="toefl"]', conv.toefl_range);
-            setText('[data-lang-out="toefl-new"]', "2026 新制 6 分制參考：" + conv.toefl_new);
+            setText('[data-lang-out="toefl-new"]', "新制 " + conv.toefl_new);
             setText('[data-lang-out="toeic"]', conv.toeic_range);
             setText('[data-lang-out="home-name"]', m.home_name);
             setText('[data-lang-out="total-pages"]', String(m.total_partner_pages));
@@ -361,7 +351,7 @@
             var homeLink = document.getElementById("lang-home-link");
             if (homeLink) {
               homeLink.href = m.home_school_url;
-              homeLink.textContent = "查看" + m.home_short_name + "完整合作校名單";
+              homeLink.textContent = m.home_short_name + "完整名單";
             }
             var plannerLink = document.getElementById("lang-planner-link");
             if (plannerLink) plannerLink.href = m.home_planner_url;
@@ -369,13 +359,13 @@
             renderMiniList(
               "lang-direct-list",
               m.direct_samples,
-              "目前該母校公開合作校欄位中，尚無直接單獨列載此檢定且低於此分數的條目，請參考下方同級檢定或母校簡章總則。"
+              "目前無單獨列載此檢定且低於此分數的合作校條目，可展開同級參考或查看母校完整名單。"
             );
             var eqBlock = document.getElementById("lang-equiv-block");
             if (eqBlock) {
               eqBlock.hidden = Boolean(conv.is_japanese);
               if (!conv.is_japanese) {
-                renderMiniList("lang-equiv-list", m.equiv_samples, "目前無額外列載其他同級英語檢定的合作校條目。");
+                renderMiniList("lang-equiv-list", m.equiv_samples, "目前無其他同級英語檢定合作校條目。");
               }
             }
           })
@@ -405,7 +395,6 @@
     var otherEl = document.getElementById("b-other");
     var oneTimeEl = document.getElementById("b-onetime");
     var scholEl = document.getElementById("b-scholarship");
-    var noteEl = document.getElementById("b-template-note");
     var tbody = document.getElementById("b-scenario-tbody");
     var previewEl = document.getElementById("budget-summary-copy");
 
@@ -419,7 +408,6 @@
       transportEl.value = tpl.transport;
       otherEl.value = tpl.other;
       oneTimeEl.value = tpl.one_time_twd;
-      if (noteEl) noteEl.textContent = "模板說明：" + tpl.note;
       recalc();
     });
 
@@ -438,9 +426,9 @@
       var mForeign = h + f + t + o;
       var semForeign = mForeign * m;
       var factors = [
-        ["匯率 -10%（台幣較強）", 0.9],
-        ["基準參考匯率（0%）", 1.0],
-        ["匯率 +10%（外幣升值緩衝）", 1.1]
+        ["匯率 -10%", 0.9],
+        ["基準匯率（0%）", 1.0],
+        ["匯率 +10%", 1.1]
       ];
       if (tbody) tbody.innerHTML = "";
       var baseMonthly = 0, baseGross = 0, baseNet = 0, highGross = 0;
@@ -475,11 +463,11 @@
       setText('[data-b-out="cur-code"]', cur);
       setText('[data-b-out="cur-code-2"]', cur);
       setText('[data-b-out="monthly-foreign"]', cur + " " + fmtInt(mForeign));
-      setText('[data-b-out="monthly-twd"]', "基準匯率折合約 NT$ " + fmtInt(baseMonthly) + "／月");
+      setText('[data-b-out="monthly-twd"]', "約 NT$ " + fmtInt(baseMonthly) + "／月");
       setText('[data-b-out="gross-twd"]', "NT$ " + fmtInt(baseGross));
-      setText('[data-b-out="months-label"]', "以 " + m + " 個月＋行前 NT$ " + fmtInt(oneTime) + " 估算");
+      setText('[data-b-out="months-label"]', m + " 個月＋行前費用");
       setText('[data-b-out="net-twd"]', "NT$ " + fmtInt(baseNet));
-      setText('[data-b-out="fx-delta"]', "若外幣升值 +10%，需多備 NT$ " + fmtInt(highGross - baseGross));
+      setText('[data-b-out="fx-delta"]', "匯率 +10% 多備 NT$ " + fmtInt(highGross - baseGross));
       setText('[data-b-out="reserve-twd"]', "NT$ " + fmtInt(baseMonthly));
 
       if (previewEl && tpl) {
@@ -534,31 +522,20 @@
       } else {
         dlEl.value = t.default_anchor;
       }
-      renderTimeline(false);
+      renderTimeline();
     }
 
-    function renderTimeline(isCustomEdit) {
+    function renderTimeline() {
       var sid = schoolEl.value;
       var tk = termEl.value;
       var s = payload.schools[sid];
       var t = payload.terms[tk];
       if (!s || !t) return;
       var anchor = dlEl.value || t.default_anchor;
-      var isOfficial = !isCustomEdit && tk === "2027-fall" && s.deadline_iso === anchor && s.date_status_code === "verified_exact";
 
       setText('[data-tl-out="school-name"]', s.school_name);
-      setText('[data-tl-out="rec-round"]', s.round_title);
       setText('[data-tl-out="rec-deadline"]', s.deadline_display);
       setText('[data-tl-out="rec-status"]', s.status_label);
-      setText('[data-tl-out="rec-checked"]', s.checked_date);
-      setText(
-        '[data-tl-out="anchor-note"]',
-        isOfficial
-          ? "帶入資料庫已核對期限（送件前請再次核對國際處最新公告）"
-          : isCustomEdit
-            ? "使用者自訂試算基準日（非校方公告日期，實際截止日以母校最新官方公告為準）"
-            : "資料庫對該目標學期尚無當期確切截止日，先以常見收件月份作為個人規劃基準；實際期限以母校最新官方公告為準"
-      );
 
       if (offLink && s.official_url) offLink.href = s.official_url;
       if (pageLink) pageLink.href = "/schools/" + sid;
@@ -569,14 +546,14 @@
 
       var dep = t.departure_date <= addDaysIso(anchor, 60) ? addDaysIso(anchor, 240) : t.departure_date;
       var steps = [
-        ["截止前 180 天", addDaysIso(anchor, -180), "確認目標語組門檻並報考語言檢定（預留重考緩衝）", "核對母校與目標姊妹校語檢種類與單科門檻，確認成績於校內截止與提名日皆在 2 年效期內。"],
-        ["截止前 90 天", addDaysIso(anchor, -90), "盤點母校合作校清單、授課語言與學分抵免規則", "至 UniWay " + s.short_name + "合作校頁面比對可申請學制、學院限制與歷年名額狀態。"],
-        ["截止前 45 天", addDaysIso(anchor, -45), "聯繫師長邀約推薦信、列出志願序與讀書計畫大綱", "提前 4–6 週禮貌詢問教授推薦信意願，同步查詢姊妹校課綱（Syllabus）。"],
-        ["截止前 21 天", addDaysIso(anchor, -21), "完成中／外文讀書計畫（Study Plan）與履歷初稿", "母校讀書計畫規定參考：" + s.study_plan_note],
-        ["截止前 10 天", addDaysIso(anchor, -10), "申請歷年中英文成績單、在學證明並辦理系所核章", "母校送件與核章規定參考：" + s.paper_note],
-        ["截止前 3 天", addDaysIso(anchor, -3), "完成線上報名系統填報、PDF 檔案規格與報名費確認", "避開截止當日系統壅塞，檢查上傳 PDF 檔案大小上限與親筆簽名欄。"],
-        ["校內截止基準日", anchor, s.short_name + "校內交換申請截止基準日", s.note],
-        ["預計出發前 120 天", addDaysIso(dep, -120), "獲母校提名後完成姊妹校網報、宿舍登記與簽證／役男出境申請", "收到正式入學許可（LoA）後辦理學生簽證、住宿與役男出國研修核准。"]
+        ["截止前 180 天", addDaysIso(anchor, -180), "確認語檢門檻並報考檢定"],
+        ["截止前 90 天", addDaysIso(anchor, -90), "盤點 " + s.short_name + " 合作校清單與學分規定"],
+        ["截止前 45 天", addDaysIso(anchor, -45), "邀約師長推薦信、擬定志願序與讀書計畫大綱"],
+        ["截止前 21 天", addDaysIso(anchor, -21), "完成中／外文讀書計畫與履歷初稿"],
+        ["截止前 10 天", addDaysIso(anchor, -10), "申請歷年成績單、在學證明與系所核章"],
+        ["截止前 3 天", addDaysIso(anchor, -3), "完成線上報名填寫與檔案檢查"],
+        ["校內截止基準日", anchor, s.short_name + " 校內交換申請截止基準日"],
+        ["出發前 120 天", addDaysIso(dep, -120), "完成姊妹校網報、宿舍登記與簽證申辦"]
       ];
 
       if (listEl) {
@@ -599,10 +576,7 @@
           cDiv.className = "uw-timeline-content";
           var h4 = document.createElement("h4");
           h4.textContent = st[2];
-          var p = document.createElement("p");
-          p.textContent = st[3];
           cDiv.appendChild(h4);
-          cDiv.appendChild(p);
 
           li.appendChild(dDiv);
           li.appendChild(cDiv);
@@ -613,7 +587,7 @@
 
     schoolEl.addEventListener("change", syncDefaultAnchor);
     termEl.addEventListener("change", syncDefaultAnchor);
-    dlEl.addEventListener("change", function () { renderTimeline(true); });
+    dlEl.addEventListener("change", renderTimeline);
   }
 
   /* 6. Instant Client-Side Filter/Sort for /data/taiwan-exchange-overview & /data/deadlines */

@@ -1235,11 +1235,36 @@ body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:has(> .
   bottom: calc(env(safe-area-inset-bottom, 0px) + 96px);
 }
 
-/* Home: the heading leads the hero and the social links follow it as quiet text links. */
+/* Home: the heading leads the hero, quick tool/data pills sit right underneath, and social links follow as quiet text links. */
 .pr-hero-copy { position: relative; z-index: 3; }
-.pr-hero-socials { justify-content: center; gap: 0 16px; margin-top: clamp(16px, 2.6svh, 28px); }
+.pr-hero-tools { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 12px; margin-top: clamp(18px, 2.6svh, 28px); }
+.pr-hero-tool-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; box-sizing: border-box; padding: 9px 16px; border: 1px solid var(--glass-edge); border-radius: 999px; background: var(--glass-strong); box-shadow: var(--uw-shadow-soft); color: var(--uw-navy); font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: border-color .16s, background .16s, transform .16s; }
+.pr-hero-tool-btn .lucide { flex: 0 0 auto; width: 17px; height: 17px; color: var(--uw-blue-strong); }
+.pr-hero-tool-btn:hover { border-color: var(--uw-blue); background: var(--uw-blue-soft); color: var(--uw-blue-strong); transform: translateY(-1px); }
+.pr-hero-tool-primary { border-color: color-mix(in srgb, var(--uw-blue) 45%, var(--glass-edge)); background: var(--uw-blue-soft); color: var(--uw-blue-strong); }
+.pr-hero-tool-primary:hover { border-color: var(--uw-blue-strong); background: var(--glass-strong); color: var(--uw-navy); }
+.pr-hero-socials { justify-content: center; gap: 0 16px; margin-top: 12px; }
 .pr-hero .pr-social-pill { padding: 8px 2px; border-color: transparent; background: transparent; box-shadow: none; font-weight: 600; }
 .pr-hero .pr-social-pill:hover { background: transparent; transform: none; text-decoration: underline; text-underline-offset: 4px; }
+
+.pr-free-tools-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.pr-free-tools-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.pr-tool-card { align-items: center; padding: 18px 20px; }
+.pr-tool-card strong { margin: 0 0 6px; font-size: 18px; }
+.pr-tool-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; background: var(--uw-surface-soft); color: var(--uw-blue-strong); font-size: 12.5px; font-weight: 700; }
+.pr-data-banner { display: grid; grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); gap: clamp(16px, 2.4cqi, 28px); align-items: center; margin-top: 18px; padding: clamp(18px, 2.2cqi, 26px); border: 1px solid var(--glass-edge); border-radius: 24px; background: var(--glass-strong); box-shadow: var(--pr-shadow-strong); }
+.pr-data-banner h3 { margin: 0; font-size: clamp(19px, 2cqi, 24px); }
+.pr-data-card-overview .pr-social-card-icon { background: var(--uw-blue-soft); color: var(--uw-blue-strong); }
+.pr-data-card-deadlines .pr-social-card-icon { background: var(--glass-lilac); color: var(--uw-lilac-ink); }
+.pr-data-banner .pr-social-card-icon .lucide { width: 22px; height: 22px; }
+.pr-data-banner .pr-social-card-body strong { font-size: 16px; }
+@media (max-width: 900px) {
+  .pr-data-banner { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pr-hero-tool-btn { transition: none; }
+  .pr-hero-tool-btn:hover { transform: none; }
+}
 
 /* Search: the card says the language requirement; an empty list says how to get schools back; on a phone the term and
    language fields sit at the top of the 篩選 drawer (see placeTiles in platform-explore.js). */
