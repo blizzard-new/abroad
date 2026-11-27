@@ -312,3 +312,62 @@ def test_wave2_tools_data_destinations_and_og_image(client):
             assert forbidden not in d_text
 
 
+def test_wave3_all_10_tools_4_data_pages_and_compact_switcher(client):
+    from exchange_info.tools_and_data_core import WAVE3_PATHS
+
+    assert len(WAVE3_PATHS) == 14
+    assert len(WAVE1_PATHS) == 28  # 2 hubs + 18 tools + 8 data pages
+
+    # 1. Verify compact categorized switcher + <select data-quick-jump-select> (<= 6 pills, all 28 routes in select)
+    hub_soup = BeautifulSoup(client.get("/tools").text, "html.parser")
+    cat_pills = hub_soup.select(".uw-tool-switcher .uw-tool-tab")
+    assert len(cat_pills) == 6
+    jump_options = {opt["value"] for opt in hub_soup.select("#uw-quick-jump option[value]")}
+    assert set(WAVE1_PATHS) == jump_options
+
+    # 2. Verify Test Validity Checker catches expiry between internal deadline and partner deadline
+    tv = client.get("/tools/test-validity-checker?exam=toefl&test_date=2025-01-15&home=ntu&home_deadline=2026-12-01&partner_deadline=2027-03-31")
+    assert tv.status_code == 200
+    assert "2027-01-15" in tv.text
+    assert "過期風險" in tv.text
+
+    # 3. Verify 30s Eligibility Matcher + .json
+    rad_json = client.get("/tools/eligibility-matcher.json?home=nccu&test=ielts&score=6.5&gpa=3.6&region=europe")
+    assert rad_json.status_code == 200
+    assert "noindex" in rad_json.headers.get("X-Robots-Tag", "")
+    rad_data = rad_json.json()
+    assert rad_data["home_id"] == "nccu" and rad_data["direct_count"] > 0
+
+    # 4. Verify Reverse Partner Search + .json
+    rev_json = client.get("/tools/reverse-partner-search.json?q=早稻田")
+    assert rev_json.status_code == 200
+    rev_data = rev_json.json()
+    assert rev_data["matched_total"] >= 1 and rev_data["results"][0]["contracted_count"] >= 5
+
+    # 5. Verify Preference Ranker + .json, FX Planner, Timezone DST Converter, Study Plan Checker
+    pref_json = client.get("/tools/preference-ranker.json?home=ntu")
+    assert pref_json.status_code == 200 and len(pref_json.json()["options"]) > 50
+
+    tz_summer = client.get("/tools/deadline-timezone-converter?tz=Europe/Berlin&deadline_date=2027-06-15&deadline_time=23:59")
+    tz_winter = client.get("/tools/deadline-timezone-converter?tz=Europe/Berlin&deadline_date=2027-01-15&deadline_time=23:59")
+    assert "2027-06-16 05:59" in tz_summer.text and "夏令時間" in tz_summer.text
+    assert "2027-01-16 06:59" in tz_winter.text
+
+    sp = client.get("/tools/study-plan-checker?target_words=800")
+    assert sp.status_code == 200 and "4 / 4 項" in sp.text
+
+    # 6. Verify all 4 Wave 3 Data Pages return real DB counts
+    toeic_page = BeautifulSoup(client.get("/data/toeic-friendly-partners?max_score=800").text, "html.parser")
+    assert len(toeic_page.select("#toeic-tbody tr[data-toeic-score]")) >= 10
+
+    dc_page = BeautifulSoup(client.get("/data/destination-costs").text, "html.parser")
+    assert len(dc_page.select("#dc-tbody tr[data-dc-region]")) == 12
+
+    et_page = BeautifulSoup(client.get("/data/english-taught-partners").text, "html.parser")
+    assert len(et_page.select("#et-tbody tr[data-et-country]")) >= 20
+
+    st_page = BeautifulSoup(client.get("/data/scholarships-taiwan").text, "html.parser")
+    assert len(st_page.select("#st-school-tbody tr[data-st-school]")) == 71
+
+
+

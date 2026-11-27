@@ -45,7 +45,7 @@ HOME_TITLE = "UniWay｜交換學生申請、合作學校與選校資訊"
 HOME_DESCRIPTION = "UniWay 整理全台大學交換學生申請與海外合作校資訊，協助比較學校、查詢資格與名額、準備申請文件及規劃時程。公開資料免登入，申請規定以各校最新官方公告為準。"
 NOTICE = "UniWay 是獨立資訊整理平台，並非校方。合作關係不等於當期開放申請；資格、名額、期限與文件請以母校國際處及合作校最新公告為準。"
 EDITORIAL_PATHS = ("/partners", "/destinations", "/guides", "/editorial-policy", *("/destinations/" + slug for slug in COUNTRIES), *("/guides/" + slug for slug in GUIDES), *WAVE1_PATHS)
-TOOLS_DATA_ASSETS_HEAD = '<link rel="stylesheet" href="/static/tools-data.css?v=20261127-wave2-2"><script src="/static/tools-data.js?v=20261127-wave2-1" defer></script>'
+TOOLS_DATA_ASSETS_HEAD = '<link rel="stylesheet" href="/static/tools-data.css?v=20261127-wave3-1"><script src="/static/tools-data.js?v=20261127-wave3-1" defer></script>'
 AVAILABILITY = {
     "open": "名單列載（請另確認本期受理時窗）", "agreement_only": "合作協議參考，非本期名額",
     "departmental_reference": "院系合作參考", "not_open": "未開放", "needs_confirmation": "待確認",

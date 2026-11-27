@@ -17,12 +17,22 @@ html.js-tools .uw-nojs-only {
   display: none !important;
 }
 
-/* Compact top switcher tabs right under H1 */
+/* Compact categorized switcher + quick-jump select right under H1 */
+.uw-tool-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  margin: 0.75rem 0 1.25rem;
+}
+
 .uw-tool-tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 0.38rem;
-  margin: 0.75rem 0 1.25rem;
+  margin: 0;
+  min-width: 0;
 }
 
 .uw-tool-tab {
@@ -47,10 +57,35 @@ html.js-tools .uw-nojs-only {
   color: var(--uw-blue-strong);
 }
 
+.uw-tool-tab.is-cat-active {
+  border-color: var(--uw-blue);
+  background: var(--uw-blue-soft);
+  color: var(--uw-blue-strong);
+}
+
 .uw-tool-tab[aria-current="page"] {
   background: var(--uw-navy);
   border-color: var(--uw-navy);
   color: var(--uw-page);
+}
+
+.uw-tool-jump {
+  flex: 1 1 250px;
+  max-width: 340px;
+  min-width: 0;
+}
+
+.uw-tool-jump select {
+  width: 100%;
+  min-height: 38px;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--uw-line);
+  border-radius: 999px;
+  background: var(--uw-page);
+  color: var(--uw-navy);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
 }
 
 /* Primary interactive tool card */
@@ -789,15 +824,108 @@ main details.uw-inline-more > summary::after,
   font-size: 0.95rem;
 }
 
+/* Wave 3 Components: Full-width textarea, Email Dual Grid, Checklist, Alerts, Print */
+.uw-field-full {
+  margin-top: 0.9rem;
+}
+
+.uw-field textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--uw-line);
+  border-radius: 12px;
+  background: var(--uw-page);
+  color: var(--uw-navy);
+  font: inherit;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.uw-field textarea:focus {
+  outline: 2px solid var(--uw-blue);
+  outline-offset: 1px;
+}
+
+.uw-kpi-value-sm {
+  font-size: 1.12rem;
+  line-height: 1.4;
+}
+
+.uw-alert-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.uw-alert-list > li {
+  display: block;
+  padding: 0.55rem 0.85rem;
+  border-radius: 10px;
+  line-height: 1.5;
+}
+
+.uw-dual-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.uw-email-panel {
+  padding: 1rem;
+  border: 1px solid var(--uw-line);
+  border-radius: 14px;
+  background: var(--uw-surface-soft);
+  min-width: 0;
+}
+
+.uw-checklist-table input.uw-ck-box {
+  width: 22px;
+  height: 22px;
+  min-height: 22px;
+  padding: 0;
+  accent-color: var(--uw-navy);
+  cursor: pointer;
+}
+
+.uw-checklist-table tr.is-checked th,
+.uw-checklist-table tr.is-checked td {
+  opacity: 0.65;
+}
+
 @media (max-width: 760px) {
   .uw-tool-tabs {
     flex-wrap: nowrap;
     overflow-x: auto;
+    max-width: 100%;
     padding-bottom: 0.3rem;
     scrollbar-width: thin;
   }
   .uw-tool-tab {
     flex-shrink: 0;
+  }
+  .uw-tool-jump {
+    max-width: 100%;
+    flex-basis: 100%;
+  }
+}
+
+@media print {
+  .reading-header,
+  .uw-tool-switcher,
+  .uw-btn-group,
+  .uw-drawers-stack,
+  footer {
+    display: none !important;
+  }
+  .uw-tool-card {
+    border: 0;
+    padding: 0;
+    box-shadow: none;
   }
 }
 
