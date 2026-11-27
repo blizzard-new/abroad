@@ -2360,10 +2360,23 @@ def create_app(
 
         threading.Thread(target=refresh, name="dashboard-refresh", daemon=True).start()
 
-    def dashboard_for_university(school: str | UniversityProfile | None) -> StudentDashboard:
-        university = university_for(
-            school.school_name if isinstance(school, UniversityProfile) else school
-        )
+    gpa_eligibility_school_ids = frozenset({
+        "ntu", "ccu", "cycu", "yzu", "fcu", "nthu", "ncue", "nknu", "tmu", "csmu", "cmu", "kmu",
+        "mcu", "ntub", "ncnu", "ndhu", "thu", "shu", "pu", "usc", "nuk", "ncyu", "nutc", "nfu",
+        "utaipei", "ntcu", "tnua", "ntua", "ntue", "ncut", "npust", "cjcu", "nqu", "isu", "fgu",
+        "nkuht", "nuu", "tnnua", "tpcu", "au", "knu", "nutn", "niu", "nptu", "npu", "ntunhs",
+        "nttu", "asia", "ttu", "tcu", "mcut", "cyut",
+    })
+    rank_eligibility_school_ids = frozenset({
+        "ntpu", "ntu", "scu", "cycu", "ntust", "nsysu", "nccu", "ncku", "nthu", "yuntech",
+        "ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub", "ncnu", "ndhu", "thu", "shu",
+        "pu", "usc", "nuk", "ncyu", "nutc", "nfu", "utaipei", "ntcu", "tnua", "ntua", "ntue",
+        "ncut", "npust", "cjcu", "nqu", "isu", "fgu", "nkuht", "nuu", "tnnua", "tpcu", "au",
+        "knu", "nutn", "niu", "nptu", "npu", "ntunhs", "nttu", "asia", "ttu", "tcu", "mcut",
+        "cyut",
+    })
+
+    def _raw_dashboard_for_university(university: UniversityProfile) -> StudentDashboard:
         if university.id == "ccu":
             return build_ccu_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == NTPU.id:
@@ -2532,6 +2545,26 @@ def create_app(
             "partner_universities": apply_partner_research(view.partners, public_partner_research(university), home_university=university.school_name, copy_nested=False),
             "catalogue_source": view.source,
         })
+
+    def dashboard_for_university(school: str | UniversityProfile | None) -> StudentDashboard:
+        university = university_for(
+            school.school_name if isinstance(school, UniversityProfile) else school
+        )
+        dashboard = _raw_dashboard_for_university(university)
+        accepts_gpa = university.id in gpa_eligibility_school_ids
+        accepts_rank = university.id in rank_eligibility_school_ids
+        if (
+            dashboard.selection_rules.accepts_academic_gpa == accepts_gpa
+            and dashboard.selection_rules.accepts_class_rank == accepts_rank
+        ):
+            return dashboard
+        updated_rules = dashboard.selection_rules.model_copy(
+            update={
+                "accepts_academic_gpa": accepts_gpa,
+                "accepts_class_rank": accepts_rank,
+            }
+        )
+        return dashboard.model_copy(update={"selection_rules": updated_rules})
 
     def render_student_dashboard(
         university: UniversityProfile,

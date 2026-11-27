@@ -160,7 +160,7 @@ window.UniWayAcademicUnits = {
         "軟體工程與數位創意進修學士學位學程",
         "醫學資訊與健康科技進修學士學位學程"
       ],
-      "外國語文學院": [
+      "外語學院": [
         "英國語文學系",
         "德語語文學系",
         "法國語文學系",
@@ -207,9 +207,10 @@ window.UniWayAcademicUnits = {
       "織品服裝學院": [
         "織品服裝學系"
       ],
-      "國際暨永續學院": [
+      "全人教育課程中心": [
         "跨領域全英語學士學位學程",
-        "品牌與時尚經營管理碩士學位學程"
+        "品牌與時尚經營管理碩士學位學程",
+        "全人教育課程中心"
       ],
       "進修部": [
         "中國文學系",
@@ -513,6 +514,7 @@ window.UniWayAcademicUnits = {
     }
   },
   "元智大學": {
+    "sourceUrl": "https://www.yzu.edu.tw/",
     "source": "教育部大專校院學科標準分類與元智大學教務處／各學院官方網站（114–115 學年度現制）",
     "colleges": {
       "工程學院": [
@@ -559,6 +561,7 @@ window.UniWayAcademicUnits = {
     }
   },
   "逢甲大學": {
+    "sourceUrl": "https://www.fcu.edu.tw/",
     "source": "教育部大專校院學科標準分類與逢甲大學國際事務處出國學習平台（114–115 學年度現制）",
     "colleges": {
       "工程與科學學院": [
@@ -648,6 +651,7 @@ window.UniWayAcademicUnits = {
     }
   },
   "國立中山大學": {
+    "sourceUrl": "https://www.nsysu.edu.tw/p/412-1000-83.php?Lang=zh-tw",
     "source": "教育部大專校院學科標準分類與國立中山大學教學單位官方頁面（https://www.nsysu.edu.tw/p/412-1000-83.php?Lang=zh-tw，114–115 學年度現制）",
     "colleges": {
       "文學院": [
@@ -688,7 +692,7 @@ window.UniWayAcademicUnits = {
         "全球人力資源管理全英語碩士學位學程 (GHRM MBA)",
         "高階經營碩士學程 (EMBA)"
       ],
-      "海洋科學院": [
+      "海洋科學學院": [
         "海洋生物科技暨資源學系",
         "海洋環境及工程學系",
         "海洋科學系",
@@ -735,6 +739,7 @@ window.UniWayAcademicUnits = {
     }
   },
   "國立中興大學": {
+    "sourceUrl": "https://www.nchu.edu.tw/about-route-map/mid/85",
     "source": "教育部大專校院學科標準分類與國立中興大學教學單位官方頁面（https://www.nchu.edu.tw/about-route-map/mid/85，114–115 學年度現制）",
     "colleges": {
       "文學院": [
@@ -843,6 +848,7 @@ window.UniWayAcademicUnits = {
     }
   },
   "國立臺北科技大學": {
+    "sourceUrl": "https://www.ntut.edu.tw/p/404-1007-85216.php",
     "source": "教育部大專校院學科標準分類與國立臺北科技大學教學單位官方頁面（https://www.ntut.edu.tw/p/404-1007-85216.php，114–115 學年度現制）",
     "colleges": {
       "機電學院": [
@@ -896,6 +902,7 @@ window.UniWayAcademicUnits = {
     }
   },
   "國立政治大學": {
+    "sourceUrl": "https://www.nccu.edu.tw/p/426-1000-13.php?Lang=zh-tw",
     "source": "教育部大專校院學科標準分類與國立政治大學教學單位官方頁面（https://www.nccu.edu.tw/p/426-1000-13.php?Lang=zh-tw，114–115 學年度現制）",
     "colleges": {
       "文學院": [
@@ -1000,6 +1007,7 @@ window.UniWayAcademicUnits = {
     }
   },
   "國立成功大學": {
+    "sourceUrl": "https://www.ncku.edu.tw/p/412-1000-85.php?Lang=zh-tw",
     "source": "教育部大專校院學科標準分類與國立成功大學教學單位官方頁面（https://www.ncku.edu.tw/p/412-1000-85.php?Lang=zh-tw，114–115 學年度現制）",
     "colleges": {
       "文學院": [
@@ -1122,6 +1130,7 @@ window.UniWayAcademicUnits = {
     }
   },
   "國立陽明交通大學": {
+    "sourceUrl": "https://www.nycu.edu.tw/nycu/ch/app/artwebsite/view?module=artwebsite&id=459&serno=750e3d3e-8ef2-4801-a100-e8733052689b",
     "source": "教育部大專校院學科標準分類與國立陽明交通大學教學單位官方頁面（https://www.nycu.edu.tw/nycu/ch/app/artwebsite/view?module=artwebsite&id=459&serno=750e3d3e-8ef2-4801-a100-e8733052689b，114–115 學年度現制）",
     "colleges": {
       "人文藝術與社會學院": [
@@ -1826,11 +1835,9 @@ window.UniWayAcademicUnits = {
         "海洋政策碩士學位學程",
         "海洋法政學士學位學程"
       ],
-      "共同教育中心": [
-        "博雅教育組",
-        "語文教育組",
-        "華語教學組",
-        "藝文中心"
+      "國際學院": [
+        "海洋生物科技及環境生態永續國際碩士學位學程",
+        "應用人工智慧國際碩士學位學程"
       ]
     }
   },
@@ -2080,7 +2087,7 @@ window.UniWayAcademicUnits = {
         "呼吸治療學系",
         "口腔衛生學系"
       ],
-      "生醫工程學院": [
+      "醫學工程學院": [
         "生物醫學影像暨放射科學學系",
         "生物醫學工程學系",
         "生醫工程暨材料碩士學位學程",

@@ -2685,6 +2685,8 @@ class HomeSelectionRules(BaseModel):
     degree_score_minimums: dict[str, float] = Field(default_factory=dict)
     excluded_undergraduate_years: list[str] = Field(default_factory=list)
     language_certificate_required: bool = False
+    accepts_academic_gpa: bool = False
+    accepts_class_rank: bool = False
 
 
 class CatalogueSourceStatus(BaseModel):
