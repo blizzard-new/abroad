@@ -535,3 +535,12 @@ Asia/Taipei 11/21，開始 UTC 00:02:04＝台北 08:02:04。隔離分支 `codex/
 原 63 篇 JSON／網址／刊載日／lastmod 不變，共 65 篇。兩張新授權攝影、原創 HTML 圖解完成；gate65、193 SEO、76 E2E、六組無 JavaScript、15 張目視及 wheel 671 檔核對均一次完整通過。詳見[本批驗收](seo-editorial-validation-2026-11-21.md)。本段附於清單末尾，保留 #401 在文件開頭的待審新增。未合併或部署。
 
 PR #402 已建立（OPEN、非 draft），初始內容 head `73dfd3437971546ba381ad96186b646761721e45`，GitHub 顯示 MERGEABLE。此 head 兩個 TLS trust regression image 檢查進行中，Supabase Preview skipped，請以目前 PR 狀態為準。任務附加工具 40 秒與附件查詢 10 秒皆無回覆，附件狀態未確認；PR 建立與 URL 已另行驗證，未宣稱附加成功。未合併或部署。
+
+## 2026-11-27 每日批次：臺大校級志願／ECTS 選課量
+
+| 題目 | slug | 狀態 |
+| --- | --- | --- |
+| 臺大校級交換兩階段志願怎麼選填、如何讀名額和何時報到 | `ntu-exchange-preference-rounds` | 已選，[PR #411](https://github.com/blizzard-new/abroad/pull/411) 待審 |
+| 歐洲交換 ECTS 如何估每週工作量及排備用課 | `ects-exchange-course-load` | 已選，同一 PR #411 待審 |
+
+臺大篇依編輯判斷，ECTS 篇參考行銷主管提供的 Search Console 查詢摘要。原有申請總覽與抵免指南繼續承接各自意圖。兩篇全文、來源、攝影、原創步驟圖與測試見[本批驗收](seo-editorial-validation-2026-11-27.md)。
