@@ -544,3 +544,12 @@ PR #402 已建立（OPEN、非 draft），初始內容 head `73dfd3437971546ba38
 | 歐洲交換 ECTS 如何估每週工作量及排備用課 | `ects-exchange-course-load` | 已選，同一 PR #411 待審 |
 
 臺大篇依編輯判斷，ECTS 篇參考行銷主管提供的 Search Console 查詢摘要。原有申請總覽與抵免指南繼續承接各自意圖。兩篇全文、來源、攝影、原創步驟圖與測試見[本批驗收](seo-editorial-validation-2026-11-27.md)。
+
+## 2026-11-28 每日批次：成大交換管道與日本國保
+
+| 題目 | slug | 狀態 |
+| --- | --- | --- |
+| 成大交換學校怎麼找？校級、院級與系級申請管道比較 | `ncku-exchange-program-routes` | 已選，[PR #417](https://github.com/blizzard-new/abroad/pull/417) 待審 |
+| 日本交換學生國民健康保險怎麼辦？加保、看診證明與費用 | `japan-exchange-national-health-insurance` | 已選，同一 [PR #417](https://github.com/blizzard-new/abroad/pull/417) 待審 |
+
+成大篇依 Leo 提供的 Search Console 查詢摘要選題。日本國保篇採編輯判斷。流程、來源、假設試算、攝影與測試見[本批驗收](seo-editorial-validation-2026-11-28.md)。
