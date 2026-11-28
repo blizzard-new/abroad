@@ -549,7 +549,7 @@ PR #402 已建立（OPEN、非 draft），初始內容 head `73dfd3437971546ba38
 
 | 題目 | slug | 狀態 |
 | --- | --- | --- |
-| 成大交換學校怎麼找？校級、院級與系級申請管道比較 | `ncku-exchange-program-routes` | 已選，收入本日同批 |
-| 日本交換學生國民健康保險怎麼辦？加保、看診證明與費用 | `japan-exchange-national-health-insurance` | 已選，收入本日同批 |
+| 成大交換學校怎麼找？校級、院級與系級申請管道比較 | `ncku-exchange-program-routes` | 已選，[PR #417](https://github.com/blizzard-new/abroad/pull/417) 待審 |
+| 日本交換學生國民健康保險怎麼辦？加保、看診證明與費用 | `japan-exchange-national-health-insurance` | 已選，同一 [PR #417](https://github.com/blizzard-new/abroad/pull/417) 待審 |
 
 成大篇依 Leo 提供的 Search Console 查詢摘要選題。日本國保篇採編輯判斷。流程、來源、假設試算、攝影與測試見[本批驗收](seo-editorial-validation-2026-11-28.md)。
